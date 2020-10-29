@@ -40,8 +40,8 @@ class HeaderComponent extends Component {
                     </Col>
                     <Col span={8}>
                         <Menu style={{ background: 'transparent', textAlign: 'end' }} mode="horizontal" title="Blackbuck">
-                            <Menu.Item key=""><Link to="/"><i className="icons social-icon"></i></Link></Menu.Item>
-                            <Menu.Item key="about"><Link to="/about"><i className="icons social-icon"></i></Link></Menu.Item>
+                            <Menu.Item key=""><Link to="/"><i className="icons chat-icon"></i></Link></Menu.Item>
+                            <Menu.Item key="about"><Link to="/about"><i className="icons notification-icon"></i></Link></Menu.Item>
                             {user && <Menu.Item key="logout"> <Button onClick={() => { store.dispatch(userLogout()); userManager.signoutRedirect() }}>Logout</Button></Menu.Item>}
                         </Menu>
                     </Col>
