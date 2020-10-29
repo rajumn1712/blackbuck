@@ -1,0 +1,51 @@
+.main-header{
+    background: rgb(241, 247, 255) !important;
+    padding: 0 20px !important;
+}
+.main-header .left-block{
+    display: flex;
+    align-items: center;
+
+}
+.main-header .header-searchbar{
+    border: 0!important ;
+    padding: 8px 11px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+}
+.main-header .ant-input-group-addon{
+    border: 0!important ;
+    padding: 3px;
+    background: white;
+    box-shadow: none !important;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.main-header .ant-input-search-button{
+    border: 0!important ;
+    background: white;
+    box-shadow: none !important;
+}
+
+.icons{
+    width: 30px;
+    height: 30px;
+    vertical-align: initial;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    background: url(styles/images/icons.svg) no-repeat;
+}
+.icons.home-icon{
+    background-position: -4px -5px;
+}
+.icons.social-icon{
+    background-position: -45px -5px;
+}
+.icons.suitcase-icon{
+    background-position: -87px -5px;
+}
+.icons.lms-icon{
+    background-position: -128px -5px;
+}
