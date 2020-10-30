@@ -154,4 +154,13 @@
 .justify-content-around{display: flex;justify-content: space-around;}
 .mb-0{margin-bottom: 0;}
 .text-hover{visibility: hidden; display: none;}
-.sharebox-icons.photo-icon:hover+ .text-hover{visibility: visible;display: block;}
+.sharebox-icons.photo-icon:hover+ .text-hover{visibility: visible;display: block;position: relative;}
+.text-icon, .photo-icon, .audio-icon, .document-icon, .gif-icon{position: relative;}
+.text-icon::after, .photo-icon::after, .audio-icon::after, .document-icon::after, .gif-icon::after{content: '';
+    position: absolute;
+    width: 1px;
+    height: 39px;
+    top: 4px;
+    right: -24px;
+    left: auto;
+    background-color: #efefef}
