@@ -1,10 +1,11 @@
 /* primary-color - #07A3B2 */
 .main-header{
-    background: rgb(241, 247, 255) !important;
+    background: #f0f7ff !important;
     padding: 0 20px !important;
     border-top: 1px solid #07A3B2;  
     line-height: 60px !important;
     height: 70px !important;  
+    border-bottom:2px solid #dae6f4;
 }
 .main-header .left-block{
     display: flex;
@@ -111,4 +112,14 @@
 }
 .text-right{
     text-align: right !important;
+}
+.notification-count .ant-badge-count{ 
+    background: #07A3B2 !important;
+    border-radius: 0px !important;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 3px;
+    font-size: 10px;
+    line-height: 16px;
+    top: -3px;
 }

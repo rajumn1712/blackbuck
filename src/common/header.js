@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Input ,Avatar } from 'antd'
+import { Button, Layout, Menu, Space, Row, Col, Input ,Avatar, Badge  } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -41,7 +41,7 @@ class HeaderComponent extends Component {
                     <Col span={8} >
                         <Menu className="menu-items text-right"  mode="horizontal" title="Blackbuck">
                             <Menu.Item key=""><Link to="/"><i className="icons chat-icon"></i></Link></Menu.Item>
-                            <Menu.Item key="about"><Link to="/about"><i className="icons notification-icon"></i></Link></Menu.Item>
+                            <Menu.Item key="about"><Badge className="notification-count" count={5} showZero><Link to="/about"><i className="icons notification-icon"></i></Link></Badge></Menu.Item>
                             <Menu.Item><Link to="/about" className="avatar-menu"><img src={avatar} /></Link></Menu.Item> 
                             {user && <Menu.Item key="logout"> <Button onClick={() => { store.dispatch(userLogout()); userManager.signoutRedirect() }}>Logout</Button></Menu.Item>}
                         </Menu>
