@@ -123,3 +123,35 @@
     line-height: 16px;
     top: -3px;
 }
+.share-box{background-color: #ffffff;border-radius: 10px;text-align: center;margin: auto;padding: 10px;}
+.site-layout-content{background: transparent !important;}
+.bg-white{background: #ffffff;}
+.container{width: 1250px;
+    box-sizing: content-box;
+    margin: auto;
+    position: relative;}
+.site-layout-content{padding: 0 !important;}
+.space{padding: 16px 0;min-height: 17px;box-sizing: content-box;}
+.sharebox-icons{width: 50px;
+    height: 45px;
+    vertical-align: initial;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    background: url(styles/images/icons.svg) no-repeat;}
+.sharebox-icons.text-icon{background-position: -3px -104px;}
+.sharebox-icons.text-icon:hover{background-position: -3px -149px;}
+.sharebox-icons.photo-icon{background-position: -60px -99px;}
+.sharebox-icons.photo-icon:hover{background-position: -60px -147px;}
+.sharebox-icons.audio-icon{background-position: -121px -97px;}
+.sharebox-icons.audio-icon:hover{background-position: -121px -145px;}
+.sharebox-icons.document-icon{background-position: -178px -95px;}
+.sharebox-icons.document-icon:hover{background-position: -178px -144px;}
+.sharebox-icons.gif-icon{background-position: -233px -96px;}
+.sharebox-icons.gif-icon:hover{background-position: -233px -144px;}
+.sharebox-icons.vedio-icon{background-position: -295px -98px;}
+.sharebox-icons.vedio-icon:hover{background-position: -295px -147px;}
+.justify-content-around{display: flex;justify-content: space-around;}
+.mb-0{margin-bottom: 0;}
+.text-hover{visibility: hidden; display: none;}
+.sharebox-icons.photo-icon:hover+ .text-hover{visibility: visible;display: block;}
