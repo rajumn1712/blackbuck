@@ -18,9 +18,9 @@ class Home extends Component {
             <div className="main">
                 <Row gutter={16} justify="center">
                     <Col span={5} className="">
-                            <Identity />
-                            <Invite />
-                        </Col>
+                        <Identity />
+                        <Invite />
+                    </Col>
                     <Col span={10} className=""><ShareBox /></Col>
                     <Col span={5} className=""><GroupCard /></Col>
                 </Row>
