@@ -3,6 +3,17 @@
 body {
     font-family: 'Neue Haas Grotesk Text Pro' !important;
 }
+.ant-btn-primary {
+    color: #fff;
+    background: #07A3B2 !important;
+    border-color: #07A3B2 !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+    border-radius: 4px;
+    height: 36px;
+    padding: 5px 15px;
+}
 
 .ant-menu-item a:hover {
     color: #07A3B2 !important;
@@ -281,10 +292,11 @@ body {
 .share-box .ant-card-body{padding: 0 !important;}
 .share-box .ant-card-actions {border-top: 0 !important;}
 
-.left-rail{
+.left-rail , .invite-card .ant-card{
     background: #ffffff;
-    border-radius: 10px;
+    border-radius: 10px !important;
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
 }
 .left-menu {
     width: 20px;
@@ -329,3 +341,45 @@ body {
 .profile-menu li:hover a .left-menu.post-icon{background-position: -64px -225px ;}
 .profile-menu li:hover a .left-menu.group-icon{background-position: -94px -225px ;}
 .profile-menu li:hover a .left-menu.noti-icon{background-position: -123px -225px ;}
+
+.invite-card .ant-card-head{
+   border-bottom: 1px solid #D6E6FB;
+   color: #272727;
+   font-size: 16px;
+}
+.invite-card .ant-card-body{
+    text-align:center;
+}
+.invite-card .ant-avatar-group .ant-avatar {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 18px;
+    border:0 ;
+    font-size: 24px;
+    color: #07A3B2;
+    font-weight: 600;
+}
+.invite-card p{
+    color: #5D5D5D;
+}
+.invite-card .ant-avatar-group{
+    margin-bottom: 30px;
+    position: relative;
+}
+.invite-card .ant-avatar-group:after{
+    content: '';
+    width: 45px;
+    height: 20px;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: text-bottom;
+    background: url(/static/media/circle-arrow.e052881f.svg) no-repeat;
+    position: absolute;
+    bottom: -23px;
+    transform: rotate(-5deg);
+    text-align: center;
+    left: 28%;
+    background-size: cover;
+}
+
