@@ -14,7 +14,12 @@ class Home extends Component {
         return (
             <div className="main">
                 <Row gutter={16} justify="center">
-                    <Col span={5} className=""><Identity /></Col>
+                    <Col span={5} className="">
+                        <Space>
+                            <Identity />
+                            <Invite />
+                        </Space>
+                        </Col>
                     <Col span={10} className=""><ShareBox /></Col>
                     <Col span={5} className=""><div className="bg-white"></div></Col>
                 </Row>
