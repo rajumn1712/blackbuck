@@ -2,7 +2,7 @@
   background: #f0f7ff url(../src/styles/images/body.svg) no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  height: 100vh;
+  height: 100%;
 }
 
 .site-page-header {
