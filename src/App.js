@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import './styles/fonts/stylesheet.css'
 import Router from './components/route.component';
 import { loadUser, OidcProvider } from 'redux-oidc';
 import { persistor, store } from './store';

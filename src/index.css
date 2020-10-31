@@ -1,19 +1,22 @@
 .site-layout-content {
-    background: #f0f7ff url(../src/styles/images/body.svg) no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    height: 100vh;
-    padding: 24px;
-    
-  }
-  .site-page-header {
-    border: 1px solid rgb(235, 237, 240);
-    bottom: 20px;
-  }
-  #components-layout-demo-top-side-2 .logo {
-    width: 120px;
-    height: 31px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px 28px 16px 0;
-    float: left;
-  }
+  background: #f0f7ff url(../src/styles/images/body.svg) no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+.site-page-header {
+  border: 1px solid rgb(235, 237, 240);
+  bottom: 20px;
+}
+
+#components-layout-demo-top-side-2 .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 28px 16px 0;
+  float: left;
+}
+.main{
+  padding: 100px 24px 24px;
+}

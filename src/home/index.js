@@ -5,19 +5,18 @@ import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
-import ShareBox  from '../components/sharebox';
+import ShareBox from '../components/sharebox';
+import Identity from '../components/identity'
 class Home extends Component {
     componentDidMount() {
     }
     render() {
         return (
-            
-            <div className="container">
-                <div className="space"></div>
-                <Row>
-                    <Col span={6} className="col-wsmall"><div className="bg-white"></div></Col>
-                    <Col span={12} className="col-wlarge"><ShareBox/></Col>
-                    <Col span={6} className="col-wsmall"><div className="bg-white"></div></Col>
+            <div className="main">
+                <Row gutter={16} justify="center">
+                    <Col span={5} className=""><Identity /></Col>
+                    <Col span={10} className=""><ShareBox /></Col>
+                    <Col span={5} className=""><div className="bg-white"></div></Col>
                 </Row>
 
             </div>
