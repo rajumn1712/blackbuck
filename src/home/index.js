@@ -6,7 +6,9 @@ import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
 import ShareBox from '../components/sharebox';
-import Identity from '../components/identity'
+import Identity from '../components/identity';
+import Invite from '../components/invite';
+
 class Home extends Component {
     componentDidMount() {
     }
