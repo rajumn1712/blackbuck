@@ -191,90 +191,6 @@ body {
     vertical-align: middle;
     background: url(styles/images/icons.svg) no-repeat;
 }
-
-.sharebox-icons.text-icon {
-    background-position: -3px -104px;
-}
-
-.sharebox-icons.text-icon:hover {
-    background-position: -3px -149px;
-}
-
-.sharebox-icons.photo-icon {
-    background-position: -60px -99px;
-}
-
-.sharebox-icons.photo-icon:hover {
-    background-position: -60px -147px;
-}
-
-.sharebox-icons.audio-icon {
-    background-position: -121px -97px;
-}
-
-.sharebox-icons.audio-icon:hover {
-    background-position: -121px -145px;
-}
-
-.sharebox-icons.document-icon {
-    background-position: -178px -95px;
-}
-
-.sharebox-icons.document-icon:hover {
-    background-position: -178px -144px;
-}
-
-.sharebox-icons.gif-icon {
-    background-position: -233px -96px;
-}
-
-.sharebox-icons.gif-icon:hover {
-    background-position: -233px -144px;
-}
-
-.sharebox-icons.vedio-icon {
-    background-position: -295px -98px;
-}
-
-.sharebox-icons.vedio-icon:hover {
-    background-position: -295px -147px;
-}
-
-.justify-content-around {
-    display: flex;
-    justify-content: space-around;
-}
-
-.mb-0 {
-    margin-bottom: 0;
-}
-
-.text-hover {
-    visibility: hidden;
-    display: none;
-}
-
-.sharebox-icons.photo-icon:hover+.text-hover {
-    visibility: visible;
-    display: block;
-    position: relative;
-}
-
-.text-icon, .photo-icon, .audio-icon, .document-icon, .gif-icon {
-    position: relative;
-}
-
-.text-icon::after, .photo-icon::after, .audio-icon::after, .document-icon::after, .gif-icon::after {
-    content: '';
-    position: absolute;
-    width: 1px;
-    height: 39px;
-    top: 4px;
-    right: -24px;
-    left: auto;
-    background-color: #efefef
-}
-
 .left-rail .profile-card {
     display: flex;
     flex-direction: column;
@@ -339,3 +255,31 @@ body {
     font-size: 12px;
     line-height: 15px;
 }
+.sharebox-icons.text-icon{background-position: -3px -104px;}
+.sharebox-icons.text-icon:hover{background-position: -3px -149px;}
+.sharebox-icons.photo-icon{background-position: -60px -99px;}
+.sharebox-icons.photo-icon:hover{background-position: -60px -147px;}
+.sharebox-icons.audio-icon{background-position: -121px -97px;}
+.sharebox-icons.audio-icon:hover{background-position: -121px -145px;}
+.sharebox-icons.document-icon{background-position: -178px -95px;}
+.sharebox-icons.document-icon:hover{background-position: -178px -144px;}
+.sharebox-icons.gif-icon{background-position: -233px -96px;}
+.sharebox-icons.gif-icon:hover{background-position: -233px -144px;}
+.sharebox-icons.vedio-icon{background-position: -295px -98px;}
+.sharebox-icons.vedio-icon:hover{background-position: -295px -147px;}
+.justify-content-around{display: flex;justify-content: space-around;align-items: center;}
+.share-box .justify-content-around{height: 4.9em;}
+.mb-0{margin-bottom: 0;}
+.text-hover{visibility: hidden; display: none;}
+.sharebox-icons:hover+ .text-hover{visibility: visible;display: block;position: relative;}
+.text-icon, .photo-icon, .audio-icon, .document-icon, .gif-icon{position: relative;transition: transform 80ms linear;}
+.text-icon::after, .photo-icon::after, .audio-icon::after, .document-icon::after, .gif-icon::after{content: '';
+    position: absolute;
+    width: 1px;
+    height: 52px;
+    top: -3px;
+    right: -24px;
+    left: auto;
+    background-color: #f1f1f1;}
+.text-icon:hover, .photo-icon:hover, .audio-icon:hover, .document-icon:hover, .gif-icon:hover, .vedio-icon:hover{transition: transform 80ms linear;transform: translate3d(0,-3px,0);}
+.text-color{color:#07A3B2;font-size: 14px;font-weight: 600;}
