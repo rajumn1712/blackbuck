@@ -15,7 +15,9 @@ class LayoutComponent extends Component {
                         <Breadcrumb.Item>List</Breadcrumb.Item>
                         <Breadcrumb.Item>App</Breadcrumb.Item>
                     </Breadcrumb> */}
-                    <div className="site-layout-content"><Router /></div>
+                    <div className="site-layout-content">
+                        <div className="container"><Router /></div>
+                    </div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Balckbuck ©2020 </Footer>
             </Layout>

@@ -1,30 +1,9 @@
-html {
-  --antd-wave-shadow-color: #07a3b2;
-  --scroll-bar: 0;
-}
-
-.site-layout-content {
-  background: #f0f7ff url(../src/styles/images/body.svg) no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  height: 100%;
-}
-
-.site-page-header {
-  border: 1px solid rgb(235, 237, 240);
-  bottom: 20px;
-}
-
-#components-layout-demo-top-side-2 .logo {
-  width: 120px;
-  height: 31px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px 28px 16px 0;
-  float: left;
-}
-.main{
-  padding: 100px 24px 24px;
-}
+html {--antd-wave-shadow-color: #07a3b2; --scroll-bar: 0;}
+.site-layout-content { background: #f0f7ff url(../src/styles/images/body.svg) no-repeat; background-size: cover; background-attachment: fixed; height: 100%; margin-top: 70px;}
+.site-page-header {border: 1px solid rgb(235, 237, 240); bottom: 20px; }
+#components-layout-demo-top-side-2 .logo { width: 120px; height: 31px; background: rgba(255, 255, 255, 0.2); margin: 16px 28px 16px 0; float: left;}
+.container{padding: 0 16px;}
+.main { padding-top: 16px; }
 .right-rail{border-radius: 10px !important;box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);margin-bottom: 30px;}
 .group-card .ant-card-bordered{border-radius: 10px;border-bottom: 0;}
 .group-card .ant-card-body{padding: 0 !important;}
@@ -32,7 +11,7 @@ html {
 .group-card .ant-card-meta-detail > div:not(:last-child) {margin-bottom: 0 !important;}
 .ant-avatar{border-radius: 30% !important;}
 .ant-btn{border-radius: 4px !important;}
-.ant-card-extra a, .link-color a{font-size: 10px;color: #07A3B2;}
+.ant-card-extra a, .link-color a{font-size: 11px;color: #07A3B2;}
 .group-card .ant-card-head{font-size: 16px;color: #07A3B2;border-bottom: 1px solid #D6E6FB;}
 .ant-card-meta-title{font-size: 14px;}
 .icons-small{width: 10px;
@@ -52,3 +31,23 @@ html {
 .reight-rail .ant-list-items{border-bottom: 1px solid #D6E6FB;}
 
 
+/*---Friend Suggestions---*/
+.friends{display: flex; overflow: hidden; margin-bottom: 24px;}
+.friends-thead{display: flex;justify-content: space-between;}
+.friends-list {border-radius: 10px; background: #ffffff; flex: 0 0 100px; height: 146px; overflow: hidden; box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); position: relative; margin-right: 16px;}
+.friends-list.one .friends-list--name{background: linear-gradient(to top, rgba(70, 10, 156, 1), rgba(70, 10, 156, 0));}
+.friends-list.two .friends-list--name{background: linear-gradient(to top, rgba(112, 165, 113, 1), rgba(112, 165, 113, 0));}
+.friends-list img {object-fit: cover;}
+.friends-list--name {position: absolute; left: 0; right: 0; bottom: 0; text-align: center; top: 60%;
+background: linear-gradient(to top, rgba(18, 66, 128, 1), rgba(18, 66, 128, 0));
+font-size: 14px; display: flex; justify-content: flex-end; flex-direction: column; align-items: center;padding: 8px;}
+.friends-list--name .ant-typography{color: #FFFFFF; margin-bottom: 0 !important;}
+.friends-list--course {font-size: 10px; color: #FFFFFF; display: none;}
+.friends-list:hover .friends-list--course{ display: block;}
+.friends-list:hover ._name{transform: translate3d(0, -3px, 0); transition: transform 80ms linear;}
+.addfrnd-btn{position: absolute; background: #ffffff; box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); top: 10px; right: 10px; padding: 14px; border-radius: 9px; cursor: pointer; opacity: 0;}
+.addfrnd-btn:hover{background: #07A3B2;}
+.friends-list:hover .addfrnd-btn{opacity: 1; transition: opacity 80ms linear;}
+@media (min-width: 1200px) {
+  .container { width: 1140px; box-sizing: content-box; margin: auto; }
+}
