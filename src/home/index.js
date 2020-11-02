@@ -9,6 +9,7 @@ import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
 import GroupCard from '../components/groupcard';
+import Ads from '../components/ads';
 
 class Home extends Component {
     componentDidMount() {
@@ -22,7 +23,10 @@ class Home extends Component {
                         <Invite />
                     </Col>
                     <Col span={10} className=""><ShareBox /></Col>
-                    <Col span={5} className=""><GroupCard /></Col>
+                    <Col span={6} className="">
+                        <GroupCard />
+                        <Ads />
+                    </Col>
                 </Row>
 
             </div>
