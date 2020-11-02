@@ -1,3 +1,8 @@
+html {
+  --antd-wave-shadow-color: #07a3b2;
+  --scroll-bar: 0;
+}
+
 .site-layout-content {
   background: #f0f7ff url(../src/styles/images/body.svg) no-repeat;
   background-size: cover;

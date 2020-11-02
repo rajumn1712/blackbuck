@@ -18,122 +18,18 @@ body {
 .ant-menu-item a:hover {
     color: #07A3B2 !important;
 }
-.main-header {
-    background: #f0f7ff !important;
-    padding: 0 20px !important;
-    border-top: 1px solid #07A3B2;
-    line-height: 60px !important;
-    height: 70px !important;
-    border-bottom: 2px solid #dae6f4;
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    z-index: 100;
-}
-
-.main-header .left-block {
-    display: flex;
-    align-items: center;
-}
-
-.main-header .header-searchbar {
-    border: 0!important;
-    padding: 8px 11px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-
-.main-header .menu-items {
-    border-bottom: 0;
-    background: transparent;
-}
-
-.main-header .ant-input-group-addon {
-    border: 0!important;
-    padding: 3px;
-    background: white;
-    box-shadow: none !important;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-
-.main-header .ant-input-search-button {
-    border: 0!important;
-    background: white;
-    box-shadow: none !important;
-}
-
-.main-header .ant-menu-item {
-    margin: 0 10px !important;
-}
-
-.main-header .ant-menu-item a {
-    padding: 10px 8px 16px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-}
 
 .ant-menu-item, .ant-menu-item-selected {
     border: 0 !important;
 }
 
-.main-header .ant-menu-item a:hover, .main-header .ant-menu-item-selected a {
-    background: #07A3B2;
-    transition: 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
 
-.icons.home-icon {
-    background-position: -4px -5px;
-}
 
-.icons.social-icon {
-    background-position: -45px -5px;
-}
 
-.icons.suitcase-icon {
-    background-position: -87px -5px;
-}
-
-.icons.lms-icon {
-    background-position: -128px -5px;
-}
-
-.icons.chat-icon {
-    background-position: -170px -5px;
-}
-
-.icons.notification-icon {
-    background-position: -209px -5px;
-}
-
-.main-header .ant-menu-item a:hover .icons.home-icon, .ant-menu-item-selected .icons.home-icon {
-    background-position: -5px -44px;
-}
-
-.main-header .ant-menu-item a:hover .icons.social-icon, .ant-menu-item-selected .icons.social-icon {
-    background-position: -46px -44px;
-}
-
-.main-header .ant-menu-item a:hover .icons.suitcase-icon, .ant-menu-item-selected .icons.suitcase-icon {
-    background-position: -88px -44px;
-}
-
-.main-header .ant-menu-item a:hover .icons.lms-icon, .ant-menu-item-selected .icons.lms-icon {
-    background-position: -129px -44px;
-}
-
-.main-header .ant-menu-item a:hover .icons.chat-icon, .ant-menu-item-selected .icons.chat-icon {
-    background-position: -171px -44px;
-}
-
-.main-header .ant-menu-item a:hover .icons.notification-icon, .ant-menu-item-selected .icons.notification-icon {
-    background-position: -210px -44px;
-}
 
 .icons {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     vertical-align: initial;
     display: inline-block;
     cursor: pointer;
@@ -336,11 +232,11 @@ body {
 .profile-menu li:hover a span{
     color: #07A3B2;
 }
-.profile-menu li:hover a .left-menu.profile-icon{background-position: -5px -225px ;  }
-.profile-menu li:hover a .left-menu.friends-icon{background-position: -35px -225px ;}
-.profile-menu li:hover a .left-menu.post-icon{background-position: -64px -225px ;}
-.profile-menu li:hover a .left-menu.group-icon{background-position: -94px -225px ;}
-.profile-menu li:hover a .left-menu.noti-icon{background-position: -123px -225px ;}
+.profile-menu li:hover a .left-menu.profile-icon{background-position: -5px -226px ;  }
+.profile-menu li:hover a .left-menu.friends-icon{background-position: -35px -226px ;}
+.profile-menu li:hover a .left-menu.post-icon{background-position: -64px -226px ;}
+.profile-menu li:hover a .left-menu.group-icon{background-position: -94px -226px ;}
+.profile-menu li:hover a .left-menu.noti-icon{background-position: -123px -226px ;}
 
 .invite-card .ant-card-head{
    border-bottom: 1px solid #D6E6FB;

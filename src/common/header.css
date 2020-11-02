@@ -1,0 +1,147 @@
+.main-header {
+    background: #f0f7ff !important;
+    padding: 0 20px !important;
+    border-top: 2px solid #07A3B2;
+    height: 70px !important;
+    border-bottom: 2px solid #dae6f4;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 100;
+    box-sizing: border-box;
+}
+.main-header .logo-brand{
+    margin-right: 16px;
+}
+
+.header-searchbar {
+    vertical-align: middle !important;
+    max-width: 300px;
+}
+
+.header-searchbar .ant-input-group {
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.header-searchbar .ant-input-group>.ant-input:first-child, .header-searchbar .ant-input-group-addon:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.header-searchbar input {
+    min-height: 36px !important;
+    padding: 8px !important;
+    border: 0 !important;
+}
+
+.main-header .menu-items {
+    border-bottom: 0;
+    background: transparent;
+}
+
+.main-header .ant-menu-horizontal>.ant-menu-submenu {
+    top: -1px !important;
+}
+
+.main-header .ant-menu-horizontal {
+    line-height: inherit !important;
+}
+
+.main-header .ant-menu-item a {
+    position: relative;
+}
+
+.main-header .ant-menu-item a:before {
+    width: 45px;
+    height: 45px;
+}
+
+.header-searchbar .ant-input-group-addon {
+    border: 0!important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    min-height: 36px;
+}
+
+.header-searchbar .ant-input-group-addon .ant-btn {
+    border: 0 !important;
+    border-left: 1px solid #D6E6FB !important;
+    max-height: 26px;
+    box-shadow: none!important;
+}
+
+.main-header .ant-menu-item {
+    margin: 0 10px !important;
+}
+
+.main-header .ant-menu-item a {
+    padding: 10px 8px 16px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    transition: color 2s linear 1s !important;
+}
+
+.main-header .ant-menu-item a:hover, .main-header .ant-menu-item-selected a {
+    background: #07A3B2;
+}
+.icons {
+    width: 26px;
+    height: 26px;
+    vertical-align: initial;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    background: url(../styles/images/icons.svg) no-repeat;
+}
+
+.icons.home-icon {
+    background-position: -11px -6px;
+}
+
+.main-header .ant-menu-item a:hover .icons.home-icon, .ant-menu-item-selected .icons.home-icon {
+    background-position: -11px -48px;
+}
+
+.icons.social-icon {
+    background-position: -50px -6px;
+}
+
+.main-header .ant-menu-item a:hover .icons.social-icon, .ant-menu-item-selected .icons.social-icon {
+    background-position: -50px -48px;
+}
+
+.icons.suitcase-icon {
+    background-position: -90px -6px;
+}
+
+.main-header .ant-menu-item a:hover .icons.suitcase-icon, .ant-menu-item-selected .icons.suitcase-icon {
+    background-position: -90px -48px;
+}
+
+.icons.lms-icon {
+    background-position: -129px -6px;
+}
+
+.main-header .ant-menu-item a:hover .icons.lms-icon, .ant-menu-item-selected .icons.lms-icon {
+    background-position: -129px -48px;
+}
+
+.icons.chat-icon {
+    background-position: -168px -6px;
+}
+
+.main-header .ant-menu-item a:hover .icons.chat-icon, .ant-menu-item-selected .icons.chat-icon {
+    background-position: -168px -48px;
+}
+
+.icons.notification-icon {
+    background-position: -207px -6px;
+}
+
+.main-header .ant-menu-item a:hover .icons.notification-icon, .ant-menu-item-selected .icons.notification-icon {
+    background-position: -207px -48px;
+}
