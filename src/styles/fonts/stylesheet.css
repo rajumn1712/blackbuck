@@ -1,35 +1,26 @@
 @font-face {
-    font-family: 'Neue Haas Grotesk Text Pro';
-    src: url('NHaasGroteskTXPro-It.woff2') format('woff2'),
-        url('NHaasGroteskTXPro-It.woff') format('woff');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Neue Haas Grotesk Text Pro';
-    src: url('NHaasGroteskTXPro-BdIt.woff2') format('woff2'),
-        url('NHaasGroteskTXPro-BdIt.woff') format('woff');
-    font-weight: bold;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Neue Haas Grotesk Text Pro';
-    src: url('NHaasGroteskTXPro-Bd.woff2') format('woff2'),
-        url('NHaasGroteskTXPro-Bd.woff') format('woff');
-    font-weight: bold;
+    font-family: 'NeueHaasGroteskText Pro Md';
+    src: url('NHaasGroteskTXPro-65Md.woff2') format('woff2'),
+        url('NHaasGroteskTXPro-65Md.woff') format('woff');
+    font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Haas Grotesk Text Pro';
-    src: url('NHaasGroteskTXPro-Rg.woff2') format('woff2'),
-        url('NHaasGroteskTXPro-Rg.woff') format('woff');
+    font-family: 'NeueHaasGroteskText Pro';
+    src: url('NHaasGroteskTXPro-55Rg.woff2') format('woff2'),
+        url('NHaasGroteskTXPro-55Rg.woff') format('woff');
     font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NeueHaasGroteskText Pro';
+    src: url('NHaasGroteskTXPro-75Bd.woff2') format('woff2'),
+        url('NHaasGroteskTXPro-75Bd.woff') format('woff');
+    font-weight: bold;
     font-style: normal;
     font-display: swap;
 }

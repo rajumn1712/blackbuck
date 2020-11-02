@@ -53,14 +53,20 @@ class HeaderComponent extends Component {
                     </Col>
                     <Col span={8} >
                         <Menu className="menu-items text-right" mode="horizontal" title="Blackbuck">
-                            <Menu.Item key=""><Link to="/"><i className="icons chat-icon"></i></Link></Menu.Item>
-                            <Menu.Item key="about">
-                                <Badge className="notification-count" count={5} showZero>
+                            <Menu.Item key="">
+                                <Dropdown overlay={menu} trigger={['click']}>
+                                    <Link to="/" onClick={e => e.preventDefault()}><i className="icons chat-icon"></i></Link>
+                                </Dropdown>
+                            </Menu.Item>
+                            <Menu.Item key="">
+                                <Dropdown overlay={menu} trigger={['click']}>
                                     <Link to="/about">
-                                        <i className="icons notification-icon">
-                                        </i>
+                                        <Badge className="notification-count" count={5} showZero>
+                                            <i className="icons notification-icon">
+                                            </i>
+                                        </Badge>
                                     </Link>
-                                </Badge>
+                                </Dropdown>
                             </Menu.Item>
                             <Menu.Item >
                                 <Dropdown overlay={menu} trigger={['click']}>

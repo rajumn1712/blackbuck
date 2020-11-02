@@ -64,7 +64,8 @@ body {
     padding: 0 3px;
     font-size: 10px;
     line-height: 16px;
-    top: -3px;
+    top: -5px;
+    right: -6px;
 }
 
 .share-box {
