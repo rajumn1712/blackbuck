@@ -18,12 +18,12 @@ class  ShareBox extends Component {
             <div className="share-box bg-white">
                 <Card
                     actions={[
-                        <Link to="/contact" className="icon-animation"><i className="sharebox-icons text-icon"></i><p className="text-hover text-color mb-0">Text</p></Link>,
-                        <Link to="/" className="icon-animation" onClick={() => this.openpopup()}><i className="sharebox-icons photo-icon"></i><p className="text-hover text-color mb-0">Images</p></Link>,
-                        <Link to="/contact" className="icon-animation"><i className="sharebox-icons audio-icon"></i><p className="text-hover text-color mb-0">Speaker</p></Link>,
-                        <Link to="/contact" className="icon-animation"><i className="sharebox-icons document-icon"></i><p className="text-hover text-color mb-0">Docs</p></Link>,
-                        <Link to="/contact" className="icon-animation"><i className="sharebox-icons gif-icon"></i><p className="text-hover text-color mb-0">GIF</p></Link>,
-                        <Link to="/contact" className="icon-animation"><i className="sharebox-icons vedio-icon"></i><p className="text-hover text-color mb-0">Vedio</p></Link>,
+                        <Link to="/contact" className="icon-animation"><span className="sharebox-icons text-icon"></span><p className="text-hover text-color mb-0">Text</p></Link>,
+                        <Link to="/" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons photo-icon"></span><p className="text-hover text-color mb-0">Images</p></Link>,
+                        <Link to="/contact" className="icon-animation"><span className="sharebox-icons audio-icon"></span><p className="text-hover text-color mb-0">Speaker</p></Link>,
+                        <Link to="/contact" className="icon-animation"><span className="sharebox-icons document-icon"></span><p className="text-hover text-color mb-0">Docs</p></Link>,
+                        <Link to="/contact" className="icon-animation"><span className="sharebox-icons gif-icon"></span><p className="text-hover text-color mb-0">GIF</p></Link>,
+                        <Link to="/contact" className="icon-animation"><span className="sharebox-icons vedio-icon"></span><p className="text-hover text-color mb-0">Vedio</p></Link>,
                     ]}
                 >
                 </Card>

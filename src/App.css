@@ -92,7 +92,7 @@ body {
 }
 
 .sharebox-icons {
-    width: 50px;
+    width: 45px;
     height: 45px;
     vertical-align: initial;
     display: inline-block;
@@ -198,12 +198,12 @@ body {
 .text-hover{visibility: hidden;}
 .sharebox-icons:hover+ .text-hover{visibility: visible;display: block;position: relative;}
 .text-icon, .photo-icon, .audio-icon, .document-icon, .gif-icon{position: relative;}
-.icon-animation{transition: transform 80ms linear;}
-.icon-animation:hover{transition: transform 80ms linear;transform: translate3d(0,-3px,0);}
 .text-color{color:#07A3B2;font-size: 14px;}
 .share-box .ant-card-bordered{border: 0 !important;}
 .share-box .ant-card-body{padding: 0 !important;}
 .share-box .ant-card-actions {border-top: 0 !important;}
+.icon-animation:focus .sharebox-icons, .icon-animation:hover .sharebox-icons {transform: translate3d(0,-3px,0);}
+.icon-animation .sharebox-icons {transition: transform 80ms linear;}
 
 .left-rail , .invite-card .ant-card{
     background: #ffffff;
