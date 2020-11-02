@@ -112,16 +112,32 @@ body {
     border: 0;
 }
 
-.profile-card .ant-avatar {
+.profile-card .ant-avatar{
     width: 90px;
     height: 90px;
     padding-right: 0;
     border-radius: 24px;
 }
+.profile-card .ant-card-meta-avatar:after{
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    right: 0;
+    bottom: 6px;
+    background: greenyellow;
+}
 
 .profile-card .ant-card-meta-avatar {
     float: none;
     padding-right: 0;
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin: auto;
 }
 
 .profile-card .ant-card-meta-detail {
@@ -135,6 +151,7 @@ body {
     font-weight: 600;
     line-height: 23px;
     margin-bottom: 0 !important;
+    white-space: normal !important;
 }
 
 .profile-card .ant-card-meta-description {
@@ -270,12 +287,24 @@ body {
     display: inline-block;
     cursor: pointer;
     vertical-align: text-bottom;
-    background: url(/static/media/circle-arrow.e052881f.svg) no-repeat;
+    background: url(../src/styles/images/circle-arrow.svg) no-repeat;
     position: absolute;
     bottom: -23px;
     transform: rotate(-5deg);
     text-align: center;
     left: 28%;
     background-size: cover;
+}
+
+.premium-icon{
+    width: 15px;
+    height: 15px;
+    vertical-align: initial;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    background: url(../src/styles/images/icons.svg) no-repeat;
+    background-position: -6px -78px;
+    margin-left: 4px;
 }
 

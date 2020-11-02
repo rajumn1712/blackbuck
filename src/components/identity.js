@@ -28,16 +28,16 @@ class Identity extends Component {
                         avatar={
                             <Avatar src={AvatarImage} />
                         }
-                        title="John Doe"
+                        title={<div>John doe<span className="premium-icon"></span></div>}
                         description="Groups"
                     />
                 </Card>
                 <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
-                    <Menu.Item key=""><Link to="/"><i className="left-menu profile-icon"></i><span>Profile</span></Link></Menu.Item>
-                    <Menu.Item key="about"><Link to="/about"><i className="left-menu friends-icon"></i><span>Friends</span></Link></Menu.Item>
-                    <Menu.Item key="contact"><Link to="/contact"><i className="left-menu post-icon"></i><span>Posts</span></Link></Menu.Item>
-                    <Menu.Item key="posts"><Link to="/posts"><i className="left-menu group-icon"></i><span>Groups</span></Link></Menu.Item>
-                    <Menu.Item key="posts"><Link to="/posts"><i className="left-menu noti-icon"></i><span>Notifications</span></Link></Menu.Item>
+                    <Menu.Item key=""><Link to="/"><span className="left-menu profile-icon"></span><span>Profile</span></Link></Menu.Item>
+                    <Menu.Item key="about"><Link to="/about"><span className="left-menu friends-icon"></span><span>Friends</span></Link></Menu.Item>
+                    <Menu.Item key="contact"><Link to="/contact"><span className="left-menu post-icon"></span><span>Posts</span></Link></Menu.Item>
+                    <Menu.Item key="posts"><Link to="/posts"><span className="left-menu group-icon"></span><span>Groups</span></Link></Menu.Item>
+                    <Menu.Item key="posts"><Link to="/posts"><span className="left-menu noti-icon"></span><span>Notifications</span></Link></Menu.Item>
                 </Menu>
             </div>
         )
