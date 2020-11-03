@@ -94,7 +94,8 @@ class GroupCard extends Component {
                                             <Avatar src={GroupImage2} />
                                         }
                                         title="IT Group"
-                                        description={<div className="f-10"><span>954 Members</span> | <span>55 Posts</span></div>}
+                                        description={<div className="f-10"><span>954 Members</span> | <span>55 Posts</span> </div>}
+                                        
                                     />
                                     <div className="link-color"><a href="#">Jion Group</a></div>
                                 </List.Item>
@@ -108,7 +109,7 @@ class GroupCard extends Component {
                         </List>
                     </div>
 
-                    <div className="m-15 text-center">
+                    <div className="m-16 text-center">
                         <Button type="primary">Create a Group</Button>
                     </div>
 
