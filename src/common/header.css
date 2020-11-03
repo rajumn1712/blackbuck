@@ -1,6 +1,6 @@
 .main-header {
     background: #f0f7ff !important;
-    padding: 0 20px !important;
+    padding: 0 24px 0 16px !important;
     border-top: 2px solid #07A3B2;
     height: 70px !important;
     border-bottom: 1px solid #dae6f4;
@@ -174,13 +174,19 @@
     right: -6px;
 }
 
-.profile-dropdown{
+.profile-dropdown,.notification-dropdown{
     margin-top: 10px !important;
     border-radius: 12px !important;
     background: #ffffff;
     box-shadow: 0 3px 15px rgba(0,0,0,0.1)
 }
-.profile-dropdown .ant-card-meta .ant-avatar-image{
+.notification-dropdown{
+    min-width: 280px;
+    margin-right: 16px;
+    padding: 10px;
+    margin-top: 6px !important;
+}
+.profile-dropdown .ant-card-meta .ant-avatar-image,.notification-dropdown .ant-list-item-meta-avatar .ant-avatar-image{
     width: 50px;
     height: 50px;
     border-radius: 17px !important;
@@ -197,4 +203,16 @@
 
 .profile-dropdown li {
     margin: 3px 8px;
+}
+.notification-dropdown .ant-list-items .ant-list-item{
+   padding: 5px;
+
+}
+.notification-dropdown .ant-list-items .ant-list-item:hover{
+    background-color: #F9F9F9;
+
+}
+
+.notification-dropdown .ant-list-split .ant-list-item {
+    border-bottom: none !important;
 }

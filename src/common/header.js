@@ -1,19 +1,57 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Input, Avatar, Badge, Dropdown, message, Drawer, List, Card } from 'antd'
+import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card} from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
 import Logo from '../styles/images/logo.svg';
 import avatar from '../styles/images/avatar.png';
+import avatar2 from '../styles/images/user.jpg';
 import './header.css';
-import ReactDOM from 'react-dom';
 
 const { Meta } = Card;
-
 const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
+
+const data = [
+    {   
+        title: 'Vin Diesel ',
+        descriptions: 'Although social distancing has created many changes with CBU courses',
+    },
+    {
+        title: 'Andrew',
+        descriptions: 'we are still offering a wide range of classes virtually. You read correctly',
+    },
+    {
+        title: 'Michel',
+        descriptions: 'Do you miss seeing the friendly faces',
+    },
+    {
+        title: 'simon',
+        descriptions: 'your fellow Colony Brands’ employees?',
+    },
+];
+
+const notifications = (
+    <div className="notification-dropdown">
+        <h2>Notifications</h2>
+        <List
+            itemLayout="horizontal"
+            dataSource={data}
+            renderItem={item => (
+                <List.Item>
+                    <List.Item.Meta
+                        avatar={<Avatar src={avatar2} />}
+                        title={<a href="">{item.title}</a>}
+                        description={item.descriptions}
+                    />
+                </List.Item>
+            )}
+        />
+    </div>
+
+);
 
 const menu = (
     <Menu className="profile-dropdown">
@@ -41,9 +79,6 @@ const menu = (
         <Menu.Item key="4">
             <Link to="/posts"></Link>Sign Out
         </Menu.Item>
-
-
-
     </Menu >
 );
 
@@ -78,7 +113,7 @@ class HeaderComponent extends Component {
                                 </Dropdown>
                             </Menu.Item>
                             <Menu.Item key="">
-                                <Dropdown overlay={menu} trigger={['click']}>
+                                <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
                                     <Link to="/about">
                                         <Badge className="notification-count" count={5} showZero>
                                             <i className="icons notification-icon">
