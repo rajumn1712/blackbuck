@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Input, Avatar, Badge, Dropdown, message, Drawer } from 'antd'
+import { Button, Layout, Menu, Space, Row, Col, Input, Avatar, Badge, Dropdown, message, Drawer, List, Card } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -9,23 +9,42 @@ import avatar from '../styles/images/avatar.png';
 import './header.css';
 import ReactDOM from 'react-dom';
 
-
+const { Meta } = Card;
 
 const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
 
 const menu = (
-    <Menu>
+    <Menu className="profile-dropdown">
         <Menu.Item key="0">
-            <a href="http://www.alipay.com/">1st menu item</a>
-        </Menu.Item>
-        <Menu.Item key="1">
-            <a href="http://www.taobao.com/">2nd menu item</a>
+            <Meta
+                avatar={<Avatar src={avatar} />}
+                title="John Doe"
+                description="See your profile"
+            />
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item key="3">3rd menu item</Menu.Item>
-    </Menu>
+        <Menu.Item key="1">
+            <Link to="/about">Switch Accounts
+            </Link>
+        </Menu.Item>
+        <Menu.Item key="2">
+            <Link to="/contact">Settings & Privacy
+            </Link>
+        </Menu.Item>
+        <Menu.Item key="3">
+            <Link to="/posts">Help & Support
+            </Link>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="4">
+            <Link to="/posts"></Link>Sign Out
+        </Menu.Item>
+
+
+
+    </Menu >
 );
 
 class HeaderComponent extends Component {
@@ -38,7 +57,7 @@ class HeaderComponent extends Component {
                     <Col span={8} justify="start"  >
                         <div >
                             <Link to="/" className="logo-brand">
-                                <img src={Logo} alt="Blackbuck" width="50px" />
+                                <img src={Logo} alt="Blackbuck" width="60px" />
                             </Link>
                             <Search className="header-searchbar" placeholder="Search" onSearch={onSearch} />
                         </div>
@@ -52,7 +71,7 @@ class HeaderComponent extends Component {
                         </Menu>
                     </Col>
                     <Col span={8} >
-                        <Menu className="menu-items text-right" mode="horizontal" title="Blackbuck">
+                        <Menu className="menu-items text-right right-menu" mode="horizontal" title="Blackbuck">
                             <Menu.Item key="">
                                 <Dropdown overlay={menu} trigger={['click']}>
                                     <Link to="/" onClick={e => e.preventDefault()}><i className="icons chat-icon"></i></Link>
@@ -68,8 +87,8 @@ class HeaderComponent extends Component {
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>
-                            <Menu.Item >
-                                <Dropdown overlay={menu} trigger={['click']}>
+                            <Menu.Item key="" >
+                                <Dropdown overlay={menu} trigger={['click']} >
                                     <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={menu}>
                                         <img src={avatar} />
                                     </Link>
