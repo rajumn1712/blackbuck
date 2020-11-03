@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message } from 'antd'
+import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message, Input } from 'antd'
 import { DownOutlined, InboxOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
@@ -38,7 +38,7 @@ class ShareBox extends Component {
     render() {
         const { user } = store.getState().oidc;
         const menu = (
-            <Menu>
+            <Menu className="menu-droupdown">
                 <Menu.Item key="0"><a href="">Public</a></Menu.Item>
                 <Menu.Item key="1"><a href="">Friends</a></Menu.Item>
                 <Menu.Item key="2"><a href="">College</a></Menu.Item>
@@ -81,7 +81,7 @@ class ShareBox extends Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[<div className="justify-content-between">
-                        <Button key="back" onClick={this.handleCancel}>
+                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                             <a href="">Close</a>
                         </Button>
                         <Button key="submit" type="primary" onClick={this.handleOk}>
@@ -92,8 +92,10 @@ class ShareBox extends Component {
                         <Dragger {...props}>
                         <Avatar src={Storage} />
                             <p className="ant-upload-text">Upload Image</p>
-                        </Dragger>,
-                        </div>
+                        </Dragger>
+                    </div>
+                        <p className="title-img mb-0"><Input placeholder="Title of the image here" /></p>
+                        <p className="caption-image"><Input placeholder="Add a caption of image, if you like" /></p>
 
                 </Modal>
 

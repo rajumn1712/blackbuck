@@ -331,9 +331,16 @@ body,h1,h2,h3,h4,h5,h6,p {
 .share-popup .ant-modal-content .ant-modal-close{display: none;}
 .justify-content-between{display: flex;justify-content: space-between;}
 .check-text{margin-bottom: 0;line-height: 15px;font-size: 10px;color: #000000;}
-.ant-modal-header {padding: 15px 16px !important;}
+.ant-modal-header {padding: 17px 16px !important;}
 .lable-height{line-height: 15px;}
-.share-popup .ant-modal-footer{color: #F9F9F9;}
+.share-popup .ant-modal-footer{color: #F9F9F9;    padding: 15px 16px;}
 .upload-image .ant-avatar{width: 64px;height: 50px;margin-bottom: 5px;}
 .upload-image.ant-upload-text{color: #000000;margin-bottom: 0px;}
-
+.upload-image{margin-bottom: 15px;}
+.title-img .ant-input{border: 0 !important;text-align: center;font-size: 24px !important;font-weight: 700;color:#BDBDBD;}
+.title-img .ant-input:focus, .title-img .ant-input-focused{ border-color: transparent;border-right-width:0px;}
+.caption-image .ant-input{color:#BDBDBD; font-size: 12px;border: 0 !important;text-align: center;}
+.ant-btn.btn-cancel{background: #DEDFE1;color:#000000}
+.menu-droupdown{width: 120px;}
+.menu-droupdown a{font-size: 11px;}
+.share-popup .ant-modal-content, .share-popup.ant-modal-header{border-radius: 10px;}

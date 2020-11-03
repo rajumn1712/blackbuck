@@ -5,4 +5,5 @@
 .post-card .ant-card-meta-description{font-size: 10px; font-weight: 500; color: #5d5d5d;}
 .post-card .ant-card-body{padding: 0;}
 .post-card .ant-card-actions{border-radius: 0 0 10px 10px;}
-.post-card .ant-card-meta-avatar{padding-right: 12px;}
+.post-card .ant-card-meta-avatar, .share-popup .ant-card-meta-avatar{padding-right: 12px;}
+.justify-content-between .ant-card-meta{margin: 3px 0 0;}
