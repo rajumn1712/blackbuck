@@ -38,8 +38,12 @@
 
 .header-searchbar input {
     min-height: 36px !important;
-    padding: 12px 8px !important;
+    padding: 12px 16px !important;
     border: 0 !important;
+}
+
+.header-searchbar .ant-input-search-button {
+    width: 40px;
 }
 
 .main-header .menu-items {
@@ -71,7 +75,6 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     min-height: 36px;
-    padding-right: 6px !important;
 }
 
 .header-searchbar .ant-input-group-addon .ant-btn {
@@ -98,7 +101,7 @@
     background: #07A3B2;
 }
 
-.main-header .right-menu .avatar-menu, .main-header .right-menu .avatar-menu:hover{
+.main-header .right-menu .avatar-menu, .main-header .right-menu .avatar-menu:hover {
     padding-top: 12px !important;
     padding-bottom: 12px !important;
     background: transparent;
@@ -174,28 +177,32 @@
     right: -6px;
 }
 
-.profile-dropdown,.notification-dropdown{
+.profile-dropdown, .notification-dropdown {
     margin-top: 10px !important;
     border-radius: 12px !important;
     background: #ffffff;
-    box-shadow: 0 3px 15px rgba(0,0,0,0.1)
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1)
 }
-.notification-dropdown{
+
+.notification-dropdown {
     min-width: 280px;
     margin-right: 16px;
     padding: 10px;
     margin-top: 6px !important;
 }
-.profile-dropdown .ant-card-meta .ant-avatar-image,.notification-dropdown .ant-list-item-meta-avatar .ant-avatar-image, .messenger-drawer .ant-card-meta .ant-avatar-image{
+
+.profile-dropdown .ant-card-meta .ant-avatar-image, .notification-dropdown .ant-list-item-meta-avatar .ant-avatar-image, .messenger-drawer .ant-card-meta .ant-avatar-image {
     width: 50px;
     height: 50px;
     border-radius: 17px !important;
 }
-.profile-dropdown .ant-card-meta{
+
+.profile-dropdown .ant-card-meta {
     padding-top: 5px;
     padding-bottom: 5px;
 }
-.profile-dropdown .ant-card-meta .ant-card-meta-title{
+
+.profile-dropdown .ant-card-meta .ant-card-meta-title {
     font-size: 20px;
     margin-bottom: 5px;
     line-height: 24px;
@@ -204,15 +211,27 @@
 .profile-dropdown li {
     margin: 3px 8px;
 }
-.notification-dropdown .ant-list-items .ant-list-item{
-   padding: 5px;
 
+.notification-dropdown .ant-list-items .ant-list-item {
+    padding: 5px;
 }
-.notification-dropdown .ant-list-items .ant-list-item:hover{
-    background-color: #F9F9F9;
 
+.notification-dropdown .ant-list-items .ant-list-item:hover {
+    background-color: #F9F9F9;
 }
 
 .notification-dropdown .ant-list-split .ant-list-item {
     border-bottom: none !important;
+}
+
+@media (min-width:576px) {
+    .mobile-navigation {
+        display: none !important;
+    }
+}
+
+@media (max-width:575px) {
+    .desktop-navigation {
+        display: none !important;
+    }
 }
