@@ -34,7 +34,6 @@ class ShareBox extends Component {
         this.setState({ visible: true })
     }
 
-
     render() {
         const { user } = store.getState().oidc;
         const menu = (
@@ -72,7 +71,7 @@ class ShareBox extends Component {
                         <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons audio-icon"></span><p className="text-hover mb-0">Speaker</p></Link></li>
                         <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons document-icon"></span><p className="text-hover mb-0">Docs</p></Link></li>
                         <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons gif-icon"></span><p className="text-hover mb-0">GIF</p></Link></li>
-                        <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons vedio-icon"></span><p className="text-hover mb-0">Video</p></Link></li>
+                        <Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons vedio-icon"></span><p className="text-hover mb-0">Video</p></Link>
                     </ul>
                 </div>
                 <Modal className="share-popup"
@@ -98,6 +97,25 @@ class ShareBox extends Component {
                         <p className="caption-image"><Input placeholder="Add a caption of image, if you like" /></p>
 
                 </Modal>
+                {/* <Modal className="share-popup"
+                    title={title}
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[<div className="justify-content-between">
+                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
+                            <a href="">Close</a>
+                        </Button>
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            <a href="#">Post</a>
+                        </Button></div>
+                    ]}>
+                    
+                        <p className="title-img mb-0"><Input placeholder="Title of the image here" /></p>
+                        <p className="caption-image"><Input placeholder="Add a caption of image, if you like" /></p>
+
+                </Modal> */}
+
 
 
             </div>

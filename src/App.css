@@ -219,6 +219,17 @@ body,h1,h2,h3,h4,h5,h6,p {
 .icon-animation{color:#07A3B2 !important;font-size: 14px;}
 .icon-animation:focus .sharebox-icons, .icon-animation:hover .sharebox-icons {transform: translate3d(0,-3px,0);}
 .icon-animation .sharebox-icons {transition: transform 80ms linear;}
+@media(min-width: 768px) {
+.share-box ul li::after{content: "";
+    position: absolute;
+    width: 1px;
+    height: 45px;
+    background-color: #D6E6FB;
+    top: 4px;
+    right: -22px;
+    left: auto;}}
+.share-box li{position: relative;}
+.share-box ul li:last-child .share-box ul li:after{background: transparent !important; width: 0px;height: 0px;}
 
 .left-rail , .invite-card .ant-card{
     background: #ffffff;
