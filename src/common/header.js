@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card} from 'antd'
+import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -15,7 +15,7 @@ const { Header } = Layout;
 const onSearch = value => console.log(value);
 
 const data = [
-    {   
+    {
         title: 'Vin Diesel ',
         descriptions: 'Although social distancing has created many changes with CBU courses',
     },
@@ -82,10 +82,25 @@ const menu = (
     </Menu >
 );
 
-class HeaderComponent extends Component {
+class HeaderComponent extends React.Component {
+
+    state = { visible: false, placement: 'left' };
+
+    showDrawer = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    onClose = () => {
+        this.setState({
+            visible: false,
+        });
+    };
 
     render() {
         const { user } = store.getState().oidc;
+        const { visible } = this.state;
         return (
             <Header className="main-header">
                 <Row>
@@ -108,9 +123,7 @@ class HeaderComponent extends Component {
                     <Col span={8} >
                         <Menu className="menu-items text-right right-menu" mode="horizontal" title="Blackbuck">
                             <Menu.Item key="">
-                                <Dropdown overlay={menu} trigger={['click']}>
-                                    <Link to="/" onClick={e => e.preventDefault()}><i className="icons chat-icon"></i></Link>
-                                </Dropdown>
+                                <Link to="/" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
                             </Menu.Item>
                             <Menu.Item key="">
                                 <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
@@ -133,6 +146,26 @@ class HeaderComponent extends Component {
                         </Menu>
                     </Col>
                 </Row>
+                <div className="messenger-chat">
+                    <Drawer
+                        title="Messenger"
+                        placement="right"
+                        closable={false}
+                        onClose={this.onClose}
+                        visible={visible}
+                        width="300px"
+
+                    >
+                        <div className="messenger-drawer">
+                            <Meta
+                                avatar={<Avatar src={avatar} />}
+                                title="John Doe"
+                                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim"
+                            />
+                        </div>
+
+                    </Drawer>
+                </div>
             </Header>
         )
     }
