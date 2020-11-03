@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card } from 'antd'
+import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card ,Divider} from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -36,6 +36,7 @@ const data = [
 const notifications = (
     <div className="notification-dropdown">
         <h2>Notifications</h2>
+        <Divider />
         <List
             itemLayout="horizontal"
             dataSource={data}
