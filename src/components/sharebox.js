@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox } from 'antd'
-import { DownOutlined } from '@ant-design/icons';
+import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message } from 'antd'
+import { DownOutlined, InboxOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
 import GroupImage from '../styles/images/groupimage.png';
+import Storage from '../styles/images/storage.png';
 const { Header } = Layout;
 const { Meta } = Card;
+const { Dragger } = Upload;
+
+const props = {
+    name: 'file',
+    multiple: true,
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    onChange(info) {
+        const { status } = info.file;
+        if (status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully.`);
+        } else if (status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+};
+
 class ShareBox extends Component {
     state = { visible: false }
     openpopup = () => {
@@ -34,9 +54,9 @@ class ShareBox extends Component {
                         Public <DownOutlined />
                     </a>
                 </Dropdown></div>} />
-            <div style={{display:'flex'}}>{function onChange(e) {
+            <div style={{ display: 'flex' }}>{function onChange(e) {
                 console.log(`checked = ${e.target.checked}`);
-                }}
+            }}
                 <div className="lable-height"><span className="f-9 text-gray">Post</span><p className="check-text">Checkbox</p></div>
                 <Checkbox className="ml-8 mt-8"></Checkbox>
             </div>
@@ -62,14 +82,17 @@ class ShareBox extends Component {
                     onCancel={this.handleCancel}
                     footer={[<div className="justify-content-between">
                         <Button key="back" onClick={this.handleCancel}>
-                        <a href="">Close</a>
+                            <a href="">Close</a>
                         </Button>
                         <Button key="submit" type="primary" onClick={this.handleOk}>
                             <a href="#">Post</a>
                         </Button></div>
                     ]}>
-                        <div className="">
-
+                    <div className="upload-image">
+                        <Dragger {...props}>
+                        <Avatar src={Storage} />
+                            <p className="ant-upload-text">Upload Image</p>
+                        </Dragger>,
                         </div>
 
                 </Modal>

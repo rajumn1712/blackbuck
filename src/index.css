@@ -90,7 +90,7 @@ html {--antd-wave-shadow-color: #07a3b2; --scroll-bar: 0;}
   cursor: pointer;
   vertical-align: text-bottom;
   background: url(styles/images/icons.svg) no-repeat; }
-.icons-small.lock-icon{background-position: ;}
+/* .icons-small.lock-icon{background-position: ;} */
 .reight-rail .ant-list-item{padding:15px}
 .reight-rail .ant-list-item-meta-avatar{ margin-right: 12px;}
 .reight-rail .ant-list-item-meta-title{margin-bottom: 0px;}
