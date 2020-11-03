@@ -10,6 +10,11 @@
     z-index: 100;
     box-sizing: border-box;
 }
+.main-header .left-block{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
 .main-header .logo-brand{
     margin-right: 16px;
 }
@@ -31,7 +36,7 @@
 
 .header-searchbar input {
     min-height: 36px !important;
-    padding: 8px !important;
+    padding: 12px 8px !important;
     border: 0 !important;
 }
 
@@ -145,3 +150,34 @@
 .main-header .ant-menu-item a:hover .icons.notification-icon, .ant-menu-item-selected .icons.notification-icon {
     background-position: -207px -48px;
 }
+
+.site-description-item-profile-wrapper {
+    margin-bottom: 7px;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    line-height: 1.5715;
+  }
+  
+  [data-theme='compact'] .site-description-item-profile-wrapper {
+    font-size: 12px;
+    line-height: 1.66667;
+  }
+  
+  .ant-drawer-body p.site-description-item-profile-p {
+    display: block;
+    margin-bottom: 16px;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    line-height: 1.5715;
+  }
+  
+  [data-theme='compact'] .ant-drawer-body p.site-description-item-profile-p {
+    font-size: 14px;
+    line-height: 1.66667;
+  }
+  
+  .site-description-item-profile-p-label {
+    display: inline-block;
+    margin-right: 8px;
+    color: rgba(0, 0, 0, 0.85);
+  }

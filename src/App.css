@@ -1,8 +1,31 @@
 /* primary-color - #07A3B2 */
 
-body {
+body,h1,h2,h3,h4,h5,h6,p {
     font-family: 'Neue Haas Grotesk Text Pro' !important;
 }
+
+.text-color{
+    color: #272727 !important;
+}
+
+.ant-card-head{
+    padding: 0 16px !important;
+    min-height: 44px !important;
+
+}
+.ant-card-head .ant-card-head-title {
+    display: inline-block;
+    -ms-flex: 1;
+    flex: 1 1;
+    padding: 12px 0 ;
+    overflow: hidden;
+    white-space: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    color:  #272727;
+}
+
 .ant-btn-primary {
     color: #fff;
     background: #07A3B2 !important;
@@ -15,10 +38,9 @@ body {
     padding: 5px 15px;
 }
 
-.ant-menu-item a:hover {
+.ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{
     color: #07A3B2 !important;
 }
-
 .ant-menu-item, .ant-menu-item-selected {
     border: 0 !important;
 }
@@ -120,7 +142,7 @@ body {
     border-radius: 50%;
     right: 0;
     bottom: 6px;
-    background: greenyellow;
+    background: #33DF00;
 }
 
 .profile-card .ant-card-meta-avatar {
@@ -140,7 +162,7 @@ body {
 .profile-card .ant-card-meta-title {
     color: #ffffff;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 23px;
     margin-bottom: 0 !important;
     white-space: normal !important;
@@ -165,13 +187,14 @@ body {
     align-items: center;
     color: #ffffff;
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 30px;
 }
 
 .profile-card .profile-status span {
     font-size: 12px;
     line-height: 15px;
+    font-weight: normal;
 }
 .sharebox-icons.text-icon{background-position: -3px -104px;}
 .sharebox-icons.text-icon:hover{background-position: -3px -149px;}
@@ -235,17 +258,17 @@ body {
     height: 46px !important;
     line-height: 46px !important;
 }
-.profile-menu li:hover{
+.profile-menu li:hover, .profile-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
     background-color: #F9F9F9;
 }
 .profile-menu li:hover a span{
     color: #07A3B2;
 }
-.profile-menu li:hover a .left-menu.profile-icon{background-position: -5px -226px ;  }
-.profile-menu li:hover a .left-menu.friends-icon{background-position: -35px -226px ;}
-.profile-menu li:hover a .left-menu.post-icon{background-position: -64px -226px ;}
-.profile-menu li:hover a .left-menu.group-icon{background-position: -94px -226px ;}
-.profile-menu li:hover a .left-menu.noti-icon{background-position: -123px -226px ;}
+.profile-menu li:hover a .left-menu.profile-icon,.profile-menu .ant-menu-item-selected a .left-menu.profile-icon{background-position: -5px -226px ;  }
+.profile-menu li:hover a .left-menu.friends-icon,.profile-menu .ant-menu-item-selected a .left-menu.friends-icon{background-position: -35px -226px ;}
+.profile-menu li:hover a .left-menu.post-icon,.profile-menu .ant-menu-item-selected a .left-menu.post-icon{background-position: -64px -226px ;}
+.profile-menu li:hover a .left-menu.group-icon,.profile-menu .ant-menu-item-selected a .left-menu.group-icon{background-position: -94px -226px ;}
+.profile-menu li:hover a .left-menu.noti-icon,.profile-menu .ant-menu-item-selected a .left-menu.noti-icon{background-position: -123px -226px ;}
 
 .invite-card .ant-card-head{
    border-bottom: 1px solid #D6E6FB;
@@ -300,3 +323,6 @@ body {
     margin-left: 4px;
 }
 
+.profile-card .ant-card-actions > li:not(:last-child) {
+    border-right: 1px solid #0CD5E8;
+}
