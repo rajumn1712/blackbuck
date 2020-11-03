@@ -29,6 +29,7 @@ html {--antd-wave-shadow-color: #07a3b2; --scroll-bar: 0;}
 .m-15{margin:15px}
 .text-center{text-align: center;}
 .reight-rail .ant-list-items{border-bottom: 1px solid #D6E6FB;}
+.justify-content-around{display: flex;justify-content: space-around;}
 
 
 /*---Friend Suggestions---*/
