@@ -25,9 +25,9 @@ class  PostCard extends Component {
             <div>
                 <Card className="post-card" title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={<a href="#">More</a>}
                     actions={[
-                        <a>Like</a>,
-                        <a>Comment</a>,
-                        <a>Share</a>
+                        <a><span className="post-icons like-icon"></span>Like</a>,
+                        <a><span className="post-icons comment-icon"></span>Comment</a>,
+                        <a><span className="post-icons share-icon"></span>Share</a>
                     ]}
                 >
                     <div>

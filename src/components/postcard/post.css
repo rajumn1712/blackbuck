@@ -7,3 +7,7 @@
 .post-card .ant-card-actions{border-radius: 0 0 10px 10px;}
 .post-card .ant-card-meta-avatar, .share-popup .ant-card-meta-avatar{padding-right: 12px;}
 .justify-content-between .ant-card-meta{margin: 3px 0 0;}
+.post-icons{width: 20px;height: 20px;vertical-align: initial;display: inline-block;vertical-align: text-bottom; background: url(../../styles/images/icons.svg) no-repeat;margin-right: 5px;}
+.post-icons.like-icon{background-position:  -150px -200px;}  
+.post-icons.comment-icon{background-position: -177px -200px;}
+.post-icons.share-icon{background-position: -205px -200px;}
