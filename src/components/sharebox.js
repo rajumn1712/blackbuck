@@ -176,7 +176,7 @@ class ShareBox extends Component {
                     </div>  */}
 
                     {/* Audio popup */}
-                    {/* <div className="upload-image">
+                     <div className="upload-image">
                         <div className="speekar-block">
                             <Avatar src={Audio} />
                             <div className="speekar-text"><span className="sharebox-icons speekar-icon"></span><p className="mb-0">Choose Audio</p></div>
@@ -184,10 +184,10 @@ class ShareBox extends Component {
                     
                         <div className="title-img mb-0"><Input placeholder="Title of the image here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>  */}
+                    </div>  
 
                     {/* document popup */}
-                    <div className="upload-image">
+                    {/* <div className="upload-image">
                         <div className="mb-8">
                             <Upload
                                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -199,7 +199,7 @@ class ShareBox extends Component {
                         </div>
                         <div className="title-img mb-0"><Input placeholder="Title of the image here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>
+                    </div> */}
 
                     {/* TAGS */}
                     <div className="tags">

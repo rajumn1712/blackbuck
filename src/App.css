@@ -213,8 +213,11 @@ body,h1,h2,h3,h4,h5,h6,p {
 .sharebox-icons.gif-icon{background-position: -236px -99px;}
 .share-box ul li:hover .sharebox-icons.gif-icon{background-position: -236px -147px;}
 .sharebox-icons.vedio-icon{background-position: -297px -100px;}
-.share-box ul li:hover .sharebox-icons.vedio-icon{background-position: -297px -149px;}
-.share-box ul{list-style-type: none;padding: 16px 6px 10px;}
+.sharebox-icons.vedio-icon:hover{background-position: -297px -149px;}
+.share-box ul{list-style-type: none;padding: 15px 5px;}
+.sharebox-icons.speekar-icon{background-position: -124px -147px;}
+.speekar-block{padding: 10px 13px 10px 0px;display: flex;justify-content: space-between;background: #F5F7F9;border: 1px dotted #CDE0F9;}
+.speekar-block .ant-avatar{width: 100% !important;height: 100% !important;}
 .mb-0{margin-bottom: 0;}
 .text-hover{visibility: hidden;line-height: 1.2;}
 .share-box ul li:hover .text-hover{visibility: visible;display: block;position: relative;}
