@@ -8,6 +8,7 @@ import Logo from '../styles/images/logo.svg';
 import avatar from '../styles/images/avatar.png';
 import avatar2 from '../styles/images/user.jpg';
 import './header.css';
+import { SwapOutlined ,GlobalOutlined ,SettingOutlined,PoweroffOutlined} from '@ant-design/icons';
 
 const { Meta } = Card;
 const { Search } = Input;
@@ -65,20 +66,20 @@ const menu = (
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="1">
-            <Link to="/about">Switch Accounts
+            <Link to="/about"><SwapOutlined />Switch Accounts
             </Link>
         </Menu.Item>
         <Menu.Item key="2">
-            <Link to="/contact">Settings & Privacy
+            <Link to="/contact"><SettingOutlined />Settings & Privacy
             </Link>
         </Menu.Item>
         <Menu.Item key="3">
-            <Link to="/posts">Help & Support
+            <Link to="/posts"><GlobalOutlined />Help & Support
             </Link>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="4">
-            <Link to="/posts"></Link>Sign Out
+            <Link to="/posts"><PoweroffOutlined />Sign Out</Link>
         </Menu.Item>
     </Menu >
 );
