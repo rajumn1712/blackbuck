@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card ,Divider} from 'antd'
+import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card, Divider } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -8,7 +8,7 @@ import Logo from '../styles/images/logo.svg';
 import avatar from '../styles/images/avatar.png';
 import avatar2 from '../styles/images/user.jpg';
 import './header.css';
-import { SwapOutlined ,GlobalOutlined ,SettingOutlined,PoweroffOutlined} from '@ant-design/icons';
+import { SwapOutlined, GlobalOutlined, SettingOutlined, PoweroffOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 const { Search } = Input;
@@ -184,17 +184,17 @@ class HeaderComponent extends React.Component {
                             {/* {user && <Menu.Item key="logout"> <Button onClick={() => { store.dispatch(userLogout()); userManager.signoutRedirect() }}>Logout</Button></Menu.Item>} */}
                         </Menu>
                     </Col>
-                    <Col xs={24} span={8} justify="center">
+                    {/* <Col xs={24} span={8} justify="center">
                         <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']} title="Blackbuck">
                             <Menu.Item key="home"><Link to="/"><span className="icons home-icon"></span></Link></Menu.Item>
                             <Menu.Item key="about"><Link to="/about"><span className="icons social-icon"></span></Link></Menu.Item>
                             <Menu.Item key="contact"><Link to="/contact"><i className="icons suitcase-icon"></i></Link></Menu.Item>
                             <Menu.Item key="posts"><Link to="/"><i className="icons lms-icon"></i></Link></Menu.Item>
                         </Menu>
-                    </Col>
+                    </Col> */}
                 </Row>
                 {/* Mobile Naviagtion */}
-                <div className="messenger-chat">
+                <div className="">
                     <Drawer
                         title="Messenger"
                         placement="right"
@@ -202,13 +202,34 @@ class HeaderComponent extends React.Component {
                         onClose={this.onClose}
                         visible={visible}
                         width="300px"
+                        className="messenger-chat"
 
                     >
                         <div className="messenger-drawer">
                             <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
-                                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim"
+                                description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
+                            />
+                             <Meta
+                                avatar={<Avatar src={avatar} />}
+                                title="John Doe"
+                                description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
+                            />
+                             <Meta
+                                avatar={<Avatar src={avatar} />}
+                                title="John Doe"
+                                description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim Lorem ipsum dolor sit amet,</p>}
+                            />
+                             <Meta
+                                avatar={<Avatar src={avatar} />}
+                                title="John Doe"
+                                description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
+                            />
+                             <Meta
+                                avatar={<Avatar src={avatar} />}
+                                title="John Doe"
+                                description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                             />
                         </div>
 

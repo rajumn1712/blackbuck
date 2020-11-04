@@ -219,7 +219,7 @@
     padding: 5px;
 }
 
-.notification-dropdown .ant-list-items .ant-list-item:hover {
+.notification-dropdown .ant-list-items .ant-list-item:hover ,.messenger-drawer .ant-card-meta:hover{
     background-color: #F9F9F9;
     border-radius: 4px;
 }
@@ -228,6 +228,26 @@
     border-bottom: none !important;
 }
 
+.messenger-chat .ant-drawer-header, .messenger-chat .ant-drawer-body{
+    padding: 16px;
+}
+.messenger-drawer .ant-card-meta{
+    display: flex;
+    align-items: center;
+    padding: 5px 3px;
+    margin-bottom: 6px;
+}
+
+.messenger-drawer .ant-card-meta-title {
+    margin-bottom: 0 !important;
+}
+
+.messenger-drawer .chat-description{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0 ;
+}
 @media (min-width:576px) {
     .mobile-navigation {
         display: none !important;
