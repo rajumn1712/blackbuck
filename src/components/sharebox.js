@@ -71,7 +71,7 @@ class ShareBox extends Component {
                         <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons audio-icon"></span><p className="text-hover mb-0">Audio</p></Link></li>
                         <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons document-icon"></span><p className="text-hover mb-0">Docs</p></Link></li>
                         <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons gif-icon"></span><p className="text-hover mb-0">GIF</p></Link></li>
-                        <Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons vedio-icon"></span><p className="text-hover mb-0">Video</p></Link>
+                        <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons vedio-icon"></span><p className="text-hover mb-0">Video</p></Link></li>
                     </ul>
                 </div>
                 <Modal className="share-popup"
