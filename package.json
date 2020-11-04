@@ -10,6 +10,7 @@
     "apisauce": "^1.1.2",
     "formik": "^2.2.0",
     "oidc-client": "^1.10.1",
+    "rc-tween-one": "^2.7.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-fb-image-grid": "^0.1.5",
