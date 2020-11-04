@@ -47,7 +47,7 @@ html {--antd-wave-shadow-color: #07a3b2; --scroll-bar: 0;}
 .ml-4{margin-left: 4px;}
 .ml-8{margin-left: 8px;}
 .ml-16{margin-left: 16px;}
-.mr-0{margin-right: 0px;}
+.mr-0{margin-right: 0px !important;}
 .mr-4{margin-right: 4px;}
 .mr-8{margin-right: 8px;}
 .mr-16{margin-right: 16px;}
