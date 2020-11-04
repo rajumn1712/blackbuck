@@ -75,7 +75,7 @@ class GroupCard extends Component {
                                         title="IT Group"
                                         description={<div className="f-10"><span>2K Members</span> | <span>245 Posts</span></div>}
                                     />
-                                    <div className="link-color"><a href="#">Jion Group</a></div>
+                                    <div className="link-color"><a href="#">Join Group</a></div>
                                 </List.Item>
                             )}
                         >
@@ -97,7 +97,7 @@ class GroupCard extends Component {
                                         description={<div className="f-10"><span>954 Members</span> | <span>55 Posts</span> </div>}
                                         
                                     />
-                                    <div className="link-color"><a href="#">Jion Group</a></div>
+                                    <div className="link-color"><a href="#">Join Group</a></div>
                                 </List.Item>
                             )}
                         >

@@ -1,0 +1,6 @@
+.post-card .ant-card-meta-title, .post-title, .post-card .ant-card-actions li a, .post-comment .ant-comment-content-author-name,
+.card-actions-count li{color: #272727 !important;}
+.post-card .ant-card-meta-description, .post-desc, .post-comment .ant-comment-content-detail p, .post-comment .ant-comment-content-author-time{color: #5d5d5d;}
+.post-card .ant-card-actions li a:hover, .post-tag .ant-tag, .ant-dropdown-menu li a:hover{color: #07A3B2 !important;}
+.post-tag .ant-tag{background: #D7FDFE;}
+.card-actions-count li span{color:#9B9B9B;}
