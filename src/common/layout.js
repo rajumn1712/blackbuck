@@ -19,7 +19,7 @@ class LayoutComponent extends Component {
                         <div className="container"><Router /></div>
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Balckbuck ©2020 </Footer>
+                {/* <Footer style={{ textAlign: 'center' }}>Balckbuck ©2020 </Footer> */}
             </Layout>
         )
     }

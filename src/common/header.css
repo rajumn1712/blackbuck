@@ -187,8 +187,11 @@
 .notification-dropdown {
     min-width: 280px;
     margin-right: 16px;
-    padding: 10px;
+    padding: 16px;
     margin-top: 6px !important;
+    max-height: calc(100vh - 60px);
+    overflow-y: scroll;
+
 }
 
 .profile-dropdown .ant-card-meta .ant-avatar-image, .notification-dropdown .ant-list-item-meta-avatar .ant-avatar-image, .messenger-drawer .ant-card-meta .ant-avatar-image {
@@ -218,6 +221,7 @@
 
 .notification-dropdown .ant-list-items .ant-list-item:hover {
     background-color: #F9F9F9;
+    border-radius: 4px;
 }
 
 .notification-dropdown .ant-list-split .ant-list-item {

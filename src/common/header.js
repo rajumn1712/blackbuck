@@ -18,11 +18,11 @@ const onSearch = value => console.log(value);
 const data = [
     {
         title: 'Vin Diesel ',
-        descriptions: 'Although social distancing has created many changes with CBU courses',
+        descriptions: 'Although social distancing has created ',
     },
     {
         title: 'Andrew',
-        descriptions: 'we are still offering a wide range of classes virtually. You read correctly',
+        descriptions: 'we are still offering a wide range',
     },
     {
         title: 'Michel',
@@ -36,8 +36,8 @@ const data = [
 
 const notifications = (
     <div className="notification-dropdown">
-        <h2>Notifications</h2>
-        <Divider />
+        <h3>Notifications</h3>
+        <Divider className="m-0 mb-4" />
         <List
             itemLayout="horizontal"
             dataSource={data}
