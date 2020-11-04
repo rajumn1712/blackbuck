@@ -1,0 +1,4 @@
+.post-card .ant-card-meta-title, .post-title, .post-card .ant-card-actions li a{color: #272727 !important;}
+.post-card .ant-card-meta-description, .post-desc{color: #5d5d5d;}
+.post-card .ant-card-actions li a:hover, .post-tag .ant-tag{color: #07A3B2 !important;}
+.post-tag .ant-tag{background: #D7FDFE;}

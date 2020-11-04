@@ -1,9 +1,17 @@
+.post-card{box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); margin-bottom: 24px;}
 .post-card .ant-card-head{padding: 0 16px;}
-.post-card .ant-card-meta-title {margin-bottom: 0 !important; color: #272727;}
+.post-card .ant-card-meta-title {margin-bottom: 0 !important;}
 .post-card .ant-card-head-title{padding: 19px 0 16px;}
 .post-card .ant-avatar {width: 40px; height: 40px;}
-.post-card .ant-card-meta-description{font-size: 10px; font-weight: 500; color: #5d5d5d;}
+.post-card .ant-card-meta-description{font-size: 10px; font-weight: 500;}
 .post-card .ant-card-body{padding: 0;}
-.post-card .ant-card-actions{border-radius: 0 0 10px 10px;}
-.post-card .ant-card-meta-avatar, .share-popup .ant-card-meta-avatar{padding-right: 12px;}
-.justify-content-between .ant-card-meta{margin: 3px 0 0;}
+.post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: #F9F9F9;}
+.post-card .ant-card-meta-avatar{padding-right: 12px;}
+.post-title, .post-card .ant-card-actions li a{font-weight: 500 !important;}
+.post-card .ant-card-actions > li {margin: 0;}
+.post-card .ant-card-actions li a{padding: 16px;}
+.post-tag .ant-tag{border-radius: 14px; min-height: 22px; font-weight: 500; border: none; cursor: pointer;}
+likeButton{position: absolute; min-height: 48px; background: rgba(0, 0, 0, 1); border-radius: 24px;min-width: 150px;left: 16px; top: -45px; opacity: 0; cursor: default;}
+.like-emojis:hover likeButton{ opacity: 1; transition: opacity 80ms linear;}
+likeButton a{width: 30px; height: 30px; border-radius: 50%;}
+likeButton a:hover{width: 50px; height: 50px; border-radius: 50%;background: rgba(0, 0, 0, 1);}
