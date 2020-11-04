@@ -132,6 +132,11 @@ class  PostCard extends Component {
                         <Title level={5} className="post-title f-14">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>
                         <Paragraph className="f-12 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a
 wide range of classes virtually.  You read correctly</Paragraph>
+                        <ul className="card-actions-count pl-0">
+                            <li>25<span> Loves</span></li>
+                            <li>5<span> Claps</span></li>
+                            <li>10<span> Whistles</span></li>
+                        </ul>
                         <div className="post-tag">
                             <Tag className="f-12 px-16">#CSC Tech</Tag>
                             <Tag className="f-12 px-16">#Computer</Tag>
