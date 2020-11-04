@@ -40,6 +40,9 @@ body,h1,h2,h3,h4,h5,h6,p {
     height: 36px;
     padding: 5px 15px;
 }
+.ant-btn-primary:hover {
+    background-color: #20838c !important;
+}
 
 .ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{
     color: #07A3B2 !important;
