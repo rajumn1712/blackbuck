@@ -163,7 +163,7 @@ class ShareBox extends Component {
                     ]}>
                     
                     {/* Image popup */}
-                    <div className="upload-image">
+                    {/* <div className="upload-image">
                     <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
                         <Dragger {...props}>
                             <Avatar src={Storage} />
@@ -172,7 +172,7 @@ class ShareBox extends Component {
 
                         <div className="title-img"><Input placeholder="Title of the image here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>
+                    </div> */}
 
                     {/* Text popup */}
                     {/* <div className="upload-image"> 
@@ -182,15 +182,15 @@ class ShareBox extends Component {
                     </div>  */}
 
                     {/* Audio popup */}
-                    {/* <div className="upload-image">
-                        <div className="speekar-block">
-                            <Avatar src={Audio} />
-                            <div className="speekar-text"><span className="sharebox-icons speekar-icon"></span><p className="mb-0">Choose Audio</p></div>
-                        </div>
+                     <div className="upload-image">
+                        <Dragger {...props}>
+                            <span className="sharebox-icons speekar-icon mb-4"></span>
+                            <p className="ant-upload-text mb-0">Upload Audio</p>
+                        </Dragger>
                     
                         <div className="title-img mb-0"><Input placeholder="Title of the image here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>   */}
+                    </div>  
 
                     {/* document popup */}
                     {/* <div className="upload-image">
