@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message, Input, Tag } from 'antd'
+import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message, Input, Tag, Image } from 'antd'
 import { DownOutlined, InboxOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { TweenOneGroup } from 'rc-tween-one';
 import { Link } from 'react-router-dom';
@@ -158,15 +158,16 @@ class ShareBox extends Component {
                     ]}>
 
                     {/* Image popup */}
-                    {/* <div className="upload-image">
+                    <div className="upload-image">
+                        <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
                         <Dragger {...props}>
                             <Avatar src={Storage} />
                             <p className="ant-upload-text">Upload Image</p>
                         </Dragger>
-                    
+
                         <div className="title-img"><Input placeholder="Title of the image here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>   */}
+                    </div>
 
                     {/* Text popup */}
                     {/* <div className="upload-image"> 
@@ -176,7 +177,7 @@ class ShareBox extends Component {
                     </div>  */}
 
                     {/* Audio popup */}
-                     <div className="upload-image">
+                    {/* <div className="upload-image">
                         <div className="speekar-block">
                             <Avatar src={Audio} />
                             <div className="speekar-text"><span className="sharebox-icons speekar-icon"></span><p className="mb-0">Choose Audio</p></div>
@@ -184,7 +185,7 @@ class ShareBox extends Component {
                     
                         <div className="title-img mb-0"><Input placeholder="Title of the image here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>  
+                    </div>   */}
 
                     {/* document popup */}
                     {/* <div className="upload-image">
