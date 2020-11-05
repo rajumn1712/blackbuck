@@ -4,12 +4,27 @@ import moment from 'moment';
 // import FbImageLibrary from 'react-fb-image-grid';
 import user from '../../styles/images/user.jpg';
 import PostImage from '../../styles/images/postimage.jpg';
+import Post_Image from '../../styles/images/post-image.jpg';
 import Love from '../../styles/images/love.gif';
 import Claps from '../../styles/images/claps.gif';
 import Whistle from '../../styles/images/whistle.gif';
 import './post.css';
 import '../../index.css'
-import '../../styles/theme.css'
+import '../../styles/theme.css';
+import ReactPhotoGrid from 'react-photo-grid';
+import {
+    FacebookShareButton,
+    LinkedinShareButton,
+    TwitterShareButton,
+    ViberShareButton,
+    WhatsappShareButton,
+  } from "react-share";
+import {
+  FacebookIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
 
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
@@ -18,16 +33,21 @@ const images = [
     PostImage,
     'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.bmbf.de%2Fen%2Fmicrosystems-technology-2445.html&psig=AOvVaw3IZ3jCI96_Zpxt01NjnV45&ust=1604478377148000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDsou_55ewCFQAAAAAdAAAAABAD',
 ]
+
 const menu = (
-    <Menu>
+    <Menu className="custom-dropdown more-opt">
         <Menu.Item key="0">
-            <a href="">View</a>
+            <a><span className="post-icons edit-icon"></span>Save Post</a>
         </Menu.Item>
         <Menu.Item key="1">
-            <a href="">Edit</a>
+            <a><span className="post-icons savepost-icon"></span>Edit</a>
         </Menu.Item>
+        <Menu.Item key="2">
+            <a><span className="post-icons notify-icon"></span>Turn on Notifications</a>
+        </Menu.Item>
+        <Menu.Divider />
         <Menu.Item key="3">
-            <a href="">Delete</a>
+            <a><span className="post-icons delete-icon"></span>Delete</a>
         </Menu.Item>
     </Menu>
 );
@@ -52,6 +72,30 @@ const CommentList = ({ comments }) => (
     />
 );
 
+const sharemenu = (
+    <Menu className="custom-dropdown">
+      <Menu.Item key="0">
+        <FacebookIcon size={24} borderRadius={24} />Facebook
+      </Menu.Item>
+      <Menu.Item key="1">
+        <TwitterIcon size={24} borderRadius={24} />Twitter
+      </Menu.Item>
+      <Menu.Item key="3">
+        <LinkedinIcon size={24} borderRadius={24} />LinkedIn
+      </Menu.Item>
+      <Menu.Item key="4">
+        <WhatsappIcon size={24} borderRadius={24} />Whatsapp
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="5">
+        <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
+      </Menu.Item>
+      <Menu.Item key="6">
+      <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
+      </Menu.Item>
+    </Menu>
+  );
+
 const title = <Meta
     avatar={
         <Avatar src={user} />
@@ -60,7 +104,7 @@ const title = <Meta
     description="24-10-2020 09:50 am"
 />
 
-class PostCard extends React.Component {
+class  PostCard extends React.Component {
     state = {
         comments: [],
         submitting: false,
@@ -83,7 +127,6 @@ class PostCard extends React.Component {
     handleCancel = () => {
         this.setState({ visible: false });
     };
-
     handleSubmit = () => {
         if (!this.state.value) {
             return;
@@ -104,12 +147,12 @@ class PostCard extends React.Component {
                         content: <>{this.state.value}</>,
                         datetime: moment().fromNow(),
                         actions: [<span key="comment-list-reply-to-0">Reply to</span>
-                        ],
+                    ],
                     },
                     ...this.state.comments,
-
+                    
                 ],
-
+                
             });
         }, 1000);
     };
@@ -119,35 +162,45 @@ class PostCard extends React.Component {
         });
     };
     render() {
-        const { comments, submitting, value, visible, loading } = this.state;
+        const { comments, submitting, value, visible, loading  } = this.state;
+        const imageData = [
+            PostImage,
+            Post_Image,
+            PostImage,
+            Post_Image,
+        ];
         return (
             <div className="post-card comment-show">
                 <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
-                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                            <span className="post-icons more-icon mr-0"></span>
-                        </a>
-                    </Dropdown>}
+                <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                <span className="post-icons more-icon mr-0"></span>
+                </a>
+              </Dropdown>}
                     actions={[
                         <a className="like-emojis">
                             <ul class="l-emojis">
-                                {/* <li><Tooltip title="Love"><a>❤️</a></Tooltip></li>
-                                <li><Tooltip title="Claps"><a>👍</a></Tooltip></li>
-                                <li><Tooltip title="Whistle"><a>😍</a></Tooltip></li> */}
                                 <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
                                 <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
                                 <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>
                             </ul>
                             <span className="post-icons like-icon like-emojis"></span>Like</a>,
                         <a><span className="post-icons comment-icon"></span>Comment</a>,
-                        <a><span className="post-icons share-icon"></span>Share</a>
+                        <Dropdown overlay={sharemenu} trigger={['click']} placement="topRight">
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
+                        </Dropdown>,
                     ]}
+                    cover={<div style={{width: 562}}><ReactPhotoGrid
+                        onImageClick={this.showModal}
+                        data={imageData}
+                        containerWidth={562}
+                        girdSize="562x562"
+                    /></div>}
                 >
-                    <div className="post-image">
-
-                        <img src={PostImage} onClick={this.showModal} />
-
-                        {/* <FbImageLibrary
+                    <div>
+                        {/* <Image src={imageData} /> */}
+                    
+                    {/* <FbImageLibrary
                         images={images}
                         countFrom={5}
                     /> */}
@@ -169,20 +222,20 @@ wide range of classes virtually.  You read correctly</Paragraph>
                     </div>
                 </Card>
                 <div className="post-comment px-16">
-                    {comments.length > 0 && <CommentList comments={comments} />}
-                    <Comment
-                        avatar={
-                            <Avatar src={user} />
-                        }
-                        content={
-                            <Editor
-                                onChange={this.handleChange}
-                                onSubmit={this.handleSubmit}
-                                submitting={submitting}
-                                value={value}
-                            />
-                        }
-                    />
+                {comments.length > 0 && <CommentList comments={comments} />}
+                <Comment
+                    avatar={
+                        <Avatar src={user} />
+                    }
+                    content={
+                        <Editor
+                            onChange={this.handleChange}
+                            onSubmit={this.handleSubmit}
+                            submitting={submitting}
+                            value={value}
+                        />
+                    }
+                />
                 </div>
                 <Modal
                     className="post-preview"
@@ -193,7 +246,6 @@ wide range of classes virtually.  You read correctly</Paragraph>
                     footer={null}
                     width="100%"
                 >
-
                     <div className="post-preview-box post-card comment-show">
                         <div className="preview-image">
                             {/* <img src={PostImage} className="overlayimage" /> */}
@@ -209,9 +261,6 @@ wide range of classes virtually.  You read correctly</Paragraph>
                                 actions={[
                                     <a className="like-emojis">
                                         <ul class="l-emojis">
-                                            {/* <li><Tooltip title="Love"><a>❤️</a></Tooltip></li>
-                                <li><Tooltip title="Claps"><a>👍</a></Tooltip></li>
-                                <li><Tooltip title="Whistle"><a>😍</a></Tooltip></li> */}
                                             <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
                                             <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
                                             <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>

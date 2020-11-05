@@ -1,16 +1,15 @@
 @import '../../styles/theme.css';
-
 .post-card{box-shadow: var(--boxshadow);}
 .post-card .ant-card-head{padding: 0 16px;}
-.post-card .ant-card-meta-title {margin-bottom: 0 !important;}
+.post-card .ant-card-meta-title {margin-bottom: 0 !important; font-size: 16px;}
 .post-card .ant-card-head-title{padding: 19px 0 16px;}
 .post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px;}
-.post-card .ant-card-meta-description{font-size: 10px; font-weight: 500;}
+.post-card .ant-card-meta-description{font-size: 12px; font-weight: 400; margin-top: 3px;}
 .post-card .ant-card-body{padding: 0;}
 .post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: #F9F9F9;}
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important;}
 .post-card .ant-card-actions > li {margin: 0;}
-.post-card .ant-card-actions li a{padding: 16px;}
+.post-card .ant-card-actions li a{padding: 10px 16px;}
 .post-tag .ant-tag{border-radius: 14px; min-height: 22px; font-weight: 500; border: none; cursor: pointer;}
 .post-card .ant-card-meta-avatar, .share-popup .ant-card-meta-avatar{padding-right: 12px;}
 .justify-content-between .ant-card-meta{margin: 3px 0 0;}
@@ -20,10 +19,20 @@
 .post-icons.share-icon{background-position: -205px -200px;}
 .post-icons.more-icon{background-position: -235px -200px;}
 .post-icons.send-icon{background-position: -265px -226px;}
+.post-icons.sharenow-icon{background-position: -294px -200px;}
+.post-icons.copylink-icon{background-position: -324px -200px;}
+.post-icons.edit-icon{background-position: -64px -200px;}
+.post-icons.notify-icon{background-position: -124px -200px;}
+.post-icons.savepost-icon{background-position: -351px -200px;}
+.post-icons.delete-icon{background-position: -377px -200px;}
 .post-icons.more-icon:hover {background-position: -235px -226px;}
 .post-card .ant-card-actions li a:hover .post-icons.like-icon{background-position:  -150px -226px;}
 .post-card .ant-card-actions li a:hover .post-icons.comment-icon{background-position: -177px -226px;}
 .post-card .ant-card-actions li a:hover .post-icons.share-icon{background-position: -205px -226px;}
+.more-opt li:hover .post-icons.edit-icon{background-position: -64px -226px;}
+.more-opt li:hover .notify-icon{background-position: -124px -226px;}
+.more-opt li:hover .savepost-icon{background-position: -351px -226px;}
+.more-opt li:hover .delete-icon{background-position: -377px -226px;}
 .l-emojis{position: absolute; min-height: 48px; background: var(--white); box-shadow: var(--boxshadow); border-radius: 28px;min-width: 180px;left: 16px; top: -45px; list-style: none; display: flex;visibility: hidden; padding-left: 0;justify-content: space-around;align-items: center;cursor: default;}
 .like-emojis:hover .l-emojis{ visibility: visible;}
 .l-emojis li a{font-size: 24px;padding: 0 !important; transition: all .2s ease-in-out; cursor: pointer;}
@@ -46,6 +55,9 @@
 .card-actions-count{list-style: none; display: flex; align-items: center;}
 .card-actions-count li{font-weight: 500; margin-right: 30px;font-size: 13px;}
 .card-actions-count li span{font-size: 12px;font-weight: normal;}
+.custom-dropdown{min-width: 300px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 8px;}
+.custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 8px; border-radius: 6px; font-weight: 500;}
+.custom-dropdown li svg, .custom-dropdown li span {margin-right: 10px;}
 .post-image img{
     width:100%;height: auto;
 }
@@ -132,4 +144,3 @@
 .post-preview .post-preview-box .preview-content .post-title ,.post-preview .post-preview-box .preview-content .post-desc{
     max-width: 360px;
 }
-
