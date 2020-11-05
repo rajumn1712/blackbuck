@@ -131,7 +131,7 @@ class ShareBox extends Component {
             <div style={{ display: 'flex' }}>{function onChange(e) {
                 console.log(`checked = ${e.target.checked}`);
             }}
-                <div className="lable-height"><span className="f-9 text-gray">Post</span><p className="check-text">Checkbox</p></div>
+                <div className="lable-height"><span className="f-9 text-gray">Post</span><p className="check-text">Anonymous</p></div>
                 <Checkbox className="ml-8 mt-8"></Checkbox>
             </div>
         </div>
@@ -161,10 +161,10 @@ class ShareBox extends Component {
                             <a href="#">Post</a>
                         </Button></div>
                     ]}>
-
+                    
                     {/* Image popup */}
                     <div className="upload-image">
-                        <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
+                    <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
                         <Dragger {...props}>
                             <Avatar src={Storage} />
                             <p className="ant-upload-text">Upload Image</p>
@@ -209,7 +209,7 @@ class ShareBox extends Component {
 
                     {/* TAGS */}
                     <div className="tags">
-                        <div style={{ marginBottom: 10 }}>
+                        <div style={{ margin: 10 }}>
                             <TweenOneGroup
                                 enter={{
                                     scale: 0.8,

@@ -368,3 +368,4 @@ body,h1,h2,h3,h4,h5,h6,p {
 .tags{text-align: center;border-top: 1px solid #D6E6FB;}
 .upload-image .ant-upload-drag{margin-bottom: 10px;}
 .speekar-text{text-align: center;font-size: 12px;color: var(--primary);}
+.image-scroll.ant-image{height: 200px;overflow: auto;margin-right: 0px;}
