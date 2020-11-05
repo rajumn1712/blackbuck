@@ -38,6 +38,7 @@ body,h1,h2,h3,h4,h5,h6,p {
     border-radius: 4px;
     height: 36px;
     padding: 5px 15px;
+    font-weight: 500 !important;
 }
 .ant-btn-primary:hover {
     background-color: #20838c !important;

@@ -1,5 +1,11 @@
 @import 'styles/theme.css';
 html {--antd-wave-shadow-color: #07a3b2; --scroll-bar: 0;}
+/*----Alignments----*/
+.text-center{text-align: center !important;}
+.text-right{text-align: right !important;}
+.text-left{text-align: left !important;}
+
+/*----Font Sizes----*/
 .f-9{font-size: 9px !important;}
 .f-10{font-size: 10px !important;}
 .f-12{font-size: 12px !important;}
