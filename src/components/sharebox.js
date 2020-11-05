@@ -101,6 +101,11 @@ class ShareBox extends Component {
                 {tag}
             </Tag>
         );
+        return (
+            <span key={tag} style={{ display: 'inline-block' }}>
+              {tagElem}
+            </span>
+          );
     }
     render() {
         const { tags, inputVisible, inputValue } = this.state;
