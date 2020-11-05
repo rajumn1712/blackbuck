@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Typography, Image, Tag, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List } from 'antd';
+import { Card, Avatar, Typography, Image, Tag, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Modal } from 'antd';
 import moment from 'moment';
 // import FbImageLibrary from 'react-fb-image-grid';
 import user from '../../styles/images/user.jpg';
@@ -60,12 +60,30 @@ const title = <Meta
     description="24-10-2020 09:50 am"
 />
 
-class  PostCard extends Component {
+class PostCard extends React.Component {
     state = {
         comments: [],
         submitting: false,
         value: '',
+        loading: false,
+        visible: false,
     };
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    handleOk = () => {
+        this.setState({ loading: true });
+        setTimeout(() => {
+            this.setState({ loading: false, visible: false });
+        }, 3000);
+    };
+
+    handleCancel = () => {
+        this.setState({ visible: false });
+    };
+
     handleSubmit = () => {
         if (!this.state.value) {
             return;
@@ -86,12 +104,12 @@ class  PostCard extends Component {
                         content: <>{this.state.value}</>,
                         datetime: moment().fromNow(),
                         actions: [<span key="comment-list-reply-to-0">Reply to</span>
-                    ],
+                        ],
                     },
                     ...this.state.comments,
-                    
+
                 ],
-                
+
             });
         }, 1000);
     };
@@ -101,15 +119,15 @@ class  PostCard extends Component {
         });
     };
     render() {
-        const { comments, submitting, value } = this.state;
+        const { comments, submitting, value, visible, loading } = this.state;
         return (
             <div className="post-card comment-show">
-                <Card title={title} style={{ width: '100%', borderRadius: 10 }}  bordered={false} extra={
-                <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                <span className="post-icons more-icon mr-0"></span>
-                </a>
-              </Dropdown>}
+                <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
+                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                            <span className="post-icons more-icon mr-0"></span>
+                        </a>
+                    </Dropdown>}
                     actions={[
                         <a className="like-emojis">
                             <ul class="l-emojis">
@@ -125,9 +143,11 @@ class  PostCard extends Component {
                         <a><span className="post-icons share-icon"></span>Share</a>
                     ]}
                 >
-                    <div>
-                        <Image src={PostImage} />
-                    {/* <FbImageLibrary
+                    <div className="post-image">
+
+                        <img src={PostImage} onClick={this.showModal} />
+
+                        {/* <FbImageLibrary
                         images={images}
                         countFrom={5}
                     /> */}
@@ -149,21 +169,93 @@ wide range of classes virtually.  You read correctly</Paragraph>
                     </div>
                 </Card>
                 <div className="post-comment px-16">
-                {comments.length > 0 && <CommentList comments={comments} />}
-                <Comment
-                    avatar={
-                        <Avatar src={user} />
-                    }
-                    content={
-                        <Editor
-                            onChange={this.handleChange}
-                            onSubmit={this.handleSubmit}
-                            submitting={submitting}
-                            value={value}
-                        />
-                    }
-                />
+                    {comments.length > 0 && <CommentList comments={comments} />}
+                    <Comment
+                        avatar={
+                            <Avatar src={user} />
+                        }
+                        content={
+                            <Editor
+                                onChange={this.handleChange}
+                                onSubmit={this.handleSubmit}
+                                submitting={submitting}
+                                value={value}
+                            />
+                        }
+                    />
                 </div>
+                <Modal
+                    className="post-preview"
+                    visible={visible}
+                    // title="Title"
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={null}
+                    width="100%"
+                >
+
+                    <div className="post-preview-box post-card comment-show">
+                        <div className="preview-image">
+                            {/* <img src={PostImage} className="overlayimage" /> */}
+                            <img src={PostImage} />
+                        </div>
+                        <div className="preview-content">
+                            <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
+                                <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                        <span className="post-icons more-icon mr-0"></span>
+                                    </a>
+                                </Dropdown>}
+                                actions={[
+                                    <a className="like-emojis">
+                                        <ul class="l-emojis">
+                                            {/* <li><Tooltip title="Love"><a>❤️</a></Tooltip></li>
+                                <li><Tooltip title="Claps"><a>👍</a></Tooltip></li>
+                                <li><Tooltip title="Whistle"><a>😍</a></Tooltip></li> */}
+                                            <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
+                                            <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
+                                            <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>
+                                        </ul>
+                                        <span className="post-icons like-icon like-emojis"></span>Like</a>,
+                                    <a><span className="post-icons comment-icon"></span>Comment</a>,
+                                    <a><span className="post-icons share-icon"></span>Share</a>
+                                ]}
+                            >
+                                <div className="p-16">
+                                    <Title level={5} className="post-title f-16">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>
+                                    <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually.  You read correctly</Paragraph>
+                                    <ul className="card-actions-count pl-0">
+                                        <li>25<span> Loves</span></li>
+                                        <li>5<span> Claps</span></li>
+                                        <li>10<span> Whistles</span></li>
+                                    </ul>
+                                    <div className="post-tag">
+                                        <Tag className="f-12 px-16">#CSC Tech</Tag>
+                                        <Tag className="f-12 px-16">#Computer</Tag>
+                                        <Tag className="f-12 px-16">#Techee</Tag>
+                                    </div>
+                                </div>
+                            </Card>
+                            <div className="post-comment px-16">
+                                {comments.length > 0 && <CommentList comments={comments} />}
+                                <Comment
+                                    avatar={
+                                        <Avatar src={user} />
+                                    }
+                                    content={
+                                        <Editor
+                                            onChange={this.handleChange}
+                                            onSubmit={this.handleSubmit}
+                                            submitting={submitting}
+                                            value={value}
+                                        />
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                </Modal>
             </div>
         )
     }
