@@ -100,7 +100,7 @@ class  PostCard extends Component {
         const { comments, submitting, value } = this.state;
         return (
             <div className="post-card comment-show">
-                <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
+                <Card title={title} style={{ width: '100%', borderRadius: 10 }}  bordered={false} extra={
                 <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                 <span className="post-icons more-icon mr-0"></span>
