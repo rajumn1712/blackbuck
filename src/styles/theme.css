@@ -4,3 +4,17 @@
 .post-card .ant-card-actions li a:hover, .post-tag .ant-tag, .ant-dropdown-menu li a:hover{color: #07A3B2 !important;}
 .post-tag .ant-tag{background: #D7FDFE;}
 .card-actions-count li span{color:#9B9B9B;}
+
+:root {
+    --primary:#07A3B2;
+    --secondary: #D7FDFE;
+    --textprimary:#272727;
+    --textsecondary: #5D5D5D;
+    --bodybg: #F1F7FF;
+    --textlightcolor: #BBB9B9;
+    --white: #ffffff;
+    --black : #000000;
+    --btnlight: #DEDFE1;
+    --btnprimary:#07A3B2;
+    --boxshadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+  }

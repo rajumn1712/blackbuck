@@ -39,6 +39,7 @@ const notifications = (
         <h3>Notifications</h3>
         <Divider className="m-0 mb-4" />
         <List
+            className="notification-list"
             itemLayout="horizontal"
             dataSource={data}
             renderItem={item => (

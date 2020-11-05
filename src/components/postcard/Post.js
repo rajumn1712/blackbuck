@@ -85,9 +85,13 @@ class  PostCard extends Component {
                         avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
                         content: <>{this.state.value}</>,
                         datetime: moment().fromNow(),
+                        actions: [<span key="comment-list-reply-to-0">Reply to</span>
+                    ],
                     },
                     ...this.state.comments,
+                    
                 ],
+                
             });
         }, 1000);
     };
@@ -100,7 +104,7 @@ class  PostCard extends Component {
         const { comments, submitting, value } = this.state;
         return (
             <div className="post-card comment-show">
-                <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
+                <Card title={title} style={{ width: '100%', borderRadius: 10 }}  bordered={false} extra={
                 <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                 <span className="post-icons more-icon mr-0"></span>
@@ -129,8 +133,8 @@ class  PostCard extends Component {
                     /> */}
                     </div>
                     <div className="p-16">
-                        <Title level={5} className="post-title f-14">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>
-                        <Paragraph className="f-12 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a
+                        <Title level={5} className="post-title f-16">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>
+                        <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a
 wide range of classes virtually.  You read correctly</Paragraph>
                         <ul className="card-actions-count pl-0">
                             <li>25<span> Loves</span></li>
