@@ -53,7 +53,7 @@ class ShareBox extends Component {
 
 
     state = {
-        tags: ['Tag 1', 'Tag 2', 'Tag 3'],
+        tags: [],
         inputVisible: false,
         inputValue: '',
     };
@@ -109,7 +109,7 @@ class ShareBox extends Component {
     }
     render() {
         const { tags, inputVisible, inputValue } = this.state;
-        const tagChild = tags.map(this.forMap);
+        const tagChild = tags?.map(this.forMap);
         const { user } = store.getState().oidc;
         const menu = (
             <Menu className="menu-droupdown">
