@@ -58,6 +58,7 @@
 .custom-dropdown{min-width: 300px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 8px;}
 .custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 8px; border-radius: 6px; font-weight: 500;}
 .custom-dropdown li svg, .custom-dropdown li span {margin-right: 10px;}
+.post-card .ant-avatar-group .ant-avatar-string{font-size: 16px; line-height: 38px; font-weight: 500;}
 .post-image img{
     width:100%;height: auto;
 }

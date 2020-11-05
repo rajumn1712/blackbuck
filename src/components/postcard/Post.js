@@ -102,7 +102,8 @@ const title = <Meta
     }
     title="Nora Briggs"
     description="24-10-2020 09:50 am"
-/>
+/> 
+const joingroup = <Meta title="John Doe has Created a group name is Mech Mantra" style={{textAlign: 'center'}} />
 
 class  PostCard extends React.Component {
     state = {
@@ -170,6 +171,7 @@ class  PostCard extends React.Component {
             Post_Image,
         ];
         return (
+            <div>
             <div className="post-card comment-show">
                 <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
                 <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
@@ -303,9 +305,43 @@ wide range of classes virtually.  You read correctly</Paragraph>
                             </div>
                         </div>
                     </div>
-
                 </Modal>
             </div>
+            <div className="post-card mb-16">
+            <Card title={joingroup} style={{ width: '100%', borderRadius: 10 }} bordered={false} 
+                actions={[
+                    <a className="like-emojis">
+                        <ul class="l-emojis">
+                            <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
+                            <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
+                            <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>
+                        </ul>
+                        <span className="post-icons like-icon like-emojis"></span>Like</a>,
+                    <a><span className="post-icons comment-icon"></span>Comment</a>,
+                    <Dropdown overlay={sharemenu} trigger={['click']} placement="topRight">
+                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
+                    </Dropdown>,
+                ]}
+            >
+                <div className="p-16 text-center">
+                    <div className="mb-16">
+                    <Avatar.Group
+                        maxCount={4}
+                        size="large"
+                        maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+                        >
+                        <Avatar src={user} />
+                        <Avatar src={user} />
+                        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                    </Avatar.Group>
+                    </div>
+                    <Button type="primary">Join Group</Button>
+                </div>
+            </Card>
+        </div>
+        </div>
         )
     }
 }
