@@ -38,7 +38,19 @@ class ShareBox extends Component {
     openpopup = () => {
         this.setState({ visible: true })
     }
-
+    popupOk = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+    
+      handleCancel = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
 
     state = {
         tags: [],
@@ -140,13 +152,13 @@ class ShareBox extends Component {
                     title={title}
                     visible={this.state.visible}
                     onOk={this.handleOk}
-                    onCancel={this.handleCancel}
+                    onCancel={this.popupOk}
                     footer={[<div className="justify-content-between">
-                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
-                            <a href="">Close</a>
+                        <Button key="back" onClick={this.popupOk} className="btn-cancel">
+                            Close
                         </Button>
-                        <Button key="submit" type="primary" onClick={this.handleOk}>
-                            <a href="#">Post</a>
+                        <Button key="submit" type="primary" onClick={this.popupOk}>
+                            Post
                         </Button></div>
                     ]}>
                     
