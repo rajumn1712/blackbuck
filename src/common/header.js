@@ -110,7 +110,7 @@ class HeaderComponent extends React.Component {
                     <Col span={8} justify="start"  >
                         <div className="left-block">
                             <Link to="/" className="logo-brand">
-                                <img src={Logo} alt="Blackbuck" width="60px" />
+                                <img src={Logo} alt="Blackbuck" width="55px" />
                             </Link>
                             <Search className="header-searchbar" placeholder="Search" onSearch={onSearch} />
                         </div>
