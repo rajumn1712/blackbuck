@@ -59,89 +59,17 @@
 .custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 8px; border-radius: 6px; font-weight: 500;}
 .custom-dropdown li svg, .custom-dropdown li span {margin-right: 10px;}
 .post-card .ant-avatar-group .ant-avatar-string{font-size: 16px; line-height: 38px; font-weight: 500;}
-.post-image img{
-    width:100%;height: auto;
-}
-.overlayimage{
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-}
-.post-preview .ant-modal-content{
-    height: 100vh;
-    padding: 60px;
-    background: var(--transparent);
-}
-.post-preview .ant-modal-content .ant-modal-close {
-    top: 10px ;
-    right: 10px;
-}
-
-.post-preview .ant-modal-content .ant-modal-close .ant-modal-close-x{
-    background: var(--white);
-    display: block;
-    width: 35px;
-    height: 35px;
-    font-size: 16px;
-    font-style: normal;
-    line-height: 35px;
-    text-align: center;
-    text-transform: none;
-    text-rendering: auto;
-    border-radius: 11px;
-}
-.post-preview.ant-modal{
-    top:0 !important;
-    padding-bottom: 0 !important;
-    max-width: calc(100vw - 20px) !important;
-}
-.post-preview.ant-modal .ant-modal-body{
-    padding: 0 !important;
-}
-.post-preview .post-preview-box{
-    display: flex;
-    align-items: stretch;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-    background: var(--black);
-    border-radius: 15px;
-}
-.post-preview .post-preview-box .preview-image{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* height: calc(100vh - 120px); */
-    flex-shrink: 1;
-    border-bottom-left-radius:15px;
-    border-top-left-radius:15px;
-    position: relative;
-
-}
-.post-preview .post-preview-box .preview-image img{
-    width: 100%;
-    height:auto;
-    /* max-height: 100vh; */
-   
-}
-.post-preview .post-preview-box .preview-content{
-    height: calc(100vh - 120px);
-    min-width: 360px;
-    flex-shrink: 0;
-    display: flex;
-    max-width: 100%;
-    flex-direction: column;
-    background: var(--white);
-    overflow-y: auto;
-    border-bottom-right-radius:15px;
-    border-top-right-radius:15px;
-}
-.post-preview .post-preview-box .preview-content .ant-card-body{
-    padding: 0;
-}
-.post-preview .post-preview-box .preview-content .post-title ,.post-preview .post-preview-box .preview-content .post-desc{
-    max-width: 360px;
-}
+.post-image img{ width:100%;height: auto;}
+.overlayimage{ position: absolute;  top: 0;right: 0; left: 0; bottom: 0;}
+.post-preview .ant-modal-content{ height: 100vh;padding: 60px; background: var(--transparent);}
+.post-preview .ant-modal-content .ant-modal-close { top: 10px ;right: 10px;}
+.post-preview .ant-modal-content .ant-modal-close .ant-modal-close-x{background: var(--white);display: block;width: 35px;height: 35px;font-size: 16px;font-style: normal;line-height: 35px;text-align: center;text-transform: none;text-rendering: auto;border-radius: 11px;}
+.post-preview.ant-modal{top:0 !important;padding-bottom: 0 !important;max-width: calc(100vw - 20px) !important;}
+.post-preview.ant-modal .ant-modal-body{padding: 0 !important;}
+.post-preview .post-preview-box{display: flex;align-items: stretch; flex-direction: row;justify-content: flex-start;    flex-wrap: nowrap;    background: var(--black);    border-radius: 15px;}
+.post-preview .post-preview-box .preview-image{ display: flex; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 1; border-bottom-left-radius:15px;border-top-left-radius:15px;position: relative;}
+.post-preview .post-preview-box .preview-image img{width: 100%;height:auto;}
+.post-preview .post-preview-box .preview-content{height: calc(100vh - 120px);min-width: 360px;flex-shrink: 0;display: flex; max-width: 100%;flex-direction: column;background: var(--white); overflow-y: auto;border-bottom-right-radius:15px;border-top-right-radius:15px;}
+.post-preview .post-preview-box .preview-content .ant-card-body{padding: 0;}
+.post-preview .post-preview-box .preview-content .post-title ,.post-preview .post-preview-box .preview-content .post-desc{max-width: 360px;}
+.post-preview .preview-content .post-comment{margin-bottom: 5px;}
