@@ -19,7 +19,7 @@ const openNotification = (placement) => {
 };
 
 
-class Invite extends React.Component {
+class Invite extends Component {
 
 
     render() {
