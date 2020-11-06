@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message, Input } from 'antd'
-import GroupImage from '../styles/images/groupimage.png';
-import Storage from '../styles/images/storage.png';
+import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message, Input, Tag } from 'antd'
+import GroupImage from '../../styles/images/groupimage.png';
+import Storage from '../../styles/images/storage.png';
 import { DownOutlined, InboxOutlined } from '@ant-design/icons';
+import openNotificationWithIcon from './toastNotify';
 const { Meta } = Card;
 const { Dragger } = Upload;
 const props = {
@@ -10,52 +11,78 @@ const props = {
     multiple: true,
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange(info) {
-        const { status } = info.file;
-        if (status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
+        if (info.file.status === 'done') {
+            openNotificationWithIcon({ title: 'Success', notType: 'success', message: `${info.file.name} file uploaded successfully` });
+        } else if (info.file.status === 'error') {
+            openNotificationWithIcon({ title: 'Error', notType: 'error', message: `${info.file.name} file uploaded ` });
         }
     },
 };
 
 class PostComponent extends Component {
     state = {
-        users: ['Public', 'Friends', 'College', 'Groups']
+        postObj: {
+            users: ['Public', 'Friends', 'College', 'Groups'],
+            userName: 'john Doe',
+            savePost: {
+                lstFiles: [],
+                Title: null,
+                Caption: null,
+                IsAnonymousChecked: false,
+                tags: ['Unremovable', 'Tag 2', 'Tag 3'],
+            }
+        }
     }
+
     componentDidMount() {
 
     }
+
+    handleClose = removedTag => {
+        var savePost = { ...this.state.postObj.savePost };
+        const tags = this.state.tags.filter(tag => tag !== removedTag);
+        savePost.tags = tags;
+        this.setState({ savePost });
+    };
     render() {
+        const { type, visible } = this.props.type;
+        const { postObj } = this.state;
+        const tags={...this.state.savePost}
         const menu = (
             <Menu className="menu-droupdown">
-                {this.state.users?.map((item, indx) =>
-                    <Menu.Item key={indx}><a href="">{item}</a></Menu.Item>)}
+                {postObj.users?.map((item, indx) =>
+                    <Menu.Item key={indx}>{item}</Menu.Item>)}
             </Menu>);
 
         const title = <div className="justify-content-between">
             <Meta
                 avatar={<Avatar src={GroupImage} />}
-                title={<div><h4 className="media-head">Jhon Doe</h4></div>}
+                title={<div><h4 className="media-head">{postObj.userName}</h4></div>}
                 description={<div className="mb-0 f-10"><Dropdown overlay={menu} trigger={['click']}>
                     <a className="ant-dropdown-link" style={{ color: '#9B9B9B' }} onClick={e => e.preventDefault()}>
-                        Public <DownOutlined />
+                        Select Type <DownOutlined />
                     </a>
                 </Dropdown></div>} />
             <div style={{ display: 'flex' }}>{function onChange(e) {
                 console.log(`checked = ${e.target.checked}`);
             }}
-                <div className="lable-height"><span className="f-9 text-gray">Post</span><p className="check-text">Checkbox</p></div>
-                <Checkbox className="ml-8 mt-8"></Checkbox>
+                <div className="lable-height"><span className="f-9 text-gray">Post</span><p className="check-text">Anonymous</p></div>
+                <Checkbox className="ml-8 mt-8" checked={postObj.IsAnonymousChecked}></Checkbox>
             </div>
         </div>
+        const tagElem = tag => (
+            <Tag
+                className="edit-tag"
+                key={tag}
+                onClose={() => this.handleClose(tag)}
+            >
+            </Tag>
+        );
+        const tagRepeat = tags.map(tagElem)
         return (
             <Modal className="share-popup"
                 title={title}
-                visible={this.state.visible}
+                visible={visible}
                 footer={[<div className="justify-content-between">
                     <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                         <a href="">Close</a>
@@ -64,15 +91,18 @@ class PostComponent extends Component {
                         <a href="#">Post</a>
                     </Button></div>
                 ]}>
-                <div className="upload-image">
+                {type !== 'text' && <div className="upload-image">
                     <Dragger {...props}>
                         <Avatar src={Storage} />
                         <p className="ant-upload-text">Upload Image</p>
                     </Dragger>
                 </div>
-                <p className="title-img mb-0"><Input placeholder="Title of the image here" /></p>
-                <p className="caption-image"><Input placeholder="Add a caption of image, if you like" /></p>
-
+                }
+                {type !== 'text' &&
+                    <p className="title-img mb-0"><Input placeholder="Title of the image here" value={postObj.savePost.Title} /></p>
+                }
+                {type !== 'text' && <p className="caption-image"><Input placeholder="Add a caption of image, if you like" value={postObj.savePost.Caption} /></p>}
+                {tagRepeat}
             </Modal>
         )
     }
