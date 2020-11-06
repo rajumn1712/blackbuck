@@ -7,26 +7,14 @@ import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
 import GroupImage from '../styles/images/groupimage.png';
+import OkIcon from '../styles/images/okicon.png';
 import Audio from '../styles/images/audio.png';
 import Storage from '../styles/images/storage.png';
 const { Header } = Layout;
 const { Meta } = Card;
 const { Dragger } = Upload;
 // doc
-const fileList = [
-    {
-        uid: '-1',
-        name: 'xxx.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-        uid: '-2',
-        name: 'yyy.png',
-        status: 'error',
-    },
-];
+const fileList = [];
 
 const props = {
     name: 'file',
@@ -50,7 +38,19 @@ class ShareBox extends Component {
     openpopup = () => {
         this.setState({ visible: true })
     }
-
+    popupOk = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+    
+      handleCancel = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
 
     state = {
         tags: [],
@@ -152,19 +152,20 @@ class ShareBox extends Component {
                     title={title}
                     visible={this.state.visible}
                     onOk={this.handleOk}
-                    onCancel={this.handleCancel}
+                    onCancel={this.popupOk}
                     footer={[<div className="justify-content-between">
-                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
-                            <a href="">Close</a>
+                        <Button key="back" onClick={this.popupOk} className="btn-cancel">
+                            Close
                         </Button>
-                        <Button key="submit" type="primary" onClick={this.handleOk}>
-                            <a href="#">Post</a>
+                        <Button key="submit" type="primary" onClick={this.popupOk}>
+                            Post
                         </Button></div>
                     ]}>
                     
                     {/* Image popup */}
-                    <div className="upload-image">
-                    <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
+                     <div className="upload-image">
+                    {/* <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
+                    <div class="image-close"></div> */}
                         <Dragger {...props}>
                             <Avatar src={Storage} />
                             <p className="ant-upload-text">Upload Image</p>
@@ -182,30 +183,58 @@ class ShareBox extends Component {
                     </div>  */}
 
                     {/* Audio popup */}
-                    {/* <div className="upload-image">
-                        <div className="speekar-block">
+                     {/* <div className="upload-image">
+                     <div className="speekar-block mb-8">
                             <Avatar src={Audio} />
-                            <div className="speekar-text"><span className="sharebox-icons speekar-icon"></span><p className="mb-0">Choose Audio</p></div>
-                        </div>
+                            <div className="speekar-text"><Avatar className="ok-image" src={OkIcon} /></div>
+                    </div>
+                    <Dragger {...props}>
+                        <span className="sharebox-icons speekar-icon mb-4"></span>
+                        <p className="ant-upload-text mb-0">Upload Audio</p>
+                    </Dragger>
                     
-                        <div className="title-img mb-0"><Input placeholder="Title of the image here" /></div>
+                    <div className="title-img mb-0"><Input placeholder="Upload Audio here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
                     </div>   */}
 
                     {/* document popup */}
-                    {/* <div className="upload-image">
-                        <div className="mb-8">
-                            <Upload
-                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                listType="picture"
-                                defaultFileList={[...fileList]}
-                            >
-                                <Button icon={<UploadOutlined />}>Upload</Button>
-                            </Upload>
-                        </div>
-                        <div className="title-img mb-0"><Input placeholder="Title of the image here" /></div>
+                     {/* <div className="upload-image">
+                     <Dragger {...props}>
+                        <Upload className="mb-8"
+                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            listType="picture"
+                            defaultFileList={[...fileList]}  >
+                            <Button icon={<UploadOutlined />}>Upload</Button>
+                        </Upload> </Dragger>
+                        <div className="title-img mb-0"><Input placeholder="Upload Documents here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div> */}
+                    </div>  */}
+
+                    {/* Gif popup */}
+                    {/* <div className="upload-image">
+                    <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
+                    <div class="image-close"></div>
+                        <Dragger {...props}>
+                            <Avatar src={Storage} />
+                            <p className="ant-upload-text">Upload Gif</p>
+                        </Dragger>
+
+                        <div className="title-img"><Input placeholder="Upload Gif here" /></div>
+                        <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
+                    </div>  */}
+
+                    {/* Vedio popup */}
+                    {/* <div className="upload-image">
+                    <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
+                    <div class="image-close"></div>
+                        <Dragger {...props}>
+                            <Avatar src={Storage} />
+                            <p className="ant-upload-text">Upload Video</p>
+                        </Dragger>
+
+                        <div className="title-img"><Input placeholder="Upload Video here" /></div>
+                        <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
+                    </div>  */}
 
                     {/* TAGS */}
                     <div className="tags">
