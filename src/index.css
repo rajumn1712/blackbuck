@@ -1,5 +1,5 @@
 @import 'styles/theme.css';
-html {--antd-wave-shadow-color: #07a3b2; --scroll-bar: 0;}
+html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 /*----Alignments----*/
 .text-center{text-align: center !important;}
 .text-right{text-align: right !important;}
@@ -87,8 +87,8 @@ html {--antd-wave-shadow-color: #07a3b2; --scroll-bar: 0;}
 .group-card .ant-card-meta-detail > div:not(:last-child), .share-popup .ant-card-meta-detail > div:not(:last-child){margin-bottom: 0 !important;}
 .ant-avatar{border-radius: 30% !important;}
 .ant-btn{border-radius: 4px !important;}
-.ant-card-extra a, .link-color a{font-size: 11px;color: #07A3B2;}
-.group-card .ant-card-head{font-size: 16px;color: #07A3B2;border-bottom: 1px solid #D6E6FB;}
+.ant-card-extra a, .link-color a{font-size: 11px;color: var(--primary);}
+.group-card .ant-card-head{font-size: 16px;color: var(--primary);border-bottom: 1px solid #D6E6FB;}
 .ant-card-meta-title{font-size: 14px;}
 .icons-small{width: 10px;
   height: 10px;
@@ -121,7 +121,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .friends-list:hover .friends-list--course{ display: block;}
 .friends-list:hover ._name{transform: translate3d(0, -3px, 0); transition: transform 80ms linear;}
 .addfrnd-btn{position: absolute; background: var(--white); box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); top: 10px; right: 10px; padding: 14px; border-radius: 9px; cursor: pointer; opacity: 0;}
-.addfrnd-btn:hover{background: #07A3B2;}
+.addfrnd-btn:hover{background: var(--primary);}
 .friends-list:hover .addfrnd-btn{opacity: 1; transition: opacity 80ms linear;}
 @media (min-width: 1200px) {
   .container { width: 1140px; box-sizing: content-box; margin: auto; }
