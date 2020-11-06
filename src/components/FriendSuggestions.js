@@ -21,6 +21,7 @@ class  FriendSuggestions extends Component {
                             <Paragraph className="friends-list--course">IT</Paragraph>
                         </div>
                         <div className="addfrnd-btn">
+                            <span className="post-icons addfriend-icon mr-0"></span>
                         </div>
                     </div>
                     <div className="friends-list one">
@@ -30,6 +31,7 @@ class  FriendSuggestions extends Component {
                             <Paragraph className="friends-list--course">CSE</Paragraph>
                         </div>
                         <div className="addfrnd-btn">
+                            <span className="post-icons addfriend-icon mr-0"></span>
                         </div>
                     </div>
                     <div className="friends-list two">
@@ -39,6 +41,7 @@ class  FriendSuggestions extends Component {
                             <Paragraph className="friends-list--course">CSE</Paragraph>
                         </div>
                         <div className="addfrnd-btn">
+                            <span className="post-icons addfriend-icon mr-0"></span>
                         </div>
                     </div>
                     <div className="friends-list">
@@ -48,6 +51,7 @@ class  FriendSuggestions extends Component {
                             <Paragraph className="friends-list--course">IT</Paragraph>
                         </div>
                         <div className="addfrnd-btn">
+                            <span className="post-icons addfriend-icon mr-0"></span>
                         </div>
                     </div>
                     <div className="friends-list one">
@@ -57,6 +61,7 @@ class  FriendSuggestions extends Component {
                             <Paragraph className="friends-list--course">CSE</Paragraph>
                         </div>
                         <div className="addfrnd-btn">
+                            <span className="post-icons addfriend-icon mr-0"></span>
                         </div>
                     </div>
                 </div>

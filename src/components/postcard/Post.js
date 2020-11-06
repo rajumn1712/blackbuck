@@ -331,7 +331,7 @@ wide range of classes virtually.  You read correctly</Paragraph>
                     </div>
                 </Modal>
                 {/* Alert */}
-                <Modal
+                {/* <Modal
                     title="Alert"
                     visible={this.state.visible}
                     onOk={this.hideAlert}
@@ -355,7 +355,7 @@ wide range of classes virtually.  You read correctly</Paragraph>
 offering a wide range of classes virtually.  You read correctly</p>
                             </div>
                         </div>
-                </Modal>
+                </Modal> */}
             </div>
             <div className="post-card mb-16">
             <Card title={joingroup} style={{ width: '100%', borderRadius: 10 }} bordered={false} 

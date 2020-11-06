@@ -114,6 +114,7 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .friends-list.one .friends-list--name{background: linear-gradient(to top, rgba(70, 10, 156, 1), rgba(70, 10, 156, 0));}
 .friends-list.two .friends-list--name{background: linear-gradient(to top, rgba(112, 165, 113, 1), rgba(112, 165, 113, 0));}
 .friends-list img {object-fit: cover;}
+.post-icons.addfriend-icon{background-position:-433px -200px;}
 .friends-list--name {position: absolute; left: 0; right: 0; bottom: 0; text-align: center; top: 60%;
 background: linear-gradient(to top, rgba(18, 66, 128, 1), rgba(18, 66, 128, 0));
 font-size: 14px; display: flex; justify-content: flex-end; flex-direction: column; align-items: center;padding: 8px;}
@@ -121,8 +122,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .friends-list--course {font-size: 10px; color: var(--white); display: none;}
 .friends-list:hover .friends-list--course{ display: block;}
 .friends-list:hover ._name{transform: translate3d(0, -3px, 0); transition: transform 80ms linear;}
-.addfrnd-btn{position: absolute; background: var(--white); box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); top: 8px; left: 8px; padding: 14px; border-radius: 9px; cursor: pointer; opacity: 0;}
-.addfrnd-btn:hover{background: var(--primary);}
+.addfrnd-btn{position: absolute; background: var(--primary); box-shadow: var(--boxshadow); top: 8px; left: 8px; padding: 4px 5px; border-radius: 9px; cursor: pointer; opacity: 0;}
 .friends-list:hover .addfrnd-btn{opacity: 1; transition: opacity 80ms linear;}
 @media (min-width: 1200px) {
   .container { width: 1140px; box-sizing: content-box; margin: auto; }
