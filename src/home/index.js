@@ -29,7 +29,9 @@ class Home extends Component {
                         <FriendSuggestions />
                         <PostCard />
                     </Col>
-                    <Col xs={24} sm={12} md={8} lg={6} xl={6}><GroupCard /></Col>
+                    <Col xs={24} sm={12} md={8} lg={6} xl={6}><GroupCard />
+                    <Ads />
+                    </Col>
                 </Row>
             </div>
         )

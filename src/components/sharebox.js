@@ -41,16 +41,16 @@ class ShareBox extends Component {
     popupOk = e => {
         console.log(e);
         this.setState({
-          visible: false,
+            visible: false,
         });
-      };
-    
-      handleCancel = e => {
+    };
+
+    handleCancel = e => {
         console.log(e);
         this.setState({
-          visible: false,
+            visible: false,
         });
-      };
+    };
 
     state = {
         tags: [],
@@ -103,9 +103,9 @@ class ShareBox extends Component {
         );
         return (
             <span key={tag} style={{ display: 'inline-block' }}>
-              {tagElem}
+                {tagElem}
             </span>
-          );
+        );
     }
     render() {
         const { tags, inputVisible, inputValue } = this.state;
@@ -161,11 +161,11 @@ class ShareBox extends Component {
                             Post
                         </Button></div>
                     ]}>
-                    
+
                     {/* Image popup */}
-                     <div className="upload-image">
-                    {/* <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
-                    <div class="image-close"></div> */}
+                    <div className="upload-image">
+                        {/* <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+                        <div class="image-close"><span className="close-icon"></span></div> */}
                         <Dragger {...props}>
                             <Avatar src={Storage} />
                             <p className="ant-upload-text">Upload Image</p>
@@ -183,7 +183,7 @@ class ShareBox extends Component {
                     </div>  */}
 
                     {/* Audio popup */}
-                     {/* <div className="upload-image">
+                    {/* <div className="upload-image">
                      <div className="speekar-block mb-8">
                             <Avatar src={Audio} />
                             <div className="speekar-text"><Avatar className="ok-image" src={OkIcon} /></div>
@@ -198,7 +198,7 @@ class ShareBox extends Component {
                     </div>   */}
 
                     {/* document popup */}
-                     {/* <div className="upload-image">
+                    {/* <div className="upload-image">
                      <Dragger {...props}>
                         <Upload className="mb-8"
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -272,12 +272,8 @@ class ShareBox extends Component {
                                 <PlusOutlined /> # tag
                             </Tag>
                         )}
-
                     </div>
                 </Modal>
-
-
-
             </div>
         )
     }
