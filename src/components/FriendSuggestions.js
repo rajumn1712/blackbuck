@@ -8,7 +8,7 @@ class  FriendSuggestions extends Component {
         return (
             <div>
                 <div className="friends-thead">
-                    <Title level={5}>Friends Requests</Title><div className="link-color"><a href="" className="link-color">View all</a></div>
+                    <Title level={5}>Friend Requests</Title><div className="link-color"><a href="" className="link-color">View all</a></div>
                 </div>
                 <div className="friends">
                     <div className="friends-list">

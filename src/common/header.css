@@ -39,9 +39,13 @@
 }
 
 .header-searchbar input {
-    min-height: 36px !important;
-    padding: 12px 16px !important;
+    min-height: 45px !important;
+    padding: 10px 16px !important;
     border: 0 !important;
+}
+.header-searchbar .anticon-search svg{
+    width:20px;
+    height: 20px;
 }
 
 .header-searchbar .ant-input-search-button {
@@ -53,12 +57,12 @@
     background: transparent;
 }
 
-.main-header .ant-menu-horizontal>.ant-menu-submenu {
-    top: -1px !important;
-}
-
 .main-header .ant-menu-horizontal {
     line-height: inherit !important;
+}
+
+.main-header .ant-menu-item{
+    top: -2px !important;
 }
 
 .main-header .ant-menu-item a {
@@ -184,20 +188,25 @@
     border-radius: 12px !important;
     background: var(--white);
     box-shadow: var(--boxshadow);
+    min-width: 280px !important;
+    margin-right: 16px;
+    padding: 16px;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
 }
 
 .notification-dropdown {
-    min-width: 280px;
-    margin-right: 16px;
-    padding: 16px;
     margin-top: 6px !important;
-    max-height: calc(100vh - 60px);
-    overflow-y: auto;
+}
 
+.notification-dropdown h3{
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .notification-dropdown .notification-list .ant-list-item-meta-title{
     margin-bottom: 0px !important;
+    font-size: 16px;
 }
 
 .notification-dropdown .notification-list .ant-list-item-meta-description{
@@ -226,8 +235,25 @@
 }
 
 .profile-dropdown li {
-    margin: 3px 8px;
+    margin: 6px 8px;
 }
+.profile-dropdown .ant-dropdown-menu-item{
+    padding:8px;
+
+}
+.profile-dropdown .ant-dropdown-menu-item a{
+    font-size: 16px;
+    color: var(--textcolor);
+}
+.profile-dropdown .ant-dropdown-menu-item a:hover{
+    color: var(--primary);
+}
+
+.profile-dropdown .ant-dropdown-menu-item > a > .anticon:first-child{
+    font-size: 20px;
+    vertical-align: middle;
+}
+
 
 .notification-dropdown .ant-list-items .ant-list-item {
     padding: 5px;

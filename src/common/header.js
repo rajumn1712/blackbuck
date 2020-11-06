@@ -110,13 +110,13 @@ class HeaderComponent extends React.Component {
                     <Col span={8} justify="start"  >
                         <div className="left-block">
                             <Link to="/" className="logo-brand">
-                                <img src={Logo} alt="Blackbuck" width="60px" />
+                                <img src={Logo} alt="Blackbuck" width="55px" />
                             </Link>
                             <Search className="header-searchbar" placeholder="Search" onSearch={onSearch} />
                         </div>
                     </Col>
                     <Col span={8} justify="center">
-                        <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']} title="Blackbuck">
+                        <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
                             <Menu.Item key="home"><Link to="/"><span className="icons home-icon"></span></Link></Menu.Item>
                             <Menu.Item key="about"><Link to="/about"><span className="icons social-icon"></span></Link></Menu.Item>
                             <Menu.Item key="contact"><Link to="/contact"><i className="icons suitcase-icon"></i></Link></Menu.Item>
@@ -124,7 +124,7 @@ class HeaderComponent extends React.Component {
                         </Menu>
                     </Col>
                     <Col span={8} >
-                        <Menu className="menu-items text-right right-menu" mode="horizontal" title="Blackbuck">
+                        <Menu className="menu-items text-right right-menu" mode="horizontal">
                             <Menu.Item key="">
                                 <Link to="/" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
                             </Menu.Item>
