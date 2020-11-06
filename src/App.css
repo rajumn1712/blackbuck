@@ -99,7 +99,7 @@ body,h1,h2,h3,h4,h5,h6,p {
 .share-box {
     border-radius: 10px;
     text-align: center;
-    margin-bottom: 24px;box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;box-shadow: var(--boxshadow);
 }
 
 .bg-white {
@@ -217,12 +217,11 @@ body,h1,h2,h3,h4,h5,h6,p {
 .share-box ul{list-style-type: none;padding: 15px 5px;}
 .sharebox-icons.speekar-icon{background-position: -124px -147px;}
 .speekar-block .ant-avatar{width: 100% !important;height: 100% !important;}
-.text-hover{visibility: hidden;line-height: 1.2;}
-.share-box ul li:hover .text-hover{visibility: visible;display: block;position: relative;}
+.text-hover{opacity: 0; line-height: 1;}
+.share-box ul li:hover .text-hover{opacity: 1; transition: opacity 100ms linear;}
+.share-box ul li:hover .sharebox-icons {transform: translate3d(0,-5px,0); transition: transform 100ms linear;}
 .text-icon, .photo-icon, .audio-icon, .document-icon, .gif-icon{position: relative;}
-.icon-animation{color:var(--primary) !important;font-size: 14px;}
-.icon-animation:focus .sharebox-icons, .icon-animation:hover .sharebox-icons {transform: translate3d(0,-3px,0);}
-.icon-animation .sharebox-icons {transition: transform 80ms linear;}
+.icon-animation{color:var(--primary) !important;font-size: 14px; font-weight: 500;}
 @media(min-width: 768px) {
 .share-box ul li::after{content: "";
     position: absolute;
@@ -233,12 +232,12 @@ body,h1,h2,h3,h4,h5,h6,p {
     right: -22px;
     left: auto;}}
 .share-box li{position: relative;}
-.share-box ul li:last-child:after{background: transparent !important; width: 0px;height: 0px;}
+.share-box ul li:last-child:after{content: none;}
 
 .left-rail , .invite-card .ant-card{
     background: var(--white);
     border-radius: 10px !important;
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--boxshadow);
     margin-bottom: 30px;
 }
 .left-menu {
@@ -338,7 +337,6 @@ body,h1,h2,h3,h4,h5,h6,p {
     background-position: -6px -78px;
     margin-left: 4px;
 }
-
 .profile-card .ant-card-actions > li:not(:last-child) {
     border-right: 1px solid #0CD5E8;
 }

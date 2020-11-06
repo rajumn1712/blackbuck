@@ -8,10 +8,12 @@ import Post_Image from '../../styles/images/post-image.jpg';
 import Love from '../../styles/images/love.gif';
 import Claps from '../../styles/images/claps.gif';
 import Whistle from '../../styles/images/whistle.gif';
+import Warning from '../../styles/images/warning.png';
 import './post.css';
 import '../../index.css'
 import '../../styles/theme.css';
 import ReactPhotoGrid from 'react-photo-grid';
+import Alert from '../Alert';
 import {
     FacebookShareButton,
     LinkedinShareButton,
@@ -68,7 +70,21 @@ const CommentList = ({ comments }) => (
         dataSource={comments}
         header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
         itemLayout="horizontal"
-        renderItem={props => <Comment {...props} />}
+        renderItem={props => <Comment {...props}>
+            <Comment style={{marginLeft: 10}} className="reply-comment"
+                    avatar={
+                        <Avatar src={user} />
+                    }
+                    content={
+                        <Editor
+                            //onChange={this.handleChange}
+                            //onSubmit={this.handleSubmit}
+                            //submitting={submitting}
+                            //value={value}
+                        />
+                    }
+                />
+        </Comment>}
     />
 );
 
@@ -113,6 +129,17 @@ class  PostCard extends React.Component {
         loading: false,
         visible: false,
     };
+    showAlert = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    hideAlert = () => {
+        this.setState({
+            visible: false,
+        });
+    };
     showModal = () => {
         this.setState({
             visible: true,
@@ -124,7 +151,6 @@ class  PostCard extends React.Component {
             this.setState({ loading: false, visible: false });
         }, 3000);
     };
-
     handleCancel = () => {
         this.setState({ visible: false });
     };
@@ -147,8 +173,6 @@ class  PostCard extends React.Component {
                         avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
                         content: <>{this.state.value}</>,
                         datetime: moment().fromNow(),
-                        actions: [<span key="comment-list-reply-to-0">Reply to</span>
-                    ],
                     },
                     ...this.state.comments,
                     
@@ -305,6 +329,32 @@ wide range of classes virtually.  You read correctly</Paragraph>
                             </div>
                         </div>
                     </div>
+                </Modal>
+                {/* Alert */}
+                <Modal
+                    title="Alert"
+                    visible={this.state.visible}
+                    onOk={this.hideAlert}
+                    onCancel={this.hideAlert}
+                    className="alert-popup"
+                    footer={[<div className="justify-content-between">
+                        <Button key="back" onClick={this.popupOk} className="btn-cancel">
+                            Close
+                        </Button>
+                        <Button key="submit" type="primary" onClick={this.popupOk}>
+                            Post
+                        </Button></div>
+                    ]}
+                >
+                        <div style={{display: "flex"}}>
+                            <div className="alert-icon mr-16">
+                                <img src={Warning} alt="Warning"/>
+                            </div>
+                            <div><Title level={5} className="mb-4" style={{ fontWeight: 500 }}>Are you sure want to delete this post?</Title>
+                                <p style={{ color: 'var(--textsecondary)' }} className="mb-0">Although social distancing has created many changes with CBU courses, we are still
+offering a wide range of classes virtually.  You read correctly</p>
+                            </div>
+                        </div>
                 </Modal>
             </div>
             <div className="post-card mb-16">

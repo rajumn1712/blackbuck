@@ -62,8 +62,8 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .mt-4{margin-top: 4px;}
 .mt-8{margin-top: 8px;}
 .mt-16{margin-top: 16px;}
-.mb-0{margin-bottom: 0px;}
-.mb-4{margin-bottom: 4px;}
+.mb-0{margin-bottom: 0px !important;}
+.mb-4{margin-bottom: 4px !important;}
 .mb-8{margin-bottom: 8px;}
 .mb-16{margin-bottom: 16px;}
 .mx-0{margin-left: 0; margin-right: 0;}
@@ -117,13 +117,19 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .friends-list--name {position: absolute; left: 0; right: 0; bottom: 0; text-align: center; top: 60%;
 background: linear-gradient(to top, rgba(18, 66, 128, 1), rgba(18, 66, 128, 0));
 font-size: 14px; display: flex; justify-content: flex-end; flex-direction: column; align-items: center;padding: 8px;}
-.friends-list--name .ant-typography{color: var(--white); margin-bottom: 0 !important;}
+.friends-list--name .ant-typography{color: var(--white); margin-bottom: 0 !important; font-weight: 500;}
 .friends-list--course {font-size: 10px; color: var(--white); display: none;}
 .friends-list:hover .friends-list--course{ display: block;}
 .friends-list:hover ._name{transform: translate3d(0, -3px, 0); transition: transform 80ms linear;}
-.addfrnd-btn{position: absolute; background: var(--white); box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); top: 10px; right: 10px; padding: 14px; border-radius: 9px; cursor: pointer; opacity: 0;}
+.addfrnd-btn{position: absolute; background: var(--white); box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); top: 8px; left: 8px; padding: 14px; border-radius: 9px; cursor: pointer; opacity: 0;}
 .addfrnd-btn:hover{background: var(--primary);}
 .friends-list:hover .addfrnd-btn{opacity: 1; transition: opacity 80ms linear;}
 @media (min-width: 1200px) {
   .container { width: 1140px; box-sizing: content-box; margin: auto; }
 }
+.alert-popup .ant-modal-content{border-radius: 8px;}
+.alert-popup .ant-modal-header{border-radius: 8px 8px 0 0;padding: 16px;}
+.alert-popup .ant-modal-title {font-size: 20px;}
+.alert-popup .ant-modal-body{padding: 16px;}
+.alert-popup .ant-modal-footer{background: #F9F9F9; border-radius: 0 0 9px 8px; padding: 16px;}
+.alert-icon{width: 60px;}
