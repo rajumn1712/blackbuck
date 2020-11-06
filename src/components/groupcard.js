@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, List, message, Spin } from 'antd'
+import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, List, message, Spin,Divider } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -98,7 +98,9 @@ class GroupCard extends Component {
                                         
                                     />
                                     <div className="link-color"><a href="#">Join Group</a></div>
+                                    
                                 </List.Item>
+                                
                             )}
                         >
                             {this.state.loading && this.state.hasMore && (
