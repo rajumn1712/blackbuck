@@ -10,6 +10,7 @@ import GroupImage from '../styles/images/groupimage.png';
 import OkIcon from '../styles/images/okicon.png';
 import Audio from '../styles/images/audio.png';
 import Storage from '../styles/images/storage.png';
+import Video from '../styles/images/video.mp4';
 const { Header } = Layout;
 const { Meta } = Card;
 const { Dragger } = Upload;
@@ -225,7 +226,9 @@ class ShareBox extends Component {
 
                     {/* Vedio popup */}
                     {/* <div className="upload-image">
-                    <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
+                    <div> <video width="100%" controls>
+                        <source src={Video}/>
+                    </video>   </div>
                     <div class="image-close"></div>
                         <Dragger {...props}>
                             <Avatar src={Storage} />
@@ -234,7 +237,7 @@ class ShareBox extends Component {
 
                         <div className="title-img"><Input placeholder="Upload Video here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>  */}
+                    </div>   */}
 
                     {/* TAGS */}
                     <div className="tags">
