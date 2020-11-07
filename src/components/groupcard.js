@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, List, message, Spin,Divider } from 'antd'
+import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, List, message, Spin, Divider } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -42,16 +42,15 @@ class GroupCard extends Component {
         return (
             <div className="reight-rail group-card">
                 <Card  title="Groups" extra={<a href="#">View all</a>} >
-                        <List
-                            dataSource={this.state.data}
+                        <List 
+                            dataSource={this.state.data} 
                             renderItem={item => (
-                                <List.Item key={item.id}>
-                                    <List.Item.Meta
+                                <List.Item key={item.id} actions={[<a className="link-color" key="list-loadmore-more">Join Group</a>]}>
+                                    <List.Item.Meta 
                                         avatar={<Avatar className="mt-4" src={GroupImage} /> }
                                         title={<div>IT Group<span className="icons-small lock-icon"></span></div>}
                                         description={<div className="f-12 text-overflow"><span>156 Members</span> | <span>14 Posts</span></div>}
-                                    />  
-                                    <div className="link-color"><a href="#">Send Request</a></div>
+                                    />
                                 </List.Item>   
                         )} >
                             {this.state.loading && this.state.hasMore && (
@@ -62,14 +61,13 @@ class GroupCard extends Component {
                         </List>
                         <List
                             dataSource={this.state.data}
-                            renderItem={item => (
-                                <List.Item key={item.id}>
+                            renderItem={item => ( 
+                                <List.Item key={item.id}  actions={[<a className="link-color" key="list-loadmore-more">Join Group</a>]}> 
                                     <List.Item.Meta
                                         avatar={<Avatar src={GroupImage1} /> }
-                                        title="Hyderabad Walkina"
+                                        title=" Walkina"
                                         description={<div className="f-12 text-overflow"><span>2K Members</span> | <span>245 Posts</span></div>}
                                     />
-                                    <div className="link-color"><a href="#">Join Group</a></div>
                                 </List.Item>
                             )} >
                             {this.state.loading && this.state.hasMore && (
@@ -77,17 +75,17 @@ class GroupCard extends Component {
                                     <Spin />
                                 </div>
                             )}
-                        </List>
+                        </List> 
+                        
                         <List
                             dataSource={this.state.data}
-                            renderItem={item => (
-                                <List.Item key={item.id}>
+                            renderItem={item => ( 
+                                <List.Item key={item.id} actions={[<a className="link-color" key="list-loadmore-more">Join Group</a>]}>
                                     <List.Item.Meta
                                         avatar={<Avatar src={GroupImage2} /> }
-                                        title="CSC Champs"
-                                        description={<div className="f-12 text-overflow"><span>954 Members</span> | <span>55 Posts</span> </div>} 
-                                    />
-                                    <div className="link-color"><a href="#">Join Group</a></div>
+                                        title="CSC Champs" 
+                                        description={<div className="f-12 text-overflow"><span>954 Members</span> | <span>55 Posts</span> </div> } 
+                                    />  
                                 </List.Item>
                             )} >
                             {this.state.loading && this.state.hasMore && (
@@ -99,13 +97,14 @@ class GroupCard extends Component {
                         <List
                             dataSource={this.state.data}
                             renderItem={item => (
-                                <List.Item key={item.id}>
+                                <List.Item key={item.id}  actions={[<a className="link-color" key="list-loadmore-more">Join Group</a>]}
+                                >
                                     <List.Item.Meta
                                         avatar={<Avatar src={GroupImage1} /> }
                                         title="IT Group"
                                         description={<div className="f-12 text-overflow"><span>2K Members</span> | <span>245 Posts</span></div>}
                                     />
-                                    <div className="link-color"><a href="#">Join Group</a></div>
+                                    
                                     
                                 </List.Item>
                             )} >
@@ -125,6 +124,5 @@ class GroupCard extends Component {
             </div>
         )
     }
-
 }
 export default GroupCard;
