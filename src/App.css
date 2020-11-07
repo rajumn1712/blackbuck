@@ -385,3 +385,11 @@ body,h1,h2,h3,h4,h5,h6,p {
     background: url(../src/styles/images/icons.svg) no-repeat;
     background-position: -402px -199px;}
 .text-overflow{width: 120px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.image-shadow{box-shadow: var(--boxshadow);}
+.justify-content-around{display: flex;justify-content: space-around;}
+.justify-content-around .ant-list-item-meta-content{width: auto !important;}
+.justify-content-around .ant-list-item-meta-avatar{margin-right: 0;}
+.sharebox-icons.word-icon{background-position: 1px -249px;}
+.sharebox-icons.excel-icon{background-position: 1px -249px;}
+.sharebox-icons.powerpoint-icon{background-position: 1px -249px;}
+.doc-text{color: var(--primary);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 120px;line-height: ;}

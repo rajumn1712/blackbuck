@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Typography, Image, Tag, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Modal,videoFile } from 'antd';
+import { Card, Avatar, Typography, Image, Tag, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Modal, videoFile } from 'antd';
 import moment from 'moment';
 // import FbImageLibrary from 'react-fb-image-grid';
 import user from '../../styles/images/user.jpg';
@@ -128,7 +128,9 @@ const videotitle = <Meta
     description={<div><a className="link-color mr-4">Public Group </a> <span>24-10-2020 09:50 am</span></div>}
 />
 const joingroup = <Meta title="John Doe has Created a group name is Mech Mantra" style={{ textAlign: 'center' }} />
-
+const data = [
+    {title: 'Mini Project.Doc',} 
+];
 class PostCard extends React.Component {
     state = {
         comments: [],
@@ -399,7 +401,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                         </div>
                     </Card>
                 </div>
-
+                {/* Video post */}
                 <div className="post-card comment-show">
                     <Card title={videotitle} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
                         <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
@@ -421,8 +423,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                             </Dropdown>,
                         ]}
                         cover={<div style={{ width: 562 }}> <video width="100%" controls>
-                        <source src={Video}/>
-                    </video>   </div>}
+                            <source src={Video} /> </video>   </div>}
                     >
                         <div>
                         </div>
@@ -430,6 +431,180 @@ offering a wide range of classes virtually.  You read correctly</p>
                             <Title level={5} className="post-title f-16">Computer Science And Engineering(CSE) Mini Projects - Engineering </Title>
                             <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a
                                 wide range of classes virtually.  You read correctly</Paragraph>
+                            <ul className="card-actions-count pl-0">
+                                <li>25<span> Loves</span></li>
+                                <li>5<span> Claps</span></li>
+                                <li>10<span> Whistles</span></li>
+                            </ul>
+                        </div>
+                        <div className="px-16 py-4 text-center justify-content-between">
+                            <div className="mb-16">
+                                <Avatar.Group
+                                    maxCount={4}
+                                    size="large"
+                                    maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+                                >
+                                    <Avatar src={user} />
+                                    <Avatar src={user} />
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                </Avatar.Group>
+                            </div>
+                            <Button type="primary">Join Group</Button>
+                        </div>
+                    </Card>
+                    <div className="post-comment px-16">
+                        {comments.length > 0 && <CommentList comments={comments} />}
+                        <Comment
+                            avatar={
+                                <Avatar src={user} />
+                            }
+                            content={
+                                <Editor
+                                    onChange={this.handleChange}
+                                    onSubmit={this.handleSubmit}
+                                    submitting={submitting}
+                                    value={value}
+                                />
+                            }
+                        />
+                    </div>
+                    <Modal
+                        className="post-preview"
+                        visible={visible}
+                        // title="Title"
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                        footer={null}
+                        width="100%"
+                    >
+                        <div className="post-preview-box post-card comment-show">
+                            <div className="preview-image">
+                                {/* <img src={PostImage} className="overlayimage" /> */}
+                                <img src={PostImage} />
+                            </div>
+                            <div className="preview-content">
+                                <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
+                                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                            <span className="post-icons more-icon mr-0"></span>
+                                        </a>
+                                    </Dropdown>}
+                                    actions={[
+                                        <a className="like-emojis">
+                                            <ul class="l-emojis">
+                                                <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
+                                                <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
+                                                <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>
+                                            </ul>
+                                            <span className="post-icons like-icon like-emojis"></span>Like</a>,
+                                        <a><span className="post-icons comment-icon"></span>Comment</a>,
+                                        <a><span className="post-icons share-icon"></span>Share</a>
+                                    ]}
+                                >
+                                    <div className="p-16">
+                                        <Title level={5} className="post-title f-16">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>
+                                        <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually.  You read correctly</Paragraph>
+                                        <ul className="card-actions-count pl-0">
+                                            <li>25<span> Loves</span></li>
+                                            <li>5<span> Claps</span></li>
+                                            <li>10<span> Whistles</span></li>
+                                        </ul>
+                                        <div className="post-tag">
+                                            <Tag className="f-12 px-16">#CSC Tech</Tag>
+                                            <Tag className="f-12 px-16">#Computer</Tag>
+                                            <Tag className="f-12 px-16">#Techee</Tag>
+                                        </div>
+                                    </div>
+                                </Card>
+                                <div className="post-comment px-16">
+                                    {comments.length > 0 && <CommentList comments={comments} />}
+                                    <Comment
+                                        avatar={
+                                            <Avatar src={user} />
+                                        }
+                                        content={
+                                            <Editor
+                                                onChange={this.handleChange}
+                                                onSubmit={this.handleSubmit}
+                                                submitting={submitting}
+                                                value={value}
+                                            />
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Modal>
+                </div>
+
+                {/* Documents Post */}
+                <div className="post-card comment-show">
+                    <Card title={videotitle} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
+                        <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                <span className="post-icons more-icon mr-0"></span>
+                            </a>
+                        </Dropdown>}
+                        actions={[
+                            <a className="like-emojis">
+                                <ul class="l-emojis">
+                                    <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
+                                    <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
+                                    <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>
+                                </ul>
+                                <span className="post-icons like-icon like-emojis"></span>Like</a>,
+                            <a><span className="post-icons comment-icon"></span>Comment</a>,
+                            <Dropdown overlay={sharemenu} trigger={['click']} placement="topRight">
+                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
+                            </Dropdown>,
+                        ]}
+                    >
+                        <div>
+                        </div>
+                        <div className="p-16">
+                            <Title level={5} className="post-title f-16">IT And Engineering(CSE) Mini Projects - Engineering </Title>
+                            <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a
+                                    wide range of classes virtually.  You read correctly</Paragraph>
+                            <div className="justify-content-around">
+                                <List
+                                    dataSource={data}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <List.Item.Meta
+                                                avatar={<span className="sharebox-icons word-icon"></span>}
+                                                title={<div className="f-12 doc-text mb-0">Mini Project.Doc</div>}
+                                                description={<div className="f-10">150 KB</div>} 
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                                <List
+                                    dataSource={data}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <List.Item.Meta
+                                                avatar={<span className="sharebox-icons excel-icon"></span>}
+                                                title={<div className="f-12 doc-text mb-0">Project Members list.xl</div>}
+                                                description={<div className="f-10">40 KB</div>} 
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                                <List
+                                    dataSource={data}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <List.Item.Meta
+                                                avatar={<span className="sharebox-icons powerpoint-icon"></span>}
+                                                title={<div className="f-12 doc-text mb-0">Power Point Slides.PPT</div>}
+                                                description={<div className="f-10">150 KB</div>} 
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
                             <ul className="card-actions-count pl-0">
                                 <li>25<span> Loves</span></li>
                                 <li>5<span> Claps</span></li>
