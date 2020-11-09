@@ -752,7 +752,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                     </Card>
                     <div className="post-comment px-16">
                         {comments.length > 0 && <CommentList comments={comments} />}
-                        
+
                     </div>
                     <Modal
                         className="post-preview"
@@ -819,7 +819,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                     </Modal>
                 </div>
 
-    {/* Reply card */}
+                {/* Reply card */}
 
 
             </div>

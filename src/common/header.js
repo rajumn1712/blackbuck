@@ -80,7 +80,7 @@ const menu = (
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="4">
-            <Link to="/posts"><PoweroffOutlined />Sign Out</Link>
+            <Link to="/" onClick={() => { userLogout(); userManager.signoutRedirect() }}><PoweroffOutlined />Sign Out</Link>
         </Menu.Item>
     </Menu >
 );
@@ -212,22 +212,22 @@ class HeaderComponent extends React.Component {
                                 title="John Doe"
                                 description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                             />
-                             <Meta
+                            <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
                                 description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                             />
-                             <Meta
+                            <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
                                 description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim Lorem ipsum dolor sit amet,</p>}
                             />
-                             <Meta
+                            <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
                                 description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                             />
-                             <Meta
+                            <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
                                 description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
