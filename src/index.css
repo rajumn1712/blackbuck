@@ -130,8 +130,13 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .friends-list:hover .addfrnd-btn, .friends-list:hover .removefrnd-btn{opacity: 1; transition: opacity 80ms linear;}
 .more-frnd-btn{width: 36px; height: 36px; border-radius: 10px; background: var(--white); box-shadow: var(--boxshadow); position: absolute; top: 50%; transform: translateY(-50%); right: 0;
   display: flex; align-items: center; justify-content: center;}
+.icon.left-arrow{background-position: -483px -203px;}
 .icon.right-arrow{background-position: -460px -203px;}
+.more-frnd-btn:hover .icon.left-arrow{background-position: -483px -227px;}
 .more-frnd-btn:hover .icon.right-arrow{background-position: -460px -227px;}
+.more-frnd-btn.prev{left: 16px; z-index: 9;}
+.more-frnd-btn.next{right: 16px; z-index: 9;}
+.more-frnd-btn:hover{background: var(--primary);}
 @media (min-width: 1200px) {
   .container { width: 1140px; box-sizing: content-box; margin: auto; }
 }

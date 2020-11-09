@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Typography, Image, Tag, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Modal, videoFile, Popover } from 'antd';
+import { Row, Col, Card, Avatar, Typography, Image, Tag, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Modal, videoFile, Popover, Carousel } from 'antd';
 import moment from 'moment';
 // import FbImageLibrary from 'react-fb-image-grid';
 import user from '../../styles/images/user.jpg';
@@ -11,7 +11,7 @@ import Whistle from '../../styles/images/whistle.gif';
 import Video from '../../styles/images/video.mp4';
 import Warning from '../../styles/images/warning.png';
 import './post.css';
-import '../../index.css'
+import '../../index.css';
 import '../../styles/theme.css';
 import ReactPhotoGrid from 'react-photo-grid';
 import Alert from '../Alert';
@@ -306,11 +306,31 @@ wide range of classes virtually.  You read correctly</Paragraph>
                         width="100%"
                     >
                         <div className="post-preview-box post-card comment-show">
-                            <div className="preview-image">
+                            <Row align="middle">
+                            <Col xs={24} sm={16} md={18} lg={18}>
                                 {/* <img src={PostImage} className="overlayimage" /> */}
-                                <img src={PostImage} />
-                            </div>
-                            <div className="preview-content">
+                                {/* <img src={PostImage} /> */}
+                                <div className="preview-image">
+                                    <a className="more-frnd-btn prev"><span className="icon left-arrow mr-0"></span></a>
+                                    <Carousel>
+                                        <div>
+                                            <img src={PostImage} />
+                                        </div>
+                                        <div>
+                                            <img src={PostImage} />
+                                        </div>
+                                        <div>
+                                            <img src={PostImage} />
+                                        </div>
+                                        <div>
+                                            <img src={PostImage} />
+                                        </div>
+                                    </Carousel>
+                                    <a className="more-frnd-btn next"><span className="icon right-arrow mr-0"></span></a>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={8} md={6} md={6}>
+                                <div className="preview-content">
                                 <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
                                     <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
                                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -360,7 +380,9 @@ wide range of classes virtually.  You read correctly</Paragraph>
                                         }
                                     />
                                 </div>
-                            </div>
+                                </div>
+                            </Col>
+                            </Row>
                         </div>
                     </Modal>
                     {/* Alert */}
@@ -489,73 +511,6 @@ offering a wide range of classes virtually.  You read correctly</p>
                             }
                         />
                     </div>
-                    <Modal
-                        className="post-preview"
-                        visible={visible}
-                        // title="Title"
-                        onOk={this.handleOk}
-                        onCancel={this.handleCancel}
-                        footer={null}
-                        width="100%"
-                    >
-                        <div className="post-preview-box post-card comment-show">
-                            <div className="preview-image">
-                                {/* <img src={PostImage} className="overlayimage" /> */}
-                                <img src={PostImage} />
-                            </div>
-                            <div className="preview-content">
-                                <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
-                                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-                                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                            <span className="post-icons more-icon mr-0"></span>
-                                        </a>
-                                    </Dropdown>}
-                                    actions={[
-                                        <a className="like-emojis">
-                                            <ul class="l-emojis">
-                                                <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
-                                                <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
-                                                <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>
-                                            </ul>
-                                            <span className="post-icons like-icon like-emojis"></span>Like</a>,
-                                        <a><span className="post-icons comment-icon"></span>Comment</a>,
-                                        <a><span className="post-icons share-icon"></span>Share</a>
-                                    ]}
-                                >
-                                    <div className="p-16">
-                                        <Title level={5} className="post-title f-16">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>
-                                        <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually.  You read correctly</Paragraph>
-                                        <ul className="card-actions-count pl-0">
-                                            <li>25<span> Loves</span></li>
-                                            <li>5<span> Claps</span></li>
-                                            <li>10<span> Whistles</span></li>
-                                        </ul>
-                                        <div className="post-tag">
-                                            <Tag className="f-12 px-16">#CSC Tech</Tag>
-                                            <Tag className="f-12 px-16">#Computer</Tag>
-                                            <Tag className="f-12 px-16">#Techee</Tag>
-                                        </div>
-                                    </div>
-                                </Card>
-                                <div className="post-comment px-16">
-                                    {comments.length > 0 && <CommentList comments={comments} />}
-                                    <Comment
-                                        avatar={
-                                            <Avatar src={user} />
-                                        }
-                                        content={
-                                            <Editor
-                                                onChange={this.handleChange}
-                                                onSubmit={this.handleSubmit}
-                                                submitting={submitting}
-                                                value={value}
-                                            />
-                                        }
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </Modal>
                 </div>
 
                 {/* Documents Post */}
@@ -661,73 +616,6 @@ offering a wide range of classes virtually.  You read correctly</p>
                             }
                         />
                     </div>
-                    <Modal
-                        className="post-preview"
-                        visible={visible}
-                        // title="Title"
-                        onOk={this.handleOk}
-                        onCancel={this.handleCancel}
-                        footer={null}
-                        width="100%"
-                    >
-                        <div className="post-preview-box post-card comment-show">
-                            <div className="preview-image">
-                                {/* <img src={PostImage} className="overlayimage" /> */}
-                                <img src={PostImage} />
-                            </div>
-                            <div className="preview-content">
-                                <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
-                                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-                                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                            <span className="post-icons more-icon mr-0"></span>
-                                        </a>
-                                    </Dropdown>}
-                                    actions={[
-                                        <a className="like-emojis">
-                                            <ul class="l-emojis">
-                                                <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
-                                                <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
-                                                <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>
-                                            </ul>
-                                            <span className="post-icons like-icon like-emojis"></span>Like</a>,
-                                        <a><span className="post-icons comment-icon"></span>Comment</a>,
-                                        <a><span className="post-icons share-icon"></span>Share</a>
-                                    ]}
-                                >
-                                    <div className="p-16">
-                                        <Title level={5} className="post-title f-16">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>
-                                        <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually.  You read correctly</Paragraph>
-                                        <ul className="card-actions-count pl-0">
-                                            <li>25<span> Loves</span></li>
-                                            <li>5<span> Claps</span></li>
-                                            <li>10<span> Whistles</span></li>
-                                        </ul>
-                                        <div className="post-tag">
-                                            <Tag className="f-12 px-16">#CSC Tech</Tag>
-                                            <Tag className="f-12 px-16">#Computer</Tag>
-                                            <Tag className="f-12 px-16">#Techee</Tag>
-                                        </div>
-                                    </div>
-                                </Card>
-                                <div className="post-comment px-16">
-                                    {comments.length > 0 && <CommentList comments={comments} />}
-                                    <Comment
-                                        avatar={
-                                            <Avatar src={user} />
-                                        }
-                                        content={
-                                            <Editor
-                                                onChange={this.handleChange}
-                                                onSubmit={this.handleSubmit}
-                                                submitting={submitting}
-                                                value={value}
-                                            />
-                                        }
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </Modal>
                 </div>
                 {/* Group */}
                 <div className="post-card comment-show">
@@ -767,71 +655,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                     </Card>
                     <div className="post-comment px-16">
                         {comments.length > 0 && <CommentList comments={comments} />}
-                        
                     </div>
-                    <Modal
-                        className="post-preview"
-                        visible={visible}
-                        // title="Title"
-                        onOk={this.handleOk}
-                        onCancel={this.handleCancel}
-                        footer={null}
-                        width="100%"
-                    >
-                        <div className="post-preview-box post-card comment-show">
-                            <div className="preview-image">
-                                {/* <img src={PostImage} className="overlayimage" /> */}
-                                <img src={PostImage} />
-                            </div>
-                            <div className="preview-content">
-                                <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
-                                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-                                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                            <span className="post-icons more-icon mr-0"></span>
-                                        </a>
-                                    </Dropdown>}
-                                    actions={[
-                                        <a className="like-emojis">
-                                            <ul class="l-emojis">
-                                                <li><Tooltip title="Love"><a><img src={Love} /></a></Tooltip></li>
-                                                <li><Tooltip title="Claps"><a><img src={Claps} /></a></Tooltip></li>
-                                                <li><Tooltip title="Whistle"><a><img src={Whistle} /></a></Tooltip></li>
-                                            </ul>
-                                            <span className="post-icons like-icon like-emojis"></span>Like</a>,
-                                        <a><span className="post-icons comment-icon"></span>Comment</a>,
-                                        <a><span className="post-icons share-icon"></span>Share</a>
-                                    ]}
-                                >
-                                    <div className="p-16">
-                                        <Title level={5} className="post-title f-16">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>
-                                        <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually.  You read correctly</Paragraph>
-
-                                        <div className="post-tag">
-                                            <Tag className="f-12 px-16">#CSC Tech</Tag>
-                                            <Tag className="f-12 px-16">#Computer</Tag>
-                                            <Tag className="f-12 px-16">#Techee</Tag>
-                                        </div>
-                                    </div>
-                                </Card>
-                                <div className="post-comment px-16">
-                                    {comments.length > 0 && <CommentList comments={comments} />}
-                                    <Comment
-                                        avatar={
-                                            <Avatar src={user} />
-                                        }
-                                        content={
-                                            <Editor
-                                                onChange={this.handleChange}
-                                                onSubmit={this.handleSubmit}
-                                                submitting={submitting}
-                                                value={value}
-                                            />
-                                        }
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </Modal>
                 </div>
     {/* Reply card */}
             </div>
