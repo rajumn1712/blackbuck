@@ -114,27 +114,27 @@ const CommentList = ({ comments }) => (
 // );
 const sharepost = (
     <Menu className="share-pop">
-        <Menu.Item key="0">
-            <FacebookIcon size={24} borderRadius={24} />Facebook
+      <Menu.Item key="0">
+        <FacebookIcon size={24} borderRadius={24} />Facebook
       </Menu.Item>
-        <Menu.Item key="1">
-            <TwitterIcon size={24} borderRadius={24} />Twitter
+      <Menu.Item key="1">
+        <TwitterIcon size={24} borderRadius={24} />Twitter
       </Menu.Item>
-        <Menu.Item key="3">
-            <LinkedinIcon size={24} borderRadius={24} />LinkedIn
+      <Menu.Item key="3">
+        <LinkedinIcon size={24} borderRadius={24} />LinkedIn
       </Menu.Item>
-        <Menu.Item key="4">
-            <WhatsappIcon size={24} borderRadius={24} />Whatsapp
+      <Menu.Item key="4">
+        <WhatsappIcon size={24} borderRadius={24} />Whatsapp
       </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="5">
-            <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
+      <Menu.Divider />
+      <Menu.Item key="5">
+        <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
       </Menu.Item>
-        <Menu.Item key="6">
-            <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
+      <Menu.Item key="6">
+      <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
       </Menu.Item>
     </Menu>
-);
+  );
 
 const title = <Meta
     avatar={
@@ -249,7 +249,7 @@ class PostCard extends React.Component {
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
                             </Popover>,
                         ]}
-                        cover={<div style={{ width: '100%', position: 'relative' }}><ReactPhotoGrid
+                        cover={<div style={{width: '100%', position: 'relative'}}><ReactPhotoGrid
                             onImageClick={this.showModal}
                             data={imageData}
                             containerWidth={562}
@@ -269,9 +269,9 @@ class PostCard extends React.Component {
                             <Paragraph className="f-14 post-desc">Although social distancing has created many changes with CBU courses, we are still offering a
 wide range of classes virtually.  You read correctly</Paragraph>
                             <ul className="card-actions-count pl-0">
-                                <li>25<span> Loves</span></li>
-                                <li>5<span> Claps</span></li>
-                                <li>10<span> Whistles</span></li>
+                                <li><span className="counter-icon loves"></span>25<span> Loves</span></li>
+                                <li><span className="counter-icon claps"></span>5<span> Claps</span></li>
+                                <li><span className="counter-icon whistles"></span>10<span> Whistles</span></li>
                             </ul>
                             <div className="post-tag">
                                 <Tag className="f-12 px-16">#CSC Tech</Tag>
@@ -590,7 +590,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<span className="sharebox-icons word-icon mr-4"></span>}
+                                                avatar={<span className="doc-icons word"></span>}
                                                 title={<div className="f-12 doc-text mb-0">Mini Project.Doc</div>}
                                                 description={<div className="f-10">150 KB</div>}
                                             />
@@ -602,7 +602,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<span className="sharebox-icons excel-icon mr-4"></span>}
+                                                avatar={<span className="doc-icons excel"></span>}
                                                 title={<div className="f-12 doc-text mb-0">Project Members list.xl</div>}
                                                 description={<div className="f-10">40 KB</div>}
                                             />
@@ -614,7 +614,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<span className="sharebox-icons powerpoint-icon mr-4"></span>}
+                                                avatar={<span className="doc-icons powerpoint"></span>}
                                                 title={<div className="f-12 doc-text mb-0">Power Point Slides.PPT</div>}
                                                 description={<div className="f-10">150 KB</div>}
                                             />
@@ -767,7 +767,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                     </Card>
                     <div className="post-comment px-16">
                         {comments.length > 0 && <CommentList comments={comments} />}
-
+                        
                     </div>
                     <Modal
                         className="post-preview"
@@ -833,7 +833,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                         </div>
                     </Modal>
                 </div>
-                {/* Reply card */}
+    {/* Reply card */}
             </div>
         )
     }

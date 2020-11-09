@@ -20,9 +20,10 @@ class  FriendSuggestions extends Component {
                             <Paragraph>Vin Diesel</Paragraph>
                             <Paragraph className="friends-list--course">IT</Paragraph>
                         </div>
-                        <div className="addfrnd-btn">
+                        <a className="addfrnd-btn">
                             <span className="post-icons addfriend-icon mr-0"></span>
-                        </div>
+                        </a>
+                        <a className="removefrnd-btn"></a>
                     </div>
                     <div className="friends-list one">
                         <img src={userImage} width="100%" height="100%" />
@@ -30,9 +31,10 @@ class  FriendSuggestions extends Component {
                             <Paragraph className="_name">Andrew</Paragraph>
                             <Paragraph className="friends-list--course">CSE</Paragraph>
                         </div>
-                        <div className="addfrnd-btn">
+                        <a className="addfrnd-btn">
                             <span className="post-icons addfriend-icon mr-0"></span>
-                        </div>
+                        </a>
+                        <a className="removefrnd-btn"></a>
                     </div>
                     <div className="friends-list two">
                         <img src={sherlyn} width="100%" height="100%" />
@@ -40,9 +42,10 @@ class  FriendSuggestions extends Component {
                             <Paragraph className="_name">Andrew</Paragraph>
                             <Paragraph className="friends-list--course">CSE</Paragraph>
                         </div>
-                        <div className="addfrnd-btn">
+                        <a className="addfrnd-btn">
                             <span className="post-icons addfriend-icon mr-0"></span>
-                        </div>
+                        </a>
+                        <a className="removefrnd-btn"></a>
                     </div>
                     <div className="friends-list">
                         <img src={user_Image} width="100%" height="100%" />
@@ -50,9 +53,10 @@ class  FriendSuggestions extends Component {
                             <Paragraph>Vin Diesel</Paragraph>
                             <Paragraph className="friends-list--course">IT</Paragraph>
                         </div>
-                        <div className="addfrnd-btn">
+                        <a className="addfrnd-btn">
                             <span className="post-icons addfriend-icon mr-0"></span>
-                        </div>
+                        </a>
+                        <a className="removefrnd-btn"></a>
                     </div>
                     <div className="friends-list one">
                         <img src={user} width="100%" height="100%" />
@@ -60,10 +64,12 @@ class  FriendSuggestions extends Component {
                             <Paragraph className="_name">Andrew</Paragraph>
                             <Paragraph className="friends-list--course">CSE</Paragraph>
                         </div>
-                        <div className="addfrnd-btn">
+                        <a className="addfrnd-btn">
                             <span className="post-icons addfriend-icon mr-0"></span>
-                        </div>
+                        </a>
+                        <a className="removefrnd-btn"></a>
                     </div>
+                    <a className="more-frnd-btn"><span className="icon right-arrow mr-0"></span></a>
                 </div>
             </div>
         )

@@ -84,3 +84,7 @@
 .ant-popover-inner{border-radius: 8px;}
 .share-pop li:hover .post-icons.sharenow-icon{background-position: -294px -226px;}
 .share-pop li:hover .post-icons.copylink-icon{background-position: -324px -226px;}
+.counter-icon{width: 20px;height: 20px;display: inline-block;vertical-align: bottom; background: url(../../styles/images/like-icons.png) no-repeat;margin-right: 5px;border: 1px solid var(--secondary); border-radius: 50%;}
+.counter-icon.loves {background-position: -2px -2px;}
+.counter-icon.claps {background-position: -32px -3px;}
+.counter-icon.whistles {background-position: -66px -3px;}

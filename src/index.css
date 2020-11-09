@@ -1,5 +1,6 @@
 @import 'styles/theme.css';
 html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
+.icon{width: 20px;height: 20px;vertical-align: initial;display: inline-block;vertical-align: text-bottom; background: url(../src/styles/images/icons.svg) no-repeat;margin-right: 5px;}
 /*----Alignments----*/
 .text-center{text-align: center !important;}
 .text-right{text-align: right !important;}
@@ -109,9 +110,9 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 
 
 /*---Friend Suggestions---*/
-.friends{display: flex; overflow: hidden; margin-bottom: 24px;}
+.friends{display: flex; overflow: hidden; margin-bottom: 24px; position: relative;}
 .friends-thead{display: flex;justify-content: space-between;}
-.friends-list {border-radius: 10px; background: var(--white); flex: 0 0 100px; height: 146px; overflow: hidden; box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); position: relative; margin-right: 16px;}
+.friends-list {border-radius: 10px; background: var(--white); flex: 0 0 98px; height: 130px; overflow: hidden; box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); position: relative; margin-right: 16px;}
 .friends-list.one .friends-list--name{background: linear-gradient(to top, rgba(70, 10, 156, 1), rgba(70, 10, 156, 0));}
 .friends-list.two .friends-list--name{background: linear-gradient(to top, rgba(112, 165, 113, 1), rgba(112, 165, 113, 0));}
 .friends-list img {object-fit: cover;}
@@ -123,8 +124,14 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .friends-list--course {font-size: 10px; color: var(--white); display: none;}
 .friends-list:hover .friends-list--course{ display: block;}
 .friends-list:hover ._name{transform: translate3d(0, -3px, 0); transition: transform 80ms linear;}
-.addfrnd-btn{position: absolute; background: var(--primary); box-shadow: var(--boxshadow); top: 8px; left: 8px; padding: 4px 5px; border-radius: 9px; cursor: pointer; opacity: 0;}
-.friends-list:hover .addfrnd-btn{opacity: 1; transition: opacity 80ms linear;}
+.addfrnd-btn{ background: var(--primary); box-shadow: var(--boxshadow); left: 8px;  border-radius: 8px;}
+.removefrnd-btn, .addfrnd-btn{position: absolute; top: 8px;padding: 4px 5px;border-radius: 8px; opacity: 0;}
+.removefrnd-btn{ width: 20px; height: 20px; display: inline-block; right: 8px; left: auto; background: rgba(255,255,255,0.85) url(../src/styles/images/icons.svg) no-repeat; background-position: -28px -83px; }
+.friends-list:hover .addfrnd-btn, .friends-list:hover .removefrnd-btn{opacity: 1; transition: opacity 80ms linear;}
+.more-frnd-btn{width: 36px; height: 36px; border-radius: 10px; background: var(--white); box-shadow: var(--boxshadow); position: absolute; top: 50%; transform: translateY(-50%); right: 0;
+  display: flex; align-items: center; justify-content: center;}
+.icon.right-arrow{background-position: -460px -203px;}
+.more-frnd-btn:hover .icon.right-arrow{background-position: -460px -227px;}
 @media (min-width: 1200px) {
   .container { width: 1140px; box-sizing: content-box; margin: auto; }
 }
