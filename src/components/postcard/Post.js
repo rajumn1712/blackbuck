@@ -114,27 +114,27 @@ const CommentList = ({ comments }) => (
 // );
 const sharepost = (
     <Menu className="share-pop">
-      <Menu.Item key="0">
-        <FacebookIcon size={24} borderRadius={24} />Facebook
+        <Menu.Item key="0">
+            <FacebookIcon size={24} borderRadius={24} />Facebook
       </Menu.Item>
-      <Menu.Item key="1">
-        <TwitterIcon size={24} borderRadius={24} />Twitter
+        <Menu.Item key="1">
+            <TwitterIcon size={24} borderRadius={24} />Twitter
       </Menu.Item>
-      <Menu.Item key="3">
-        <LinkedinIcon size={24} borderRadius={24} />LinkedIn
+        <Menu.Item key="3">
+            <LinkedinIcon size={24} borderRadius={24} />LinkedIn
       </Menu.Item>
-      <Menu.Item key="4">
-        <WhatsappIcon size={24} borderRadius={24} />Whatsapp
+        <Menu.Item key="4">
+            <WhatsappIcon size={24} borderRadius={24} />Whatsapp
       </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="5">
-        <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
+        <Menu.Divider />
+        <Menu.Item key="5">
+            <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
       </Menu.Item>
-      <Menu.Item key="6">
-      <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
+        <Menu.Item key="6">
+            <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
       </Menu.Item>
     </Menu>
-  );
+);
 
 const title = <Meta
     avatar={
@@ -249,7 +249,7 @@ class PostCard extends React.Component {
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
                             </Popover>,
                         ]}
-                        cover={<div style={{width: '100%', position: 'relative'}}><ReactPhotoGrid
+                        cover={<div style={{ width: '100%', position: 'relative' }}><ReactPhotoGrid
                             onImageClick={this.showModal}
                             data={imageData}
                             containerWidth={562}
@@ -767,7 +767,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                     </Card>
                     <div className="post-comment px-16">
                         {comments.length > 0 && <CommentList comments={comments} />}
-                        
+
                     </div>
                     <Modal
                         className="post-preview"
@@ -833,7 +833,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                         </div>
                     </Modal>
                 </div>
-    {/* Reply card */}
+                {/* Reply card */}
             </div>
         )
     }

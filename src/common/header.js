@@ -84,7 +84,7 @@ const menu = (
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="4">
-            <Link to="/posts"><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></Link>
+            <Link to="/posts" onClick={() => { userLogout(); userManager.signoutRedirect() }}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></Link>
         </Menu.Item>
     </Menu >
 );
