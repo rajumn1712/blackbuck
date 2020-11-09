@@ -7,6 +7,7 @@
 
 :root {
     --primary:#07A3B2;
+    --primaryhover:#20838c;
     --secondary: #D7FDFE;
     --textprimary:#272727;
     --textsecondary: #5D5D5D;
@@ -15,7 +16,6 @@
     --white: #ffffff;
     --black : #000000;
     --btnlight: #DEDFE1;
-    --btnprimary:#07A3B2;
     --boxshadow: 0 3px 15px rgba(0, 0, 0, 0.06);
     --transparent: transparent;
   }

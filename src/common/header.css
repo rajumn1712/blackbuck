@@ -105,6 +105,7 @@
 
 .main-header .ant-menu-item a:hover, .main-header .ant-menu-item-selected a {
     background: var(--primary);
+
 }
 
 .main-header .right-menu .avatar-menu, .main-header .right-menu .avatar-menu:hover {
@@ -199,20 +200,6 @@
     margin-top: 6px !important;
 }
 
-.notification-dropdown h3 {
-    font-size: 18px;
-    font-weight: 500;
-}
-
-.notification-dropdown .notification-list .ant-list-item-meta-title {
-    margin-bottom: 0px !important;
-    font-size: 16px;
-}
-
-.notification-dropdown .notification-list .ant-list-item-meta-description {
-    line-height: 18px !important;
-}
-
 .notification-dropdown .ant-list-item-meta-description.unread {
     font-weight: 600;
 }
@@ -254,6 +241,7 @@
 
 .profile-dropdown .ant-dropdown-menu-item {
     padding: 8px;
+    border-radius: 6px;
 }
 
 .profile-dropdown .ant-dropdown-menu-item a {
@@ -263,6 +251,7 @@
 
 .profile-dropdown .ant-dropdown-menu-item a:hover {
     color: var(--primary);
+    
 }
 
 .profile-dropdown .ant-dropdown-menu-item>a>.anticon:first-child {
@@ -281,6 +270,27 @@
 
 .notification-dropdown .ant-list-split .ant-list-item {
     border-bottom: none !important;
+}
+.notification-dropdown .noti-dropdown-header h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.notification-dropdown a{
+    color: var(--primary);
+}
+.notification-dropdown a:hover{
+    color: var(--primaryhover);
+    opacity: 0.9;
+}
+
+
+.notification-dropdown .noti-dropdown-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
 }
 
 .messenger-chat .ant-drawer-header, .messenger-chat .ant-drawer-body {
