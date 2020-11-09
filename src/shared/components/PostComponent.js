@@ -24,14 +24,31 @@ class PostComponent extends Component {
         postObj: {
             users: ['Public', 'Friends', 'College', 'Groups'],
             userName: 'john Doe',
-            savePost: {
-                lstFiles: [],
-                Title: null,
-                Caption: null,
-                IsAnonymousChecked: false,
-                tags: ['Unremovable', 'Tag 2', 'Tag 3'],
-            }
+            lstFiles: [],
+            Title: null,
+            Caption: null,
+            IsAnonymousChecked: false,
+            tags: ['Unremovable', 'Tag 2', 'Tag 3'],
         }
+    }
+
+    forMap = tag => {
+        const tagElem = (
+            <Tag
+                closable
+                onClose={e => {
+                    e.preventDefault();
+                    this.handleClose(tag);
+                }}
+            >
+                {tag}
+            </Tag>
+        );
+        return (
+            <span key={tag} style={{ display: 'inline-block' }}>
+                {tagElem}
+            </span>
+        );
     }
 
     componentDidMount() {
@@ -39,15 +56,15 @@ class PostComponent extends Component {
     }
 
     handleClose = removedTag => {
-        var savePost = { ...this.state.postObj.savePost };
-        const tags = this.state.tags.filter(tag => tag !== removedTag);
-        savePost.tags = tags;
-        this.setState({ savePost });
+        var postObj = { ...this.state.postObj };
+        const tags = postObj.tags.filter(tag => tag !== removedTag);
+        postObj.tags = tags;
+        this.setState({ postObj: postObj });
     };
     render() {
         const { type, visible } = this.props.type;
         const { postObj } = this.state;
-        const tags={...this.state.savePost}
+        const tags = { ...this.state.postObj }
         const menu = (
             <Menu className="menu-droupdown">
                 {postObj.users?.map((item, indx) =>
@@ -70,15 +87,7 @@ class PostComponent extends Component {
                 <Checkbox className="ml-8 mt-8" checked={postObj.IsAnonymousChecked}></Checkbox>
             </div>
         </div>
-        const tagElem = tag => (
-            <Tag
-                className="edit-tag"
-                key={tag}
-                onClose={() => this.handleClose(tag)}
-            >
-            </Tag>
-        );
-        const tagRepeat = tags.map(tagElem)
+        const tagRepeat = tags.tags?.map(this.forMap);
         return (
             <Modal className="share-popup"
                 title={title}
@@ -99,9 +108,9 @@ class PostComponent extends Component {
                 </div>
                 }
                 {type !== 'text' &&
-                    <p className="title-img mb-0"><Input placeholder="Title of the image here" value={postObj.savePost.Title} /></p>
+                    <p className="title-img mb-0"><Input placeholder="Title of the image here" value={postObj.Title} /></p>
                 }
-                {type !== 'text' && <p className="caption-image"><Input placeholder="Add a caption of image, if you like" value={postObj.savePost.Caption} /></p>}
+                {type !== 'text' && <p className="caption-image"><Input placeholder="Add a caption of image, if you like" value={postObj.Caption} /></p>}
                 {tagRepeat}
             </Modal>
         )
