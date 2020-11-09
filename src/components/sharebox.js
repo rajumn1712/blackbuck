@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message, Input, Tag, Image } from 'antd'
+import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, Dropdown, Checkbox, Upload, message, Input, Tag, Image, Divider } from 'antd'
 import { DownOutlined, InboxOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { TweenOneGroup } from 'rc-tween-one';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { userLogout } from '../reducers/auth';
 import GroupImage from '../styles/images/groupimage.png';
 import OkIcon from '../styles/images/okicon.png';
 import Audio from '../styles/images/audio.png';
-import Storage from '../styles/images/storage.png';
 import Video from '../styles/images/video.mp4';
 const { Header } = Layout;
 const { Meta } = Card;
@@ -132,7 +131,7 @@ class ShareBox extends Component {
             <div style={{ display: 'flex' }}>{function onChange(e) {
                 console.log(`checked = ${e.target.checked}`);
             }}
-                <div className="lable-height"><span className="f-9 text-gray">Post</span><p className="check-text">Anonymous</p></div>
+                <div className="lable-height"><span className="f-10 text-gray">Post</span><p className="check-text f-12">Anonymous</p></div>
                 <Checkbox className="ml-8 mt-8"></Checkbox>
             </div>
         </div>
@@ -145,7 +144,7 @@ class ShareBox extends Component {
                     <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons audio-icon"></span><p className="text-hover mb-0">Audio</p></Link></li>
                     <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons document-icon"></span><p className="text-hover mb-0">Docs</p></Link></li>
                     <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons gif-icon"></span><p className="text-hover mb-0">GIF</p></Link></li>
-                    <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons vedio-icon"></span><p className="text-hover mb-0">Video</p></Link></li>
+                    <li><Link to="" className="icon-animation" onClick={() => this.openpopup()}><span className="sharebox-icons video-icon"></span><p className="text-hover mb-0">Video</p></Link></li>
                 </ul>
                 <Modal className="share-popup"
                     title={title}
@@ -160,42 +159,43 @@ class ShareBox extends Component {
                             Post
                         </Button></div>
                     ]}>
-
+                    
+                     {/* Text popup */}
+                     <div className="upload-image"> 
+                    <p></p> 
+                        <div className="title-img mb-0"><Input placeholder="Title here" /></div>
+                        <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
+                    </div> 
+                    <Divider dashed />
                     {/* Image popup */}
                     <div className="upload-image">
                         <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
                         <div class="image-close"><span className="close-icon"></span></div> 
-                        <Dragger {...props}>
-                            <Avatar src={Storage} />
+                        <Dragger className="radious" {...props}>
+                            <span className="sharebox-icons photo-icon"></span>
                             <p className="ant-upload-text">Upload Image</p>
                         </Dragger>
 
                         <div className="title-img"><Input placeholder="Title of the image here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
                     </div>
-
-                    {/* Text popup */}
-                     <div className="upload-image"> 
-                    <p></p> 
-                        <div className="title-img mb-0"><Input placeholder="Title here" /></div>
-                        <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>  
-
+                    <Divider dashed />
                     {/* Audio popup */}
                      <div className="upload-image">
-                     <div className="speekar-block mb-8">
-                            <Avatar src={Audio} />
-                            <div className="speekar-text"><Avatar className="ok-image" src={OkIcon} /></div>
+                     <div className="speekar-block mb-16">
+                            <Avatar className="mr-8" src={Audio} />
+                            <div class="image-close"><span className="close-icon"></span></div> 
+                            <div className="speekar-text"><Avatar className="ok-image mx-8" src={OkIcon} /></div>
                     </div>
                     <Dragger {...props}>
-                        <span className="sharebox-icons speekar-icon mb-4"></span>
+                        <span className="sharebox-icons audio-icon mb-4"></span>
                         <p className="ant-upload-text mb-0">Upload Audio</p>
                     </Dragger>
                     
                     <div className="title-img mb-0"><Input placeholder="Upload Audio here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
                     </div>   
-
+                    <Divider dashed />
                     {/* document popup */}
                     <div className="upload-image">
                      <Dragger {...props}>
@@ -203,40 +203,43 @@ class ShareBox extends Component {
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             listType="picture"
                             defaultFileList={[...fileList]}  >
-                            <Button icon={<UploadOutlined />}>Upload</Button>
+                            
+                            <span className="sharebox-icons document-icon mb-4"></span>
+                            <p className="ant-upload-text">Upload Document</p>
                         </Upload> </Dragger>
                         <div className="title-img mb-0"><Input placeholder="Upload Documents here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
                     </div>  
-
+                    <Divider dashed />
                     {/* Gif popup */}
                      <div className="upload-image">
                     <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
+                    <div class="image-close"><span className="close-icon"></span></div> 
                     <div class="image-close"></div>
                         <Dragger {...props}>
-                            <Avatar src={Storage} />
+                        <span className="sharebox-icons gif-icon"></span>
                             <p className="ant-upload-text">Upload Gif</p>
                         </Dragger>
 
                         <div className="title-img"><Input placeholder="Upload Gif here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
                     </div>  
-
-                    {/* Vedio popup */}
+                    <Divider dashed />
+                    {/* Video popup */}
                      <div className="upload-image">
-                    <div> <video width="100%" controls>
+                    <div> <div class="image-close"><span className="close-icon"></span></div>  <video width="100%" controls>
                         <source src={Video}/>
                     </video>   </div>
                     <div class="image-close"></div>
                         <Dragger {...props}>
-                            <Avatar src={Storage} />
+                        <span className="sharebox-icons video-icon mb-4"></span>
                             <p className="ant-upload-text">Upload Video</p>
                         </Dragger>
 
                         <div className="title-img"><Input placeholder="Upload Video here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
                     </div>  
-
+                    <Divider dashed />
                     {/* TAGS */}
                     <div className="tags">
                         <div style={{ margin: 10 }}>

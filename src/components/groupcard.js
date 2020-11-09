@@ -49,7 +49,7 @@ class GroupCard extends Component {
                                     <List.Item.Meta 
                                         avatar={<Avatar className="mt-4" src={GroupImage} /> }
                                         title={<div>IT Group<span className="icons-small lock-icon"></span></div>}
-                                        description={<div className="f-12 text-overflow"><span>156 Members</span> | <span>14 Posts</span></div>}
+                                        description={<div className="f-12 text-overflow text-hash"><span className="fw-400">156</span> Members | <span className="fw-400">14</span> Posts</div>}
                                     />
                                 </List.Item>   
                         )} >
@@ -66,7 +66,7 @@ class GroupCard extends Component {
                                     <List.Item.Meta
                                         avatar={<Avatar src={GroupImage1} /> }
                                         title=" Walkina"
-                                        description={<div className="f-12 text-overflow"><span>2K Members</span> | <span>245 Posts</span></div>}
+                                        description={<div className="f-12 text-overflow text-hash"><span className="fw-400">2K</span> Members | <span className="fw-400">245</span> Posts</div>}
                                     />
                                 </List.Item>
                             )} >
@@ -84,7 +84,7 @@ class GroupCard extends Component {
                                     <List.Item.Meta
                                         avatar={<Avatar src={GroupImage2} /> }
                                         title="CSC Champs" 
-                                        description={<div className="f-12 text-overflow"><span>954 Members</span> | <span>55 Posts</span> </div> } 
+                                        description={<div className="f-12 text-overflow text-hash"><span className="fw-400">954</span> Members | <span className="fw-400">55</span> Posts </div> } 
                                     />  
                                 </List.Item>
                             )} >
@@ -102,7 +102,7 @@ class GroupCard extends Component {
                                     <List.Item.Meta
                                         avatar={<Avatar src={GroupImage1} /> }
                                         title="IT Group"
-                                        description={<div className="f-12 text-overflow"><span>2K Members</span> | <span>245 Posts</span></div>}
+                                        description={<div className="f-12 text-overflow text-hash"><span className="fw-400">2K</span> Members | <span className="fw-400">245 </span>Posts</div>}
                                     />
                                     
                                     

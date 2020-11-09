@@ -104,7 +104,7 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .reight-rail .ant-list-item-meta-avatar{ margin-right: 12px;}
 .reight-rail .ant-list-item-meta-title{margin-bottom: 0px;}
 .text-center{text-align: center;}
-.reight-rail .ant-list-items{border-bottom: 1px solid #D6E6FB;}
+.reight-rail .ant-list-items, .border-below{border-bottom: 1px solid #D6E6FB;}
 .reight-rail .ant-card-extra{padding: 0;}
 .justify-content-around{display: flex;justify-content: space-around;}
 
