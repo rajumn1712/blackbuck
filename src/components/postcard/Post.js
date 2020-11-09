@@ -573,7 +573,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<span className="sharebox-icons word-icon"></span>}
+                                                avatar={<span className="sharebox-icons word-icon mr-4"></span>}
                                                 title={<div className="f-12 doc-text mb-0">Mini Project.Doc</div>}
                                                 description={<div className="f-10">150 KB</div>}
                                             />
@@ -585,7 +585,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<span className="sharebox-icons excel-icon"></span>}
+                                                avatar={<span className="sharebox-icons excel-icon mr-4"></span>}
                                                 title={<div className="f-12 doc-text mb-0">Project Members list.xl</div>}
                                                 description={<div className="f-10">40 KB</div>}
                                             />
@@ -597,7 +597,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<span className="sharebox-icons powerpoint-icon"></span>}
+                                                avatar={<span className="sharebox-icons powerpoint-icon mr-4"></span>}
                                                 title={<div className="f-12 doc-text mb-0">Power Point Slides.PPT</div>}
                                                 description={<div className="f-10">150 KB</div>}
                                             />

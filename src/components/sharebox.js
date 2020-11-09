@@ -163,8 +163,8 @@ class ShareBox extends Component {
 
                     {/* Image popup */}
                     <div className="upload-image">
-                        {/* <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                        <div class="image-close"><span className="close-icon"></span></div> */}
+                        <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+                        <div class="image-close"><span className="close-icon"></span></div> 
                         <Dragger {...props}>
                             <Avatar src={Storage} />
                             <p className="ant-upload-text">Upload Image</p>
@@ -175,14 +175,14 @@ class ShareBox extends Component {
                     </div>
 
                     {/* Text popup */}
-                    {/* <div className="upload-image"> 
+                     <div className="upload-image"> 
                     <p></p> 
                         <div className="title-img mb-0"><Input placeholder="Title here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>  */}
+                    </div>  
 
                     {/* Audio popup */}
-                    {/* <div className="upload-image">
+                     <div className="upload-image">
                      <div className="speekar-block mb-8">
                             <Avatar src={Audio} />
                             <div className="speekar-text"><Avatar className="ok-image" src={OkIcon} /></div>
@@ -194,10 +194,10 @@ class ShareBox extends Component {
                     
                     <div className="title-img mb-0"><Input placeholder="Upload Audio here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>   */}
+                    </div>   
 
                     {/* document popup */}
-                    {/* <div className="upload-image">
+                    <div className="upload-image">
                      <Dragger {...props}>
                         <Upload className="mb-8"
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -207,10 +207,10 @@ class ShareBox extends Component {
                         </Upload> </Dragger>
                         <div className="title-img mb-0"><Input placeholder="Upload Documents here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>  */}
+                    </div>  
 
                     {/* Gif popup */}
-                    {/* <div className="upload-image">
+                     <div className="upload-image">
                     <Image className="image-scroll mb-8 p-0" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"/>
                     <div class="image-close"></div>
                         <Dragger {...props}>
@@ -220,10 +220,10 @@ class ShareBox extends Component {
 
                         <div className="title-img"><Input placeholder="Upload Gif here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>  */}
+                    </div>  
 
                     {/* Vedio popup */}
-                    {/* <div className="upload-image">
+                     <div className="upload-image">
                     <div> <video width="100%" controls>
                         <source src={Video}/>
                     </video>   </div>
@@ -235,7 +235,7 @@ class ShareBox extends Component {
 
                         <div className="title-img"><Input placeholder="Upload Video here" /></div>
                         <div className="caption-image"><Input placeholder="Add a caption of image, if you like" /></div>
-                    </div>   */}
+                    </div>  
 
                     {/* TAGS */}
                     <div className="tags">
