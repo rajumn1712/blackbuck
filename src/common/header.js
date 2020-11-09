@@ -60,6 +60,7 @@ const menu = (
     <Menu className="profile-dropdown">
         <Menu.Item key="0">
             <Meta
+            className="account-holder"
                 avatar={<Avatar src={avatar} />}
                 title="John Doe"
                 description="See your profile"
@@ -67,20 +68,20 @@ const menu = (
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="1">
-            <Link to="/about"><SwapOutlined />Switch Accounts
+            <Link to="/about"><span className="icons swap-icon" /><span className="pl-16">Switch Accounts</span>
             </Link>
         </Menu.Item>
         <Menu.Item key="2">
-            <Link to="/contact"><SettingOutlined />Settings & Privacy
+            <Link to="/contact"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
             </Link>
         </Menu.Item>
         <Menu.Item key="3">
-            <Link to="/posts"><GlobalOutlined />Help & Support
+            <Link to="/posts"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
             </Link>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="4">
-            <Link to="/posts"><PoweroffOutlined />Sign Out</Link>
+            <Link to="/posts"><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></Link>
         </Menu.Item>
     </Menu >
 );

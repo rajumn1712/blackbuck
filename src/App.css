@@ -327,14 +327,14 @@ body,h1,h2,h3,h4,h5,h6,p {
 }
 
 .premium-icon{
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     vertical-align: initial;
     display: inline-block;
     cursor: pointer;
     vertical-align: middle;
     background: url(../src/styles/images/icons.svg) no-repeat;
-    background-position: -6px -78px;
+    background-position:-6px -84px;
     margin-left: 4px;
 }
 .profile-card .ant-card-actions > li:not(:last-child) {
