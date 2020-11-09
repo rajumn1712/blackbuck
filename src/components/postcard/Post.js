@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Typography, Image, Tag, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Modal, videoFile } from 'antd';
+import { Card, Avatar, Typography, Image, Tag, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Modal, videoFile, Popover } from 'antd';
 import moment from 'moment';
 // import FbImageLibrary from 'react-fb-image-grid';
 import user from '../../styles/images/user.jpg';
@@ -89,29 +89,52 @@ const CommentList = ({ comments }) => (
     />
 );
 
-const sharemenu = (
-    <Menu className="custom-dropdown">
-        <Menu.Item key="0">
-            <FacebookIcon size={24} borderRadius={24} />Facebook
+// const sharemenu = (
+//     <Menu className="custom-dropdown">
+//         <Menu.Item key="0">
+//             <FacebookIcon size={24} borderRadius={24} />Facebook
+//       </Menu.Item>
+//         <Menu.Item key="1">
+//             <TwitterIcon size={24} borderRadius={24} />Twitter
+//       </Menu.Item>
+//         <Menu.Item key="3">
+//             <LinkedinIcon size={24} borderRadius={24} />LinkedIn
+//       </Menu.Item>
+//         <Menu.Item key="4">
+//             <WhatsappIcon size={24} borderRadius={24} />Whatsapp
+//       </Menu.Item>
+//         <Menu.Divider />
+//         <Menu.Item key="5">
+//             <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
+//       </Menu.Item>
+//         <Menu.Item key="6">
+//             <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
+//       </Menu.Item>
+//     </Menu>
+// );
+const sharepost = (
+    <Menu className="share-pop">
+      <Menu.Item key="0">
+        <FacebookIcon size={24} borderRadius={24} />Facebook
       </Menu.Item>
-        <Menu.Item key="1">
-            <TwitterIcon size={24} borderRadius={24} />Twitter
+      <Menu.Item key="1">
+        <TwitterIcon size={24} borderRadius={24} />Twitter
       </Menu.Item>
-        <Menu.Item key="3">
-            <LinkedinIcon size={24} borderRadius={24} />LinkedIn
+      <Menu.Item key="3">
+        <LinkedinIcon size={24} borderRadius={24} />LinkedIn
       </Menu.Item>
-        <Menu.Item key="4">
-            <WhatsappIcon size={24} borderRadius={24} />Whatsapp
+      <Menu.Item key="4">
+        <WhatsappIcon size={24} borderRadius={24} />Whatsapp
       </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="5">
-            <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
+      <Menu.Divider />
+      <Menu.Item key="5">
+        <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
       </Menu.Item>
-        <Menu.Item key="6">
-            <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
+      <Menu.Item key="6">
+      <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
       </Menu.Item>
     </Menu>
-);
+  );
 
 const title = <Meta
     avatar={
@@ -222,16 +245,16 @@ class PostCard extends React.Component {
                                 </ul>
                                 <span className="post-icons like-icon like-emojis"></span>Like</a>,
                             <a><span className="post-icons comment-icon"></span>Comment</a>,
-                            <Dropdown overlay={sharemenu} trigger={['click']} placement="topRight">
+                            <Popover content={sharepost} trigger="click" placement="topRight">
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
-                            </Dropdown>,
+                            </Popover>,
                         ]}
-                        cover={<div style={{ width: 562 }}><ReactPhotoGrid
+                        cover={<div style={{width: '100%', position: 'relative'}}><ReactPhotoGrid
                             onImageClick={this.showModal}
                             data={imageData}
                             containerWidth={562}
                             girdSize="562x562"
-                        /></div>}
+                        /><span className="more-images">+2</span></div>}
                     >
                         <div>
                             {/* <Image src={imageData} /> */}
@@ -378,9 +401,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                 </ul>
                                 <span className="post-icons like-icon like-emojis"></span>Like</a>,
                             <a><span className="post-icons comment-icon"></span>Comment</a>,
-                            <Dropdown overlay={sharemenu} trigger={['click']} placement="topRight">
-                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
-                            </Dropdown>,
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>,
                         ]}
                     >
                         <div className="p-16 text-center">
@@ -418,9 +439,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                 </ul>
                                 <span className="post-icons like-icon like-emojis"></span>Like</a>,
                             <a><span className="post-icons comment-icon"></span>Comment</a>,
-                            <Dropdown overlay={sharemenu} trigger={['click']} placement="topRight">
-                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
-                            </Dropdown>,
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>,
                         ]}
                         cover={<div style={{ width: 562 }}> <video width="100%" controls>
                             <source src={Video} /> </video>   </div>}
@@ -556,9 +575,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                 </ul>
                                 <span className="post-icons like-icon like-emojis"></span>Like</a>,
                             <a><span className="post-icons comment-icon"></span>Comment</a>,
-                            <Dropdown overlay={sharemenu} trigger={['click']} placement="topRight">
-                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
-                            </Dropdown>,
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>,
                         ]}
                     >
                         <div>
@@ -724,9 +741,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                                 </ul>
                                 <span className="post-icons like-icon like-emojis"></span>Like</a>,
                             <a><span className="post-icons comment-icon"></span>Comment</a>,
-                            <Dropdown overlay={sharemenu} trigger={['click']} placement="topRight">
-                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
-                            </Dropdown>,
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>,
                         ]} >
                         <div>
                         </div>
@@ -818,10 +833,7 @@ offering a wide range of classes virtually.  You read correctly</p>
                         </div>
                     </Modal>
                 </div>
-
     {/* Reply card */}
-
-
             </div>
         )
     }
