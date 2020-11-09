@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Layout, Menu, Space, Row, Col } from 'antd';
-import { Link } from 'react-router-dom';
-import { userManager } from '../shared/authentication/auth';
-import { store } from '../store';
-import { userLogout } from '../reducers/auth';
+import { Row, Col } from 'antd';
 import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';

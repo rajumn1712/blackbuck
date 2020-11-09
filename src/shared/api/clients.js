@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 
 let apiClient = create({
-    baseURL: "https://jsonplaceholder.typicode.com/"
+    baseURL: "http://localhost:8529/_db/Blackbuck/"
 });
 
 export { apiClient }
