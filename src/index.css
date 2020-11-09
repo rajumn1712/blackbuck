@@ -146,3 +146,5 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .alert-popup .ant-modal-body{padding: 16px;}
 .alert-popup .ant-modal-footer{background: #F9F9F9; border-radius: 0 0 9px 8px; padding: 16px;}
 .alert-icon{width: 60px;}
+/*---ads---*/
+.ads img{width: 100%;}

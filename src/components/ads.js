@@ -12,10 +12,10 @@ class Ads extends Component {
 
     render() {
         return (
-        <div>
+        <div className="ads">
             <Title className="f-16" level={4}>Ads</Title> 
-               <img className="mb-8 image-shadow" src={PreviewRed} /> 
-               <img className="image-shadow" src={AdsImage} />
+            <img className="mb-8 image-shadow" src={PreviewRed} /> 
+            <img className="image-shadow" src={AdsImage} />
         </div>
         )
     }
