@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card, Divider } from 'antd'
+import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card, Divider, } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -36,7 +36,10 @@ const data = [
 
 const notifications = (
     <div className="notification-dropdown">
-        <h3>Notifications</h3>
+        <div className="noti-dropdown-header">
+            <h3>Notifications</h3>
+            <Link to="/" >View all</Link>
+        </div>
         <Divider className="m-0 mb-4" />
         <List
             className="notification-list"
@@ -60,7 +63,7 @@ const menu = (
     <Menu className="profile-dropdown">
         <Menu.Item key="0">
             <Meta
-            className="account-holder"
+                className="account-holder"
                 avatar={<Avatar src={avatar} />}
                 title="John Doe"
                 description="See your profile"
@@ -81,7 +84,7 @@ const menu = (
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="4">
-            <Link to="/posts"><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></Link>
+            <Link to="/posts" onClick={() => { userLogout(); userManager.signoutRedirect() }}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></Link>
         </Menu.Item>
     </Menu >
 );
@@ -120,8 +123,8 @@ class HeaderComponent extends React.Component {
                         <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
                             <Menu.Item key="home"><Link to="/"><span className="icons home-icon"></span></Link></Menu.Item>
                             <Menu.Item key="about"><Link to="/about"><span className="icons social-icon"></span></Link></Menu.Item>
-                            <Menu.Item key="contact"><Link to="/contact"><i className="icons suitcase-icon"></i></Link></Menu.Item>
-                            <Menu.Item key="posts"><Link to="/"><i className="icons lms-icon"></i></Link></Menu.Item>
+                            <Menu.Item key="contact"><Link to="/contact"><span className="icons suitcase-icon" /></Link></Menu.Item>
+                            <Menu.Item key="posts"><Link to="/"><span className="icons lms-icon" /></Link></Menu.Item>
                         </Menu>
                     </Col>
                     <Col span={8} >
@@ -133,8 +136,7 @@ class HeaderComponent extends React.Component {
                                 <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
                                     <Link to="/about">
                                         <Badge className="notification-count" count={5} showZero>
-                                            <i className="icons notification-icon">
-                                            </i>
+                                            <span className="icons notification-icon" />
                                         </Badge>
                                     </Link>
                                 </Dropdown>
@@ -213,22 +215,22 @@ class HeaderComponent extends React.Component {
                                 title="John Doe"
                                 description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                             />
-                             <Meta
+                            <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
                                 description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                             />
-                             <Meta
+                            <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
                                 description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim Lorem ipsum dolor sit amet,</p>}
                             />
-                             <Meta
+                            <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
                                 description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                             />
-                             <Meta
+                            <Meta
                                 avatar={<Avatar src={avatar} />}
                                 title="John Doe"
                                 description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
