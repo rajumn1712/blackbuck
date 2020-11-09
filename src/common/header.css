@@ -1,5 +1,4 @@
 @import '../styles/theme.css';
-
 .main-header {
     background: var(--bodybg) !important;
     padding: 0 24px 0 16px !important;
@@ -43,8 +42,9 @@
     padding: 10px 16px !important;
     border: 0 !important;
 }
-.header-searchbar .anticon-search svg{
-    width:20px;
+
+.header-searchbar .anticon-search svg {
+    width: 20px;
     height: 20px;
 }
 
@@ -61,7 +61,7 @@
     line-height: inherit !important;
 }
 
-.main-header .ant-menu-item{
+.main-header .ant-menu-item {
     top: -2px !important;
 }
 
@@ -188,7 +188,7 @@
     border-radius: 12px !important;
     background: var(--white);
     box-shadow: var(--boxshadow);
-    min-width: 280px !important;
+    min-width: 300px !important;
     margin-right: 16px;
     padding: 16px;
     max-height: calc(100vh - 60px);
@@ -199,21 +199,21 @@
     margin-top: 6px !important;
 }
 
-.notification-dropdown h3{
+.notification-dropdown h3 {
     font-size: 18px;
     font-weight: 500;
 }
 
-.notification-dropdown .notification-list .ant-list-item-meta-title{
+.notification-dropdown .notification-list .ant-list-item-meta-title {
     margin-bottom: 0px !important;
     font-size: 16px;
 }
 
-.notification-dropdown .notification-list .ant-list-item-meta-description{
+.notification-dropdown .notification-list .ant-list-item-meta-description {
     line-height: 18px !important;
 }
 
-.notification-dropdown .ant-list-item-meta-description.unread{
+.notification-dropdown .ant-list-item-meta-description.unread {
     font-weight: 600;
 }
 
@@ -223,43 +223,58 @@
     border-radius: 17px !important;
 }
 
-.profile-dropdown .ant-card-meta {
+.profile-dropdown .account-holder {
+    display: flex;
+    align-items: center;
     padding-top: 5px;
     padding-bottom: 5px;
+    max-width: 268px;
+}
+
+.profile-dropdown .account-holder .ant-avatar-image {
+    flex-shrink: 0;
 }
 
 .profile-dropdown .ant-card-meta .ant-card-meta-title {
     font-size: 20px;
-    margin-bottom: 5px;
-    line-height: 24px;
+    margin-bottom: 0;
+    line-height: 20px;
+}
+
+.profile-dropdown .account-holder .ant-card-meta-detail .ant-card-meta-description {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 400;
 }
 
 .profile-dropdown li {
-    margin: 6px 8px;
+    margin: 3px 8px;
+    line-height: 36px;
 }
-.profile-dropdown .ant-dropdown-menu-item{
-    padding:8px;
 
+.profile-dropdown .ant-dropdown-menu-item {
+    padding: 8px;
 }
-.profile-dropdown .ant-dropdown-menu-item a{
-    font-size: 16px;
+
+.profile-dropdown .ant-dropdown-menu-item a {
+    font-size: 15px;
     color: var(--textcolor);
 }
-.profile-dropdown .ant-dropdown-menu-item a:hover{
+
+.profile-dropdown .ant-dropdown-menu-item a:hover {
     color: var(--primary);
 }
 
-.profile-dropdown .ant-dropdown-menu-item > a > .anticon:first-child{
+.profile-dropdown .ant-dropdown-menu-item>a>.anticon:first-child {
     font-size: 20px;
     vertical-align: middle;
 }
-
 
 .notification-dropdown .ant-list-items .ant-list-item {
     padding: 5px;
 }
 
-.notification-dropdown .ant-list-items .ant-list-item:hover ,.messenger-drawer .ant-card-meta:hover{
+.notification-dropdown .ant-list-items .ant-list-item:hover, .messenger-drawer .ant-card-meta:hover {
     background-color: #F9F9F9;
     border-radius: 4px;
 }
@@ -268,10 +283,11 @@
     border-bottom: none !important;
 }
 
-.messenger-chat .ant-drawer-header, .messenger-chat .ant-drawer-body{
+.messenger-chat .ant-drawer-header, .messenger-chat .ant-drawer-body {
     padding: 16px;
 }
-.messenger-drawer .ant-card-meta{
+
+.messenger-drawer .ant-card-meta {
     display: flex;
     align-items: center;
     padding: 5px 3px;
@@ -282,12 +298,45 @@
     margin-bottom: 0 !important;
 }
 
-.messenger-drawer .chat-description{
+.messenger-drawer .chat-description {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 0 ;
+    margin-bottom: 0;
 }
+
+.icons.swap-icon {
+    background-position: -3px -252px;
+}
+
+.icons.settings-icon {
+    background-position: -32px -252px;
+}
+
+.icons.globe-icon {
+    background-position: -62px -252px;
+}
+
+.icons.signout-icon {
+    background-position: -91px -252px;
+}
+
+.profile-dropdown li a:hover .icons.swap-icon {
+    background-position: -3px -279px;
+}
+
+.profile-dropdown li a:hover .icons.settings-icon {
+    background-position: -32px -279px;
+}
+
+.profile-dropdown li a:hover .icons.globe-icon {
+    background-position: -62px -279px;
+}
+
+.profile-dropdown li a:hover .icons.signout-icon {
+    background-position: -91px -279px;
+}
+
 @media (min-width:576px) {
     .mobile-navigation {
         display: none !important;

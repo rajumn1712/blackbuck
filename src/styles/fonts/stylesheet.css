@@ -1,7 +1,9 @@
 @font-face {
     font-family: 'NeueHaasGroteskText Pro';
     src: url('NHaasGroteskTXPro-55Rg.woff2') format('woff2'),
-        url('NHaasGroteskTXPro-55Rg.woff') format('woff');
+        url('NHaasGroteskTXPro-55Rg.woff') format('woff'),
+        url('NHaasGroteskTXPro-55Rg.ttf') format('ttf');
+
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -10,7 +12,9 @@
 @font-face {
     font-family: 'NeueHaasGroteskText Pro Md';
     src: url('NHaasGroteskTXPro-65Md.woff2') format('woff2'),
-        url('NHaasGroteskTXPro-65Md.woff') format('woff');
+        url('NHaasGroteskTXPro-65Md.woff') format('woff'),
+        url('NHaasGroteskTXPro-65Md.ttf') format('ttf');
+
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -19,7 +23,9 @@
 @font-face {
     font-family: 'NeueHaasGroteskText Pro';
     src: url('NHaasGroteskTXPro-75Bd.woff2') format('woff2'),
-        url('NHaasGroteskTXPro-75Bd.woff') format('woff');
+        url('NHaasGroteskTXPro-75Bd.woff') format('woff'),
+        url('NHaasGroteskTXPro-75Bd.ttf') format('ttf');
+
     font-weight: bold;
     font-style: normal;
     font-display: swap;

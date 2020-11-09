@@ -1,5 +1,6 @@
 @import '../../styles/theme.css';
-.post-card{box-shadow: var(--boxshadow);}
+.post-card{margin-bottom: 24px;}
+.post-card .ant-card{box-shadow: var(--boxshadow) !important;}
 .post-card .ant-card-head{padding: 0 16px;}
 .post-card .ant-card-meta-title {margin-bottom: 0 !important; font-size: 16px;}
 .post-card .ant-card-head-title{padding: 19px 0 16px;}
@@ -56,8 +57,9 @@
 .card-actions-count li{font-weight: 500; margin-right: 30px;font-size: 13px;}
 .card-actions-count li span{font-size: 12px;font-weight: normal;}
 .custom-dropdown{min-width: 300px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 8px;}
-.custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 8px; border-radius: 6px; font-weight: 500;}
+.custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 12px 8px; border-radius: 6px; font-weight: 500; font-size: 15px;}
 .custom-dropdown li svg, .custom-dropdown li span {margin-right: 10px;}
+.custom-dropdown li a{display: block;}
 .post-card .ant-avatar-group .ant-avatar-string{font-size: 16px; line-height: 38px; font-weight: 500;}
 .post-image img{ width:100%;height: auto;}
 .overlayimage{ position: absolute;  top: 0;right: 0; left: 0; bottom: 0;}
@@ -74,3 +76,11 @@
 .post-preview .post-preview-box .preview-content .post-title ,.post-preview .post-preview-box .preview-content .post-desc{max-width: 360px;}
 .post-preview .preview-content .post-comment{margin-bottom: 5px;}
 .reply-comment .ant-form-item{margin-bottom: 5px !important;}
+.more-images{font-size: 36px; position: absolute; right: 60px; bottom: 60px; color: var(--white); background:rgba(0, 0, 0, 0.6); padding: 8px 16px; border-radius: 10px;}
+.share-pop{margin: -8px -8px 0; border-right: none; width: 280px;}
+.share-pop .ant-menu-item{padding: 12px 8px; display: flex; align-items: center; font-size: 15px; font-weight: 500;}
+.share-pop .ant-menu-item:hover, .share-pop .ant-menu-item-selected{background: #F5F5F5; border-radius: 6px; color: var(--primary)}
+.share-pop .ant-menu-item svg, .share-pop .ant-menu-item span{margin-right: 12px;}
+.ant-popover-inner{border-radius: 8px;}
+.share-pop li:hover .post-icons.sharenow-icon{background-position: -294px -226px;}
+.share-pop li:hover .post-icons.copylink-icon{background-position: -324px -226px;}
