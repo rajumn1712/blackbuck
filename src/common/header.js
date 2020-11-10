@@ -17,7 +17,7 @@ const onSearch = value => console.log(value);
 
 const data = [
     {
-        title: 'Vin Diesel ',
+        title: '3 days',
         descriptions: 'Although social distancing has created ',
     },
     {
@@ -41,20 +41,34 @@ const notifications = (
             <Link to="/" >View all</Link>
         </div>
         <Divider className="m-0 mb-4" />
-        <List
-            className="notification-list"
-            itemLayout="horizontal"
-            dataSource={data}
-            renderItem={item => (
-                <List.Item>
-                    <List.Item.Meta
-                        avatar={<Avatar src={avatar2} />}
-                        title={<a href="">{item.title}</a>}
-                        description={item.descriptions}
-                    />
-                </List.Item>
-            )}
-        />
+        <div className="notification-list">
+            <div className="notification-image">
+                <Avatar src={avatar2} />
+            </div>
+            <div className="notification-description unread">
+                <p><strong>Vin Diesel</strong> commented on your post.</p>
+                <span>3 minutes ago</span>
+            </div>
+        </div>
+        <div className="notification-list">
+            <div className="notification-image">
+                <Avatar src={avatar2} />
+            </div>
+            <div className="notification-description read">
+                <p><strong>Vin Diesel</strong> added to his story</p>
+                <span>3 days ago</span>
+            </div>
+        </div>
+        <div className="notification-list">
+            <div className="notification-image">
+                <Avatar src={avatar2} />
+            </div>
+            <div className="notification-description read">
+                <p><strong>Andrew</strong> mentioned you in the timeline.</p>
+                <span>18 hours ago</span>
+            </div>
+        </div>
+
     </div>
 
 );
