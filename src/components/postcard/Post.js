@@ -40,10 +40,10 @@ const images = [
 const menu = (
     <Menu className="custom-dropdown more-opt">
         <Menu.Item key="0">
-            <a><span className="post-icons edit-icon"></span>Save Post</a>
+            <a><span className="post-icons savepost-icon"></span>Save Post</a>
         </Menu.Item>
         <Menu.Item key="1">
-            <a><span className="post-icons savepost-icon"></span>Edit</a>
+            <a><span className="post-icons edit-icon"></span>Edit</a>
         </Menu.Item>
         <Menu.Item key="2">
             <a><span className="post-icons notify-icon"></span>Turn on Notifications</a>
@@ -360,7 +360,9 @@ wide range of classes virtually.  You read correctly</Paragraph>
                                             </ul>
                                             <span className="post-icons like-icon like-emojis"></span>Like</a>,
                                         <a><span className="post-icons comment-icon"></span>Comment</a>,
-                                        <a><span className="post-icons share-icon"></span>Share</a>
+                                        <Popover content={sharepost} trigger="click">
+                                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
+                                        </Popover>,
                                     ]}
                                 >
                                     <div className="p-16">
@@ -437,7 +439,9 @@ offering a wide range of classes virtually.  You read correctly</p>
                                 </ul>
                                 <span className="post-icons like-icon like-emojis"></span>Like</a>,
                             <a><span className="post-icons comment-icon"></span>Comment</a>,
-                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>,
+                            <Popover content={sharepost} trigger="click">
+                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
+                            </Popover>,
                         ]}
                     >
                         <div className="p-16 text-center">
@@ -475,7 +479,9 @@ offering a wide range of classes virtually.  You read correctly</p>
                                 </ul>
                                 <span className="post-icons like-icon like-emojis"></span>Like</a>,
                             <a><span className="post-icons comment-icon"></span>Comment</a>,
-                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>,
+                            <Popover content={sharepost} trigger="click">
+                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
+                            </Popover>,
                         ]}
                         cover={<div> <video width="100%" controls>
                             <source src={Video} /></video></div>}
@@ -526,7 +532,9 @@ offering a wide range of classes virtually.  You read correctly</p>
                                 </ul>
                                 <span className="post-icons like-icon like-emojis"></span>Like</a>,
                             <a><span className="post-icons comment-icon"></span>Comment</a>,
-                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>,
+                            <Popover content={sharepost} trigger="click">
+                                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
+                            </Popover>,
                         ]}
                     >
                         <div>
