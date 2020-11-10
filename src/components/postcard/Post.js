@@ -271,12 +271,29 @@ class PostCard extends React.Component {
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
                             </Popover>,
                         ]}
-                        cover={<div style={{width: '100%', position: 'relative'}}><ReactPhotoGrid
-                            onImageClick={this.showModal}
-                            data={imageData}
-                            containerWidth={562}
-                            girdSize="562x562"
-                        /><span className="more-images">+2</span></div>}
+                        // cover={<div style={{width: '100%', position: 'relative'}}><ReactPhotoGrid
+                        //     onImageClick={this.showModal}
+                        //     data={imageData}
+                        //     containerWidth={562}
+                        //     girdSize="562x562"
+                        // /><span className="more-images">+2</span></div>}
+                        cover={<div style={{width: '100%', position: 'relative'}}>
+                            <div class="images" onClick={this.showModal}>
+                                <div class="image-box">
+                                    <img src={PostImage} />
+                                </div>
+                                <div class="image-box four">
+                                    <img src={PostImage} />
+                                </div>
+                                <div class="image-box four">
+                                    <img src={PostImage} />
+                                </div>
+                                <div class="image-box four">
+                                    <img src={PostImage} />
+                                </div>
+                                <span class="more-images">+2</span>
+                            </div>
+                        </div>}
                     >
                         <div className="p-16">
                             <Title level={5} className="post-title f-16">Do you miss seeing the friendly faces of your fellow Colony Brands’ employees?</Title>

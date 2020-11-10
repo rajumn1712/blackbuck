@@ -76,7 +76,6 @@
 .post-preview .post-preview-box .preview-content .post-title ,.post-preview .post-preview-box .preview-content .post-desc{max-width: 360px;}
 .post-preview .preview-content .post-comment{margin-bottom: 5px;}
 .reply-comment .ant-form-item{margin-bottom: 5px !important;}
-.more-images{font-size: 36px; position: absolute; right: 60px; bottom: 60px; color: var(--white); background:rgba(0, 0, 0, 0.6); padding: 8px 16px; border-radius: 10px;}
 .share-pop{margin: -8px -8px 0; border-right: none; width: 280px;}
 .share-pop .ant-menu-item{padding: 12px 8px; display: flex; align-items: center; font-size: 16px; font-weight: 500; min-height: 52px; margin-bottom: 0 !important;}
 .share-pop .ant-menu-item:hover, .share-pop .ant-menu-item-selected{background: #F5F5F5; border-radius: 6px; color: var(--primary)}
@@ -99,3 +98,46 @@
 .anonymous-check .ant-checkbox{transform: scale(1.6)}
 .ant-checkbox-checked .ant-checkbox-inner{background: var(--primary); border-color: var(--primary);}
 .ant-checkbox-checked::after, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{border-color: var(--primary);}
+.images{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    position: relative;
+}
+.image-box{
+    width: 100%;
+    height: 200px;
+    font-size: 30px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+.image-box img {width: 100%;
+
+left: 0;
+top: 0;
+transform: scale(2.4);
+object-fit: cover;
+}
+.image2, .image3{
+    width: 100%;
+}
+.image-box.three{width: 50%;}
+.image-box.four{width: 33.333%;}
+.more-images{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    width: 33.333%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 30px;
+}

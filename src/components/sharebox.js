@@ -11,6 +11,9 @@ import GroupImage from '../styles/images/groupimage.png';
 import OkIcon from '../styles/images/okicon.png';
 import Audio from '../styles/images/audio.png';
 import Video from '../styles/images/video.mp4';
+import AudioPlayer from "react-h5-audio-player";
+import 'react-h5-audio-player/lib/styles.css';
+
 const { Header } = Layout;
 const { Meta } = Card;
 const { Dragger } = Upload;
@@ -231,6 +234,16 @@ class ShareBox extends Component {
                             <span className="sharebox-icons audio-upload"></span>
                             <p className="ant-upload-text mt-8 mb-0">Upload Audio</p>
                         </Dragger>
+                        <div className="mb-16">
+                            <AudioPlayer
+                                autoPlay
+                                src="http://example.com/audio.mp3"
+                                onPlay={e => console.log("onPlay")}
+                                layout="horizontal-reverse"
+                            
+                            />
+                            
+                        </div>
                         <div className="title-img">
                             <TextArea
                                 placeholder="Title of the audio here"
