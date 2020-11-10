@@ -1,0 +1,91 @@
+@import '../styles/theme.css';
+.coverpage {
+    position: relative;
+    background-color: #ffffff;
+}
+.coverpage img {
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: top center;
+}
+
+.coverpage:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: url(../styles/images/overlay.svg) no-repeat;
+    border-radius: 10px;
+}
+.user-statistic{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    background: #ffffff;
+    padding-bottom: 15px;
+}
+.user-statistic .ant-statistic{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-top: 20px;
+}
+.user-statistic .user-banner{
+    border: 0;
+    background: transparent;
+    margin-top: -100px;
+}
+.user-statistic .user-banner .ant-card-meta{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.user-statistic .user-banner .ant-card-meta .ant-avatar-image{
+    width: 170px;
+    height: 170px;
+    border-radius: 50px;
+}
+.user-statistic .user-banner .ant-card-body{
+    padding: 0 !important;
+}
+.user-statistic .user-banner .ant-card-meta-avatar{
+    padding-right: 0 !important;
+}
+.user-statistic .user-banner .ant-card-meta-detail{
+    text-align: center;
+    
+}
+.user-statistic .user-banner .ant-card-meta-title{
+    font-size: 22px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+.user-statistic .user-banner .ant-card-meta-description{
+    font-size: 14px;
+}
+.profile-tabs .ant-tabs-nav{
+    background-color: #ffffff;
+}
+.user-banner .premium-icon{
+    margin-bottom: 5px;
+}
+.profile-tabs .ant-tabs-tab{
+    font-size: 16px;
+}
+.profile-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color: var(--primary);
+    
+}
+
+.ant-tabs-ink-bar{
+    background: var(--primary);
+}
+.ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-top > div > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom > div > .ant-tabs-nav .ant-tabs-ink-bar{
+    height: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+
+}
