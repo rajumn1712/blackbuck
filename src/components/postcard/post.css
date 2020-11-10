@@ -46,7 +46,7 @@
 .post-card.comment-show .ant-card-actions{border-radius: 0;}
 .post-comment .ant-form-item-control-input-content{position: relative;}
 .post-btn{position: absolute; right: 4px; top: 4px;}
-.post-comment .ant-input{height: 40px !important; border-radius: 5px; resize: none;padding-right: 60px;}
+.post-comment .ant-input{height: 40px !important; border-radius: 5px; resize: none;padding-right: 60px;padding-top: 6px;}
 .post-comment .ant-comment-avatar img{border-radius: 13px;}
 .post-comment .ant-comment-content-author-time{margin-left: auto;}
 .post-comment .ant-comment-content-detail{font-size: 13px;}
