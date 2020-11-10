@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic,Avatar } from 'antd';
+import { Row, Col, Tabs, Card, Statistic, Avatar } from 'antd';
 import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
@@ -14,6 +14,7 @@ import Title from 'antd/lib/typography/Title';
 import Paragraph from 'antd/lib/skeleton/Paragraph';
 import AvatarImage from '../styles/images/avatar.png';
 import PremiumBadge from '../styles/images/premiumbadge.svg'
+import { Link } from 'react-router-dom';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -32,6 +33,10 @@ class Profile extends Component {
                         <div className="coverpage">
                             <img src={profilebanner} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
+                            <Link to="#" className="editpost">
+                                <span className="left-menu post-icon" />
+                            </Link>
+
                         </div>
                         <div className="user-statistic ">
                             <Statistic title="Friends" className="afterline" value={58} />

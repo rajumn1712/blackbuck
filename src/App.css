@@ -222,7 +222,7 @@ body,h1,h2,h3,h4,h5,h6,p {
 }
 .left-menu.profile-icon{background-position: -5px -200px ;}
 .left-menu.friends-icon{background-position: -35px -200px ;}
-.left-menu.post-icon{background-position: -64px -200px ;}
+.left-menu.post-icon{background-position: -64px -201px ;}
 .left-menu.group-icon{background-position: -94px -200px ;}
 .left-menu.noti-icon{background-position: -123px -200px ;}
 .profile-menu{
@@ -247,7 +247,7 @@ body,h1,h2,h3,h4,h5,h6,p {
 }
 .profile-menu li:hover a .left-menu.profile-icon,.profile-menu .ant-menu-item-selected a .left-menu.profile-icon{background-position: -5px -226px ;  }
 .profile-menu li:hover a .left-menu.friends-icon,.profile-menu .ant-menu-item-selected a .left-menu.friends-icon{background-position: -35px -226px ;}
-.profile-menu li:hover a .left-menu.post-icon,.profile-menu .ant-menu-item-selected a .left-menu.post-icon{background-position: -64px -226px ;}
+.profile-menu li:hover a .left-menu.post-icon,.profile-menu .ant-menu-item-selected a .left-menu.post-icon{background-position: -64px -227px ;}
 .profile-menu li:hover a .left-menu.group-icon,.profile-menu .ant-menu-item-selected a .left-menu.group-icon{background-position: -94px -226px ;}
 .profile-menu li:hover a .left-menu.noti-icon,.profile-menu .ant-menu-item-selected a .left-menu.noti-icon{background-position: -123px -226px ;}
 

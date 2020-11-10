@@ -2,7 +2,9 @@
 
 .coverpage {
     position: relative;
-    background-color: #ffffff;
+    background-color:var(--white);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 .coverpage img {
     width: 100%;
@@ -21,11 +23,14 @@
     background: url(../styles/images/overlay.svg) no-repeat;
     border-radius: 10px;
 }
+.coverpage .premium-badge img{
+    width: 53px;
+}
 .user-statistic{
     display: flex;
     justify-content: space-evenly;
     align-items: flex-start;
-    background: #ffffff;
+    background:var(--white);
     padding-bottom: 15px;
 }
 .user-statistic .ant-statistic{
@@ -43,6 +48,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 .user-statistic .user-banner .ant-card-meta .ant-avatar-image{
     width: 170px;
@@ -57,18 +63,23 @@
 }
 .user-statistic .user-banner .ant-card-meta-detail{
     text-align: center;
-    
 }
 .user-statistic .user-banner .ant-card-meta-title{
     font-size: 22px;
     margin-bottom: 0;
     margin-top: 10px;
+    max-width: 280px;
+    white-space: normal;
 }
 .user-statistic .user-banner .ant-card-meta-description{
     font-size: 14px;
 }
+.user-statistic .ant-statistic-content .ant-statistic-content-value {
+    font-weight: 600;
+    font-size: 26px;
+}
 .profile-tabs .ant-tabs-nav{
-    background-color: #ffffff;
+    background-color:var(--white);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     margin-bottom: 24px;
@@ -78,6 +89,7 @@
 }
 .profile-tabs .ant-tabs-tab{
     font-size: 16px;
+    color: var(--textcolor);
 }
 .profile-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,.ant-tabs-tab:hover,.ant-tabs-tab:active,.ant-tabs-tab-btn:focus, .ant-tabs-tab-remove:focus, .ant-tabs-tab-btn:active, .ant-tabs-tab-remove:active {
     color: var(--primary) !important;
@@ -86,7 +98,7 @@
     background: var(--primary) !important;
 }
 .ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-top > div > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom > div > .ant-tabs-nav .ant-tabs-ink-bar{
-    height: 3px;
+    height: 4px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 
@@ -104,11 +116,13 @@
     height: 45px;
     background-color: #D6E6FB;
     top: 10px;
-    right: -22px;
+    right: -25px;
     left: auto;
 }
 .profile-tabs .ant-tabs-tab{
     margin: 0 20px !important;
+    padding-left:10px ;
+    padding-right: 10px;
 }
 .profile-tabs .ant-tabs-tab:last-child{
     margin: 0 !important;
@@ -117,7 +131,7 @@
     position: absolute;
     left: -15px;
     bottom: 35px;
-    background: #ffffff;
+    background:var(--white);
     font-size: 16px;
     line-height: 1;
     text-align: center;
@@ -127,7 +141,7 @@
     border-top-right-radius: 34px;
     border-bottom-right-radius: 34px;
     z-index: 50;
-    padding: 6px;
+    padding: 6px 6px 6px 24px;
 }
 .premium-badge:before{
     left: -1px;
@@ -141,6 +155,19 @@
     z-index: -1;
 
 }
-.coverpage .premium-badge img{
-    width: 53px;
+.coverpage .editpost{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: #ffffff;
+    width: 30px;
+    height: 30px;
+    border-radius: 11px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.coverpage:hover .editpost{
+    display: flex;
 }
