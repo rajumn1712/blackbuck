@@ -16,19 +16,7 @@ body,h1,h2,h3,h4,h5,h6,p {
     min-height: 44px !important;
 
 }
-.ant-card-head .ant-card-head-title {
-    display: inline-block;
-    -ms-flex: 1;
-    flex: 1 1;
-    padding: 12px 0 ;
-    overflow: hidden;
-    white-space: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 20px;
-    color:  var(--textprimary);
-}
-
+.ant-card-head .ant-card-head-title{font-weight: 600; font-size: 18px; color:  var(--textprimary); line-height: normal;}
 .ant-btn-primary {
     color: #fff;
     background: var(--primary) !important;
@@ -120,7 +108,6 @@ body,h1,h2,h3,h4,h5,h6,p {
     vertical-align: middle;
     background: url(styles/images/icons.svg) no-repeat;
 }
-.doc-icons{margin-right: 10px;}
 .left-rail .profile-card {
     display: flex;
     flex-direction: column;
@@ -160,26 +147,21 @@ body,h1,h2,h3,h4,h5,h6,p {
     height: 90px;
     margin: auto;
 }
-
 .profile-card .ant-card-meta-detail {
     color: var(--white) !important;
     margin-top: 10px;
 }
-
 .profile-card .ant-card-meta-title {
     color: var(--white);
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
-    line-height: 23px;
     margin-bottom: 0 !important;
     white-space: normal !important;
 }
-
 .profile-card .ant-card-meta-description {
     color: var(--white);
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 18px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .profile-card .ant-card-actions {
@@ -195,14 +177,8 @@ body,h1,h2,h3,h4,h5,h6,p {
     color: var(--white);
     font-size: 24px;
     font-weight: 500;
-    line-height: 30px;
-}
-
-.profile-card .profile-status span {
-    font-size: 12px;
-    line-height: 15px;
-    font-weight: normal;
-}
+    line-height: 30px;}
+.profile-card .profile-status span{font-size: 14px; line-height: 24px; font-weight: normal;}
 .sharebox-icons.text-icon{background-position: -5px -105px;}
 .share-box ul li:hover .sharebox-icons.text-icon{background-position: -5px -152px;}
 .sharebox-icons.photo-icon{background-position: -63px -101px;}
@@ -234,13 +210,7 @@ body,h1,h2,h3,h4,h5,h6,p {
     left: auto;}}
 .share-box li{position: relative;}
 .share-box ul li:last-child:after{content: none;}
-
-.left-rail , .invite-card .ant-card{
-    background: var(--white);
-    border-radius: 10px !important;
-    box-shadow: var(--boxshadow);
-    margin-bottom: 30px;
-}
+.left-rail , .invite-card .ant-card{background: var(--white); border-radius: 10px !important; box-shadow: var(--boxshadow); margin-bottom: 24px;}
 .left-menu {
     width: 20px;
     height: 20px;
@@ -262,11 +232,7 @@ body,h1,h2,h3,h4,h5,h6,p {
     margin-top: -10px !important;
     background-color: transparent !important;
 }
-.profile-menu .ant-menu-item a span{
- font-size: 16px;
- line-height: 20px;
- padding-left: 20px;
-}
+.profile-menu .ant-menu-item a span{font-size: 16px; padding-left: 20px; font-weight: 500;}
 .profile-menu .ant-menu-item a{width:100%;height: 100%; }
 .profile-menu .ant-menu-item{
     margin:0 !important;
@@ -303,10 +269,8 @@ body,h1,h2,h3,h4,h5,h6,p {
     color: var(--primary);
     font-weight: 600;
 }
-.invite-card p{
-    color: #5D5D5D;
-    font-size: 16px;
-}
+.invite-card p{color: var(--textsecondary); font-size: 16px;}
+.invite-grp-name{font-weight: 500;}
 .invite-card .ant-avatar-group{
     margin-bottom: 30px;
     position: relative;
@@ -385,14 +349,14 @@ body,h1,h2,h3,h4,h5,h6,p {
     display: inline-block;
     background: url(../src/styles/images/icons.svg) no-repeat;
     background-position: -402px -199px;}
-.text-overflow{width: 120px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .image-shadow{box-shadow: var(--boxshadow);}
-.justify-content-around{display: flex;justify-content: space-around;}
-.justify-content-around .ant-list-item-meta-content{width: auto !important;}
-.justify-content-around .ant-list-item-meta-avatar{margin-right: 0;}
 .doc-icons.word{background-position: -469px -104px;}
 .doc-icons.excel{background-position: -412px -104px;}
-.doc-icons.powerpoint{background-position: -354px -103px;}
+.doc-icons.ppt{background-position: -354px -103px;}
+.docs .ant-list-items{display: flex; flex-wrap: wrap;}
+.docs .ant-list-item{min-width: calc(50% - 8px); background: #F9F9F9; padding: 10px; border-radius: 6px; border: 1px solid #EAF2FD;margin: 0 8px 8px 0;}
+.docs .ant-list-item h4{margin-bottom: 0;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;color: var(--primary);}
+.file-size{font-weight: 500; color: var(--textsecondary);}
 .upload-image .ant-upload.ant-upload-drag p.ant-upload-text {
     margin: 0 0 4px;
     color: var(--black);
