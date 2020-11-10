@@ -1,4 +1,5 @@
 @import '../styles/theme.css';
+
 .coverpage {
     position: relative;
     background-color: #ffffff;
@@ -68,6 +69,8 @@
 }
 .profile-tabs .ant-tabs-nav{
     background-color: #ffffff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .user-banner .premium-icon{
     margin-bottom: 5px;
@@ -75,17 +78,65 @@
 .profile-tabs .ant-tabs-tab{
     font-size: 16px;
 }
-.profile-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
-    color: var(--primary);
-    
+.profile-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,.ant-tabs-tab:hover,.ant-tabs-tab:active,.ant-tabs-tab-btn:focus, .ant-tabs-tab-remove:focus, .ant-tabs-tab-btn:active, .ant-tabs-tab-remove:active {
+    color: var(--primary) !important;
 }
-
-.ant-tabs-ink-bar{
-    background: var(--primary);
+.profile-tabs .ant-tabs-ink-bar{
+    background: var(--primary) !important;
 }
 .ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-top > div > .ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom > div > .ant-tabs-nav .ant-tabs-ink-bar{
-    height: 4px;
+    height: 3px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+
+}
+.profile-tabs .ant-tabs-nav:before{
+    border: 0;
+}
+.afterline{
+    position: relative;
+}
+.afterline:after{
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 45px;
+    background-color: #D6E6FB;
+    top: 10px;
+    right: -22px;
+    left: auto;
+}
+.profile-tabs .ant-tabs-tab{
+    margin: 0 20px !important;
+}
+.profile-tabs .ant-tabs-tab:last-child{
+    margin: 0 !important;
+}
+.premium-badge{
+    position: absolute;
+    left: -15px;
+    bottom: 35px;
+    background: #ffffff;
+    font-size: 16px;
+    line-height: 1;
+    text-align: center;
+    margin: 0px auto;
+    width: 92px;
+    height: 68px;
+    border-top-right-radius: 34px;
+    border-bottom-right-radius: 34px;
+    z-index: 50;
+    padding: 6px;
+}
+.premium-badge:before{
+    left: -1px;
+    border-width: 1em 0px 0px 1em;
+    content: "";
+    display: block;
+    position: absolute;
+    border-style: solid;
+    border-color: #CECDCD transparent transparent;
+    bottom: -1em;
+    z-index: -1;
 
 }
