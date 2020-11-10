@@ -64,8 +64,8 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .mr-16{margin-right: 16px;}
 .mt-0{margin-top: 0px;}
 .mt-4{margin-top: 4px;}
-.mt-8{margin-top: 8px;}
-.mt-16{margin-top: 16px;}
+.mt-8{margin-top: 8px !important;}
+.mt-16{margin-top: 16px !important;}
 .mb-0{margin-bottom: 0px !important;}
 .mb-4{margin-bottom: 4px !important;}
 .mb-8{margin-bottom: 8px;}
