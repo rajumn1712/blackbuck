@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, List, Card, Divider, } from 'antd'
+import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -8,7 +8,6 @@ import Logo from '../styles/images/logo.svg';
 import avatar from '../styles/images/avatar.png';
 import avatar2 from '../styles/images/user.jpg';
 import './header.css';
-import { SwapOutlined, GlobalOutlined, SettingOutlined, PoweroffOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 const { Search } = Input;

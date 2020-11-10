@@ -307,7 +307,7 @@ wide range of classes virtually.  You read correctly</Paragraph>
                     >
                         <div className="post-preview-box post-card comment-show">
                             <Row align="middle">
-                            <Col xs={24} sm={16} md={18} lg={18}>
+                            <Col xs={24} sm={16} md={16} lg={17}>
                                 {/* <img src={PostImage} className="overlayimage" /> */}
                                 {/* <img src={PostImage} /> */}
                                 <div className="preview-image">
@@ -329,7 +329,7 @@ wide range of classes virtually.  You read correctly</Paragraph>
                                     <a className="more-frnd-btn next"><span className="icon right-arrow mr-0"></span></a>
                                 </div>
                             </Col>
-                            <Col xs={24} sm={8} md={6} md={6}>
+                            <Col xs={24} sm={8} md={8} lg={7}>
                                 <div className="preview-content">
                                 <Card title={title} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
                                     <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
