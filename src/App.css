@@ -170,41 +170,13 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
     justify-content: center;
 }
 
-.custom-card {
-
-}
-.custom-card .ant-card-body{
-    padding: 16px;
-}
-.custom-card .ant-list-split .ant-list-item{
-    border-bottom: 1px solid var(--line);
-}
-.custom-card .ant-list-items .ant-list-item:first-child{
-    padding-top: 0 !important;
-}
-.custom-card .ant-list-items .ant-list-item:last-child{
-    padding-bottom: 0 !important;
-}
-.custom-card .ant-list-items .ant-list-item .ant-list-item-meta .ant-avatar-image{
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-}
-.custom-card .ant-list-items .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{
-    margin-right: 10px;
-}
-.custom-card .ant-list-items .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{
-    font-size: 16px;
-    line-height: 18px;
-    margin-bottom: 3px;
-    color: var(--textprimary);
-}   
-.overflow-text{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.custom-card .list-link{
-    color: var(--primary);
-    margin-left: 3px;
-}
+.custom-card .ant-card{ border-radius: 10px; box-shadow: var(--boxshadow); margin-bottom: 24px;}
+.custom-card .ant-card-body{ padding: 16px;}
+.custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);}
+.custom-card .ant-list-items .ant-list-item:first-child{padding-top: 0 !important;}
+.custom-card .ant-list-items .ant-list-item:last-child{ padding-bottom: 0 !important;}
+.custom-card .ant-list-items .ant-list-item .ant-list-item-meta .ant-avatar-image{width: 40px;height: 40px;border-radius: 12px;}
+.custom-card .ant-list-items .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 10px;}
+.custom-card .ant-list-items .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: 16px;line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
+.overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.custom-card .list-link{color: var(--primary);margin-left: 3px;}
