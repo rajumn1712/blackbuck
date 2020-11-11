@@ -78,31 +78,30 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .my-4{margin-top: 4px; margin-bottom: 4px;}
 .my-8{margin-top: 8px; margin-bottom: 8px;}
 .my-16{margin-top: 16px; margin-bottom: 16px;}
-
+.d-flex{display: flex;}
+.align-items-center{align-items: center;}
 .site-layout-content { background: #f0f7ff url(../src/styles/images/body.svg) no-repeat; background-size: cover; background-attachment: fixed; height: 100%; margin-top: 70px;}
 .site-page-header {border: 1px solid rgb(235, 237, 240); bottom: 20px; }
 #components-layout-demo-top-side-2 .logo { width: 120px; height: 31px; background: rgba(255, 255, 255, 0.2); margin: 16px 28px 16px 0; float: left;}
-.container{padding: 0 16px;}
 .main { padding-top: 16px; }
 .reight-rail{border-radius: 10px !important;box-shadow: var(--boxshadow);margin-bottom: 20px;}
 .group-card .ant-card-bordered{border-radius: 10px;border-bottom: 0;}
 .group-card .ant-card-body{padding: 0 !important;}
 .group-card .ant-card-meta{padding: 15px;}
 .group-card .ant-card-meta-detail > div:not(:last-child), .share-popup .ant-card-meta-detail > div:not(:last-child){margin-bottom: 0 !important;}
-.ant-avatar{border-radius: 30% !important;}
 .ant-btn{border-radius: 4px !important;}
 .group-card .ant-card-head{font-size: 16px;color: var(--primary);border-bottom: 1px solid #D6E6FB;}
 .ant-card-extra a, .link-color, .link-color:hover{font-size: 14px;color: var(--primary); font-weight: 500;}
 .reight-rail .ant-list-item-action li{padding-right: 0;}
 .ant-card-meta-title{font-size: 16px;}
-.icons-small{width: 10px;
-  height: 10px;
+.icons-small{width: 12px;
+  height: 12px;
   vertical-align: initial;
   display: inline-block;
   cursor: pointer;
   vertical-align: text-bottom;
   background: url(styles/images/icons.svg) no-repeat; }
-.icons-small.lock-icon{background-position:0px 0px ;} 
+.icons-small.lock-icon{background-position:-69px -397px ;} 
 .reight-rail .ant-list-item{padding:14px}
 .reight-rail .ant-list-item-meta-avatar{ margin-right: 12px;}
 .reight-rail .ant-list-item-meta-title{margin-bottom: 0px;}

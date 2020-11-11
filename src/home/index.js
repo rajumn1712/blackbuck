@@ -8,6 +8,7 @@ import GroupCard from '../components/groupcard';
 import Ads from '../components/ads';
 import FriendSuggestions from '../components/FriendSuggestions';
 import PostCard from '../components/postcard/Post';
+import Groups from '../components/groups';
 
 class Home extends Component {
     componentDidMount() {
@@ -26,7 +27,7 @@ class Home extends Component {
                         <PostCard />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={6} xl={6}>
-                        <GroupCard />
+                        <Groups />
                         <Ads />
                     </Col>
                 </Row>
