@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Menu, Space, Row, Col, Modal, Card, Avatar, List, message, Spin, Divider } from 'antd'
+import { Button, Layout, Card, Avatar, List } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -10,9 +10,6 @@ import User4 from '../styles/images/user-image.jpg';
 import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
-const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
-const { Header } = Layout;
-const { Meta } = Card;
 const data = [
 
     {
@@ -25,20 +22,20 @@ const data = [
         avatar: User2,
         title: 'CSC Champs',
         description: '',
-        members: 161,
+        members: 18,
     },
 
     {
         avatar: User3,
         title: 'Civili',
         description: 'created many changes with CBU...',
-        members: 161,
+        members:21,
     },
     {
         avatar: User4,
         title: 'Technical Group',
         description: '',
-        members: 161,
+        members:3,
     },
 ];
 class Groups extends Component {

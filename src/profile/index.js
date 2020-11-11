@@ -17,6 +17,7 @@ import PremiumBadge from '../styles/images/premiumbadge.svg'
 import { Link } from 'react-router-dom';
 import Courses from '../components/courses'
 import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
+import Groups from '../components/groups';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -97,7 +98,7 @@ class Profile extends Component {
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
                         <FriendsSuggestioncard/>
                         <Ads />
-                        <GroupCard />
+                        <Groups />
 
                     </Col>
                 </Row>

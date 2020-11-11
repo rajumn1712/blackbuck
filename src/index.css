@@ -78,6 +78,9 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .my-4{margin-top: 4px; margin-bottom: 4px;}
 .my-8{margin-top: 8px; margin-bottom: 8px;}
 .my-16{margin-top: 16px; margin-bottom: 16px;}
+
+a{color: var(--primary);}
+a:hover,a:active{color: var(--primaryhover) !important;}
 .d-flex{display: flex;}
 .align-items-center{align-items: center;}
 .site-layout-content { background: #f0f7ff url(../src/styles/images/body.svg) no-repeat; background-size: cover; background-attachment: fixed; height: 100%; margin-top: 70px;}
