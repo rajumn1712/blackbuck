@@ -94,7 +94,7 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .group-card .ant-card-head{font-size: 16px;color: var(--primary);border-bottom: 1px solid #D6E6FB;}
 .ant-card-extra a, .link-color, .link-color:hover{font-size: 14px;color: var(--primary); font-weight: 500;}
 .reight-rail .ant-list-item-action li{padding-right: 0;}
-.ant-card-meta-title{font-size: 14px;}
+.ant-card-meta-title{font-size: 16px;}
 .icons-small{width: 10px;
   height: 10px;
   vertical-align: initial;
