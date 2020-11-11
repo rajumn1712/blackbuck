@@ -200,8 +200,9 @@
     margin-top: 6px !important;
 }
 
-.notification-dropdown .ant-list-item-meta-description.unread {
+.notification-dropdown.unread {
     font-weight: 600;
+
 }
 
 .profile-dropdown .ant-card-meta .ant-avatar-image, .notification-dropdown .ant-list-item-meta-avatar .ant-avatar-image, .messenger-drawer .ant-card-meta .ant-avatar-image {
@@ -305,24 +306,22 @@
     font-size: 15px;
     line-height: 16px;
 }
-.notification-list .notification-description span{
+.notification-list.unread .notification-description span{
     color: var(--primary);
     font-size: 14px;
     line-height: 14px;
     font-weight: 400;
 }
-.notification-list .notification-description.read{  
+.notification-list.read{  
     color: #5D5D5D;
 }
-.notification-list .notification-description.unread{
+.notification-list.unread{
     font-weight: 600;
 }
-
 .notification-list:hover{
     background-color: #f5f5f5;
     border-radius: 6px;
 }
-
 .notification-dropdown .noti-dropdown-header{
     display: flex;
     justify-content: space-between;
@@ -339,12 +338,19 @@
 .messenger-drawer .ant-card-meta {
     display: flex;
     align-items: center;
-    padding: 5px 3px;
-    margin-bottom: 6px;
+    padding: 5px;
+    margin-bottom: 8px;
+}
+
+.messenger-chat{
+    width: auto !important;
 }
 
 .messenger-drawer .ant-card-meta-title {
     margin-bottom: 0 !important;
+}
+.messenger-drawer .ant-card-meta-title,.messenger-drawer .chat-description{
+    line-height: 1.4 !important;
 }
 
 .messenger-drawer .chat-description {
@@ -353,6 +359,19 @@
     text-overflow: ellipsis;
     margin-bottom: 0;
 }
+.messenger-chat .ant-drawer-footer{
+    text-align: center !important;
+}   
+.ant-drawer-footer .messenger-footer{
+    color: var(--primary);
+}
+.ant-drawer-footer .messenger-footer:hover{
+    color: var(--primaryhover);
+    text-decoration: underline !important;
+}   
+.messenger-chat .ant-drawer-title{
+    font-size: 18px !important;
+}   
 
 .icons.swap-icon {
     background-position: -3px -252px;

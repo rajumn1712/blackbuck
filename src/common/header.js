@@ -7,31 +7,16 @@ import { userLogout } from '../reducers/auth';
 import Logo from '../styles/images/logo.svg';
 import avatar from '../styles/images/avatar.png';
 import avatar2 from '../styles/images/user.jpg';
+import userImage from '../styles/images/user_image.jpg';
+import user_Image from '../styles/images/user-image.jpg';
+import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
+import '../index.css'
 
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
-
-const data = [
-    {
-        title: '3 days',
-        descriptions: 'Although social distancing has created ',
-    },
-    {
-        title: 'Andrew',
-        descriptions: 'we are still offering a wide range',
-    },
-    {
-        title: 'Michel',
-        descriptions: 'Do you miss seeing the friendly faces',
-    },
-    {
-        title: 'simon',
-        descriptions: 'your fellow Colony Brands’ employees?',
-    },
-];
 
 const notifications = (
     <div className="notification-dropdown">
@@ -40,36 +25,52 @@ const notifications = (
             <Link to="/" >View all</Link>
         </div>
         <Divider className="m-0 mb-4" />
-        <div className="notification-list">
+        <div className="notification-list unread">
             <div className="notification-image">
-                <Avatar src={avatar2} />
+                <Avatar src={avatar} />
             </div>
-            <div className="notification-description unread">
-                <p><strong>Vin Diesel</strong> commented on your post.</p>
+            <div className="notification-description ">
+                <p>Vin Diesel commented on your post.</p>
                 <span>3 minutes ago</span>
             </div>
         </div>
-        <div className="notification-list">
+        <div className="notification-list read">
             <div className="notification-image">
-                <Avatar src={avatar2} />
+                <Avatar src={sherlyn} />
             </div>
-            <div className="notification-description read">
-                <p><strong>Vin Diesel</strong> added to his story</p>
-                <span>3 days ago</span>
-            </div>
-        </div>
-        <div className="notification-list">
-            <div className="notification-image">
-                <Avatar src={avatar2} />
-            </div>
-            <div className="notification-description read">
-                <p><strong>Andrew</strong> mentioned you in the timeline.</p>
+            <div className="notification-description ">
+                <p>Shrelyn mentioned you in the timeline.</p>
                 <span>18 hours ago</span>
             </div>
         </div>
-
+        <div className="notification-list read">
+            <div className="notification-image">
+                <Avatar src={avatar2} />
+            </div>
+            <div className="notification-description ">
+                <p>Andrew sent you a friend request.</p>
+                <span>1 day ago</span>
+            </div>
+        </div>
+        <div className="notification-list  read">
+            <div className="notification-image">
+                <Avatar src={user_Image} />
+            </div>
+            <div className="notification-description">
+                <p>Simon added a new photo.</p>
+                <span>2 days ago</span>
+            </div>
+        </div>
+        <div className="notification-list read">
+            <div className="notification-image">
+                <Avatar src={userImage} />
+            </div>
+            <div className="notification-description">
+                <p>Vin Diesel shared his story.</p>
+                <span>3 days ago</span>
+            </div>
+        </div>
     </div>
-
 );
 
 const menu = (
@@ -212,44 +213,46 @@ class HeaderComponent extends React.Component {
                 </Row>
                 {/* Mobile Naviagtion */}
                 <div className="">
-                    <Drawer
-                        title="Messenger"
-                        placement="right"
-                        closable={false}
-                        onClose={this.onClose}
-                        visible={visible}
-                        width="300px"
-                        className="messenger-chat"
-
-                    >
+                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="320px" className="messenger-chat" closable="true"   footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
+                        <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
                         <div className="messenger-drawer">
-                            <Meta
-                                avatar={<Avatar src={avatar} />}
-                                title="John Doe"
-                                description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
-                            />
-                            <Meta
-                                avatar={<Avatar src={avatar} />}
-                                title="John Doe"
-                                description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
-                            />
-                            <Meta
-                                avatar={<Avatar src={avatar} />}
-                                title="John Doe"
-                                description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim Lorem ipsum dolor sit amet,</p>}
-                            />
-                            <Meta
-                                avatar={<Avatar src={avatar} />}
-                                title="John Doe"
-                                description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
-                            />
-                            <Meta
-                                avatar={<Avatar src={avatar} />}
-                                title="John Doe"
-                                description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
-                            />
-                        </div>
 
+                            <Link>
+                                <Meta
+                                    avatar={<Avatar src={avatar} />}
+                                    title="Benjamin"
+                                    description={<p className="chat-description">great!</p>}
+                                />
+                            </Link>
+                            <Link>
+                                <Meta
+                                    avatar={<Avatar src={avatar2} />}
+                                    title="Dylan Eugene"
+                                    description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
+                                />
+                            </Link>
+                            <Link>
+                                <Meta
+                                    avatar={<Avatar src={userImage} />}
+                                    title="Gordon"
+                                    description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim Lorem ipsum dolor sit amet,</p>}
+                                />
+                            </Link>
+                            <Link>
+                                <Meta
+                                    avatar={<Avatar src={user_Image} />}
+                                    title="Ivan Jason"
+                                    description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
+                                />
+                            </Link>
+                            <Link>
+                                <Meta
+                                    avatar={<Avatar src={sherlyn} />}
+                                    title="Ethan"
+                                    description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
+                                />
+                            </Link>
+                        </div>
                     </Drawer>
                 </div>
             </Header>
