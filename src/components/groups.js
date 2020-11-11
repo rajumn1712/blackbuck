@@ -29,13 +29,13 @@ const data = [
         avatar: User3,
         title: 'Civili',
         description: 'created many changes with CBU...',
-        members:21,
+        members: 21,
     },
     {
         avatar: User4,
         title: 'Technical Group',
         description: '',
-        members:3,
+        members: 3,
     },
 ];
 class Groups extends Component {
@@ -44,7 +44,9 @@ class Groups extends Component {
         const { user } = store.getState().oidc;
         return (
             <div className="custom-card">
-                <Card title="Groups" bordered={false} extra={<Link to="">View all</Link>} >
+                <Card title="Groups" bordered={false} extra={<Link to="">View all</Link>} actions={[
+                     <Button type="primary" >Create a Group</Button>
+                ]} >
                     <List
                         itemLayout="horizontal"
                         dataSource={data}
@@ -53,7 +55,7 @@ class Groups extends Component {
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.avatar} />}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span><span className="icons-small lock-icon" /></div>}
-                                    description={<div><div className="overflow-text">{item.description}</div><div><span style={{color:'var(--textprimary)'}}>{item.members}</span> Members</div></div>}
+                                    description={<div><div className="overflow-text">{item.description}</div><div><span style={{ color: 'var(--textprimary)' }}>{item.members}</span> Members</div></div>}
                                 />
                                 <Link to="" className="f-12 list-link">Join group</Link>
                             </List.Item>
