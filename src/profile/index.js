@@ -15,6 +15,8 @@ import Paragraph from 'antd/lib/skeleton/Paragraph';
 import AvatarImage from '../styles/images/avatar.png';
 import PremiumBadge from '../styles/images/premiumbadge.svg'
 import { Link } from 'react-router-dom';
+import Courses from '../components/courses'
+import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -46,7 +48,10 @@ class Profile extends Component {
                             >
                                 <Meta
                                     avatar={
-                                        <Avatar src={AvatarImage} />
+                                        <div>
+                                            <Avatar src={AvatarImage} />
+                                            {/* <span className="icons camera" /> */}
+                                        </div>
                                     }
                                     title={<div>John Doe<span className="premium-icon"></span></div>}
                                     description="CSE"
@@ -61,6 +66,7 @@ class Profile extends Component {
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
+                                        <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         <ShareBox />
@@ -89,6 +95,7 @@ class Profile extends Component {
 
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
+                        <FriendsSuggestioncard/>
                         <Ads />
                         <GroupCard />
 

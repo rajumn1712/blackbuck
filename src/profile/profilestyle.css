@@ -166,8 +166,8 @@
     display: none;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
 }
 .coverpage:hover .editpost{
     display: flex;
+    cursor: pointer;
 }
