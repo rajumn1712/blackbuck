@@ -181,3 +181,10 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .custom-card .list-link{color: var(--primary);margin-left: 3px;}
 .custom-card .ant-card-actions{ background-color: #F9F9F9;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top: 0;}
+/* FriendRequests */
+.ant-avatar.request-image{width: 60px !important;height: 60px !important;border-radius: 12px;}
+.list-remove{color: #FF0000;}
+.list-request .ant-avatar{width: 20px;height: 20px;line-height: 20px;border-radius: 8px;}
+.requests .ant-list-item-meta{align-items: flex-end;}
+
+/* Friends */
