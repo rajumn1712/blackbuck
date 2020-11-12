@@ -19,6 +19,9 @@ import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
 import FriendRequests from '../components/friendrequests';
 import Friends from '../components/friends';
 import Groups from '../components/groups';
+import Interests from '../components/interests';
+import Hobbies from '../components/hobbies';
+import About from '../components/about';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -82,7 +85,9 @@ class Profile extends Component {
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-
+                                        <About />
+                                        <Interests />
+                                        <Hobbies />
                                     </Col>
                                 </Row>
                             </TabPane>
