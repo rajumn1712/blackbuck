@@ -76,15 +76,39 @@ class Profile extends Component {
                                 </Row>
                             </TabPane>
                             <TabPane tab="Profile" key="2">
-                                Content of Tab Pane 2</TabPane>
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Invite />
+                                    </Col>
+                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+
+                                    </Col>
+                                </Row>
+                            </TabPane>
                             <TabPane tab="Friends" key="3">
-                                Content of Tab Pane 3</TabPane>
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Invite />
+                                    </Col>
+                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+
+                                    </Col>
+                                </Row>
+                            </TabPane>
                             <TabPane tab="Groups" className="m-0" key="4">
-                                Content of Tab Pane 4</TabPane>
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Invite />
+                                    </Col>
+                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+
+                                    </Col>
+                                </Row>
+                            </TabPane>
                         </Tabs>
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
-                        <FriendsSuggestioncard/>
+                        <FriendsSuggestioncard />
                         <Ads />
                         <Groups />
                     </Col>
