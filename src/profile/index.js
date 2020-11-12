@@ -16,6 +16,8 @@ import PremiumBadge from '../styles/images/premiumbadge.svg'
 import { Link } from 'react-router-dom';
 import Courses from '../components/courses'
 import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
+import FriendRequests from '../components/friendrequests';
+import Friends from '../components/friends';
 import Groups from '../components/groups';
 import Interests from '../components/interests';
 import Hobbies from '../components/hobbies';
@@ -105,9 +107,11 @@ class Profile extends Component {
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
+                                        
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-
+                                    <FriendRequests />
+                                    <Friends />
                                     </Col>
                                 </Row>
                             </TabPane>
