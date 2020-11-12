@@ -82,24 +82,11 @@ class Profile extends Component {
                             <TabPane tab="Groups" className="m-0" key="4">
                                 Content of Tab Pane 4</TabPane>
                         </Tabs>
-
-                        {/* <Row gutter={16}>
-                            <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                <Invite />
-                            </Col>
-                            <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                <ShareBox />
-                                <PostCard />
-                            </Col>
-                        </Row> */}
-                        {/* <FriendSuggestions /> */}
-
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
                         <FriendsSuggestioncard/>
                         <Ads />
                         <Groups />
-
                     </Col>
                 </Row>
             </div>

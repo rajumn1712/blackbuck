@@ -11,7 +11,7 @@ import userImage from '../styles/images/user_image.jpg';
 import user_Image from '../styles/images/user-image.jpg';
 import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
-import '../index.css'
+import '../index.css';
 
 const { Meta } = Card;
 const { Search } = Input;
@@ -24,7 +24,7 @@ const notifications = (
             <h3>Notifications</h3>
             <Link to="/" >View all</Link>
         </div>
-        <Divider className="m-0 mb-4" />
+        <Divider className="my-0" />
         <div className="notification-list unread">
             <div className="notification-image">
                 <Avatar src={avatar} />

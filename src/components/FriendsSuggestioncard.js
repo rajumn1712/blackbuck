@@ -40,7 +40,7 @@ class FriendsSuggestioncard extends Component {
         const { user } = store.getState().oidc;
         return (
             <div className="custom-card">
-                <Card title="Friend Suggetions" bordered={false} extra={<Link to="">View all</Link>} >
+                <Card title="Friend Suggestions" bordered={false} extra={<Link to="">View all</Link>} >
                     <List
                         itemLayout="horizontal"
                         dataSource={data}
