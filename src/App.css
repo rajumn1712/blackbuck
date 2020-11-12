@@ -52,6 +52,12 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .left-menu.post-icon,.icons.edit{background-position: -64px -201px;}
 .left-menu.group-icon{background-position: -94px -200px;}
 .left-menu.noti-icon{background-position: -123px -200px;}
+.left-menu.interest{background-position: -206px -254px;}
+.left-menu.hobbies{background-position: -234px -254px;}
+.left-menu.intenship{background-position: -263px -254px;}
+.left-menu.play{background-position: -292px -254px;}
+.left-menu.education{background-position: -325px -254px;}
+.left-menu.courses{background-position: -350px -254px;}
 .profile-menu{ border: 0 !important; padding-top: 20px !important; padding-bottom: 10px !important; margin-top: -10px !important; background-color: transparent !important;}
 .profile-menu .ant-menu-item a span{font-size: 16px; padding-left: 20px; font-weight: 500;}
 .profile-menu .ant-menu-item a{width:100%;height: 100%;}
@@ -63,6 +69,12 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .profile-menu li:hover a .left-menu.post-icon,.profile-menu .ant-menu-item-selected a .left-menu.post-icon{background-position: -64px -227px;}
 .profile-menu li:hover a .left-menu.group-icon,.profile-menu .ant-menu-item-selected a .left-menu.group-icon{background-position: -94px -226px;}
 .profile-menu li:hover a .left-menu.noti-icon,.profile-menu .ant-menu-item-selected a .left-menu.noti-icon{background-position: -123px -226px;}
+.profile-menu li:hover a .left-menu.interest,.profile-menu .ant-menu-item-selected a .left-menu.interest{background-position: -206px -281px;}
+.profile-menu li:hover a .left-menu.hobbies,.profile-menu .ant-menu-item-selected a .left-menu.hobbies{background-position: -234px -281px;}
+.profile-menu li:hover a .left-menu.intenship,.profile-menu .ant-menu-item-selected a .left-menu.intenship{background-position: -263px -281px;}
+.profile-menu li:hover a .left-menu.play,.profile-menu .ant-menu-item-selected a .left-menu.play{background-position: -292px -281px;}
+.profile-menu li:hover a .left-menu.education,.profile-menu .ant-menu-item-selected a .left-menu.education{background-position: -325px -281px;}
+.profile-menu li:hover a .left-menu.courses,.profile-menu .ant-menu-item-selected a .left-menu.courses{background-position: -350px -281px;}
 .invite-card .ant-card-head{border-bottom: 1px solid #D6E6FB; color: var(--textprimary); font-size: 16px;}
 .invite-card .ant-card-body{text-align:center;}
 .invite-card .ant-avatar-group .ant-avatar{width: 60px; height: 60px; line-height: 60px; border-radius: 18px; border:0; font-size: 24px; color: var(--primary); font-weight: 600;}
@@ -193,4 +205,5 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .about-details {display: flex;align-items: flex-start;margin-bottom: 10px;color: var(--textprimary);}
 .about-details .about-icons{width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;border-radius: 10px;border: 1px solid var(--secondary);margin-right: 10px;}
 .about-details p{ margin-bottom: 0;}
+.profile-tab .profile-menu{margin-top: 0 !important;padding-top: 16px !important;}
 
