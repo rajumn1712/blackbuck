@@ -148,7 +148,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .doc-text{color: var(--primary);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 110px;}
 .ant-upload-list-item-error .ant-upload-list-item-card-actions .anticon,.ant-upload-list-item-card-actions .anticon{color: transparent !important;}
 .fw-400{font-weight: 400;color: var(--black);}
-.text-hash{color: #5D5D5D;}
+
 .justify-content-around .ant-list-item-meta{background: #F9F9F9;border-radius: 5px;}
 .ant-input:focus, .ant-input-focused, .ant-input:hover{border-color: var(--primary) !important;}
 .icons.camera{background-position: -289px -49px;}

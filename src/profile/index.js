@@ -4,7 +4,6 @@ import { Row, Col, Tabs, Card, Statistic, Avatar } from 'antd';
 import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
-import GroupCard from '../components/groupcard';
 import Ads from '../components/ads';
 import FriendSuggestions from '../components/FriendSuggestions';
 import PostCard from '../components/postcard/Post';

@@ -3,7 +3,7 @@ import { Button, Layout, Card, Avatar, List, message, Spin } from 'antd'
 import GroupImage from '../../styles/images/groupimage.png';
 import notify from './notification';
 import { apiClient } from '../api/clients'
-class GroupCard extends Component {
+class Groups extends Component {
     state = {
         data: [
             {
@@ -66,4 +66,4 @@ class GroupCard extends Component {
         )
     }
 }
-export default GroupCard;
+export default Groups;
