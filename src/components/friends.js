@@ -35,7 +35,7 @@ class Friends extends Component {
                 <Card title="Friend Requests" bordered={false} >
 
                     <List grid={{
-                        gutter: 16,column: 2,
+                        gutter: 16, column: 2,
                         xs: 1,
                         sm: 1,
                         md: 2,
@@ -47,20 +47,20 @@ class Friends extends Component {
                                 <List.Item.Meta
                                     avatar={<Avatar className="request-image" src={item.avatar} />}
                                     title={<div><span className="overflow-text">{item.title}</span></div>}
-                                    description={<div className="mt-8">
-                                            <span className="list-request">
-                                                <Avatar.Group
-                                                    maxCount={4}
-                                                    size="large"
-                                                    maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
-                                                >
-                                                    <Avatar src={user} />
-                                                    <Avatar src={user} />
-                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                </Avatar.Group>
-                                            </span> Mutual Friends</div>}
+                                    description={<div className="mt-8 d-flex align-items-center">
+                                        <span className="list-request">
+                                            <Avatar.Group
+                                                maxCount={4}
+                                                size="large"
+                                                maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
+                                            >
+                                                <Avatar src={user} />
+                                                <Avatar src={user} />
+                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                            </Avatar.Group>
+                                        </span> <span>Mutual Friends</span></div>}
                                 />
                             </List.Item>
                         )}

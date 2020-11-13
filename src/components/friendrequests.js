@@ -49,7 +49,7 @@ class FriendRequests extends Component {
                                 <List.Item.Meta
                                     avatar={<Avatar className="request-image" src={item.avatar} />}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
-                                    description={<div className="mt-8">
+                                    description={<div className="mt-8 d-flex align-items-center">
                                             <span className="list-request">
                                                 <Avatar.Group
                                                     maxCount={4}
@@ -62,7 +62,7 @@ class FriendRequests extends Component {
                                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                                 </Avatar.Group>
-                                            </span> Mutual Friends</div>}
+                                            </span> <span>Mutual Friends</span></div>}
                                 />
                                 <Link to="" className="f-14 mr-16 list-link">Accept</Link>
                                 <Link to="" className="f-14 ml-16 list-remove">Remove</Link>
