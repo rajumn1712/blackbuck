@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Avatar, Card, Dropdown, Popover, Tag, Tooltip, Typography } from 'antd';
-import PostImage from '../../../styles/images/post-image.jpg';
+import { Avatar, Card, Tag, Typography } from 'antd';
+import PostImage from '../../../styles/images/postimage.jpg';
 import Post_Image from '../../../styles/images/post-image.jpg';
-import Love from '../../../styles/images/love.gif';
-import Claps from '../../../styles/images/claps.gif';
-import Whistle from '../../../styles/images/whistle.gif';
 import user from '../../../styles/images/user.jpg';
 import Comments from './Comments/Comments';
 import SideAction from './Actions/SideActions';
 import EmojiAction from './Actions/EmojiActions';
 import CommentAction from './Actions/CommentAction';
 import ShareAction from './Actions/ShareActions';
+import PostCardModal from './PostModal';
 
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
@@ -50,6 +48,7 @@ class ImagePost extends Component {
         commentsection:false,
         submitting: false,
         value: '',
+        visible:false
 
 
     }
@@ -135,6 +134,10 @@ class ImagePost extends Component {
         this.setState({commentsection:true})
     }
 
+    showModal = ()=>{
+        this.setState({visible:true});
+    }
+
     render() {
 
         const { postimage, commentsection,comments, submitting, value } = this.state;
@@ -182,6 +185,7 @@ class ImagePost extends Component {
                 </Card>
                 {commentsection ? <Comments comments={comments} submitting={submitting} value={value}
                     submitted={this.handleSubmit} changed={this.handleChange} /> : null}
+                    <PostCardModal {...this.state} closed={()=>{this.setState({visible:false})}}/>
             </div> : null
         )
     }
