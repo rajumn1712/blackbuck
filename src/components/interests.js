@@ -14,34 +14,35 @@ const data = [
 
     {
         avatar: User1,
-        title: 'IT Groups',
-        members: 6,
+        title: 'Indian Cricket Team',
+        members: 2,
     },
     {
         avatar: User2,
-        title: 'CSC Champs',
-        members: 2,
+        title: 'Pan India Movies',
+        members: 10,
     },
 
     {
         avatar: User3,
-        title: 'Civili',
-        members:10,
+        title: 'Pan India Movies',
+        members: 21,
     },
     {
         avatar: User4,
-        title: 'Technical Group',
-        members:8,
+        title: 'Indian Cricket Team',
+        members: 3,
     },
 ];
-class FriendsSuggestioncard extends Component {
+class Interests extends Component {
 
     render() {
         const { user } = store.getState().oidc;
         return (
             <div className="custom-card">
-                <Card title="Friend Suggestions" bordered={false} extra={<Link to="">View all</Link>} >
+                <Card title="Interests" bordered={false} extra={<Link to=""><span className="icons add" /></Link>}  >
                     <List
+                        grid={{ gutter: 16, column:2 }}
                         itemLayout="horizontal"
                         dataSource={data}
                         renderItem={item => (
@@ -49,9 +50,8 @@ class FriendsSuggestioncard extends Component {
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.avatar} />}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
-                                    description={<div><span style={{color:'var(--textprimary)'}}>{item.members}</span> Mutual Friends</div>}
+                                    description={<div><span style={{ color: 'var(--textprimary)' }}>{item.members}</span> Mutual Friends</div>}
                                 />
-                                <Link to="" className="f-14 list-link">Accept</Link>
                             </List.Item>
                         )}
                     />
@@ -61,4 +61,4 @@ class FriendsSuggestioncard extends Component {
         )
     }
 }
-export default FriendsSuggestioncard;
+export default Interests;

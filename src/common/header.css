@@ -199,6 +199,10 @@
 .notification-dropdown {
     margin-top: 6px !important;
 }
+.notification-dropdown .ant-divider{
+    margin: 0 !important;
+    margin-bottom: 4px !important;
+}
 
 .notification-dropdown.unread {
     font-weight: 600;

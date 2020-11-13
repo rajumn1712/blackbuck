@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar } from 'antd';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu } from 'antd';
 import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
-import GroupCard from '../components/groupcard';
 import Ads from '../components/ads';
 import FriendSuggestions from '../components/FriendSuggestions';
 import PostCard from '../components/postcard/Post';
@@ -17,7 +16,12 @@ import PremiumBadge from '../styles/images/premiumbadge.svg'
 import { Link } from 'react-router-dom';
 import Courses from '../components/courses'
 import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
+import FriendRequests from '../components/friendrequests';
+import Friends from '../components/friends';
 import Groups from '../components/groups';
+import Interests from '../components/interests';
+import Hobbies from '../components/hobbies';
+import About from '../components/about';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -76,30 +80,57 @@ class Profile extends Component {
                                 </Row>
                             </TabPane>
                             <TabPane tab="Profile" key="2">
-                                Content of Tab Pane 2</TabPane>
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
+                                        <div className="left-rail">
+                                            <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
+                                                <Menu.Item key="AboutMe"><Link to="/"><span className="left-menu profile-icon"></span><span>About Me</span></Link></Menu.Item>
+                                                <Menu.Item key="Interests"><Link to="/"><span className="left-menu interest"></span><span>Interests</span></Link></Menu.Item>
+                                                <Menu.Item key="Hobbies"><Link to="/"><span className="left-menu hobbies"></span><span>Hobbies</span></Link></Menu.Item>
+                                                <Menu.Item key="Intenships"><Link to="/"><span className="left-menu intenship"></span><span>Intenships</span></Link></Menu.Item>
+                                                <Menu.Item key="VideoProfile"><Link to="/"><span className="left-menu play"></span><span>Video as Profile</span></Link></Menu.Item>
+                                                <Menu.Item key="Education"><Link to="/"><span className="left-menu education"></span><span>Education</span></Link></Menu.Item>
+                                                <Menu.Item key="Courses"><Link to="/"><span className="left-menu courses"></span><span>Courses</span></Link></Menu.Item>
+                                                <Menu.Item key="Groups"><Link to="/"><span className="left-menu group-icon"></span><span>Groups</span></Link></Menu.Item>
+                                            </Menu>
+                                        </div>
+                                        <Invite />
+                                    </Col>
+                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                        <About />
+                                        <Interests />
+                                        <Hobbies />
+                                    </Col>
+                                </Row>
+                            </TabPane>
                             <TabPane tab="Friends" key="3">
-                                Content of Tab Pane 3</TabPane>
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Invite />
+                                        
+                                    </Col>
+                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    <FriendRequests />
+                                    <Friends />
+                                    </Col>
+                                </Row>
+                            </TabPane>
                             <TabPane tab="Groups" className="m-0" key="4">
-                                Content of Tab Pane 4</TabPane>
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Invite />
+                                    </Col>
+                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+
+                                    </Col>
+                                </Row>
+                            </TabPane>
                         </Tabs>
-
-                        {/* <Row gutter={16}>
-                            <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                <Invite />
-                            </Col>
-                            <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                <ShareBox />
-                                <PostCard />
-                            </Col>
-                        </Row> */}
-                        {/* <FriendSuggestions /> */}
-
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
-                        <FriendsSuggestioncard/>
+                        <FriendsSuggestioncard />
                         <Ads />
                         <Groups />
-
                     </Col>
                 </Row>
             </div>
