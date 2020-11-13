@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu } from 'antd';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor } from 'antd';
 import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
@@ -18,10 +18,13 @@ import Courses from '../components/courses'
 import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
 import FriendRequests from '../components/friendrequests';
 import Friends from '../components/friends';
+import Tags from '../components/tags';
 import Groups from '../components/groups';
 import Interests from '../components/interests';
 import Hobbies from '../components/hobbies';
 import About from '../components/about';
+import Intership from '../components/internships';
+import VideoProfile from '../components/videoprofile';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -84,9 +87,9 @@ class Profile extends Component {
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
                                         <div className="left-rail">
                                             <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
-                                                <Menu.Item key="AboutMe"><Link to="/"><span className="left-menu profile-icon"></span><span>About Me</span></Link></Menu.Item>
+                                                <Menu.Item key="AboutMe"><Link to="#AboutMe"><span className="left-menu profile-icon"></span><span>About Me</span></Link></Menu.Item>
                                                 <Menu.Item key="Interests"><Link to="/"><span className="left-menu interest"></span><span>Interests</span></Link></Menu.Item>
-                                                <Menu.Item key="Hobbies"><Link to="/"><span className="left-menu hobbies"></span><span>Hobbies</span></Link></Menu.Item>
+                                                <Menu.Item key="Hobbies"><Link to="#Hobbies"><span className="left-menu hobbies"></span><span>Hobbies</span></Link></Menu.Item>
                                                 <Menu.Item key="Intenships"><Link to="/"><span className="left-menu intenship"></span><span>Intenships</span></Link></Menu.Item>
                                                 <Menu.Item key="VideoProfile"><Link to="/"><span className="left-menu play"></span><span>Video as Profile</span></Link></Menu.Item>
                                                 <Menu.Item key="Education"><Link to="/"><span className="left-menu education"></span><span>Education</span></Link></Menu.Item>
@@ -95,11 +98,15 @@ class Profile extends Component {
                                             </Menu>
                                         </div>
                                         <Invite />
+                                        <Tags />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         <About />
                                         <Interests />
                                         <Hobbies />
+                                        <Intership />
+                                        <VideoProfile />
+                                        <Courses />
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -107,11 +114,10 @@ class Profile extends Component {
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
-                                        
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                    <FriendRequests />
-                                    <Friends />
+                                        <FriendRequests />
+                                        <Friends />
                                     </Col>
                                 </Row>
                             </TabPane>
