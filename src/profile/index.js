@@ -106,6 +106,7 @@ class Profile extends Component {
                                         <Hobbies />
                                         <Intership />
                                         <VideoProfile />
+                                        <Courses />
                                     </Col>
                                 </Row>
                             </TabPane>
