@@ -24,7 +24,6 @@ const data = [
         members: 2,
     },
 
-
 ];
 class Friends extends Component {
 
@@ -44,9 +43,10 @@ class Friends extends Component {
                         dataSource={data}
                         renderItem={item => (
                             <List.Item>
+                                
                                 <List.Item.Meta
                                     avatar={<Avatar className="request-image" src={item.avatar} />}
-                                    title={<div><span className="overflow-text">{item.title}</span></div>}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
                                     description={<div className="mt-8 d-flex align-items-center">
                                         <span className="list-request">
                                             <Avatar.Group

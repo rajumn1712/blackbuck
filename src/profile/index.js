@@ -18,6 +18,7 @@ import Courses from '../components/courses'
 import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
 import FriendRequests from '../components/friendrequests';
 import Friends from '../components/friends';
+import Tags from '../components/tags';
 import Groups from '../components/groups';
 import Interests from '../components/interests';
 import Hobbies from '../components/hobbies';
@@ -97,6 +98,7 @@ class Profile extends Component {
                                             </Menu>
                                         </div>
                                         <Invite />
+                                        <Tags />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         <About />
