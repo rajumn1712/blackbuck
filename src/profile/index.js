@@ -25,6 +25,7 @@ import Hobbies from '../components/hobbies';
 import About from '../components/about';
 import Intership from '../components/internships';
 import VideoProfile from '../components/videoprofile';
+import Education from '../components/education';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -106,6 +107,7 @@ class Profile extends Component {
                                         <Hobbies />
                                         <Intership />
                                         <VideoProfile />
+                                        <Education />
                                         <Courses />
                                     </Col>
                                 </Row>
