@@ -1,5 +1,6 @@
 @import 'styles/theme.css';
 body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
+.ant-avatar{border-radius: 13px !important;}
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
 .ant-card-head{padding: 0 16px !important; min-height: 44px !important;}
 .ant-card-head .ant-card-head-title{font-weight: 500; font-size: 18px; color:  var(--textprimary); line-height: normal;}
@@ -85,7 +86,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .premium-icon{width: 16px; height: 16px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(../src/styles/images/icons.svg) no-repeat; background-position:-6px -84px; margin-left: 4px;}
 .profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid #0CD5E8;}
 .share-popup .ant-modal-content .ant-modal-close{display: none;}
-.justify-content-between, .speekar-block{display: flex;justify-content: space-between;}
+.justify-content-between, .speekar-block{justify-content: space-between;}
 .share-popup .ant-modal-header {padding: 14px 16px; border-bottom: 1px solid #D6E6FB; border-radius: 10px 10px 0 0;} 
 .share-popup .ant-modal-footer{background: #F9F9F9; padding: 15px 16px; border-top: 0;border-radius: 10px;}
 .share-box ul li:hover .sharebox-icons.video-icon{background-position: -297px -149px;}
@@ -102,7 +103,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .upload-preview{position: relative;}
 .item-close{position: absolute; background: var(--white); box-shadow: var(--boxshadow); top: 10px; right: 10px; border-radius: 8px; z-index: 9; opacity: 0;}
 .upload-preview:hover .item-close{opacity: 1;}
-.close-icon, .anticon.anticon-delete{width: 30px; height: 30px; vertical-align: middle; display: inline-block; background: url(../src/styles/images/icons.svg) no-repeat; background-position: -399px -196px;}
+.close-icon, .anticon.anticon-delete{width: 30px; height: 30px; vertical-align: middle; display: inline-block; background: url(../src/styles/images/icons.svg) no-repeat; background-position: -401px -196px;}
 .doc-icons.word{background-position: -469px -104px;}
 .doc-icons.excel{background-position: -412px -104px;}
 .doc-icons.ppt{background-position: -354px -103px;}
@@ -113,7 +114,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-btn.btn-cancel{background: #DEDFE1;color:var(--black)}
 .menu-droupdown{width: 120px;}
 .menu-droupdown a{font-size: 11px;}
-.share-popup .ant-modal-body {padding: 16px;}
+.ant-modal-body ,.ant-modal-header,.ant-modal-footer{padding: 16px !important;}
 .share-popup .ant-modal-content, .share-popup.ant-modal-header{border-radius: 10px;}
 .ant-input:hover{box-shadow: none !important;}
 .tags .anticon-plus{display: none;}
@@ -129,19 +130,8 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-checkbox-checked .ant-checkbox-inner{background: var(--primary); border-color: var(--primary);}
 .ant-checkbox-checked::after, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{border-color: var(--primary);}
 .ok-image img{width: 48px !important;height: 48px !important;vertical-align: middle;margin-top: 20px;}
-.image-close{position: absolute;
-    background: var(--white);
-    box-shadow: var(--boxshadow);
-    top: 8px;
-    right: 25px;
-    border-radius: 9px;
-    cursor: pointer;}
-.close-icon, .anticon.anticon-delete{    width: 25px;
-    height: 25px;
-    vertical-align: middle;
-    display: inline-block;
-    background: url(../src/styles/images/icons.svg) no-repeat;
-    background-position: -402px -199px;}
+.image-close{position: absolute;background: var(--white);box-shadow: var(--boxshadow);top: 8px;right: 25px;border-radius: 9px;cursor: pointer;}
+.close-icon, .anticon.anticon-delete{ width: 25px; height: 25px;vertical-align: middle;display: inline-block;background: url(../src/styles/images/icons.svg) no-repeat;background-position: -402px -199px;}
 .image-shadow{box-shadow: var(--boxshadow);}
 .doc-icons.word{background-position: -469px -104px;}
 .doc-icons.excel{background-position: -412px -104px;}
@@ -176,12 +166,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 @media(min-width: 768px) {
     .share-box ul li::after{content: ""; position: absolute; width: 1px; height: 45px; background-color: #D6E6FB; top: 4px; right: -22px; left: auto;}
 }
-.invite-btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+.invite-btn{display: flex;align-items: center;justify-content: center;}
 .custom-card .ant-card{ border-radius: 10px; box-shadow: var(--boxshadow); margin-bottom: 24px;}
 .custom-card .ant-card-body{ padding: 16px;}
 .custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);}
@@ -193,8 +178,10 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .custom-card .list-link{color: var(--primary);margin-left: 3px;}
 .custom-card .ant-card-actions{ background-color: #F9F9F9;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top: 0;}
-
 .icons.add{background-position:-505px -198px;}
+.icons.add:hover{background-position: -505px -224px;}
+.icons.close{background-position:-401px -197px;}
+.icons.close:hover{background-position:-401px -223px;}   
 .hobbies-card .tags{ background-color: var(--secondary); color: var(--textprimary);font-size: 14px;font-weight: 500; border-radius: 40px;padding: 4px 15px;border: none;margin-bottom: 8px;}
 .text-left-line.ant-divider-horizontal.ant-divider-with-text-left::before{width: 0 !important;}
 .text-left-line .ant-divider-inner-text{padding-left: 0;color: var(--textprimary);}
@@ -232,3 +219,24 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .edu-card .edu-study{ display: flex;align-items: center;}
 .edu-card .edu-certificate .about-icons {background: var(--white) ;}
 .edu-card .edu-certificate .ant-list-item-meta-title{color: var(--primary);}
+.ant-input-affix-wrapper:hover,.ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused{border-color: var(--primary) !important;}
+.hobbiesmodal{}
+.custom-input{
+    margin-bottom: 15px;
+    border-radius: 4px;
+    padding:  0 !important;
+}
+.custom-input .ant-input-suffix{
+    border-left: 1px solid var(--bordergrey);
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.custom-input .ant-input{
+    padding: 7px 10px !important;
+}
+.custom-modal-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.custom-modal-header h4{margin-bottom: 0;}
