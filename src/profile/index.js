@@ -26,6 +26,7 @@ import About from '../components/about';
 import Intership from '../components/internships';
 import VideoProfile from '../components/videoprofile';
 import Education from '../components/education';
+import GroupsPage from '../components/groupspage';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -129,7 +130,7 @@ class Profile extends Component {
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-
+                                    <GroupsPage />
                                     </Col>
                                 </Row>
                             </TabPane>

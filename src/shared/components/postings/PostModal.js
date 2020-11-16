@@ -21,9 +21,9 @@ class PostCardModal extends Component {
 
     goToPrevSlide = () => {
         this.slider.current.prev();
-      }
+    }
 
-      goToNextSlide = () => {
+    goToNextSlide = () => {
         this.slider.current.next();
     }
 
@@ -80,6 +80,30 @@ class PostCardModal extends Component {
 
         const { Title, Paragraph } = Typography;
 
+        const carouselData = (
+            <div className="preview-image">
+                <a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>
+                <Carousel ref={this.slider}>
+                    {postimage.imageData.map((image, index) => {
+                        return <div key={index}>
+                            <img src={image.image} />
+                        </div>
+                    })}
+                </Carousel>
+                <a className="more-frnd-btn next" onClick={() => this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>
+            </div>
+        )
+
+        const noCarousel = (
+            <div className="preview-image">
+                <Carousel>
+                    <div>
+                        <img src={postimage.imageData[0].image} />
+                    </div>
+                </Carousel>
+            </div>
+        )
+
 
         return (
             <Modal
@@ -94,17 +118,7 @@ class PostCardModal extends Component {
                 <div className="post-preview-box post-card comment-show">
                     <Row align="middle">
                         <Col xs={24} sm={16} md={16} lg={17}>
-                            <div className="preview-image">
-                                <a className="more-frnd-btn prev" onClick={()=>this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>
-                                <Carousel ref={this.slider}>
-                                    {postimage.imageData.map((image, index) => {
-                                        return <div key={index}>
-                                            <img src={image.image} />
-                                        </div>
-                                    })}
-                                </Carousel>
-                                <a className="more-frnd-btn next" onClick={()=>this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>
-                            </div>
+                            {postimage.length > 1 ? carouselData : noCarousel}
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={7}>
                             <div className="preview-content">
