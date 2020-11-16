@@ -235,3 +235,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .modal-interest .ant-modal-body {background-color: #f9f9f9;padding: 0!important;}
 .text-red,.text-red:hover{color: var(--red) !important;}
 .bg-white{background-color: var(--white);}
+.ant-form-vertical .ant-form-item-label{padding-bottom: 0px !important;}
+.custom-fields .ant-form-item-label > label{color: var(--textsecondary) !important;}
+.custom-fields{margin-bottom: 16px !important;}
+.ant-input{border-radius: 4px !important;}

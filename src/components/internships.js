@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List, Dropdown, Tooltip, Popover } from 'antd'
+import { Button, Layout, Card, Avatar, List, Dropdown, Tooltip, Popover, Form, Row, Col, Select, Input } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -13,6 +13,10 @@ import infosys from '../styles/images/infosys.svg'
 import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
+import TextArea from 'antd/lib/input/TextArea';
+import Modal from 'antd/lib/modal/Modal';
+
+const { Option } = Select;
 const data = [
 
     {
@@ -41,12 +45,29 @@ const data = [
     },
 ];
 class Intership extends Component {
-
+    state = { visible: false };
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
     render() {
         const { user } = store.getState().oidc;
         return (
             <div className="custom-card">
-                <Card title="Internships" bordered={false} extra={<Link to=""><span className="icons add" /></Link>}  >
+                <Card title="Internships" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>}  >
                     <List
                         grid={{
                             gutter: 8,
@@ -77,6 +98,59 @@ class Intership extends Component {
                         )}
                     />
                 </Card>
+                <Modal
+                    title={<div className="custom-modal-header"><h4>Internships</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
+                    visible={this.state.visible}
+                    closable={false}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[<div className="d-flex justify-content-between">
+                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
+                            Close
+                        </Button>
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            Save
+                        </Button></div>
+                    ]}>
+                    <Form
+                        layout="vertical"
+                    >
+                        <Row gutter={16}>
+                            <Col xs={12}>
+                                <Form.Item label="Company Name" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Short Name" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Place" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Duration" className="custom-fields">
+                                    <Select defaultValue="Select Option">
+                                        <Option value="Select Option">Select Duration</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            
+                            <Col xs={12}>
+                               
+                            </Col>
+                            <Col xs={12}>
+                               
+                            </Col>
+                            <Col xs={12}>
+                               
+                            </Col>
+                        </Row>
+                    </Form>
+                </Modal>
             </div>
 
         )
