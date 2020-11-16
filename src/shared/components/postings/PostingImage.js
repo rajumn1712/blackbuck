@@ -83,7 +83,7 @@ class ImagePost extends Component {
         //         handleDeletePost();
         //         break;
         //     default:
-        //         handleSavePost();
+        //         break;
         // }
     }
 
@@ -151,12 +151,6 @@ class ImagePost extends Component {
                     <CommentAction key="comment" clickedEvent={()=>this.showComment()}/>,
                     <ShareAction key="share" />
                     ]}
-                    // cover={<div style={{width: '100%', position: 'relative'}}><ReactPhotoGrid
-                    //     onImageClick={this.showModal}
-                    //     data={imageData}
-                    //     containerWidth={562}
-                    //     girdSize="562x562"
-                    // /><span className="more-images">+2</span></div>}
                     cover={<div style={{ width: '100%', position: 'relative' }}>
                         <div class="images" onClick={this.showModal}>
                             {postimage.imageData.map((image, index) => {
