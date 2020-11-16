@@ -140,7 +140,7 @@ class ShareBox extends Component {
                 <Menu.Item key="3"><a href="">Groups</a></Menu.Item>
             </Menu>
         );
-        const title = <div className="justify-content-between">
+        const title = <div className="d-flex justify-content-between">
             <Meta
                 avatar={<Avatar src={GroupImage} />}
                 title={<h4 className="f-16 mb-0">Jhon Doe</h4>}
@@ -172,7 +172,7 @@ class ShareBox extends Component {
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.popupOk}
-                    footer={[<div className="justify-content-between">
+                    footer={[<div className="d-flex justify-content-between">
                         <Button key="back" onClick={this.popupOk} className="btn-cancel">
                             Close
                         </Button>

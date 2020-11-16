@@ -114,7 +114,7 @@ class PostComponent extends Component {
                     <Menu.Item key={indx}>{item}</Menu.Item>)}
             </Menu>);
 
-        const title = <div className="justify-content-between">
+        const title = <div className="d-flex justify-content-between">
             <Meta
                 avatar={<Avatar src={GroupImage} />}
                 title={<div><h4 className="media-head">{postObj.userName}</h4></div>}
@@ -135,7 +135,7 @@ class PostComponent extends Component {
             <Modal className="share-popup"
                 title={title}
                 visible={visible}
-                footer={[<div className="justify-content-between">
+                footer={[<div className="d-flex justify-content-between">
                     <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                         <a >Close</a>
                     </Button>
