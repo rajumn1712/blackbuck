@@ -220,23 +220,14 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .edu-card .edu-certificate .about-icons {background: var(--white) ;}
 .edu-card .edu-certificate .ant-list-item-meta-title{color: var(--primary);}
 .ant-input-affix-wrapper:hover,.ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused{border-color: var(--primary) !important;}
-.hobbiesmodal{}
-.custom-input{
-    margin-bottom: 15px;
-    border-radius: 4px;
-    padding:  0 !important;
-}
-.custom-input .ant-input-suffix{
-    border-left: 1px solid var(--bordergrey);
-    padding-left: 3px;
-    padding-right: 3px;
-}
-.custom-input .ant-input{
-    padding: 7px 10px !important;
-}
-.custom-modal-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+.custom-input{margin-bottom: 15px;border-radius: 4px;padding:  0 !important;}
+.custom-input .ant-input-suffix{ border-left: 1px solid var(--bordergrey); padding-left: 3px;padding-right: 3px;}
+.custom-input .ant-input{padding: 7px 10px !important;}
+.custom-modal-header{display: flex;justify-content: space-between;align-items: center;}
 .custom-modal-header h4{margin-bottom: 0;}
+.modal-search .header-searchbar .ant-input-group{box-shadow: none;border: 1px solid var(--bordergrey);border-radius: 4px;}
+.modal-search .header-searchbar{max-width: 100%;}
+.modal-search .header-searchbar input{min-height: 35px !important;}
+.modal-interest .ant-modal-body {background-color: #f9f9f9;padding: 0!important;}
+.text-red,.text-red:hover{color: var(--red) !important;}
+.bg-white{background-color: var(--white);}
