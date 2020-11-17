@@ -140,32 +140,19 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .docs .ant-list-item{min-width: calc(50% - 8px); background: #F9F9F9; padding: 10px; border-radius: 6px; border: 1px solid #EAF2FD;margin: 0 8px 8px 0;}
 .docs .ant-list-item h4{margin-bottom: 0;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;color: var(--primary);}
 .file-size{font-weight: 500; color: var(--textsecondary);}
-.upload-image .ant-upload.ant-upload-drag p.ant-upload-text {
-    margin: 0 0 4px;
-    color: var(--black);
-    font-size: 14px;
-    font-weight: 500;}
+.upload-image .ant-upload.ant-upload-drag p.ant-upload-text {margin: 0 0 4px;color: var(--black);font-size: 14px;font-weight: 500;}
 .speekar-block{padding: 30px 0;background: var(--bodybg);border-radius: 10px;}
 .radious, .upload-image .ant-upload.ant-upload-drag{border-radius: 10px;}
 .doc-text{color: var(--primary);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 110px;}
 .ant-upload-list-item-error .ant-upload-list-item-card-actions .anticon,.ant-upload-list-item-card-actions .anticon{color: transparent !important;}
 .fw-400{font-weight: 400;color: var(--black);}
-
 .justify-content-around .ant-list-item-meta{background: #F9F9F9;border-radius: 5px;}
 .ant-input:focus, .ant-input-focused, .ant-input:hover{border-color: var(--primary) !important;}
 .icons.camera{background-position: -289px -49px;}
 .card-box .ant-list-item-action{margin-left: 5px !important;}
-.card-box .ant-list-item-meta .ant-avatar-image{
-    width: 40px;
-    height: 40px;
-}
-.card-box .ant-list-item-meta-title{
-    font-size: 16px;
-    line-height: 24px;
-}
-@media(min-width: 768px) {
-    .share-box ul li::after{content: ""; position: absolute; width: 1px; height: 45px; background-color: #D6E6FB; top: 4px; right: -22px; left: auto;}
-}
+.card-box .ant-list-item-meta .ant-avatar-image{ width: 40px;height: 40px;}
+.card-box .ant-list-item-meta-title{font-size: 16px;line-height: 24px;}
+@media(min-width: 768px) {.share-box ul li::after{content: ""; position: absolute; width: 1px; height: 45px; background-color: #D6E6FB; top: 4px; right: -22px; left: auto;}}
 .invite-btn{display: flex;align-items: center;justify-content: center;}
 .custom-card .ant-card{ border-radius: 10px; box-shadow: var(--boxshadow); margin-bottom: 24px;}
 .custom-card .ant-card-body{ padding: 16px;}
@@ -239,3 +226,5 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .custom-fields .ant-form-item-label > label{color: var(--textsecondary) !important;}
 .custom-fields{margin-bottom: 16px !important;}
 .ant-input{border-radius: 4px !important;}
+.ant-modal-content{border-radius: 10px !important;}
+.ant-modal-header{border-radius: 10px 10px 0 0 !important;}
