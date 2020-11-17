@@ -15,6 +15,7 @@ import '../index.css';
 import '../App.css';
 import TextArea from 'antd/lib/input/TextArea';
 import Modal from 'antd/lib/modal/Modal';
+import Dragger from 'antd/lib/upload/Dragger';
 
 const { Option } = Select;
 const data = [
@@ -138,15 +139,21 @@ class Intership extends Component {
                                     </Select>
                                 </Form.Item>
                             </Col>
-                            
+
                             <Col xs={12}>
-                               
+                                <Dragger className="upload" >
+                                    <span className="sharebox-icons photo-upload"></span>
+                                    <p className="ant-upload-text mt-8 mb-0">Upload Logo</p>
+                                </Dragger>
                             </Col>
                             <Col xs={12}>
-                               
+                                <Dragger className="upload" >
+                                    <span className="sharebox-icons photo-upload"></span>
+                                    <p className="ant-upload-text mt-8 mb-0">Upload certificate</p>
+                                </Dragger>
                             </Col>
                             <Col xs={12}>
-                               
+
                             </Col>
                         </Row>
                     </Form>
