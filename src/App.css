@@ -8,12 +8,12 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
 .ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{color: var(--primary) !important;}
 .ant-menu-item, .ant-menu-item-selected{border: 0 !important;}
-.icons{width: 28px; height: 28px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
+.icons{width: 28px; height: 28px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .avatar-menu{padding: 0 !important;}
 .avatar-menu img{width: 45px; height: 45px; border-radius: 12px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1)}
 .notification-count .ant-badge-count{background: var(--primary) !important; border-radius: 0px !important; min-width: 16px; height: 16px; padding: 0 3px; font-size: 10px; line-height: 16px; top: -5px; right: -6px;}
 .share-box{border-radius: 10px; text-align: center; margin-bottom: 24px; box-shadow: var(--boxshadow); background: var(--white);}
-.sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
+.sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--primary); border-radius: 10px; color: var(--white); border: 0;}
 .profile-card .ant-avatar{width: 90px; height: 90px; padding-right: 0; border-radius: 24px;}
 .profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: 0; bottom: 6px; background: #33DF00;}
@@ -47,7 +47,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .share-box li{position: relative;}
 .share-box ul li:last-child:after{content: none;}
 .left-rail, .invite-card .ant-card{background: var(--white); border-radius: 10px !important; box-shadow: var(--boxshadow); margin-bottom: 24px;}
-.left-menu{width: 20px; height: 20px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
+.left-menu{width: 20px; height: 20px; vertical-align: initial; display: inline-block; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
 .left-menu.profile-icon{background-position: -5px -200px;}
 .left-menu.friends-icon{background-position: -35px -200px;}
 .left-menu.post-icon,.icons.edit{background-position: -64px -201px;}
@@ -67,7 +67,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .profile-menu li:hover a span{color: var(--primary);}
 .profile-menu li:hover a .left-menu.profile-icon,.profile-menu .ant-menu-item-selected a .left-menu.profile-icon{background-position: -5px -226px;}
 .profile-menu li:hover a .left-menu.friends-icon,.profile-menu .ant-menu-item-selected a .left-menu.friends-icon{background-position: -35px -226px;}
-.profile-menu li:hover a .left-menu.post-icon,.profile-menu .ant-menu-item-selected a .left-menu.post-icon{background-position: -64px -227px;}
+.profile-menu li:hover a .left-menu.post-icon,.profile-menu .ant-menu-item-selected a .left-menu.post-icon,.icons.edit:hover{background-position: -64px -227px;}
 .profile-menu li:hover a .left-menu.group-icon,.profile-menu .ant-menu-item-selected a .left-menu.group-icon{background-position: -94px -226px;}
 .profile-menu li:hover a .left-menu.noti-icon,.profile-menu .ant-menu-item-selected a .left-menu.noti-icon{background-position: -123px -226px;}
 .profile-menu li:hover a .left-menu.interest,.profile-menu .ant-menu-item-selected a .left-menu.interest{background-position: -206px -281px;}
@@ -175,9 +175,8 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .icons.location{background-position: -148px -252px;}
 .icons.email{background-position: -122px -252px;}
 .icons.phone{background-position: -174px -252px;}
-.about-details .icons{flex-shrink: 0;}
 .about-details {display: flex;align-items: flex-start;margin-bottom: 10px;color: var(--textprimary);}
-.about-details .about-icons,.edu-card .about-icons{width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;border-radius: 10px;border: 1px solid var(--secondary);margin-right: 10px;}
+.about-details .about-icons,.edu-card .about-icons{min-width: 40px; width: 40px;height: 40px; display: flex; align-items: center; justify-content: center;border-radius: 10px;border: 1px solid var(--secondary);margin-right: 10px;}
 .about-details p{ margin-bottom: 0;}
 /* FriendRequests */
 .ant-avatar.request-image{width: 60px !important;height: 60px !important;border-radius: 12px;}
@@ -224,7 +223,12 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .bg-white{background-color: var(--white);}
 .ant-form-vertical .ant-form-item-label{padding-bottom: 0px !important;}
 .custom-fields .ant-form-item-label > label{color: var(--textsecondary) !important;}
-.custom-fields{margin-bottom: 16px !important;}
+.custom-fields{margin-bottom: 8px !important;}
 .ant-input{border-radius: 4px !important;}
 .ant-modal-content{border-radius: 10px !important;}
 .ant-modal-header{border-radius: 10px 10px 0 0 !important;}
+.ant-btn:hover, .ant-btn:focus{
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+.ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}

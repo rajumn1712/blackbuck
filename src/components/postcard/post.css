@@ -131,11 +131,11 @@ object-fit: cover;
 .image-box.four{width: 33.333%;}
 .more-images{
     position: absolute;
-    bottom: 0;
+    bottom: 2px;
     right: 0;
     background: rgba(0,0,0,0.8);
     width: 33.333%;
-    height: 200px;
+    height: 196px;
     display: flex;
     justify-content: center;
     align-items: center;

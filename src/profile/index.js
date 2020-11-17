@@ -50,26 +50,23 @@ class Profile extends Component {
                             </Link>
 
                         </div>
-                        <div className="user-statistic ">
-                            <Statistic title="Friends" className="afterline" value={58} />
-                            <Statistic className="afterline" title="Groups" value={8} />
-                            <Statistic title="Posts" value={10} />
-                            <Card className="user-banner"
-                            >
-                                <Meta
-                                    avatar={
-                                        <div>
-                                            <Avatar src={AvatarImage} />
-                                            {/* <span className="icons camera" /> */}
-                                        </div>
-                                    }
+                        <div className="user-statistic">
+                            <div className="left-statistic">
+                                <Statistic title="Friends" className="afterline" value={58} />
+                                <Statistic className="afterline" title="Groups" value={8} />
+                                <Statistic title="Posts" value={10} />
+                            </div>
+                            <Card className="user-banner" >
+                                <Meta avatar={<div><Avatar src={AvatarImage} />{/* <span className="icons camera" /> */} </div>}
                                     title={<div>John Doe<span className="premium-icon"></span></div>}
                                     description="CSE"
                                 />
                             </Card>
-                            <Statistic title="Shares" className="afterline" value={80} />
-                            <Statistic title="Interests" className="afterline" value={9} />
-                            <Statistic title="Posts" value={10} />
+                            <div  className="right-statistic">
+                                <Statistic title="Shares" className="afterline" value={80} />
+                                <Statistic title="Interests" className="afterline" value={9} />
+                                <Statistic title="Posts" value={10} />
+                            </div>
                         </div>
                         <Tabs defaultActiveKey="1" centered className="profile-tabs">
                             <TabPane tab="Posts" key="1">
@@ -130,7 +127,7 @@ class Profile extends Component {
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                    <GroupsPage />
+                                        <GroupsPage />
                                     </Col>
                                 </Row>
                             </TabPane>
