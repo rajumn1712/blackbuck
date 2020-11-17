@@ -8,9 +8,9 @@ import CommentAction from './Actions/CommentAction';
 import ShareAction from './Actions/ShareActions';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
-class PostVideo extends Component {
+class PostAudio extends Component {
     state = {
-        video: {
+        audio: {
             src: "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
             postTitle: 'Computer Science And Engineering(CSE) Mini Projects - Engineering',
             postDescription: `Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually. You read correctly`,
@@ -54,8 +54,8 @@ class PostVideo extends Component {
 
     updateLoveCount = (lovescount) => {
         this.setState({
-            video: {
-                ...this.state.video,
+            audio: {
+                ...this.state.audio,
                 lovesCount: lovescount
             }
         })
@@ -63,8 +63,8 @@ class PostVideo extends Component {
 
     updateClapsCount = (clapscount) => {
         this.setState({
-            video: {
-                ...this.state.video,
+            audio: {
+                ...this.state.audio,
                 clapsCount: clapscount
             }
         })
@@ -72,8 +72,8 @@ class PostVideo extends Component {
 
     updateWhistlesCount = (whistlescount) => {
         this.setState({
-            video: {
-                ...this.state.video,
+            audio: {
+                ...this.state.audio,
                 whistlesCount: whistlescount
             }
         })
@@ -87,30 +87,31 @@ class PostVideo extends Component {
             description={<div><a className="mr-8 grp-type"><span className="grp-type-icon public mr-4"></span>Public Group</a><span>24-10-2020 09:50 am</span></div>}
         />
 
-        const { video, submitting, commentsection, comments, value } = this.state;
+        const { audio, submitting, commentsection, comments, value } = this.state;
 
         return (
             !submitting ? <div className="post-card comment-show">
                 <Card title={title} style={{ width: '100%' }} bordered={false} extra={
                     <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
                 }
-                    actions={[<EmojiAction key="emoji" mystate={video} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
+                    actions={[<EmojiAction key="emoji" mystate={audio} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
                     <CommentAction key="comment" clickedEvent={() => this.showComment()} />,
                     <ShareAction key="share" />
                     ]}
-                    cover={<div> <video width="100%" controls src="https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4">
-                    </video></div>}
+                    cover={<div> <audio width="100%" controls >
+                        <source src="https://ia800208.us.archive.org/4/items/Popeye_forPresident/Popeye_forPresident_512kb.mp4" type="audio/mp3" />
+                    </audio></div>}
                 >
                     <div className="p-16">
-                        <Title level={5} className="post-title f-16">{video.postTitle}</Title>
-                        <Paragraph className="f-14 post-desc">{video.postDescription}</Paragraph>
+                        <Title level={5} className="post-title f-16">{audio.postTitle}</Title>
+                        <Paragraph className="f-14 post-desc">{audio.postDescription}</Paragraph>
                         <ul className="card-actions-count pl-0">
-                            <li><span className="counter-icon loves"></span>{video.lovesCount}<span> Loves</span></li>
-                            <li><span className="counter-icon claps"></span>{video.clapsCount}<span> Claps</span></li>
-                            <li><span className="counter-icon whistles"></span>{video.whistlesCount}<span> Whistles</span></li>
+                            <li><span className="counter-icon loves"></span>{audio.lovesCount}<span> Loves</span></li>
+                            <li><span className="counter-icon claps"></span>{audio.clapsCount}<span> Claps</span></li>
+                            <li><span className="counter-icon whistles"></span>{audio.whistlesCount}<span> Whistles</span></li>
                         </ul>
                         <div className="post-tag">
-                            {video.postTags.map((tag, index) => {
+                            {audio.postTags.map((tag, index) => {
                                 return <Tag key={index} className="f-14 px-16">{tag.tagname}</Tag>
                             })}
                         </div>
@@ -122,4 +123,4 @@ class PostVideo extends Component {
         )
     }
 }
-export default PostVideo;
+export default PostAudio;
