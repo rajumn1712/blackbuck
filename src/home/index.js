@@ -5,7 +5,7 @@ import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
 import Ads from '../components/ads';
-import FriendSuggestions from '../components/FriendSuggestions';
+import FriendSuggestions from '../shared/components/friendSuggestion';
 import PostCard from '../components/postcard/Post';
 import Groups from '../components/groups';
 
