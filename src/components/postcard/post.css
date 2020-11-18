@@ -1,22 +1,23 @@
 @import '../../styles/theme.css';
 .post-card{margin-bottom: 24px;}
-.post-card .ant-card{box-shadow: var(--boxshadow) !important;}
-.post-card .ant-card-head{padding: 0 16px;}
+.post-card{box-shadow: var(--boxshadow) !important; border-radius: 10px;}
+.post-card .ant-card{ border-radius: 10px;}
 .post-card .ant-card-meta-title {margin-bottom: 0 !important; font-size: 16px;}
-.post-card .ant-card-head-title{padding: 19px 0 16px;}
 .post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px;}
-.post-card .ant-card-meta-description{font-size: 12px; font-weight: 400; margin-top: 3px;}
+.post-card .ant-card-meta-description{font-size: 12px; font-weight: 500; margin-top: 3px;}
 .post-card .ant-card-body{padding: 0;}
 .post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: #F9F9F9;}
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important;}
-.post-card .ant-card-actions > li {margin: 0;}
+.post-title{color: var(--textprimary) !important; margin-bottom: 2px !important;}
+.post-desc{color: var(--textsecondary);}
+.post-card .ant-card-actions > li, .post-card .ant-card-meta {margin: 0;}
 .post-card .ant-card-actions li a{padding: 10px 8px;}
-.post-tag .ant-tag{border-radius: 14px; min-height: 22px; font-weight: 500; border: none; cursor: pointer;}
+.post-tag .ant-tag{border-radius: 14px; min-height: 24px; font-weight: 500; border: none; cursor: pointer; line-height: 24px;}
 .post-card .ant-card-meta-avatar, .share-popup .ant-card-meta-avatar{padding-right: 12px;}
 .justify-content-between .ant-card-meta{margin: 3px 0 0;}
 .post-icons{width: 20px;height: 20px;vertical-align: initial;display: inline-block;vertical-align: text-bottom; background: url(../../styles/images/icons.svg) no-repeat;margin-right: 5px;}
 .post-icons.like-icon{background-position:  -150px -200px;}  
-.post-icons.comment-icon{background-position: -177px -200px;}
+.post-icons.comment-icon{background-position: -177px -199px;}
 .post-icons.share-icon{background-position: -205px -200px;}
 .post-icons.more-icon{background-position: -235px -200px;}
 .post-icons.send-icon{background-position: -265px -226px;}
@@ -28,7 +29,7 @@
 .post-icons.delete-icon{background-position: -377px -200px;}
 .post-icons.more-icon:hover {background-position: -235px -226px;}
 .post-card .ant-card-actions li a:hover .post-icons.like-icon{background-position:  -150px -226px;}
-.post-card .ant-card-actions li a:hover .post-icons.comment-icon{background-position: -177px -226px;}
+.post-card .ant-card-actions li a:hover .post-icons.comment-icon{background-position: -177px -225px;}
 .post-card .ant-card-actions li a:hover .post-icons.share-icon{background-position: -205px -226px;}
 .more-opt li:hover .post-icons.edit-icon{background-position: -64px -226px;}
 .more-opt li:hover .notify-icon{background-position: -124px -226px;}
@@ -46,10 +47,10 @@
 .post-card.comment-show .ant-card-actions{border-radius: 0;}
 .post-comment .ant-form-item-control-input-content{position: relative;}
 .post-btn{position: absolute; right: 4px; top: 4px;}
-.post-comment .ant-input{height: 40px !important; border-radius: 5px; resize: none;padding-right: 60px;}
+.post-comment .ant-input{height: 40px !important; border-radius: 5px; resize: none;padding-right: 60px;padding-top: 6px;}
 .post-comment .ant-comment-avatar img{border-radius: 13px;}
 .post-comment .ant-comment-content-author-time{margin-left: auto;}
-.post-comment .ant-comment-content-detail{font-size: 13px;}
+.post-comment .ant-comment-content-detail{font-size: 14px;}
 .post-comment .ant-comment-content-author-time{font-size: 12px;}
 .post-comment .ant-comment-content-author-name{font-size: 14px; font-weight: 500;}
 .post-comment .ant-comment-inner {padding-bottom: 0;}
@@ -57,28 +58,27 @@
 .card-actions-count li{font-weight: 500; margin-right: 30px;font-size: 13px;}
 .card-actions-count li span{font-size: 12px;font-weight: normal;}
 .custom-dropdown{min-width: 300px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 8px;}
-.custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 12px 8px; border-radius: 6px; font-weight: 500; font-size: 15px;}
-.custom-dropdown li svg, .custom-dropdown li span {margin-right: 10px;}
+.custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 15px 8px; border-radius: 6px; font-weight: 500; font-size: 16px;}
+.custom-dropdown li svg, .custom-dropdown li span {margin-right: 16px;}
 .custom-dropdown li a{display: block;}
 .post-card .ant-avatar-group .ant-avatar-string{font-size: 16px; line-height: 38px; font-weight: 500;}
 .post-image img{ width:100%;height: auto;}
 .overlayimage{ position: absolute;  top: 0;right: 0; left: 0; bottom: 0;}
-.post-preview .ant-modal-content{ height: 100vh;padding: 60px; background: var(--transparent);}
+.post-preview .ant-modal-content{ height: 100vh; background: var(--transparent);}
 .post-preview .ant-modal-content .ant-modal-close { top: 10px ;right: 10px;}
 .post-preview .ant-modal-content .ant-modal-close .ant-modal-close-x{background: var(--white);display: block;width: 35px;height: 35px;font-size: 16px;font-style: normal;line-height: 35px;text-align: center;text-transform: none;text-rendering: auto;border-radius: 11px;}
 .post-preview.ant-modal{top:0 !important;padding-bottom: 0 !important;max-width: calc(100vw - 20px) !important;}
 .post-preview.ant-modal .ant-modal-body{padding: 0 !important;}
-.post-preview .post-preview-box{    background: var(--black);    border-radius: 15px;}
-.post-preview .post-preview-box .preview-image{ }
+.post-preview .post-preview-box{background: var(--black);margin-bottom: 0;}
 .post-preview .post-preview-box .preview-image img{width: 100%;height:auto;}
-.post-preview .post-preview-box .preview-content{height: calc(100vh - 120px);flex-shrink: 0;display: flex; max-width: 100%;flex-direction: column;background: var(--white); overflow-y: auto;border-bottom-right-radius:15px;border-top-right-radius:15px;}
+.post-preview .post-preview-box .preview-content{height: calc(100vh);flex-shrink: 0;display: flex; max-width: 100%;flex-direction: column;background: var(--white); overflow-y: auto;border-bottom-right-radius:15px;border-top-right-radius:15px;}
 .post-preview .post-preview-box .preview-content .ant-card-body{padding: 0;}
 .post-preview .post-preview-box .preview-content .post-title ,.post-preview .post-preview-box .preview-content .post-desc{max-width: 360px;}
 .post-preview .preview-content .post-comment{margin-bottom: 5px;}
+.preview-content .post-card{border-radius: 0;}
 .reply-comment .ant-form-item{margin-bottom: 5px !important;}
-.more-images{font-size: 36px; position: absolute; right: 60px; bottom: 60px; color: var(--white); background:rgba(0, 0, 0, 0.6); padding: 8px 16px; border-radius: 10px;}
 .share-pop{margin: -8px -8px 0; border-right: none; width: 280px;}
-.share-pop .ant-menu-item{padding: 12px 8px; display: flex; align-items: center; font-size: 15px; font-weight: 500;}
+.share-pop .ant-menu-item{padding: 12px 8px; display: flex; align-items: center; font-size: 16px; font-weight: 500; min-height: 52px; margin-bottom: 0 !important;}
 .share-pop .ant-menu-item:hover, .share-pop .ant-menu-item-selected{background: #F5F5F5; border-radius: 6px; color: var(--primary)}
 .share-pop .ant-menu-item svg, .share-pop .ant-menu-item span{margin-right: 12px;}
 .ant-popover-inner{border-radius: 8px;}
@@ -88,3 +88,57 @@
 .counter-icon.loves {background-position: -2px -2px;}
 .counter-icon.claps {background-position: -32px -3px;}
 .counter-icon.whistles {background-position: -66px -3px;}
+.join-grp-title{font-weight: 500; font-size: 16px; text-align: center;}
+.join-grp-txt{font-weight: normal; color: var(--textsecondary);}
+.grp-type, .grp-type:hover{color: var(--primary);}
+.grp-type-icon{width: 14px;height: 14px;display: inline-block;vertical-align: text-top;}
+.grp-type-icon.public{background-position: -26px -396px;}
+.grp-type-icon.private{background-position: -48px -396px;}
+.ant-avatar-group .ant-avatar{border-width: 2px;}
+.join-grp{display: flex; justify-content: space-between; align-items: center; margin-top: 20px;}
+.anonymous-check .ant-checkbox{transform: scale(1.6)}
+.ant-checkbox-checked .ant-checkbox-inner{background: var(--primary); border-color: var(--primary);}
+.ant-checkbox-checked::after, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{border-color: var(--primary);}
+.images{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    position: relative;
+}
+.image-box{
+    width: 100%;
+    height: 200px;
+    font-size: 30px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+.image-box img {width: 100%;
+
+left: 0;
+top: 0;
+transform: scale(2.4);
+object-fit: cover;
+}
+.image2, .image3{
+    width: 100%;
+}
+.image-box.three{width: 50%;}
+.image-box.four{width: 33.333%;}
+.more-images{
+    position: absolute;
+    bottom: 2px;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    width: 33.333%;
+    height: 196px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 30px;
+}

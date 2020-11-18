@@ -30,7 +30,7 @@ class Invite extends Component {
                         <Avatar style={{ backgroundColor: '#D7FDFE' }}>Me</Avatar>
                         <Avatar src={AvatarImage} />
                     </Avatar.Group>
-                    <p><span>Vin Diesel</span> was invited to join in <span className="text-color">Mech Mantra</span> group</p>
+                    <p><span>Vin Diesel</span> was invited to join in <span className="text-color invite-grp-name">Mech Mantra</span> group</p>
                     <Button type="primary" onClick={() => openNotification('bottomLeft')}>Accept Request</Button>
 
                 </Card>

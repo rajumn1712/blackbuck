@@ -6,12 +6,14 @@ const Contact = lazy(() => import("../contact-us"));
 const Home = lazy(() => import("../home"));
 const Callback = lazy(() => import("../shared/authentication/callback"));
 const Post = lazy(() => import("../common/post"));
+const Profile = lazy(()=>import("../profile"))
 const Router = () => {
     return (
         <Switch>
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
             <Route path="/callback" component={Callback} />
+            <Route path="/profile" component={Profile} />
             <ProtectedRoute path="/post/:name" component={Post} />
             <ProtectedRoute path="" component={Home} />
         </Switch>

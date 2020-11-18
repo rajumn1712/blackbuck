@@ -191,7 +191,7 @@
     box-shadow: var(--boxshadow);
     min-width: 300px !important;
     margin-right: 16px;
-    padding: 16px;
+    padding: 16px 8px;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
 }
@@ -199,9 +199,14 @@
 .notification-dropdown {
     margin-top: 6px !important;
 }
+.notification-dropdown .ant-divider{
+    margin: 0 !important;
+    margin-bottom: 4px !important;
+}
 
-.notification-dropdown .ant-list-item-meta-description.unread {
+.notification-dropdown.unread {
     font-weight: 600;
+
 }
 
 .profile-dropdown .ant-card-meta .ant-avatar-image, .notification-dropdown .ant-list-item-meta-avatar .ant-avatar-image, .messenger-drawer .ant-card-meta .ant-avatar-image {
@@ -282,15 +287,52 @@
 }
 .notification-dropdown a:hover{
     color: var(--primaryhover);
-    opacity: 0.9;
 }
 
-
+.notification-list{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 8px;
+    max-width: 284px;
+}
+.notification-list .notification-image .ant-avatar-image{
+    width: 45px;
+    height: 45px;
+    border-radius: 17px;
+    margin-right: 12px;
+}
+.notification-list .notification-image img{
+    flex-shrink: 0;
+}
+.notification-list .notification-description p{
+    margin: 0;
+    font-size: 15px;
+    line-height: 16px;
+}
+.notification-list.unread .notification-description span{
+    color: var(--primary);
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 400;
+}
+.notification-list.read{  
+    color: #5D5D5D;
+}
+.notification-list.unread{
+    font-weight: 600;
+}
+.notification-list:hover{
+    background-color: #f5f5f5;
+    border-radius: 6px;
+}
 .notification-dropdown .noti-dropdown-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .messenger-chat .ant-drawer-header, .messenger-chat .ant-drawer-body {
@@ -300,12 +342,19 @@
 .messenger-drawer .ant-card-meta {
     display: flex;
     align-items: center;
-    padding: 5px 3px;
-    margin-bottom: 6px;
+    padding: 5px;
+    margin-bottom: 8px;
+}
+
+.messenger-chat{
+    width: auto !important;
 }
 
 .messenger-drawer .ant-card-meta-title {
     margin-bottom: 0 !important;
+}
+.messenger-drawer .ant-card-meta-title,.messenger-drawer .chat-description{
+    line-height: 1.4 !important;
 }
 
 .messenger-drawer .chat-description {
@@ -314,6 +363,19 @@
     text-overflow: ellipsis;
     margin-bottom: 0;
 }
+.messenger-chat .ant-drawer-footer{
+    text-align: center !important;
+}   
+.ant-drawer-footer .messenger-footer{
+    color: var(--primary);
+}
+.ant-drawer-footer .messenger-footer:hover{
+    color: var(--primaryhover);
+    text-decoration: underline !important;
+}   
+.messenger-chat .ant-drawer-title{
+    font-size: 18px !important;
+}   
 
 .icons.swap-icon {
     background-position: -3px -252px;
