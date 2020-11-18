@@ -118,7 +118,7 @@ class PostCardModal extends Component {
                 <div className="post-preview-box post-card comment-show">
                     <Row align="middle">
                         <Col xs={24} sm={16} md={16} lg={17}>
-                            {postimage.length > 1 ? carouselData : noCarousel}
+                            {postimage.imageData.length > 1 ? carouselData : noCarousel}
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={7}>
                             <div className="preview-content">
