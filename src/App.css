@@ -234,3 +234,4 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
     border-color: var(--primary) !important;
 }
 .ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}
+.requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
