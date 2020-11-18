@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List, Tag, Input,Dragger,props } from 'antd'
+import { Button, Layout, Card, Avatar, List, Tag, Input, props, Upload, Form } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -11,7 +11,10 @@ import Video from '../styles/images/video.mp4';
 import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
+import '../styles/theme.css';
 import Modal from 'antd/lib/modal/Modal';
+
+const { Dragger } = Upload;
 class VideoProfile extends Component {
     state = { visible: false };
     showModal = () => {
@@ -39,8 +42,7 @@ class VideoProfile extends Component {
                 </video>} bordered={false} extra={<Link onClick={this.showModal}><span className="icons edit" /></Link>} >
                 </Card>
                 <Modal
-                    className="modal-interest"
-                    title={<div className="custom-modal-header"><h4>Interests</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
+                    title={<div className="custom-modal-header"><h4>Video as Profile</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
                     visible={this.state.visible}
                     closable={false}
                     onOk={this.handleOk}
@@ -53,8 +55,16 @@ class VideoProfile extends Component {
                             Save
                         </Button></div>
                     ]}>
-                    <div className="p-16">
-                        
+                    <div className="">
+                        <Dragger className="upload mb-16">
+                            <span className="sharebox-icons video-upload"></span>
+                            <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
+                        </Dragger>
+                        <Form layout="vertical" className="mt-16">
+                            <Form.Item label="URL" className="custom-fields">
+                                <Input />
+                            </Form.Item>
+                        </Form>
                     </div>
 
                 </Modal>
