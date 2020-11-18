@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Button, Layout, Card, Avatar, List, Divider, Row, Col, Modal, Form, Input, Select } from 'antd'
 import { Link } from 'react-router-dom';
-import { userManager } from '../shared/authentication/auth';
-import { store } from '../store'
-import User1 from '../styles/images/avatar.png';
-import User2 from '../styles/images/user.jpg';
-import User3 from '../styles/images/user_image.jpg';
-import User4 from '../styles/images/user-image.jpg';
-import { userLogout } from '../reducers/auth';
-import '../index.css';
-import '../App.css';
+import { userManager } from '../../shared/authentication/auth';
+import { store } from '../../store'
+import User1 from '../../styles/images/avatar.png';
+import User2 from '../../styles/images/user.jpg';
+import User3 from '../../styles/images/user_image.jpg';
+import User4 from '../../styles/images/user-image.jpg';
+import { userLogout } from '../../reducers/auth';
+import '../../index.css';
+import '../../App.css';
 import TextArea from 'antd/lib/input/TextArea';
+import CommonModal from './CommonModal';
 const { Option } = Select;
 const data = [
 
@@ -41,7 +42,24 @@ const data = [
     },
 ];
 class About extends Component {
-    state = { visible: false };
+    state = {
+        about: [
+            {
+                address: 'Mr. I. K. Taneja Flat No. 100, Triveni Apartments Pitam Pura, TG - 500049',
+                icon: 'icons location'
+            },
+            {
+                address: '+91 9015245810',
+                icon: 'icons phone'
+            },
+            {
+                address: 'JohnDoe@blackbuck.com',
+                icon: 'icons email'
+            }
+        ],
+        description: 'Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually.',
+        visible: false
+    };
     showModal = () => {
         this.setState({
             visible: true,
@@ -62,56 +80,31 @@ class About extends Component {
     render() {
         const { user } = store.getState().oidc;
 
+        const { about, description, visible } = this.state;
+
         return (
             <div className="custom-card">
                 <Card title="About Me" bordered={false} extra={<Link onClick={this.showModal}><span className="icons edit" /></Link>} actions={[
                     <Button type="primary" >Download Profile as PDF</Button>
                 ]} >
                     <div>
-                        <p>Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually.</p>
+                        <p>{description}</p>
                         <Divider className="text-left-line" orientation="left">Contact</Divider>
                         <Row gutter={16}>
-                            <Col xs={24} sm={12}>
-                                <div className="about-details">
-                                    <div className="about-icons">
-                                        <span className="icons location" />
+                            {about.map((user, index) => {
+                                return <Col xs={24} sm={12}>
+                                    <div className="about-details">
+                                        <div className="about-icons">
+                                            <span className={user.icon} />
+                                        </div>
+                                        <p>{user.address}</p>
                                     </div>
-                                    <p>Mr. I. K. Taneja Flat No. 100, Triveni Apartments Pitam Pura, TG - 500049</p>
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={12}>
-                                <div className="about-details">
-                                    <div className="about-icons">
-                                        <span className="icons phone" />
-                                    </div>
-                                    <p>+91 9015245810</p>
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={12}>
-                                <div className="about-details">
-                                    <div className="about-icons">
-                                        <span className="icons email" />
-                                    </div>
-                                    <p>JohnDoe@blackbuck.com</p>
-                                </div>
-                            </Col>
+                                </Col>
+                            })}
                         </Row>
                     </div>
                 </Card>
-                <Modal
-                    title={<div className="custom-modal-header"><h4>About Me</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
-                    visible={this.state.visible}
-                    closable={false}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                    footer={[<div className="d-flex justify-content-between">
-                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
-                            Close
-                        </Button>
-                        <Button key="submit" type="primary" onClick={this.handleOk}>
-                            Save
-                        </Button></div>
-                    ]}>
+                <CommonModal visible={visible} title="About Me" cancel={this.handleCancel} saved={this.handleOk}>
                     <Form
                         layout="vertical"
                     >
@@ -127,6 +120,7 @@ class About extends Component {
                             <Col xs={12}>
                                 <Form.Item label="Plot No" className="custom-fields">
                                     <Input />
+                                    <span style={{color:'red',textAlign:'right'}}>is required</span>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
@@ -177,7 +171,7 @@ class About extends Component {
                             </Col>
                         </Row>
                     </Form>
-                </Modal>
+                </CommonModal>
             </div>
         )
     }
