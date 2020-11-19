@@ -11,6 +11,7 @@ import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
 import { Meta } from 'antd/lib/list/Item';
+import Dragger from 'antd/lib/upload/Dragger';
 const { Option } = Select;
 const data = [
 
@@ -22,7 +23,9 @@ const data = [
     },
 ];
 const docs = [
-    {avatar : [<span className="doc-icons word"></span>]}
+    {avatar : [<span className="icon education-icon mr-0"></span>],
+    title: 'Inter Marks memo.jpeg',
+}
     ]
 class Education extends Component {
     state = { visible: false };
@@ -119,8 +122,8 @@ class Education extends Component {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Col xs={12}>
-                        <div className="docs about-icons mb-16">
+                        
+                        <div className="docs about-icons mb-16 education">
                             <List
                                 itemLayout="horizontal"
                                 dataSource={docs}
@@ -129,18 +132,13 @@ class Education extends Component {
                                         <List.Item.Meta
                                             avatar={item.avatar}
                                             title={item.title}
-                                            description={<div className="file-size f-12">{item.fileSize}</div>}
+                                            description={<div className="file-size f-14">{item.fileSize}</div>}
                                         />
-                                        <a class="item-close">
-                                            <Tooltip title="Remove">
-                                                <span className="close-icon"></span>
-                                            </Tooltip>
-                                        </a>
+                                        <span className="close-icon"></span>
                                     </List.Item>
                                 )}
                             />
                         </div>
-                        </Col>
 
                         <Divider className="text-left-line" orientation="left">college</Divider>
                         <Row gutter={16}>
@@ -172,6 +170,10 @@ class Education extends Component {
                             </Form.Item>
                         </Col>
                         </Row>
+                        <Dragger className="upload" >
+                            <span className="sharebox-icons photo-upload"></span>
+                            <p className="ant-upload-text mt-8 mb-0">Upload Certificate</p>
+                        </Dragger>
                         <Divider className="text-left-line" orientation="left">Add Education</Divider>
                     </div>
 

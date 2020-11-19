@@ -139,7 +139,6 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .docs .ant-list-items{display: flex; flex-wrap: wrap;}
 .docs .ant-list-item{min-width: calc(50% - 8px); background: #F9F9F9; padding: 10px; border-radius: 6px; border: 1px solid #EAF2FD;margin: 0 8px 8px 0;}
 .docs .ant-list-item h4{margin-bottom: 0;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;color: var(--primary);}
-.file-size{font-weight: 500; color: var(--textsecondary);}
 .upload-image .ant-upload.ant-upload-drag p.ant-upload-text {margin: 0 0 4px;color: var(--black);font-size: 14px;font-weight: 500;}
 .speekar-block{padding: 30px 0;background: var(--bodybg);border-radius: 10px;}
 .radious, .upload-image .ant-upload.ant-upload-drag{border-radius: 10px;}
@@ -238,3 +237,5 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
 .center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
 .img-camera{position: relative;bottom: 46px;left: 70px;}
+.icon.education-icon{background-position: -263px -254px;}
+.education .ant-list-item-meta-avatar{border: 1px solid #ccc;border-radius: 11px;background: #ffff;padding: 4px 5px;}
