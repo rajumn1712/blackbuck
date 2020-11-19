@@ -1,34 +1,36 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List, Divider, Row, Col, Modal, Form, Input, Select,Tooltip } from 'antd'
+import { Card, Avatar, List, Divider, Row, Col, Form, Input, Select } from 'antd'
 import { Link } from 'react-router-dom';
-import { userManager } from '../shared/authentication/auth';
-import { store } from '../store'
-import User1 from '../styles/images/avatar.png';
-import User2 from '../styles/images/user.jpg';
-import User3 from '../styles/images/user_image.jpg';
-import User4 from '../styles/images/user-image.jpg';
-import { userLogout } from '../reducers/auth';
-import '../index.css';
-import '../App.css';
+// import { userManager } from '../../shared/authentication/auth';
+import { store } from '../../store'
+// import User1 from '../styles/images/avatar.png';
+// import User2 from '../styles/images/user.jpg';
+// import User3 from '../styles/images/user_image.jpg';
+// import User4 from '../styles/images/user-image.jpg';
+// import { userLogout } from '../../reducers/auth';
+import '../../index.css';
+import '../../App.css';
 import { Meta } from 'antd/lib/list/Item';
 import Dragger from 'antd/lib/upload/Dragger';
+import CommonModal from './CommonModal';
 const { Option } = Select;
-const data = [
 
-    {
-        avatar: User1,
-        title: 'IT Groups',
-        description: '',
-        members: 161,
-    },
-];
 const docs = [
-    {avatar : [<span className="icon education-icon mr-0"></span>],
-    title: 'Inter Marks memo.jpeg',
-}
+    {
+        avatar : [<span className="icon education-icon mr-0"></span>],
+            title: 'Inter Marks memo.jpeg'
+    }
     ]
 class Education extends Component {
-    state = { visible: false };
+    state = {
+        history:[
+            {title:"St.Ann's intermediate junior college",yearFrom:'2010',yearTo:'2014',location:'Hyderabad',
+            avatar : [<span className="icon education-icon mr-0"></span>],
+            file: 'Inter Marks memo.jpeg',
+        }
+        ],
+        visible: false
+     };
     showModal = () => {
         this.setState({
             visible: true,
@@ -49,6 +51,8 @@ class Education extends Component {
 
     render() {
         const { user } = store.getState().oidc;
+
+        const data = [...this.state.history];
         return (
             <div className="custom-card">
                 <Card title="Education" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>} >
@@ -62,36 +66,23 @@ class Education extends Component {
                                     avatar={<div className="about-icons">
                                         <span className="icons location" />
                                     </div>}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">St.Ann's intermediate junior college</span></div>}
-                                    description={<div><span style={{ color: 'var(--textprimary)' }}></span> 2010 - 2012 | <span style={{ color: 'var(--textprimary)' }}></span>Hyderabad</div>}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
+                        description={<div><span style={{ color: 'var(--textprimary)' }}></span> {item.yearFrom} - {item.yearTo} | <span style={{ color: 'var(--textprimary)' }}></span>{item.Location}</div>}
                                 />
                                 <Meta
                                     className="edu-certificate"
                                     avatar={<div className="about-icons">
                                         <span className="icons location" />
                                     </div>}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">Inter Marks memo.jpeg</span></div>}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.file}</span></div>}
                                 />
                                 <Link to="" className="f-12 list-link"><span className="icons edit" /></Link>
                             </div>
                         )}
                     />
                 </Card>
-                <Modal
-                    title={<div className="custom-modal-header"><h4>Education</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
-                    visible={this.state.visible}
-                    closable={false}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                    footer={[<div className="d-flex justify-content-between">
-                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
-                            Close
-                                    </Button>
-                        <Button key="submit" type="primary" onClick={this.handleOk}>
-                            Save
-                                    </Button></div>
-                    ]}>
-                    <div className="">
+                <CommonModal visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
+                <div className="">
                         <Divider className="text-left-line" orientation="left">School</Divider>
                         <Row gutter={16}>
                             <Col xs={12}>
@@ -176,8 +167,7 @@ class Education extends Component {
                         </Dragger>
                         <Divider className="text-left-line" orientation="left">Add Education</Divider>
                     </div>
-
-                </Modal>
+                </CommonModal>
             </div >
 
         )

@@ -25,7 +25,7 @@ import Hobbies from '../components/ProfileComponents/hobbies';
 import About from '../components/ProfileComponents/about';
 import Intership from '../components/ProfileComponents/internships';
 import VideoProfile from '../components/ProfileComponents/videoprofile';
-import Education from '../components/education';
+import Education from '../components/ProfileComponents/education';
 import GroupsPage from '../components/groupspage';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
 const { Meta } = Card;
