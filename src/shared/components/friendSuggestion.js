@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Typography, UserAddOutlined } from 'antd';
 import user from '../../styles/images/user.jpg';
+import userImage from '../../styles/images/user_image.jpg';
+import user_Image from '../../styles/images/user-image.jpg';
 import { apiClient } from '../api/clients';
 import notify from './notification';
 
@@ -11,16 +13,16 @@ class FriendSuggestions extends Component {
         friends: [{
             Name: 'kumar', Dept: 'IT', user: user
         }, {
-            Name: 'sindhu', Dept: 'ECE', user: user
+            Name: 'sindhu', Dept: 'ECE', user: userImage
         }
             , {
-            Name: 'mounika', Dept: 'LTE', user: user
+            Name: 'mounika', Dept: 'LTE', user: user_Image
         },
             , {
             Name: 'Lakshmi', Dept: 'RTE', user: user
         }
             , {
-            Name: 'venkat', Dept: 'PTC', user: user
+            Name: 'venkat', Dept: 'PTC', user: user_Image
         }]
     }
     addFriend = () => {
@@ -41,7 +43,7 @@ class FriendSuggestions extends Component {
                 </div>
                 <div className="friends">
                     {friends.map((friend, index) => {
-                        return <div><div className="friends-list">
+                        return<div className="friends-list">
                             <img src={friend.user} width="100%" height="100%" />
                             <div className="friends-list--name">
                                 <Paragraph>{friend.Name}</Paragraph>
@@ -51,13 +53,10 @@ class FriendSuggestions extends Component {
                                 <span className="post-icons addfriend-icon mr-0"></span>
                             </a>
                             <a className="removefrnd-btn" onClick={() => this.removeSuggestion()}></a>
-
-                        </div>
-
-                            {friends.length > 4 && <a className="more-frnd-btn" onClick={() => this.goToFriendsSuggestions()}><span className="icon right-arrow mr-0"></span></a>}
                         </div>
                     })
                     }
+                    {friends.length > 4 && <a className="more-frnd-btn" onClick={() => this.goToFriendsSuggestions()}><span className="icon right-arrow mr-0"></span></a>}
                 </div>
             </div>
         )
