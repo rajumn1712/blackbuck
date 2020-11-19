@@ -11,56 +11,97 @@ import User4 from '../styles/images/user-image.jpg';
 import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
-const data = [
-
-    {
-        avatar: User1,
-        title: 'IT Groups',
-        members: 6,
-    },
-    {
-        avatar: User2,
-        title: 'CSC Champs',
-        members: 2,
-    },
-
-];
 class Friends extends Component {
 
+    state = {
+        FriendsList: [
+            {
+                avatar: User1,
+                title: 'St Ann',
+                members: 6,
+                mutulFnds: [user, user, user, user]
+            },
+            {
+                avatar: User2,
+                title: 'Mohan',
+                members: 2,
+                mutulFnds: [user, user, user, user]
+            },
+            {
+                avatar: User1,
+                title: 'Jain',
+                members: 6,
+                mutulFnds: [user, user, user, user]
+            },
+            {
+                avatar: User2,
+                title: 'Poul',
+                members: 2,
+                mutulFnds: [user, user, user, user]
+            },
+            {
+                avatar: User1,
+                title: 'Jake',
+                members: 6,
+                mutulFnds: [user, user, user, user]
+            },
+            {
+                avatar: User2,
+                title: 'Calvin',
+                members: 2,
+                mutulFnds: [user, user, user, user]
+            },
+            {
+                avatar: User1,
+                title: 'Disee',
+                members: 6,
+                mutulFnds: [user, user, user, user]
+            },
+            {
+                avatar: User2,
+                title: 'Cruise',
+                members: 2,
+                mutulFnds: [user, user, user, user]
+            },
+
+        ],
+    }
     render() {
         const { user } = store.getState().oidc;
+        const { FriendsList } = this.state;
         return (
             <div className="custom-card requests">
-                <Card title="Friend Requests" bordered={false} >
-
+                <Card title="Friends" bordered={false} >
                     <List grid={{
-                        gutter: 16, column: 2,
+                        gutter: 16,
+                        column: 2,
                         xs: 1,
-                        sm: 1,
                         md: 2,
                     }}
                         itemLayout="horizontal"
-                        dataSource={data}
+                        dataSource={FriendsList}
                         renderItem={item => (
                             <List.Item>
-                                
                                 <List.Item.Meta
                                     avatar={<Avatar className="request-image" src={item.avatar} />}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
-                                    description={<div className="mt-8 d-flex align-items-center">
-                                        <span className="list-request">
-                                            <Avatar.Group
-                                                maxCount={4}
-                                                size="large"
-                                                maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
-                                            >
-                                                <Avatar src={user} />
-                                                <Avatar src={user} />
-                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                            </Avatar.Group>
-                                        </span> <span>Mutual Friends</span></div>}
+                                    description={
+                                        <div className="mt-8 d-flex align-items-center">
+                                            <span className="list-request">
+                                                <Avatar.Group
+                                                    maxCount={4}
+                                                    size="large"
+                                                    maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
+                                                >
+                                                    {item.mutulFnds.map((friend, index) => {
+                                                        return <Avatar key={index} src={friend} />
+                                                    })
+                                                    }
+                                                </Avatar.Group>
+                                            </span>
+                                            <span>Mutual Friends</span>
+                                        </div>
+                                    }
                                 />
                             </List.Item>
                         )}
