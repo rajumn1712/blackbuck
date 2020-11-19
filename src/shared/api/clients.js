@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 
 let apiClient = create({
-    baseURL: "http://localhost:8529/_db/Blackbuck/"
+    baseURL: process.env.REACT_APP_API_END_POINT
 });
 
 export { apiClient }

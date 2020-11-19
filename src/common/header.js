@@ -17,7 +17,11 @@ const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
-
+const logout = ()=>{
+    userLogout(); setTimeout(()=>{
+        userManager.signoutRedirect()
+    },1000)
+}
 const notifications = (
     <div className="notification-dropdown">
         <div className="noti-dropdown-header">
@@ -98,7 +102,7 @@ const menu = (
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="4">
-            <Link to="/posts" onClick={() => { userLogout(); userManager.signoutRedirect() }}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></Link>
+            <Link to="/posts" onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></Link>
         </Menu.Item>
     </Menu >
 );
