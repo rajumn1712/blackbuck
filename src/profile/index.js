@@ -28,13 +28,17 @@ import VideoProfile from '../components/ProfileComponents/videoprofile';
 import Education from '../components/ProfileComponents/education';
 import GroupsPage from '../components/groupspage';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
+import { apiClient } from '../shared/api/clients';
+import CommonModal from '../components/ProfileComponents/CommonModal';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
 
 class Profile extends Component {
     state = {
+        profileData: {},
         disabled: false,
+        visible:false
     };
 
     handleDisabledChange = disabled => {
@@ -42,9 +46,12 @@ class Profile extends Component {
     };
 
     componentDidMount() {
-
+        apiClient.get('service/api/profile/getProfileDetail/1')
+            .then(res => {
+                const profiledata = res.data[0];
+                this.setState({ profileData: profiledata });
+            })
     }
-    state = { visible: false };
     showModal = () => {
         this.setState({
             visible: true,
@@ -64,140 +71,126 @@ class Profile extends Component {
     }
 
     render() {
-        const { disabled } = this.state;
+        const { profileData,disabled,visible } = this.state;
         return (
-            <div className="main">
-                <Row gutter={16}>
-                    <Col xs={24} sm={16} md={16} lg={18} xl={18}>
-                        <div className="coverpage">
-                            <img className="center-focus" src={profilebanner} alt="profilecover" />
-                            <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <Link to="#" className="editpost">
-                                <span className="left-menu post-icon" />
-                            </Link>
+            profileData ? <div className="main">
+            <Row gutter={16}>
+                <Col xs={24} sm={16} md={16} lg={18} xl={18}>
+                    <div className="coverpage">
+                        <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
+                        <span className="premium-badge"><img src={PremiumBadge} /></span>
+                        <Link to="#" className="editpost">
+                            <span className="left-menu post-icon" />
+                        </Link>
 
+                    </div>
+                    <div className="user-statistic">
+                        <div className="left-statistic">
+                            <Statistic title="Friends" className="afterline" value={profileData.Friend} />
+                            <Statistic className="afterline" title="Groups" value={profileData.Groups} />
+                            <Statistic title="Posts" value={profileData.Posts} />
                         </div>
-                        <div className="user-statistic">
-                            <div className="left-statistic">
-                                <Statistic title="Friends" className="afterline" value={58} />
-                                <Statistic className="afterline" title="Groups" value={8} />
-                                <Statistic title="Posts" value={10} />
-                            </div>
-                            <Card className="user-banner" >
-                                <Meta avatar={<div><Avatar src={AvatarImage} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
-                                    title={<div>John Doe<span className="premium-icon"></span></div>}
-                                    description="CSE"
-                                />
-                            </Card>
-                            <Modal
-                                title={<div className="custom-modal-header"><h4>Edit Profile Photo</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
-                                visible={this.state.visible}
-                                closable={false}
-                                onOk={this.handleOk}
-                                onCancel={this.handleCancel}
-                                footer={[<div className="d-flex justify-content-between">
-                                    <Button key="back" onClick={this.handleCancel} className="btn-cancel">
-                                        Close
-                                    </Button>
-                                    <Button key="submit" type="primary" onClick={this.handleOk}>
-                                        Save
-                                    </Button></div>
-                                ]}>
-                                <div className="">
-                                    <div className=" upload-preview">
-                                        <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                                        <a class="item-close">
-                                            <Tooltip title="Remove">
-                                                <span className="close-icon"></span>
-                                            </Tooltip>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <Slider defaultValue={30} disabled={disabled} />
-                                    </div>
-
+                        <Card className="user-banner" >
+                            <Meta avatar={<div><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
+                                title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
+                                description={profileData.Branch}
+                            />
+                        </Card>
+                        <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
+                        <div className="">
+                                <div className=" upload-preview">
+                                    <Image src={profileData.ProfilePic} />
+                                    <a class="item-close">
+                                        <Tooltip title="Remove">
+                                            <span className="close-icon"></span>
+                                        </Tooltip>
+                                    </a>
+                                </div>
+                                <div>
+                                    <Slider defaultValue={30} disabled={disabled} />
                                 </div>
 
-                            </Modal>
-                            <div className="right-statistic">
-                                <Statistic title="Shares" className="afterline" value={80} />
-                                <Statistic title="Interests" className="afterline" value={9} />
-                                <Statistic title="Posts" value={10} />
                             </div>
+                        </CommonModal>
+                        <div className="right-statistic">
+                            <Statistic title="Shares" className="afterline" value={profileData.Shares} />
+                            <Statistic title="Interests" className="afterline" value={profileData.Interest} />
+                            {/* <Statistic title="Posts" value={10} /> */}
                         </div>
-                        <Tabs defaultActiveKey="1" centered className="profile-tabs">
-                            <TabPane tab="Posts" key="1">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                        <Courses />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <ShareBox />
-                                        <PostCard />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                            <TabPane tab="Profile" key="2">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
-                                        <div className="left-rail">
-                                            <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
-                                                <Menu.Item key="AboutMe"><Link to="#AboutMe"><span className="left-menu profile-icon"></span><span>About Me</span></Link></Menu.Item>
-                                                <Menu.Item key="Interests"><Link to="/"><span className="left-menu interest"></span><span>Interests</span></Link></Menu.Item>
-                                                <Menu.Item key="Hobbies"><Link to="#Hobbies"><span className="left-menu hobbies"></span><span>Hobbies</span></Link></Menu.Item>
-                                                <Menu.Item key="Intenships"><Link to="/"><span className="left-menu intenship"></span><span>Intenships</span></Link></Menu.Item>
-                                                <Menu.Item key="VideoProfile"><Link to="/"><span className="left-menu play"></span><span>Video as Profile</span></Link></Menu.Item>
-                                                <Menu.Item key="Education"><Link to="/"><span className="left-menu education"></span><span>Education</span></Link></Menu.Item>
-                                                <Menu.Item key="Courses"><Link to="/"><span className="left-menu courses"></span><span>Courses</span></Link></Menu.Item>
-                                                <Menu.Item key="Groups"><Link to="/"><span className="left-menu group-icon"></span><span>Groups</span></Link></Menu.Item>
-                                            </Menu>
-                                        </div>
-                                        <Invite />
-                                        <Tags />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <About />
-                                        <Interests />
-                                        <Hobbies />
-                                        <Intership />
-                                        <VideoProfile />
-                                        <Education />
-                                        <Courses />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                            <TabPane tab="Friends" key="3">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <FriendRequests />
-                                        <Friends />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                            <TabPane tab="Groups" className="m-0" key="4">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <GroupsPage />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                        </Tabs>
-                    </Col>
-                    <Col xs={24} sm={8} md={8} lg={6} xl={6}>
-                        {/* <FriendsSuggestioncard /> */}
-                        <FriendsRequestsCard />
-                        <Ads />
-                        <Groups />
-                    </Col>
-                </Row>
-            </div>
+                    </div>
+                    <Tabs defaultActiveKey="1" centered className="profile-tabs">
+                        <TabPane tab="Posts" key="1">
+                            <Row gutter={16}>
+                                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                    <Invite />
+                                    <Courses />
+                                </Col>
+                                <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    <ShareBox />
+                                    <PostCard />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                        <TabPane tab="Profile" key="2">
+                            <Row gutter={16}>
+                                <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
+                                    <div className="left-rail">
+                                        <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
+                                            <Menu.Item key="AboutMe"><Link to="#AboutMe"><span className="left-menu profile-icon"></span><span>About Me</span></Link></Menu.Item>
+                                            <Menu.Item key="Interests"><Link to="/"><span className="left-menu interest"></span><span>Interests</span></Link></Menu.Item>
+                                            <Menu.Item key="Hobbies"><Link to="#Hobbies"><span className="left-menu hobbies"></span><span>Hobbies</span></Link></Menu.Item>
+                                            <Menu.Item key="Intenships"><Link to="/"><span className="left-menu intenship"></span><span>Intenships</span></Link></Menu.Item>
+                                            <Menu.Item key="VideoProfile"><Link to="/"><span className="left-menu play"></span><span>Video as Profile</span></Link></Menu.Item>
+                                            <Menu.Item key="Education"><Link to="/"><span className="left-menu education"></span><span>Education</span></Link></Menu.Item>
+                                            <Menu.Item key="Courses"><Link to="/"><span className="left-menu courses"></span><span>Courses</span></Link></Menu.Item>
+                                            <Menu.Item key="Groups"><Link to="/"><span className="left-menu group-icon"></span><span>Groups</span></Link></Menu.Item>
+                                        </Menu>
+                                    </div>
+                                    <Invite />
+                                    <Tags />
+                                </Col>
+                                <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    <About />
+                                    <Interests />
+                                    <Hobbies />
+                                    <Intership />
+                                    <VideoProfile />
+                                    <Education />
+                                    <Courses />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                        <TabPane tab="Friends" key="3">
+                            <Row gutter={16}>
+                                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                    <Invite />
+                                </Col>
+                                <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    <FriendRequests />
+                                    <Friends />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                        <TabPane tab="Groups" className="m-0" key="4">
+                            <Row gutter={16}>
+                                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                    <Invite />
+                                </Col>
+                                <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    <GroupsPage />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </Tabs>
+                </Col>
+                <Col xs={24} sm={8} md={8} lg={6} xl={6}>
+                    {/* <FriendsSuggestioncard /> */}
+                    <FriendsRequestsCard />
+                    <Ads />
+                    <Groups />
+                </Col>
+            </Row>
+        </div> : null
         )
     }
 }
