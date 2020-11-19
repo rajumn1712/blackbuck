@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React, { Component } from 'react';
 import Ads from '../components/ads';
-import Courses from '../components/courses';
+import Courses from '../components/ProfileComponents/courses';
 import Friends from '../components/friends';
 import Groups from '../components/groups';
 import Identity from '../components/identity';

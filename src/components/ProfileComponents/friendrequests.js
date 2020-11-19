@@ -97,7 +97,7 @@ class FriendRequests extends Component {
                                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                             >
                                                 {item.members.map((member, index) => {
-                                                    return <Avatar src={member.avatar} key={index} style={{ backgroundColor: (member.avatar ? '' : '#f56a00') }}>
+                                                    return <Avatar src='' key={index} style={{ backgroundColor: (member.avatar ? '' : '#f56a00') }}>
                                                         {member.avatar ? null : member.initial}
                                                     </Avatar>
                                                 })}

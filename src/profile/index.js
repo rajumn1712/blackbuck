@@ -14,17 +14,17 @@ import Paragraph from 'antd/lib/skeleton/Paragraph';
 import AvatarImage from '../styles/images/avatar.png';
 import PremiumBadge from '../styles/images/premiumbadge.svg'
 import { Link } from 'react-router-dom';
-import Courses from '../components/courses'
+import Courses from '../components/ProfileComponents/courses'
 import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
-import FriendRequests from '../shared/components/friendrequests';
+import FriendRequests from '../components/ProfileComponents/friendrequests';
 import Friends from '../components/friends';
 import Tags from '../components/tags';
 import Groups from '../components/groups';
 import Interests from '../components/ProfileComponents/interests';
 import Hobbies from '../components/ProfileComponents/hobbies';
 import About from '../components/ProfileComponents/about';
-import Intership from '../components/internships';
-import VideoProfile from '../components/videoprofile';
+import Intership from '../components/ProfileComponents/internships';
+import VideoProfile from '../components/ProfileComponents/videoprofile';
 import Education from '../components/education';
 import GroupsPage from '../components/groupspage';
 import FriendsRequestsCard from '../shared/components/friendsRequests'

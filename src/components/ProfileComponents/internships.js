@@ -1,71 +1,73 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List, Dropdown, Tooltip, Popover, Form, Row, Col, Select, Input } from 'antd'
+import { Card, List, Form, Row, Col, Select, Input } from 'antd'
 import { Link } from 'react-router-dom';
-import { userManager } from '../shared/authentication/auth';
-import { store } from '../store'
-import User1 from '../styles/images/avatar.png';
-import User2 from '../styles/images/user.jpg';
-import User3 from '../styles/images/user_image.jpg';
-import User4 from '../styles/images/user-image.jpg';
-import wipro from '../styles/images/Wiprologo.svg'
-import infosys from '../styles/images/infosys.svg'
+// import { userManager } from '../shared/authentication/auth';
+import { store } from '../../store'
+// import User1 from '../styles/images/avatar.png';
+// import User2 from '../styles/images/user.jpg';
+// import User3 from '../styles/images/user_image.jpg';
+// import User4 from '../styles/images/user-image.jpg';
+import wipro from '../../styles/images/Wiprologo.svg'
+import infosys from '../../styles/images/infosys.svg'
 
-import { userLogout } from '../reducers/auth';
-import '../index.css';
-import '../App.css';
-import TextArea from 'antd/lib/input/TextArea';
-import Modal from 'antd/lib/modal/Modal';
+// import { userLogout } from '../reducers/auth';
+import '../../index.css';
+import '../../App.css';
+// import TextArea from 'antd/lib/input/TextArea';
+// import Modal from 'antd/lib/modal/Modal';
 import Dragger from 'antd/lib/upload/Dragger';
+import CommonModal from './CommonModal';
 
 const { Option } = Select;
-const data = [
 
-    {
-        company: wipro,
-        title: 'Wipro',
-        place: 'Hyderabad',
-        months: '6'
-    },
-    {
-        company: infosys,
-        title: 'infosys',
-        place: 'Hyderabad',
-        months: '6'
-    },
-    {
-        company: wipro,
-        title: 'Wipro',
-        place: 'Hyderabad',
-        months: '6'
-    },
-    {
-        company: wipro,
-        title: 'Wipro',
-        place: 'Hyderabad',
-        months: '6'
-    },
-];
 class Intership extends Component {
-    state = { visible: false };
+    state = { 
+        internships:[
+            {
+                company: wipro,
+                title: 'Wipro',
+                place: 'Hyderabad',
+                months: '6'
+            },
+            {
+                company: infosys,
+                title: 'infosys',
+                place: 'Hyderabad',
+                months: '6'
+            },
+            {
+                company: wipro,
+                title: 'Wipro',
+                place: 'Hyderabad',
+                months: '6'
+            },
+            {
+                company: wipro,
+                title: 'Wipro',
+                place: 'Hyderabad',
+                months: '6'
+            },
+        ],
+        visible: false 
+    };
     showModal = () => {
         this.setState({
             visible: true,
         });
     };
     handleOk = e => {
-        console.log(e);
         this.setState({
             visible: false,
         });
     };
     handleCancel = e => {
-        console.log(e);
         this.setState({
             visible: false,
         });
     };
     render() {
         const { user } = store.getState().oidc;
+        const data = [...this.state.internships];
         return (
             <div className="custom-card">
                 <Card title="Internships" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>}  >
@@ -99,21 +101,8 @@ class Intership extends Component {
                         )}
                     />
                 </Card>
-                <Modal
-                    title={<div className="custom-modal-header"><h4>Internships</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
-                    visible={this.state.visible}
-                    closable={false}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                    footer={[<div className="d-flex justify-content-between">
-                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
-                            Close
-                        </Button>
-                        <Button key="submit" type="primary" onClick={this.handleOk}>
-                            Save
-                        </Button></div>
-                    ]}>
-                    <Form
+                <CommonModal visible={this.state.visible} title="Internships" cancel={this.handleCancel} saved={this.handleOk}>
+                <Form
                         layout="vertical"
                     >
                         <Row gutter={16}>
@@ -157,7 +146,7 @@ class Intership extends Component {
                             </Col>
                         </Row>
                     </Form>
-                </Modal>
+                </CommonModal>
             </div>
 
         )
