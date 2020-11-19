@@ -27,6 +27,7 @@ import Intership from '../components/internships';
 import VideoProfile from '../components/videoprofile';
 import Education from '../components/education';
 import GroupsPage from '../components/groupspage';
+import FriendsRequestsCard from '../shared/components/friendsRequests'
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -190,7 +191,8 @@ class Profile extends Component {
                         </Tabs>
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
-                        <FriendsSuggestioncard />
+                        {/* <FriendsSuggestioncard /> */}
+                        <FriendsRequestsCard />
                         <Ads />
                         <Groups />
                     </Col>
