@@ -187,6 +187,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .group-page .ant-card, .group-page .ant-card-actions{border-radius: 10px;}
 .group-page .ant-card-cover img{border-top-left-radius: 10px;border-top-right-radius: 10px;}
 .group-page .ant-card-body{padding: 16px !important;}
+.group-page .ant-card-actions{color:#f9f9f9;}
 .list-request .ant-avatar{width: 20px;height: 20px;line-height: 20px;border-radius: 8px !important;}
 .requests .ant-list-item-meta{align-items: flex-end;}
 .profile-tab .profile-menu{margin-top: 0 !important;padding-top: 16px !important;}
@@ -235,4 +236,5 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 }
 .ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
-.center-focus{object-fit: none;object-position: 50% 50% !important;object-position: 0 0;}
+.center-focus{object-position: 50% 50%;object-position: 0 0;height: 300px;object-fit: cover;}
+.img-camera{position: relative;bottom: 46px;left: 70px;}

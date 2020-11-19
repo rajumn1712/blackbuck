@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor } from 'antd';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch } from 'antd';
 import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
@@ -32,12 +32,38 @@ const { Meta } = Card;
 const { TabPane } = Tabs;
 
 class Profile extends Component {
+    state = {
+        disabled: false,
+    };
+
+    handleDisabledChange = disabled => {
+        this.setState({ disabled });
+    };
 
     componentDidMount() {
 
     }
+    state = { visible: false };
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
 
     render() {
+        const { disabled } = this.state;
         return (
             <div className="main">
                 <Row gutter={16}>
@@ -57,12 +83,42 @@ class Profile extends Component {
                                 <Statistic title="Posts" value={10} />
                             </div>
                             <Card className="user-banner" >
-                                <Meta avatar={<div><Avatar src={AvatarImage} />{/* <span className="icons camera" /> */} </div>}
+                                <Meta avatar={<div><Avatar src={AvatarImage} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
                                     title={<div>John Doe<span className="premium-icon"></span></div>}
                                     description="CSE"
                                 />
                             </Card>
-                            <div  className="right-statistic">
+                            <Modal
+                                title={<div className="custom-modal-header"><h4>Edit Profile Photo</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
+                                visible={this.state.visible}
+                                closable={false}
+                                onOk={this.handleOk}
+                                onCancel={this.handleCancel}
+                                footer={[<div className="d-flex justify-content-between">
+                                    <Button key="back" onClick={this.handleCancel} className="btn-cancel">
+                                        Close
+                                    </Button>
+                                    <Button key="submit" type="primary" onClick={this.handleOk}>
+                                        Save
+                                    </Button></div>
+                                ]}>
+                                <div className="">
+                                    <div className=" upload-preview">
+                                        <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+                                        <a class="item-close">
+                                            <Tooltip title="Remove">
+                                                <span className="close-icon"></span>
+                                            </Tooltip>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <Slider defaultValue={30} disabled={disabled} />
+                                    </div>
+
+                                </div>
+
+                            </Modal>
+                            <div className="right-statistic">
                                 <Statistic title="Shares" className="afterline" value={80} />
                                 <Statistic title="Interests" className="afterline" value={9} />
                                 <Statistic title="Posts" value={10} />
