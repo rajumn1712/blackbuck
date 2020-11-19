@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List, Divider, Row, Col,Modal } from 'antd'
+import { Button, Layout, Card, Avatar, List, Divider, Row, Col, Modal, Form, Input, Select,Tooltip } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -11,6 +11,7 @@ import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
 import { Meta } from 'antd/lib/list/Item';
+const { Option } = Select;
 const data = [
 
     {
@@ -20,6 +21,9 @@ const data = [
         members: 161,
     },
 ];
+const docs = [
+    {avatar : [<span className="doc-icons word"></span>]}
+    ]
 class Education extends Component {
     state = { visible: false };
     showModal = () => {
@@ -85,12 +89,94 @@ class Education extends Component {
                                     </Button></div>
                     ]}>
                     <div className="">
-                        
+                        <Divider className="text-left-line" orientation="left">School</Divider>
+                        <Row gutter={16}>
+                            <Col xs={12}>
+                                <Form.Item label="Education Type" className="custom-fields">
+                                    <Select defaultValue="Select Option">
+                                        <Option value="Select Option">Select State</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="College/University Name" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Academic Year" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Place of College/University" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Marks Grade" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Col xs={12}>
+                        <div className="docs about-icons mb-16">
+                            <List
+                                itemLayout="horizontal"
+                                dataSource={docs}
+                                renderItem={item => (
+                                    <List.Item className="upload-preview">
+                                        <List.Item.Meta
+                                            avatar={item.avatar}
+                                            title={item.title}
+                                            description={<div className="file-size f-12">{item.fileSize}</div>}
+                                        />
+                                        <a class="item-close">
+                                            <Tooltip title="Remove">
+                                                <span className="close-icon"></span>
+                                            </Tooltip>
+                                        </a>
+                                    </List.Item>
+                                )}
+                            />
+                        </div>
+                        </Col>
 
+                        <Divider className="text-left-line" orientation="left">college</Divider>
+                        <Row gutter={16}>
+                        <Col xs={12}>
+                            <Form.Item label="Education Type" className="custom-fields">
+                                <Select defaultValue="Select Option">
+                                    <Option value="Select Option">Select State</Option>
+                                </Select>
+                            </Form.Item>
+                            </Col>
+                        <Col xs={12}>
+                            <Form.Item label="College/University Name" className="custom-fields">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={12}>
+                            <Form.Item label="Academic Year" className="custom-fields">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={12}>
+                            <Form.Item label="Place of College/University" className="custom-fields">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={12}>
+                            <Form.Item label="Marks Grade" className="custom-fields">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        </Row>
+                        <Divider className="text-left-line" orientation="left">Add Education</Divider>
                     </div>
 
                 </Modal>
-            </div>
+            </div >
 
         )
     }

@@ -236,5 +236,5 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 }
 .ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
-.center-focus{object-position: 50% 50%;object-position: 0 0;height: 300px;object-fit: cover;}
+.center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
 .img-camera{position: relative;bottom: 46px;left: 70px;}
