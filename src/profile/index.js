@@ -16,7 +16,7 @@ import PremiumBadge from '../styles/images/premiumbadge.svg'
 import { Link } from 'react-router-dom';
 import Courses from '../components/courses'
 import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
-import FriendRequests from '../components/friendrequests';
+import FriendRequests from '../components/ProfileComponents/friendrequests';
 import Friends from '../components/friends';
 import Tags from '../components/tags';
 import Groups from '../components/groups';
