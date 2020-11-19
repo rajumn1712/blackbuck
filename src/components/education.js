@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List, Divider, Row, Col } from 'antd'
+import { Button, Layout, Card, Avatar, List, Divider, Row, Col,Modal } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -21,12 +21,30 @@ const data = [
     },
 ];
 class Education extends Component {
+    state = { visible: false };
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
 
     render() {
         const { user } = store.getState().oidc;
         return (
             <div className="custom-card">
-                <Card title="Education" bordered={false} extra={<Link to=""><span className="icons add" /></Link>} >
+                <Card title="Education" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>} >
                     <List
                         itemLayout="horizontal"
                         dataSource={data}
@@ -52,6 +70,26 @@ class Education extends Component {
                         )}
                     />
                 </Card>
+                <Modal
+                    title={<div className="custom-modal-header"><h4>Education</h4><a onClick={this.handleCancel}><span className="close-icon" /></a></div>}
+                    visible={this.state.visible}
+                    closable={false}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[<div className="d-flex justify-content-between">
+                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
+                            Close
+                                    </Button>
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            Save
+                                    </Button></div>
+                    ]}>
+                    <div className="">
+                        
+
+                    </div>
+
+                </Modal>
             </div>
 
         )
