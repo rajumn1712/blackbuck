@@ -4,6 +4,7 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/ico
 import AvatarImage from '../styles/images/avatar.png';
 import { Link } from 'react-router-dom';
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
+import {apiClient} from '../shared/api/clients'
 const { Meta } = Card;
 
 
@@ -13,22 +14,32 @@ const { SubMenu } = Menu;
 
 
 class Identity extends Component {
-
+    state = {
+        homeInfo: {}
+    };
+    componentDidMount() {
+        apiClient.get('service/api/profile/getProfile/1')
+            .then(res => {
+                const homeInfo = res.data[0];
+                this.setState({ homeInfo: homeInfo });
+            })
+    }
     render() {
+        const { homeInfo } = this.state;
         return (
             <div className="left-rail">
                 <Card className="profile-card"
                     actions={[
-                        <div className="profile-status">58<span>Friends</span></div>,
-                        <div className="profile-status">8<span>Groups</span></div>,
-                        <div className="profile-status">10<span>Post</span></div>,
+                        <div className="profile-status">{homeInfo.Friends}<span>Friends</span></div>,
+                        <div className="profile-status">{homeInfo.Groups}<span>Groups</span></div>,
+                        <div className="profile-status">{homeInfo.Posts}<span>Post</span></div>,
                     ]}
                 >
                     <Meta
                         avatar={
-                            <Avatar src={AvatarImage} />
+                            <Avatar src={homeInfo.CoverPic} />
                         }
-                        title={<div>John Doe<span className="premium-icon"></span></div>}
+                        title={<div>{homeInfo.FirstName}<span className="premium-icon"></span></div>}
                         description="Groups"
                     />
                 </Card>

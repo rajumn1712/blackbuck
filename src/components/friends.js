@@ -11,58 +11,65 @@ import User4 from '../styles/images/user-image.jpg';
 import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
+import { apiClient } from '../shared/api/clients';
 class Friends extends Component {
-
+    componentDidMount() {
+        apiClient.get('service/api/profile/getUserFriends/1')
+            .then(res => {
+                const friendsInfo = res.data[0];
+                this.setState({ FriendsList: friendsInfo });
+            })
+    }
     state = {
         FriendsList: [
-            {
-                avatar: User1,
-                title: 'St Ann',
-                members: 6,
-                mutulFnds: [user, user, user, user]
-            },
-            {
-                avatar: User2,
-                title: 'Mohan',
-                members: 2,
-                mutulFnds: [user, user, user, user]
-            },
-            {
-                avatar: User1,
-                title: 'Jain',
-                members: 6,
-                mutulFnds: [user, user, user, user]
-            },
-            {
-                avatar: User2,
-                title: 'Poul',
-                members: 2,
-                mutulFnds: [user, user, user, user]
-            },
-            {
-                avatar: User1,
-                title: 'Jake',
-                members: 6,
-                mutulFnds: [user, user, user, user]
-            },
-            {
-                avatar: User2,
-                title: 'Calvin',
-                members: 2,
-                mutulFnds: [user, user, user, user]
-            },
-            {
-                avatar: User1,
-                title: 'Disee',
-                members: 6,
-                mutulFnds: [user, user, user, user]
-            },
-            {
-                avatar: User2,
-                title: 'Cruise',
-                members: 2,
-                mutulFnds: [user, user, user, user]
-            },
+            // {
+            //     avatar: User1,
+            //     title: 'St Ann',
+            //     members: 6,
+            //     mutulFnds: [user, user, user, user]
+            // },
+            // {
+            //     avatar: User2,
+            //     title: 'Mohan',
+            //     members: 2,
+            //     mutulFnds: [user, user, user, user]
+            // },
+            // {
+            //     avatar: User1,
+            //     title: 'Jain',
+            //     members: 6,
+            //     mutulFnds: [user, user, user, user]
+            // },
+            // {
+            //     avatar: User2,
+            //     title: 'Poul',
+            //     members: 2,
+            //     mutulFnds: [user, user, user, user]
+            // },
+            // {
+            //     avatar: User1,
+            //     title: 'Jake',
+            //     members: 6,
+            //     mutulFnds: [user, user, user, user]
+            // },
+            // {
+            //     avatar: User2,
+            //     title: 'Calvin',
+            //     members: 2,
+            //     mutulFnds: [user, user, user, user]
+            // },
+            // {
+            //     avatar: User1,
+            //     title: 'Disee',
+            //     members: 6,
+            //     mutulFnds: [user, user, user, user]
+            // },
+            // {
+            //     avatar: User2,
+            //     title: 'Cruise',
+            //     members: 2,
+            //     mutulFnds: [user, user, user, user]
+            // },
 
         ],
     }
@@ -83,8 +90,8 @@ class Friends extends Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar className="request-image" src={item.avatar} />}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
+                                    avatar={<Avatar className="request-image" src={item.Image} />}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.Firstname}</span></div>}
                                     description={
                                         <div className="mt-8 d-flex align-items-center">
                                             <span className="list-request">
@@ -93,13 +100,13 @@ class Friends extends Component {
                                                     size="large"
                                                     maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                                 >
-                                                    {item.mutulFnds.map((friend, index) => {
+                                                    {item.mutulFnds?.map((friend, index) => {
                                                         return <Avatar key={index} src={friend} />
                                                     })
                                                     }
                                                 </Avatar.Group>
                                             </span>
-                                            <span>Mutual Friends</span>
+                                            {item.mutulFnds && <span>Mutual Friends</span>}
                                         </div>
                                     }
                                 />
