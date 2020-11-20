@@ -40,54 +40,62 @@ const navigations =
             "Heading": "About Me",
             "Url": "/aboutme",
             "CssSprite": "left-menu profile-icon",
-            "IsActive": false
+            "IsActive": false,
+            "Id": "AboutComp"
         },
         {
             "Heading": "Interests",
             "Url": "/interests",
             "CssSprite": "left-menu interest",
-            "IsActive": false
+            "IsActive": false,
+            "Id": "InterestComp"
         },
         {
             "Heading": "Hobbies",
             "Url": "/hobbies",
             "CssSprite": "left-menu hobbies",
-            "IsActive": false
+            "IsActive": false,
+            "Id": "HobbyComp"
         },
         {
             "Heading": "Internships",
             "Url": "/internships",
             "CssSprite": "left-menu intenship",
-            "IsActive": false
+            "IsActive": false,
+            "Id": "InternshipComp"
         },
         {
             "Heading": "Video as Profile",
             "Url": "/videoprofile",
             "CssSprite": "left-menu play",
-            "IsActive": false
+            "IsActive": false,
+            "Id": "VideoComp"
         },
         {
             "Heading": "Education",
             "Url": "/education",
             "CssSprite": "left-menu education",
-            "IsActive": false
+            "IsActive": false,
+            "Id": "EducationComp"
         },
         {
             "Heading": "Courses",
             "Url": "/courses",
             "CssSprite": "left-menu courses",
-            "IsActive": false
-        },
-        {
-            "Heading": "Groups",
-            "Url": "/profilegroups",
-            "CssSprite": "left-menu group-icon",
-            "IsActive": false
+            "IsActive": false,
+            "Id": "CourseComp"
         }
     ]
 class Profile extends Component {
 
-    aboutRef = createRef(null);
+    references = {};
+
+    getOrCreateRef(id) {
+        if (!this.references.hasOwnProperty(id)) {
+            this.references[id] = createRef();
+        }
+        return this.references[id];
+    }
 
     state = {
         navigations: navigations,
@@ -132,6 +140,7 @@ class Profile extends Component {
     }
 
     render() {
+
         const { navigations, profileData, disabled, visible } = this.state;
         return (
             profileData ? <div className="main">
@@ -198,7 +207,7 @@ class Profile extends Component {
                                         <div className="left-rail">
                                             <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
                                                 {navigations.map(navigatieItem => {
-                                                    return <Menu.Item key="AboutMe"><Link onClick={() => this.handleDomNavigate(this.aboutRef)}><span className={navigatieItem.CssSprite}></span><span>{navigatieItem.Heading}</span></Link></Menu.Item>
+                                                    return <Menu.Item key={navigatieItem.Id}><Link onClick={() => this.handleDomNavigate(this.references[navigatieItem.Id])}><span className={navigatieItem.CssSprite}></span><span>{navigatieItem.Heading}</span></Link></Menu.Item>
                                                 })}
                                             </Menu>
                                         </div>
@@ -206,13 +215,13 @@ class Profile extends Component {
                                         <Tags />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <div ref={this.aboutRef}><About about={profileData} /></div>
-                                        <div ref={this.aboutRef}><Interests interests={profileData.Interests} /></div>
-                                        <div ref={this.aboutRef}><Hobbies hobbies={profileData.Hobbies} /></div>
-                                        <div ref={this.aboutRef}><Intership internships={profileData.Internships} /></div>
-                                        <div ref={this.aboutRef}><VideoProfile video={profileData.VideoAsProfile} /></div>
-                                        <div ref={this.aboutRef}><Education education={profileData.Education} /></div>
-                                        <div ref={this.aboutRef}><Courses courses={profileData.Courses} /></div>
+                                        <div ref={this.getOrCreateRef('AboutComp')}><About about={profileData} /></div>
+                                        <div ref={this.getOrCreateRef('InterestComp')}><Interests interests={profileData.Interests} /></div>
+                                        <div ref={this.getOrCreateRef('HobbyComp')}><Hobbies hobbies={profileData.Hobbies} /></div>
+                                        <div ref={this.getOrCreateRef('InternshipComp')}><Intership internships={profileData.Internships} /></div>
+                                        <div ref={this.getOrCreateRef('VideoComp')}><VideoProfile video={profileData.VideoAsProfile} /></div>
+                                        <div ref={this.getOrCreateRef('EducationComp')}><Education education={profileData.Education} /></div>
+                                        <div ref={this.getOrCreateRef('CourseComp')}><Courses courses={profileData.Courses} /></div>
                                     </Col>
                                 </Row>
                             </TabPane>
