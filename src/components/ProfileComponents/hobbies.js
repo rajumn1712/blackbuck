@@ -15,7 +15,15 @@ import '../../App.css';
 import CommonModal from './CommonModal';
 
 class Hobbies extends Component {
-    state = { visible: false };
+
+    state = {
+        hobbies:this.props.hobbies,
+        tags: [],
+        inputVisible: false,
+        inputValue: '',
+        visible: false
+    };
+    
     showModal = () => {
         this.setState({
             visible: true,
@@ -32,11 +40,6 @@ class Hobbies extends Component {
         this.setState({
             visible: false,
         });
-    };
-    state = {
-        tags: [],
-        inputVisible: false,
-        inputValue: '',
     };
 
     handleClose = removedTag => {
@@ -89,17 +92,17 @@ class Hobbies extends Component {
         );
     }
     render() {
-        const { tags, inputVisible, inputValue } = this.state;
+        const { hobbies,tags, inputVisible, inputValue,visible } = this.state;
         const tagChild = tags?.map(this.forMap);
         const { user } = store.getState().oidc;
         return (
             <div className="custom-card">
                 <Card title="Hobbies" className="hobbies-card" bordered={false} extra={<Link onClick={this.showModal}><span className="icons edit" /></Link>} >
-                    <Tag className="tags">Playing Cricket</Tag>
-                    <Tag className="tags">Reading Books</Tag>
-                    <Tag className="tags">Watching Movies</Tag>
+                    {hobbies.map((hobby,index)=>{
+                        return <Tag className="tags" key={index}>{hobby.Name}</Tag>
+                    })}
                 </Card>
-                <CommonModal visible={this.state.visible} title="Hobbies" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal visible={visible} title="Hobbies" cancel={this.handleCancel} saved={this.handleOk}>
                 <div className="tags">
                         <div style={{ margin: 10 }}>
                             <TweenOneGroup
