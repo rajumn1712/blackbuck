@@ -43,21 +43,10 @@ const data = [
 ];
 class About extends Component {
     state = {
-        about: [
-            {
-                address: 'Mr. I. K. Taneja Flat No. 100, Triveni Apartments Pitam Pura, TG - 500049',
-                icon: 'icons location'
-            },
-            {
-                address: '+91 9015245810',
-                icon: 'icons phone'
-            },
-            {
-                address: 'JohnDoe@blackbuck.com',
-                icon: 'icons email'
-            }
-        ],
-        description: 'Although social distancing has created many changes with CBU courses, we are still offering a wide range of classes virtually.',
+        phone: this.props.about.PhoneNumber,
+        email: this.props.about.Email,
+        description: this.props.about.Aboutme,
+        address: this.props.about.Address,
         visible: false
     };
     showModal = () => {
@@ -80,7 +69,7 @@ class About extends Component {
     render() {
         const { user } = store.getState().oidc;
 
-        const { about, description, visible } = this.state;
+        const { phone, email, description, address, visible } = this.state;
 
         return (
             <div className="custom-card">
@@ -91,16 +80,34 @@ class About extends Component {
                         <p>{description}</p>
                         <Divider className="text-left-line" orientation="left">Contact</Divider>
                         <Row gutter={16}>
-                            {about.map((user, index) => {
-                                return <Col xs={24} sm={12}>
-                                    <div className="about-details">
-                                        <div className="about-icons">
-                                            <span className={user.icon} />
-                                        </div>
-                                        <p>{user.address}</p>
+                            <Col xs={24} sm={12}>
+                                <div className="about-details">
+                                    <div className="about-icons">
+                                        <span className="icons location" />
                                     </div>
-                                </Col>
-                            })}
+                                    {address.map((address,index)=>{
+                                        return <p key={index}>
+                                            {Object.keys(address).map((k)=>{return address[k]}).join(",")}
+                                        </p>
+                                    })}
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={12}>
+                                <div className="about-details">
+                                    <div className="about-icons">
+                                        <span className="icons phone" />
+                                    </div>
+                                    <p>{phone}</p>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={12}>
+                                <div className="about-details">
+                                    <div className="about-icons">
+                                        <span className="icons email" />
+                                    </div>
+                                    <p>{email}</p>
+                                </div>
+                            </Col>
                         </Row>
                     </div>
                 </Card>
@@ -120,7 +127,7 @@ class About extends Component {
                             <Col xs={12}>
                                 <Form.Item label="Plot No" className="custom-fields">
                                     <Input />
-                                    <span style={{color:'red',textAlign:'right'}}>is required</span>
+                                    <span style={{ color: 'red', textAlign: 'right' }}>is required</span>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>

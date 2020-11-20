@@ -99,7 +99,7 @@ class Profile extends Component {
                         <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                         <div className="">
                                 <div className=" upload-preview">
-                                    <Image src={profileData.ProfilePic} />
+                                    {/* <Image src={profileData.ProfilePic} /> */}
                                     <a class="item-close">
                                         <Tooltip title="Remove">
                                             <span className="close-icon"></span>
@@ -115,7 +115,7 @@ class Profile extends Component {
                         <div className="right-statistic">
                             <Statistic title="Shares" className="afterline" value={profileData.Shares} />
                             <Statistic title="Interests" className="afterline" value={profileData.Interest} />
-                            {/* <Statistic title="Posts" value={10} /> */}
+                            <Statistic title="Internships" value={3} />
                         </div>
                     </div>
                     <Tabs defaultActiveKey="1" centered className="profile-tabs">
@@ -150,13 +150,13 @@ class Profile extends Component {
                                     <Tags />
                                 </Col>
                                 <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                    <About />
-                                    <Interests />
-                                    <Hobbies />
-                                    <Intership />
-                                    <VideoProfile />
-                                    <Education />
-                                    <Courses />
+                                    <About about={profileData}/>
+                                    <Interests interests={profileData.Interests}/>
+                                    <Hobbies hobbies={profileData.Hobbies}/>
+                                    <Intership internships={profileData.Internships}/>
+                                    <VideoProfile video={profileData.VideoAsProfile}/>
+                                    <Education education={profileData.Education}/>
+                                    <Courses courses={profileData.Courses}/>
                                 </Col>
                             </Row>
                         </TabPane>
