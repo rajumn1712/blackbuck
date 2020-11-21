@@ -7,7 +7,7 @@ import Invite from '../components/invite';
 import Ads from '../components/ads';
 import FriendSuggestions from '../shared/components/friendSuggestion';
 import PostCard from '../components/postcard/Post';
-import Groups from '../components/groups';
+import Groups from '../shared/components/Groups';
 
 class Home extends Component {
     componentDidMount() {

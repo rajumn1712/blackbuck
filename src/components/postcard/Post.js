@@ -22,6 +22,7 @@ import ImagePost from '../../shared/components/postings/PostingImage';
 import SingleImageCard from '../../shared/components/postings/SingleImageCard';
 import DocumentPost from '../../shared/components/postings/DocumentsPost';
 import GroupCard from '../../shared/components/postings/GroupPost';
+import { apiClient } from '../../shared/api/clients';
 
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
@@ -108,27 +109,27 @@ const CommentList = ({ comments }) => (
 // );
 const sharepost = (
     <Menu className="share-pop">
-      <Menu.Item key="0">
-        <FacebookIcon size={24} borderRadius={24} />Facebook
+        <Menu.Item key="0">
+            <FacebookIcon size={24} borderRadius={24} />Facebook
       </Menu.Item>
-      <Menu.Item key="1">
-        <TwitterIcon size={24} borderRadius={24} />Twitter
+        <Menu.Item key="1">
+            <TwitterIcon size={24} borderRadius={24} />Twitter
       </Menu.Item>
-      <Menu.Item key="3">
-        <LinkedinIcon size={24} borderRadius={24} />LinkedIn
+        <Menu.Item key="3">
+            <LinkedinIcon size={24} borderRadius={24} />LinkedIn
       </Menu.Item>
-      <Menu.Item key="4">
-        <WhatsappIcon size={24} borderRadius={24} />Whatsapp
+        <Menu.Item key="4">
+            <WhatsappIcon size={24} borderRadius={24} />Whatsapp
       </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="5">
-        <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
+        <Menu.Divider />
+        <Menu.Item key="5">
+            <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
       </Menu.Item>
-      <Menu.Item key="6">
-      <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
+        <Menu.Item key="6">
+            <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
       </Menu.Item>
     </Menu>
-  );
+);
 
 const title = <Meta
     avatar={
@@ -145,39 +146,51 @@ const publicgrp = <Meta
     description={<div><a className="mr-8 grp-type"><span className="grp-type-icon public mr-4"></span>Public Group</a><span>24-10-2020 09:50 am</span></div>}
 />
 const privategrp = <Meta
-avatar={
-    <Avatar src={user} />
-}
-title="CSC Champions Group"
-description={<div><a className="mr-8 grp-type"><span className="grp-type-icon private mr-4"></span>Private Group</a><span>24-10-2020 09:50 am</span></div>}
+    avatar={
+        <Avatar src={user} />
+    }
+    title="CSC Champions Group"
+    description={<div><a className="mr-8 grp-type"><span className="grp-type-icon private mr-4"></span>Private Group</a><span>24-10-2020 09:50 am</span></div>}
 />
 const joingroup = <div className="join-grp-title">John Doe <span className="join-grp-txt">has Created a group name is</span> Mech Mantra</div>
 
 const docs = [
     {
-        avatar : [<span className="doc-icons word"></span>],
+        avatar: [<span className="doc-icons word"></span>],
         title: 'Mini Project.Doc',
         fileSize: '150 KB'
     },
     {
-        avatar : [<span className="doc-icons excel"></span>],
+        avatar: [<span className="doc-icons excel"></span>],
         title: 'Project Members list.xl...',
         fileSize: '40 KB'
     },
     {
-        avatar : [<span className="doc-icons ppt"></span>],
+        avatar: [<span className="doc-icons ppt"></span>],
         title: 'Power Point Slides of students.PPT',
         fileSize: '10MB'
     }
-  ];
+];
 class PostCard extends React.Component {
     state = {
+        allPosts: {},
         comments: [],
         submitting: false,
         value: '',
         loading: false,
         visible: false,
     };
+
+    componentDidMount = () => {
+        this.getAllPosts();
+    }
+
+    getAllPosts = () => {
+        apiClient.get('service/api/posts/getAllPosts/1/5/0').then(res => {
+            const allPosts = res.data;
+        })
+    }
+
     showAlert = () => {
         this.setState({
             visible: true,
@@ -237,18 +250,12 @@ class PostCard extends React.Component {
     };
     render() {
         const { comments, submitting, value, visible, loading } = this.state;
-        const imageData = [
-            PostImage,
-            Post_Image,
-            PostImage,
-            Post_Image,
-        ];
         return (
             <div>
-                <SingleImageCard/>
-                <ImagePost/>
-                <GroupCard/>
-                <DocumentPost/>
+                <SingleImageCard />
+                <ImagePost />
+                <GroupCard />
+                <DocumentPost />
                 {/* Video post */}
                 <div className="post-card">
                     <Card title={publicgrp} style={{ width: '100%' }} bordered={false} extra={
@@ -343,7 +350,7 @@ class PostCard extends React.Component {
                                             />
                                         </List.Item>
                                     )}
-                                />                          
+                                />
                             </div>
                             <ul className="card-actions-count pl-0">
                                 <li><span className="counter-icon loves"></span>25<span> Loves</span></li>
@@ -383,7 +390,7 @@ class PostCard extends React.Component {
                         />
                     </div>
                 </div>
-    {/* Reply card */}
+                {/* Reply card */}
             </div>
         )
     }

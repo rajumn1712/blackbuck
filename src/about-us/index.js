@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Ads from '../components/ads';
 import Courses from '../components/ProfileComponents/courses';
 import Friends from '../components/friends';
-import Groups from '../components/groups';
+import Groups from '../shared/components/Groups';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
 

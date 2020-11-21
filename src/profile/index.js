@@ -19,7 +19,7 @@ import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
 import FriendRequests from '../components/ProfileComponents/friendrequests';
 import Friends from '../components/friends';
 import Tags from '../components/tags';
-import Groups from '../components/groups';
+import Groups from '../shared/components/Groups';
 import Interests from '../components/ProfileComponents/interests';
 import Hobbies from '../components/ProfileComponents/hobbies';
 import About from '../components/ProfileComponents/about';
