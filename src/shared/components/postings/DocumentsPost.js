@@ -6,40 +6,43 @@ import EmojiAction from './Actions/EmojiActions';
 import CommentAction from './Actions/CommentAction';
 import ShareAction from './Actions/ShareActions';
 import Comments from './Comments/Comments';
+import moment from 'moment';
 
 
-const {Meta} = Card;
-const {Title,Paragraph}=Typography;
+
+const { Meta } = Card;
+const { Title, Paragraph } = Typography;
 
 const privategrp = <Meta
-avatar={
-    <Avatar src={user} />
-}
-title="CSC Champions Group"
-description={<div><a className="mr-8 grp-type"><span className="grp-type-icon private mr-4"></span>Private Group</a><span>24-10-2020 09:50 am</span></div>}
+    avatar={
+        <Avatar src={user} />
+    }
+    title="CSC Champions Group"
+    description={<div><a className="mr-8 grp-type"><span className="grp-type-icon private mr-4"></span>Private Group</a><span>24-10-2020 09:50 am</span></div>}
 />
 
 const docs = [
     {
-        avatar : [<span className="doc-icons word"></span>],
+        avatar: [<span className="doc-icons word"></span>],
         title: 'Mini Project.Doc',
         fileSize: '150 KB'
     },
     {
-        avatar : [<span className="doc-icons excel"></span>],
+        avatar: [<span className="doc-icons excel"></span>],
         title: 'Project Members list.xl...',
         fileSize: '40 KB'
     },
     {
-        avatar : [<span className="doc-icons ppt"></span>],
+        avatar: [<span className="doc-icons ppt"></span>],
         title: 'Power Point Slides of students.PPT',
         fileSize: '10MB'
     }
-  ];
+];
 
-class DocumentPost extends React.Component{
+class DocumentPost extends React.Component {
 
-    state={
+    state = {
+        groupposts: this.props.groups,
         documentCard: {
             post: privategrp,
             docs: docs,
@@ -55,18 +58,38 @@ class DocumentPost extends React.Component{
                 { tagname: '#Techee' }
             ]
         },
-        comments: [],
-        commentsection:false,
+        commentsection: false,
         submitting: false,
         value: ''
+    }
+
+    componentDidMount = ()=>{ //temporary code
+        const allposts = [...this.state.groupposts];
+        allposts.map(post=>{
+            post.comments.map(comment=>{
+                comment['author'] = comment.Firstname;
+                comment['avatar'] = comment.Image;
+                comment['content'] = comment.Comment;
+                comment['datetime'] = moment().fromNow(comment.CreatedDate)
+                comment.Replies.map(reply=>{
+                reply['author'] = reply.Firstname;
+                reply['avatar'] = reply.Image;
+                reply['content'] = reply.Comment;
+                reply['datetime'] = moment().fromNow(reply.CreatedDate)
+                })
+            })
+        })
+        this.setState({grouppost:allposts})
     }
 
     handleSubmit = () => {
 
     }
 
-    handleChange = () => {
-
+    handleChange = (e) => {
+        this.setState({
+            value: e.target.value,
+        });
     }
 
     handleDeletePost = () => {
@@ -95,7 +118,7 @@ class DocumentPost extends React.Component{
         // }
     }
 
-    handleEmojiEvent = (event, name,count) => {
+    handleEmojiEvent = (event, name, count) => {
         switch (name) {
             case 'Love':
                 this.updateLoveCount(count);
@@ -138,69 +161,78 @@ class DocumentPost extends React.Component{
         })
     }
 
-    showComment = ()=>{
-        this.setState({commentsection:true})
+    showComment = () => {
+        this.setState({ commentsection: true })
     }
 
-    render(){
+    render() {
 
-        const { documentCard, commentsection,comments, submitting, value } = this.state;
+        const { groupposts, documentCard, commentsection, submitting, value } = this.state;
 
-        return(
-            !submitting ? 
-            <div className="post-card comment-show">
-            <Card title={documentCard.post} style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
-            <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />    
-            }
-                actions={[<EmojiAction key="emoji" mystate={documentCard} clickedEvent={(event, name,count) => this.handleEmojiEvent(event, name,count)} />,
-                <CommentAction key="comment" clickedEvent={()=>this.showComment()}/>,
-                <ShareAction key="share" />
-                ]}
-            >
-                <div>
-                </div>
-                <div className="p-16">
-            <Title level={5} className="post-title f-16">{documentCard.postTitle}</Title>
-            <Paragraph className="f-14 post-desc">{documentCard.postDescription}</Paragraph>
-                    <div className="docs mb-16">
-                        <List
-                            itemLayout="horizontal"
-                            dataSource={documentCard.docs}
-                            renderItem={item => (
-                                <List.Item>
-                                    <List.Item.Meta
-                                        avatar={item.avatar}
-                                        title={item.title}
-                                        description={<div className="file-size f-12">{item.fileSize}</div>}
-                                    />
-                                </List.Item>
-                            )}
-                        />                          
-                    </div>
-                    <ul className="card-actions-count pl-0">
+        return (
+            groupposts.map(grouppost => {
+                return <div className="post-card comment-show">
+                    <Card title={
+                        <Meta
+                            avatar={
+                                <Avatar src={grouppost.userdetails.Image} />
+                            }
+                            title={grouppost.meassage}
+                            description={<div><a className="mr-8 grp-type"><span className="grp-type-icon private mr-4"></span>Private Group</a><span>24-10-2020 09:50 am</span></div>}
+                        />
+                    } style={{ width: '100%', borderRadius: 10 }} bordered={false} extra={
+                        <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
+                    }
+                        actions={[<EmojiAction key="emoji" mystate={documentCard} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
+                        <CommentAction key="comment" clickedEvent={() => this.showComment()} />,
+                        <ShareAction key="share" />
+                        ]}
+                    >
+                        <div>
+                        </div>
+                        <div className="p-16">
+                            <Title level={5} className="post-title f-16">{documentCard.postTitle}</Title>
+                            <Paragraph className="f-14 post-desc">{documentCard.postDescription}</Paragraph>
+                            <div className="docs mb-16">
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={documentCard.docs}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <List.Item.Meta
+                                                avatar={item.avatar}
+                                                title={item.title}
+                                                description={<div className="file-size f-12">{item.fileSize}</div>}
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
+                            <ul className="card-actions-count pl-0">
                                 <li><span className="counter-icon loves"></span>{documentCard.lovesCount}<span> Loves</span></li>
                                 <li><span className="counter-icon claps"></span>{documentCard.clapsCount}<span> Claps</span></li>
                                 <li><span className="counter-icon whistles"></span>{documentCard.whistlesCount}<span> Whistles</span></li>
                             </ul>
-                    <div className="join-grp">
-                        <Avatar.Group
-                            maxCount={4}
-                            size="large"
-                            maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
-                        >
-                            <Avatar src={user} />
-                            <Avatar src={user} />
-                            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                        </Avatar.Group>
-                        <Button type="primary">Join Group</Button>
-                    </div>
-                </div>
-            </Card>
-            {commentsection ? <Comments comments={comments} submitting={submitting} value={value}
+                            <div className="join-grp">
+                                <Avatar.Group
+                                    maxCount={4}
+                                    size="large"
+                                    maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
+                                >
+                                    <Avatar src={user} />
+                                    <Avatar src={user} />
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                </Avatar.Group>
+                                <Button type="primary">Join Group</Button>
+                            </div>
+                        </div>
+                    </Card>
+                    {(commentsection || grouppost.comments.length > 0) ? <Comments comments={grouppost.comments} submitting={submitting} value={value}
                         submitted={this.handleSubmit} changed={this.handleChange} /> : null}
-        </div> : null
+                </div>
+            })
         )
     }
 }

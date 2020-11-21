@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Avatar, Typography, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Popover } from 'antd';
 import moment from 'moment';
+import _ from 'lodash';
 // import FbImageLibrary from 'react-fb-image-grid';
 import user from '../../styles/images/user.jpg';
 import PostImage from '../../styles/images/postimage.jpg';
@@ -23,14 +24,12 @@ import SingleImageCard from '../../shared/components/postings/SingleImageCard';
 import DocumentPost from '../../shared/components/postings/DocumentsPost';
 import GroupCard from '../../shared/components/postings/GroupPost';
 import { apiClient } from '../../shared/api/clients';
+import TextPostCard from '../../shared/components/postings/TextPost';
 
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
-const images = [
-    PostImage,
-    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.bmbf.de%2Fen%2Fmicrosystems-technology-2445.html&psig=AOvVaw3IZ3jCI96_Zpxt01NjnV45&ust=1604478377148000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDsou_55ewCFQAAAAAdAAAAABAD',
-]
+
 
 const menu = (
     <Menu className="custom-dropdown more-opt">
@@ -84,29 +83,6 @@ const CommentList = ({ comments }) => (
     />
 );
 
-// const sharemenu = (
-//     <Menu className="custom-dropdown">
-//         <Menu.Item key="0">
-//             <FacebookIcon size={24} borderRadius={24} />Facebook
-//       </Menu.Item>
-//         <Menu.Item key="1">
-//             <TwitterIcon size={24} borderRadius={24} />Twitter
-//       </Menu.Item>
-//         <Menu.Item key="3">
-//             <LinkedinIcon size={24} borderRadius={24} />LinkedIn
-//       </Menu.Item>
-//         <Menu.Item key="4">
-//             <WhatsappIcon size={24} borderRadius={24} />Whatsapp
-//       </Menu.Item>
-//         <Menu.Divider />
-//         <Menu.Item key="5">
-//             <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
-//       </Menu.Item>
-//         <Menu.Item key="6">
-//             <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
-//       </Menu.Item>
-//     </Menu>
-// );
 const sharepost = (
     <Menu className="share-pop">
         <Menu.Item key="0">
@@ -188,6 +164,8 @@ class PostCard extends React.Component {
     getAllPosts = () => {
         apiClient.get('service/api/posts/getAllPosts/1/5/0').then(res => {
             const allPosts = res.data;
+            const grouped = _.groupBy(allPosts, post => post.type);
+            this.setState({ allPosts: grouped })
         })
     }
 
@@ -249,13 +227,14 @@ class PostCard extends React.Component {
         });
     };
     render() {
-        const { comments, submitting, value, visible, loading } = this.state;
+        const { allPosts, comments, submitting, value, visible, loading } = this.state;
         return (
             <div>
+                {allPosts.Text ? <TextPostCard texts={allPosts.Text} /> : null}
+                {allPosts.Group ? <DocumentPost groups={allPosts.Group} /> : null}
                 <SingleImageCard />
                 <ImagePost />
                 <GroupCard />
-                <DocumentPost />
                 {/* Video post */}
                 <div className="post-card">
                     <Card title={publicgrp} style={{ width: '100%' }} bordered={false} extra={
