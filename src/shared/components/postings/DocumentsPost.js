@@ -70,12 +70,12 @@ class DocumentPost extends React.Component {
                 comment['author'] = comment.Firstname;
                 comment['avatar'] = comment.Image;
                 comment['content'] = comment.Comment;
-                comment['datetime'] = moment().fromNow(comment.CreatedDate)
+                comment['datetime'] = moment(comment.CreatedDate).fromNow()
                 comment.Replies.map(reply=>{
                 reply['author'] = reply.Firstname;
                 reply['avatar'] = reply.Image;
                 reply['content'] = reply.Comment;
-                reply['datetime'] = moment().fromNow(reply.CreatedDate)
+                reply['datetime'] = moment(reply.CreatedDate).fromNow()
                 })
             })
         })
