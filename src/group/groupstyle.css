@@ -24,47 +24,41 @@
     border-radius: 10px;
 }
 
-.coverpage .premium-badge img {
-    width: 53px;
+.coverpage .padlock img {
+    width: 25px;
 }
 
 .user-statistic {
-    display: flex;
-    justify-content: space-evenly;
     align-items: flex-start;
     background: var(--white);
-    padding-bottom: 15px;
 }
+.ant-list-item-meta-content{position: relative;top:80px;}
 
-.user-statistic .ant-statistic {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    margin-top: 20px;
-}
 
 .user-statistic .user-banner {
     border: 0;
     background: transparent;
-    margin-top: -80px;
+    margin-top: -90px;
+    left: 100px;
 }
 
 .user-statistic .user-banner .ant-card-meta {
-    display: flex;
+    
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.user-statistic .user-banner .ant-card-meta .ant-avatar-image {
+.user-statistic .ant-list-items .ant-avatar-image {
     width: 150px;
     height: 150px;
-    border-radius: 50px;
+    border-radius: 50px !important;
 }
-
+.img-camera{bottom: 90px;}
 .user-statistic .user-banner .ant-card-body {
     padding: 0 !important;
 }
+.user-statistic .ant-list-item-meta-title{font-size: 22px; margin: 5px 0 0;}
 
 .user-statistic .user-banner .ant-card-meta-avatar {
     padding-right: 0 !important;
@@ -150,24 +144,24 @@
     margin: 0 !important;
 }
 
-.premium-badge {
+.padlock {
     position: absolute;
     left: -15px;
-    bottom: 35px;
+    bottom: 36px;
     background: var(--white);
     font-size: 16px;
     line-height: 1;
     text-align: center;
     margin: 0px auto;
-    width: 92px;
-    height: 68px;
+    width: 82px;
+    height: 60px;
     border-top-right-radius: 34px;
     border-bottom-right-radius: 34px;
     z-index: 50;
-    padding: 6px 6px 6px 24px;
+    padding: 12px 6px 6px 13px;
 }
 
-.premium-badge:before {
+.padlock:before {
     left: -1px;
     border-width: 1em 0px 0px 1em;
     content: "";
