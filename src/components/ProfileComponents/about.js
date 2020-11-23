@@ -13,34 +13,7 @@ import '../../App.css';
 import TextArea from 'antd/lib/input/TextArea';
 import CommonModal from './CommonModal';
 const { Option } = Select;
-const data = [
 
-    {
-        avatar: User1,
-        title: 'IT Groups',
-        description: '',
-        members: 161,
-    },
-    {
-        avatar: User2,
-        title: 'CSC Champs',
-        description: '',
-        members: 18,
-    },
-
-    {
-        avatar: User3,
-        title: 'Civili',
-        description: 'created many changes with CBU...',
-        members: 21,
-    },
-    {
-        avatar: User4,
-        title: 'Technical Group',
-        description: '',
-        members: 3,
-    },
-];
 class About extends Component {
     state = {
         phone: this.props.about.PhoneNumber,
