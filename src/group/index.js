@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch } from 'antd';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch,List } from 'antd';
 import ShareBox from '../components/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
@@ -8,11 +8,11 @@ import Ads from '../components/ads';
 import FriendSuggestions from '../components/FriendSuggestions';
 import PostCard from '../components/postcard/Post';
 import profilebanner from '../styles/images/banner.svg'
-import './profilestyle.css'
+import './groupstyle.css'
 import Title from 'antd/lib/typography/Title';
 import Paragraph from 'antd/lib/skeleton/Paragraph';
 import AvatarImage from '../styles/images/avatar.png';
-import PremiumBadge from '../styles/images/premiumbadge.svg'
+import PadLock from '../styles/images/padlock.svg'
 import { Link } from 'react-router-dom';
 import Courses from '../components/ProfileComponents/courses'
 import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
@@ -33,6 +33,9 @@ import CommonModal from '../components/ProfileComponents/CommonModal';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
+const data = [
+    {title: 'Programmers'} 
+  ];
 
 const navigations =
     [
@@ -40,62 +43,54 @@ const navigations =
             "Heading": "About Me",
             "Url": "/aboutme",
             "CssSprite": "left-menu profile-icon",
-            "IsActive": false,
-            "Id": "AboutComp"
+            "IsActive": false
         },
         {
             "Heading": "Interests",
             "Url": "/interests",
             "CssSprite": "left-menu interest",
-            "IsActive": false,
-            "Id": "InterestComp"
+            "IsActive": false
         },
         {
             "Heading": "Hobbies",
             "Url": "/hobbies",
             "CssSprite": "left-menu hobbies",
-            "IsActive": false,
-            "Id": "HobbyComp"
+            "IsActive": false
         },
         {
             "Heading": "Internships",
             "Url": "/internships",
             "CssSprite": "left-menu intenship",
-            "IsActive": false,
-            "Id": "InternshipComp"
+            "IsActive": false
         },
         {
             "Heading": "Video as Profile",
             "Url": "/videoprofile",
             "CssSprite": "left-menu play",
-            "IsActive": false,
-            "Id": "VideoComp"
+            "IsActive": false
         },
         {
             "Heading": "Education",
             "Url": "/education",
             "CssSprite": "left-menu education",
-            "IsActive": false,
-            "Id": "EducationComp"
+            "IsActive": false
         },
         {
             "Heading": "Courses",
             "Url": "/courses",
             "CssSprite": "left-menu courses",
-            "IsActive": false,
-            "Id": "CourseComp"
+            "IsActive": false
+        },
+        {
+            "Heading": "Groups",
+            "Url": "/profilegroups",
+            "CssSprite": "left-menu group-icon",
+            "IsActive": false
         }
     ]
-class Profile extends Component {
+class Group extends Component {
 
-    references = {};
-
-    getOrCreateRef(id) {
-        if (!this.references.hasOwnProperty(id)) {
-            this.references[id] = createRef();
-        }
-        return this.references[id];
-    }
+    aboutRef = createRef(null);
 
     state = {
         navigations: navigations,
@@ -140,7 +135,6 @@ class Profile extends Component {
     }
 
     render() {
-
         const { navigations, profileData, disabled, visible } = this.state;
         return (
             profileData ? <div className="main">
@@ -148,23 +142,35 @@ class Profile extends Component {
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
-                            <span className="premium-badge"><img src={PremiumBadge} /></span>
+                            <span className="padlock"><img src={PadLock} /></span>
                             <Link to="#" className="editpost">
                                 <span className="left-menu post-icon" />
                             </Link>
 
                         </div>
                         <div className="user-statistic">
-                            <div className="left-statistic">
-                                <Statistic title="Friends" className="afterline" value={profileData.Friend} />
-                                <Statistic className="afterline" title="Groups" value={profileData.Groups} />
-                                <Statistic title="Posts" value={profileData.Posts} />
-                            </div>
                             <Card className="user-banner" >
-                                <Meta avatar={<div><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
-                                    title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
-                                    description={profileData.Branch}
+                                {/* <Meta avatar={<div><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
+                                    title={<div>sdfghjk</div>}
+                                    description={<div>ASDFGH</div>}
+                                /> */}
+
+
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={data}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <List.Item.Meta
+                                                avatar={<div><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
+                                                title={<a href="https://ant.design">{item.title}</a>}
+                                                description={<div><div className="f-12">Private Group</div><div className="f-12">Created on <span className="fw-400">31-10-2020</span></div></div>}
+                                            />
+                                        </List.Item>
+                                    )}
                                 />
+
+
                             </Card>
                             <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                                 <div className="">
@@ -182,13 +188,18 @@ class Profile extends Component {
 
                                 </div>
                             </CommonModal>
-                            <div className="right-statistic">
-                                <Statistic title="Shares" className="afterline" value={profileData.Shares} />
-                                <Statistic title="Interests" className="afterline" value={profileData.Interest} />
-                                <Statistic title="Internships" value={3} />
-                            </div>
                         </div>
                         <Tabs defaultActiveKey="1" centered className="profile-tabs">
+                            <TabPane tab="About" key="3">
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+
+                                    </Col>
+                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+
+                                    </Col>
+                                </Row>
+                            </TabPane>
                             <TabPane tab="Posts" key="1">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
@@ -201,51 +212,7 @@ class Profile extends Component {
                                     </Col>
                                 </Row>
                             </TabPane>
-                            <TabPane tab="Profile" key="2">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
-                                        <div className="left-rail">
-                                            <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
-                                                {navigations.map(navigatieItem => {
-                                                    return <Menu.Item key={navigatieItem.Id}><Link onClick={() => this.handleDomNavigate(this.references[navigatieItem.Id])}><span className={navigatieItem.CssSprite}></span><span>{navigatieItem.Heading}</span></Link></Menu.Item>
-                                                })}
-                                            </Menu>
-                                        </div>
-                                        <Invite />
-                                        <Tags />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <div ref={this.getOrCreateRef('AboutComp')}><About about={profileData} /></div>
-                                        <div ref={this.getOrCreateRef('InterestComp')}><Interests interests={profileData.Interests} /></div>
-                                        <div ref={this.getOrCreateRef('HobbyComp')}><Hobbies hobbies={profileData.Hobbies} /></div>
-                                        <div ref={this.getOrCreateRef('InternshipComp')}><Intership internships={profileData.Internships} /></div>
-                                        <div ref={this.getOrCreateRef('VideoComp')}><VideoProfile video={profileData.VideoAsProfile} /></div>
-                                        <div ref={this.getOrCreateRef('EducationComp')}><Education education={profileData.Education} /></div>
-                                        <div ref={this.getOrCreateRef('CourseComp')}><Courses courses={profileData.Courses} /></div>
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                            <TabPane tab="Friends" key="3">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <FriendRequests />
-                                        <Friends />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                            <TabPane tab="Groups" className="m-0" key="4">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <GroupsPage />
-                                    </Col>
-                                </Row>
-                            </TabPane>
+
                         </Tabs>
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
@@ -260,4 +227,4 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+export default Group;

@@ -22,32 +22,7 @@ const { Option } = Select;
 
 class Intership extends Component {
     state = { 
-        internships:[
-            {
-                company: wipro,
-                title: 'Wipro',
-                place: 'Hyderabad',
-                months: '6'
-            },
-            {
-                company: infosys,
-                title: 'infosys',
-                place: 'Hyderabad',
-                months: '6'
-            },
-            {
-                company: wipro,
-                title: 'Wipro',
-                place: 'Hyderabad',
-                months: '6'
-            },
-            {
-                company: wipro,
-                title: 'Wipro',
-                place: 'Hyderabad',
-                months: '6'
-            },
-        ],
+        internships:this.props.internships,
         visible: false 
     };
     showModal = () => {
@@ -89,12 +64,12 @@ class Intership extends Component {
                                     <span className="left-menu intenship card-options-left" />
                                     <span className="icons more card-options-right" />
                                     <div className="intern-cardbody">
-                                        <img src={item.company} />
-                                        <h4 className="title">{item.title}</h4>
-                                        <p className="description"><span className="afterline mr-16">{item.place}</span><span className="">{item.months} Months</span></p>
+                                        <img src={item.CompanyLogo} />
+                                        <h4 className="title">{item.CompanyName}</h4>
+                                        <p className="description"><span className="afterline mr-16">{item.Location}</span><span className="">{item.Duration}</span></p>
                                     </div>
                                     <div className="intern-cardfooter">
-                                        <p className="mb-0"><span className="icons pdf mr-8" />Internship Cetificate.pdf</p>
+                        <p className="mb-0"><span className="icons pdf mr-8" />{item.Certificate}</p>
                                     </div>
                                 </div>
                             </List.Item>

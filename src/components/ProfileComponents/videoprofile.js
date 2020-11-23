@@ -16,9 +16,9 @@ import CommonModal from './CommonModal';
 
 const { Dragger } = Upload;
 class VideoProfile extends Component {
-    state = { 
-        videoUrl:'https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4',
-        visible: false 
+    state = {
+        videourl: this.props.video,
+        visible: false
     };
     showModal = () => {
         this.setState({
@@ -37,13 +37,15 @@ class VideoProfile extends Component {
     };
     render() {
         const { user } = store.getState().oidc;
+        const { videourl, visible } = this.state
+
         return (
             <div className="custom-card">
-                <Card title="Video as Profile" className="pfvideocard" cover={<video width="100%" controls src={this.state.videoUrl}>
+                <Card title="Video as Profile" className="pfvideocard" cover={<video width="100%" controls src={videourl}>
                 </video>} bordered={false} extra={<Link onClick={this.showModal}><span className="icons edit" /></Link>} >
                 </Card>
-                <CommonModal visible={this.state.visible} title="Internships" cancel={this.handleCancel} saved={this.handleOk}>
-                <div className="">
+                <CommonModal visible={visible} title="Internships" cancel={this.handleCancel} saved={this.handleOk}>
+                    <div className="">
                         <Dragger className="upload mb-16">
                             <span className="sharebox-icons video-upload"></span>
                             <p className="ant-upload-text mt-8 mb-0">Upload Video</p>

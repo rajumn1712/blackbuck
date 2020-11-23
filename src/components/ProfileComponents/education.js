@@ -23,6 +23,7 @@ const docs = [
     ]
 class Education extends Component {
     state = {
+        education:this.props.education,
         history:[
             {title:"St.Ann's intermediate junior college",yearFrom:'2010',yearTo:'2014',location:'Hyderabad',
             avatar : [<span className="icon education-icon mr-0"></span>],
@@ -52,13 +53,13 @@ class Education extends Component {
     render() {
         const { user } = store.getState().oidc;
 
-        const data = [...this.state.history];
+        const {education,visible}=this.state
         return (
             <div className="custom-card">
                 <Card title="Education" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>} >
                     <List
                         itemLayout="horizontal"
-                        dataSource={data}
+                        dataSource={education}
                         renderItem={item => (
                             <div className="edu-card">
                                 <Meta
@@ -66,15 +67,15 @@ class Education extends Component {
                                     avatar={<div className="about-icons">
                                         <span className="icons location" />
                                     </div>}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
-                        description={<div><span style={{ color: 'var(--textprimary)' }}></span> {item.yearFrom} - {item.yearTo} | <span style={{ color: 'var(--textprimary)' }}></span>{item.Location}</div>}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.Name}</span></div>}
+                        description={<div><span style={{ color: 'var(--textprimary)' }}></span> {item.StartDate} - {item.EndDate} | <span style={{ color: 'var(--textprimary)' }}></span>{item.Location}</div>}
                                 />
                                 <Meta
                                     className="edu-certificate"
                                     avatar={<div className="about-icons">
-                                        <span className="icons location" />
+                                        <span className="icon education-icon mr-0" />
                                     </div>}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.file}</span></div>}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.File}</span></div>}
                                 />
                                 <Link to="" className="f-12 list-link"><span className="icons edit" /></Link>
                             </div>

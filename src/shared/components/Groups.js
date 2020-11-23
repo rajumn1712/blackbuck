@@ -1,28 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List, message, Spin } from 'antd'
-import GroupImage from '../../styles/images/groupimage.png';
+import { Button, Card, Avatar, List } from 'antd'
 import notify from './notification';
 import { apiClient } from '../api/clients'
+import { Link } from 'react-router-dom';
+
+
 class Groups extends Component {
     state = {
-        data: [
-            {
-                Group: 'IT Group',
-                id: 1,
-                Avatar: GroupImage,
-                Description: 'Good',
-                Members: 156,
-                Posts: 143
-            },
-            {
-                Group: 'Cse Group',
-                id: 1,
-                Avatar: GroupImage,
-                Description: 'Good',
-                Members: 156,
-                Posts: 143
-            }
-        ],
+        data: [],
     };
     joinGroup = (item) => {
         apiClient.get('/repos/skellock/apisauce/commits').then(res => {
@@ -37,30 +22,31 @@ class Groups extends Component {
         this.getAllGroups();
     }
     getAllGroups = () => {
-        apiClient.get('/repos/skellock/apisauce/commits').then(res => {
-            // this.setState({ data: res.data });
+        apiClient.get('service/api/groups/userGroupSuggestions/1/5/0').then(res => {
+            const groupData = res.data;
+            this.setState({data:groupData});
         });
     }
     render() {
         return (
-            <div className="reight-rail group-card">
-                <Card title="Groups" extra={<a href="#">View all</a>} >
+            <div className="custom-card">
+                <Card title="Groups" bordered={false} extra={<Link>View all</Link>} actions={[
+                     <Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button>
+                ]} >
                     <List
+                        itemLayout="horizontal"
                         dataSource={this.state.data}
                         renderItem={item => (
-                            <List.Item key={item.id} actions={[<a className="link-color" key="list-loadmore-more" onClick={() => this.joinGroup(item)}>Join Group</a>]}>
+                            <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar className="mt-4" src={item.Avatar} />}
-                                    title={<div>{item.Group}<span className="icons-small lock-icon"></span></div>}
-                                    description={<div className="f-12 text-overflow text-hash"><span className="fw-400">{item.Members}</span> Members | <span className="fw-400">{item.Posts}</span> Posts</div>}
+                                    avatar={<Avatar src={item.image} />}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.name}</span><span className="icons-small lock-icon" /></div>}
+                                    description={<div><div className="overflow-text">{item.description}</div><div><span style={{ color: 'var(--textprimary)' }}>{item.members}</span> Members</div></div>}
                                 />
+                                <Link className="f-12 list-link" onClick={() => this.joinGroup(item)}>Join group</Link>
                             </List.Item>
-                        )} >
-                    </List>
-                    <div className="m-16 text-center">
-                        <Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button>
-                    </div>
-
+                        )}
+                    />
                 </Card>
             </div>
         )

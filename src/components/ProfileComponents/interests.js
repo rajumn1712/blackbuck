@@ -17,33 +17,7 @@ const { Search } = Input;
 
 class Interests extends Component {
     state = {
-        interests: [
-            {
-                avatar: User1,
-                title: 'Indian Cricket Team',
-                members: 2,
-                post: 5,
-            },
-            {
-                avatar: User2,
-                title: 'Pan India Movies',
-                members: 10,
-                post: 5,
-            },
-
-            {
-                avatar: User3,
-                title: 'Pan India Movies',
-                members: 21,
-                post: 5,
-            },
-            {
-                avatar: User4,
-                title: 'Indian Cricket Team',
-                members: 3,
-                post: 5,
-            },
-        ],
+        interests: this.props.interests,
         visible: false,
         search: null
     };
@@ -109,9 +83,11 @@ class Interests extends Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar src={item.avatar} />}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
-                                    description={<div><span style={{ color: 'var(--textprimary)' }}>{item.members}</span> Mutual Friends</div>}
+                                    avatar={<Avatar src={item.Image} />}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.Name}</span></div>}
+                                    description={
+                                    <div><span style={{ color: 'var(--textprimary)' }}>{item.Members}</span> Mutual Friends</div>
+                                }
                                 />
                             </List.Item>
                         )}
