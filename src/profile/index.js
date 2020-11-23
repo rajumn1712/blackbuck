@@ -149,7 +149,7 @@ class Profile extends Component {
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <Link to="#" className="editpost">
+                            <Link to="#" className="editpost" >
                                 <span className="left-menu post-icon" />
                             </Link>
 

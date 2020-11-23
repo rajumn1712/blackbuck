@@ -26,7 +26,7 @@ class GroupsPage extends Component {
                     <Col className="" span={12}>
                         <Card
                             cover={<img src={Computer} />} actions={[
-                                <a className="list-link f-14">Join Group</a>
+                                <a className="list-link f-14">Leave Group</a>
                             ]}
                         >
                             <Meta title="CSC Champs"
@@ -51,7 +51,7 @@ class GroupsPage extends Component {
                     <Col className="" span={12}>
                         <Card
                             cover={<img src={Computer} />} actions={[
-                                <a className="list-link f-14">Join Group</a>
+                                <a className="list-link f-14">Leave Group</a>
                             ]}>
                             <Meta title="CSC Champs"
                                 description={<div>Created many changes with CBU
@@ -78,7 +78,7 @@ class GroupsPage extends Component {
                     <Col className="" span={12}>
                         <Card
                             cover={<img src={Computer} />} actions={[
-                                <a className="list-link f-14">Join Group</a>
+                                <a className="list-link f-14">Leave Group</a>
                             ]}
                         >
                             <Meta title="CSC Champs"
@@ -103,7 +103,7 @@ class GroupsPage extends Component {
                     <Col className="" span={12}>
                         <Card
                             cover={<img src={Computer} />} actions={[
-                                <a className="list-link f-14">Join Group</a>
+                                <a className="list-link f-14">Leave Group</a>
                             ]}>
                             <Meta title="CSC Champs"
                                 description={<div>Created many changes with CBU

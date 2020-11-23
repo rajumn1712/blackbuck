@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, List, Divider, Row, Col, Form, Input, Select } from 'antd'
+import { Card, Avatar, List, Divider, Row, Col, Form, Input, Select, DatePicker } from 'antd'
 import { Link } from 'react-router-dom';
 // import { userManager } from '../../shared/authentication/auth';
 import { store } from '../../store'
@@ -14,24 +14,25 @@ import { Meta } from 'antd/lib/list/Item';
 import Dragger from 'antd/lib/upload/Dragger';
 import CommonModal from './CommonModal';
 const { Option } = Select;
-
+const { RangePicker } = DatePicker;
 const docs = [
     {
-        avatar : [<span className="icon education-icon mr-0"></span>],
-            title: 'Inter Marks memo.jpeg'
+        avatar: [<span className="icon education-icon mr-0"></span>],
+        title: 'Inter Marks memo.jpeg'
     }
-    ]
+]
 class Education extends Component {
     state = {
-        education:this.props.education,
-        history:[
-            {title:"St.Ann's intermediate junior college",yearFrom:'2010',yearTo:'2014',location:'Hyderabad',
-            avatar : [<span className="icon education-icon mr-0"></span>],
-            file: 'Inter Marks memo.jpeg',
-        }
+        education: this.props.education,
+        history: [
+            {
+                title: "St.Ann's intermediate junior college", yearFrom: '2010', yearTo: '2014', location: 'Hyderabad',
+                avatar: [<span className="icon education-icon mr-0"></span>],
+                file: 'Inter Marks memo.jpeg',
+            }
         ],
         visible: false
-     };
+    };
     showModal = () => {
         this.setState({
             visible: true,
@@ -53,7 +54,7 @@ class Education extends Component {
     render() {
         const { user } = store.getState().oidc;
 
-        const {education,visible}=this.state
+        const { education, visible } = this.state
         return (
             <div className="custom-card">
                 <Card title="Education" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>} >
@@ -68,7 +69,7 @@ class Education extends Component {
                                         <span className="icons location" />
                                     </div>}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text">{item.Name}</span></div>}
-                        description={<div><span style={{ color: 'var(--textprimary)' }}></span> {item.StartDate} - {item.EndDate} | <span style={{ color: 'var(--textprimary)' }}></span>{item.Location}</div>}
+                                    description={<div><span style={{ color: 'var(--textprimary)' }}></span> {item.StartDate} - {item.EndDate} | <span style={{ color: 'var(--textprimary)' }}></span>{item.Location}</div>}
                                 />
                                 <Meta
                                     className="edu-certificate"
@@ -83,7 +84,7 @@ class Education extends Component {
                     />
                 </Card>
                 <CommonModal visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
-                <div className="">
+                    <div className="">
                         <Divider className="text-left-line" orientation="left">School</Divider>
                         <Row gutter={16}>
                             <Col xs={12}>
@@ -100,7 +101,9 @@ class Education extends Component {
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Academic Year" className="custom-fields">
-                                    <Input />
+                                    <Input.Group compact>
+                                        <RangePicker />
+                                    </Input.Group>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
@@ -114,7 +117,7 @@ class Education extends Component {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        
+
                         <div className="docs about-icons mb-16 education">
                             <List
                                 itemLayout="horizontal"
@@ -134,33 +137,35 @@ class Education extends Component {
 
                         <Divider className="text-left-line" orientation="left">college</Divider>
                         <Row gutter={16}>
-                        <Col xs={12}>
-                            <Form.Item label="Education Type" className="custom-fields">
-                                <Select defaultValue="Select Option">
-                                    <Option value="Select Option">Select State</Option>
-                                </Select>
-                            </Form.Item>
+                            <Col xs={12}>
+                                <Form.Item label="Education Type" className="custom-fields">
+                                    <Select defaultValue="Select Option">
+                                        <Option value="Select Option">Select State</Option>
+                                    </Select>
+                                </Form.Item>
                             </Col>
-                        <Col xs={12}>
-                            <Form.Item label="College/University Name" className="custom-fields">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={12}>
-                            <Form.Item label="Academic Year" className="custom-fields">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={12}>
-                            <Form.Item label="Place of College/University" className="custom-fields">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={12}>
-                            <Form.Item label="Marks Grade" className="custom-fields">
-                                <Input />
-                            </Form.Item>
-                        </Col>
+                            <Col xs={12}>
+                                <Form.Item label="College/University Name" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Academic Year" className="custom-fields">
+                                    <Input.Group compact>
+                                    <RangePicker />
+                                    </Input.Group>
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Place of College/University" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12}>
+                                <Form.Item label="Marks Grade" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
                         </Row>
                         <Dragger className="upload" >
                             <span className="sharebox-icons photo-upload"></span>

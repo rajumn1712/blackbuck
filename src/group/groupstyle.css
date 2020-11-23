@@ -32,7 +32,7 @@
     align-items: flex-start;
     background: var(--white);
 }
-.ant-list-item-meta-content{position: relative;top:80px;}
+.user-statistic .ant-list-item-meta-content{position: relative;top:80px;}
 
 
 .user-statistic .user-banner {
