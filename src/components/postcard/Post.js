@@ -162,7 +162,7 @@ class PostCard extends React.Component {
     }
 
     getAllPosts = () => {
-        apiClient.get('service/api/posts/getAllPosts/1/5/0').then(res => {
+        apiClient.get(this.props.user ? 'service/api/posts/getUsersPosts/4/5/0' : 'service/api/posts/getAllPosts/1/5/0').then(res => {
             const allPosts = res.data;
             const grouped = _.groupBy(allPosts, post => post.type);
             this.setState({ allPosts: grouped })

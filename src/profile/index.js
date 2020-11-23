@@ -1,21 +1,15 @@
 import React, { Component, createRef } from 'react';
-import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch } from 'antd';
+// import { connect } from 'react-redux';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
-import Identity from '../components/identity';
+// import Identity from '../components/identity';
 import Invite from '../components/invite';
 import Ads from '../components/ads';
-import FriendSuggestions from '../components/FriendSuggestions';
 import PostCard from '../components/postcard/Post';
-import profilebanner from '../styles/images/banner.svg'
 import './profilestyle.css'
-import Title from 'antd/lib/typography/Title';
-import Paragraph from 'antd/lib/skeleton/Paragraph';
-import AvatarImage from '../styles/images/avatar.png';
 import PremiumBadge from '../styles/images/premiumbadge.svg'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Courses from '../components/ProfileComponents/courses'
-import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
 import FriendRequests from '../components/ProfileComponents/friendrequests';
 import Friends from '../components/friends';
 import Tags from '../components/tags';
@@ -101,7 +95,8 @@ class Profile extends Component {
         navigations: navigations,
         profileData: {},
         disabled: false,
-        visible: false
+        visible: false,
+        user: this.props.match.params.user
     };
 
     handleDisabledChange = disabled => {
@@ -197,7 +192,7 @@ class Profile extends Component {
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         <ShareBox />
-                                        <PostCard />
+                                        <PostCard user={this.state.user}/>
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -260,4 +255,4 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+export default withRouter(Profile);
