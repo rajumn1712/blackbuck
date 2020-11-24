@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch,List } from 'antd';
-import ShareBox from '../components/sharebox';
+import ShareBox from '../components/SavePostBox/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
 import Ads from '../components/ads';

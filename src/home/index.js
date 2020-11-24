@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
-import ShareBox from '../components/sharebox';
+import ShareBox from '../components/SavePostBox/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
 import Ads from '../components/ads';
