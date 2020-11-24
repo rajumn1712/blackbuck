@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch,List } from 'antd';
-import ShareBox from '../components/sharebox';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch,List,Form, Select } from 'antd';
+import ShareBox from '../components/SavePostBox/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
 import Ads from '../components/ads';
@@ -31,17 +31,19 @@ import FriendsRequestsCard from '../shared/components/friendsRequests'
 import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 const { Meta } = Card;
-
+const { Option } = Select;
 const { TabPane } = Tabs;
-class CreateGroup extends Component {
+const data = [
+    {title: 'Programmers'} 
+  ];
+
+
+class Group extends Component {
 
     aboutRef = createRef(null);
 
     state = {
-        navigations: navigations,
-        profileData: {},
-        disabled: false,
-        visible: false
+       
     };
 
     handleDisabledChange = disabled => {
@@ -83,8 +85,6 @@ class CreateGroup extends Component {
         const { navigations, profileData, disabled, visible } = this.state;
         return (
             profileData ? <div className="main">
-                <Row gutter={16}>
-                    <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
@@ -134,13 +134,33 @@ class CreateGroup extends Component {
                                 </div>
                             </CommonModal>
                         </div>
-                        
-                    </Col>
-                    
-                </Row>
+                <Row gutter={16}>
+                            <Col xs={16}>
+                                <Form.Item label="Education Type" className="custom-fields">
+                                    <Select defaultValue="Select Option">
+                                        <Option value="Select Option">Select State</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            <Col xs={16}>
+                                <Form.Item label="College/University Name" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={16}>
+                                <Form.Item label="Place of College/University" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={16}>
+                                <Form.Item label="Marks Grade" className="custom-fields">
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
             </div> : null
         )
     }
 }
 
-export default CreateGroup;
+export default Group;
