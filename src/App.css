@@ -162,6 +162,8 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 10px;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: 16px;line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.w-150{width: 150px;}
+.ant-btn{border-radius:4px !important;}
 .custom-card .list-link{color: var(--primary);margin-left: 3px;}
 .custom-card .ant-card-actions{ background-color: #F9F9F9;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top: 0;}
 .icons.add{background-position:-505px -198px;}

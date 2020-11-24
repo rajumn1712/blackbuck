@@ -26,7 +26,7 @@ a:hover,a:active{color: var(--primaryhover) !important;}
   cursor: pointer;
   vertical-align: text-bottom;
   background: url(styles/images/icons.svg) no-repeat; }
-.icons-small.lock-icon{background-position:-69px -397px ;}
+.icons-small.lock-icon{background-position:-72px -397px ;}
 .justify-content-around{display: flex;justify-content: space-around;}
 
 
