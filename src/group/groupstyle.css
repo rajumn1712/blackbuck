@@ -54,7 +54,7 @@
     height: 150px;
     border-radius: 50px !important;
 }
-.img-camera{bottom: 90px;}
+.img-camera{bottom: 39px;}
 .user-statistic .user-banner .ant-card-body {
     padding: 0 !important;
 }
@@ -204,12 +204,11 @@
         margin: 0 !important;
     }
     .user-statistic .user-banner .ant-card-meta .ant-avatar-image {
-        width: 80px;
-        height: 80px;
+        width: 150px;
+        height: 150px;
     }
-    .user-statistic .user-banner {
-        margin-top: -50px;
-    }
+    .img-camera {width: 150px;}
+    
     .user-statistic .ant-statistic {
         display: flex;
         flex-direction: row-reverse;

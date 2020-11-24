@@ -107,7 +107,7 @@ class Group extends Component {
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<div><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
+                                                avatar={<div className="img-container"><Avatar className="" src={profileData.ProfilePic} /> <div className="text-center mt-8 overlay"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
                                                 title={<a href="https://ant.design">{item.title}</a>}
                                                 description={<div><div className="f-12">Private Group</div><div className="f-12">Created on <span className="fw-400">31-10-2020</span></div></div>}
                                             />

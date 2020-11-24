@@ -156,7 +156,7 @@ class Profile extends Component {
                                 <Statistic title="Posts" value={profileData.Posts} />
                             </div>
                             <Card className="user-banner" >
-                                <Meta avatar={<div><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
+                                <Meta avatar={<div className="img-container"><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera overlay"><span className="icons camera" /> </a></div>}
                                     title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
                                     description={profileData.Branch}
                                 />

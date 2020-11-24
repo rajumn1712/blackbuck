@@ -238,6 +238,23 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
 .center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
-.img-camera{position: relative;bottom: 46px;left: 65px;}
+/* .img-camera{position: relative;bottom: 46px;left: 65px;} */
+.img-camera{display: block;
+    width: 150px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;}
 .icon.education-icon{background-position: -263px -254px;}
 .education .ant-list-item-meta-avatar{border: 1px solid #ccc;border-radius: 11px;background: #ffff;padding: 4px 5px;}
+.overlay {
+    position: absolute; 
+    bottom: 0; 
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    color: #f1f1f1; 
+    transition: .5s ease;
+    color: white;
+    font-size: 22px;
+    padding: 19px;
+    text-align: center;
+  }
+.img-container{position: relative;width: 100%;}
