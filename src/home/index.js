@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
 import Identity from '../components/identity';
-import Invite from '../components/invite';
+import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import FriendSuggestions from '../shared/components/friendSuggestion';
 import PostCard from '../components/postcard/Post';
