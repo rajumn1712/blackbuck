@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch,List,Form, Select } from 'antd';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch, List,Form,Radio } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
@@ -31,19 +31,72 @@ import FriendsRequestsCard from '../shared/components/friendsRequests'
 import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 const { Meta } = Card;
-const { Option } = Select;
+
 const { TabPane } = Tabs;
 const data = [
-    {title: 'Programmers'} 
-  ];
+    { title: 'Programmers' }
+];
 
-
-class CreateGroup extends Component {
+const navigations =
+    [
+        {
+            "Heading": "About Me",
+            "Url": "/aboutme",
+            "CssSprite": "left-menu profile-icon",
+            "IsActive": false
+        },
+        {
+            "Heading": "Interests",
+            "Url": "/interests",
+            "CssSprite": "left-menu interest",
+            "IsActive": false
+        },
+        {
+            "Heading": "Hobbies",
+            "Url": "/hobbies",
+            "CssSprite": "left-menu hobbies",
+            "IsActive": false
+        },
+        {
+            "Heading": "Internships",
+            "Url": "/internships",
+            "CssSprite": "left-menu intenship",
+            "IsActive": false
+        },
+        {
+            "Heading": "Video as Profile",
+            "Url": "/videoprofile",
+            "CssSprite": "left-menu play",
+            "IsActive": false
+        },
+        {
+            "Heading": "Education",
+            "Url": "/education",
+            "CssSprite": "left-menu education",
+            "IsActive": false
+        },
+        {
+            "Heading": "Courses",
+            "Url": "/courses",
+            "CssSprite": "left-menu courses",
+            "IsActive": false
+        },
+        {
+            "Heading": "Groups",
+            "Url": "/profilegroups",
+            "CssSprite": "left-menu group-icon",
+            "IsActive": false
+        }
+    ]
+class Group extends Component {
 
     aboutRef = createRef(null);
 
     state = {
-       
+        navigations: navigations,
+        profileData: {},
+        disabled: false,
+        visible: false
     };
 
     handleDisabledChange = disabled => {
@@ -85,6 +138,8 @@ class CreateGroup extends Component {
         const { navigations, profileData, disabled, visible } = this.state;
         return (
             profileData ? <div className="main">
+                <Row gutter={24}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
@@ -107,15 +162,34 @@ class CreateGroup extends Component {
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<div className="img-container"><Avatar className="" src={profileData.ProfilePic} /> <div className="text-center mt-8 overlay"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
+                                                avatar={<div className="img-container"><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera overlay"><span className="icons camera" /> </a></div>}
                                                 title={<a href="https://ant.design">{item.title}</a>}
                                                 description={<div><div className="f-12">Private Group</div><div className="f-12">Created on <span className="fw-400">31-10-2020</span></div></div>}
                                             />
                                         </List.Item>
                                     )}
                                 />
-
-
+                                <div className="my-16">
+                                    <Form layout="vertical" >
+                                        <Row gutter={24}>
+                                            <Col xs={16}>
+                                                <Form.Item label="Group Name" className="custom-fields">
+                                                    <Input placeholder="Enter group name here" />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={16}>
+                                                <Form.Item label="Description" className="custom-fields">
+                                                    <Input placeholder="Enter description here" />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={16}>
+                                                <Form.Item label="Location" className="custom-fields">
+                                                    <Input placeholder="Add a Location to your group"/>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </div>
                             </Card>
                             <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                                 <div className="">
@@ -134,33 +208,13 @@ class CreateGroup extends Component {
                                 </div>
                             </CommonModal>
                         </div>
-                <Row gutter={16}>
-                            <Col xs={16}>
-                                <Form.Item label="Education Type" className="custom-fields">
-                                    <Select defaultValue="Select Option">
-                                        <Option value="Select Option">Select State</Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={16}>
-                                <Form.Item label="College/University Name" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={16}>
-                                <Form.Item label="Place of College/University" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={16}>
-                                <Form.Item label="Marks Grade" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                        </Row>
+
+                    </Col>
+
+                </Row>
             </div> : null
         )
     }
 }
 
-export default CreateGroup;
+export default Group;
