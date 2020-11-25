@@ -5,7 +5,6 @@ import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
 import ShareAction from '../components/postings/Actions/ShareActions';
 import EmojiAction from '../components/postings/Actions/EmojiActions';
-import { apiClient } from '../api/clients';
 import { getPosts } from '../api/postsApi';
 import FriendSuggestions from '../components/friendSuggestion';
 import ShareBox from '../../components/SavePostBox/sharebox';
@@ -30,7 +29,7 @@ class Postings extends Component {
             alert("scroll reached end")
          }
       }
-      const posts = await getPosts(1, 1, 10, this.props.postingsType);
+      const posts = await getPosts(4, 1, 10, this.props.postingsType);
       if (posts.ok) {
          this.setState({ ...this.state, loading: false, allPosts: posts.data })
       }
@@ -73,7 +72,7 @@ class Postings extends Component {
             } else {
                return <div style={{ width: '100%', position: 'relative' }}>
                   <div class="images" onClick={this.showModal}>
-                     <div className={""}>
+                     <div className={"image-box"}>
                         <img src={imageObj} />
                      </div>
                   </div>
