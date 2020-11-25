@@ -24,6 +24,7 @@ import GroupsPage from '../components/ProfileComponents/groupspage';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
 import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
+import Postings from '../shared/postings';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -194,8 +195,7 @@ class Profile extends Component {
                                         <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <ShareBox />
-                                        <PostCard user={this.state.user}/>
+                                       <Postings postingsType="user" sharebox={true}/>
                                     </Col>
                                 </Row>
                             </TabPane>

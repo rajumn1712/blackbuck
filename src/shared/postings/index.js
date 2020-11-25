@@ -23,7 +23,7 @@ class Postings extends Component {
    }
    async componentDidMount() {
       this.setState({ ...this.state, loading: true })
-      const posts = await getPosts(1,1,10,this.props.postingsType||"all");
+      const posts = await getPosts(1, 1, 10, this.props.postingsType);
       if (posts.ok) {
          this.setState({ ...this.state, loading: false, allPosts: posts.data })
       }
@@ -76,11 +76,18 @@ class Postings extends Component {
          Video: () => {
             return <div> <video width="100%" controls>
                <source src={imageObj} /></video></div>
+         },
+         Text: () => {
+            return null
+         },
+         Document:()=>{
+            return null
          }
+
       }
 
 
-      return imageObj ? _result[type]() : null;
+      return imageObj ? (_result[type]?_result[type]():null) : null;
    }
    renderPost = (post) => {
 
@@ -119,8 +126,8 @@ class Postings extends Component {
    }
    render() {
       return <>
-         <ShareBox />
-         <FriendSuggestions />
+         {this.props.sharebox && <ShareBox />}
+         {this.props.friendsSuggestions && <FriendSuggestions />}
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
       </>
    }

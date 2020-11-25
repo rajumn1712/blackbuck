@@ -22,7 +22,7 @@ class Home extends Component {
                         <Invite />
                     </Col>
                     <Col xs={24} sm={12} md={16} lg={12} xl={12}>
-                        <Postings/>
+                        <Postings sharebox={true} friendsSuggestions={true} postingsType="all"/>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={6} xl={6}>
                         <Groups />
