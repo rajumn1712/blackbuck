@@ -8,6 +8,7 @@ import EmojiAction from '../components/postings/Actions/EmojiActions';
 import { getPosts } from '../api/postsApi';
 import FriendSuggestions from '../components/friendSuggestion';
 import ShareBox from '../../components/SavePostBox/sharebox';
+import Moment from 'react-moment';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -29,18 +30,18 @@ class Postings extends Component {
             alert("scroll reached end")
          }
       }
-      const posts = await getPosts(4, 1, 10, this.props.postingsType);
+      const posts = await getPosts(1, 1, 50, this.props.postingsType);
       if (posts.ok) {
          this.setState({ ...this.state, loading: false, allPosts: posts.data })
       }
    }
-   titleAvatar = (user) => {
+   titleAvatar = (user,date) => {
       return <Meta
          avatar={
             <Avatar src={user.Image} />
          }
          title={user.Firstname}
-         description="24-10-2020 09:50 am"
+      description={<Moment fromNow>{date}</Moment>}
       />
    }
    handleEvent = () => {
@@ -98,7 +99,7 @@ class Postings extends Component {
    renderPost = (post) => {
 
       return <div className="post-card comment-show">
-         <Card title={this.titleAvatar(post.userdetails)} style={{ width: '100%' }} bordered={false} extra={
+         <Card title={this.titleAvatar(post.userdetails,post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
          }
             actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,

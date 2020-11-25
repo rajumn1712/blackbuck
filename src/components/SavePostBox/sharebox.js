@@ -136,7 +136,7 @@ class ShareBox extends Component {
     };
     openpopup = (modal) => {
         this.postObject = this.createObject();
-        this.postObject.Type = "Image";
+        this.postObject.Type = modal==="Images"?"Image":modal;
         this.setState({ visible: true, modal: modal })
     }
     popupOk = async e => {
