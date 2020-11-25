@@ -1,6 +1,7 @@
 import React, { lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ProtectedRoute from '../shared/authentication/protected_route';
+import CommingSoon from './comingsoon';
 const About = lazy(() => import("../about-us"));
 const Contact = lazy(() => import("../contact-us"));
 const Home = lazy(() => import("../home"));
@@ -16,6 +17,7 @@ const Router = () => {
             <Route path="/callback" component={Callback} />
             <Route path="/profile/:user" component={Profile} />
             <Route path="/group" component={Group} />
+            <Route path="/commingsoon" component={CommingSoon}/>
             <ProtectedRoute path="/post/:name" component={Post} />
             <ProtectedRoute path="" component={Home} />
         </Switch>

@@ -12,15 +12,16 @@ import user_Image from '../styles/images/user-image.jpg';
 import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
+import { connect } from 'react-redux';
 
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
-const logout = ()=>{
-    userLogout(); setTimeout(()=>{
+const logout = () => {
+    userLogout(); setTimeout(() => {
         userManager.signoutRedirect()
-    },1000)
+    }, 1000)
 }
 const notifications = (
     <div className="notification-dropdown">
@@ -77,35 +78,7 @@ const notifications = (
     </div>
 );
 
-const menu = (
-    <Menu className="profile-dropdown">
-        <Menu.Item key="0">
-            <Meta
-                className="account-holder"
-                avatar={<Avatar src={avatar} />}
-                title="John Doe"
-                description="See your profile"
-            />
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="1">
-            <Link to="/about"><span className="icons swap-icon" /><span className="pl-16">Switch Accounts</span>
-            </Link>
-        </Menu.Item>
-        <Menu.Item key="2">
-            <Link to="/contact"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
-            </Link>
-        </Menu.Item>
-        <Menu.Item key="3">
-            <Link to="/posts"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
-            </Link>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="4">
-            <Link to="/posts" onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></Link>
-        </Menu.Item>
-    </Menu >
-);
+
 
 class HeaderComponent extends React.Component {
 
@@ -122,7 +95,33 @@ class HeaderComponent extends React.Component {
             visible: false,
         });
     };
-
+    menu = (<Menu className="profile-dropdown">
+        <Menu.Item key="0">
+            <Meta
+                className="account-holder"
+                avatar={<Avatar src={this.props.profile?.ProfilePic} />}
+                title={this.props.profile?.FirstName}
+                description={this.props.user?.profile.email}
+            />
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="1">
+            <Link to="/commingsoon"><span className="icons swap-icon" /><span className="pl-16">Switch Accounts</span>
+            </Link>
+        </Menu.Item>
+        <Menu.Item key="2">
+            <Link to="/commingsoon"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
+            </Link>
+        </Menu.Item>
+        <Menu.Item key="3">
+            <Link to="/commingsoon"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
+            </Link>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="4">
+            <a  onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
+        </Menu.Item>
+    </Menu >)
     render() {
         const { user } = store.getState().oidc;
         const { visible } = this.state;
@@ -160,9 +159,9 @@ class HeaderComponent extends React.Component {
                                 </Dropdown>
                             </Menu.Item>
                             <Menu.Item key="" >
-                                <Dropdown overlay={menu} trigger={['click']} >
-                                    <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={menu}>
-                                        <img src={avatar} />
+                                <Dropdown overlay={this.menu} trigger={['click']} >
+                                    <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
+                                        <img src={this.props.profile.ProfilePic} />
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>
@@ -197,8 +196,8 @@ class HeaderComponent extends React.Component {
                                 </Dropdown>
                             </Menu.Item> */}
                             <Menu.Item key="" >
-                                <Dropdown overlay={menu} trigger={['click']} >
-                                    <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={menu}>
+                                <Dropdown overlay={this.menu} trigger={['click']} >
+                                    <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
                                         <img src={avatar} />
                                     </Link>
                                 </Dropdown>
@@ -217,7 +216,7 @@ class HeaderComponent extends React.Component {
                 </Row>
                 {/* Mobile Naviagtion */}
                 <div className="">
-                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="320px" className="messenger-chat" closable="true"   footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
+                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="320px" className="messenger-chat" closable="true" footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
                         <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
                         <div className="messenger-drawer">
 
@@ -263,5 +262,8 @@ class HeaderComponent extends React.Component {
         )
     }
 }
-
-export default HeaderComponent;
+const mapStateToProps = ({ oidc }) => {
+    const {user,profile}=oidc;
+    return { profile, user }
+}
+export default connect(mapStateToProps)(HeaderComponent);

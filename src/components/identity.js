@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { Card, Avatar, Menu } from 'antd'
 import { Link } from 'react-router-dom';
-import {apiClient} from '../shared/api/clients'
+import { apiClient } from '../shared/api/clients'
+import { profileSuccess } from '../reducers/auth';
+import { connect } from 'react-redux';
 const { Meta } = Card;
-
-
-
 const { SubMenu } = Menu;
-
-
-
 class Identity extends Component {
     state = {
         homeInfo: {}
@@ -18,6 +14,7 @@ class Identity extends Component {
         apiClient.get('service/api/profile/getProfile/1')
             .then(res => {
                 const homeInfo = res.data[0];
+                this.props.upadateProfile(homeInfo);
                 this.setState({ homeInfo: homeInfo });
             })
     }
@@ -51,5 +48,12 @@ class Identity extends Component {
         )
     }
 }
-
-export default Identity;
+const mapStateToProps = ({ user }) => {
+    return { user }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        upadateProfile: (info) => { dispatch(profileSuccess(info)) }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Identity);
