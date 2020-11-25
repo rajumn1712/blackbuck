@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Avatar, Typography, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Popover, Tag } from 'antd';
+import { Card, Avatar, Typography, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Popover, Tag, Empty, Space, Spin } from 'antd';
 import SideAction from '../components/postings/Actions/SideActions';
 import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
@@ -18,7 +18,7 @@ class Postings extends Component {
       allPosts: [],
       value: "",
       submitting: false,
-      loading: false,
+      loading: true,
       commentsection: false
    }
    async componentDidMount() {
@@ -128,7 +128,9 @@ class Postings extends Component {
       return <>
          {this.props.sharebox && <ShareBox />}
          {this.props.friendsSuggestions && <FriendSuggestions />}
+         {this.state.loading&&<Space size="middle"><Spin size="large"/></Space>}
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
+         {!this.state.loading&&(!this.state.allPosts||this.state.allPosts?.length==0)&&<Empty/>}
       </>
    }
 }
