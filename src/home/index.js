@@ -8,6 +8,7 @@ import Ads from '../components/ads';
 import FriendSuggestions from '../shared/components/friendSuggestion';
 import PostCard from '../components/postcard/Post';
 import Groups from '../shared/components/Groups';
+import Postings from '../shared/postings';
 
 class Home extends Component {
     componentDidMount() {
@@ -21,9 +22,7 @@ class Home extends Component {
                         <Invite />
                     </Col>
                     <Col xs={24} sm={12} md={16} lg={12} xl={12}>
-                        <ShareBox />
-                        <FriendSuggestions />
-                        <PostCard />
+                        <Postings/>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={6} xl={6}>
                         <Groups />

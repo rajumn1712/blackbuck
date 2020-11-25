@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Skeleton, Switch, Card, Avatar, Space, Affix, Menu } from 'antd'
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import AvatarImage from '../styles/images/avatar.png';
+import { Card, Avatar, Menu } from 'antd'
 import { Link } from 'react-router-dom';
-import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
 import {apiClient} from '../shared/api/clients'
 const { Meta } = Card;
 
@@ -37,7 +34,7 @@ class Identity extends Component {
                 >
                     <Meta
                         avatar={
-                            <Avatar src={homeInfo.CoverPic} />
+                            <Avatar src={homeInfo.ProfilePic} />
                         }
                         title={<div>{homeInfo.FirstName}<span className="premium-icon"></span></div>}
                         description="Groups"

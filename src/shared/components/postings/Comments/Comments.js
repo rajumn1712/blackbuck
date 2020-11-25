@@ -9,8 +9,8 @@ const CommentList = ({ comments }) => (
         dataSource={comments}
         header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
         itemLayout="horizontal"
-        renderItem={item => <Comment {...item}>
-            {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
+        renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={item.CreatedDate} avatar={<Avatar src={item.Image}/>}> 
+            {/* {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
             {/* <Comment style={{ marginLeft: 10 }} className="reply-comment"
                 avatar={
                     <Avatar src={item.Image} />
@@ -18,7 +18,7 @@ const CommentList = ({ comments }) => (
                 content={
                     <Editor />
                 }
-            /> */}
+            /> */} 
         </Comment>
         }
     />
@@ -43,7 +43,7 @@ class Comments extends Component {
         const { comments, submitting, value, submitted, changed } = { ...this.props }
         return (
             <div className="post-comment px-16">
-                {comments.length > 0 && <CommentList comments={comments} />}
+               
                 <Comment
                     avatar={
                         <Avatar src={user} />
@@ -57,6 +57,7 @@ class Comments extends Component {
                         />
                     }
                 />
+                 {comments.length > 0 && <CommentList comments={comments} />}
             </div>
         )
     }

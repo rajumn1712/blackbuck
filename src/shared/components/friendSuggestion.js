@@ -5,27 +5,19 @@ import userImage from '../../styles/images/user_image.jpg';
 import user_Image from '../../styles/images/user-image.jpg';
 import { apiClient } from '../api/clients';
 import notify from './notification';
-
-
+import { getFriendSuggestions } from '../api/apiServer';
 const { Title, Paragraph, Link } = Typography;
 class FriendSuggestions extends Component {
     state = {
-        friends: [{
-            Name: 'kumar', Dept: 'IT', user: user
-        }, {
-            Name: 'sindhu', Dept: 'ECE', user: userImage
-        }
-            , {
-            Name: 'mounika', Dept: 'LTE', user: user_Image
-        },
-            , {
-            Name: 'Lakshmi', Dept: 'RTE', user: user
-        }
-            , {
-            Name: 'venkat', Dept: 'PTC', user: user_Image
-        }]
+        friends: []
     }
     addFriend = () => {
+    }
+    async componentDidMount() {
+        const response = await getFriendSuggestions(1, 1, 5);
+        if (response.ok) {
+            this.setState({ ...this.state, friends: response.data });
+        }
     }
     removeSuggestion = () => {
         apiClient.get('/repos/skellock/apisauce/commits').then(res => {
@@ -43,10 +35,10 @@ class FriendSuggestions extends Component {
                 </div>
                 <div className="friends">
                     {friends.map((friend, index) => {
-                        return<div className="friends-list">
-                            <img src={friend.user} width="100%" height="100%" />
+                        return <div className="friends-list">
+                            <img src={friend.Image} width="100%" height="100%" />
                             <div className="friends-list--name">
-                                <Paragraph>{friend.Name}</Paragraph>
+                                <Paragraph>{friend.Firstname}</Paragraph>
                                 <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                             </div>
                             <a className="addfrnd-btn" onClick={() => this.addFriend()}>
