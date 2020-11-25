@@ -24,13 +24,6 @@ const docs = [
 class Education extends Component {
     state = {
         education: this.props.education,
-        history: [
-            {
-                title: "St.Ann's intermediate junior college", yearFrom: '2010', yearTo: '2014', location: 'Hyderabad',
-                avatar: [<span className="icon education-icon mr-0"></span>],
-                file: 'Inter Marks memo.jpeg',
-            }
-        ],
         visible: false
     };
     showModal = () => {

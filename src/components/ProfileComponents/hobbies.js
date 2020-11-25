@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Tag, Input, Tooltip } from 'antd'
+import { Card, Tag, Input } from 'antd'
 import {  PlusOutlined } from '@ant-design/icons';
 import { TweenOneGroup } from 'rc-tween-one';
 import { Link } from 'react-router-dom';
@@ -18,25 +18,24 @@ class Hobbies extends Component {
 
     state = {
         hobbies:this.props.hobbies,
-        tags: [],
+        tags: this.props.hobbies,
         inputVisible: false,
-        inputValue: '',
+        inputValue: {Name:''},
         visible: false
     };
     
-    showModal = () => {
+    showModal = (e) => {
+        e.preventDefault();
         this.setState({
             visible: true,
         });
     };
     handleOk = e => {
-        console.log(e);
         this.setState({
             visible: false,
         });
     };
     handleCancel = e => {
-        console.log(e);
         this.setState({
             visible: false,
         });
@@ -44,7 +43,6 @@ class Hobbies extends Component {
 
     handleClose = removedTag => {
         const tags = this.state.tags.filter(tag => tag !== removedTag);
-        console.log(tags);
         this.setState({ tags });
     };
 
@@ -53,19 +51,20 @@ class Hobbies extends Component {
     };
 
     handleInputChange = e => {
-        this.setState({ inputValue: e.target.value });
+        this.setState({ inputValue:{
+            Name:e.target.value
+        }  });
     };
     handleInputConfirm = () => {
         const { inputValue } = this.state;
         let { tags } = this.state;
-        if (inputValue && tags.indexOf(inputValue) === -1) {
+        if (inputValue.Name && tags.indexOf(inputValue.Name) === -1) {
             tags = [...tags, inputValue];
         }
-        console.log(tags);
         this.setState({
             tags,
             inputVisible: false,
-            inputValue: '',
+            inputValue: {Name:''},
         });
     };
 
@@ -73,20 +72,20 @@ class Hobbies extends Component {
         this.input = input;
     };
 
-    forMap = tag => {
+    forMap = (tag,index) => {
         const tagElem = (
-            <Tag
+            <Tag key={index}
                 closable
                 onClose={e => {
                     e.preventDefault();
                     this.handleClose(tag);
                 }}
             >
-                {tag}
+                {tag.Name}
             </Tag>
         );
         return (
-            <span key={tag} style={{ display: 'inline-block' }}>
+            <span key={index} style={{ display: 'inline-block' }}>
                 {tagElem}
             </span>
         );
@@ -127,7 +126,7 @@ class Hobbies extends Component {
                                 type="text"
                                 size="small"
                                 style={{ width: 78 }}
-                                value={inputValue}
+                                value={inputValue.Name}
                                 onChange={this.handleInputChange}
                                 onBlur={this.handleInputConfirm}
                                 onPressEnter={this.handleInputConfirm}
