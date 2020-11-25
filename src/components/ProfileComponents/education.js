@@ -69,9 +69,9 @@ class Education extends Component {
                                     avatar={<div className="about-icons">
                                         <span className="icon education-icon mr-0" />
                                     </div>}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.File}</span></div>}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.File ? item.File : 'No Files'}</span></div>}
                                 />
-                                <Link to="" className="f-12 list-link"><span className="icons edit" /></Link>
+                                <Link className="f-12 list-link"><span className="icons edit" /></Link>
                             </div>
                         )}
                     />
