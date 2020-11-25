@@ -7,6 +7,7 @@ import User1 from '../styles/images/avatar.png';
 import User2 from '../styles/images/user.jpg';
 import User3 from '../styles/images/user_image.jpg';
 import User4 from '../styles/images/user-image.jpg';
+import CreateGroup from '../components/ProfileComponents/creategroup';
 import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
@@ -45,7 +46,7 @@ class Groups extends Component {
         return (
             <div className="custom-card">
                 <Card title="Groups" bordered={false} extra={<Link to="">View all</Link>} actions={[
-                     <Button type="primary" >Create a Group</Button>
+                     <Button type="primary" ><CreateGroup />Create a Group</Button>
                 ]} >
                     <List
                         itemLayout="horizontal"

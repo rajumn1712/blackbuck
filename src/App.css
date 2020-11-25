@@ -189,7 +189,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .group-page .ant-card-cover img{border-top-left-radius: 10px;border-top-right-radius: 10px;}
 .group-page .ant-card-body{padding: 16px !important;}
 .group-page .ant-card-actions{color:#f9f9f9;}
-.list-request .ant-avatar{width: 20px;height: 20px;line-height: 20px;border-radius: 8px !important;}
+.list-request .ant-avatar{width: 25px;height: 25px;line-height: 20px;border-radius: 8px !important;}
 .requests .ant-list-item-meta{align-items: flex-end;}
 .profile-tab .profile-menu{margin-top: 0 !important;padding-top: 16px !important;}
 .pfvideocard .ant-card-cover video{border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;}

@@ -38,7 +38,7 @@ const data = [
   ];
 
 
-class Group extends Component {
+class CreateGroup extends Component {
 
     aboutRef = createRef(null);
 
@@ -163,4 +163,4 @@ class Group extends Component {
     }
 }
 
-export default Group;
+export default CreateGroup;
