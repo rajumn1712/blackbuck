@@ -19,10 +19,17 @@ class Postings extends Component {
       value: "",
       submitting: false,
       loading: true,
-      commentsection: false
+      commentselection: []
    }
    async componentDidMount() {
-      this.setState({ ...this.state, loading: true })
+
+      this.setState({ ...this.state, loading: true });
+      window.onscroll = (e) => {
+         let element = e.target
+         if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+            alert("scroll reached end")
+         }
+      }
       const posts = await getPosts(1, 1, 10, this.props.postingsType);
       if (posts.ok) {
          this.setState({ ...this.state, loading: false, allPosts: posts.data })
@@ -80,14 +87,14 @@ class Postings extends Component {
          Text: () => {
             return null
          },
-         Document:()=>{
+         Document: () => {
             return null
          }
 
       }
 
 
-      return imageObj ? (_result[type]?_result[type]():null) : null;
+      return imageObj ? (_result[type] ? _result[type]() : null) : null;
    }
    renderPost = (post) => {
 
@@ -96,7 +103,7 @@ class Postings extends Component {
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
          }
             actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
-            <CommentAction key="comment" clickedEvent={() => this.showComment()} />,
+            <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
             cover={this.renderPostImages(post.image, post.type)}
@@ -116,22 +123,30 @@ class Postings extends Component {
                </div>
             </div>
          </Card>
-         {this.state.commentsection && <Comments comments={post.comments} submitting={this.state.submitting} value={this.state.value}
+         {this.state.commentselection.indexOf(post.id) > -1 && <Comments comments={post.comments} submitting={this.state.submitting} value={this.state.value}
             submitted={this.handleSubmit} changed={this.handleChange} />}
          {/* <PostCardModal {...this.state} closed={() => { this.setState({ visible: false }) }} /> */}
       </div>
    }
-   showComment = () => {
-      this.setState({ ...this.state, commentsection: true })
+   showComment = (post) => {
+      const { commentselection } = this.state;
+      const idx = commentselection.indexOf(post.id);
+      if (idx > -1) {
+         commentselection.splice(idx, 1);
+      } else {
+         commentselection.push(post.id);
+      }
+      this.setState({ ...this.state, commentselection })
    }
+
    render() {
-      return <>
+      return <div onScroll={this.handleScroll}>
          {this.props.sharebox && <ShareBox />}
          {this.props.friendsSuggestions && <FriendSuggestions />}
-         {this.state.loading&&<Space size="middle"><Spin size="large"/></Space>}
+         {this.state.loading && <Space size="large"><Spin size="large" /></Space>}
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
-         {!this.state.loading&&(!this.state.allPosts||this.state.allPosts?.length==0)&&<Empty/>}
-      </>
+         {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
+      </div>
    }
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Avatar, Comment, Form, Button, List } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import user from '../../../../styles/images/user.jpg';
+import { connect } from 'react-redux';
 
 
 const CommentList = ({ comments }) => (
@@ -46,7 +47,7 @@ class Comments extends Component {
                
                 <Comment
                     avatar={
-                        <Avatar src={user} />
+                        <Avatar src={this.props.profile?.ProfilePic} />
                     }
                     content={
                         <Editor
@@ -63,4 +64,8 @@ class Comments extends Component {
     }
 }
 
-export default Comments;
+const mapStateToProps = ({oidc})=>{
+    const {user,profile} = oidc;
+    return {user,profile}
+}
+export default connect(mapStateToProps)(Comments);
