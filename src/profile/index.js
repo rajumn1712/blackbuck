@@ -96,8 +96,7 @@ class Profile extends Component {
         navigations: navigations,
         profileData: {},
         disabled: false,
-        visible: false,
-        user: this.props.match.params.user
+        visible: false
     };
 
     handleDisabledChange = disabled => {

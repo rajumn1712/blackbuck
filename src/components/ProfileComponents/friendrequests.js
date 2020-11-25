@@ -16,52 +16,7 @@ import notify from '../../shared/components/notification';
 class FriendRequests extends Component {
 
     state = {
-        friendRequests: [
-
-            {
-                avatar: User1,
-                title: 'IT Groups',
-                members: [
-                    { avatar: '', name: 'User', initial: 'U' },
-                    { avatar: '', name: 'UserName', initial: 'A' },
-                    { avatar: '', name: 'Name', initial: 'B' },
-                    { avatar: '', name: 'Name', initial: 'C' },
-                    { avatar: '', name: 'Name', initial: 'D' },
-                    { avatar: '', name: 'Name', initial: 'E' }
-                ],
-            },
-            {
-                avatar: User2,
-                title: 'CSC Champs',
-                members: [
-                    { avatar: '', name: 'User', initial: 'A' },
-                    { avatar: '', name: 'User', initial: 'B' },
-                    { avatar: '', name: 'User', initial: 'C' },
-                    { avatar: '', name: 'User', initial: 'D' },
-
-                ],
-            },
-
-            {
-                avatar: User3,
-                title: 'Civili',
-                members: [
-                    { avatar: '', name: 'User', initial: 'U' },
-                    { avatar: '', name: 'User', initial: 'U' },
-
-                ],
-            },
-            {
-                avatar: User4,
-                title: 'Technical Group',
-                members: [
-                    { avatar: '', name: 'User', initial: 'U' },
-                    { avatar: '', name: 'User', initial: 'U' },
-                    { avatar: '', name: 'User', initial: 'U' },
-
-                ],
-            },
-        ]
+        friendRequests: []
     }
 
     handleAccept = () => {
