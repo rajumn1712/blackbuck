@@ -10,6 +10,7 @@ import PadLock from '../styles/images/padlock.svg'
 import { Link } from 'react-router-dom';
 import Courses from '../components/ProfileComponents/courses'
 import Groups from '../shared/components/Groups';
+import GroupAbout from '../shared/components/groupabout';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
 import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
@@ -176,10 +177,11 @@ class Group extends Component {
                             <TabPane tab="About" key="3">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-
+                                        <Invite />
+                                        <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-
+                                    <GroupAbout />
                                     </Col>
                                 </Row>
                             </TabPane>
