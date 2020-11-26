@@ -21,8 +21,8 @@ const fetchUserFriends = (userid) => {
 const sendFirendRequest = (user_id, object) => {
     return apiClient.post(FRIENDS_API + `savefriendRequest/${user_id}`, object);
 }
-const acceptFrienRequest = (user_id, friend_id,type) => {
-    return apiClient.get(FRIENDS_API+`saveAcceptAndDecline/${user_id}/${friend_id}/${type}`)
+const acceptFrienRequest = (user_id, friend_id,type,obj) => {
+    return apiClient.post(FRIENDS_API+`saveAcceptAndDecline/${user_id}/${friend_id}/${type}`,obj)
 }   
 const fetchFriendRequests = (user_id)=>{
     return apiClient.get(PROFILE_API+"getFriendRequests/"+user_id)

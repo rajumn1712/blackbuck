@@ -30,14 +30,30 @@ class FriendRequests extends Component {
         }
     }
     handleAccept = async (friend) => {
-        acceptFrienRequest(this.props.profile?.Id, friend.id, "accept").then(() => {
+        const obj = {
+            "UserId": this.props?.profile?.Id,
+            "Firstname": this.props?.profile?.FirstName,
+            "Lastname": this.props?.profile?.LastName,
+            "Image": null,
+            "Email": this.props?.profile?.Email,
+            "Type": "accept"
+        }
+        acceptFrienRequest(this.props.profile?.Id, friend.id, "accept", obj).then(() => {
             message.success("Action Success");
             this.loadRequests();
         })
     }
 
     handleRemove = (friend) => {
-        acceptFrienRequest(this.props.profile?.Id, friend.id, "decline").then(() => {
+        const obj = {
+            "UserId": this.props?.profile?.Id,
+            "Firstname": this.props?.profile?.FirstName,
+            "Lastname": this.props?.profile?.LastName,
+            "Image": null,
+            "Email": this.props?.profile?.Email,
+            "Type": "decline"
+        }
+        acceptFrienRequest(this.props.profile?.Id, friend.id, "decline", obj).then(() => {
             message.success("Action Success");
             this.loadRequests();
         })
