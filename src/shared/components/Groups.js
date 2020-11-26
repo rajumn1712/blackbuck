@@ -4,12 +4,15 @@ import notify from './notification';
 import { apiClient } from '../api/clients'
 import { Link } from 'react-router-dom';
 import { fetchGroupSuggestions } from '../api/apiServer';
+import { connect } from 'react-redux';
 
 
 class Groups extends Component {
     state = {
         data: [],
-        loading: true
+        loading: true,
+        page:1,
+        pageNo:5
     };
     joinGroup = (item) => {
         apiClient.get('/repos/skellock/apisauce/commits').then(res => {
@@ -24,7 +27,7 @@ class Groups extends Component {
         this.getAllGroups();
     }
     getAllGroups = async () => {
-        const response = await fetchGroupSuggestions(1, 1, 5);
+        const response = await fetchGroupSuggestions(this.props?.profile?.Id,this.state.page,this.state.pageNo);
         if (response.ok) {
             this.setState({ loading: false, data: response.data });
         }
@@ -54,4 +57,8 @@ class Groups extends Component {
         )
     }
 }
-export default Groups;
+
+const mapStateToProps = ({oidc})=>{
+    return {profile:oidc.profile}
+}
+export default connect(mapStateToProps)(Groups);
