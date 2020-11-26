@@ -119,6 +119,7 @@ class ShareBox extends Component {
     }
     uploadProps = {
         name: 'file',
+        accept:".png,.jpg,.jpeg",
         multiple: false,
         action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
         onChange:(info)=> {
@@ -163,7 +164,8 @@ class ShareBox extends Component {
         post.Title = "";
         this.setState({
            ...this.state,
-            post
+            post,
+            errors:null
         });
     }
     handleCancel = e => {

@@ -22,20 +22,30 @@ class Postings extends Component {
       value: "",
       submitting: false,
       loading: true,
-      commentselection: []
+      commentselection: [],
+      page: 1,
+      pageSize: 10
    }
-   async componentDidMount() {
-
-      this.setState({ ...this.state, loading: true });
-      window.onscroll = (e) => {
-         let element = e.target
+   componentDidMount() {
+      window.addEventListener('scroll', (e) => {
+         let element = e.target.scrollingElement
          if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-            alert("scroll reached end")
+            let { page } = this.state;
+            page +=1;
+            this.setState({...this.state,page},()=>{
+               this.loadPosts();
+            })
          }
-      }
-      const posts = await getPosts(1, 1, 50, this.props.postingsType);
+      })
+      this.loadPosts();
+   }
+   async loadPosts() {
+      this.setState({ ...this.state, loading: true });
+      const posts = await getPosts(1, this.state.page, this.state.pageSize, this.props.postingsType);
+      let {allPosts} = this.state;
+      allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
-         this.setState({ ...this.state, loading: false, allPosts: posts.data })
+         this.setState({ ...this.state, loading: false, allPosts })
       }
    }
    titleAvatar = (user, date) => {
