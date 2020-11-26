@@ -99,9 +99,9 @@ class HeaderComponent extends React.Component {
         <Menu.Item key="0">
             <Meta
                 className="account-holder"
-                avatar={<Avatar src={this.props.profile?.ProfilePic} />}
+                avatar={<Avatar src={this.props?.profile?.ProfilePic} />}
                 title={this.props.profile?.FirstName}
-                description={this.props.user?.profile.email}
+                description={this.props?.profile?.email}
             />
         </Menu.Item>
         <Menu.Divider />
@@ -161,7 +161,7 @@ class HeaderComponent extends React.Component {
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
-                                        <img src={this.props.profile.ProfilePic} />
+                                        <img src={this.props?.profile?.ProfilePic} />
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>

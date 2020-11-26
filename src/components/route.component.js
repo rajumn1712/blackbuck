@@ -2,13 +2,13 @@ import React, { lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ProtectedRoute from '../shared/authentication/protected_route';
 import CommingSoon from './comingsoon';
-const About = lazy(() => import("../about-us"));
-const Contact = lazy(() => import("../contact-us"));
-const Home = lazy(() => import("../home"));
-const Callback = lazy(() => import("../shared/authentication/callback"));
-const Post = lazy(() => import("../common/post"));
-const Profile = lazy(()=>import("../profile"));
-const Group = lazy(()=>import("../group"));
+import About from '../about-us';
+import Contact from '../contact-us';
+import Home from '../home';
+import Post from '../common/post';
+import Callback from "../shared/authentication/callback";
+import Profile from '../profile';
+import Group from '../group'
 const Router = () => {
     return (
         <Switch>

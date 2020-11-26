@@ -12,6 +12,7 @@ import Moment from 'react-moment';
 import AudioPlayer from "react-h5-audio-player";
 import 'react-h5-audio-player/lib/styles.css';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -41,7 +42,7 @@ class Postings extends Component {
    }
    async loadPosts() {
       this.setState({ ...this.state, loading: true });
-      const posts = await getPosts(1, this.state.page, this.state.pageSize, this.props.postingsType);
+      const posts = await getPosts(this.props?.profile?.id, this.state.page, this.state.pageSize, this.props.postingsType);
       let {allPosts} = this.state;
       allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
@@ -182,5 +183,7 @@ class Postings extends Component {
       </div>
    }
 }
-
-export default Postings;
+const mapStateToProps = ({oidc})=>{
+   return {profile:oidc.profile}
+}
+export default connect(mapStateToProps)(Postings);

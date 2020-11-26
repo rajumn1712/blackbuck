@@ -3,11 +3,13 @@ import { Button, Card, Avatar, List } from 'antd'
 import notify from './notification';
 import { apiClient } from '../api/clients'
 import { Link } from 'react-router-dom';
+import { fetchGroupSuggestions } from '../api/apiServer';
 
 
 class Groups extends Component {
     state = {
         data: [],
+        loading: true
     };
     joinGroup = (item) => {
         apiClient.get('/repos/skellock/apisauce/commits').then(res => {
@@ -21,17 +23,17 @@ class Groups extends Component {
     componentDidMount() {
         this.getAllGroups();
     }
-    getAllGroups = () => {
-        apiClient.get('service/api/groups/userGroupSuggestions/1/5/0').then(res => {
-            const groupData = res.data;
-            this.setState({data:groupData});
-        });
+    getAllGroups = async () => {
+        const response = await fetchGroupSuggestions(1, 1, 5);
+        if (response.ok) {
+            this.setState({ loading: false, data: response.data });
+        }
     }
     render() {
         return (
             <div className="custom-card">
-                <Card title="Groups" bordered={false} extra={<Link>View all</Link>} actions={[
-                     <Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button>
+                <Card title="Groups" bordered={false} extra={<Link to="/commingsoon">View all</Link>} actions={[
+                    <Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button>
                 ]} >
                     <List
                         itemLayout="horizontal"
