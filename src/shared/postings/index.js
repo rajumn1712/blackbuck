@@ -5,7 +5,7 @@ import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
 import ShareAction from '../components/postings/Actions/ShareActions';
 import EmojiAction from '../components/postings/Actions/EmojiActions';
-import { getPosts } from '../api/postsApi';
+import { getPosts, saveActions } from '../api/postsApi';
 import FriendSuggestions from '../components/friendSuggestion';
 import ShareBox from '../../components/SavePostBox/sharebox';
 import Moment from 'react-moment';
@@ -32,8 +32,8 @@ class Postings extends Component {
          let element = e.target.scrollingElement
          if (element.scrollHeight - element.scrollTop === element.clientHeight) {
             let { page } = this.state;
-            page +=1;
-            this.setState({...this.state,page},()=>{
+            page += 1;
+            this.setState({ ...this.state, page }, () => {
                this.loadPosts();
             })
          }
@@ -43,7 +43,7 @@ class Postings extends Component {
    async loadPosts() {
       this.setState({ ...this.state, loading: true });
       const posts = await getPosts(this.props?.profile?.id, this.state.page, this.state.pageSize, this.props.postingsType);
-      let {allPosts} = this.state;
+      let { allPosts } = this.state;
       allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
          this.setState({ ...this.state, loading: false, allPosts })
@@ -64,9 +64,7 @@ class Postings extends Component {
    handleSubmit = () => {
 
    }
-   handleEmojiEvent = () => {
 
-   }
    handleChange = () => {
 
    }
@@ -130,13 +128,35 @@ class Postings extends Component {
 
       return imageObj ? (_result[type] ? _result[type]() : null) : null;
    }
+   handleActions = async (type, post) => {
+      type = type === "Whistles" ? "Whistiles" : type;
+      type = type === "Love" ? "Likes" : type;
+      const { id, ProfilePic, FirstName, email, LastName } = this.props.profile;
+      const saveObj = {
+         "UserId": id,
+         "Firstname": FirstName,
+         "Lastname": LastName,
+         "Image": ProfilePic,
+         "Email": email
+      }
+      const saveResponse = await saveActions(post.id, type, saveObj);
+      if (saveResponse.ok) {
+         let { allPosts } = this.state;
+         for (let i in allPosts) {
+            if (allPosts[i].id === post.id) {
+               allPosts[i][type.toLowerCase()] = allPosts[i][type.toLowerCase()] + 1;
+            }
+         }
+         this.setState({ ...this.state, allPosts })
+      }
+   }
    renderPost = (post) => {
 
       return <div className="post-card comment-show">
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
          }
-            actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
+            actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleActions(name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
@@ -147,7 +167,7 @@ class Postings extends Component {
                <Paragraph className="f-14 post-desc">{post.meassage}</Paragraph>
                <ul className="card-actions-count pl-0">
                   <li><span className="counter-icon loves"></span>{post.likes}<span> Loves</span></li>
-                  <li><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
+                  <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
                   <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
                </ul>
                <div className="post-tag">
@@ -183,7 +203,7 @@ class Postings extends Component {
       </div>
    }
 }
-const mapStateToProps = ({oidc})=>{
-   return {profile:oidc.profile}
+const mapStateToProps = ({ oidc }) => {
+   return { profile: oidc.profile }
 }
 export default connect(mapStateToProps)(Postings);
