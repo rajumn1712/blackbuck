@@ -85,7 +85,7 @@ class Postings extends Component {
             } else {
                return <div style={{ width: '100%', position: 'relative' }}>
                   <div class="images" onClick={this.showModal}>
-                     <div className={"image-box"}>
+                     <div className={"image-box single"}>
                         <img src={imageObj} />
                      </div>
                   </div>
@@ -116,7 +116,7 @@ class Postings extends Component {
          Gif: () => {
             return <div style={{ width: '100%', position: 'relative' }}>
                <div class="images" onClick={this.showModal}>
-                  <div className={"image-box"}>
+                  <div className={"image-box gif"}>
                      <img src={imageObj} />
                   </div>
                </div>
