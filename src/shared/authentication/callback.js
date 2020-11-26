@@ -6,8 +6,8 @@ import { profileSuccess } from "../../reducers/auth";
 import { fetchProfile } from "../api/apiServer";
 import { userManager } from "./auth";
 class CallbackPage extends React.Component {
-    handleSuccess = async () => {
-        const profileResponse = await fetchProfile("Prasanna@gmail.com");
+    handleSuccess = async (user) => {
+        const profileResponse = await fetchProfile(user.profile.email);
         if (profileResponse.ok) {
             this.props.updateProfile(profileResponse.data[0])
             this.props.history.push("/")
@@ -19,7 +19,7 @@ class CallbackPage extends React.Component {
         return (
             <CallbackComponent
                 userManager={userManager}
-                successCallback={() => this.handleSuccess()}
+                successCallback={(user) => this.handleSuccess(user)}
                 errorCallback={error => {
                     console.error(error);
                 }}

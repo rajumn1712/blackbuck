@@ -101,7 +101,7 @@ class HeaderComponent extends React.Component {
                 className="account-holder"
                 avatar={<Avatar src={this.props?.profile?.ProfilePic} />}
                 title={this.props.profile?.FirstName}
-                description={this.props?.profile?.email}
+                description={this.props?.profile?.Email}
             />
         </Menu.Item>
         <Menu.Divider />

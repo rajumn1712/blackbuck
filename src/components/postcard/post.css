@@ -99,46 +99,8 @@
 .anonymous-check .ant-checkbox{transform: scale(1.6)}
 .ant-checkbox-checked .ant-checkbox-inner{background: var(--primary); border-color: var(--primary);}
 .ant-checkbox-checked::after, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{border-color: var(--primary);}
-.images{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    position: relative;
-}
-.image-box{
-    width: 100%;
-    height: 200px;
-    font-size: 30px;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-}
-.image-box img {width: 100%;
-
-left: 0;
-top: 0;
-transform: scale(2.4);
-object-fit: cover;
-}
-.image2, .image3{
-    width: 100%;
-}
-.image-box.three{width: 50%;}
-.image-box.four{width: 33.333%;}
-.more-images{
-    position: absolute;
-    bottom: 2px;
-    right: 0;
-    background: rgba(0,0,0,0.8);
-    width: 33.333%;
-    height: 196px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 30px;
-}
+.images{width: 100%; display: flex; flex-wrap: wrap; align-items: flex-start; position: relative;}
+.image-box{width: 100%; height: 250px; font-size: 30px; color: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;}
+.image-box.gif, .image-box.single{height: auto;}
+.image-box img {width: 100%; left: 0; top: 0; object-fit: cover;}
+.image2, .image3{width: 100%;}
