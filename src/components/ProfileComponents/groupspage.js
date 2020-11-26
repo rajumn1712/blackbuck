@@ -14,6 +14,7 @@ class GroupsPage extends Component {
 
     state = {
         usergroups:{},
+        allGroups:[],
         loading:true,
         page: 1,
         pageSize: 5
@@ -23,8 +24,9 @@ class GroupsPage extends Component {
         this.setState({ ...this.state, loading: true })
         const groups = await getGroups(this.props?.profile?.Id, this.state.page, this.state.pageSize);
         if (groups.ok) {
+            const allgroups = groups.data;
             const grouped = _.groupBy(groups.data, group => group.type);
-           this.setState({ ...this.state, loading: false, usergroups: grouped })
+           this.setState({ ...this.state, loading: false, usergroups: grouped,allGroups:allgroups })
         }
      }
 
@@ -33,7 +35,7 @@ class GroupsPage extends Component {
         return <>
             {this.state.loading&&<Space size="middle"><Spin size="large"/></Space>}
             
-            {this.state.usergroups && <div className="group-page" >
+            {this.state.allGroups && <div className="group-page" >
                 {Object.keys(this.state.usergroups).map(usergroup=>{
                     return <Row gutter={24} className="mb-16">
                         { this.state.usergroups[usergroup].map((group,indx)=>{
@@ -68,7 +70,7 @@ class GroupsPage extends Component {
                 </Row>
                 })}
             </div>}
-            {!this.state.loading && (!this.state.usergroups || this.state.usergroups?.length == 0) && <Empty />}
+            {(!this.state.allGroups || this.state.allGroups?.length == 0) && <Empty />}
 
         </>
     }
