@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Avatar, Typography, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Popover, Tag, Empty, Space, Spin } from 'antd';
+import { Card, Avatar, Typography, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Popover, Tag, Empty, Space, Spin, message } from 'antd';
 import SideAction from '../components/postings/Actions/SideActions';
 import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
@@ -13,6 +13,7 @@ import AudioPlayer from "react-h5-audio-player";
 import 'react-h5-audio-player/lib/styles.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loader from '../../common/loader';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -131,13 +132,13 @@ class Postings extends Component {
    handleActions = async (type, post) => {
       type = type === "Whistles" ? "Whistiles" : type;
       type = type === "Love" ? "Likes" : type;
-      const { id, ProfilePic, FirstName, email, LastName } = this.props.profile;
+      const { Id, ProfilePic, FirstName, Email, LastName } = this.props.profile;
       const saveObj = {
-         "UserId": id,
+         "UserId": Id,
          "Firstname": FirstName,
          "Lastname": LastName,
          "Image": ProfilePic,
-         "Email": email
+         "Email": Email
       }
       const saveResponse = await saveActions(post.id, type, saveObj);
       if (saveResponse.ok) {
@@ -148,6 +149,8 @@ class Postings extends Component {
             }
          }
          this.setState({ ...this.state, allPosts })
+      }else{
+         message.error("Action failed")
       }
    }
    renderPost = (post) => {
@@ -199,7 +202,7 @@ class Postings extends Component {
          {this.props.friendsSuggestions && <FriendSuggestions />}
       
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
-         {this.state.loading && <Space size="large"><Spin size="large" /></Space>}
+         {this.state.loading &&<Loader/>}
          {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
       </div>
    }

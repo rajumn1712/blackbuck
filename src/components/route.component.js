@@ -17,7 +17,7 @@ const Router = () => {
             <Route path="/callback" component={Callback} />
             <Route path="/profile" component={Profile} />
             <Route path="/group" component={Group} />
-            <Route path="/commingsoon" component={CommingSoon}/>
+            <Route path="/commingsoon" component={CommingSoon} />
             <ProtectedRoute path="/post/:name" component={Post} />
             <ProtectedRoute path="" component={Home} />
         </Switch>

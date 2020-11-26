@@ -24,10 +24,10 @@ const authReducer = (state = initialState, action) => {
             processSilentRenew();
             break;
         case USER_LOG_OUT:
-            state = { ...state, user: null };
+            state = {user: null,profile:null };
             return state;
         case USER_EXPIRED:
-            state = { ...state, user: null };
+            state = { ...state, user: null,profile:null };
             return state;
         case GET_PROFILE_SUCCESS:
             state = { ...state, profile: action.payload };

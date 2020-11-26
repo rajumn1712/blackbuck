@@ -14,6 +14,9 @@ class Home extends Component {
     componentDidMount() {
     }
     render() {
+        if(!this.props.user||this.props.user.expired){
+            return null
+        }
         return (
             <div className="main">
                 <Row gutter={16}>
@@ -34,6 +37,6 @@ class Home extends Component {
     }
 }
 const mapStateToProps = ({ oidc }) => {
-    return { oidc }
+    return { user:oidc.user }
 }
 export default connect(mapStateToProps)(Home)
