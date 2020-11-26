@@ -5,7 +5,9 @@ import { userManager } from './auth';
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const state = store.getState();
     const { user } = state?.oidc;
+    window.scrollTo(0,0)
     useEffect(() => {
+        
         if (!user || user.expired) {
             userManager.signinRedirect();
         }

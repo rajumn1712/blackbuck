@@ -12,10 +12,10 @@ import Group from '../group'
 const Router = () => {
     return (
         <Switch>
-            <Route path="/about" component={About} />
+            <ProtectedRoute path="/about" component={About} />
             <Route path="/contact" component={Contact} />
             <Route path="/callback" component={Callback} />
-            <Route path="/profile" component={Profile} />
+            <ProtectedRoute path="/profile" component={Profile} />
             <Route path="/group" component={Group} />
             <Route path="/commingsoon" component={CommingSoon} />
             <ProtectedRoute path="/post/:name" component={Post} />

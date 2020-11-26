@@ -98,11 +98,11 @@ class ShareBox extends Component {
             "ImageUrl": null,
             "CreatedDate": null,
             "UserDetails": {
-                "UserId": 1,
+                "UserId": this.props.profile?.Id,
                 "Firstname": this.props.profile?.FirstName,
                 "Lastname": "",
                 "Image": this.props.profile?.ProfilePic,
-                "Email": this.props.user?.profile?.email
+                "Email":this.props.profile?.Email
             },
             "Tags": [],
             "Likes": [],

@@ -77,7 +77,7 @@ class Postings extends Component {
                   <div class="images" onClick={this.showModal}>
                      {imageObj.map((image, index) => {
                         return <div key={index} className={index === 0 ? "image-box" : 'image-box ' + imageObj.length}>
-                           <img src={image.Name} />
+                           <img src={image.Name||image} />
                         </div>
                      })}
                      {imageObj.length > 4 ? <span class="more-images">+2</span> : null}
