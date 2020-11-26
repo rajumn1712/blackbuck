@@ -85,7 +85,7 @@ class Hobbies extends Component {
             </Tag>
         );
         return (
-            <span key={index} style={{ display: 'inline-block' }}>
+            <span className="hobbies-tag" key={index} style={{ display: 'inline-block' }}>
                 {tagElem}
             </span>
         );
@@ -134,7 +134,7 @@ class Hobbies extends Component {
                         )}
                         {!inputVisible && (
                             <Tag onClick={this.showInput} className="site-tag-plus">
-                                <PlusOutlined /> # tag
+                                <PlusOutlined /> Enter Hobbies
                             </Tag>
                         )}
                     </div>
