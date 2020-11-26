@@ -12,10 +12,16 @@ const fetchGroupSuggestions = (userid, page, pageSize) => {
 const fetchProfile = (email) => {
     return apiClient.get(PROFILE_API + "getProfile/" + email)
 }
-const profileDetail = (userid)=>{
+const profileDetail = (userid) => {
     return apiClient.get(PROFILE_API + "getProfileDetail/" + userid)
 }
-const fetchUserFriends = (userid)=>{
+const fetchUserFriends = (userid) => {
     return apiClient.get(PROFILE_API + "getUserFriends/" + userid)
 }
-export { getFriendSuggestions, fetchGroupSuggestions,fetchProfile,profileDetail,fetchUserFriends }
+const sendFirendRequest = (user_id, object) => {
+    return apiClient.post(FRIENDS_API + `savefriendRequest/${user_id}`, object);
+}
+const acceptFrienRequest = (user_id, friend_id) => {
+    return apiClient.get(FRIENDS_API+`savefriendRequestAccept/${user_id}/${friend_id}`)
+}   
+export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends,sendFirendRequest,acceptFrienRequest }

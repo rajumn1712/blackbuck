@@ -248,13 +248,15 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .overlay {
     position: absolute; 
     bottom: 0; 
-    background: rgb(0, 0, 0);
+    background: var(--black);
     background: rgba(0, 0, 0, 0.5); /* Black see-through */
     color: #f1f1f1; 
     transition: .5s ease;
-    color: white;
+    color: var(--white);
     font-size: 22px;
     padding: 19px;
     text-align: center;
   }
 .img-container{position: relative;width: 100%;}
+.hobbies-tag .ant-tag{color: var(--black);font-size: 14px;}
+.hobbies-tag .ant-tag-close-icon{color: var(--black) !important; margin-left: 4px;font-size: 11px;}

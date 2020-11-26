@@ -156,7 +156,7 @@ class Profile extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
+                            <img className="center-focus" src={profileData.CoverPic||"https://via.placeholder.com/1200x400"} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
                             <Link to="#" className="editpost" >
                                 <span className="left-menu post-icon" />
