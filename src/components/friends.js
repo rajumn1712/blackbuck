@@ -3,8 +3,8 @@ import { Card, Avatar, List } from 'antd'
 import { store } from '../store'
 import '../index.css';
 import '../App.css';
-import connectStateProps from '../shared/stateConnect'
 import { fetchUserFriends } from '../shared/api/apiServer';
+import { connect } from 'react-redux';
 class Friends extends Component {
     componentDidMount() {
         fetchUserFriends(this.props?.profile?.Id)
@@ -63,4 +63,7 @@ class Friends extends Component {
         )
     }
 }
-export default connectStateProps(Friends);
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+ }
+export default connect(mapStateToProps)(Friends);

@@ -132,38 +132,38 @@ class About extends Component {
                                 </Col>
                                 <Col xs={12}>
                                     <Form.Item label="Plot No" className="custom-fields">
-                                        <Input value={address[0].BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange}/>
                                         <ErrorMessage name="BlockHouseNo" />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12}>
                                     <Form.Item label="Street Name" className="custom-fields">
-                                        <Input value={address[0].BuildingEstate} name="BuildingEstate" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.BuildingEstate} name="BuildingEstate" onChange={this.handleOnChange}/>
                                         <ErrorMessage name="BuildingEstate" />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12}>
                                     <Form.Item label="Address Line 1" className="custom-fields">
-                                        <Input value={address[0].UnitNo} name="UnitNo" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.UnitNo} name="UnitNo" onChange={this.handleOnChange}/>
                                         <ErrorMessage name="UnitNo" />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12}>
                                     <Form.Item label="City" className="custom-fields">
-                                        <Input value={address[0].City} name="City" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.City} name="City" onChange={this.handleOnChange}/>
                                         <ErrorMessage name="City" />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12}>
                                     <Form.Item label="State" className="custom-fields">
-                                        <Select defaultValue="Select Option" value={address[0].State} name="State" onChange={this.handleOnChange}>
+                                        <Select defaultValue="Select Option" value={address[0]?.State} name="State" onChange={this.handleOnChange}>
                                             <Option value="Select Option">Select State</Option>
                                         </Select>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12}>
                                     <Form.Item label="Country" className="custom-fields">
-                                        <Select id="select" value={address[0].Country} name="Country" onChange={this.handleOnChange.bind(this)}>
+                                        <Select id="select" value={address[0]?.Country} name="Country" onChange={this.handleOnChange.bind(this)}>
                                             <Option value="Select Option">Select Option</Option>
                                             <Option value="India">India</Option>
                                             <Option value="Singapore">Singapore</Option>
@@ -172,7 +172,7 @@ class About extends Component {
                                 </Col>
                                 <Col xs={12}>
                                     <Form.Item label="Pin Code" className="custom-fields">
-                                        <Input value={address[0].PostalCode} name="PostalCode" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.PostalCode} name="PostalCode" onChange={this.handleOnChange}/>
                                         <ErrorMessage name="PostalCode" />
                                     </Form.Item>
                                 </Col>

@@ -229,13 +229,13 @@ class Profile extends Component {
                                         <Tags />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <div ref={this.getOrCreateRef('AboutComp')}><About about={profileData} /></div>
-                                        <div ref={this.getOrCreateRef('InterestComp')}><Interests interests={profileData.Interests} /></div>
-                                        <div ref={this.getOrCreateRef('HobbyComp')}><Hobbies hobbies={profileData.Hobbies} /></div>
-                                        <div ref={this.getOrCreateRef('InternshipComp')}><Intership internships={profileData.Internships} /></div>
-                                        <div ref={this.getOrCreateRef('VideoComp')}><VideoProfile video={profileData.VideoAsProfile} /></div>
-                                        <div ref={this.getOrCreateRef('EducationComp')}><Education education={profileData.Education} /></div>
-                                        <div ref={this.getOrCreateRef('CourseComp')}><Courses courses={profileData.Courses} /></div>
+                                            <div ref={this.getOrCreateRef('AboutComp')}>{profileData && <About about={profileData} />}</div>
+                                        <div ref={this.getOrCreateRef('InterestComp')}>{profileData.Interests &&<Interests interests={profileData.Interests} />}</div>
+                                        <div ref={this.getOrCreateRef('HobbyComp')}>{profileData.Hobbies &&<Hobbies hobbies={profileData.Hobbies} />}</div>
+                                        <div ref={this.getOrCreateRef('InternshipComp')}>{profileData.Internships &&<Intership internships={profileData.Internships} />}</div>
+                                        <div ref={this.getOrCreateRef('VideoComp')}>{profileData.VideoAsProfile &&<VideoProfile video={profileData.VideoAsProfile} />}</div>
+                                        <div ref={this.getOrCreateRef('EducationComp')}>{profileData.Education &&<Education education={profileData.Education} />}</div>
+                                        <div ref={this.getOrCreateRef('CourseComp')}>{profileData.Courses &&<Courses courses={profileData.Courses} />}</div>
                                     </Col>
                                 </Row>
                             </TabPane>
