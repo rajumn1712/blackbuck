@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch, List, Form, Radio } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Input, Tooltip, Slider, List,Form  } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
 import Identity from '../components/identity';
 import Invite from '../components/invite';
@@ -9,25 +9,8 @@ import FriendSuggestions from '../components/FriendSuggestions';
 import PostCard from '../components/postcard/Post';
 import profilebanner from '../styles/images/banner.svg'
 import './groupstyle.css'
-import Title from 'antd/lib/typography/Title';
-import Paragraph from 'antd/lib/skeleton/Paragraph';
-import AvatarImage from '../styles/images/avatar.png';
 import PadLock from '../styles/images/padlock.svg'
 import { Link } from 'react-router-dom';
-import Courses from '../components/ProfileComponents/courses'
-import FriendsSuggestioncard from '../components/FriendsSuggestioncard';
-import FriendRequests from '../components/ProfileComponents/friendrequests';
-import Friends from '../components/friends';
-import Tags from '../components/tags';
-import Groups from '../shared/components/Groups';
-import Interests from '../components/ProfileComponents/interests';
-import Hobbies from '../components/ProfileComponents/hobbies';
-import About from '../components/ProfileComponents/about';
-import Intership from '../components/ProfileComponents/internships';
-import VideoProfile from '../components/ProfileComponents/videoprofile';
-import Education from '../components/ProfileComponents/education';
-import GroupsPage from '../components/ProfileComponents/groupspage';
-import FriendsRequestsCard from '../shared/components/friendsRequests'
 import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 const { Meta } = Card;

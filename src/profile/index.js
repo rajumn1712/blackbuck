@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 // import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider } from 'antd';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider, Image } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
 // import Identity from '../components/identity';
 import Invite from '../components/invite';
@@ -12,7 +12,7 @@ import { Link, withRouter } from 'react-router-dom';
 import Courses from '../components/ProfileComponents/courses'
 import FriendRequests from '../components/ProfileComponents/friendrequests';
 import Friends from '../components/friends';
-import Tags from '../components/tags';
+import Tags from '../components/ProfileComponents/tags';
 import Groups from '../shared/components/Groups';
 import Interests from '../components/ProfileComponents/interests';
 import Hobbies from '../components/ProfileComponents/hobbies';
@@ -24,6 +24,7 @@ import GroupsPage from '../components/ProfileComponents/groupspage';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
 import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
+import Postings from '../shared/postings';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -95,8 +96,7 @@ class Profile extends Component {
         navigations: navigations,
         profileData: {},
         disabled: false,
-        visible: false,
-        user: this.props.match.params.user
+        visible: false
     };
 
     handleDisabledChange = disabled => {
@@ -106,7 +106,8 @@ class Profile extends Component {
     componentDidMount() {
         apiClient.get('service/api/profile/getProfileDetail/1')
             .then(res => {
-                const profiledata = res.data[0];
+                const profiledata = res.data[0].User;
+                const navigations = res.data[0].ProfileItems;
                 this.setState({ profileData: profiledata });
             })
     }
@@ -156,7 +157,9 @@ class Profile extends Component {
                                 <Statistic title="Posts" value={profileData.Posts} />
                             </div>
                             <Card className="user-banner" >
-                                <Meta avatar={<div className="img-container"><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera overlay"><span className="icons camera" /> </a></div>}
+                                <Meta avatar={<div className="img-container"><Avatar src={profileData.ProfilePic} /> 
+                                <a onClick={this.showModal} className="img-camera overlay"><span className="icons camera" /> </a>
+                                </div>}
                                     title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
                                     description={profileData.Branch}
                                 />
@@ -164,7 +167,7 @@ class Profile extends Component {
                             <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                                 <div className="">
                                     <div className=" upload-preview">
-                                        {/* <Image src={profileData.ProfilePic} /> */}
+                                        <Image src={profileData.ProfilePic} />
                                         <a class="item-close">
                                             <Tooltip title="Remove">
                                                 <span className="close-icon"></span>
@@ -191,8 +194,7 @@ class Profile extends Component {
                                         <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <ShareBox />
-                                        <PostCard user={this.state.user}/>
+                                       <Postings postingsType="user" sharebox={true}/>
                                     </Col>
                                 </Row>
                             </TabPane>

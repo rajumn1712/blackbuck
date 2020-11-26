@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List, Divider, Row, Col, Modal, Form, Input, Select } from 'antd'
+import { Button, Card, Divider, Row, Col, Form, Input, Select } from 'antd'
 import { Link } from 'react-router-dom';
-import { userManager } from '../../shared/authentication/auth';
+// import { userManager } from '../../shared/authentication/auth';
 import { store } from '../../store'
-import User1 from '../../styles/images/avatar.png';
-import User2 from '../../styles/images/user.jpg';
-import User3 from '../../styles/images/user_image.jpg';
-import User4 from '../../styles/images/user-image.jpg';
-import { userLogout } from '../../reducers/auth';
+// import User1 from '../../styles/images/avatar.png';
+// import User2 from '../../styles/images/user.jpg';
+// import User3 from '../../styles/images/user_image.jpg';
+// import User4 from '../../styles/images/user-image.jpg';
+// import { userLogout } from '../../reducers/auth';
 import '../../index.css';
 import '../../App.css';
 import TextArea from 'antd/lib/input/TextArea';
@@ -91,7 +91,7 @@ class About extends Component {
                         <Row gutter={16}>
                             <Col xs={24}>
                                 <Form.Item label="About Me" className="custom-fields">
-                                    <TextArea autoSize={{ minRows: 2, maxRows: 6 }} />
+                                    <TextArea autoSize={{ minRows: 2, maxRows: 6 }} value={description} name={this.props.about.Aboutme}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={24}>
@@ -99,35 +99,35 @@ class About extends Component {
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Plot No" className="custom-fields">
-                                    <Input />
+                                    <Input value={address.BlockHouseNo} name={address.BlockHouseNo}/>
                                     <span style={{ color: 'red', textAlign: 'right' }}>is required</span>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Street Name" className="custom-fields">
-                                    <Input />
+                                    <Input value={address.BuildingEstate} name={address.BuildingEstate}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Address Line 1" className="custom-fields">
-                                    <Input />
+                                    <Input value={address.UnitNo} name={address.UnitNo}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
-                                <Form.Item label="Address Line 2" className="custom-fields">
-                                    <Input />
+                                <Form.Item label="City" className="custom-fields">
+                                    <Input value={address.City} name={address.City}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="State" className="custom-fields">
-                                    <Select defaultValue="Select Option">
+                                    <Select defaultValue="Select Option" value={address.State} name={address.State}>
                                         <Option value="Select Option">Select State</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Country" className="custom-fields">
-                                    <Select defaultValue="India">
+                                    <Select defaultValue="India" value={address.Country} name={address.Country}>
                                         <Option value="Select Option">Select Option</Option>
                                         <Option value="India">India</Option>
                                         <Option value="Singapore">Singapore</Option>
@@ -136,17 +136,17 @@ class About extends Component {
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Pin Code" className="custom-fields">
-                                    <Input />
+                                    <Input value={address.PostalCode} name={address.PostalCode}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Phone Number" className="custom-fields">
-                                    <Input />
+                                    <Input value={phone} name={this.props.about.PhoneNumber}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Email" className="custom-fields">
-                                    <Input />
+                                    <Input value={email} name={this.props.about.Email}/>
                                 </Form.Item>
                             </Col>
                         </Row>

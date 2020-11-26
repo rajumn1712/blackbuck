@@ -5,7 +5,6 @@ import { userManager } from './auth';
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const state = store.getState();
     const { user } = state?.oidc;
-    debugger
     return (
         <Route {...rest} render={
             (props) => !user || user.expired ? userManager.signinRedirect() : <Component {...rest} {...props} />

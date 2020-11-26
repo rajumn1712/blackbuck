@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Avatar, Comment, Form, Button, List } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import user from '../../../../styles/images/user.jpg';
+import { connect } from 'react-redux';
 
 
 const CommentList = ({ comments }) => (
@@ -9,8 +10,8 @@ const CommentList = ({ comments }) => (
         dataSource={comments}
         header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
         itemLayout="horizontal"
-        renderItem={item => <Comment {...item}>
-            {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
+        renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={item.CreatedDate} avatar={<Avatar src={item.Image}/>}> 
+            {/* {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
             {/* <Comment style={{ marginLeft: 10 }} className="reply-comment"
                 avatar={
                     <Avatar src={item.Image} />
@@ -18,7 +19,7 @@ const CommentList = ({ comments }) => (
                 content={
                     <Editor />
                 }
-            /> */}
+            /> */} 
         </Comment>
         }
     />
@@ -43,10 +44,10 @@ class Comments extends Component {
         const { comments, submitting, value, submitted, changed } = { ...this.props }
         return (
             <div className="post-comment px-16">
-                {comments.length > 0 && <CommentList comments={comments} />}
+               
                 <Comment
                     avatar={
-                        <Avatar src={user} />
+                        <Avatar src={this.props.profile?.ProfilePic} />
                     }
                     content={
                         <Editor
@@ -57,9 +58,14 @@ class Comments extends Component {
                         />
                     }
                 />
+                 {comments.length > 0 && <CommentList comments={comments} />}
             </div>
         )
     }
 }
 
-export default Comments;
+const mapStateToProps = ({oidc})=>{
+    const {user,profile} = oidc;
+    return {user,profile}
+}
+export default connect(mapStateToProps)(Comments);

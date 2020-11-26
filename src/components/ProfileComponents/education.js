@@ -24,13 +24,6 @@ const docs = [
 class Education extends Component {
     state = {
         education: this.props.education,
-        history: [
-            {
-                title: "St.Ann's intermediate junior college", yearFrom: '2010', yearTo: '2014', location: 'Hyderabad',
-                avatar: [<span className="icon education-icon mr-0"></span>],
-                file: 'Inter Marks memo.jpeg',
-            }
-        ],
         visible: false
     };
     showModal = () => {
@@ -76,9 +69,9 @@ class Education extends Component {
                                     avatar={<div className="about-icons">
                                         <span className="icon education-icon mr-0" />
                                     </div>}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.File}</span></div>}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.File ? item.File : 'No Files'}</span></div>}
                                 />
-                                <Link to="" className="f-12 list-link"><span className="icons edit" /></Link>
+                                <Link className="f-12 list-link"><span className="icons edit" /></Link>
                             </div>
                         )}
                     />
