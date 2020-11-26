@@ -13,7 +13,7 @@ class FriendSuggestions extends Component {
     addFriend = () => {
     }
     async componentDidMount() {
-        const response = await getFriendSuggestions(this.props?.profile?.id, 1, 5);
+        const response = await getFriendSuggestions(this.props?.profile?.Id, 1, 5);
         if (response.ok) {
             this.setState({ ...this.state, friends: response.data });
         }

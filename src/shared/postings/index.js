@@ -42,7 +42,7 @@ class Postings extends Component {
    }
    async loadPosts() {
       this.setState({ ...this.state, loading: true });
-      const posts = await getPosts(this.props?.profile?.id, this.state.page, this.state.pageSize, this.props.postingsType);
+      const posts = await getPosts(this.props?.profile?.Id, this.state.page, this.state.pageSize, this.props.postingsType);
       let { allPosts } = this.state;
       allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
@@ -197,8 +197,9 @@ class Postings extends Component {
       return <div onScroll={this.handleScroll}>
          {this.props.sharebox && <ShareBox />}
          {this.props.friendsSuggestions && <FriendSuggestions />}
-         {this.state.loading && <Space size="large"><Spin size="large" /></Space>}
+      
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
+         {this.state.loading && <Space size="large"><Spin size="large" /></Space>}
          {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
       </div>
    }

@@ -6,7 +6,7 @@ const getPosts = (userid, pageNo, pageSize, postingsType) => {
         "all": "getAllPosts",
         "user": "getUsersPosts"
     }
-    return apiClient.get(POSTS_END_POINT + `${method[postingsType]}/${userid || "1"}/${pageSize}/${pageNo * pageSize - pageSize}`);
+    return apiClient.get(POSTS_END_POINT + `${method[postingsType]}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`);
 }
 const savePost = (post) => {
     return apiClient.post(POSTS_END_POINT + "savePosts", post)
