@@ -1,6 +1,13 @@
 import React, { Component, createRef } from 'react';
-// import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Avatar, Input, Tooltip, Slider, List,Form } from 'antd';
+import { connect } from 'react-redux';
+import { Row, Col, Tabs, Card, Avatar, Input, Tooltip, Slider, List,Form  } from 'antd';
+import ShareBox from '../components/SavePostBox/sharebox';
+import Identity from '../components/identity';
+import Invite from '../components/invite';
+import Ads from '../components/ads';
+import FriendSuggestions from '../components/FriendSuggestions';
+import PostCard from '../components/postcard/Post';
+import profilebanner from '../styles/images/banner.svg'
 import './groupstyle.css'
 import PadLock from '../styles/images/padlock.svg'
 import { Link } from 'react-router-dom';
@@ -65,7 +72,16 @@ const navigations =
         }
     ]
 class Group extends Component {
-
+    state = {
+        value: 1,
+      };
+    
+      onChange = e => {
+        console.log('radio checked', e.target.value);
+        this.setState({
+          value: e.target.value,
+        });
+      };
     aboutRef = createRef(null);
 
     state = {
@@ -112,6 +128,12 @@ class Group extends Component {
 
     render() {
         const { navigations, profileData, disabled, visible } = this.state;
+        const radioStyle = {
+            display: 'block',
+            height: '30px',
+            lineHeight: '30px',
+        };
+        const { value } = this.state;
         return (
             profileData ? <div className="main">
                 <Row gutter={24}>
@@ -160,9 +182,15 @@ class Group extends Component {
                                             </Col>
                                             <Col xs={16}>
                                                 <Form.Item label="Location" className="custom-fields">
-                                                    <Input placeholder="Add a Location to your group"/>
+                                                    <Input placeholder="Add a Location to your group" />
                                                 </Form.Item>
                                             </Col>
+                                            {/* <Col xs={16}>
+                                            <Radio.Group  onChange={this.onChange} value={value}>
+                                                <Radio style={radioStyle} value={1}>Option A</Radio>
+                                                <Radio style={radioStyle} value={2}>Option B</Radio>
+                                            </Radio.Group>
+                                            </Col> */}
                                         </Row>
                                     </Form>
                                 </div>
@@ -180,13 +208,10 @@ class Group extends Component {
                                     <div>
                                         <Slider defaultValue={30} disabled={disabled} />
                                     </div>
-
                                 </div>
                             </CommonModal>
                         </div>
-
                     </Col>
-
                 </Row>
             </div> : null
         )

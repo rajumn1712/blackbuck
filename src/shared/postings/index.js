@@ -5,10 +5,13 @@ import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
 import ShareAction from '../components/postings/Actions/ShareActions';
 import EmojiAction from '../components/postings/Actions/EmojiActions';
-import { apiClient } from '../api/clients';
 import { getPosts } from '../api/postsApi';
 import FriendSuggestions from '../components/friendSuggestion';
 import ShareBox from '../../components/SavePostBox/sharebox';
+import Moment from 'react-moment';
+import AudioPlayer from "react-h5-audio-player";
+import 'react-h5-audio-player/lib/styles.css';
+import { Link } from 'react-router-dom';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -19,29 +22,39 @@ class Postings extends Component {
       value: "",
       submitting: false,
       loading: true,
-      commentselection: []
+      commentselection: [],
+      page: 1,
+      pageSize: 10
    }
-   async componentDidMount() {
-
-      this.setState({ ...this.state, loading: true });
-      window.onscroll = (e) => {
-         let element = e.target
+   componentDidMount() {
+      window.addEventListener('scroll', (e) => {
+         let element = e.target.scrollingElement
          if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-            alert("scroll reached end")
+            let { page } = this.state;
+            page +=1;
+            this.setState({...this.state,page},()=>{
+               this.loadPosts();
+            })
          }
-      }
-      const posts = await getPosts(1, 1, 10, this.props.postingsType);
+      })
+      this.loadPosts();
+   }
+   async loadPosts() {
+      this.setState({ ...this.state, loading: true });
+      const posts = await getPosts(1, this.state.page, this.state.pageSize, this.props.postingsType);
+      let {allPosts} = this.state;
+      allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
-         this.setState({ ...this.state, loading: false, allPosts: posts.data })
+         this.setState({ ...this.state, loading: false, allPosts })
       }
    }
-   titleAvatar = (user) => {
+   titleAvatar = (user, date) => {
       return <Meta
          avatar={
             <Avatar src={user.Image} />
          }
          title={user.Firstname}
-         description="24-10-2020 09:50 am"
+         description={<Moment fromNow>{date}</Moment>}
       />
    }
    handleEvent = () => {
@@ -73,7 +86,7 @@ class Postings extends Component {
             } else {
                return <div style={{ width: '100%', position: 'relative' }}>
                   <div class="images" onClick={this.showModal}>
-                     <div className={""}>
+                     <div className={"image-box"}>
                         <img src={imageObj} />
                      </div>
                   </div>
@@ -89,6 +102,26 @@ class Postings extends Component {
          },
          Document: () => {
             return null
+         },
+         Audio: () => {
+            return <div style={{ width: '100%', position: 'relative' }}>
+               <div class="audio" onClick={this.showModal}>
+                  <AudioPlayer
+                     src={imageObj}
+                     onPlay={e => console.log("onPlay")}
+                     layout="horizontal-reverse"
+                  />
+               </div>
+            </div>
+         },
+         Gif: () => {
+            return <div style={{ width: '100%', position: 'relative' }}>
+               <div class="images" onClick={this.showModal}>
+                  <div className={"image-box"}>
+                     <img src={imageObj} />
+                  </div>
+               </div>
+            </div>
          }
 
       }
@@ -99,7 +132,7 @@ class Postings extends Component {
    renderPost = (post) => {
 
       return <div className="post-card comment-show">
-         <Card title={this.titleAvatar(post.userdetails)} style={{ width: '100%' }} bordered={false} extra={
+         <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
          }
             actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
@@ -118,7 +151,7 @@ class Postings extends Component {
                </ul>
                <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <Tag key={index} className="f-14 px-16">{tag.tagname}</Tag>
+                     return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{tag.Name}</Link></Tag>
                   })}
                </div>
             </div>
