@@ -1,27 +1,40 @@
 import React, { Component } from 'react';
-import { Typography } from 'antd';
+import { message, Typography } from 'antd';
 import { apiClient } from '../api/clients';
 import notify from './notification';
-import { getFriendSuggestions } from '../api/apiServer';
-import {Link} from 'react-router-dom'
+import { getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
+import { Link } from 'react-router-dom'
 import connectStateProps from '../stateConnect';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     state = {
         friends: []
     }
-    addFriend = () => {
+    addFriend = async (friend) => {
+        const obj = {
+            "UserId": friend.UserId,
+            "Firstname": friend.Firstname,
+            "Lastname": friend.Lastname,
+            "Image": null,
+            "Email": friend.Email,
+            "Type": "request"
+        }
+        sendFirendRequest(this.props?.profile?.Id, obj).then(() => {
+            message.success("Request sent");
+            this.loadSuggestions();
+        })
     }
-    async componentDidMount() {
+    componentDidMount() {
+        this.loadSuggestions();
+    }
+    async loadSuggestions() {
         const response = await getFriendSuggestions(this.props?.profile?.Id, 1, 5);
         if (response.ok) {
             this.setState({ ...this.state, friends: response.data });
         }
     }
     removeSuggestion = () => {
-        apiClient.get('/repos/skellock/apisauce/commits').then(res => {
-            notify({ placement: 'topRight', message: 'Remove Suggestion', description: 'Suggestion removed successfully.' });
-        });
+
     }
     goToFriendsSuggestions = () => {
 
@@ -41,7 +54,7 @@ class FriendSuggestions extends Component {
                                 <Paragraph>{friend.Firstname}</Paragraph>
                                 <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                             </div>
-                            <a className="addfrnd-btn" onClick={() => this.addFriend()}>
+                            <a className="addfrnd-btn" onClick={() => this.addFriend(friend)}>
                                 <span className="post-icons addfriend-icon mr-0"></span>
                             </a>
                             {/* <a className="removefrnd-btn" onClick={() => this.removeSuggestion()}></a> */}
