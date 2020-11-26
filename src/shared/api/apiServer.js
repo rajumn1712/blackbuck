@@ -12,4 +12,7 @@ const fetchGroupSuggestions = (userid, page, pageSize) => {
 const fetchProfile = (email) => {
     return apiClient.get(PROFILE_API + "getProfile/" + email)
 }
-export { getFriendSuggestions, fetchGroupSuggestions,fetchProfile }
+const profileDetail = (userid)=>{
+    return apiClient.get(PROFILE_API + "getProfile/" + userid)
+}
+export { getFriendSuggestions, fetchGroupSuggestions,fetchProfile,profileDetail }
