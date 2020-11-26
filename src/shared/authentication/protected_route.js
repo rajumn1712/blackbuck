@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { store } from '../../store';
 import { userManager } from './auth';
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const state = store.getState();
     const { user } = state?.oidc;
+    useEffect(() => {
+        if (!user || user.expired) {
+            userManager.signinRedirect();
+        }
+    }, [])
     return (
         <Route {...rest} render={
-            (props) => !user || user.expired ? userManager.signinRedirect() : <Component {...rest} {...props} />
+            (props) => <Component {...rest} {...props} />
         } />
     )
 }

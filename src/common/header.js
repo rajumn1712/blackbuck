@@ -19,9 +19,8 @@ const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
 const logout = () => {
-    userLogout(); setTimeout(() => {
-        userManager.signoutRedirect()
-    }, 1000)
+    userLogout();
+    userManager.signoutRedirect()
 }
 const notifications = (
     <div className="notification-dropdown">
@@ -119,11 +118,10 @@ class HeaderComponent extends React.Component {
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="4">
-            <a  onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
+            <a onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
         </Menu.Item>
     </Menu >)
     render() {
-        const { user } = store.getState().oidc;
         const { visible } = this.state;
         return (
             <Header className="main-header">
@@ -263,7 +261,7 @@ class HeaderComponent extends React.Component {
     }
 }
 const mapStateToProps = ({ oidc }) => {
-    const {user,profile}=oidc;
+    const { user, profile } = oidc;
     return { profile, user }
 }
 export default connect(mapStateToProps)(HeaderComponent);
