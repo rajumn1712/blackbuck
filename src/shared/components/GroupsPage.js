@@ -6,7 +6,7 @@ import { getGroups } from '../api/usergroupsApi'
 const { Meta } = Card;
 class GroupsPage extends Component {
     componentDidMount() {
-        getGroups(this.props?.profile?.id, 5, 0)
+        getGroups(this.props?.profile?.Id, 5, 0)
             .then(res => {
                 const Groups = res.data;
                 this.setState({ Groups: Groups });
