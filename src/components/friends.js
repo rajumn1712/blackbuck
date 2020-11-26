@@ -12,9 +12,10 @@ import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
 import { apiClient } from '../shared/api/clients';
+import connectStateProps from '../shared/stateConnect'
 class Friends extends Component {
     componentDidMount() {
-        apiClient.get('service/api/profile/getUserFriends/1')
+        apiClient.get('service/api/profile/getUserFriends/' + this.props?.profile?.id)
             .then(res => {
                 const friendsInfo = res.data[0];
                 this.setState({ FriendsList: friendsInfo });
@@ -22,55 +23,6 @@ class Friends extends Component {
     }
     state = {
         FriendsList: [
-            // {
-            //     avatar: User1,
-            //     title: 'St Ann',
-            //     members: 6,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User2,
-            //     title: 'Mohan',
-            //     members: 2,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User1,
-            //     title: 'Jain',
-            //     members: 6,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User2,
-            //     title: 'Poul',
-            //     members: 2,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User1,
-            //     title: 'Jake',
-            //     members: 6,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User2,
-            //     title: 'Calvin',
-            //     members: 2,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User1,
-            //     title: 'Disee',
-            //     members: 6,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User2,
-            //     title: 'Cruise',
-            //     members: 2,
-            //     mutulFnds: [user, user, user, user]
-            // },
-
         ],
     }
     render() {
@@ -119,4 +71,4 @@ class Friends extends Component {
         )
     }
 }
-export default Friends;
+export default connectStateProps(Friends);

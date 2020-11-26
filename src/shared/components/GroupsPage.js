@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Card, Avatar, Col, Row, Typography } from 'antd'
 import { store } from '../../store'
-import { apiClient } from '../api/clients';
+import connectStateProps from '../stateConnect';
+import { getGroups } from '../api/usergroupsApi'
 const { Meta } = Card;
-const { Title } = Typography;
 class GroupsPage extends Component {
     componentDidMount() {
-        apiClient.get('service/api/groups/getUserGroups/4/5/0')
+        getGroups(this.props?.profile?.id, 5, 0)
             .then(res => {
                 const Groups = res.data;
                 this.setState({ Groups: Groups });
@@ -63,4 +63,4 @@ class GroupsPage extends Component {
         )
     }
 }
-export default GroupsPage;
+export default connectStateProps(GroupsPage);
