@@ -9,6 +9,8 @@ import { getPosts } from '../api/postsApi';
 import FriendSuggestions from '../components/friendSuggestion';
 import ShareBox from '../../components/SavePostBox/sharebox';
 import Moment from 'react-moment';
+import AudioPlayer from "react-h5-audio-player";
+import 'react-h5-audio-player/lib/styles.css';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -35,13 +37,13 @@ class Postings extends Component {
          this.setState({ ...this.state, loading: false, allPosts: posts.data })
       }
    }
-   titleAvatar = (user,date) => {
+   titleAvatar = (user, date) => {
       return <Meta
          avatar={
             <Avatar src={user.Image} />
          }
          title={user.Firstname}
-      description={<Moment fromNow>{date}</Moment>}
+         description={<Moment fromNow>{date}</Moment>}
       />
    }
    handleEvent = () => {
@@ -89,6 +91,26 @@ class Postings extends Component {
          },
          Document: () => {
             return null
+         },
+         Audio: () => {
+            return <div style={{ width: '100%', position: 'relative' }}>
+               <div class="audio" onClick={this.showModal}>
+                  <AudioPlayer
+                     src={imageObj}
+                     onPlay={e => console.log("onPlay")}
+                     layout="horizontal-reverse"
+                  />
+               </div>
+            </div>
+         },
+         Gif: () => {
+            return <div style={{ width: '100%', position: 'relative' }}>
+               <div class="images" onClick={this.showModal}>
+                  <div className={"image-box"}>
+                     <img src={imageObj} />
+                  </div>
+               </div>
+            </div>
          }
 
       }
@@ -99,7 +121,7 @@ class Postings extends Component {
    renderPost = (post) => {
 
       return <div className="post-card comment-show">
-         <Card title={this.titleAvatar(post.userdetails,post.date)} style={{ width: '100%' }} bordered={false} extra={
+         <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
          }
             actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
