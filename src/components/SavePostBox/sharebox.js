@@ -119,7 +119,7 @@ class ShareBox extends Component {
     }
     uploadProps = {
         name: 'file',
-        multiple: true,
+        multiple: false,
         action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
         onChange:(info)=> {
             const { status } = info.file;
@@ -135,6 +135,7 @@ class ShareBox extends Component {
         },
     };
     openpopup = (modal) => {
+        this.clearUploaddata();
         this.postObject = this.createObject();
         this.postObject.Type = modal==="Images"?"Image":modal;
         this.setState({ visible: true, modal: modal })
@@ -155,15 +156,20 @@ class ShareBox extends Component {
             });
         }
     };
-
-    handleCancel = e => {
+    clearUploaddata = ()=>{
         let { post } = this.state;
         post.IsAnonymous = false;
         post.Message = "";
         post.Title = "";
         this.setState({
-            visible: false,
+           ...this.state,
             post
+        });
+    }
+    handleCancel = e => {
+       this.clearUploaddata();
+        this.setState({
+            visible: false
         });
     };
 

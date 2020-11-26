@@ -11,6 +11,7 @@ import ShareBox from '../../components/SavePostBox/sharebox';
 import Moment from 'react-moment';
 import AudioPlayer from "react-h5-audio-player";
 import 'react-h5-audio-player/lib/styles.css';
+import { Link } from 'react-router-dom';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -140,7 +141,7 @@ class Postings extends Component {
                </ul>
                <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <Tag key={index} className="f-14 px-16">{tag.tagname}</Tag>
+                     return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{tag.Name}</Link></Tag>
                   })}
                </div>
             </div>
