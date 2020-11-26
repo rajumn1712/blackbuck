@@ -27,8 +27,6 @@ class Postings extends Component {
       pageSize: 10
    }
    componentDidMount() {
-
-     
       window.addEventListener('scroll', (e) => {
          let element = e.target.scrollingElement
          if (element.scrollHeight - element.scrollTop === element.clientHeight) {
