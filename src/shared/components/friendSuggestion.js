@@ -4,6 +4,7 @@ import { apiClient } from '../api/clients';
 import notify from './notification';
 import { getFriendSuggestions } from '../api/apiServer';
 import {Link} from 'react-router-dom'
+import connectStateProps from '../stateConnect';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     state = {
@@ -12,7 +13,7 @@ class FriendSuggestions extends Component {
     addFriend = () => {
     }
     async componentDidMount() {
-        const response = await getFriendSuggestions(1, 1, 5);
+        const response = await getFriendSuggestions(this.props?.profile?.id, 1, 5);
         if (response.ok) {
             this.setState({ ...this.state, friends: response.data });
         }
@@ -53,4 +54,4 @@ class FriendSuggestions extends Component {
         )
     }
 }
-export default FriendSuggestions;
+export default connectStateProps(FriendSuggestions);
