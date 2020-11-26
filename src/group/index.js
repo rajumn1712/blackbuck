@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch,List } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
 import Invite from '../components/invite';
@@ -89,7 +89,7 @@ class Group extends Component {
     componentDidMount() {
         apiClient.get('service/api/profile/getProfileDetail/1')
             .then(res => {
-                const profiledata = res.data[0];
+                const profiledata = res.data[0].User;
                 this.setState({ profileData: profiledata });
             })
     }
@@ -145,7 +145,7 @@ class Group extends Component {
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<div className="img-container"><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera overlay"><span className="icons camera" /> </a></div>}
+                                                avatar={<div><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
                                                 title={<a href="https://ant.design">{item.title}</a>}
                                                 description={<div><div className="f-12">Private Group</div><div className="f-12">Created on <span className="fw-400">31-10-2020</span></div></div>}
                                             />
