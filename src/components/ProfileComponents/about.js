@@ -184,7 +184,7 @@ class About extends Component {
                                 </Col>
                                 <Col xs={12}>
                                     <Form.Item label="Email" className="custom-fields">
-                                        <Input value={Email} name="Email" onChange={this.handleOnChange}/>
+                                        <Input value={Email} name="Email" onChange={this.handleOnChange} disabled/>
                                     </Form.Item>
                                 </Col>
                             </Row>
