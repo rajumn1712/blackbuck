@@ -51,7 +51,7 @@ class FriendSuggestions extends Component {
                         return <div className="friends-list">
                             <img src={friend.Image} width="100%" height="100%" />
                             <div className="friends-list--name">
-                                <Paragraph>{friend.Firstname}</Paragraph>
+                                <Paragraph>{friend.FirstName}</Paragraph>
                                 <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                             </div>
                             <a className="addfrnd-btn" onClick={() => this.addFriend(friend)}>
