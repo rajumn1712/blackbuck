@@ -1,39 +1,32 @@
 import React, { Component } from 'react';
 import { Card, Avatar, Menu } from 'antd'
 import { Link } from 'react-router-dom';
-import { apiClient } from '../shared/api/clients'
 import { profileSuccess } from '../reducers/auth';
 import { connect } from 'react-redux';
 const { Meta } = Card;
 const { SubMenu } = Menu;
 class Identity extends Component {
     state = {
-        homeInfo: {}
+       
     };
     componentDidMount() {
-        apiClient.get('service/api/profile/getProfile/1')
-            .then(res => {
-                const homeInfo = res.data[0];
-                this.props.upadateProfile(homeInfo);
-                this.setState({ homeInfo: homeInfo });
-            })
     }
     render() {
-        const { homeInfo } = this.state;
+        const { profile:homeInfo } = this.props;
         return (
             <div className="left-rail">
                 <Card className="profile-card"
                     actions={[
-                        <div className="profile-status">{homeInfo.Friends}<span>Friends</span></div>,
-                        <div className="profile-status">{homeInfo.Groups}<span>Groups</span></div>,
-                        <div className="profile-status">{homeInfo.Posts}<span>Post</span></div>,
+                        <div className="profile-status">{homeInfo?.Friends}<span>Friends</span></div>,
+                        <div className="profile-status">{homeInfo?.Groups}<span>Groups</span></div>,
+                        <div className="profile-status">{homeInfo?.Posts}<span>Post</span></div>,
                     ]}
                 >
                     <Meta
                         avatar={
-                            <Avatar src={homeInfo.ProfilePic} />
+                            <Avatar src={homeInfo?.ProfilePic} />
                         }
-                        title={<div>{homeInfo.FirstName}<span className="premium-icon"></span></div>}
+                        title={<div>{homeInfo?.FirstName}<span className="premium-icon"></span></div>}
                         description="Groups"
                     />
                 </Card>
@@ -48,8 +41,8 @@ class Identity extends Component {
         )
     }
 }
-const mapStateToProps = ({ user }) => {
-    return { user }
+const mapStateToProps = ({ oidc }) => {
+    return { user:oidc.user,profile:oidc.profile }
 }
 const mapDispatchToProps = dispatch => {
     return {

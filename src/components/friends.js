@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List } from 'antd'
-import { Link } from 'react-router-dom';
-import { userManager } from '../shared/authentication/auth';
+import { Card, Avatar, List } from 'antd'
 import { store } from '../store'
-import User1 from '../styles/images/avatar.png';
-import User2 from '../styles/images/user.jpg';
-import User3 from '../styles/images/user_image.jpg';
-import user from '../styles/images/user.jpg';
-import User4 from '../styles/images/user-image.jpg';
-import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
-import { apiClient } from '../shared/api/clients';
+import connectStateProps from '../shared/stateConnect'
+import { fetchUserFriends } from '../shared/api/apiServer';
 class Friends extends Component {
     componentDidMount() {
-        apiClient.get('service/api/profile/getUserFriends/1')
+        fetchUserFriends(this.props?.profile?.Id)
             .then(res => {
                 const friendsInfo = res.data[0];
                 this.setState({ FriendsList: friendsInfo });
@@ -22,55 +15,6 @@ class Friends extends Component {
     }
     state = {
         FriendsList: [
-            // {
-            //     avatar: User1,
-            //     title: 'St Ann',
-            //     members: 6,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User2,
-            //     title: 'Mohan',
-            //     members: 2,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User1,
-            //     title: 'Jain',
-            //     members: 6,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User2,
-            //     title: 'Poul',
-            //     members: 2,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User1,
-            //     title: 'Jake',
-            //     members: 6,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User2,
-            //     title: 'Calvin',
-            //     members: 2,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User1,
-            //     title: 'Disee',
-            //     members: 6,
-            //     mutulFnds: [user, user, user, user]
-            // },
-            // {
-            //     avatar: User2,
-            //     title: 'Cruise',
-            //     members: 2,
-            //     mutulFnds: [user, user, user, user]
-            // },
-
         ],
     }
     render() {
@@ -119,4 +63,4 @@ class Friends extends Component {
         )
     }
 }
-export default Friends;
+export default connectStateProps(Friends);

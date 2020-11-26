@@ -1,6 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Anchor, Input, Modal, Button, Image, Tooltip, Slider, Switch,List } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
 import Invite from '../components/invite';
 import Ads from '../components/ads';
@@ -12,8 +11,8 @@ import Courses from '../components/ProfileComponents/courses'
 import Groups from '../shared/components/Groups';
 import GroupAbout from '../shared/components/groupabout';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
-import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
+import { profileDetail } from '../shared/api/apiServer';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -88,7 +87,7 @@ class Group extends Component {
     };
 
     componentDidMount() {
-        apiClient.get('service/api/profile/getProfileDetail/1')
+        profileDetail(this.props?.profile?.id)
             .then(res => {
                 const profiledata = res.data[0].User;
                 this.setState({ profileData: profiledata });

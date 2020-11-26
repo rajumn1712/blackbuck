@@ -19,9 +19,8 @@ const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
 const logout = () => {
-    userLogout(); setTimeout(() => {
-        userManager.signoutRedirect()
-    }, 1000)
+    userLogout();
+    userManager.signoutRedirect()
 }
 const notifications = (
     <div className="notification-dropdown">
@@ -99,9 +98,9 @@ class HeaderComponent extends React.Component {
         <Menu.Item key="0">
             <Meta
                 className="account-holder"
-                avatar={<Avatar src={this.props.profile?.ProfilePic} />}
+                avatar={<Avatar src={this.props?.profile?.ProfilePic} />}
                 title={this.props.profile?.FirstName}
-                description={this.props.user?.profile.email}
+                description={this.props?.profile?.Email}
             />
         </Menu.Item>
         <Menu.Divider />
@@ -119,11 +118,10 @@ class HeaderComponent extends React.Component {
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="4">
-            <a  onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
+            <a onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
         </Menu.Item>
     </Menu >)
     render() {
-        const { user } = store.getState().oidc;
         const { visible } = this.state;
         return (
             <Header className="main-header">
@@ -161,7 +159,7 @@ class HeaderComponent extends React.Component {
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
-                                        <img src={this.props.profile?.ProfilePic} />
+                                        <img src={this.props?.profile?.ProfilePic} />
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>
@@ -263,7 +261,7 @@ class HeaderComponent extends React.Component {
     }
 }
 const mapStateToProps = ({ oidc }) => {
-    const {user,profile}=oidc;
+    const { user, profile } = oidc;
     return { profile, user }
 }
 export default connect(mapStateToProps)(HeaderComponent);
