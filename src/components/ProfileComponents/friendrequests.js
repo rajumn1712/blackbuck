@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, List } from 'antd'
+import { Card, Avatar, List, message } from 'antd'
 import { Link } from 'react-router-dom';
 // import { userManager } from '../shared/authentication/auth';
 import { store } from '../../store'
@@ -12,21 +12,35 @@ import User4 from '../../styles/images/user-image.jpg';
 import '../../index.css';
 import '../../App.css';
 import notify from '../../shared/components/notification';
+import { acceptFrienRequest, fetchFriendRequests } from '../../shared/api/apiServer';
+import connectStateProps from '../../shared/stateConnect';
 
 class FriendRequests extends Component {
 
     state = {
         friendRequests: []
     }
-
-    handleAccept = () => {
-        notify({ placement: 'bottom', message: 'Frien Request', description: 'Request sent successfully.' });
+    componentDidMount() {
+        this.loadRequests();
+    }
+    async loadRequests() {
+        const requests = await fetchFriendRequests(this.props.profile?.Id);
+        if (requests.ok) {
+            this.setState({ friendRequests: requests.data })
+        }
+    }
+    handleAccept = async (friend) => {
+        acceptFrienRequest(this.props.profile?.Id, friend.id, "accept").then(() => {
+            message.success("Action Success");
+            this.loadRequests();
+        })
     }
 
-    handleRemove = (index) => {
-        const requests = [...this.state.friendRequests];
-        requests.splice(index, 1);
-        this.setState({ friendRequests: requests });
+    handleRemove = (friend) => {
+        acceptFrienRequest(this.props.profile?.Id, friend.id, "decline").then(() => {
+            message.success("Action Success");
+            this.loadRequests();
+        })
     }
 
     render() {
@@ -42,8 +56,8 @@ class FriendRequests extends Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar className="request-image" src={item.avatar} />}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span></div>}
+                                    avatar={<Avatar className="request-image" src={item.image || "https://via.placeholder.com/150"} />}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.firstName}</span></div>}
                                     description={<div className="mt-8 d-flex align-items-center">
                                         <span className="list-request">
                                             <Avatar.Group
@@ -51,7 +65,7 @@ class FriendRequests extends Component {
                                                 size="large"
                                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                             >
-                                                {item.members.map((member, index) => {
+                                                {item?.members?.map((member, index) => {
                                                     return <Avatar src='' key={index} style={{ backgroundColor: (member.avatar ? '' : '#f56a00') }}>
                                                         {member.avatar ? null : member.initial}
                                                     </Avatar>
@@ -59,8 +73,8 @@ class FriendRequests extends Component {
                                             </Avatar.Group>
                                         </span> <span>Mutual Friends</span></div>}
                                 />
-                                <Link className="f-14 mr-16 list-link" onClick={this.handleAccept}>Accept</Link>
-                                <Link className="f-14 ml-16 list-remove" onClick={(index)=>this.handleRemove(index)}>Remove</Link>
+                                <Link className="f-14 mr-16 list-link" onClick={() => this.handleAccept(item)}>Accept</Link>
+                                <Link className="f-14 ml-16 list-remove" onClick={(index) => this.handleRemove(item)}>Remove</Link>
                             </List.Item>
                         )}
                     />
@@ -70,4 +84,4 @@ class FriendRequests extends Component {
         )
     }
 }
-export default FriendRequests;
+export default connectStateProps(FriendRequests);

@@ -9,7 +9,8 @@ class Friends extends Component {
     componentDidMount() {
         fetchUserFriends(this.props?.profile?.Id)
             .then(res => {
-                const friendsInfo = res.data[0];
+                debugger
+                const friendsInfo = res.data;
                 this.setState({ FriendsList: friendsInfo });
             })
     }
