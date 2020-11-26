@@ -12,29 +12,56 @@ import '../../index.css';
 import '../../App.css';
 import TextArea from 'antd/lib/input/TextArea';
 import CommonModal from './CommonModal';
+import { ErrorMessage, Field, Formik } from 'formik';
 const { Option } = Select;
 
 class About extends Component {
     state = {
-        phone: this.props.about.PhoneNumber,
-        email: this.props.about.Email,
-        description: this.props.about.Aboutme,
+        PhoneNumber: this.props.about.PhoneNumber,
+        Email: this.props.about.Email,
+        AboutMe: this.props.about.Aboutme,
         address: this.props.about.Address,
         visible: false
     };
+    initialValues = {
+        AboutMe: '',
+        PhoneNumber: '',
+        Email: ''
+
+    }
+    handleValidate = (value) => {
+        let errors = {};
+
+        if (!value.Email) {
+            errors.Email = "Required!";
+        } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.Email)) {
+            errors.Email = "Invalid email address!";
+        }
+        if (!value.AboutMe) {
+            errors.AboutMe = "Required";
+        }
+
+        return errors;
+    }
+    handleOnChange = (event) => {
+        const input = event.target;
+        const user = { ...this.state };
+        user[input.name] = input.value;
+        this.setState(user)
+
+
+    }
     showModal = () => {
         this.setState({
             visible: true,
         });
     };
     handleOk = e => {
-        console.log(e);
         this.setState({
             visible: false,
         });
     };
     handleCancel = e => {
-        console.log(e);
         this.setState({
             visible: false,
         });
@@ -42,7 +69,7 @@ class About extends Component {
     render() {
         const { user } = store.getState().oidc;
 
-        const { phone, email, description, address, visible } = this.state;
+        const { PhoneNumber, Email, AboutMe, address, visible } = this.state;
 
         return (
             <div className="custom-card">
@@ -50,7 +77,7 @@ class About extends Component {
                     <Button type="primary" >Download Profile as PDF</Button>
                 ]} >
                     <div>
-                        <p>{description}</p>
+                        <p>{AboutMe}</p>
                         <Divider className="text-left-line" orientation="left">Contact</Divider>
                         <Row gutter={16}>
                             <Col xs={24} sm={12}>
@@ -58,9 +85,9 @@ class About extends Component {
                                     <div className="about-icons">
                                         <span className="icons location" />
                                     </div>
-                                    {address.map((address,index)=>{
+                                    {address.map((address, index) => {
                                         return <p key={index}>
-                                            {Object.keys(address).map((k)=>{return address[k]}).join(",")}
+                                            {Object.keys(address).map((k) => { return address[k] }).join(",")}
                                         </p>
                                     })}
                                 </div>
@@ -70,7 +97,7 @@ class About extends Component {
                                     <div className="about-icons">
                                         <span className="icons phone" />
                                     </div>
-                                    <p>{phone}</p>
+                                    <p>{PhoneNumber}</p>
                                 </div>
                             </Col>
                             <Col xs={24} sm={12}>
@@ -78,79 +105,91 @@ class About extends Component {
                                     <div className="about-icons">
                                         <span className="icons email" />
                                     </div>
-                                    <p>{email}</p>
+                                    <p>{Email}</p>
                                 </div>
                             </Col>
                         </Row>
                     </div>
                 </Card>
                 <CommonModal visible={visible} title="About Me" cancel={this.handleCancel} saved={this.handleOk}>
-                    <Form
-                        layout="vertical"
+                    <Formik initialValues={this.initialValues}
+                        validate={(values) => this.handleValidate(values)}
+                        onSubmit={this.handleOk}
                     >
-                        <Row gutter={16}>
-                            <Col xs={24}>
-                                <Form.Item label="About Me" className="custom-fields">
-                                    <TextArea autoSize={{ minRows: 2, maxRows: 6 }} value={description} name={this.props.about.Aboutme}/>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24}>
-                                <h3>Contact</h3>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Plot No" className="custom-fields">
-                                    <Input value={address.BlockHouseNo} name={address.BlockHouseNo}/>
-                                    <span style={{ color: 'red', textAlign: 'right' }}>is required</span>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Street Name" className="custom-fields">
-                                    <Input value={address.BuildingEstate} name={address.BuildingEstate}/>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Address Line 1" className="custom-fields">
-                                    <Input value={address.UnitNo} name={address.UnitNo}/>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="City" className="custom-fields">
-                                    <Input value={address.City} name={address.City}/>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="State" className="custom-fields">
-                                    <Select defaultValue="Select Option" value={address.State} name={address.State}>
-                                        <Option value="Select Option">Select State</Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Country" className="custom-fields">
-                                    <Select defaultValue="India" value={address.Country} name={address.Country}>
-                                        <Option value="Select Option">Select Option</Option>
-                                        <Option value="India">India</Option>
-                                        <Option value="Singapore">Singapore</Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Pin Code" className="custom-fields">
-                                    <Input value={address.PostalCode} name={address.PostalCode}/>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Phone Number" className="custom-fields">
-                                    <Input value={phone} name={this.props.about.PhoneNumber}/>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Email" className="custom-fields">
-                                    <Input value={email} name={this.props.about.Email}/>
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    </Form>
+                        <Form
+                            layout="vertical"
+                        >
+                            <Row gutter={16}>
+                                <Col xs={24}>
+                                    <Form.Item label="About Me" className="custom-fields">
+                                        <TextArea autoSize={{ minRows: 2, maxRows: 6 }} value={AboutMe}
+                                            name="AboutMe" onChange={this.handleOnChange} />
+                                        <ErrorMessage name="AboutMe" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24}>
+                                    <h3>Contact</h3>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Plot No" className="custom-fields">
+                                        <Input value={address[0].BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange}/>
+                                        <ErrorMessage name="BlockHouseNo" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Street Name" className="custom-fields">
+                                        <Input value={address[0].BuildingEstate} name="BuildingEstate" onChange={this.handleOnChange}/>
+                                        <ErrorMessage name="BuildingEstate" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Address Line 1" className="custom-fields">
+                                        <Input value={address[0].UnitNo} name="UnitNo" onChange={this.handleOnChange}/>
+                                        <ErrorMessage name="UnitNo" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="City" className="custom-fields">
+                                        <Input value={address[0].City} name="City" onChange={this.handleOnChange}/>
+                                        <ErrorMessage name="City" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="State" className="custom-fields">
+                                        <Select defaultValue="Select Option" value={address[0].State} name="State" onChange={this.handleOnChange}>
+                                            <Option value="Select Option">Select State</Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Country" className="custom-fields">
+                                        <Select id="select" value={address[0].Country} name="Country" onChange={this.handleOnChange.bind(this)}>
+                                            <Option value="Select Option">Select Option</Option>
+                                            <Option value="India">India</Option>
+                                            <Option value="Singapore">Singapore</Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Pin Code" className="custom-fields">
+                                        <Input value={address[0].PostalCode} name="PostalCode" onChange={this.handleOnChange}/>
+                                        <ErrorMessage name="PostalCode" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Phone Number" className="custom-fields">
+                                        <Input value={PhoneNumber} name="PhoneNumber" onChange={this.handleOnChange}/>
+                                        <ErrorMessage name="PhoneNumber" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Email" className="custom-fields">
+                                        <Input value={Email} name="Email" onChange={this.handleOnChange}/>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </Formik>
                 </CommonModal>
             </div>
         )

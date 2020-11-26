@@ -1,14 +1,10 @@
 import React, { Component, createRef } from 'react';
-// import { connect } from 'react-redux';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider, Image } from 'antd';
-import ShareBox from '../components/SavePostBox/sharebox';
-// import Identity from '../components/identity';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider, Image, Upload, message } from 'antd';
 import Invite from '../components/invite';
 import Ads from '../components/ads';
-import PostCard from '../components/postcard/Post';
 import './profilestyle.css'
 import PremiumBadge from '../styles/images/premiumbadge.svg'
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Courses from '../components/ProfileComponents/courses'
 import FriendRequests from '../components/ProfileComponents/friendrequests';
 import Friends from '../components/friends';
@@ -25,6 +21,8 @@ import FriendsRequestsCard from '../shared/components/friendsRequests'
 import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import Postings from '../shared/postings';
+import { connect } from 'react-redux';
+import { profileDetail } from '../shared/api/apiServer';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -81,6 +79,23 @@ const navigations =
             "Id": "CourseComp"
         }
     ]
+    const props = {
+        name: 'file',
+        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        headers: {
+          authorization: 'authorization-text',
+        },
+        onChange(info) {
+          if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+          }
+          if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+          } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+          }
+        },
+      };
 class Profile extends Component {
 
     references = {};
@@ -104,7 +119,7 @@ class Profile extends Component {
     };
 
     componentDidMount() {
-        apiClient.get('service/api/profile/getProfileDetail/1')
+        profileDetail(this.props?.profile?.id)
             .then(res => {
                 const profiledata = res.data[0].User;
                 const navigations = res.data[0].ProfileItems;
@@ -157,8 +172,12 @@ class Profile extends Component {
                                 <Statistic title="Posts" value={profileData.Posts} />
                             </div>
                             <Card className="user-banner" >
-                                <Meta avatar={<div className="img-container"><Avatar src={profileData.ProfilePic} /> 
-                                <a onClick={this.showModal} className="img-camera overlay"><span className="icons camera" /> </a>
+                                <Meta avatar={<div className="img-container">
+                                <Upload {...props}>
+                                <Avatar src={profileData.ProfilePic} /> 
+                                <a className="img-camera overlay"><span className="icons camera" /> </a>
+                                </Upload>
+                                
                                 </div>}
                                     title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
                                     description={profileData.Branch}
@@ -257,4 +276,8 @@ class Profile extends Component {
     }
 }
 
-export default withRouter(Profile);
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+ }
+
+export default connect(mapStateToProps)(Profile);

@@ -1,18 +1,10 @@
 import React, { Component, createRef } from 'react';
-import { connect } from 'react-redux';
 import { Row, Col, Tabs, Card, Avatar, Input, Tooltip, Slider, List,Form  } from 'antd';
-import ShareBox from '../components/SavePostBox/sharebox';
-import Identity from '../components/identity';
-import Invite from '../components/invite';
-import Ads from '../components/ads';
-import FriendSuggestions from '../components/FriendSuggestions';
-import PostCard from '../components/postcard/Post';
-import profilebanner from '../styles/images/banner.svg'
 import './groupstyle.css'
 import PadLock from '../styles/images/padlock.svg'
 import { Link } from 'react-router-dom';
-import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
+import { profileDetail } from '../../shared/api/apiServer';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -96,9 +88,9 @@ class Group extends Component {
     };
 
     componentDidMount() {
-        apiClient.get('service/api/profile/getProfileDetail/1')
+        profileDetail(this.props?.profile?.id)
             .then(res => {
-                const profiledata = res.data[0];
+                const profiledata = res.data[0].User;
                 this.setState({ profileData: profiledata });
             })
     }
