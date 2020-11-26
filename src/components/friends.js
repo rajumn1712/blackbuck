@@ -15,7 +15,7 @@ import { apiClient } from '../shared/api/clients';
 import connectStateProps from '../shared/stateConnect'
 class Friends extends Component {
     componentDidMount() {
-        apiClient.get('service/api/profile/getUserFriends/' + this.props?.profile?.id)
+        apiClient.get('service/api/profile/getUserFriends/' + this.props?.profile?.Id)
             .then(res => {
                 const friendsInfo = res.data[0];
                 this.setState({ FriendsList: friendsInfo });
