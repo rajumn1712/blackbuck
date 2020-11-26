@@ -13,7 +13,7 @@ const fetchProfile = (email) => {
     return apiClient.get(PROFILE_API + "getProfile/" + email)
 }
 const profileDetail = (userid)=>{
-    return apiClient.get(PROFILE_API + "getProfile/" + userid)
+    return apiClient.get(PROFILE_API + "getProfileDetail/" + userid)
 }
 const fetchUserFriends = (userid)=>{
     return apiClient.get(PROFILE_API + "getUserFriends/" + userid)
