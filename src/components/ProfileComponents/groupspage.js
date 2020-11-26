@@ -13,6 +13,7 @@ import _ from 'lodash';
 // import { userLogout } from '../../reducers/auth';
 import '../../index.css';
 import '../../App.css';
+import { connect } from 'react-redux';
 const { Meta } = Card;
 const data = [
     { avatar: Computer }
@@ -22,7 +23,9 @@ class GroupsPage extends Component {
 
     state = {
         usergroups:{},
-        loading:true
+        loading:true,
+        page: 1,
+        pageSize: 10
     }
 
     async componentDidMount() {
@@ -158,4 +161,8 @@ class GroupsPage extends Component {
         </>
     }
 }
-export default GroupsPage;
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+ }
+
+export default connect(mapStateToProps)(GroupsPage);

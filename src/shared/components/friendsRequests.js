@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List } from 'antd'
+import { Card, Avatar, List } from 'antd'
 import { store } from '../../store'
-import { apiClient } from '../api/clients'
 import '../../index.css';
 import '../../App.css';
+import { fetchUserFriends } from '../api/apiServer';
 class FriendsRequestsCard extends Component {
     state = {
         lstFriendsRequests: [
         ]
     }
     componentDidMount() {
-        apiClient.get('service/api/profile/getUserFriends/1')
+        fetchUserFriends(this.props?.profile?.Id)
             .then(res => {
                 const lstFriendsRequests = [];
                 this.setState({ lstFriendsRequests: lstFriendsRequests });

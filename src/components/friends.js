@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Layout, Card, Avatar, List } from 'antd'
-import { Link } from 'react-router-dom';
-import { userManager } from '../shared/authentication/auth';
+import { Card, Avatar, List } from 'antd'
 import { store } from '../store'
-import User1 from '../styles/images/avatar.png';
-import User2 from '../styles/images/user.jpg';
-import User3 from '../styles/images/user_image.jpg';
-import user from '../styles/images/user.jpg';
-import User4 from '../styles/images/user-image.jpg';
-import { userLogout } from '../reducers/auth';
 import '../index.css';
 import '../App.css';
-import { apiClient } from '../shared/api/clients';
 import connectStateProps from '../shared/stateConnect'
+import { fetchUserFriends } from '../shared/api/apiServer';
 class Friends extends Component {
     componentDidMount() {
-        apiClient.get('service/api/profile/getUserFriends/' + this.props?.profile?.Id)
+        fetchUserFriends(this.props?.profile?.Id)
             .then(res => {
                 const friendsInfo = res.data[0];
                 this.setState({ FriendsList: friendsInfo });

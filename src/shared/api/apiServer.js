@@ -15,4 +15,7 @@ const fetchProfile = (email) => {
 const profileDetail = (userid)=>{
     return apiClient.get(PROFILE_API + "getProfile/" + userid)
 }
-export { getFriendSuggestions, fetchGroupSuggestions,fetchProfile,profileDetail }
+const fetchUserFriends = (userid)=>{
+    return apiClient.get(PROFILE_API + "getUserFriends/" + userid)
+}
+export { getFriendSuggestions, fetchGroupSuggestions,fetchProfile,profileDetail,fetchUserFriends }
