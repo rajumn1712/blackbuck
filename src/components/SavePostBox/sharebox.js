@@ -102,14 +102,14 @@ class ShareBox extends Component {
                 "Firstname": this.props.profile?.FirstName,
                 "Lastname": "",
                 "Image": this.props.profile?.ProfilePic,
-                "Email":this.props.profile?.Email
+                "Email": this.props.profile?.Email
             },
             "Tags": [],
             "Likes": [],
             "Claps": [],
             "whistiles": [],
             "Comments": [],
-            "Loves":[],
+            "Loves": [],
             "Group": {
                 "GroupId": null,
                 "GroupName": null,
@@ -122,13 +122,14 @@ class ShareBox extends Component {
         name: 'file',
         multiple: false,
         action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
-        onChange:(info)=> {
+        onChange: (info) => {
             const { status } = info.file;
             if (status !== 'uploading') {
-                console.log(info.file, info.fileList);
-                this.postObject.ImageUrl = info.file.response
+
             }
             if (status === 'done') {
+                this.postObject.ImageUrl = info.file.response;
+                this.setState({ ...this.state, uploadSources: [info.file.response] })
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
@@ -138,7 +139,7 @@ class ShareBox extends Component {
     openpopup = (modal) => {
         this.clearUploaddata();
         this.postObject = this.createObject();
-        this.postObject.Type = modal==="Images"?"Image":modal;
+        this.postObject.Type = modal === "Images" ? "Image" : modal;
         this.setState({ visible: true, modal: modal })
     }
     popupOk = async e => {
@@ -157,19 +158,19 @@ class ShareBox extends Component {
             });
         }
     };
-    clearUploaddata = ()=>{
+    clearUploaddata = () => {
         let { post } = this.state;
         post.IsAnonymous = false;
         post.Message = "";
         post.Title = "";
         this.setState({
-           ...this.state,
+            ...this.state,
             post,
-            errors:null
+            errors: null
         });
     }
     handleCancel = e => {
-       this.clearUploaddata();
+        this.clearUploaddata();
         this.setState({
             visible: false
         });
@@ -231,17 +232,17 @@ class ShareBox extends Component {
 
             </div>,
             Images: <div>
-                <Dragger className="upload" {...this.uploadProps}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })}>
                     <span className="sharebox-icons photo-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Image</p>
                 </Dragger>
                 {this.state.uploadSources?.map((image, indx) => <div key={indx} className="mb-16 upload-preview">
                     <Image src={image} />
-                    <a class="item-close">
+                    {/* <a class="item-close">
                         <Tooltip title="Remove">
                             <span className="close-icon"></span>
                         </Tooltip>
-                    </a>
+                    </a> */}
                 </div>)}
             </div>,
             Video: <div>
@@ -337,7 +338,6 @@ class ShareBox extends Component {
         if (!post.Title || !post.Message) {
             errors.validate = false
             if (!post.Title) { errors.Title = "Title is required" }
-            if (!post.Message) { errors.Message = "Caption is required" } 
         }
         this.setState({ ...this.state, errors })
         return errors;
@@ -389,12 +389,12 @@ class ShareBox extends Component {
                         </Button></div>
                     ]}>
                     <div className="upload-image">
-                {this.state.errors&&!this.state.errors.validate&&<Alert showIcon type="error" message={<>{Object.keys(this.state.errors).map((value,indx)=><>{this.state.errors[value]&&<><span>{this.state.errors[value]}</span><br/></>}</>)}</>}/>}
+                        {this.state.errors && !this.state.errors.validate && <Alert showIcon type="error" message={<>{Object.keys(this.state.errors).map((value, indx) => <>{this.state.errors[value] && <><span>{this.state.errors[value]}</span><br /></>}</>)}</>} />}
                         {this.renderUploadType(modal)}
                         <form >
                             <div className="title-img">
                                 <TextArea
-                                    placeholder={`Title of the ${modal} here`}
+                                    placeholder={`Title of the post here`}
                                     autoSize={{ minRows: 1, maxRows: 6 }}
                                     style={{ resize: 'none' }}
                                     name="Title"
@@ -405,7 +405,7 @@ class ShareBox extends Component {
                             </div>
                             <div className="caption-image">
                                 <TextArea
-                                    placeholder={`Add a caption of ${modal}, if you like`}
+                                    placeholder={`Add a caption of post, if you like`}
                                     autoSize={{ minRows: 1, maxRows: 6 }}
                                     style={{ resize: 'none' }}
                                     name="Message"

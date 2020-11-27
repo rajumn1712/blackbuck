@@ -5,7 +5,7 @@ import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
 import ShareAction from '../components/postings/Actions/ShareActions';
 import EmojiAction from '../components/postings/Actions/EmojiActions';
-import { getPosts, saveActions } from '../api/postsApi';
+import { deletePost, getPosts, saveActions } from '../api/postsApi';
 import FriendSuggestions from '../components/friendSuggestion';
 import ShareBox from '../../components/SavePostBox/sharebox';
 import Moment from 'react-moment';
@@ -59,8 +59,18 @@ class Postings extends Component {
          description={<Moment fromNow>{date}</Moment>}
       />
    }
-   handleEvent = () => {
-
+   handleEvent = (e, name, post) => {
+      switch (name) {
+         case "Delete":
+            this.deletePost(post);
+            break;
+         case "Edit":
+            break;
+         case "Save Post":
+            break;
+         default:
+            break;
+      }
    }
    handleSubmit = () => {
 
@@ -77,7 +87,7 @@ class Postings extends Component {
                   <div class="images" onClick={this.showModal}>
                      {imageObj.map((image, index) => {
                         return <div key={index} className={index === 0 ? "image-box" : 'image-box ' + imageObj.length}>
-                           <img src={image.Name||image} />
+                           <img src={image.Name || image} />
                         </div>
                      })}
                      {imageObj.length > 4 ? <span class="more-images">+2</span> : null}
@@ -149,15 +159,35 @@ class Postings extends Component {
             }
          }
          this.setState({ ...this.state, allPosts })
-      }else{
+      } else {
          message.error("Action failed")
       }
    }
+   fetchCardActions = (user) => {
+      const ownerActions = [
+         { action: 'Edit', icons: 'post-icons edit-icon' },
+         { action: 'Delete', icons: 'post-icons delete-icon' }
+      ]
+      const actionsList = [
+         { action: 'Save Post', icons: 'post-icons savepost-icon' },
+         { action: 'Turn on Notifications', icons: 'post-icons notify-icon' },
+      ]
+      const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
+      return result;
+   }
+   deletePost = (post) => {
+      deletePost(post.id).then(() => {
+         let { allPosts } = this.state;
+         allPosts = allPosts.filter(item => item.id !== post.id);
+         this.setState({ ...this.state, allPosts });
+         message.success("Post deleted");
+      })
+   }
    renderPost = (post) => {
 
-      return <div className={`post-card ${this.state.commentselection.indexOf(post.id) > -1?'comment-show':""}`}>
+      return <div className={`post-card ${this.state.commentselection.indexOf(post.id) > -1 ? 'comment-show' : ""}`}>
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
-            <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
+            <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
             actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleActions(name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
@@ -200,9 +230,9 @@ class Postings extends Component {
       return <div onScroll={this.handleScroll}>
          {this.props.sharebox && <ShareBox />}
          {this.props.friendsSuggestions && <FriendSuggestions />}
-      
+
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
-         {this.state.loading &&<Loader/>}
+         {this.state.loading && <Loader />}
          {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
       </div>
    }
