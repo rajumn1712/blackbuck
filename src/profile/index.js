@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider, Image, Upload, message } from 'antd';
-import Invite from '../shared/components/Invite';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider, Image, Upload, message, Button } from 'antd';
+import Invite from '../components/invite';
 import Ads from '../components/ads';
 import './profilestyle.css'
 import PremiumBadge from '../styles/images/premiumbadge.svg'
@@ -22,30 +22,34 @@ import CommonModal from '../components/ProfileComponents/CommonModal';
 import Postings from '../shared/postings';
 import { connect } from 'react-redux';
 import { profileDetail } from '../shared/api/apiServer';
+import ImgCrop from 'antd-img-crop';
 const { Meta } = Card;
+const { Dragger } = Upload;
+
 
 const { TabPane } = Tabs;
 
-    const props = {
-        name: 'file',
-        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-        headers: {
-          authorization: 'authorization-text',
-        },
-        onChange(info) {
-          if (info.file.status !== 'uploading') {
+const props = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+        authorization: 'authorization-text',
+    },
+    onChange(info) {
+        if (info.file.status !== 'uploading') {
             console.log(info.file, info.fileList);
-          }
-          if (info.file.status === 'done') {
+        }
+        if (info.file.status === 'done') {
             message.success(`${info.file.name} file uploaded successfully`);
-          } else if (info.file.status === 'error') {
+        } else if (info.file.status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
-          }
-        },
-      };
+        }
+    },
+};
 class Profile extends Component {
 
     references = {};
+    postObject = {};
 
     getOrCreateRef(id) {
         if (!this.references.hasOwnProperty(id)) {
@@ -60,6 +64,22 @@ class Profile extends Component {
         disabled: false,
         visible: false
     };
+    uploadProps = {
+        name: 'file',
+        action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
+        onChange: ({ file, fileList }) => {
+            const { status } = file;
+            if (status !== 'uploading') {
+                this.postObject.ProfilePic = file.response
+            }
+            if (status === 'done') {
+                message.success(`${file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${file.name} file upload failed.`);
+            }
+        },
+        customRequest: () => { this.handleImageOk() }
+    };
 
     handleDisabledChange = disabled => {
         this.setState({ disabled });
@@ -70,7 +90,7 @@ class Profile extends Component {
             .then(res => {
                 const profiledata = res.data[0].User;
                 const navigations = res.data[0].ProfileItems;
-                this.setState({ profileData: profiledata,navigations:navigations });
+                this.setState({ profileData: profiledata, navigations: navigations });
             })
     }
     showModal = () => {
@@ -78,6 +98,9 @@ class Profile extends Component {
             visible: true,
         });
     };
+    handleImageOk = () => {
+        console.log('dfhgdhgfhsdgfhsdfds');
+    }
     handleOk = e => {
         this.setState({
             visible: false,
@@ -103,11 +126,16 @@ class Profile extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <img className="center-focus" src={profileData.CoverPic||"https://via.placeholder.com/1200x400"} alt="profilecover" />
+                            <img className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <Link to="#" className="editpost" >
-                                <span className="left-menu post-icon" />
-                            </Link>
+                            <ImgCrop shape="rect">
+                                <Upload>
+                                    <a className="editpost" >
+                                        <span className="left-menu post-icon" />
+                                    </a>
+                                </Upload>
+                            </ImgCrop>
+
 
                         </div>
                         <div className="user-statistic">
@@ -118,11 +146,12 @@ class Profile extends Component {
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="img-container">
-                                {/* <Upload {...props}> */}
-                                <Avatar src={profileData.ProfilePic} /> 
-                                <a className="img-camera overlay"><span className="icons camera" /> </a>
-                                {/* </Upload> */}
-                                
+                                    <ImgCrop shape="rect">
+                                        <Upload {...this.uploadProps}>
+                                            <Avatar src="https://via.placeholder.com/1200x400" />
+                                            <a className="img-camera overlay"><span className="icons camera" /> </a>
+                                        </Upload>
+                                    </ImgCrop>
                                 </div>}
                                     title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
                                     description={profileData.Branch}
@@ -130,7 +159,7 @@ class Profile extends Component {
                             </Card>
                             <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                                 <div className="">
-                                    <div className=" upload-preview">
+                                    <div className="upload-preview">
                                         <Image src={profileData.ProfilePic} />
                                         <a class="item-close">
                                             <Tooltip title="Remove">
@@ -158,7 +187,7 @@ class Profile extends Component {
                                         <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                       <Postings postingsType="user" sharebox={true}/>
+                                        <Postings postingsType="user" sharebox={true} />
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -176,13 +205,13 @@ class Profile extends Component {
                                         <Tags />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                            <div ref={this.getOrCreateRef('AboutComp')}>{profileData && <About about={profileData} />}</div>
-                                        <div ref={this.getOrCreateRef('InterestComp')}>{profileData.Interests &&<Interests interests={profileData.Interests} />}</div>
-                                        <div ref={this.getOrCreateRef('HobbyComp')}>{profileData.Hobbies &&<Hobbies hobbies={profileData.Hobbies} />}</div>
-                                        <div ref={this.getOrCreateRef('InternshipComp')}>{profileData.Internships &&<Intership internships={profileData.Internships} />}</div>
-                                        <div ref={this.getOrCreateRef('VideoComp')}>{profileData.VideoAsProfile &&<VideoProfile video={profileData.VideoAsProfile} />}</div>
-                                        <div ref={this.getOrCreateRef('EducationComp')}>{profileData.Education &&<Education education={profileData.Education} />}</div>
-                                        <div ref={this.getOrCreateRef('CourseComp')}>{profileData.Courses &&<Courses courses={profileData.Courses} />}</div>
+                                        <div ref={this.getOrCreateRef('AboutComp')}>{profileData && <About about={profileData} />}</div>
+                                        <div ref={this.getOrCreateRef('InterestComp')}>{profileData.Interests && <Interests interests={profileData.Interests} />}</div>
+                                        <div ref={this.getOrCreateRef('HobbyComp')}>{profileData.Hobbies && <Hobbies hobbies={profileData.Hobbies} />}</div>
+                                        <div ref={this.getOrCreateRef('InternshipComp')}>{profileData.Internships && <Intership internships={profileData.Internships} />}</div>
+                                        <div ref={this.getOrCreateRef('VideoComp')}>{profileData.VideoAsProfile && <VideoProfile video={profileData.VideoAsProfile} />}</div>
+                                        <div ref={this.getOrCreateRef('EducationComp')}>{profileData.Education && <Education education={profileData.Education} />}</div>
+                                        <div ref={this.getOrCreateRef('CourseComp')}>{profileData.Courses && <Courses courses={profileData.Courses} />}</div>
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -211,9 +240,9 @@ class Profile extends Component {
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
                         {/* <FriendsSuggestioncard /> */}
-                        <Groups />
+                        <FriendsRequestsCard />
                         <Ads />
-                       
+                        <Groups />
                     </Col>
                 </Row>
             </div> : null
@@ -223,6 +252,6 @@ class Profile extends Component {
 
 const mapStateToProps = ({ oidc }) => {
     return { profile: oidc.profile }
- }
+}
 
 export default connect(mapStateToProps)(Profile);
