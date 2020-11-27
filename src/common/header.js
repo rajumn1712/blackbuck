@@ -13,7 +13,6 @@ import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
 import { connect } from 'react-redux';
-
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
@@ -81,46 +80,63 @@ const notifications = (
 
 class HeaderComponent extends React.Component {
 
-    state = { visible: false, placement: 'left' };
+    state = {
+        visible: false, placement: 'left', FirstName: "",
+        Email: "",
+        ProfilePic: ""
+    };
 
     showDrawer = () => {
         this.setState({
             visible: true,
         });
     };
-
+    componentDidMount() {
+        const storeState = store.getState();
+        const { FirstName, LastName, Email, ProfilePic } = storeState.oidc?.profile || {};
+        this.setState({ FirstName, LastName, Email, ProfilePic });
+        store.subscribe(() => {
+            const state = store.getState();
+            if (state.oidc?.profile) {
+                const { FirstName, LastName, Email, ProfilePic } = state.oidc.profile;
+                this.setState({ FirstName, LastName, Email, ProfilePic })
+            }
+        })
+    }
     onClose = () => {
         this.setState({
             visible: false,
         });
     };
-    menu = (<Menu className="profile-dropdown">
-        <Menu.Item key="0">
-            <Meta
-                className="account-holder"
-                avatar={<Avatar src={this.props?.profile?.ProfilePic} />}
-                title={this.props.profile?.FirstName}
-                description={this.props?.profile?.Email}
-            />
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="1">
-            <Link to="/commingsoon"><span className="icons swap-icon" /><span className="pl-16">Switch Accounts</span>
-            </Link>
-        </Menu.Item>
-        <Menu.Item key="2">
-            <Link to="/commingsoon"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
-            </Link>
-        </Menu.Item>
-        <Menu.Item key="3">
-            <Link to="/commingsoon"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
-            </Link>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="4">
-            <a onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
-        </Menu.Item>
-    </Menu >)
+    menu = () => {
+        return (<Menu className="profile-dropdown">
+            <Menu.Item key="0">
+                <Meta
+                    className="account-holder"
+                    avatar={<Avatar src={this.state?.ProfilePic} />}
+                    title={this.state?.FirstName}
+                    description={this.state?.Email}
+                />
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key="1">
+                <Link to="/commingsoon"><span className="icons swap-icon" /><span className="pl-16">Switch Accounts</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="2">
+                <Link to="/commingsoon"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="3">
+                <Link to="/commingsoon"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key="4">
+                <a onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
+            </Menu.Item>
+        </Menu >)
+    }
     render() {
         const { visible } = this.state;
         return (
@@ -196,7 +212,7 @@ class HeaderComponent extends React.Component {
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
-                                        <img src={avatar} />
+                                        <img src={this.state.ProfilePic} />
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>

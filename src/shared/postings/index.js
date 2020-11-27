@@ -232,7 +232,7 @@ class Postings extends Component {
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
-         {this.state.loading && <Loader />}
+         {this.state.loading && <Loader className="loader-top-middle" />}
          {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
       </div>
    }
