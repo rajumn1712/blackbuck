@@ -86,5 +86,5 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .coming-soon h1{font-size: 30px;margin-bottom: 0;margin-right: 10px;}
 .coming-soon img{width: 50px; }
 }
-.ant-empty {background-color: var(--white);border-radius: 10px;margin: 0 !important;padding: 16px;}
+.ant-empty {background-color: var(--white);border-radius: 10px;margin: 0 auto !important;padding: 16px;}
 .ant-empty-description{color: rgba(0, 0, 0, 0.25) !important;}

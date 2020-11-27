@@ -54,7 +54,7 @@ class GroupsPage extends Component {
                         </Col>
                     })
                     }
-                    {Groups.length==0 && <Empty ></Empty>
+                    {Groups.length==0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 
                     }
 
