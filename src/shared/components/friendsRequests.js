@@ -4,6 +4,7 @@ import { store } from '../../store'
 import '../../index.css';
 import '../../App.css';
 import { fetchUserFriends } from '../api/apiServer';
+import { connect } from 'react-redux';
 class FriendsRequestsCard extends Component {
     state = {
         lstFriendsRequests: [
@@ -42,4 +43,7 @@ class FriendsRequestsCard extends Component {
         )
     }
 }
-export default FriendsRequestsCard;
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+ }
+export default connect(mapStateToProps)(FriendsRequestsCard);

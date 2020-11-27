@@ -3,13 +3,14 @@ import { Card, Avatar, List } from 'antd'
 import { store } from '../store'
 import '../index.css';
 import '../App.css';
-import connectStateProps from '../shared/stateConnect'
 import { fetchUserFriends } from '../shared/api/apiServer';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 class Friends extends Component {
     componentDidMount() {
         fetchUserFriends(this.props?.profile?.Id)
             .then(res => {
-                const friendsInfo = res.data[0];
+                const friendsInfo = res.data;
                 this.setState({ FriendsList: friendsInfo });
             })
     }
@@ -34,8 +35,8 @@ class Friends extends Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar className="request-image" src={item.Image} />}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.Firstname}</span></div>}
+                                    avatar={<Link to="/commingsoon"><Avatar className="request-image" src={item.Image} /></Link>}
+                                    title={<div className="d-flex align-items-center"><a href="/commingsoon"><span className="overflow-text post-title">{item.Firstname}</span></a></div>}
                                     description={
                                         <div className="mt-8 d-flex align-items-center">
                                             <span className="list-request">
@@ -44,13 +45,13 @@ class Friends extends Component {
                                                     size="large"
                                                     maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                                 >
-                                                    {item.mutulFnds?.map((friend, index) => {
-                                                        return <Avatar key={index} src={friend} />
+                                                    {item.MutualFriends?.map((friend, index) => {
+                                                        return <Avatar key={index} src={friend.Image}/>
                                                     })
                                                     }
                                                 </Avatar.Group>
                                             </span>
-                                            {item.mutulFnds && <span>Mutual Friends</span>}
+                                            {item.MutualFriends.length > 0 && <span>Mutual Friends</span>}
                                         </div>
                                     }
                                 />
@@ -63,4 +64,7 @@ class Friends extends Component {
         )
     }
 }
-export default connectStateProps(Friends);
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+ }
+export default connect(mapStateToProps)(Friends);

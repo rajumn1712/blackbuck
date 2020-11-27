@@ -87,7 +87,7 @@ class Group extends Component {
     };
 
     componentDidMount() {
-        profileDetail(this.props?.profile?.id)
+        profileDetail(this.props?.profile?.Id)
             .then(res => {
                 const profiledata = res.data[0].User;
                 this.setState({ profileData: profiledata });

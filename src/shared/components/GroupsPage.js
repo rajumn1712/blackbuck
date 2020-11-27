@@ -27,11 +27,11 @@ class GroupsPage extends Component {
                         return <Col className="" span={12}>
                             <Card key={index}
                                 cover={<img src={group.image} />} actions={[
-                                    <a className="list-link f-14">Leave Group</a>
+                                    <a className="list-link f-14" href="/commingsoon">Leave Group</a>
                                 ]}
                             >
-                                <Meta title="CSC Champs"
-                                    description={<div>{group.name}
+                                <Meta title={<a href="/commingsoon" className="post-title">{group.name}</a>}
+                                    description={<div>
                                         <div className="d-flex align-items-center">
                                             <span className="list-request">
                                                 <Avatar.Group

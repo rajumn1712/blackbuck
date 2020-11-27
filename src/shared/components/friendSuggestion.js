@@ -12,14 +12,14 @@ class FriendSuggestions extends Component {
     }
     addFriend = async (friend) => {
         const obj = {
-            "UserId": friend.UserId,
-            "Firstname": friend.Firstname,
-            "Lastname": friend.Lastname,
+            "UserId": this.props?.profile?.Id,
+            "Firstname": this.props?.profile?.FirstName,
+            "Lastname": this.props?.profile?.LastName,
             "Image": null,
-            "Email": friend.Email,
+            "Email": this.props?.profile?.Email,
             "Type": "request"
         }
-        sendFirendRequest(this.props?.profile?.Id, obj).then(() => {
+        sendFirendRequest(friend.UserId, obj).then(() => {
             message.success("Request sent");
             this.loadSuggestions();
         })
@@ -51,7 +51,7 @@ class FriendSuggestions extends Component {
                         return <div className="friends-list">
                             <img src={friend.Image} width="100%" height="100%" />
                             <div className="friends-list--name">
-                                <Paragraph>{friend.Firstname}</Paragraph>
+                                <Paragraph>{friend.FirstName}</Paragraph>
                                 <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                             </div>
                             <a className="addfrnd-btn" onClick={() => this.addFriend(friend)}>

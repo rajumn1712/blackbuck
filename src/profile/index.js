@@ -18,7 +18,6 @@ import VideoProfile from '../components/ProfileComponents/videoprofile';
 import Education from '../components/ProfileComponents/education';
 import GroupsPage from '../components/ProfileComponents/groupspage';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
-import { apiClient } from '../shared/api/clients';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import Postings from '../shared/postings';
 import { connect } from 'react-redux';
@@ -27,58 +26,6 @@ const { Meta } = Card;
 
 const { TabPane } = Tabs;
 
-const navigations =
-    [
-        {
-            "Heading": "About Me",
-            "Url": "/aboutme",
-            "CssSprite": "left-menu profile-icon",
-            "IsActive": false,
-            "Id": "AboutComp"
-        },
-        {
-            "Heading": "Interests",
-            "Url": "/interests",
-            "CssSprite": "left-menu interest",
-            "IsActive": false,
-            "Id": "InterestComp"
-        },
-        {
-            "Heading": "Hobbies",
-            "Url": "/hobbies",
-            "CssSprite": "left-menu hobbies",
-            "IsActive": false,
-            "Id": "HobbyComp"
-        },
-        {
-            "Heading": "Internships",
-            "Url": "/internships",
-            "CssSprite": "left-menu intenship",
-            "IsActive": false,
-            "Id": "InternshipComp"
-        },
-        {
-            "Heading": "Video as Profile",
-            "Url": "/videoprofile",
-            "CssSprite": "left-menu play",
-            "IsActive": false,
-            "Id": "VideoComp"
-        },
-        {
-            "Heading": "Education",
-            "Url": "/education",
-            "CssSprite": "left-menu education",
-            "IsActive": false,
-            "Id": "EducationComp"
-        },
-        {
-            "Heading": "Courses",
-            "Url": "/courses",
-            "CssSprite": "left-menu courses",
-            "IsActive": false,
-            "Id": "CourseComp"
-        }
-    ]
     const props = {
         name: 'file',
         action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -108,7 +55,7 @@ class Profile extends Component {
     }
 
     state = {
-        navigations: navigations,
+        navigations: [],
         profileData: {},
         disabled: false,
         visible: false
@@ -123,7 +70,7 @@ class Profile extends Component {
             .then(res => {
                 const profiledata = res.data[0].User;
                 const navigations = res.data[0].ProfileItems;
-                this.setState({ profileData: profiledata });
+                this.setState({ profileData: profiledata,navigations:navigations });
             })
     }
     showModal = () => {
@@ -171,10 +118,10 @@ class Profile extends Component {
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="img-container">
-                                <Upload {...props}>
+                                {/* <Upload {...props}> */}
                                 <Avatar src={profileData.ProfilePic} /> 
                                 <a className="img-camera overlay"><span className="icons camera" /> </a>
-                                </Upload>
+                                {/* </Upload> */}
                                 
                                 </div>}
                                     title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
@@ -200,7 +147,7 @@ class Profile extends Component {
                             <div className="right-statistic">
                                 <Statistic title="Shares" className="afterline" value={profileData.Shares} />
                                 <Statistic title="Interests" className="afterline" value={profileData.Interest} />
-                                <Statistic title="Internships" value={3} />
+                                <Statistic title="Internships" value={profileData.Internships?.length} />
                             </div>
                         </div>
                         <Tabs defaultActiveKey="1" centered className="profile-tabs">
@@ -229,13 +176,13 @@ class Profile extends Component {
                                         <Tags />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <div ref={this.getOrCreateRef('AboutComp')}><About about={profileData} /></div>
-                                        <div ref={this.getOrCreateRef('InterestComp')}><Interests interests={profileData.Interests} /></div>
-                                        <div ref={this.getOrCreateRef('HobbyComp')}><Hobbies hobbies={profileData.Hobbies} /></div>
-                                        <div ref={this.getOrCreateRef('InternshipComp')}><Intership internships={profileData.Internships} /></div>
-                                        <div ref={this.getOrCreateRef('VideoComp')}><VideoProfile video={profileData.VideoAsProfile} /></div>
-                                        <div ref={this.getOrCreateRef('EducationComp')}><Education education={profileData.Education} /></div>
-                                        <div ref={this.getOrCreateRef('CourseComp')}><Courses courses={profileData.Courses} /></div>
+                                            <div ref={this.getOrCreateRef('AboutComp')}>{profileData && <About about={profileData} />}</div>
+                                        <div ref={this.getOrCreateRef('InterestComp')}>{profileData.Interests &&<Interests interests={profileData.Interests} />}</div>
+                                        <div ref={this.getOrCreateRef('HobbyComp')}>{profileData.Hobbies &&<Hobbies hobbies={profileData.Hobbies} />}</div>
+                                        <div ref={this.getOrCreateRef('InternshipComp')}>{profileData.Internships &&<Intership internships={profileData.Internships} />}</div>
+                                        <div ref={this.getOrCreateRef('VideoComp')}>{profileData.VideoAsProfile &&<VideoProfile video={profileData.VideoAsProfile} />}</div>
+                                        <div ref={this.getOrCreateRef('EducationComp')}>{profileData.Education &&<Education education={profileData.Education} />}</div>
+                                        <div ref={this.getOrCreateRef('CourseComp')}>{profileData.Courses &&<Courses courses={profileData.Courses} />}</div>
                                     </Col>
                                 </Row>
                             </TabPane>
