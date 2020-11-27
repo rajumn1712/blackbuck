@@ -9,7 +9,7 @@ class Ads extends Component {
 
     render() {
         return (
-        <div className="ads mb-24">
+        <div className="ads mb-16">
             <Title className="f-16" level={4}>Ads</Title> 
             <img style={{cursor:"pointer"}} className="mb-8 image-shadow" src={PreviewRed} onClick={()=>window.open("https://theblackbucks.com/","_blank")}  /> 
             <img style={{cursor:"pointer"}} className="image-shadow" src={AdsImage} onClick={()=>window.open("https://theblackbucks.com/","_blank")} />

@@ -12,7 +12,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .avatar-menu{padding: 0 !important;}
 .avatar-menu img{width: 45px; height: 45px; border-radius: 12px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1)}
 .notification-count .ant-badge-count{background: var(--primary) !important; border-radius: 0px !important; min-width: 16px; height: 16px; padding: 0 3px; font-size: 10px; line-height: 16px; top: -5px; right: -6px;}
-.share-box{border-radius: 10px; text-align: center; margin-bottom: 24px; box-shadow: var(--boxshadow); background: var(--white);}
+.share-box{border-radius: 10px; text-align: center; margin-bottom: 16px; box-shadow: var(--boxshadow); background: var(--white);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--primary); border-radius: 10px; color: var(--white); border: 0;}
 .profile-card .ant-avatar{width: 90px; height: 90px; padding-right: 0; border-radius: 24px;}
@@ -46,7 +46,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .icon-animation{color:var(--primary) !important;font-size: 14px; font-weight: 500;}
 .share-box li{position: relative;}
 .share-box ul li:last-child:after{content: none;}
-.left-rail, .invite-card .ant-card{background: var(--white); border-radius: 10px !important; box-shadow: var(--boxshadow); margin-bottom: 24px;}
+.left-rail, .invite-card .ant-card{background: var(--white); border-radius: 10px !important; box-shadow: var(--boxshadow); margin-bottom: 16px;}
 .left-menu{width: 20px; height: 20px; vertical-align: initial; display: inline-block; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
 .left-menu.profile-icon{background-position: -5px -200px;}
 .left-menu.friends-icon{background-position: -35px -200px;}
@@ -153,7 +153,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .card-box .ant-list-item-meta-title{font-size: 16px;line-height: 24px;}
 @media(min-width: 768px) {.share-box ul li::after{content: ""; position: absolute; width: 1px; height: 45px; background-color: #D6E6FB; top: 4px; right: -22px; left: auto;}}
 .invite-btn{display: flex;align-items: center;justify-content: center;}
-.custom-card .ant-card{ border-radius: 10px; box-shadow: var(--boxshadow); margin-bottom: 24px;}
+.custom-card .ant-card{ border-radius: 10px; box-shadow: var(--boxshadow); margin-bottom: 16px;}
 .custom-card .ant-card-body{ padding: 16px;}
 .custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);}
 .custom-card .ant-list-item:first-child{padding-top: 0 !important;}
