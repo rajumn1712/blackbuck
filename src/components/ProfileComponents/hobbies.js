@@ -96,7 +96,7 @@ class Hobbies extends Component {
         const { user } = store.getState().oidc;
         return (
             <div className="custom-card">
-                <Card title="Hobbies" className="hobbies-card" bordered={false} extra={<Link onClick={this.showModal}><span className="icons edit" /></Link>} >
+                <Card title="Hobbies" className="hobbies-card" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons edit" /></Link> : null} >
                     {hobbies.map((hobby,index)=>{
                         return <Tag className="tags" key={index}>{hobby.Name}</Tag>
                     })}

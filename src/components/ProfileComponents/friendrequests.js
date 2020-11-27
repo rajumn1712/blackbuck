@@ -89,8 +89,8 @@ class FriendRequests extends Component {
                                             </Avatar.Group>
                                         </span> <span>Mutual Friends</span></div>}
                                 />
-                                <Link className="f-14 mr-16 list-link" onClick={() => this.handleAccept(item)}>Accept</Link>
-                                <Link className="f-14 ml-16 list-remove" onClick={(index) => this.handleRemove(item)}>Remove</Link>
+                                {!this.props.IsHideAction ? <Link className="f-14 mr-16 list-link" onClick={() => this.handleAccept(item)}>Accept</Link> : null}
+                                {!this.props.IsHideAction ? <Link className="f-14 ml-16 list-remove" onClick={(index) => this.handleRemove(item)}>Remove</Link> : null}
                             </List.Item>
                         )}
                     />

@@ -45,7 +45,7 @@ class Intership extends Component {
         const data = [...this.state.internships];
         return (
             <div className="custom-card">
-                <Card title="Internships" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>}  >
+                <Card title="Internships" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons add" /></Link>: null}  >
                     <List
                         grid={{
                             gutter: 8,

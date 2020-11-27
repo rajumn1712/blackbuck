@@ -73,8 +73,8 @@ class About extends Component {
 
         return (
             <div className="custom-card">
-                <Card title="About Me" bordered={false} extra={<Link onClick={this.showModal}><span className="icons edit" /></Link>} actions={[
-                    <Button type="primary" >Download Profile as PDF</Button>
+                <Card title="About Me" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons edit" /></Link> : null} actions={[
+                    !this.props.IsHideAction ? <Button type="primary">Download Profile as PDF</Button> : null
                 ]} >
                     <div>
                         <p>{AboutMe}</p>

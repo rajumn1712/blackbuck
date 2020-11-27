@@ -75,7 +75,7 @@ class Interests extends Component {
 
         return (
             <div className="custom-card">
-                <Card title="Interests" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>}  >
+                <Card title="Interests" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons add" /></Link> : null}  >
                     <List
                         grid={{ gutter: 16, column: 2 }}
                         itemLayout="horizontal"

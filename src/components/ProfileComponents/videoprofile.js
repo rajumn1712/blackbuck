@@ -42,7 +42,7 @@ class VideoProfile extends Component {
         return (
             <div className="custom-card">
                 <Card title="Video as Profile" className="pfvideocard" cover={<video width="100%" controls src={videourl}>
-                </video>} bordered={false} extra={<Link onClick={this.showModal}><span className="icons edit" /></Link>} >
+                </video>} bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons edit" /></Link> : null} >
                 </Card>
                 <CommonModal visible={visible} title="Internships" cancel={this.handleCancel} saved={this.handleOk}>
                     <div className="">

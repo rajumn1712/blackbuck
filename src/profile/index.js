@@ -21,7 +21,7 @@ import FriendsRequestsCard from '../shared/components/friendsRequests'
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import Postings from '../shared/postings';
 import { connect } from 'react-redux';
-import { profileDetail } from '../shared/api/apiServer';
+import { profileDetail, saveProfileImage } from '../shared/api/apiServer';
 import ImgCrop from 'antd-img-crop';
 const { Meta } = Card;
 const { Dragger } = Upload;
@@ -29,27 +29,11 @@ const { Dragger } = Upload;
 
 const { TabPane } = Tabs;
 
-const props = {
-    name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-        authorization: 'authorization-text',
-    },
-    onChange(info) {
-        if (info.file.status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (info.file.status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
+
 class Profile extends Component {
 
     references = {};
-    postObject = {};
+    imageObject = {};
 
     getOrCreateRef(id) {
         if (!this.references.hasOwnProperty(id)) {
@@ -62,15 +46,19 @@ class Profile extends Component {
         navigations: [],
         profileData: {},
         disabled: false,
-        visible: false
+        visible: false,
+        isProfilePic:false
     };
     uploadProps = {
         name: 'file',
+        multiple: false,
+        fileList: [],
         action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
-        onChange: ({ file, fileList }) => {
+        onChange: ({ file }) => {
             const { status } = file;
             if (status !== 'uploading') {
-                this.postObject.ProfilePic = file.response
+                this.imageObject.ImageUrl = file.response[0];
+                this.handleImageOk();
             }
             if (status === 'done') {
                 message.success(`${file.name} file uploaded successfully.`);
@@ -78,7 +66,16 @@ class Profile extends Component {
                 message.error(`${file.name} file upload failed.`);
             }
         },
-        customRequest: () => { this.handleImageOk() }
+        beforeUpload: (file) => {
+            const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                if (!isJPG) {
+                    message.error('You can only upload JPG or PNG file!');
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        
     };
 
     handleDisabledChange = disabled => {
@@ -86,6 +83,14 @@ class Profile extends Component {
     };
 
     componentDidMount() {
+        this.profielDetails();
+    }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    profielDetails = ()=>{
         profileDetail(this.props?.profile?.Id)
             .then(res => {
                 const profiledata = res.data[0].User;
@@ -93,13 +98,17 @@ class Profile extends Component {
                 this.setState({ profileData: profiledata, navigations: navigations });
             })
     }
-    showModal = () => {
-        this.setState({
-            visible: true,
-        });
-    };
     handleImageOk = () => {
-        console.log('dfhgdhgfhsdgfhsdfds');
+       const imageType = this.state.isProfilePic ? 'ProfilePic' : 'CoverPic';
+       if(this.state.isProfilePic){
+           this.props.profile.ProfilePic = this.imageObject.ImageUrl;
+       }
+        saveProfileImage(this.props?.profile?.Id,imageType,this.imageObject)
+        .then(res=>{
+            this.imageObject = {};
+            this.profielDetails();
+        })
+
     }
     handleOk = e => {
         this.setState({
@@ -128,9 +137,9 @@ class Profile extends Component {
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <ImgCrop shape="rect">
-                                <Upload>
-                                    <a className="editpost" >
+                            <ImgCrop shape="rect" aspect>
+                                <Upload {...this.uploadProps}>
+                                    <a className="editpost" onClick={()=>this.setState({isProfilePic:false})}>
                                         <span className="left-menu post-icon" />
                                     </a>
                                 </Upload>
@@ -148,8 +157,8 @@ class Profile extends Component {
                                 <Meta avatar={<div className="img-container">
                                     <ImgCrop shape="rect">
                                         <Upload {...this.uploadProps}>
-                                            <Avatar src="https://via.placeholder.com/1200x400" />
-                                            <a className="img-camera overlay"><span className="icons camera" /> </a>
+                                            <Avatar src={profileData.ProfilePic || "https://via.placeholder.com/1200x400"} />
+                                            <a className="img-camera overlay" onClick={()=>this.setState({isProfilePic:true})}><span className="icons camera" /> </a>
                                         </Upload>
                                     </ImgCrop>
                                 </div>}

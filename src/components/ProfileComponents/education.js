@@ -50,7 +50,7 @@ class Education extends Component {
         const { education, visible } = this.state
         return (
             <div className="custom-card">
-                <Card title="Education" bordered={false} extra={<Link onClick={this.showModal}><span className="icons add" /></Link>} >
+                <Card title="Education" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons add" /></Link> : null} >
                     <List
                         itemLayout="horizontal"
                         dataSource={education}
@@ -71,7 +71,7 @@ class Education extends Component {
                                     </div>}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text">{item.File ? item.File : 'No Files'}</span></div>}
                                 />
-                                <Link className="f-12 list-link"><span className="icons edit" /></Link>
+                                {!this.props.IsHideAction ? <Link className="f-12 list-link"><span className="icons edit" /></Link> : null}
                             </div>
                         )}
                     />

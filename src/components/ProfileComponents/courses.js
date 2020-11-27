@@ -28,7 +28,7 @@ class Courses extends Component {
         const {courses} = this.state;
         return (
             <div className="custom-card">
-                <Card title="Courses" bordered={false} extra={<Link to="">View all</Link>} >
+                <Card title="Courses" bordered={false} extra={!this.props.IsHideAction ? <Link to="">View all</Link> : null} >
                     <List
                         itemLayout="horizontal"
                         dataSource={courses}
@@ -39,7 +39,7 @@ class Courses extends Component {
                                     title={<div className="d-flex align-items-center"><span className="overflow-text">{item.CourseName}</span></div>}
                                     description={<div><span style={{color:'var(--textprimary)'}}>{item.Members}</span> Members | <span style={{color:'var(--textprimary)'}}>{item.Posts}</span> posts</div>}
                                 />
-                                <Link className="f-12 list-link" onClick={this.handleCourseJoin}>Join</Link>
+                                {!this.props.IsHideAction ? <Link className="f-12 list-link" onClick={this.handleCourseJoin}>Join</Link> : null}
                             </List.Item>
                         )}
                     />
