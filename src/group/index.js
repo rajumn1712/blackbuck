@@ -13,6 +13,7 @@ import GroupAbout from '../shared/components/groupabout';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import { profileDetail } from '../shared/api/apiServer';
+import { connect } from 'react-redux';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -211,4 +212,8 @@ class Group extends Component {
     }
 }
 
-export default Group;
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+ }
+
+export default connect(mapStateToProps)(Group);
