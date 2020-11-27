@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider, Image, Upload, message, Button } from 'antd';
-import Invite from '../components/invite';
+import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import './profilestyle.css'
 import PremiumBadge from '../styles/images/premiumbadge.svg'
@@ -153,7 +153,7 @@ class Profile extends Component {
                                         </Upload>
                                     </ImgCrop>
                                 </div>}
-                                    title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
+                                    title={<div className="user-name">{profileData.Firstname} {profileData.Lastname}</div>}
                                     description={profileData.Branch}
                                 />
                             </Card>
@@ -240,9 +240,9 @@ class Profile extends Component {
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
                         {/* <FriendsSuggestioncard /> */}
-                        <FriendsRequestsCard />
-                        <Ads />
                         <Groups />
+                        <Ads />
+                        
                     </Col>
                 </Row>
             </div> : null
