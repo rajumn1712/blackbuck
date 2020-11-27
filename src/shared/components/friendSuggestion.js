@@ -5,6 +5,7 @@ import notify from './notification';
 import { getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
 import { Link } from 'react-router-dom'
 import connectStateProps from '../stateConnect';
+import Defaultuser from '../../styles/images/userprofile.jpg';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     state = {
@@ -52,7 +53,7 @@ class FriendSuggestions extends Component {
                 <div className="friends">
                     {friends.map((friend, index) => {
                         return <div className="friends-list">
-                            <img src={friend.Image} width="100%" height="100%" />
+                            <img src={friend.Image || Defaultuser} width="100%" height="100%" />
                             <div className="friends-list--name">
                                 <Paragraph>{friend.FirstName}</Paragraph>
                                 <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
