@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 class Friends extends Component {
     componentDidMount() {
-        fetchUserFriends(this.props?.profile?.Id)
+        fetchUserFriends((this.props.userId?this.props.userId:(this.props?.profile?.Id)))
             .then(res => {
                 const friendsInfo = res.data;
                 this.setState({ FriendsList: friendsInfo });
@@ -36,7 +36,7 @@ class Friends extends Component {
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Link to="/commingsoon"><Avatar className="request-image" src={item.Image} /></Link>}
-                                    title={<div className="d-flex align-items-center"><a href="/commingsoon"><span className="overflow-text post-title">{item.Firstname}</span></a></div>}
+                                    title={<div className="d-flex align-items-center"><a href={"/profileview/"+item.UserId}><span className="overflow-text post-title">{item.Firstname}</span></a></div>}
                                     description={
                                         <div className="mt-8 d-flex align-items-center">
                                             <span className="list-request">

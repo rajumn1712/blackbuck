@@ -27,7 +27,7 @@ class Groups extends Component {
         this.getAllGroups();
     }
     getAllGroups = async () => {
-        const response = await fetchGroupSuggestions(this.props?.profile?.Id,this.state.page,this.state.pageNo);
+        const response = await fetchGroupSuggestions((this.props.userId?this.props.userId:(this.props?.profile?.Id)),this.state.page,this.state.pageNo);
         if (response.ok) {
             this.setState({ loading: false, data: response.data });
         }

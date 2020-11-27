@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Col, Row, Typography } from 'antd'
+import { Card, Avatar, Col, Row, Typography ,Empty} from 'antd'
 import { store } from '../../store'
 import connectStateProps from '../stateConnect';
 import { getGroups } from '../api/usergroupsApi'
 const { Meta } = Card;
 class GroupsPage extends Component {
     componentDidMount() {
-        getGroups( 4,1,4)
+        getGroups((this.props.userId?this.props.userId:(this.props?.profile?.Id)),1,4)
             .then(res => {
+                debugger;
                 const Groups = res.data;
                 this.setState({ Groups: Groups });
             })
@@ -22,7 +23,7 @@ class GroupsPage extends Component {
         return (
             <div className="group-page" >
                 <Row gutter={16} className="">
-                    {Groups.map((group, index) => {
+                    {Groups.length>0 && Groups?.map((group, index) => {
                         return <Col className="mb-16" md={12} lg={6}>
                             <Card key={index}
                                 cover={<img src={group.image} />} actions={[
@@ -52,6 +53,9 @@ class GroupsPage extends Component {
                             </Card>
                         </Col>
                     })
+                    }
+                    {Groups.length==0 && <Empty ></Empty>
+
                     }
 
 
