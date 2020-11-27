@@ -105,6 +105,7 @@
 .profile-tabs .ant-tabs-tab {
     font-size: 16px;
     color: var(--textcolor);
+     font-weight: 500;
 }
 
 .profile-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .ant-tabs-tab:hover, .ant-tabs-tab:active, .ant-tabs-tab-btn:focus, .ant-tabs-tab-remove:focus, .ant-tabs-tab-btn:active, .ant-tabs-tab-remove:active {
