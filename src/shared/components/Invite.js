@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Button } from 'antd'
+import { Card, Avatar, Button, Empty } from 'antd'
 import notify from './notification';
 import { apiClient } from '../api/clients'
 class Invite extends Component {
@@ -43,7 +43,7 @@ class Invite extends Component {
                         </div>
                     }
                     {
-                        keys.length == 0 && <p>No data</p>
+                        keys.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                     }
                 </Card>
             </div>
