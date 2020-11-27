@@ -153,7 +153,7 @@ class Profile extends Component {
                                         </Upload>
                                     </ImgCrop>
                                 </div>}
-                                    title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
+                                    title={<div className="user-name">{profileData.Firstname} {profileData.Lastname}</div>}
                                     description={profileData.Branch}
                                 />
                             </Card>
