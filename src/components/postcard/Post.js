@@ -11,8 +11,6 @@ import Claps from '../../styles/images/claps.gif';
 import Whistle from '../../styles/images/whistle.gif';
 import Video from '../../styles/images/video.mp4';
 import './post.css';
-import '../../index.css';
-import '../../styles/theme.css';
 import {
     FacebookIcon,
     LinkedinIcon,

@@ -180,7 +180,7 @@ class Postings extends Component {
                </div>
             </div>
          </Card>
-         {this.state.commentselection.indexOf(post.id) > -1 && <Comments comments={post.comments} submitting={this.state.submitting} value={this.state.value}
+         {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} comments={post.comments} submitting={this.state.submitting} value={this.state.value}
             submitted={this.handleSubmit} changed={this.handleChange} />}
          {/* <PostCardModal {...this.state} closed={() => { this.setState({ visible: false }) }} /> */}
       </div>

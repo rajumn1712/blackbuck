@@ -17,4 +17,7 @@ const saveActions = (post_id, type, object) => {
 const deleteActions = (post_id, user_id, type) => {
     return apiClient.get(POSTS_END_POINT + `deleteActions/${post_id}/${user_id}/${type}`);
 }
-export { getPosts, savePost, saveActions, deleteActions };
+const postComment = (post_id, object) => {
+    return apiClient.post(POSTS_END_POINT + `saveComment/${post_id}`, object);
+}
+export { getPosts, savePost, saveActions, deleteActions, postComment };
