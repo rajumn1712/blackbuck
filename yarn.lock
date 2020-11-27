@@ -2279,6 +2279,14 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
+antd-img-crop@^3.13.2:
+  version "3.13.2"
+  resolved "https://registry.yarnpkg.com/antd-img-crop/-/antd-img-crop-3.13.2.tgz#a406551edf0a3d5ad2a7d80bc691a0d6b7958933"
+  integrity sha512-UNCyD9KbnKFx4Lhl+eehlYIwdo8k74P4K0VWrgKTjuLr2tuWXM+UIK+L8MwUadSRfuHiSL+bWrtFaXjqYZK/CA==
+  dependencies:
+    "@babel/runtime" "^7.12.1"
+    react-easy-crop "^3.3.0"
+
 antd@^4.7.2:
   version "4.7.2"
   resolved "https://registry.npmjs.org/antd/-/antd-4.7.2.tgz"
@@ -9728,6 +9736,13 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-easy-crop@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-easy-crop/-/react-easy-crop-3.3.0.tgz#35b4cee63dbdfb0d784c06b52209f77c2ea450ff"
+  integrity sha512-3udl/ZlyHkCldtNpY0XdNNym6gugRStII7j93KXaZyVACfiMvb5WQmieGnkGIffItNQnOGQ44X1koe165rUPNQ==
+  dependencies:
+    tslib "2.0.1"
+
 react-error-overlay@^6.0.7:
   version "6.0.8"
   resolved "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.8.tgz"
@@ -11443,6 +11458,11 @@ ts-pnp@1.1.6, ts-pnp@^1.1.6:
   version "1.1.6"
   resolved "https://registry.npmjs.org/ts-pnp/-/ts-pnp-1.1.6.tgz"
   integrity sha512-CrG5GqAAzMT7144Cl+UIFP7mz/iIhiy+xQ6GGcnjTezhALT02uPMRw7tgDSESgB5MsfKt55+GPWw4ir1kVtMIQ==
+
+tslib@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
+  integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
 tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.11.1"
