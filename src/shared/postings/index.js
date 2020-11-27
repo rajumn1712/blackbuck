@@ -207,7 +207,7 @@ class Postings extends Component {
                </ul>
                <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{tag.Name}</Link></Tag>
+                     return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
                   })}
                </div>
             </div>
