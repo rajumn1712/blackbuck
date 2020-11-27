@@ -66,9 +66,6 @@ class Profile extends Component {
                 message.error(`${file.name} file upload failed.`);
             }
         },
-        beforeUpload: (file) => {
-
-        }
 
     };
 
@@ -139,7 +136,7 @@ class Profile extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <img className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} alt="profilecover" />
+                            <Avatar className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
                             <ImgCrop shape="rect" aspect beforeCrop={this.handleBeforUpload}>
                                 <Upload {...this.uploadProps}>
