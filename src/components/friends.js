@@ -36,7 +36,7 @@ class Friends extends Component {
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Link to="/commingsoon"><Avatar className="request-image" src={item.Image} /></Link>}
-                                    title={<div className="d-flex align-items-center"><a href={"/profileview/"+item.UserId}><span className="overflow-text post-title">{item.Firstname}</span></a></div>}
+                                    title={<div className="d-flex align-items-center"><Link to={"/profileview/"+item.UserId}><span className="overflow-text post-title">{item.Firstname}</span></Link></div>}
                                     description={
                                         <div className="mt-8 d-flex align-items-center">
                                             <span className="list-request">

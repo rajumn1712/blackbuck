@@ -13,7 +13,7 @@ import ProfileView from '../profileview'
 const Router = () => {
     return (
         <Switch>
-            <ProtectedRoute path="/about" component={About} />
+            <ProtectedRoute path="/friends" component={About} />
             <Route path="/contact" component={Contact} />
             <Route path="/callback" component={Callback} />
             <ProtectedRoute path="/profile" component={Profile} />

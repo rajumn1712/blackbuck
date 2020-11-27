@@ -153,7 +153,7 @@ class HeaderComponent extends React.Component {
                     <Col span={8} justify="center">
                         <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
                             <Menu.Item key="home"><Link to="/"><span className="icons home-icon"></span></Link></Menu.Item>
-                            <Menu.Item key="about"><Link to="/about"><span className="icons social-icon"></span></Link></Menu.Item>
+                            <Menu.Item key="about"><Link to="/friends"><span className="icons social-icon"></span></Link></Menu.Item>
                             <Menu.Item key="contact"><Link to="/contact"><span className="icons suitcase-icon" /></Link></Menu.Item>
                             <Menu.Item key="posts"><Link to="/"><span className="icons lms-icon" /></Link></Menu.Item>
                         </Menu>

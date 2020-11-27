@@ -81,9 +81,14 @@ class ProfileView extends Component {
     handleDisabledChange = disabled => {
         this.setState({ disabled });
     };
-
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.match.params.userId !== this.props.match.params.userId) {
+            this.componentDidMount();
+        }
+      }
+      
+    
     componentDidMount() {
-        debugger;
         profileDetail(this.props?.match?.params.userId)
             .then(res => {
                 const profiledata = res.data[0].User;
@@ -126,13 +131,6 @@ class ProfileView extends Component {
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <ImgCrop shape="rect">
-                                <Upload>
-                                    <a className="editpost" >
-                                        <span className="left-menu post-icon" />
-                                    </a>
-                                </Upload>
-                            </ImgCrop>
 
 
                         </div>
@@ -144,12 +142,9 @@ class ProfileView extends Component {
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="img-container">
-                                    <ImgCrop shape="rect">
-                                        <Upload {...this.uploadProps}>
-                                            <Avatar src="https://via.placeholder.com/1200x400" />
+                                            <Avatar src={profileData.ProfilePic|| "https://via.placeholder.com/1200x400"}/>
                                             <a className="img-camera overlay"><span className="icons camera" /> </a>
-                                        </Upload>
-                                    </ImgCrop>
+                                        
                                 </div>}
                                     title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
                                     description={profileData.Branch}
@@ -168,7 +163,7 @@ class ProfileView extends Component {
                                         <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <Postings postingsType="user" sharebox={false} userId={this.props.match.params.userId} postActions={false}/>
+                                        <Postings postingsType="user" sharebox={false} userId={this.props.match.params.userId} key={this.props.match.params.userId} postActions={false}/>
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -185,20 +180,20 @@ class ProfileView extends Component {
                                         <Tags />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <div ref={this.getOrCreateRef('AboutComp')}>{profileData && <About about={profileData} />}</div>
-                                        <div ref={this.getOrCreateRef('InterestComp')}>{profileData.Interests && <Interests interests={profileData.Interests} />}</div>
-                                        <div ref={this.getOrCreateRef('HobbyComp')}>{profileData.Hobbies && <Hobbies hobbies={profileData.Hobbies} />}</div>
-                                        <div ref={this.getOrCreateRef('InternshipComp')}>{profileData.Internships && <Intership internships={profileData.Internships} />}</div>
-                                        <div ref={this.getOrCreateRef('VideoComp')}>{profileData.VideoAsProfile && <VideoProfile video={profileData.VideoAsProfile} />}</div>
-                                        <div ref={this.getOrCreateRef('EducationComp')}>{profileData.Education && <Education education={profileData.Education} />}</div>
-                                        <div ref={this.getOrCreateRef('CourseComp')}>{profileData.Courses && <Courses courses={profileData.Courses} />}</div>
+                                        <div ref={this.getOrCreateRef('AboutComp')}>{profileData && <About about={profileData} IsHideAction={true}/>}</div>
+                                        <div ref={this.getOrCreateRef('InterestComp')}>{profileData.Interests && <Interests interests={profileData.Interests} IsHideAction={true}/>}</div>
+                                        <div ref={this.getOrCreateRef('HobbyComp')}>{profileData.Hobbies && <Hobbies hobbies={profileData.Hobbies} IsHideAction={true}/>}</div>
+                                        <div ref={this.getOrCreateRef('InternshipComp')}>{profileData.Internships && <Intership internships={profileData.Internships} IsHideAction={true}/>}</div>
+                                        <div ref={this.getOrCreateRef('VideoComp')}>{profileData.VideoAsProfile && <VideoProfile video={profileData.VideoAsProfile} IsHideAction={true}/>}</div>
+                                        <div ref={this.getOrCreateRef('EducationComp')}>{profileData.Education && <Education education={profileData.Education} IsHideAction={true}/>}</div>
+                                        <div ref={this.getOrCreateRef('CourseComp')}>{profileData.Courses && <Courses courses={profileData.Courses} IsHideAction={true}/>}</div>
                                     </Col>
                                 </Row>
                             </TabPane>
                             <TabPane tab="Friends" key="3">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Friends userId={this.props.match.params.userId} />
+                                        <Friends userId={this.props.match.params.userId} key={this.props.match.params.userId}/>
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -213,7 +208,7 @@ class ProfileView extends Component {
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
                         {/* <FriendsSuggestioncard /> */}
-                        <Groups userId={this.props.match.params.userId} />
+                        <Groups userId={this.props.match.params.userId}  key={this.props.match.params.userId}/>
                         <Ads />
                     </Col>
                 </Row>
