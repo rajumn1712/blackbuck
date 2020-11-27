@@ -80,3 +80,9 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .anticon-loading svg{fill: var(--primary) !important;}
 .loader-middle,.loader-top-middle{display: flex;align-items: center;justify-content: center;margin-top:10px;}
 .loader-middle{height: 100vh;}
+.coming-soon{height: calc(100vh - 70px); margin-bottom: 0;display: flex;align-items: center;justify-content: center;}
+.coming-soon h1{font-size: 80px;margin-bottom: 0;margin-right: 15px;}
+@media (max-width:767px){
+.coming-soon h1{font-size: 30px;margin-bottom: 0;margin-right: 10px;}
+.coming-soon img{width: 50px; }
+}
