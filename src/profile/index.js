@@ -47,7 +47,7 @@ class Profile extends Component {
         profileData: {},
         disabled: false,
         visible: false,
-        isProfilePic:false
+        isProfilePic: false
     };
     uploadProps = {
         name: 'file',
@@ -67,15 +67,9 @@ class Profile extends Component {
             }
         },
         beforeUpload: (file) => {
-            const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
-                if (!isJPG) {
-                    message.error('You can only upload JPG or PNG file!');
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        
+
+        }
+
     };
 
     handleDisabledChange = disabled => {
@@ -90,7 +84,7 @@ class Profile extends Component {
             visible: true,
         });
     };
-    profielDetails = ()=>{
+    profielDetails = () => {
         profileDetail(this.props?.profile?.Id)
             .then(res => {
                 const profiledata = res.data[0].User;
@@ -98,16 +92,26 @@ class Profile extends Component {
                 this.setState({ profileData: profiledata, navigations: navigations });
             })
     }
+    handleBeforUpload = (file) => {
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJPG) {
+            message.error('You can only upload JPG or PNG file!');
+            return false;
+        } else {
+            return true;
+        }
+
+    }
     handleImageOk = () => {
-       const imageType = this.state.isProfilePic ? 'ProfilePic' : 'CoverPic';
-       if(this.state.isProfilePic){
-           this.props.profile.ProfilePic = this.imageObject.ImageUrl;
-       }
-        saveProfileImage(this.props?.profile?.Id,imageType,this.imageObject)
-        .then(res=>{
-            this.imageObject = {};
-            this.profielDetails();
-        })
+        const imageType = this.state.isProfilePic ? 'ProfilePic' : 'CoverPic';
+        if (this.state.isProfilePic) {
+            this.props.profile.ProfilePic = this.imageObject.ImageUrl;
+        }
+        saveProfileImage(this.props?.profile?.Id, imageType, this.imageObject)
+            .then(res => {
+                this.imageObject = {};
+                this.profielDetails();
+            })
 
     }
     handleOk = e => {
@@ -137,9 +141,9 @@ class Profile extends Component {
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <ImgCrop shape="rect" aspect>
+                            <ImgCrop shape="rect" aspect beforeCrop={this.handleBeforUpload}>
                                 <Upload {...this.uploadProps}>
-                                    <a className="editpost" onClick={()=>this.setState({isProfilePic:false})}>
+                                    <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
                                         <span className="left-menu post-icon" />
                                     </a>
                                 </Upload>
@@ -155,10 +159,10 @@ class Profile extends Component {
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="img-container">
-                                    <ImgCrop shape="rect">
+                                    <ImgCrop shape="rect" aspect beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profileData.ProfilePic || "https://via.placeholder.com/1200x400"} />
-                                            <a className="img-camera overlay" onClick={()=>this.setState({isProfilePic:true})}><span className="icons camera" /> </a>
+                                            <a className="img-camera overlay" onClick={() => this.setState({ isProfilePic: true })}><span className="icons camera" /> </a>
                                         </Upload>
                                     </ImgCrop>
                                 </div>}
@@ -251,7 +255,7 @@ class Profile extends Component {
                         {/* <FriendsSuggestioncard /> */}
                         <Groups />
                         <Ads />
-                        
+
                     </Col>
                 </Row>
             </div> : null
