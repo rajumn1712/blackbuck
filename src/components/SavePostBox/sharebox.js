@@ -150,7 +150,6 @@ class ShareBox extends Component {
             this.postObject.CreatedDate = new Date();
             this.postObject.Tags = this.state.tags;
             const response = await savePost(this.postObject);
-            console.log(JSON.stringify(this.postObject))
             this.setState({
                 visible: false,
             }, () => {
@@ -166,7 +165,8 @@ class ShareBox extends Component {
         this.setState({
             ...this.state,
             post,
-            errors: null
+            errors: null,
+            uploadSources: []
         });
     }
     handleCancel = e => {
@@ -227,6 +227,15 @@ class ShareBox extends Component {
     }
 
     renderUploadType = (type) => {
+
+        const fileTypes = {
+            Images: ".jpg,.jpeg,.png",
+            Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
+            Audio: ".mp3,.aac,.wma,.wav,.flac,.m4a",
+            Gif: ".gif",
+            Docs:'.doc,.docx'
+        }
+        this.uploadProps = {...this.uploadProps,accept:fileTypes[type]}
         const types = {
             Text: <div>
 
@@ -246,7 +255,7 @@ class ShareBox extends Component {
                 </div>)}
             </div>,
             Video: <div>
-                <Dragger className="upload" {...this.uploadProps}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })} >
                     <span className="sharebox-icons video-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
                 </Dragger>
@@ -254,16 +263,16 @@ class ShareBox extends Component {
                     <video width="100%" controls>
                         <source src={image} />
                     </video>
-                    <a class="item-close">
+                    {/* <a class="item-close">
                         <Tooltip title="Remove">
                             <span className="close-icon"></span>
                         </Tooltip>
-                    </a>
+                    </a> */}
                 </div>)}
 
             </div>,
             Audio: <div>
-                <Dragger className="upload" {...this.uploadProps}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })}>
                     <span className="sharebox-icons audio-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Audio</p>
                 </Dragger>
@@ -278,7 +287,7 @@ class ShareBox extends Component {
             </div>,
             Docs: <div>
 
-                <Dragger className="upload" {...this.uploadProps}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })}>
                     <span className="sharebox-icons docs-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Documents</p>
                 </Dragger>
@@ -304,17 +313,12 @@ class ShareBox extends Component {
                 </div>
             </div>,
             Gif: <div>
-                <Dragger className="upload" {...this.uploadProps}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })}>
                     <span className="sharebox-icons gif-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Gif</p>
                 </Dragger>
                 {this.state.uploadSources?.map((image, indx) => <div key={indx} className="mb-16 upload-preview">
                     <Image src={image} />
-                    <a class="item-close">
-                        <Tooltip title="Remove">
-                            <span className="close-icon"></span>
-                        </Tooltip>
-                    </a>
                 </div>)}
             </div>
         }
