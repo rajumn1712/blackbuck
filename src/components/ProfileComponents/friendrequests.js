@@ -62,7 +62,7 @@ class FriendRequests extends Component {
     render() {
         const { user } = store.getState().oidc;
         const data = [...this.state.friendRequests];
-
+        if (!data || data.length === 0) { return null }
         return (
             <div className="custom-card requests">
                 <Card title="Friend Requests" bordered={false} >

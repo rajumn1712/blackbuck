@@ -131,7 +131,7 @@ class Postings extends Component {
    }
    handleActions = async (type, post) => {
       type = type === "Whistles" ? "Whistiles" : type;
-      type = type === "Love" ? "Likes" : type;
+      type = type === "Love" ? "Loves" : type;
       const { Id, ProfilePic, FirstName, Email, LastName } = this.props.profile;
       const saveObj = {
          "UserId": Id,
@@ -155,7 +155,7 @@ class Postings extends Component {
    }
    renderPost = (post) => {
 
-      return <div className="post-card comment-show">
+      return <div className={`post-card ${this.state.commentselection.indexOf(post.id) > -1?'comment-show':""}`}>
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name)} />
          }

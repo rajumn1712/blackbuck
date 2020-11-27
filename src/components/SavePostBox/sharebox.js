@@ -109,6 +109,7 @@ class ShareBox extends Component {
             "Claps": [],
             "whistiles": [],
             "Comments": [],
+            "Loves":[],
             "Group": {
                 "GroupId": null,
                 "GroupName": null,

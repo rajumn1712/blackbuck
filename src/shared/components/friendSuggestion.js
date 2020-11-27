@@ -21,7 +21,7 @@ class FriendSuggestions extends Component {
         }
         sendFirendRequest(friend.UserId, obj).then(() => {
             message.success("Request sent");
-            this.loadSuggestions();
+            this.removeSuggestion(friend)
         })
     }
     componentDidMount() {
@@ -33,14 +33,17 @@ class FriendSuggestions extends Component {
             this.setState({ ...this.state, friends: response.data });
         }
     }
-    removeSuggestion = () => {
-
+    removeSuggestion = (friend) => {
+        let { friends } = this.state;
+        friends = friends.filter(item => item.UserId !== friend.UserId);
+        this.setState({ friends })
     }
     goToFriendsSuggestions = () => {
 
     }
     render() {
         const { friends } = this.state;
+        if(!friends||friends.length===0){return null;}
         return (
             <div>
                 <div className="friends-thead">
@@ -57,7 +60,7 @@ class FriendSuggestions extends Component {
                             <a className="addfrnd-btn" onClick={() => this.addFriend(friend)}>
                                 <span className="post-icons addfriend-icon mr-0"></span>
                             </a>
-                            {/* <a className="removefrnd-btn" onClick={() => this.removeSuggestion()}></a> */}
+                            <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                         </div>
                     })
                     }

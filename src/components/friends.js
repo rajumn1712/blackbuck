@@ -51,7 +51,7 @@ class Friends extends Component {
                                                     }
                                                 </Avatar.Group>
                                             </span>
-                                            {item.MutualFriends.length > 0 && <span>Mutual Friends</span>}
+                                            {item.MutualFriends.length > 0 && <span><span>{item.MutualFriends.length}</span><span> Mutual Friends</span></span>}
                                         </div>
                                     }
                                 />
