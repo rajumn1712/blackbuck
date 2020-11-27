@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-class CommingSoon extends Component{
+import Smiley from '../styles/images/smiley.svg'
+class CommingSoon extends Component {
 
-    render(){
-        return <h3>Comming soon</h3>
+    render() {
+        return <div className="coming-soon">
+            <h1 >Coming Soon </h1>
+            <img src={Smiley}/>
+        </div>
     }
 }
 

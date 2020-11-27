@@ -31,7 +31,7 @@ a:hover,a:active{color: var(--primaryhover) !important;}
 
 
 /*---Friend Suggestions---*/
-.friends{display: flex; overflow: hidden; margin-bottom: 24px; position: relative;}
+.friends{display: flex; overflow: hidden; margin-bottom: 16px; position: relative;}
 .friends-thead{display: flex;justify-content: space-between;}
 .friends-list {border-radius: 10px; background: var(--white); flex: 0 0 98px; height: 130px; overflow: hidden; box-shadow: var(--boxshadow); position: relative; margin-right: 16px;}
 .friends-list.one .friends-list--name{background: linear-gradient(to top, rgba(70, 10, 156, 1), rgba(70, 10, 156, 0));}
@@ -78,5 +78,11 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .card-actions-count li span{color:#9B9B9B;}
 .grp-type-icon{background: url(styles/images/icons.svg) no-repeat;}
 .anticon-loading svg{fill: var(--primary) !important;}
-.loader-middle,.loader-top-middle{display: flex;align-items: center;justify-content: center;}
+.loader-middle,.loader-top-middle{display: flex;align-items: center;justify-content: center;margin-top:10px;}
 .loader-middle{height: 100vh;}
+.coming-soon{height: calc(100vh - 70px); margin-bottom: 0;display: flex;align-items: center;justify-content: center;}
+.coming-soon h1{font-size: 80px;margin-bottom: 0;margin-right: 15px;}
+@media (max-width:767px){
+.coming-soon h1{font-size: 30px;margin-bottom: 0;margin-right: 10px;}
+.coming-soon img{width: 50px; }
+}
