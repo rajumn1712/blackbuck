@@ -6,7 +6,7 @@ import { getGroups } from '../api/usergroupsApi'
 const { Meta } = Card;
 class GroupsPage extends Component {
     componentDidMount() {
-        getGroups(this.props?.profile?.Id, 5, 0)
+        getGroups( 4,1,4)
             .then(res => {
                 const Groups = res.data;
                 this.setState({ Groups: Groups });
@@ -21,10 +21,9 @@ class GroupsPage extends Component {
         const { Groups } = this.state;
         return (
             <div className="group-page" >
-                <Row gutter={24} className="mb-16">
-
+                <Row gutter={16} className="">
                     {Groups.map((group, index) => {
-                        return <Col className="" span={12}>
+                        return <Col className="mb-16" md={12} lg={6}>
                             <Card key={index}
                                 cover={<img src={group.image} />} actions={[
                                     <a className="list-link f-14" href="/commingsoon">Leave Group</a>
