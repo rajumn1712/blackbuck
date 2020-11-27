@@ -55,7 +55,7 @@ class Comments extends Component {
         if (saveResponse.ok) {
             let { comments } = this.state;
             comments.push(object);
-            this.setState({ ...this.state, comments });
+            this.setState({ ...this.state, comments,Comment:"" });
         }
     }
     render() {

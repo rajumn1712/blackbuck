@@ -43,7 +43,7 @@ class Postings extends Component {
    }
    async loadPosts() {
       this.setState({ ...this.state, loading: true });
-      const posts = await getPosts((this.props.userId?this.props.userId:(this.props?.profile?.Id)), this.state.page, this.state.pageSize, this.props.postingsType);
+      const posts = await getPosts((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageSize, this.props.postingsType);
       let { allPosts } = this.state;
       allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
@@ -139,7 +139,8 @@ class Postings extends Component {
 
       return imageObj ? (_result[type] ? _result[type]() : null) : null;
    }
-   handleActions = async (type, post) => {
+   handleActions = async (event, type, post) => {
+      event.stopPropagation();
       type = type === "Whistles" ? "Whistiles" : type;
       type = type === "Love" ? "Loves" : type;
       const { Id, ProfilePic, FirstName, Email, LastName } = this.props.profile;
@@ -189,7 +190,7 @@ class Postings extends Component {
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
-            actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleActions(name, post)} />,
+            actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
@@ -199,9 +200,10 @@ class Postings extends Component {
                <Title level={5} className="post-title f-16">{post.title}</Title>
                <Paragraph className="f-14 post-desc">{post.meassage}</Paragraph>
                <ul className="card-actions-count pl-0">
-                  <li><span className="counter-icon loves"></span>{post.likes}<span> Loves</span></li>
+                  <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
                   <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
                   <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
+                  <li><span></span>{post.comments.length} <span> Comment(s)</span></li>
                </ul>
                <div className="post-tag">
                   {post.tags?.map((tag, index) => {
