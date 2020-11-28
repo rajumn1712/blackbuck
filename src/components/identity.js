@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Avatar, Menu } from 'antd'
 import { Link } from 'react-router-dom';
 import { profileSuccess } from '../reducers/auth';
+import defaultUser from '../styles/images/defaultuser.jpg';
 import { connect } from 'react-redux';
 const { Meta } = Card;
 const { SubMenu } = Menu;
@@ -24,7 +25,7 @@ class Identity extends Component {
                 >
                     <Meta
                         avatar={
-                            <Avatar src={homeInfo?.ProfilePic} />
+                            <Avatar src={homeInfo?.ProfilePic||defaultUser} />
                         }
                         title={<div>{homeInfo?.FirstName}<span className="premium-icon"></span></div>}
                         description="Groups"
