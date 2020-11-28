@@ -13,7 +13,7 @@ const CommentList = ({ comments }) => (
         dataSource={comments}
         header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
         itemLayout="horizontal"
-        renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={<Moment fromNow>{item.CreatedDate}</Moment>} avatar={<Avatar src={item.Image} />}>
+        renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={<Moment fromNow>{item.CreatedDate}</Moment>} avatar={<Avatar src={item.Image||defaultUser} />}>
             {/* {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
             {/* <Comment style={{ marginLeft: 10 }} className="reply-comment"
                 avatar={

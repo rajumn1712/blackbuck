@@ -141,9 +141,11 @@ class Profile extends Component {
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
                             <ImgCrop beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
                                 <Upload {...this.uploadProps}>
+                                    <Tooltip title="Change Coverphoto">
                                     <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
                                         <span className="left-menu post-icon" />
                                     </a>
+                                    </Tooltip>
                                 </Upload>
                             </ImgCrop>
 

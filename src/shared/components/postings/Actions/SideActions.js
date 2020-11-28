@@ -16,7 +16,8 @@ class SideAction extends Component {
             <Menu className="custom-dropdown more-opt">
                 {this.props.actionsList?.map((menu, index) => {
                     return <Menu.Item key={index}>
-                        <a onClick={(event) => this.props.clickedEvent(event, menu.action)}><span className={menu.icons}></span>{menu.action}</a>
+                        <a onClick={(event) => this.props.clickedEvent(event, menu.action)}>{menu.action}</a>
+                        {/* <span className={menu.icons}></span> */}
                     </Menu.Item>
                 })}
             </Menu>

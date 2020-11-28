@@ -193,7 +193,7 @@ class Postings extends Component {
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
-            actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
+         actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
@@ -216,7 +216,7 @@ class Postings extends Component {
                </div>
                {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
+                     return <Tag key={index}><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
                   })}
                </div>}
             </div>
