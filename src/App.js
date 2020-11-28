@@ -22,6 +22,7 @@ function App() {
   return (
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
+      
         <BrowserRouter>
           <Suspense fallback={<div>Loading...</div>}>
             {loading ? <Loader className="loader-top-middle"/> : <LayoutComponent />}
