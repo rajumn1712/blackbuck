@@ -46,7 +46,7 @@ class Groups extends Component {
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.image} />}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text" title={item.name}>{item.name}</span></div>}
-                                    description={<div><div className="overflow-text">{item.description}</div><div><span style={{ color: 'var(--textprimary)' }}>{item.members}</span> Members</div></div>}
+                                    description={<div><div className="overflow-text">{item.description}</div><div><span style={{ color: 'var(--textprimary)',fontWeight: '500' }}>{item.members}</span> Members</div></div>}
                                 />
                                 <Link style={{marginLeft: 16}} className="f-12 list-link" onClick={() => this.joinGroup(item)}>Join Group</Link>
                             </List.Item>

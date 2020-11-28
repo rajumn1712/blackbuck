@@ -261,3 +261,4 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .hobbies-tag .ant-tag{color: var(--black);font-size: 14px;}
 .hobbies-tag .ant-tag-close-icon{color: var(--black) !important; margin-left: 4px;font-size: 11px;}
 .comment-list .ant-comment:last-child .ant-comment-inner{padding-bottom: 16px;}
+.ant-list-item-meta-description{font-size: 12px;}
