@@ -8,8 +8,9 @@ import Home from '../home';
 import Post from '../common/post';
 import Callback from "../shared/authentication/callback";
 import Profile from '../profile';
-import Group from '../group'
-import ProfileView from '../profileview'
+import Group from '../group';
+import ProfileView from '../profileview';
+// import CreateGroup from './creategroup';
 const Router = () => {
     return (
         <Switch>
@@ -19,6 +20,7 @@ const Router = () => {
             <ProtectedRoute path="/profile" component={Profile} />
             <ProtectedRoute path="/profileview/:userId" component={ProfileView} />
             <Route path="/group" component={Group} />
+            {/* <Route path="/creategroup" component={CreateGroup} /> */}
             <Route path="/commingsoon" component={CommingSoon} />
             <ProtectedRoute path="/post/:name" component={Post} />
             <ProtectedRoute path="" component={Home} />
