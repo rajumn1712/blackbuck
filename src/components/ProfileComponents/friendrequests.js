@@ -72,8 +72,8 @@ class FriendRequests extends Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar className="request-image" src={item.image || "https://via.placeholder.com/150"} />}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.firstName}</span></div>}
+                                    avatar={<Avatar className="request-image" src={item.Image || "https://via.placeholder.com/150"} />}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{[item.Firstname,item.Lastname].join(' ')}</span></div>}
                                     description={<div className="mt-8 d-flex align-items-center">
                                         <span className="list-request">
                                             <Avatar.Group
@@ -81,9 +81,9 @@ class FriendRequests extends Component {
                                                 size="large"
                                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                             >
-                                                {item?.members?.map((member, index) => {
-                                                    return <Avatar src='' key={index} style={{ backgroundColor: (member.avatar ? '' : '#f56a00') }}>
-                                                        {member.avatar ? null : member.initial}
+                                                {item?.mutualFriends?.map((member, index) => {
+                                                    return <Avatar src='' key={index} style={{ backgroundColor: (member.Image ? '' : '#f56a00') }}>
+                                                        {member.Image ? null : [member.Firstname.charAt(0),member.Lastname.charAt(0)].join('')}
                                                     </Avatar>
                                                 })}
                                             </Avatar.Group>
