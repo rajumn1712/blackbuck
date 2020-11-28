@@ -149,9 +149,10 @@ class Postings extends Component {
          "Firstname": FirstName,
          "Lastname": LastName,
          "Image": ProfilePic,
-         "Email": Email
+         "Email": Email,
+         "Type":type
       }
-      const saveResponse = await saveActions(post.id, type, saveObj);
+      const saveResponse = await saveActions(post.id, saveObj);
       if (saveResponse.ok) {
          let { allPosts } = this.state;
          for (let i in allPosts) {
@@ -205,11 +206,11 @@ class Postings extends Component {
                   <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
                   <li><span></span>{post.comments.length} <span> Comment(s)</span></li>
                </ul>
-               <div className="post-tag">
+               {(post.tags!=null&&post.tags?.length>0)&&<div className="post-tag">
                   {post.tags?.map((tag, index) => {
                      return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
                   })}
-               </div>
+               </div>}
             </div>
          </Card>
          {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} comments={post.comments} submitting={this.state.submitting} value={this.state.value}
