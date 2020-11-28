@@ -114,7 +114,7 @@ class HeaderComponent extends React.Component {
             <Menu.Item key="0">
                 <Meta
                     className="account-holder"
-                    avatar={<Avatar src={this.state?.ProfilePic} />}
+                    avatar={<Avatar src={this.state?.ProfilePic||defaultUser} />}
                     title={this.state?.FirstName}
                     description={this.state?.Email}
                 />
@@ -154,22 +154,22 @@ class HeaderComponent extends React.Component {
                     <Col span={8} justify="center">
                         <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
                             <Menu.Item key="home">
-                                <Tooltip title="Home">
+                                <Tooltip title="Home" placement="bottom">
                                     <Link to="/"><span className="icons home-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="about">
-                                <Tooltip title="Connections">
+                                <Tooltip title="Connections" placement="bottom">
                                     <Link to="/friends"><span className="icons social-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="contact">
-                                <Tooltip title="Careers">
+                                <Tooltip title="Careers" placement="bottom">
                                     <Link to="/contact"><span className="icons suitcase-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="posts">
-                                <Tooltip title="LMS">
+                                <Tooltip title="LMS" placement="bottom">
                                     <Link to="/"><span className="icons lms-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
@@ -233,7 +233,7 @@ class HeaderComponent extends React.Component {
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
-                                        <img src={this.state.ProfilePic} />
+                                        <img src={this.state.ProfilePic||defaultUser} />
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>

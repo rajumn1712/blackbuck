@@ -33,7 +33,7 @@ a:hover,a:active{color: var(--primaryhover) !important;}
 /*---Friend Suggestions---*/
 .friends{display: flex; overflow: hidden; margin-bottom: 16px; position: relative;}
 .friends-thead{display: flex;justify-content: space-between;}
-.friends-list {border-radius: 10px; background: var(--white); flex: 0 0 98px; height: 130px; overflow: hidden; box-shadow: var(--boxshadow); position: relative; margin-right: 16px;}
+.friends-list {border-radius: 10px; background: var(--white); flex: 0 0 102px; height: 130px; overflow: hidden; box-shadow: var(--boxshadow); position: relative; margin-right: 16px;}
 .friends-list.one .friends-list--name{background: linear-gradient(to top, rgba(70, 10, 156, 1), rgba(70, 10, 156, 0));}
 .friends-list.two .friends-list--name{background: linear-gradient(to top, rgba(112, 165, 113, 1), rgba(112, 165, 113, 0));}
 .friends-list img {object-fit: cover;}
@@ -60,7 +60,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .more-frnd-btn:hover{background: var(--primary);}
 .container{padding-left: 15px;padding-right: 15px;}
 @media (min-width: 1200px) {
-  .container { width: 1140px; box-sizing: content-box; margin: auto;padding-left: 0;padding-right: 0; }
+  .container { width: 1180px; box-sizing: content-box; margin: auto;padding-left: 0;padding-right: 0; }
 }
 .alert-popup .ant-modal-content{border-radius: 8px;}
 .alert-popup .ant-modal-header{border-radius: 8px 8px 0 0;padding: 16px;}
@@ -73,7 +73,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .post-card .ant-card-meta-title, .post-title, .post-card .ant-card-actions li a, .post-comment .ant-comment-content-author-name,
 .card-actions-count li{color: var(--textprimary) !important;}
 .post-card .ant-card-meta-description, .post-desc, .post-comment .ant-comment-content-detail p, .post-comment .ant-comment-content-author-time{color: var(--textsecondary);}
-.post-card .ant-card-actions li a:hover, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
+.post-card .ant-card-actions li a:hover, .post-card .ant-card-actions li a.focus, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
 .post-tag .ant-tag{background:var(--secondary);}
 .card-actions-count li span{color:#9B9B9B;}
 .grp-type-icon{background: url(styles/images/icons.svg) no-repeat;}

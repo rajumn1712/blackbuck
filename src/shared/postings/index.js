@@ -54,7 +54,7 @@ class Postings extends Component {
    titleAvatar = (user, date) => {
       return <Meta
          avatar={
-            <Avatar src={user.Image||defaultUser} />
+            <Avatar src={user.Image || defaultUser} />
          }
          title={user.Firstname}
          description={<Moment fromNow>{date}</Moment>}
@@ -151,14 +151,15 @@ class Postings extends Component {
          "Lastname": LastName,
          "Image": ProfilePic,
          "Email": Email,
-         "Type":type
+         "Type": type
       }
       const saveResponse = await saveActions(post.id, saveObj);
       if (saveResponse.ok) {
          let { allPosts } = this.state;
          for (let i in allPosts) {
             if (allPosts[i].id === post.id) {
-               allPosts[i][type.toLowerCase()] = allPosts[i][type.toLowerCase()] + 1;
+               allPosts[i][type.toLowerCase()] = (allPosts[i][type.toLowerCase()]?allPosts[i][type.toLowerCase()]:0) + 1;
+               allPosts[i].IsUserLikes =  !allPosts[i].IsUserLikes;
             }
          }
          this.setState({ ...this.state, allPosts })
@@ -192,7 +193,7 @@ class Postings extends Component {
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
-            actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
+         actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
@@ -201,21 +202,21 @@ class Postings extends Component {
             <div className="p-16">
                <Title level={5} className="post-title">{post.title}</Title>
                <Paragraph className="post-desc">{post.meassage}</Paragraph>
-               <div style={{display: 'flex', justifyContent: 'space-between'}}>
-               <ul className="card-actions-count pl-0">
-                  <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
-                  <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
-                  <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
-               </ul>
-               <ul className="card-actions-count">
-                  <li><span></span>2 <span> Like</span></li>
-                  <li><span></span>{post.comments.length} <span> Comment(s)</span></li>
-                  <li><span></span>2 <span> Shares</span></li>
-               </ul>
+               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <ul className="card-actions-count pl-0">
+                     <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
+                     <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
+                     <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
+                  </ul>
+                  <ul className="card-actions-count">
+                     {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
+                     {post.comments != null && post.comments.length != 0 && <li><span></span>{post.comments.length} <span> Comment(s)</span></li>}
+                     {/* <li><span></span>2 <span> Shares</span></li> */}
+                  </ul>
                </div>
-               {(post.tags!=null&&post.tags?.length>0)&&<div className="post-tag">
+               {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
+                     return <Tag key={index}><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
                   })}
                </div>}
             </div>

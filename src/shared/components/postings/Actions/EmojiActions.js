@@ -8,7 +8,7 @@ import Whistle from '../../../../styles/images/whistle.gif';
 class EmojiAction extends Component {
     render() {
         return (
-            <a className="like-emojis" onClick={(event)=>this.props.clickedEvent(event, 'Likes',0)}>
+            <a className={`like-emojis ${this.props?.IsUserLikes?'focus':""}`} onClick={(event)=>this.props.clickedEvent(event, 'Likes',0)}>
                 <ul class="l-emojis">
                     <li><Tooltip title="Love"><a onClick={(event) =>  this.props.clickedEvent(event, 'Love')}><img src={Love} /></a></Tooltip></li>
                     <li><Tooltip title="Claps"><a onClick={(event) =>  this.props.clickedEvent(event, 'Claps')}><img src={Claps} /></a></Tooltip></li>
