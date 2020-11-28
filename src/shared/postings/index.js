@@ -14,6 +14,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loader from '../../common/loader';
+import defaultUser from '../../styles/images/defaultuser.jpg';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -53,7 +54,7 @@ class Postings extends Component {
    titleAvatar = (user, date) => {
       return <Meta
          avatar={
-            <Avatar src={user.Image} />
+            <Avatar src={user.Image||defaultUser} />
          }
          title={user.Firstname}
          description={<Moment fromNow>{date}</Moment>}
@@ -198,14 +199,20 @@ class Postings extends Component {
             cover={this.renderPostImages(post.image, post.type)}
          >
             <div className="p-16">
-               <Title level={5} className="post-title f-16">{post.title}</Title>
-               <Paragraph className="f-14 post-desc">{post.meassage}</Paragraph>
+               <Title level={5} className="post-title">{post.title}</Title>
+               <Paragraph className="post-desc">{post.meassage}</Paragraph>
+               <div style={{display: 'flex', justifyContent: 'space-between'}}>
                <ul className="card-actions-count pl-0">
                   <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
                   <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
                   <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
-                  <li><span></span>{post.comments.length} <span> Comment(s)</span></li>
                </ul>
+               <ul className="card-actions-count">
+                  <li><span></span>2 <span> Like</span></li>
+                  <li><span></span>{post.comments.length} <span> Comment(s)</span></li>
+                  <li><span></span>2 <span> Shares</span></li>
+               </ul>
+               </div>
                {(post.tags!=null&&post.tags?.length>0)&&<div className="post-tag">
                   {post.tags?.map((tag, index) => {
                      return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>

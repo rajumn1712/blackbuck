@@ -4,6 +4,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import user from '../../../../styles/images/user.jpg';
 import { connect } from 'react-redux';
 import { postComment } from '../../../api/postsApi';
+import defaultUser from '../../../../styles/images/defaultuser.jpg';
 import Moment from 'react-moment'
 
 const CommentList = ({ comments }) => (
@@ -65,7 +66,7 @@ class Comments extends Component {
 
                 <Comment
                     avatar={
-                        <Avatar src={this.props.profile?.ProfilePic} />
+                        <Avatar src={this.props.profile?.ProfilePic||defaultUser} />
                     }
                     content={
                         <Form.Item><TextArea onChange={this.onChange} value={this.state.Comment} />
