@@ -15,6 +15,7 @@ import Loader from './common/loader';
 function App() {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
+    console.log(process.env.PUBLIC_URL)
     loadUser(store, userManager).then((user) => {   
         setLoading(false);
     });

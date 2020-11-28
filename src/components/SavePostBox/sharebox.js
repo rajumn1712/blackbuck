@@ -8,6 +8,7 @@ import AudioPlayer from "react-h5-audio-player";
 import 'react-h5-audio-player/lib/styles.css';
 import { Formik } from 'formik';
 import { savePost } from '../../shared/api/postsApi';
+import Loader from '../../common/loader';
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -86,7 +87,8 @@ class ShareBox extends Component {
         inputValue: '',
         uploadSources: [],
         post: { Title: "", Message: "", IsAnonymous: false },
-        errors: null
+        errors: null,
+        fileUploading: false
     }
     createObject = () => {
         return {
@@ -123,6 +125,7 @@ class ShareBox extends Component {
         multiple: false,
         action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
         onChange: (info) => {
+            this.setState({ ...this.state, fileUploading: true });
             const { status } = info.file;
             if (status !== 'uploading') {
 
@@ -131,8 +134,10 @@ class ShareBox extends Component {
                 this.postObject.ImageUrl = info.file.response;
                 this.setState({ ...this.state, uploadSources: [info.file.response] })
                 message.success(`${info.file.name} file uploaded successfully.`);
+                this.setState({ ...this.state, fileUploading: false })
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
+                this.setState({ ...this.state, fileUploading: false })
             }
         },
     };
@@ -233,56 +238,63 @@ class ShareBox extends Component {
             Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
             Audio: ".mp3,.aac,.wma,.wav,.flac,.m4a",
             Gif: ".gif",
-            Docs:'.doc,.docx'
+            Docs: '.doc,.docx'
         }
-        this.uploadProps = {...this.uploadProps,accept:fileTypes[type]}
+        this.uploadProps = { ...this.uploadProps, accept: fileTypes[type] }
         const types = {
             Text: <div>
 
             </div>,
             Images: <div>
-                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })} showUploadList={false}>
                     <span className="sharebox-icons photo-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Image</p>
                 </Dragger>
+                {this.state.fileUploading && <Loader className="loader-top-middle" />}
                 {this.state.uploadSources?.map((image, indx) => <div key={indx} className="mb-16 upload-preview">
                     <Image src={image} />
-                    {/* <a class="item-close">
+                    <a class="item-close" onClick={() => this.setState({ ...this.state, uploadSources: [] })}>
                         <Tooltip title="Remove">
                             <span className="close-icon"></span>
                         </Tooltip>
-                    </a> */}
+                    </a>
                 </div>)}
             </div>,
             Video: <div>
-                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })} >
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })} showUploadList={false}>
                     <span className="sharebox-icons video-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
                 </Dragger>
+                {this.state.fileUploading && <Loader className="loader-top-middle" />}
                 {this.state.uploadSources?.map((image, indx) => <div key={indx} className="mb-16 upload-preview">
                     <video width="100%" controls>
                         <source src={image} />
                     </video>
-                    {/* <a class="item-close">
+                    <a class="item-close" onClick={() => this.setState({ ...this.state, uploadSources: [] })}>
                         <Tooltip title="Remove">
                             <span className="close-icon"></span>
                         </Tooltip>
-                    </a> */}
+                    </a>
                 </div>)}
 
             </div>,
             Audio: <div>
-                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })} showUploadList={false}>
                     <span className="sharebox-icons audio-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Audio</p>
                 </Dragger>
+                {this.state.fileUploading && <Loader className="loader-top-middle" />}
                 {this.state.uploadSources?.map((image, indx) => <div key={indx} className="mb-16 upload-preview">
                     <AudioPlayer
-                        autoPlay
                         src={image}
                         onPlay={e => console.log("onPlay")}
                         layout="horizontal-reverse"
                     />
+                    <a class="item-close" onClick={() => this.setState({ ...this.state, uploadSources: [] })} showUploadList={false}>
+                        <Tooltip title="Remove">
+                            <span className="close-icon"></span>
+                        </Tooltip>
+                    </a>
                 </div>)}
             </div>,
             Docs: <div>
@@ -313,12 +325,18 @@ class ShareBox extends Component {
                 </div>
             </div>,
             Gif: <div>
-                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })} showUploadList={false}>
                     <span className="sharebox-icons gif-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Gif</p>
                 </Dragger>
+                {this.state.fileUploading && <Loader className="loader-top-middle" />}
                 {this.state.uploadSources?.map((image, indx) => <div key={indx} className="mb-16 upload-preview">
                     <Image src={image} />
+                    <a class="item-close" onClick={() => this.setState({ ...this.state, uploadSources: [] })}>
+                        <Tooltip title="Remove">
+                            <span className="close-icon"></span>
+                        </Tooltip>
+                    </a>
                 </div>)}
             </div>
         }
