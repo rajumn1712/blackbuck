@@ -1,36 +1,94 @@
 import React, { Component } from 'react';
-import { Card, List, Form, Row, Col, Select, Input } from 'antd'
+import { Card, List, Form, Row, Col, Select, Input, message } from 'antd'
 import { Link } from 'react-router-dom';
-// import { userManager } from '../shared/authentication/auth';
-import { store } from '../../store'
-// import User1 from '../styles/images/avatar.png';
-// import User2 from '../styles/images/user.jpg';
-// import User3 from '../styles/images/user_image.jpg';
-// import User4 from '../styles/images/user-image.jpg';
-import wipro from '../../styles/images/Wiprologo.svg'
-import infosys from '../../styles/images/infosys.svg'
-
-// import { userLogout } from '../reducers/auth';
+import { store } from '../../store';
 import '../../index.css';
 import '../../App.css';
-// import TextArea from 'antd/lib/input/TextArea';
-// import Modal from 'antd/lib/modal/Modal';
 import Dragger from 'antd/lib/upload/Dragger';
 import CommonModal from './CommonModal';
+import { saveInnternship } from '../../shared/api/apiServer';
+import Loader from '../../common/loader';
 
 const { Option } = Select;
-
+const internshipsObj = {
+    CompanyName: '',
+    ShortName: '',
+    Place: '',
+    Duration: '',
+    lstUploadLogos: [],
+    lstUploadFiles: []
+}
 class Intership extends Component {
     state = { 
         internships:this.props.internships,
-        visible: false 
+        internshipsObj:  internshipsObj,
+        visible: false ,
+        fileUploading:false,
+        fileUpload:false
+    };
+    uploadProps = {
+        name: 'file',
+        multiple: false,
+        action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
+        onChange: (info) => {
+            this.setState({ ...this.state, fileUploading: true });
+            const { status } = info.file;
+            if (status !== 'uploading') {
+
+            }
+            if (status === 'done') {
+                const { internshipsObj } = this.state;
+                internshipsObj.lstUploadLogos = [info.file.response]
+                this.setState({ internshipsObj: internshipsObj })
+                message.success(`${info.file.name} file uploaded successfully.`);
+                this.setState({ ...this.state, fileUploading: false })
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+                this.setState({ ...this.state, fileUploading: false })
+            }
+        },
+    };
+    uploadfileProps = {
+        name: 'file',
+        multiple: false,
+        action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
+        onChange: (info) => {
+            this.setState({ ...this.state, fileUpload: true });
+            const { status } = info.file;
+            if (status !== 'uploading') {
+
+            }
+            if (status === 'done') {
+                const { internshipsObj } = this.state;
+                internshipsObj.lstUploadFiles = [info.file.response]
+                this.setState({ internshipsObj: internshipsObj })
+                message.success(`${info.file.name} file uploaded successfully.`);
+                this.setState({ ...this.state, fileUpload: false })
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+                this.setState({ ...this.state, fileUpload: false })
+            }
+        },
     };
     showModal = () => {
         this.setState({
             visible: true,
         });
     };
+    handleChange = (target) => {
+        const { internshipsObj } = this.state;
+        internshipsObj[target.currentTarget.name] = target.currentTarget ? target.currentTarget.value : target;
+        this.setState({ internshipsObj: internshipsObj })
+    }
+    handleddlChange = (value) => {
+        const { internshipsObj } = this.state;
+        internshipsObj.Duration = value;
+        this.setState({ internshipsObj: internshipsObj })
+    }
     handleOk = e => {
+        saveInnternship(this.props?.profile?.Id, this.state.internshipsObj).then(res => {
+            message.success('Intership saved successfully')
+        })
         this.setState({
             visible: false,
         });
@@ -43,6 +101,7 @@ class Intership extends Component {
     render() {
         const { user } = store.getState().oidc;
         const data = [...this.state.internships];
+        const {internshipsObj}=this.state;
         return (
             <div className="custom-card">
                 <Card title="Internships" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons add" /></Link>: null}  >
@@ -83,35 +142,37 @@ class Intership extends Component {
                         <Row gutter={16}>
                             <Col xs={12}>
                                 <Form.Item label="Company Name" className="custom-fields">
-                                    <Input />
+                                    <Input name="CompanyName" value={internshipsObj.CompanyName} onChange={(event)=>this.handleChange(event)}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Short Name" className="custom-fields">
-                                    <Input />
+                                    <Input name="ShortName"  value={internshipsObj.ShortName} onChange={(event)=>this.handleChange(event)}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Place" className="custom-fields">
-                                    <Input />
+                                    <Input name="Place"  value={internshipsObj.Place} onChange={(event)=>this.handleChange(event)}/>
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Duration" className="custom-fields">
-                                    <Select defaultValue="Select Option">
+                                    <Select name="Duration"  defaultValue="Select Option" value={internshipsObj.Duration} onChange={(event)=>this.handleddlChange(event)}>
                                         <Option value="Select Option">Select Duration</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
 
                             <Col xs={12}>
-                                <Dragger className="upload" >
+                                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state.internshipsObj, lstUploadLogos: [] })}>
+                                {this.state.fileUploading && <Loader className="loader-top-middle" />}
                                     <span className="sharebox-icons photo-upload"></span>
                                     <p className="ant-upload-text mt-8 mb-0">Upload Logo</p>
                                 </Dragger>
                             </Col>
                             <Col xs={12}>
-                                <Dragger className="upload" >
+                                <Dragger className="upload" {...this.uploadfileProps} onRemove={() => this.setState({ ...this.state.internshipsObj, lstUploadFiles: [] })}>
+                                {this.state.fileUpload && <Loader className="loader-top-middle" />}
                                     <span className="sharebox-icons photo-upload"></span>
                                     <p className="ant-upload-text mt-8 mb-0">Upload certificate</p>
                                 </Dragger>
