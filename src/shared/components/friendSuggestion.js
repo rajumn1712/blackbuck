@@ -53,7 +53,7 @@ class FriendSuggestions extends Component {
                 </div>
                 <div className="friends">
                     {friends.map((friend, index) => {
-                        return <div className={"friends-list friends-list."+this.className[Math.floor(Math.random() * this.className.length)]}>
+                        return <div className={"friends-list "+this.className[Math.floor(Math.random() * this.className.length)]}>
                             <img src={friend.Image || defaultUser} width="100%" height="100%" />
                             <div className="friends-list--name">
                                 <Paragraph>{friend.FirstName}</Paragraph>
