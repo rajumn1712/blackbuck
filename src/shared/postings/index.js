@@ -159,7 +159,7 @@ class Postings extends Component {
          for (let i in allPosts) {
             if (allPosts[i].id === post.id) {
                allPosts[i][type.toLowerCase()] = allPosts[i][type.toLowerCase()] + 1;
-               allPosts[i].IsUserLikes = true;
+               allPosts[i].IsUserLikes =  !allPosts[i].IsUserLikes;
             }
          }
          this.setState({ ...this.state, allPosts })
