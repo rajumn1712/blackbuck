@@ -138,7 +138,7 @@ class Profile extends Component {
                         <div className="coverpage">
                             <Avatar className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <ImgCrop shape="rect" aspect beforeCrop={this.handleBeforUpload}>
+                            <ImgCrop beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
                                 <Upload {...this.uploadProps}>
                                     <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
                                         <span className="left-menu post-icon" />
