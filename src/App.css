@@ -101,8 +101,9 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .upload .ant-upload-text{color: var(--black); font-size: 16px; font-weight: 500;}
 .upload-image .ant-upload-drag{margin-bottom: 16px;}
 .upload-preview{position: relative;}
-.item-close{position: absolute; background: var(--white); box-shadow: var(--boxshadow); top: 10px; right: 10px; border-radius: 8px; z-index: 9; opacity: 0;}
+.item-close{position: absolute; background: var(--white); box-shadow: var(--boxshadow); top: 10px; right: 25px; border-radius: 8px; z-index: 9; opacity: 0;}
 .upload-preview:hover .item-close{opacity: 1;}
+.upload-preview .ant-image{height: 300px;overflow: auto;}
 .close-icon, .anticon.anticon-delete{width: 30px; height: 30px; vertical-align: middle; display: inline-block; background: url(../src/styles/images/icons.svg) no-repeat; background-position: -401px -196px;}
 .doc-icons.word{background-position: -469px -104px;}
 .doc-icons.excel{background-position: -412px -104px;}
@@ -131,7 +132,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-checkbox-checked::after, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{border-color: var(--primary);}
 .ok-image img{width: 48px !important;height: 48px !important;vertical-align: middle;margin-top: 20px;}
 .image-close{position: absolute;background: var(--white);box-shadow: var(--boxshadow);top: 8px;right: 25px;border-radius: 9px;cursor: pointer;}
-.close-icon, .anticon.anticon-delete{ width: 25px; height: 25px;vertical-align: middle;display: inline-block;background: url(../src/styles/images/icons.svg) no-repeat;background-position: -402px -199px;}
+.close-icon, .anticon.anticon-delete{margin-top: 3px; width: 25px; height: 25px;vertical-align: middle;display: inline-block;background: url(../src/styles/images/icons.svg) no-repeat;background-position: -402px -199px;}
 .image-shadow{box-shadow: var(--boxshadow);}
 .doc-icons.word{background-position: -469px -104px;}
 .doc-icons.excel{background-position: -412px -104px;}
