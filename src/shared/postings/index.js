@@ -192,7 +192,7 @@ class Postings extends Component {
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
-            actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
+            actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
