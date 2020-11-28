@@ -77,10 +77,10 @@ class About extends Component {
                     !this.props.IsHideAction ? <Button type="primary">Download Profile as PDF</Button> : null
                 ]} >
                     <div>
-                        <p>{AboutMe}</p>
+                        {AboutMe && <p>{AboutMe}</p>}
                         <Divider className="text-left-line" orientation="left">Contact</Divider>
                         <Row gutter={16}>
-                            <Col xs={24} sm={12}>
+                            {address.length > 0 && <Col xs={24} sm={12}>
                                 <div className="about-details">
                                     <div className="about-icons">
                                         <span className="icons location" />
@@ -91,23 +91,23 @@ class About extends Component {
                                         </p>
                                     })}
                                 </div>
-                            </Col>
-                            <Col xs={24} sm={12}>
+                            </Col>}
+                            {PhoneNumber && <Col xs={24} sm={12}>
                                 <div className="about-details">
                                     <div className="about-icons">
                                         <span className="icons phone" />
                                     </div>
                                     <p>{PhoneNumber}</p>
                                 </div>
-                            </Col>
-                            <Col xs={24} sm={12}>
+                            </Col> }
+                           {Email && <Col xs={24} sm={12}>
                                 <div className="about-details">
                                     <div className="about-icons">
                                         <span className="icons email" />
                                     </div>
                                     <p>{Email}</p>
                                 </div>
-                            </Col>
+                            </Col>}
                         </Row>
                     </div>
                 </Card>
