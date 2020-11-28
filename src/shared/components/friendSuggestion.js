@@ -5,7 +5,7 @@ import notify from './notification';
 import { getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
 import { Link } from 'react-router-dom'
 import connectStateProps from '../stateConnect';
-import Defaultuser from '../../styles/images/userprofile.jpg';
+import defaultUser from '../../styles/images/defaultuser.jpg';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     className = ["one","two","three"]
@@ -54,7 +54,7 @@ class FriendSuggestions extends Component {
                 <div className="friends">
                     {friends.map((friend, index) => {
                         return <div className={"friends-list friends-list."+this.className[Math.floor(Math.random() * this.className.length)]}>
-                            <img src={friend.Image || Defaultuser} width="100%" height="100%" />
+                            <img src={friend.Image || defaultUser} width="100%" height="100%" />
                             <div className="friends-list--name">
                                 <Paragraph>{friend.FirstName}</Paragraph>
                                 <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
