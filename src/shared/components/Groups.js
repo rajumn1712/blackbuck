@@ -34,7 +34,7 @@ class Groups extends Component {
     }
     render() {
         return (
-            <div className="custom-card">
+            <div className="custom-card sub-text">
                 <Card title="Groups" bordered={false} extra={<Link to="/commingsoon">View all</Link>} actions={[
                     <Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button>
                 ]} >
@@ -46,9 +46,18 @@ class Groups extends Component {
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.image} />}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text" title={item.name}>{item.name}</span></div>}
-                                    description={<div><div className="overflow-text">{item.description}</div><div><span style={{ color: 'var(--textprimary)',fontWeight: '500' }}>{item.members}</span> Members</div></div>}
+                                    description={<div><div className="overflow-text">{item.description}</div>
+                                    <div className="text-overflow">
+                                    <span>
+                                        <span className="mr-4" style={{ color: 'var(--textprimary)',fontWeight: '500' }}>{item.members}</span> 
+                                         Members
+                                    </span> | <span>
+                                        <span className="mr-4" style={{ color: 'var(--textprimary)',fontWeight: '500' }}>5</span> 
+                                         posts
+                                    </span></div>
+                                    </div>}
                                 />
-                                <Link style={{marginLeft: 16}} className="f-12 list-link" onClick={() => this.joinGroup(item)}>Join Group</Link>
+                                <Link style={{fontWeight:'500'}} className="ml-8 f-12 list-link" onClick={() => this.joinGroup(item)}>Join Group</Link>
                             </List.Item>
                         )}
                     />
