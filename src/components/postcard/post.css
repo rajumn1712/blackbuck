@@ -30,6 +30,7 @@
 .post-card .ant-card-actions li a:hover .post-icons.like-icon{background-position:  -150px -226px;}
 .post-card .ant-card-actions li a:hover .post-icons.comment-icon{background-position: -177px -225px;}
 .post-card .ant-card-actions li a:hover .post-icons.share-icon{background-position: -205px -226px;}
+.post-card .ant-card-actions li a.focus .post-icons.like-icon{background-position:  -150px -226px;}
 .more-opt li:hover .post-icons.edit-icon{background-position: -64px -226px;}
 .more-opt li:hover .notify-icon{background-position: -124px -226px;}
 .more-opt li:hover .savepost-icon{background-position: -351px -226px;}
