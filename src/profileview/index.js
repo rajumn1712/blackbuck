@@ -19,6 +19,7 @@ import Postings from '../shared/postings';
 import { connect } from 'react-redux';
 import { profileDetail } from '../shared/api/apiServer';
 import GroupsPage from '../shared/components/GroupsPage';
+import defaultUser from '../styles/images/defaultuser.jpg';
 import ImgCrop from 'antd-img-crop';
 const { Meta } = Card;
 const { Dragger } = Upload;
@@ -142,7 +143,7 @@ class ProfileView extends Component {
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="img-container">
-                                            <Avatar src={profileData.ProfilePic|| "https://via.placeholder.com/1200x400"}/>
+                                            <Avatar src={profileData.ProfilePic||defaultUser}/>
                                             <a className="img-camera overlay"><span className="icons camera" /> </a>
                                         
                                 </div>}

@@ -9,6 +9,7 @@ import avatar from '../styles/images/avatar.png';
 import avatar2 from '../styles/images/user.jpg';
 import userImage from '../styles/images/user_image.jpg';
 import user_Image from '../styles/images/user-image.jpg';
+import defaultUser from '../styles/images/defaultuser.jpg';
 import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
@@ -195,7 +196,7 @@ class HeaderComponent extends React.Component {
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
-                                        <img src={this.props?.profile?.ProfilePic} />
+                                        <img src={this.props?.profile?.ProfilePic||defaultUser} />
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>

@@ -22,6 +22,7 @@ import CommonModal from '../components/ProfileComponents/CommonModal';
 import Postings from '../shared/postings';
 import { connect } from 'react-redux';
 import { profileDetail, saveProfileImage } from '../shared/api/apiServer';
+import defaultUser from '../styles/images/defaultuser.jpg';
 import ImgCrop from 'antd-img-crop';
 const { Meta } = Card;
 const { Dragger } = Upload;
@@ -158,7 +159,7 @@ class Profile extends Component {
                                 <Meta avatar={<div className="img-container">
                                     <ImgCrop shape="rect" aspect beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
-                                            <Avatar src={profileData.ProfilePic || "https://via.placeholder.com/1200x400"} />
+                                            <Avatar src={profileData.ProfilePic || defaultUser} />
                                             <a className="img-camera overlay" onClick={() => this.setState({ isProfilePic: true })}><span className="icons camera" /> </a>
                                         </Upload>
                                     </ImgCrop>
