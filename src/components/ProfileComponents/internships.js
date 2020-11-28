@@ -34,7 +34,7 @@ class Intership extends Component {
             this.setState({ ...this.state, fileUploading: true });
             const { status } = info.file;
             if (status !== 'uploading') {
-
+                this.setState({ ...this.state, fileUploading: false })
             }
             if (status === 'done') {
                 const { internshipsObj } = this.state;
@@ -56,7 +56,7 @@ class Intership extends Component {
             this.setState({ ...this.state, fileUpload: true });
             const { status } = info.file;
             if (status !== 'uploading') {
-
+                this.setState({ ...this.state, fileUpload: false })
             }
             if (status === 'done') {
                 const { internshipsObj } = this.state;
