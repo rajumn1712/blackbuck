@@ -54,7 +54,7 @@ class Postings extends Component {
    titleAvatar = (user, date) => {
       return <Meta
          avatar={
-            <Avatar src={user.Image||defaultUser} />
+            <Avatar src={user.Image || defaultUser} />
          }
          title={user.Firstname}
          description={<Moment fromNow>{date}</Moment>}
@@ -151,7 +151,7 @@ class Postings extends Component {
          "Lastname": LastName,
          "Image": ProfilePic,
          "Email": Email,
-         "Type":type
+         "Type": type
       }
       const saveResponse = await saveActions(post.id, saveObj);
       if (saveResponse.ok) {
@@ -201,19 +201,19 @@ class Postings extends Component {
             <div className="p-16">
                <Title level={5} className="post-title">{post.title}</Title>
                <Paragraph className="post-desc">{post.meassage}</Paragraph>
-               <div style={{display: 'flex', justifyContent: 'space-between'}}>
-               <ul className="card-actions-count pl-0">
-                  <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
-                  <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
-                  <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
-               </ul>
-               <ul className="card-actions-count">
-                  <li><span></span>2 <span> Like</span></li>
-                  <li><span></span>{post.comments.length} <span> Comment(s)</span></li>
-                  <li><span></span>2 <span> Shares</span></li>
-               </ul>
+               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <ul className="card-actions-count pl-0">
+                     <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
+                     <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
+                     <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
+                  </ul>
+                  <ul className="card-actions-count">
+                     {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
+                     {post.comments != null && post.comments.length != 0 && <li><span></span>{post.comments.length} <span> Comment(s)</span></li>}
+                     {/* <li><span></span>2 <span> Shares</span></li> */}
+                  </ul>
                </div>
-               {(post.tags!=null&&post.tags?.length>0)&&<div className="post-tag">
+               {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
                      return <Tag key={index} className="f-14 px-16"><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
                   })}
