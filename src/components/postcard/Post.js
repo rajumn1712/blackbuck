@@ -4,12 +4,11 @@ import moment from 'moment';
 import _ from 'lodash';
 // import FbImageLibrary from 'react-fb-image-grid';
 import user from '../../styles/images/user.jpg';
-import PostImage from '../../styles/images/postimage.jpg';
-import Post_Image from '../../styles/images/post-image.jpg';
 import Love from '../../styles/images/love.gif';
 import Claps from '../../styles/images/claps.gif';
 import Whistle from '../../styles/images/whistle.gif';
 import Video from '../../styles/images/video.mp4';
+import defaultUser from '../../styles/images/defaultuser.jpg';
 import './post.css';
 import {
     FacebookIcon,
@@ -354,7 +353,7 @@ class PostCard extends React.Component {
                         {comments.length > 0 && <CommentList comments={comments} />}
                         <Comment
                             avatar={
-                                <Avatar src={user} />
+                                <Avatar src={user||defaultUser} />
                             }
                             content={
                                 <Editor

@@ -127,9 +127,11 @@ class Group extends Component {
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
+                            <Tooltip title="Change Coverphoto">
                             <Link to="#" className="editpost">
                                 <span className="left-menu post-icon" />
                             </Link>
+                            </Tooltip>
 
                         </div>
                         <div className="user-statistic">

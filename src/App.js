@@ -23,7 +23,7 @@ function App() {
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
       
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Suspense fallback={<div>Loading...</div>}>
             {loading ? <Loader className="loader-top-middle"/> : <LayoutComponent />}
           </Suspense>
