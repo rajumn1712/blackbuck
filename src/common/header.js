@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, } from 'antd'
+import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip } from 'antd'
 import { Link } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -152,24 +152,44 @@ class HeaderComponent extends React.Component {
                     </Col>
                     <Col span={8} justify="center">
                         <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
-                            <Menu.Item key="home"><Link to="/"><span className="icons home-icon"></span></Link></Menu.Item>
-                            <Menu.Item key="about"><Link to="/friends"><span className="icons social-icon"></span></Link></Menu.Item>
-                            <Menu.Item key="contact"><Link to="/contact"><span className="icons suitcase-icon" /></Link></Menu.Item>
-                            <Menu.Item key="posts"><Link to="/"><span className="icons lms-icon" /></Link></Menu.Item>
+                            <Menu.Item key="home">
+                                <Tooltip title="Home">
+                                    <Link to="/"><span className="icons home-icon"></span></Link>
+                                </Tooltip>
+                            </Menu.Item>
+                            <Menu.Item key="about">
+                                <Tooltip title="Connections">
+                                    <Link to="/friends"><span className="icons social-icon"></span></Link>
+                                </Tooltip>
+                            </Menu.Item>
+                            <Menu.Item key="contact">
+                                <Tooltip title="Careers">
+                                    <Link to="/contact"><span className="icons suitcase-icon" /></Link>
+                                </Tooltip>
+                            </Menu.Item>
+                            <Menu.Item key="posts">
+                                <Tooltip title="LMS">
+                                    <Link to="/"><span className="icons lms-icon" /></Link>
+                                </Tooltip>
+                            </Menu.Item>
                         </Menu>
                     </Col>
                     <Col span={8} >
                         <Menu className="menu-items text-right right-menu" mode="horizontal">
                             <Menu.Item key="">
-                                <Link to="/" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
+                                <Tooltip title="Messages">
+                                    <Link to="/" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
+                                </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="">
                                 <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
+                                    <Tooltip title="Notifications">
                                     <Link to="/about">
                                         <Badge className="notification-count" count={5} showZero>
                                             <span className="icons notification-icon" />
                                         </Badge>
                                     </Link>
+                                    </Tooltip>
                                 </Dropdown>
                             </Menu.Item>
                             <Menu.Item key="" >
