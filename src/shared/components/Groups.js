@@ -17,7 +17,7 @@ class Groups extends Component {
     joinGroup = (item) => {
         apiClient.get('/repos/skellock/apisauce/commits').then(res => {
             this.getAllGroups();
-            notify({ placement: 'topRight', message: 'Join', description: 'Join group successfully.' });
+            notify({ placement: 'topRight', message: 'Join', description: 'Request sent to join group' });
         });
     }
     newGroup = () => {
