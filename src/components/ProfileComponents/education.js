@@ -76,7 +76,7 @@ class Education extends Component {
                         )}
                     />
                 </Card>
-                <CommonModal className="cutom-popup" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="custom-popup" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
                     <div className="">
                         <Divider className="text-left-line" orientation="left">School</Divider>
                         <Form layout="vertical" >

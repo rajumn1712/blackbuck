@@ -141,7 +141,7 @@ class Intership extends Component {
                         )}
                     />
                 </Card>
-                <CommonModal visible={this.state.visible} title="Internships" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="custom-popup" visible={this.state.visible} title="Internships" cancel={this.handleCancel} saved={this.handleOk}>
                     <Form
                         layout="vertical"
 
