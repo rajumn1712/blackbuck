@@ -87,7 +87,7 @@ class Postings extends Component {
                return <div style={{ width: '100%', position: 'relative' }}>
                   <div class="images" onClick={this.showModal}>
                      {imageObj.map((image, index) => {
-                        return <div key={index} className={index === 0 ? "image-box" : 'image-box ' + imageObj.length}>
+                        return <div key={index} className={index === 0 ? "image-box single" : 'image-box ' + imageObj.length}>
                            <img src={image.Name || image} />
                         </div>
                      })}

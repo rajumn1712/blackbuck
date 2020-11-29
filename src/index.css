@@ -62,6 +62,9 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 @media (min-width: 1200px) {
   .container { width: 1180px; box-sizing: content-box; margin: auto;padding-left: 0;padding-right: 0; }
 }
+@media (min-width: 1600px) {
+  .container { width: 1280px; box-sizing: content-box; margin: auto;padding-left: 0;padding-right: 0; }
+}
 .alert-popup .ant-modal-content{border-radius: 8px;}
 .alert-popup .ant-modal-header{border-radius: 8px 8px 0 0;padding: 16px;}
 .alert-popup .ant-modal-title {font-size: 20px;}

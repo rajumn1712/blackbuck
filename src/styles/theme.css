@@ -87,7 +87,7 @@
 .mb-0{margin-bottom: 0px !important;}
 .mb-4{margin-bottom: 4px !important;}
 .mb-8{margin-bottom: 8px;}
-.mb-16{margin-bottom: 16px;}
+.mb-16{margin-bottom: 16px !important;}
 .mb-24{margin-bottom: 24px;}
 .mx-0{margin-left: 0; margin-right: 0;}
 .mx-4{margin-left: 4px; margin-right: 4px;}

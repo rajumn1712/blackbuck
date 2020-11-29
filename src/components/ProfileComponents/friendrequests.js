@@ -13,6 +13,7 @@ import '../../index.css';
 import '../../App.css';
 import notify from '../../shared/components/notification';
 import { acceptFrienRequest, fetchFriendRequests } from '../../shared/api/apiServer';
+import defaultUser from '../../styles/images/defaultuser.jpg';
 import connectStateProps from '../../shared/stateConnect';
 
 class FriendRequests extends Component {
@@ -72,7 +73,7 @@ class FriendRequests extends Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar className="request-image" src={item.Image || "https://via.placeholder.com/150"} />}
+                                    avatar={<Avatar className="request-image" src={item.Image||defaultUser} />}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text">{[item.Firstname,item.Lastname].join(' ')}</span></div>}
                                     description={<div className="mt-8 d-flex align-items-center">
                                         <span className="list-request">
@@ -87,7 +88,7 @@ class FriendRequests extends Component {
                                                     </Avatar>
                                                 })}
                                             </Avatar.Group>
-                                        </span> <span>Mutual Friends</span></div>}
+                                        </span> <span style={{fontWeight: 500}}>Mutual Friends</span></div>}
                                 />
                                 {!this.props.IsHideAction ? <Link className="f-14 mr-16 list-link" onClick={() => this.handleAccept(item)}>Accept</Link> : null}
                                 {!this.props.IsHideAction ? <Link className="f-14 ml-16 list-remove" onClick={(index) => this.handleRemove(item)}>Remove</Link> : null}

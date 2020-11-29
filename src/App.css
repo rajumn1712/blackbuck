@@ -3,8 +3,9 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-avatar{border-radius: 13px !important;}
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
 .ant-card-head{padding: 0 16px !important; min-height: 44px !important;}
-.ant-card-head .ant-card-head-title{font-weight: 500; font-size: var(--f-16); color:  var(--textprimary); line-height: normal;}
-.ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; height: 36px; padding: 5px 15px; font-weight: 500 !important;}
+.ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal;}
+.ant-btn{height: 35px !important; min-width: 80px;}
+.ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px; font-weight: 500 !important;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
 .ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{color: var(--primary) !important;}
 .ant-menu-item, .ant-menu-item-selected{border: 0 !important;}
@@ -24,8 +25,8 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .profile-card .ant-card-actions{width: 100%; background: transparent; border: 0;}
 .profile-card .profile-status{display: flex; flex-direction: column; align-items: center; color: var(--white); font-size: 24px; font-weight: 500; line-height: 30px;}
 .profile-card .profile-status span{font-size: 12px; line-height: 24px; font-weight: normal;}
-.sharebox-icons.text-icon{background-position: -5px -105px;}
-.share-box ul li:hover .sharebox-icons.text-icon{background-position: -5px -152px;}
+.sharebox-icons.text-icon{background-position: -5px -103px;}
+.share-box ul li:hover .sharebox-icons.text-icon{background-position: -5px -149px;}
 .sharebox-icons.photo-icon{background-position: -63px -101px;}
 .share-box ul li:hover .sharebox-icons.photo-icon, .sharebox-icons.photo-upload{background-position: -63px -149px;}
 .sharebox-icons.audio-icon{background-position: -124px -99px;}
@@ -36,7 +37,6 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .share-box ul li:hover .sharebox-icons.gif-icon,  .sharebox-icons.gif-upload{background-position: -236px -147px;}
 .sharebox-icons.video-icon{background-position: -297px -100px;}
 .share-box ul li:hover .sharebox-icons.video-icon, .sharebox-icons.video-upload{background-position: -297px -149px;}
-.share-box ul{list-style-type: none;padding: 15px 5px;}
 .sharebox-icons.speekar-icon{background-position: -124px -147px;}
 .speekar-block .ant-avatar{width: 100% !important;height: 100% !important;}
 .text-hover{opacity: 0; line-height: 1;}
@@ -44,7 +44,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .share-box ul li:hover .sharebox-icons {transform: translate3d(0,-5px,0); transition: transform 100ms linear;}
 .text-icon, .photo-icon, .audio-icon, .document-icon, .gif-icon{position: relative;}
 .icon-animation{color:var(--primary) !important;font-size: 14px; font-weight: 500;}
-.share-box li{position: relative;}
+.share-box li{position: relative; padding-top: 5px;}
 .share-box ul li:last-child:after{content: none;}
 .left-rail, .invite-card .ant-card{background: var(--white); border-radius: 10px !important; box-shadow: var(--boxshadow); margin-bottom: 16px;}
 .left-menu{width: 20px; height: 20px; vertical-align: initial; display: inline-block; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
@@ -90,11 +90,11 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .share-popup .ant-modal-header {padding: 14px 16px; border-bottom: 1px solid #D6E6FB; border-radius: 10px 10px 0 0;} 
 .share-popup .ant-modal-footer{background: #F9F9F9; padding: 15px 16px; border-top: 0;border-radius: 10px;}
 .share-box ul li:hover .sharebox-icons.video-icon{background-position: -297px -149px;}
-.share-box ul{list-style-type: none;padding: 16px 6px 10px;}
+.share-box ul{list-style-type: none;padding: 20px 6px 20px;}
 .upload-image .ant-avatar{width: 64px;height: 50px;margin-bottom: 5px;}
 .upload-image.ant-upload-text{color: var(--black);margin-bottom: 0px;}
 .upload-image{margin-bottom: 24px;}
-.title-img .ant-input{border: none !important;text-align: center;font-size: 24px !important;font-weight: 600;color: var(--textprimary);}
+.title-img .ant-input{border: none !important;text-align: center;font-size: 24px !important;font-weight: 600;color: var(--textprimary); line-height: normal; margin-bottom: 8px;}
 .title-img .ant-input:focus, .title-img .ant-input-focused, .caption-image .ant-input:focus{ border: none; box-shadow: none !important;}
 .caption-image .ant-input{color: var(--textsecondary); font-size: 14px; border: none !important; text-align: center;}
 .upload{border-radius: 6px !important;}
@@ -140,7 +140,9 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .docs .ant-list-items{display: flex; flex-wrap: wrap;}
 .docs .ant-list-item{min-width: calc(50% - 8px); background: #F9F9F9; padding: 10px; border-radius: 6px; border: 1px solid #EAF2FD;margin: 0 8px 8px 0;}
 .docs .ant-list-item h4{margin-bottom: 0;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;color: var(--primary);}
-.upload-image .ant-upload.ant-upload-drag p.ant-upload-text {margin: 0 0 4px;color: var(--black);font-size: 14px;font-weight: 500;}
+.addpost-user .ant-card-meta-title{font-size: var(--f-16);margin-bottom: 0 !important; line-height: normal;}
+.post-privacy{color: var(--textsecondary); font-size: var(--f-12); cursor: pointer;}
+.upload-image .ant-upload.ant-upload-drag p.ant-upload-text {margin: 0 0 4px;color: var(--black);font-size: var(--f-16);font-weight: 500;}
 .speekar-block{padding: 30px 0;background: var(--bodybg);border-radius: 10px;}
 .radious, .upload-image .ant-upload.ant-upload-drag{border-radius: 10px;}
 .doc-text{color: var(--primary);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 110px;}
@@ -160,18 +162,18 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .custom-card .ant-list-item:first-child{padding-top: 0 !important;}
 .custom-card .ant-list-item:last-child{ padding-bottom: 0 !important;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image{width: 40px;height: 40px;border-radius: 12px;}
-.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 10px;}
-.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: 14px;line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
+.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; box-shadow: var(--boxshadow); border-radius: 13px;}
+.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-14);line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .w-150{width: 150px;}
 .ant-btn{border-radius:4px !important;}
-.custom-card .list-link{color: var(--primary);margin-left: 3px;}
+.custom-card .list-link{color: var(--primary);margin-left: 3px; font-weight: 500;}
 .custom-card .ant-card-actions{ background-color: #F9F9F9;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top: 0;}
 .icons.add{background-position:-505px -198px;}
 .icons.add:hover{background-position: -505px -224px;}
 .icons.close{background-position:-401px -197px;}
 .icons.close:hover{background-position:-401px -223px;}   
-.hobbies-card .tags{ background-color: var(--secondary); color: var(--textprimary);font-size: 14px;font-weight: 500; border-radius: 40px;padding: 4px 15px;border: none;margin-bottom: 8px;}
+.hobbies-card .tags{ background-color: var(--secondary); color: var(--textprimary);font-size: var(--f-14);font-weight: 500; border-radius: 40px;padding: 4px 15px;border: none;margin-bottom: 8px;}
 .text-left-line.ant-divider-horizontal.ant-divider-with-text-left::before{width: 0 !important;}
 .text-left-line .ant-divider-inner-text{padding-left: 0;color: var(--textprimary);}
 .icons.location{background-position: -148px -252px;}
@@ -182,7 +184,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .about-details p{ margin-bottom: 0;font-size: var(--f-12);}
 /* FriendRequests */
 .ant-avatar.request-image{width: 60px !important;height: 60px !important;border-radius: 12px;}
-.list-remove{color: #FF0000;}
+.list-remove, .list-remove:hover{color: #FF0000 !important; font-weight: 500;}
 .requests .ant-row .ant-col{margin: 0 5px 16px; border-bottom: 1px solid var(--line);}
 .group-page .ant-card-meta-detail .ant-card-meta-title{margin-bottom: 0;}
 .group-page .list-link{color: var(--primary) !important;font-weight: 500;}
@@ -190,8 +192,10 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .group-page .ant-card-cover img{border-top-left-radius: 10px;border-top-right-radius: 10px;}
 .group-page .ant-card-body{padding: 16px !important;}
 .group-page .ant-card-actions{color:#f9f9f9;}
+.list-request{display: inherit; margin-right: 4px;}
 .list-request .ant-avatar{width: 25px;height: 25px;line-height: 20px;border-radius: 8px !important;}
-.requests .ant-list-item-meta{align-items: flex-end;}
+.list-request .ant-avatar-string{font-size: var(--f-10);}
+.requests .ant-list-item-meta{align-items: center;}
 .profile-tab .profile-menu{margin-top: 0 !important;padding-top: 16px !important;}
 .pfvideocard .ant-card-cover video{border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;}
 .pfvideocard .ant-card-body{padding: 0 !important;}
@@ -262,7 +266,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .img-container{position: relative;width: 100%;}
 .hobbies-tag .ant-tag{color: var(--black);font-size: 14px;}
 .hobbies-tag .ant-tag-close-icon{color: var(--black) !important; margin-left: 4px;font-size: 11px;}
-.comment-list .ant-comment:last-child .ant-comment-inner{padding-bottom: 16px;}
+.comment-list .ant-comment:last-child .ant-comment-inner{padding-bottom: 0px;}
 .sub-text .ant-list-item-meta-description{font-size: 12px;}
 .display-flex{display: flex;}
 .text-overflow{    white-space: nowrap;
