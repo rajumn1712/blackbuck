@@ -10,6 +10,7 @@ import SideAction from '../../components/postings/Actions/SideActions';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
+import '../../../components/postcard/post.css'
 const { Meta } = Card;
 
 

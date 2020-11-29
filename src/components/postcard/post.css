@@ -68,7 +68,7 @@
 .post-image img{ width:100%;height: auto;}
 .overlayimage{ position: absolute;  top: 0;right: 0; left: 0; bottom: 0;}
 .post-preview .ant-modal-content{ height: 100vh; background: var(--transparent);}
-.post-preview .ant-modal-content .ant-modal-close { top: 10px ;right: 10px;}
+.post-preview .ant-modal-content .ant-modal-close { top: 10px ;left: 10px;}
 .post-preview .ant-modal-content .ant-modal-close .ant-modal-close-x{background: var(--white);display: block;width: 35px;height: 35px;font-size: 16px;font-style: normal;line-height: 35px;text-align: center;text-transform: none;text-rendering: auto;border-radius: 11px;}
 .post-preview.ant-modal{top:0 !important;padding-bottom: 0 !important;max-width: calc(100vw - 20px) !important;}
 .post-preview.ant-modal .ant-modal-body{padding: 0 !important;}
