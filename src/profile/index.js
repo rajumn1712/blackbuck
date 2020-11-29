@@ -23,6 +23,7 @@ import Postings from '../shared/postings';
 import { connect } from 'react-redux';
 import { profileDetail, saveProfileImage } from '../shared/api/apiServer';
 import defaultUser from '../styles/images/defaultuser.jpg';
+import defaultCover from '../styles/images/defaultcover.png';
 import ImgCrop from 'antd-img-crop';
 const { Meta } = Card;
 const { Dragger } = Upload;
@@ -137,7 +138,7 @@ class Profile extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <Avatar className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} />
+                            <Avatar className="center-focus" src={profileData.CoverPic || defaultCover} />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
                             <ImgCrop beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
                                 <Upload {...this.uploadProps}>

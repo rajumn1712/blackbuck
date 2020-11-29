@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import { profileDetail } from '../shared/api/apiServer';
 import GroupsPage from '../shared/components/GroupsPage';
 import defaultUser from '../styles/images/defaultuser.jpg';
+import defaultCover from '../styles/images/defaultcover.png';
 import ImgCrop from 'antd-img-crop';
 const { Meta } = Card;
 const { Dragger } = Upload;
@@ -130,7 +131,7 @@ class ProfileView extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <img className="center-focus" src={profileData.CoverPic || "https://via.placeholder.com/1200x400"} alt="profilecover" />
+                            <img className="center-focus" src={profileData.CoverPic || defaultCover} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
 
 
