@@ -70,8 +70,8 @@
 }
 
 .main-header .ant-menu-item a:before {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
 }
 
 .header-searchbar .ant-input-group-addon {

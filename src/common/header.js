@@ -165,12 +165,12 @@ class HeaderComponent extends React.Component {
                             </Menu.Item>
                             <Menu.Item key="contact">
                                 <Tooltip title="Careers" placement="bottom">
-                                    <Link to="/contact"><span className="icons suitcase-icon" /></Link>
+                                    <Link to="/commingsoon"><span className="icons suitcase-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="posts">
                                 <Tooltip title="LMS" placement="bottom">
-                                    <Link to="/"><span className="icons lms-icon" /></Link>
+                                    <Link to="/commingsoon"><span className="icons lms-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
                         </Menu>

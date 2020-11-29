@@ -20,14 +20,14 @@ class Home extends Component {
         return (
             <div className="main">
                 <Row gutter={16}>
-                    <Col xs={24} sm={12} md={8} lg={6} xl={6}>
+                    <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={5}>
                         <Identity />
                         <Invite />
                     </Col>
-                    <Col xs={24} sm={12} md={16} lg={12} xl={12}>
+                    <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
                         <Postings sharebox={true} friendsSuggestions={true} postingsType="all"/>
                     </Col>
-                    <Col xs={24} sm={12} md={8} lg={6} xl={6}>
+                    <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={7}>
                         <Groups />
                         <Ads />
                     </Col>
