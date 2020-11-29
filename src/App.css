@@ -104,6 +104,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .item-close{position: absolute; background: var(--white); box-shadow: var(--boxshadow); top: 10px; right: 25px; border-radius: 8px; z-index: 9; opacity: 0;}
 .upload-preview:hover .item-close{opacity: 1;}
 .upload-preview .ant-image{height: 300px;overflow: auto;}
+.upload-preview .ant-list-item-meta{align-items: center;}
 .close-icon, .anticon.anticon-delete{width: 30px; height: 30px; vertical-align: middle; display: inline-block; background: url(../src/styles/images/icons.svg) no-repeat; background-position: -401px -196px;}
 .doc-icons.word{background-position: -469px -104px;}
 .doc-icons.excel{background-position: -412px -104px;}
@@ -272,5 +273,6 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .text-overflow{    white-space: nowrap; overflow: hidden;text-overflow: ellipsis;}
 .ant-divider-with-text {margin-top: 0 !important;}
 @media (min-width:576px){
-    .w-medium{width: 575px !important;}
+    .cutom-popup{width: 600px !important;}
+    .cutom-popup .ant-modal-body{max-height: 60vh; overflow: auto;} 
 }

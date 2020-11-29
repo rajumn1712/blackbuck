@@ -93,7 +93,7 @@ class Interests extends Component {
                         )}
                     />
                 </Card>
-                <CommonModal className="w-medium modal-interest" visible={visible} title="Interests" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="cutom-popup modal-interest" visible={visible} title="Interests" cancel={this.handleCancel} saved={this.handleOk}>
                     <div className="modal-search p-16">
                         <Search className="header-searchbar" placeholder="Search Groups / Courses" onChange={(e => this.handleSearch(e))} />
                     </div>

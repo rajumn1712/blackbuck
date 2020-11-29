@@ -111,7 +111,7 @@ class About extends Component {
                         </Row>
                     </div>
                 </Card>
-                <CommonModal className="w-medium" visible={visible} title="About Me" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="cutom-popup" visible={visible} title="About Me" cancel={this.handleCancel} saved={this.handleOk}>
                     <Formik initialValues={this.initialValues}
                         validate={(values) => this.handleValidate(values)}
                         onSubmit={this.handleOk}

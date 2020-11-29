@@ -9,6 +9,12 @@ import CommonModal from './CommonModal';
 import { saveInnternship } from '../../shared/api/apiServer';
 import Loader from '../../common/loader';
 
+const docs = [
+    {
+        avatar: [<span className="icon education-icon mr-0"></span>],
+        title: 'Inter Marks memo.jpeg'
+    }
+]
 const { Option } = Select;
 const internshipsObj = {
     CompanyName: '',
@@ -19,12 +25,12 @@ const internshipsObj = {
     lstUploadFiles: []
 }
 class Intership extends Component {
-    state = { 
-        internships:this.props.internships,
-        internshipsObj:  internshipsObj,
-        visible: false ,
-        fileUploading:false,
-        fileUpload:false
+    state = {
+        internships: this.props.internships,
+        internshipsObj: internshipsObj,
+        visible: false,
+        fileUploading: false,
+        fileUpload: false
     };
     uploadProps = {
         name: 'file',
@@ -101,10 +107,10 @@ class Intership extends Component {
     render() {
         const { user } = store.getState().oidc;
         const data = [...this.state.internships];
-        const {internshipsObj}=this.state;
+        const { internshipsObj } = this.state;
         return (
             <div className="custom-card">
-                <Card title="Internships" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons add" /></Link>: null}  >
+                <Card title="Internships" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons add" /></Link> : null}  >
                     <List
                         grid={{
                             gutter: 8,
@@ -128,7 +134,7 @@ class Intership extends Component {
                                         <p className="description"><span className="afterline mr-16">{item.Location}</span><span className="">{item.Duration}</span></p>
                                     </div>
                                     <div className="intern-cardfooter">
-                        <p className="mb-0"><span className="icons pdf mr-8" />{item.Certificate}</p>
+                                        <p className="mb-0"><span className="icons pdf mr-8" />{item.Certificate}</p>
                                     </div>
                                 </div>
                             </List.Item>
@@ -136,28 +142,29 @@ class Intership extends Component {
                     />
                 </Card>
                 <CommonModal visible={this.state.visible} title="Internships" cancel={this.handleCancel} saved={this.handleOk}>
-                <Form
+                    <Form
                         layout="vertical"
+
                     >
-                        <Row gutter={16}>
+                        <Row gutter={16} className="mb-16">
                             <Col xs={12}>
                                 <Form.Item label="Company Name" className="custom-fields">
-                                    <Input name="CompanyName" value={internshipsObj.CompanyName} onChange={(event)=>this.handleChange(event)}/>
+                                    <Input name="CompanyName" value={internshipsObj.CompanyName} onChange={(event) => this.handleChange(event)} />
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Short Name" className="custom-fields">
-                                    <Input name="ShortName"  value={internshipsObj.ShortName} onChange={(event)=>this.handleChange(event)}/>
+                                    <Input name="ShortName" value={internshipsObj.ShortName} onChange={(event) => this.handleChange(event)} />
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Place" className="custom-fields">
-                                    <Input name="Place"  value={internshipsObj.Place} onChange={(event)=>this.handleChange(event)}/>
+                                    <Input name="Place" value={internshipsObj.Place} onChange={(event) => this.handleChange(event)} />
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
                                 <Form.Item label="Duration" className="custom-fields">
-                                    <Select name="Duration"  defaultValue="Select Option" value={internshipsObj.Duration} onChange={(event)=>this.handleddlChange(event)}>
+                                    <Select name="Duration" defaultValue="Select Option" value={internshipsObj.Duration} onChange={(event) => this.handleddlChange(event)}>
                                         <Option value="Select Option">Select Duration</Option>
                                     </Select>
                                 </Form.Item>
@@ -165,23 +172,36 @@ class Intership extends Component {
 
                             <Col xs={12}>
                                 <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state.internshipsObj, lstUploadLogos: [] })}>
-                                {this.state.fileUploading && <Loader className="loader-top-middle" />}
+                                    {this.state.fileUploading && <Loader className="loader-top-middle" />}
                                     <span className="sharebox-icons photo-upload"></span>
                                     <p className="ant-upload-text mt-8 mb-0">Upload Logo</p>
                                 </Dragger>
                             </Col>
                             <Col xs={12}>
                                 <Dragger className="upload" {...this.uploadfileProps} onRemove={() => this.setState({ ...this.state.internshipsObj, lstUploadFiles: [] })}>
-                                {this.state.fileUpload && <Loader className="loader-top-middle" />}
+                                    {this.state.fileUpload && <Loader className="loader-top-middle" />}
                                     <span className="sharebox-icons photo-upload"></span>
                                     <p className="ant-upload-text mt-8 mb-0">Upload certificate</p>
                                 </Dragger>
                             </Col>
-                            <Col xs={12}>
-
-                            </Col>
                         </Row>
                     </Form>
+                    <div className="docs about-icons mb-16 education">
+                        <List
+                            itemLayout="horizontal"
+                            dataSource={docs}
+                            renderItem={item => (
+                                <List.Item className="upload-preview">
+                                    <List.Item.Meta
+                                        avatar={item.avatar}
+                                        title={item.title}
+                                        description={<div className="file-size f-14">{item.fileSize}</div>}
+                                    />
+                                    <span className="close-icon"></span>
+                                </List.Item>
+                            )}
+                        />
+                    </div>
                 </CommonModal>
             </div>
 

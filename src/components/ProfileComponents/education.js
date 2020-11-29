@@ -76,7 +76,7 @@ class Education extends Component {
                         )}
                     />
                 </Card>
-                <CommonModal className="w-medium" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="cutom-popup" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
                     <div className="">
                         <Divider className="text-left-line" orientation="left">School</Divider>
                         <Form layout="vertical" >
@@ -130,42 +130,60 @@ class Education extends Component {
                             />
                         </div>
 
-                        <Divider className="text-left-line" orientation="left">college</Divider>
-                        <Row gutter={16}>
-                            <Col xs={12}>
-                                <Form.Item label="Education Type" className="custom-fields">
-                                    <Select defaultValue="Select Option">
-                                        <Option value="Select Option">Select State</Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="College/University Name" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Academic Year" className="custom-fields">
-                                    <Input.Group compact>
-                                        <RangePicker />
-                                    </Input.Group>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Place of College/University" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Marks Grade" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Dragger className="upload" >
+                        <Divider className="text-left-line" orientation="left">College</Divider>
+                        <Form layout="vertical" >
+                            <Row gutter={16}>
+                                <Col xs={12}>
+                                    <Form.Item label="Education Type" className="custom-fields">
+                                        <Select defaultValue="Select Option">
+                                            <Option value="Select Option">Select State</Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="College/University Name" className="custom-fields">
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Academic Year" className="custom-fields">
+                                        <Input.Group compact>
+                                            <RangePicker />
+                                        </Input.Group>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Place of College/University" className="custom-fields">
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12}>
+                                    <Form.Item label="Marks Grade" className="custom-fields">
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form>
+                        <Dragger className="upload mb-24" >
                             <span className="sharebox-icons photo-upload"></span>
                             <p className="ant-upload-text mt-8 mb-0">Upload Certificate</p>
                         </Dragger>
+                        <div className="docs about-icons mb-16 education">
+                            <List
+                                itemLayout="horizontal"
+                                dataSource={docs}
+                                renderItem={item => (
+                                    <List.Item className="upload-preview">
+                                        <List.Item.Meta
+                                            avatar={item.avatar}
+                                            title={item.title}
+                                            description={<div className="file-size f-14">{item.fileSize}</div>}
+                                        />
+                                        <span className="close-icon"></span>
+                                    </List.Item>
+                                )}
+                            />
+                        </div>
                         <Divider className="text-left-line" orientation="left">Add Education</Divider>
                     </div>
                 </CommonModal>
