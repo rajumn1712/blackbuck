@@ -132,7 +132,7 @@ class PostCardModal extends Component {
                 <Carousel ref={this.slider}>
                     {post.image?.map((image, index) => {
                         return <div key={index}>
-                            <img src={image.image} />
+                            <img src={image} />
                         </div>
                     })}
                 </Carousel>
