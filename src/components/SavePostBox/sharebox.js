@@ -360,6 +360,7 @@ class ShareBox extends Component {
         if (!post.Title || !post.Message) {
             errors.validate = false
             if (!post.Title) { errors.Title = "Title is required" }
+            if (!post.Message) { errors.Message = "Description is required" }
         }
         this.setState({ ...this.state, errors })
         return errors;
@@ -368,24 +369,25 @@ class ShareBox extends Component {
         const { tags, inputVisible, inputValue, visible, modal } = this.state;
         const tagChild = tags?.map(this.forMap);
         const menu = (
-            <Menu className="custom-droupdown">
-                <Menu.Item key="0"><a href="">Public</a></Menu.Item>
-                {/* <Menu.Item key="1"><a href="">Friends</a></Menu.Item>
-                <Menu.Item key="2"><a href="">College</a></Menu.Item>
-                <Menu.Item key="3"><a href="">Groups</a></Menu.Item> */}
+            <Menu className="custom-dropdown more-opt">
+                <Menu.Item key="0"><a><span className="grp-type-icon public mr-4"></span>Public</a></Menu.Item>
+                <Menu.Item key="1"><a><span className="grp-type-icon private mr-4"></span>Private</a></Menu.Item>
+                <Menu.Item key="2"><a><span className="grp-type-icon public mr-4"></span>Friends</a></Menu.Item>
+                <Menu.Item key="3"><a><span className="grp-type-icon public mr-4"></span>College</a></Menu.Item>
+                <Menu.Item key="4"><a><span className="grp-type-icon public mr-4"></span>Groups</a></Menu.Item>
             </Menu>
         );
-        const title = <div className="d-flex justify-content-between">
+        const title = <div className="d-flex justify-content-between addpost-user">
             <Meta
                 avatar={<Avatar src={this.props.profile?.ProfilePic} />}
-                title={<h4 className="f-16 mb-0">{this.props.profile?.FirstName}</h4>}
-                description={<div className="mb-0 f-14"><Dropdown overlay={menu} trigger={['click']}>
-                    <a className="ant-dropdown-link" style={{ color: '#9B9B9B' }} onClick={e => e.preventDefault()}>
-                        Public
-                    </a>
+                title={<h4 className="mb-0">{this.props.profile?.FirstName}</h4>}
+                description={<div className="mb-0"><Dropdown overlay={menu} trigger={['click']}>
+                    <div className="post-privacy" style={{ color: '#9B9B9B', fontSize: 12 }} onClick={e => e.preventDefault()}>
+                    <span className="grp-type-icon public mr-4"></span>Public<span className="grp-type-icon public ml-4"></span>
+                    </div>
                 </Dropdown></div>} />
-            <div style={{ display: 'flex' }}>
-                <div><span className="f-14" style={{ color: 'var(--textlightcolor)' }}>Post</span><div className="f-14" style={{ marginTop: -6 }}>Anonymous</div></div>
+            <div style={{ display: 'flex' }} className="mr-8">
+                <div><span className="f-12" style={{ color: 'var(--textlightcolor)' }}>Post</span><div className="f-14" style={{ marginTop: -6 }}>Anonymous</div></div>
                 <Checkbox onChange={this.handleChange} value={this.state.IsAnonymous} name="IsAnonymous" className="ml-16 mt-8 mr-8 anonymous-check"></Checkbox>
             </div>
         </div>
@@ -411,7 +413,7 @@ class ShareBox extends Component {
                         </Button></div>
                     ]}>
                     <div className="upload-image">
-                        {this.state.errors && !this.state.errors.validate && <Alert showIcon type="error" message={<>{Object.keys(this.state.errors).map((value, indx) => <>{this.state.errors[value] && <><span>{this.state.errors[value]}</span><br /></>}</>)}</>} />}
+                        {this.state.errors && !this.state.errors.validate && <Alert className="mb-16" showIcon type="error" message={<>{Object.keys(this.state.errors).map((value, indx) => <>{this.state.errors[value] && <><span>{this.state.errors[value]}</span><br /></>}</>)}</>} />}
                         {this.renderUploadType(modal)}
                         <form >
                             <div className="title-img">
