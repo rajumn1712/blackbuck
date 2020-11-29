@@ -101,7 +101,7 @@ class Hobbies extends Component {
                         return <Tag className="tags" key={index}>{hobby.Name}</Tag>
                     })}
                 </Card>
-                <CommonModal visible={visible} title="Hobbies" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="w-medium" visible={visible} title="Hobbies" cancel={this.handleCancel} saved={this.handleOk}>
                 <div className="tags">
                         <div style={{ margin: 10 }}>
                             <TweenOneGroup

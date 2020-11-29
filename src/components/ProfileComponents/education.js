@@ -76,7 +76,7 @@ class Education extends Component {
                         )}
                     />
                 </Card>
-                <CommonModal visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="w-medium" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
                     <div className="">
                         <Divider className="text-left-line" orientation="left">School</Divider>
                         <Row gutter={16}>
