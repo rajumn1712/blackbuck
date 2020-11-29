@@ -99,8 +99,8 @@ class About extends Component {
                                     </div>
                                     <p>{PhoneNumber}</p>
                                 </div>
-                            </Col> }
-                           {Email && <Col xs={24} sm={12}>
+                            </Col>}
+                            {Email && <Col xs={24} sm={12}>
                                 <div className="about-details">
                                     <div className="about-icons">
                                         <span className="icons email" />
@@ -111,7 +111,7 @@ class About extends Component {
                         </Row>
                     </div>
                 </Card>
-                <CommonModal visible={visible} title="About Me" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="w-medium" visible={visible} title="About Me" cancel={this.handleCancel} saved={this.handleOk}>
                     <Formik initialValues={this.initialValues}
                         validate={(values) => this.handleValidate(values)}
                         onSubmit={this.handleOk}
@@ -121,7 +121,7 @@ class About extends Component {
                         >
                             <Row gutter={16}>
                                 <Col xs={24}>
-                                    <Form.Item label="About Me" className="custom-fields">
+                                    <Form.Item label="About Me" className="custom-fields mb-24">
                                         <TextArea autoSize={{ minRows: 2, maxRows: 6 }} value={AboutMe}
                                             name="AboutMe" onChange={this.handleOnChange} />
                                         <ErrorMessage name="AboutMe" />
@@ -130,38 +130,38 @@ class About extends Component {
                                 <Col xs={24}>
                                     <h3>Contact</h3>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="Plot No" className="custom-fields">
-                                        <Input value={address[0]?.BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange} />
                                         <ErrorMessage name="BlockHouseNo" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="Street Name" className="custom-fields">
-                                        <Input value={address[0]?.BuildingEstate} name="BuildingEstate" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.BuildingEstate} name="BuildingEstate" onChange={this.handleOnChange} />
                                         <ErrorMessage name="BuildingEstate" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="Address Line 1" className="custom-fields">
-                                        <Input value={address[0]?.UnitNo} name="UnitNo" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.UnitNo} name="UnitNo" onChange={this.handleOnChange} />
                                         <ErrorMessage name="UnitNo" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="City" className="custom-fields">
-                                        <Input value={address[0]?.City} name="City" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.City} name="City" onChange={this.handleOnChange} />
                                         <ErrorMessage name="City" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="State" className="custom-fields">
                                         <Select defaultValue="Select Option" value={address[0]?.State} name="State" onChange={this.handleOnChange}>
                                             <Option value="Select Option">Select State</Option>
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="Country" className="custom-fields">
                                         <Select id="select" value={address[0]?.Country} name="Country" onChange={this.handleOnChange.bind(this)}>
                                             <Option value="Select Option">Select Option</Option>
@@ -170,21 +170,21 @@ class About extends Component {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="Pin Code" className="custom-fields">
-                                        <Input value={address[0]?.PostalCode} name="PostalCode" onChange={this.handleOnChange}/>
+                                        <Input value={address[0]?.PostalCode} name="PostalCode" onChange={this.handleOnChange} />
                                         <ErrorMessage name="PostalCode" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="Phone Number" className="custom-fields">
-                                        <Input value={PhoneNumber} name="PhoneNumber" onChange={this.handleOnChange}/>
+                                        <Input value={PhoneNumber} name="PhoneNumber" onChange={this.handleOnChange} />
                                         <ErrorMessage name="PhoneNumber" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={12}>
+                                <Col xs={24} sm={12}>
                                     <Form.Item label="Email" className="custom-fields">
-                                        <Input value={Email} name="Email" onChange={this.handleOnChange} disabled/>
+                                        <Input value={Email} name="Email" onChange={this.handleOnChange} disabled />
                                     </Form.Item>
                                 </Col>
                             </Row>

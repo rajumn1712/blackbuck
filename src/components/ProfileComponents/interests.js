@@ -93,7 +93,7 @@ class Interests extends Component {
                         )}
                     />
                 </Card>
-                <CommonModal visible={visible} title="Interests" cancel={this.handleCancel} saved={this.handleOk}>
+                <CommonModal className="p-0" visible={visible} title="Interests" cancel={this.handleCancel} saved={this.handleOk}>
                     <div className="modal-search p-16">
                         <Search className="header-searchbar" placeholder="Search Groups / Courses" onChange={(e => this.handleSearch(e))} />
                     </div>

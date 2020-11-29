@@ -13,6 +13,7 @@ class CommonModal extends React.Component {
                 visible={modal.visible}
                 closable={false}
                 onOk={modal.saved}
+                className={modal.className}
                 onCancel={modal.cancel}
                 footer={[<div className="d-flex justify-content-between">
                     <Button key="back" onClick={modal.cancel} className="btn-cancel">
