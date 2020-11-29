@@ -159,7 +159,7 @@ class Profile extends Component {
                                 <Statistic title="Posts" value={profileData.Posts} />
                             </div>
                             <Card className="user-banner" >
-                                <Meta avatar={<div className="img-container">
+                                <Meta avatar={<div className="">
                                     <ImgCrop shape="rect" aspect beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profileData.ProfilePic || defaultUser} />

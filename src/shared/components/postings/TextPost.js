@@ -194,7 +194,7 @@ class TextPostCard extends Component {
                     </Card>
                     {(commentsection || textpost.comments.length > 0) ? <Comments comments={textpost.comments} submitting={submitting} value={value}
                         submitted={this.handleSubmit} changed={this.handleChange} /> : null}
-                    <PostCardModal {...this.state} closed={() => { this.setState({ visible: false }) }} />
+                    {/* <PostCardModal {...this.state} closed={() => { this.setState({ visible: false }) }} /> */}
                 </div>
             })
         )

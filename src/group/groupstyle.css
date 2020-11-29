@@ -54,8 +54,12 @@
     height: 150px;
     border-radius: 50px !important;
 }
-.group-banner .ant-card-meta-avatar .img-camera.overlay{display: none;}
-/* .img-camera{bottom: 39px;} */
+.group-banner .ant-list-item-meta-avatar .img-camera.overlay{display: none;}
+.group-banner .ant-list-item-meta-avatar:hover .img-camera.overlay {
+    display: block;
+}
+.btn-position{top:15px;}
+.img-camera{bottom: 39px;}
 .user-statistic .group-banner .ant-card-body {
     padding: 0 !important;
 }
