@@ -96,6 +96,10 @@
 .grp-type-icon{width: 14px;height: 14px;display: inline-block;vertical-align: text-top;}
 .grp-type-icon.public{background-position: -26px -396px;}
 .grp-type-icon.private{background-position: -48px -396px;}
+.grp-type-icon.down{background-position: -153px -396px;}
+.grp-type-icon.friend{background-position: -87px -396px;}
+.grp-type-icon.college{background-position: -132px -397px;}
+.grp-type-icon.group{background-position: -153px -396px;}
 .ant-avatar-group .ant-avatar{border-width: 2px;}
 .join-grp{display: flex; justify-content: space-between; align-items: center; margin-top: 20px;}
 .anonymous-check .ant-checkbox{transform: scale(1.6)}

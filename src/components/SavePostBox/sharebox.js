@@ -370,11 +370,11 @@ class ShareBox extends Component {
         const tagChild = tags?.map(this.forMap);
         const menu = (
             <Menu className="custom-dropdown more-opt">
-                <Menu.Item key="0"><a><span className="grp-type-icon public mr-4"></span>Public</a></Menu.Item>
-                <Menu.Item key="1"><a><span className="grp-type-icon private mr-4"></span>Private</a></Menu.Item>
-                <Menu.Item key="2"><a><span className="grp-type-icon public mr-4"></span>Friends</a></Menu.Item>
-                <Menu.Item key="3"><a><span className="grp-type-icon public mr-4"></span>College</a></Menu.Item>
-                <Menu.Item key="4"><a><span className="grp-type-icon public mr-4"></span>Groups</a></Menu.Item>
+                <Menu.Item key="0">Public</Menu.Item>
+                <Menu.Item key="1">Private</Menu.Item>
+                <Menu.Item key="2">Friends</Menu.Item>
+                <Menu.Item key="3">College</Menu.Item>
+                <Menu.Item key="4">Groups</Menu.Item>
             </Menu>
         );
         const title = <div className="d-flex justify-content-between addpost-user">
@@ -383,7 +383,7 @@ class ShareBox extends Component {
                 title={<h4 className="mb-0">{this.props.profile?.FirstName}</h4>}
                 description={<div className="mb-0"><Dropdown overlay={menu} trigger={['click']}>
                     <div className="post-privacy" style={{ color: '#9B9B9B', fontSize: 12 }} onClick={e => e.preventDefault()}>
-                    <span className="grp-type-icon public mr-4"></span>Public<span className="grp-type-icon public ml-4"></span>
+                    <span className="grp-type-icon public mr-4"></span>Public<span className="grp-type-icon down ml-4"></span>
                     </div>
                 </Dropdown></div>} />
             <div style={{ display: 'flex' }} className="mr-8">
