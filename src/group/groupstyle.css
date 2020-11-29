@@ -196,6 +196,9 @@
         width: 100%;
         /* justify-content: space-evenly; */
     }
+    .user-banner.w-btn{
+        min-width: 760px;
+    }
     
 }
 /* .user-statistic .ant-avatar.ant-avatar-circle{width: 150px;height: 150px;border-radius: 50px !important;} */

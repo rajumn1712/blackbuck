@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
 import Invite from '../components/invite';
 import Ads from '../components/ads';
@@ -18,8 +18,8 @@ const { Meta } = Card;
 
 const { TabPane } = Tabs;
 const data = [
-    {title: 'Programmers'} 
-  ];
+    { title: 'Programmers' }
+];
 
 const navigations =
     [
@@ -128,30 +128,32 @@ class Group extends Component {
                             <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
                             <Tooltip title="Change Coverphoto">
-                            <Link to="#" className="editpost">
-                                <span className="left-menu post-icon" />
-                            </Link>
+                                <Link to="#" className="editpost">
+                                    <span className="left-menu post-icon" />
+                                </Link>
                             </Tooltip>
 
                         </div>
                         <div className="user-statistic">
-                            <Card className="user-banner" >
+                            <Card className="user-banner w-btn" >
                                 {/* <Meta avatar={<div><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
                                     title={<div>sdfghjk</div>}
                                     description={<div>ASDFGH</div>}
                                 /> */}
-
-
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={data}
                                     renderItem={item => (
                                         <List.Item>
-                                            <List.Item.Meta
+                                            <
+                                                
+                                                List.Item.Meta
                                                 avatar={<div><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
                                                 title={<a href="https://ant.design">{item.title}</a>}
                                                 description={<div><div className="f-12">Private Group</div><div className="f-12">Created on <span className="fw-400">31-10-2020</span></div></div>}
+                                                   
                                             />
+                                            <Button type="primary" className="ml-8 mt-16 f-12 list-link ml-16" onClick={() => this.joinGroup(item)}>Jion Group</Button>
                                         </List.Item>
                                     )}
                                 />
@@ -183,7 +185,7 @@ class Group extends Component {
                                         <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                    <GroupAbout />
+                                        <GroupAbout />
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -216,6 +218,6 @@ class Group extends Component {
 
 const mapStateToProps = ({ oidc }) => {
     return { profile: oidc.profile }
- }
+}
 
 export default connect(mapStateToProps)(Group);
