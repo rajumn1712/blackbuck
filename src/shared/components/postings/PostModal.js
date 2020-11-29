@@ -1,9 +1,16 @@
-import { Card, Carousel, Col, Modal, Row, Tag, Typography } from 'antd';
+import { Card, Carousel, Col, Empty, Modal, Row, Tag, Typography, message, Avatar } from 'antd';
 import React, { Component, createRef } from 'react';
 import CommentAction from './Actions/CommentAction';
 import EmojiAction from './Actions/EmojiActions';
 import ShareAction from './Actions/ShareActions';
 import Comments from './Comments/Comments';
+import defaultUser from '../../../styles/images/defaultuser.jpg';
+import { deletePost, getPosts, saveActions } from '../../api/postsApi';
+import SideAction from '../../components/postings/Actions/SideActions';
+import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
+import { connect } from 'react-redux';
+const { Meta } = Card;
 
 
 
@@ -20,10 +27,31 @@ class PostCardModal extends Component {
         commentselection: [],
         submitting: false,
         loading: true,
-        comments:[],
-        commentsection:false
+        comments: [],
+        commentsection: false
     }
-
+    titleAvatar = (user, date) => {
+        return <Meta
+            avatar={
+                <Avatar src={user.Image || defaultUser} />
+            }
+            title={user.Firstname}
+            description={<Moment fromNow>{date}</Moment>}
+        />
+    }
+    fetchCardActions = (user) => {
+        const ownerActions = [
+            { action: 'Edit', icons: 'post-icons edit-icon' },
+            { action: 'Delete', icons: 'post-icons delete-icon' }
+        ]
+        const actionsList = [
+            { action: 'Save Post', icons: 'post-icons savepost-icon' },
+            { action: 'Turn on Notifications', icons: 'post-icons notify-icon' },
+        ]
+        // const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
+        const result =  actionsList;
+        return result;
+    }
     goToPrevSlide = () => {
         this.slider.current.prev();
     }
@@ -78,10 +106,22 @@ class PostCardModal extends Component {
     showComment = () => {
         this.setState({ commentsection: true })
     }
+    handleEvent = (e, name, post) => {
+        switch (name) {
+            case "Delete":
+                break;
+            case "Edit":
+                break;
+            case "Save Post":
+                break;
+            default:
+                break;
+        }
+    }
 
     render() {
 
-        const { post, submitting,comments,value,commentsection } = this.state;
+        const { post, submitting, comments, value, commentsection } = this.state;
 
         const { Title, Paragraph } = Typography;
 
@@ -128,7 +168,10 @@ class PostCardModal extends Component {
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={7}>
                             <div className="preview-content">
-                                <Card title={post.post} style={{ width: '100%', borderRadius: 10 }} bordered={false}
+                                <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%', borderRadius: 10 }} bordered={false}
+                                    extra={
+                                        <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
+                                    }
                                     actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
                                     <CommentAction key="comment" clickedEvent={() => this.showComment()} />,
                                     <ShareAction key="share" />
@@ -159,5 +202,7 @@ class PostCardModal extends Component {
         )
     }
 }
-
-export default PostCardModal;
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+}
+export default connect(mapStateToProps)(PostCardModal);
