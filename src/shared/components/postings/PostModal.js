@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import '../../../components/postcard/post.css'
+import AudioPlayer from "react-h5-audio-player";
 const { Meta } = Card;
 
 
@@ -20,7 +21,7 @@ class PostCardModal extends Component {
     slider = createRef(null);
     componentDidMount() { }
     componentWillReceiveProps(props) {
-        this.setState({ post: props.postData, visible: props.visible })
+        this.setState({ ...this.state, post: props.postData, visible: props.visible })
     }
     state = {
         post: this.props.postData,
@@ -30,6 +31,16 @@ class PostCardModal extends Component {
         loading: true,
         comments: [],
         commentsection: false
+    }
+    showComment = (post) => {
+        const { commentselection } = this.state;
+        const idx = commentselection.indexOf(post.id);
+        if (idx > -1) {
+            commentselection.splice(idx, 1);
+        } else {
+            commentselection.push(post.id);
+        }
+        this.setState({ ...this.state, commentselection })
     }
     titleAvatar = (user, date) => {
         return <Meta
@@ -49,8 +60,7 @@ class PostCardModal extends Component {
             { action: 'Save Post', icons: 'post-icons savepost-icon' },
             { action: 'Turn on Notifications', icons: 'post-icons notify-icon' },
         ]
-        // const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
-        const result =  actionsList;
+        const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
         return result;
     }
     goToPrevSlide = () => {
@@ -61,63 +71,42 @@ class PostCardModal extends Component {
         this.slider.current.next();
     }
 
-    handleEmojiEvent = (event, name, count) => {
-        switch (name) {
-            case 'Love':
-                this.updateLoveCount(count);
-                break;
-            case 'Claps':
-                this.updateClapsCount(count);
-                break;
-            case 'Whistles':
-                this.updateWhistlesCount(count);
-                break;
-            default:
-                break;
+    handleSubmit = () => {
+
+    }
+
+    handleChange = () => {
+
+    }
+
+    renderPostImages = (imageObj, type) => {
+        const _result = {
+            Video: () => {
+                return <div className="video-post">
+                    <video width="100%" controls>
+                        <source src={imageObj} />
+                    </video>
+                    <div className="play"></div>
+                </div>
+            },
+            Document: () => {
+                return null
+            },
+            Audio: () => {
+                return <div style={{ width: '100%', position: 'relative' }}>
+                    <div class="audio">
+                        <AudioPlayer
+                            src={imageObj[0]}
+                            onPlay={e => console.log("onPlay")}
+                            layout="horizontal-reverse"
+                        />
+                    </div>
+                </div>
+            },
         }
-    }
 
-    updateLoveCount = (lovescount) => {
-        this.setState({
-            post: {
-                ...this.state.post,
-                lovesCount: lovescount
-            }
-        })
-    }
 
-    updateClapsCount = (clapscount) => {
-        this.setState({
-            post: {
-                ...this.state.post,
-                clapsCount: clapscount
-            }
-        })
-    }
-
-    updateWhistlesCount = (whistlescount) => {
-        this.setState({
-            post: {
-                ...this.state.post,
-                whistlesCount: whistlescount
-            }
-        })
-    }
-
-    showComment = () => {
-        this.setState({ commentsection: true })
-    }
-    handleEvent = (e, name, post) => {
-        switch (name) {
-            case "Delete":
-                break;
-            case "Edit":
-                break;
-            case "Save Post":
-                break;
-            default:
-                break;
-        }
+        return imageObj ? (_result[type] ? _result[type]() : null) : null;
     }
 
     render() {
@@ -130,7 +119,7 @@ class PostCardModal extends Component {
             <div className="preview-image">
                 <a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>
                 <Carousel ref={this.slider}>
-                    {post.image?.map((image, index) => {
+                    {(post.type == 'Image' || post.type == 'Gif') && post.image?.map((image, index) => {
                         return <div key={index}>
                             <img src={image} />
                         </div>
@@ -142,7 +131,7 @@ class PostCardModal extends Component {
 
         const noCarousel = (
             <div className="preview-image">
-                { post.image && <Carousel>
+                {(post.type == 'Image' || post.type == 'Gif') && post.image && <Carousel>
                     <div>
                         <img src={post.image[0]} />
                     </div>
@@ -165,16 +154,17 @@ class PostCardModal extends Component {
                 <div className="post-preview-box post-card comment-show">
                     <Row align="middle">
                         <Col xs={24} sm={16} md={16} lg={17}>
-                            {post.image && post.image.length > 1 ? carouselData : noCarousel}
+                            {(post.type == 'Image' || post.type == 'Gif') && post.image.length > 1 ? carouselData : noCarousel}
+                            {(post.type !== 'Image' && post.type !== 'Gif') && <div>{this.renderPostImages(post.image, post.type)}</div>}
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={7}>
                             <div className="preview-content">
                                 <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%', borderRadius: 10 }} bordered={false}
                                     extra={
-                                        <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
+                                        <SideAction clickedEvent={(event, name) => this.props.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
                                     }
-                                    actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name, count) => this.handleEmojiEvent(event, name, count)} />,
-                                    <CommentAction key="comment" clickedEvent={() => this.showComment()} />,
+                                    actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name) => this.props.handleActions(event, name, post)} />,
+                                    <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
                                     <ShareAction key="share" />
                                     ]}
                                 >
@@ -182,19 +172,23 @@ class PostCardModal extends Component {
                                         <Title level={5} className="post-title f-16">{post.title}</Title>
                                         <Paragraph className="f-14 post-desc">{post.meassage}</Paragraph>
                                         <ul className="card-actions-count pl-0">
-                                            <li><span className="counter-icon loves"></span>{post.lovesCount}<span> Loves</span></li>
-                                            <li><span className="counter-icon claps"></span>{post.clapsCount}<span> Claps</span></li>
-                                            <li><span className="counter-icon whistles"></span>{post.whistlesCount}<span> Whistles</span></li>
+                                            <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
+                                            <li><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
+                                            <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
                                         </ul>
-                                        <div className="post-tag">
+                                        <ul className="card-actions-count">
+                                            {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
+                                            {post.comments != null && post.comments.length != 0 && <li><span></span>{post.comments.length} <span> Comment(s)</span></li>}
+                                        </ul>
+                                        {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                                             {post.tags?.map((tag, index) => {
-                                                return <Tag key={index} className="f-14 px-16">{tag.tagname}</Tag>
+                                                return <Tag key={index}><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
                                             })}
-                                        </div>
+                                        </div>}
                                     </div>
                                 </Card>
-                                {commentsection ? <Comments comments={comments} submitting={submitting} value={value}
-                                    submitted={this.handleSubmit} changed={this.handleChange} /> : null}
+                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} comments={post.comments} submitting={this.state.submitting} value={this.state.value}
+                                    submitted={this.handleSubmit} changed={this.handleChange} />}
                             </div>
                         </Col>
                     </Row>

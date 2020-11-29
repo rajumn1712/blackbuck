@@ -173,6 +173,7 @@ class Postings extends Component {
             if (allPosts[i].id === post.id) {
                allPosts[i][type.toLowerCase()] = (allPosts[i][type.toLowerCase()]?allPosts[i][type.toLowerCase()]:0) + 1;
                allPosts[i].IsUserLikes =  !allPosts[i].IsUserLikes;
+               postObj = allPosts[i]//added for re usablity code
             }
          }
          this.setState({ ...this.state, allPosts })
@@ -196,7 +197,7 @@ class Postings extends Component {
       deletePost(post.id).then(() => {
          let { allPosts } = this.state;
          allPosts = allPosts.filter(item => item.id !== post.id);
-         this.setState({ ...this.state, allPosts });
+         this.setState({ ...this.state, allPosts,showModal:false });
          message.success("Post deleted");
       })
    }
@@ -213,10 +214,8 @@ class Postings extends Component {
             cover={<div onClick={()=>this.showModal(post)}>{this.renderPostImages(post.image, post.type,post)}</div>}
          >
             <div className="p-16">
-            <div onClick={()=>this.showModal(post)}>
                <Title level={5} className="post-title">{post.title}</Title>
                <Paragraph className="post-desc">{post.meassage}</Paragraph>
-               </div>
                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <ul className="card-actions-count pl-0">
                      <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
@@ -238,7 +237,7 @@ class Postings extends Component {
          </Card>
          {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} comments={post.comments} submitting={this.state.submitting} value={this.state.value}
             submitted={this.handleSubmit} changed={this.handleChange} />}
-         {<PostCardModal postData={postObj}   visible={this.state.showModal} closed={() =>  this.closed() } /> }
+         {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} />}
       </div>
    }
    showComment = (post) => {
