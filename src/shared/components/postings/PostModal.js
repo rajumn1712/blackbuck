@@ -144,7 +144,7 @@ class PostCardModal extends Component {
             <div className="preview-image">
                 { post.image && <Carousel>
                     <div>
-                        <img src={post.image[0].image} />
+                        <img src={post.image[0]} />
                     </div>
                 </Carousel>
                 }
