@@ -30,7 +30,7 @@
 
 .user-statistic {
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     align-items: flex-start;
     background: var(--white);
     padding-bottom: 15px;

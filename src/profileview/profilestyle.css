@@ -31,7 +31,7 @@
 
 .user-statistic {
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     align-items: flex-start;
     background: var(--white);
     padding-bottom: 15px;
@@ -202,7 +202,7 @@
     .user-statistic .left-statistic,.user-statistic .right-statistic{
         display: flex;
         width: 100%;
-        justify-content: space-evenly;
+        /* justify-content: space-evenly; */
     }
 }
 

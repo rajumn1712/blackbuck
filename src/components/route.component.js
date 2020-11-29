@@ -10,6 +10,7 @@ import Callback from "../shared/authentication/callback";
 import Profile from '../profile';
 import Group from '../group';
 import ProfileView from '../profileview';
+import GroupView from '../group/groupview';
 // import CreateGroup from './creategroup';
 const Router = () => {
     return (
@@ -20,6 +21,7 @@ const Router = () => {
             <ProtectedRoute path="/profile" component={Profile} />
             <ProtectedRoute path="/profileview/:userId" component={ProfileView} />
             <Route path="/group" component={Group} />
+            <Route path="/groupview" component={GroupView} />
             {/* <Route path="/creategroup" component={CreateGroup} /> */}
             <Route path="/commingsoon" component={CommingSoon} />
             <ProtectedRoute path="/post/:name" component={Post} />

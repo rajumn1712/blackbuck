@@ -49,7 +49,7 @@
     align-items: center;
 }
 
-.user-statistic .ant-list-items .ant-avatar-image {
+.user-statistic .ant-list-items .ant-avatar-image, .user-statistic .ant-avatar.ant-avatar-circle{
     width: 150px;
     height: 150px;
     border-radius: 50px !important;
@@ -194,11 +194,11 @@
     .user-statistic .left-statistic,.user-statistic .right-statistic{
         display: flex;
         width: 100%;
-        justify-content: space-evenly;
+        /* justify-content: space-evenly; */
     }
+    
 }
-
-
+/* .user-statistic .ant-avatar.ant-avatar-circle{width: 150px;height: 150px;border-radius: 50px !important;} */
 @media (max-width:575px) {
     .profile-tabs .ant-tabs-tab {
         margin: 0 !important;

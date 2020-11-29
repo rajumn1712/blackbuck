@@ -30,7 +30,7 @@ class GroupsPage extends Component {
                                     <a className="list-link f-14" href="/commingsoon">Leave Group</a>
                                 ]}
                             >
-                                <Meta title={<a href="/commingsoon" className="post-title">{group.name}</a>}
+                                <Meta title={<a href="/groupview" className="post-title">{group.name}</a>}
                                     description={<div>
                                         <div className="d-flex align-items-center">
                                             <span className="list-request">
