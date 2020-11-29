@@ -79,37 +79,39 @@ class Education extends Component {
                 <CommonModal className="w-medium" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
                     <div className="">
                         <Divider className="text-left-line" orientation="left">School</Divider>
-                        <Row gutter={16}>
-                            <Col xs={12}>
-                                <Form.Item label="Education Type" className="custom-fields">
-                                    <Select defaultValue="Select Option">
-                                        <Option value="Select Option">Select State</Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="College/University Name" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Academic Year" className="custom-fields">
-                                    <Input.Group compact>
-                                        <RangePicker />
-                                    </Input.Group>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Place of College/University" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12}>
-                                <Form.Item label="Marks Grade" className="custom-fields">
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                        <Form layout="vertical" >
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12}>
+                                    <Form.Item label="Education Type" className="custom-fields">
+                                        <Select defaultValue="Select Option">
+                                            <Option value="Select Option">Select State</Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12}>
+                                    <Form.Item label="College/University Name" className="custom-fields">
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12}>
+                                    <Form.Item label="Academic Year" className="custom-fields">
+                                        <Input.Group compact>
+                                            <RangePicker />
+                                        </Input.Group>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12}>
+                                    <Form.Item label="Place of College/University" className="custom-fields">
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12}>
+                                    <Form.Item label="Marks Grade" className="custom-fields">
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form>
 
                         <div className="docs about-icons mb-16 education">
                             <List
@@ -145,7 +147,7 @@ class Education extends Component {
                             <Col xs={12}>
                                 <Form.Item label="Academic Year" className="custom-fields">
                                     <Input.Group compact>
-                                    <RangePicker />
+                                        <RangePicker />
                                     </Input.Group>
                                 </Form.Item>
                             </Col>
