@@ -179,7 +179,7 @@ class ImagePost extends Component {
                 </Card>
                 {commentsection ? <Comments comments={comments} submitting={submitting} value={value}
                     submitted={this.handleSubmit} changed={this.handleChange} /> : null}
-                    {/* <PostCardModal {...this.state} closed={()=>{this.setState({visible:false})}}/> */}
+                    <PostCardModal {...this.state} closed={()=>{this.setState({visible:false})}}/>
             </div> : null
         )
     }
