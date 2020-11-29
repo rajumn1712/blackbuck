@@ -272,6 +272,8 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .display-flex{display: flex;}
 .text-overflow{    white-space: nowrap; overflow: hidden;text-overflow: ellipsis;}
 .ant-divider-with-text {margin-top: 0 !important;}
+.video-post{position: relative;}
+.video-post .play{width: 80px; height: 80px; background: url('./styles/images/play-btn.svg') no-repeat; display: inline-block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
 @media (min-width:576px){
     .cutom-popup{width: 600px !important;}
     .cutom-popup .ant-modal-body{max-height: 60vh; overflow: auto;} 

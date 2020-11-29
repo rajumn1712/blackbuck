@@ -114,8 +114,12 @@ class Postings extends Component {
             }
          },
          Video: () => {
-            return <div> <video width="100%" controls>
-               <source src={imageObj} /></video></div>
+            return <div className="video-post">
+                     <video width="100%" controls>
+                        <source src={imageObj} />
+                     </video>
+                     <div className="play"></div>
+                  </div>
          },
          Text: () => {
             return null
