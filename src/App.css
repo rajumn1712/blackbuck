@@ -276,3 +276,5 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 @media (min-width:576px){
     .w-medium{width: 575px !important;}
 }
+.group-member .ant-avatar-group .ant-avatar:not(:first-child){margin-left: 0; }
+.group-member .ant-avatar{width: 40px;height: 40px;}
