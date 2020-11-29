@@ -35,14 +35,14 @@
 .user-statistic .ant-list-item-meta-content{position: relative;top:80px;}
 
 
-.user-statistic .user-banner {
+.user-statistic .group-banner {
     border: 0;
     background: transparent;
     margin-top: -90px;
     left: 100px;
 }
 
-.user-statistic .user-banner .ant-card-meta {
+.user-statistic .group-banner .ant-card-meta {
     
     flex-direction: column;
     justify-content: center;
@@ -54,21 +54,22 @@
     height: 150px;
     border-radius: 50px !important;
 }
-.img-camera{bottom: 39px;}
-.user-statistic .user-banner .ant-card-body {
+.group-banner .ant-card-meta-avatar .img-camera.overlay{display: none;}
+/* .img-camera{bottom: 39px;} */
+.user-statistic .group-banner .ant-card-body {
     padding: 0 !important;
 }
 .user-statistic .ant-list-item-meta-title{font-size: 22px; margin: 5px 0 0;}
 
-.user-statistic .user-banner .ant-card-meta-avatar {
+.user-statistic .group-banner .ant-card-meta-avatar {
     padding-right: 0 !important;
 }
 
-.user-statistic .user-banner .ant-card-meta-detail {
+.user-statistic .group-banner .ant-card-meta-detail {
     text-align: center;
 }
 
-.user-statistic .user-banner .ant-card-meta-title {
+.user-statistic .group-banner .ant-card-meta-title {
     font-size: 22px;
     margin-bottom: 0;
     margin-top: 10px;
@@ -76,7 +77,7 @@
     white-space: normal;
 }
 
-.user-statistic .user-banner .ant-card-meta-description {
+.user-statistic .group-banner .ant-card-meta-description {
     font-size: 14px;
 }
 
@@ -92,7 +93,7 @@
     margin-bottom: 16px;
 }
 
-.user-banner .premium-icon {
+.group-banner .premium-icon {
     margin-bottom: 5px;
 }
 
@@ -196,7 +197,7 @@
         width: 100%;
         /* justify-content: space-evenly; */
     }
-    .user-banner.w-btn{
+    .group-banner.w-btn{
         min-width: 760px;
     }
     
@@ -206,7 +207,7 @@
     .profile-tabs .ant-tabs-tab {
         margin: 0 !important;
     }
-    .user-statistic .user-banner .ant-card-meta .ant-avatar-image {
+    .user-statistic .group-banner .ant-card-meta .ant-avatar-image {
         width: 150px;
         height: 150px;
     }

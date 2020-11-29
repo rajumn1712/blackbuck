@@ -135,7 +135,7 @@ class Group extends Component {
 
                         </div>
                         <div className="user-statistic">
-                            <Card className="user-banner w-btn" >
+                            <Card className="group-banner w-btn" >
                                 {/* <Meta avatar={<div><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
                                     title={<div>sdfghjk</div>}
                                     description={<div>ASDFGH</div>}
@@ -145,11 +145,10 @@ class Group extends Component {
                                     dataSource={data}
                                     renderItem={item => (
                                         <List.Item>
-                                            <
-                                                
-                                                List.Item.Meta
-                                                avatar={<div><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
+                                            <List.Item.Meta
+                                                avatar={<div><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera overlay"><span className="icons camera" /> </a></div>}
                                                 title={<a href="https://ant.design">{item.title}</a>}
+                                                
                                                 description={<div><div className="f-12">Private Group</div><div className="f-12">Created on <span className="fw-400">31-10-2020</span></div></div>}
                                                    
                                             />
