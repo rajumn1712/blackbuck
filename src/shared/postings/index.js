@@ -15,10 +15,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loader from '../../common/loader';
 import defaultUser from '../../styles/images/defaultuser.jpg';
+import PostCardModal from '../components/postings/PostModal';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
-
+let postObj = { tags: [],userdetails:{} };
 class Postings extends Component {
    state = {
       allPosts: [],
@@ -27,7 +28,8 @@ class Postings extends Component {
       loading: true,
       commentselection: [],
       page: 1,
-      pageSize: 10
+      pageSize: 10,
+      showModal:false,
    }
    componentDidMount() {
       window.addEventListener('scroll', (e) => {
@@ -60,6 +62,13 @@ class Postings extends Component {
          description={<Moment fromNow>{date}</Moment>}
       />
    }
+   closed = () => {
+      this.setState({ showModal: false });
+   }
+   showModal = (post) => {
+      postObj = post;
+      this.setState({ showModal: true })
+   }
    handleEvent = (e, name, post) => {
       switch (name) {
          case "Delete":
@@ -85,7 +94,7 @@ class Postings extends Component {
          Image: () => {
             if (typeof (imageObj) != "string") {
                return <div style={{ width: '100%', position: 'relative' }}>
-                  <div class="images" onClick={this.showModal}>
+                  <div class="images">
                      {imageObj.map((image, index) => {
                         return <div key={index} className={index === 0 ? "image-box single" : 'image-box ' + imageObj.length}>
                            <img src={image.Name || image} />
@@ -96,7 +105,7 @@ class Postings extends Component {
                </div>
             } else {
                return <div style={{ width: '100%', position: 'relative' }}>
-                  <div class="images" onClick={this.showModal}>
+                  <div class="images">
                      <div className={"image-box single"}>
                         <img src={imageObj} />
                      </div>
@@ -116,7 +125,7 @@ class Postings extends Component {
          },
          Audio: () => {
             return <div style={{ width: '100%', position: 'relative' }}>
-               <div class="audio" onClick={this.showModal}>
+               <div class="audio">
                   <AudioPlayer
                      src={imageObj}
                      onPlay={e => console.log("onPlay")}
@@ -127,7 +136,7 @@ class Postings extends Component {
          },
          Gif: () => {
             return <div style={{ width: '100%', position: 'relative' }}>
-               <div class="images" onClick={this.showModal}>
+               <div class="images">
                   <div className={"image-box gif"}>
                      <img src={imageObj} />
                   </div>
@@ -197,11 +206,13 @@ class Postings extends Component {
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
-            cover={this.renderPostImages(post.image, post.type)}
+            cover={<div onClick={()=>this.showModal(post)}>{this.renderPostImages(post.image, post.type,post)}</div>}
          >
             <div className="p-16">
+            <div onClick={()=>this.showModal(post)}>
                <Title level={5} className="post-title">{post.title}</Title>
                <Paragraph className="post-desc">{post.meassage}</Paragraph>
+               </div>
                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <ul className="card-actions-count pl-0">
                      <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
@@ -223,7 +234,7 @@ class Postings extends Component {
          </Card>
          {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} comments={post.comments} submitting={this.state.submitting} value={this.state.value}
             submitted={this.handleSubmit} changed={this.handleChange} />}
-         {/* <PostCardModal {...this.state} closed={() => { this.setState({ visible: false }) }} /> */}
+         {<PostCardModal postData={postObj}   visible={this.state.showModal} closed={() =>  this.closed() } /> }
       </div>
    }
    showComment = (post) => {
