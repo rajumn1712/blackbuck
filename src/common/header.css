@@ -96,7 +96,7 @@
 }
 
 .main-header .ant-menu-item a {
-    padding: 10px 8px 16px;
+    padding: 12px 12px 20px;
     background: var(--white);
     border-radius: 15px;
     box-shadow: var(--boxshadow);

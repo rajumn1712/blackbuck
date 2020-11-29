@@ -2,7 +2,7 @@
 .post-card{box-shadow: var(--boxshadow) !important; border-radius: 10px;margin-bottom: 16px;}
 .post-card .ant-card{ border-radius: 10px;}
 .post-card .ant-card-meta-title {margin-bottom: 0 !important; font-size: 15px; margin-top: 2px;}
-.post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px;}
+.post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px; cursor: default;}
 .post-card .ant-card-meta-description{font-size: 12px; font-weight: 400; margin-top: 2px;}
 .post-card .ant-card-body{padding: 0;}
 .post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: #F9F9F9; }
@@ -55,6 +55,7 @@
 .post-comment .ant-comment-content-author-time, .post-comment .ant-comment-content-detail{font-size: var(--f-12); color: var(--textsecondary);}
 .post-comment .ant-comment-content-author-name{font-size: var(--f-14); font-weight: 500;}
 .post-comment .ant-comment-inner{padding-bottom: 0;}
+.comment-list .ant-list-header{font-weight: 500;padding-bottom: 8px;}
 .post-comment .ant-form-item{margin-bottom: 0;}
 .card-actions-count{list-style: none; display: flex; align-items: center; margin-bottom: 0;}
 .card-actions-count li{font-weight: 500; margin-right: 16px;font-size: 12px;}
