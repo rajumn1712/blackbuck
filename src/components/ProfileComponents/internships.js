@@ -163,7 +163,7 @@ class Intership extends Component {
                                 </Form.Item>
                             </Col>
                             <Col xs={12}>
-                                <Form.Item label="Duration" className="custom-fields">
+                                <Form.Item label="Duration" className="custom-fields custom-select">
                                     <Select name="Duration" defaultValue="Select Option" value={internshipsObj.Duration} onChange={(event) => this.handleddlChange(event)}>
                                         <Option value="Select Option">Select Duration</Option>
                                     </Select>
@@ -186,7 +186,7 @@ class Intership extends Component {
                             </Col>
                         </Row>
                     </Form>
-                    <div className="docs about-icons mb-16 education">
+                    <div className="docs about-icons education">
                         <List
                             itemLayout="horizontal"
                             dataSource={docs}

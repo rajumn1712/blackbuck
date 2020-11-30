@@ -82,7 +82,7 @@ class Education extends Component {
                         <Form layout="vertical" >
                             <Row gutter={16}>
                                 <Col xs={24} sm={12}>
-                                    <Form.Item label="Education Type" className="custom-fields">
+                                    <Form.Item label="Education Type" className="custom-fields custom-select">
                                         <Select defaultValue="Select Option">
                                             <Option value="Select Option">Select State</Option>
                                         </Select>
@@ -134,7 +134,7 @@ class Education extends Component {
                         <Form layout="vertical" >
                             <Row gutter={16}>
                                 <Col xs={12}>
-                                    <Form.Item label="Education Type" className="custom-fields">
+                                    <Form.Item label="Education Type" className="custom-fields custom-select">
                                         <Select defaultValue="Select Option">
                                             <Option value="Select Option">Select State</Option>
                                         </Select>
