@@ -175,11 +175,15 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .custom-card .ant-card-actions{ background-color: #F9F9F9;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top: 0;}
 .icons.add{background-position:-505px -198px;}
 .icons.add:hover{background-position: -505px -224px;}
+.icons.white-add{background-position:-528px -224px;}
+.icons.white-close{background-position:-527px -198px;}
 .icons.close{background-position:-401px -197px;}
 .icons.close:hover{background-position:-401px -223px;}   
 .hobbies-card .tags{ background-color: var(--secondary); color: var(--textprimary);font-size: var(--f-14);font-weight: 500; border-radius: 40px;padding: 4px 15px;border: none;margin-bottom: 8px;}
 .text-left-line.ant-divider-horizontal.ant-divider-with-text-left::before{width: 0 !important;}
 .text-left-line .ant-divider-inner-text{padding-left: 0;color: var(--textprimary);}
+.text-left-line{position: relative;}
+.text-left-line .icons{position: absolute;right: -10px;background-color: var(--primary);border-radius: 50%;}
 .icons.location{background-position: -148px -252px;}
 .icons.email{background-position: -122px -252px;}
 .icons.phone{background-position: -174px -252px;}

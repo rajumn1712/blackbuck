@@ -78,7 +78,7 @@ class Education extends Component {
                 </Card>
                 <CommonModal className="custom-popup" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
                     <div className="">
-                        <Divider className="text-left-line" orientation="left">School</Divider>
+                        <Divider className="text-left-line" orientation="left">School <Link><span className=" icons white-close" /></Link></Divider>
                         <Form layout="vertical" >
                             <Row gutter={16}>
                                 <Col xs={24} sm={12}>
@@ -130,7 +130,7 @@ class Education extends Component {
                             />
                         </div>
 
-                        <Divider className="text-left-line" orientation="left">College</Divider>
+                        <Divider className="text-left-line" orientation="left">College <Link><span className=" icons white-close" /></Link></Divider>
                         <Form layout="vertical" >
                             <Row gutter={16}>
                                 <Col xs={12}>
@@ -184,7 +184,7 @@ class Education extends Component {
                                 )}
                             />
                         </div>
-                        <Divider className="text-left-line" orientation="left">Add Education</Divider>
+                        <Divider className="text-left-line" orientation="left">Add Education <Link><span className=" icons white-add" /></Link></Divider>
                     </div>
                 </CommonModal>
             </div >
