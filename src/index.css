@@ -63,7 +63,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .frnds-list-item img{border-radius: 8px 8px 0 0;}
 .frnds-img{height: 150px; position: relative;}
 .frnd-name{font-size: var(--f-14); font-weight: 500; margin-bottom: 10px !important; width: 100%; line-height: normal;}
-.addfrnd{ color: var(--primary) !important;}
+.addfrnd{ color: var(--primary) !important; min-width: auto !important; min-height: 34px !important; font-size: 14px !important;}
 @media (min-width: 1200px) {
   .container { width: 1180px; box-sizing: content-box; margin: auto;padding-left: 0;padding-right: 0; }
 }

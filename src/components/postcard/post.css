@@ -37,8 +37,11 @@
 .more-opt li:hover .notify-icon{background-position: -124px -226px;}
 .more-opt li:hover .savepost-icon{background-position: -351px -226px;}
 .more-opt li:hover .delete-icon{background-position: -377px -226px;}
-.l-emojis{position: absolute; min-height: 48px; background: var(--white); box-shadow: var(--boxshadow); border-radius: 28px;min-width: 180px;left: 16px; top: -45px; list-style: none; display: flex;visibility: hidden; padding-left: 0;justify-content: space-around;align-items: center;cursor: default;}
-.like-emojis:hover .l-emojis{ visibility: visible;}
+.l-emojis{position: absolute; min-height: 48px; background: var(--white);visibility: hidden;transform: translateY(16px);box-shadow: var(--boxshadow); border-radius: 28px;min-width: 140px;left: 36px; top: -48px; list-style: none; display: flex; padding-left: 0;justify-content: space-around;align-items: center;cursor: default;}
+.like-emojis:hover .l-emojis{ animation: 0.3s forwards 0.5s fadein;}
+@keyframes fadein{from{visibility: hidden; transform: translateY(16px);}
+to{visibility: visible;transform: translateY(0px);}
+}
 .l-emojis li a{font-size: 24px;padding: 0 !important; transition: all .2s ease-in-out; cursor: pointer;}
 .l-emojis li a:hover {transform: scale(1.25);}
 .l-emojis li a img{width: 40px;}
@@ -58,8 +61,9 @@
 .comment-list .ant-list-header{font-weight: 500;padding-bottom: 8px;}
 .post-comment .ant-form-item{margin-bottom: 0;}
 .card-actions-count{list-style: none; display: flex; align-items: center; margin-bottom: 0;}
-.card-actions-count li{font-weight: 500; margin-right: 16px;font-size: 12px;}
+.card-actions-count li{font-weight: 500; margin-right: 2px;font-size: 12px;}
 .card-actions-count li span{font-size: var(--f-11);font-weight: normal;}
+.card-actions-count li a{font-size: var(--f-12);font-weight: normal; color: var(--textsecondary);}
 .custom-dropdown{min-width: 180px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 8px;}
 .custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 8px; border-radius: 4px; font-weight: 500; font-size: 14px;}
 .custom-dropdown li svg, .custom-dropdown li span {margin-right: 12px;}
@@ -87,7 +91,8 @@
 .ant-popover-inner{border-radius: 8px;}
 .share-pop li:hover .post-icons.sharenow-icon{background-position: -294px -226px;}
 .share-pop li:hover .post-icons.copylink-icon{background-position: -324px -226px;}
-.counter-icon{width: 20px;height: 20px;display: inline-block;vertical-align: bottom; background: url(../../styles/images/like-icons.png) no-repeat;margin-right: 5px;border: 1px solid var(--secondary); border-radius: 50%;}
+.counter-icon{width: 20px;height: 20px;display: inline-block;vertical-align: bottom; background: url(../../styles/images/like-icons.png) no-repeat;border: 1px solid var(--secondary); border-radius: 50%;}
+.counter-icon.likes {background-position: -98px -2px;}
 .counter-icon.loves {background-position: -2px -2px;}
 .counter-icon.claps {background-position: -32px -3px;}
 .counter-icon.whistles {background-position: -66px -3px;}
