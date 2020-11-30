@@ -5,7 +5,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-card-head{padding: 0 16px !important; min-height: 44px !important;}
 .ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal;}
 .ant-btn{min-height: 45px !important; min-width: 120px;font-size: 16px !important;}
-.ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px; font-weight: 500 !important;}
+.ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
 .ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{color: var(--primary) !important;}
 .ant-menu-item, .ant-menu-item-selected{border: 0 !important;}
@@ -170,7 +170,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-14);line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .w-150{width: 150px;}
-.ant-btn{border-radius:4px !important;}
+.ant-btn{border-radius:4px !important;font-weight: 500 !important;}
 .custom-card .list-link{color: var(--primary);margin-left: 3px; font-weight: 500;}
 .custom-card .ant-card-actions{ background-color: #F9F9F9;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top: 0;}
 .icons.add{background-position:-505px -198px;}
@@ -235,7 +235,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .text-red,.text-red:hover{color: var(--red) !important;}
 .bg-white{background-color: var(--white);}
 .ant-form-vertical .ant-form-item-label{padding-bottom: 0px !important;}
-.custom-fields .ant-form-item-label > label{color: var(--textsecondary) !important;font-size: var(--f-14);font-weight: 600;margin-bottom: 3px !important;}
+.custom-fields .ant-form-item-label > label{color: var(--textsecondary) !important;font-size: var(--f-14);font-weight: 500;margin-bottom: 3px !important;}
 .custom-fields{margin-bottom: 16px !important;}
 .custom-fields .ant-input, .custom-fields .ant-select{min-height: 45px;}
 .custom-fields .ant-select-selector,.custom-fields .ant-picker.ant-picker-range{min-height: 45px;height: 45px !important;border-radius: 4px !important;}
