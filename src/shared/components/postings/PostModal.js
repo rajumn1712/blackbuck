@@ -169,7 +169,7 @@ class PostCardModal extends Component {
                                         </ul>
                                         <ul className="card-actions-count">
                                             {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
-                                            {post.comments != null && post.comments.length != 0 && <a><li onClick={() => this.showComment(post)}><span></span>{post.comments.length} <span> Comment(s)</span></li></a>}
+                                            {post.commentsCount != null && <a><li onClick={() => this.showComment(post)}><span></span>{post.comments.length} <span> Comments</span></li></a>}
                                         </ul>
                                         {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                                             {post.tags?.map((tag, index) => {
