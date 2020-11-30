@@ -285,11 +285,12 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-divider-with-text {margin-top: 0 !important;}
 .video-post{position: relative;}
 .video-post .play{width: 80px; height: 80px; background: url('./styles/images/play-btn.svg') no-repeat; display: inline-block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
+
+.group-member .ant-avatar-group .ant-avatar:not(:first-child){margin-left: 0; }
+.group-member .ant-avatar{width: 40px;height: 40px;}
+.ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
 @media (min-width:576px){
     .w-medium{width: 575px !important;}
     .custom-popup,.ant-modal{width: 600px !important;}
     .custom-popup .ant-modal-body{max-height: calc(60vh - 20px); overflow: auto;} 
 }
-.group-member .ant-avatar-group .ant-avatar:not(:first-child){margin-left: 0; }
-.group-member .ant-avatar{width: 40px;height: 40px;}
-.ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
