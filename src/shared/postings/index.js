@@ -170,11 +170,12 @@ class Postings extends Component {
          "Type": type
       }
       const saveResponse = await saveActions(post.id, saveObj);
+      debugger
       if (saveResponse.ok) {
          let { allPosts } = this.state;
          for (let i in allPosts) {
             if (allPosts[i].id === post.id) {
-               allPosts[i][type.toLowerCase()] = post.IsUserLikes ? (allPosts[i][type.toLowerCase()] ? allPosts[i][type.toLowerCase()] : 0) - 1 : (allPosts[i][type.toLowerCase()] ? allPosts[i][type.toLowerCase()] : 0) + 1;
+               allPosts[i][type.toLowerCase()] = post.IsUserLikes ? (allPosts[i][type.toLowerCase()] ?parseInt( allPosts[i][type.toLowerCase()]) : 1) - 1 : (allPosts[i][type.toLowerCase()] ? parseInt(allPosts[i][type.toLowerCase()]) : 0) + 1;
                allPosts[i].IsUserLikes = !allPosts[i].IsUserLikes;
                postObj = allPosts[i]//added for re usablity code
             }
@@ -197,7 +198,7 @@ class Postings extends Component {
       return result;
    }
    deletePost = (post) => {
-      deletePost(post.id,this.props?.profile?.Id).then(() => {
+      deletePost(post.id, this.props?.profile?.Id).then(() => {
          let { allPosts } = this.state;
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });
@@ -226,14 +227,14 @@ class Postings extends Component {
                      <li ><span className="counter-icon claps"></span></li>
                      <li><span className="counter-icon whistles"></span></li>
                      <li>
-                        <Tooltip title="Manoj kumar">
-                           <a>Manoj kumar and {post.loves} others</a>
+                        <Tooltip title="">
+                           <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
                         </Tooltip>
                      </li>
                   </ul>}
                   <ul className="card-actions-count">
-                     {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
-                     {post.commentsCount != null && <li><span></span>{post.commentsCount} <span> Comments</span></li>}
+                     {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
+                     {post.commentsCount != null && <li style={{ cursor: "pointer" }} onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
                      {/* <li><span></span>2 <span> Shares</span></li> */}
                   </ul>
                </div>
