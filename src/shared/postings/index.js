@@ -19,7 +19,7 @@ import PostCardModal from '../components/postings/PostModal';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
-let postObj = { tags: [],userdetails:{} };
+let postObj = { tags: [], userdetails: {} };
 class Postings extends Component {
    state = {
       allPosts: [],
@@ -29,7 +29,7 @@ class Postings extends Component {
       commentselection: [],
       page: 1,
       pageSize: 10,
-      showModal:false,
+      showModal: false,
    }
    componentDidMount() {
       window.addEventListener('scroll', (e) => {
@@ -115,11 +115,11 @@ class Postings extends Component {
          },
          Video: () => {
             return <div className="video-post">
-                     <video width="100%" controls>
-                        <source src={imageObj} />
-                     </video>
-                     <div className="play"></div>
-                  </div>
+               <video width="100%" controls>
+                  <source src={imageObj} />
+               </video>
+               <div className="play"></div>
+            </div>
          },
          Text: () => {
             return null
@@ -171,8 +171,8 @@ class Postings extends Component {
          let { allPosts } = this.state;
          for (let i in allPosts) {
             if (allPosts[i].id === post.id) {
-               allPosts[i][type.toLowerCase()] = (allPosts[i][type.toLowerCase()]?allPosts[i][type.toLowerCase()]:0) + 1;
-               allPosts[i].IsUserLikes =  !allPosts[i].IsUserLikes;
+               allPosts[i][type.toLowerCase()] = post.IsUserLikes ? (allPosts[i][type.toLowerCase()] ? allPosts[i][type.toLowerCase()] : 0) - 1 : (allPosts[i][type.toLowerCase()] ? allPosts[i][type.toLowerCase()] : 0) + 1;
+               allPosts[i].IsUserLikes = !allPosts[i].IsUserLikes;
                postObj = allPosts[i]//added for re usablity code
             }
          }
@@ -197,7 +197,7 @@ class Postings extends Component {
       deletePost(post.id).then(() => {
          let { allPosts } = this.state;
          allPosts = allPosts.filter(item => item.id !== post.id);
-         this.setState({ ...this.state, allPosts,showModal:false });
+         this.setState({ ...this.state, allPosts, showModal: false });
          message.success("Post deleted");
       })
    }
@@ -207,11 +207,11 @@ class Postings extends Component {
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
-         actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
+            actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
-            cover={<div onClick={()=>this.showModal(post)}>{this.renderPostImages(post.image, post.type,post)}</div>}
+            cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             <div className="p-16">
                <Title level={5} className="post-title">{post.title}</Title>

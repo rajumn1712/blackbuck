@@ -357,10 +357,9 @@ class ShareBox extends Component {
     validate = () => {
         let { errors, post } = this.state;
         errors = { validate: true };
-        if (!post.Title || !post.Message) {
+        if (!post.Title) {
             errors.validate = false
             if (!post.Title) { errors.Title = "Title is required" }
-            if (!post.Message) { errors.Message = "Description is required" }
         }
         this.setState({ ...this.state, errors })
         return errors;
