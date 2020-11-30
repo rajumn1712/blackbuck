@@ -4,7 +4,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
 .ant-card-head{padding: 0 16px !important; min-height: 44px !important;}
 .ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal;}
-.ant-btn{height: 35px !important; min-width: 80px;}
+.ant-btn{min-height: 45px !important; min-width: 120px;font-size: 16px !important;}
 .ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px; font-weight: 500 !important;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
 .ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{color: var(--primary) !important;}
@@ -87,16 +87,15 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid #0CD5E8;}
 .share-popup .ant-modal-content .ant-modal-close{display: none;}
 .justify-content-between, .speekar-block{justify-content: space-between;}
-.share-popup .ant-modal-header {padding: 14px 16px; border-bottom: 1px solid #D6E6FB; border-radius: 10px 10px 0 0;} 
-.share-popup .ant-modal-footer{background: #F9F9F9; padding: 15px 16px; border-top: 0;border-radius: 10px;}
+.share-popup .ant-modal-footer{background: #F9F9F9; border-top: 0;border-radius: 10px;}
 .share-box ul li:hover .sharebox-icons.video-icon{background-position: -297px -149px;}
 .share-box ul{list-style-type: none;padding: 20px 6px 20px;}
 .upload-image .ant-avatar{width: 64px;height: 50px;margin-bottom: 5px;}
 .upload-image.ant-upload-text{color: var(--black);margin-bottom: 0px;}
 .upload-image{margin-bottom: 24px;}
-.title-img .ant-input{border: none !important;text-align: center;font-size: 24px !important;font-weight: 600;color: var(--textprimary); line-height: normal; margin-bottom: 8px;}
+.title-img .ant-input{border: none !important;text-align: left;font-size: 24px !important;font-weight: 600;color: var(--textprimary); line-height: normal; margin-bottom: 10px;padding: 0;}
 .title-img .ant-input:focus, .title-img .ant-input-focused, .caption-image .ant-input:focus{ border: none; box-shadow: none !important;}
-.caption-image .ant-input{color: var(--textsecondary); font-size: 14px; border: none !important; text-align: center;}
+.caption-image .ant-input{color: var(--textsecondary); font-size: 14px; border: none !important; text-align: left;padding: 0;}
 .upload{border-radius: 6px !important;}
 .upload .ant-upload-text{color: var(--black); font-size: var(--f-16); font-weight: 500;}
 .upload-image .ant-upload-drag{margin-bottom: 16px;}
@@ -116,8 +115,10 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-btn.btn-cancel{background: #DEDFE1;color:var(--black)}
 .menu-droupdown{width: 120px;}
 .menu-droupdown a{font-size: 11px;}
-.ant-modal-body ,.ant-modal-header,.ant-modal-footer{padding: 16px !important;}
+.ant-modal-header,.ant-modal-footer{padding: 20px 24px !important;}
+.ant-modal-body{padding: 16px 24px!important;}
 .share-popup .ant-modal-content, .share-popup.ant-modal-header{border-radius: 10px;}
+.anonymous{display: flex;align-items: center;}
 .ant-input:hover{box-shadow: none !important;}
 .tags .anticon-plus{display: none;}
 .tags .site-tag-plus{border: 0;text-align: center;font-size: 14px;color: #BDBDBD !important;background: transparent !important;border-top: 1px solid #D6E6FB;}
@@ -275,6 +276,8 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .video-post{position: relative;}
 .video-post .play{width: 80px; height: 80px; background: url('./styles/images/play-btn.svg') no-repeat; display: inline-block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
 @media (min-width:576px){
-    .custom-popup{width: 600px !important;}
+    .custom-popup,.ant-modal{width: 600px !important;}
     .custom-popup .ant-modal-body{max-height: 60vh; overflow: auto;} 
+
 }
+.ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
