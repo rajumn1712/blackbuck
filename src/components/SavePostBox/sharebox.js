@@ -380,9 +380,9 @@ class ShareBox extends Component {
                     <span className="grp-type-icon public mr-4"></span>Public<span className="grp-type-icon down ml-4"></span>
                     </div>
                 </Dropdown></div>} />
-            <div style={{ display: 'flex' }} className="mr-8">
-                <div><span className="f-12" style={{ color: 'var(--textlightcolor)' }}>Post</span><div className="f-14" style={{ marginTop: -6 }}>Anonymous</div></div>
-                <Checkbox onChange={this.handleChange} value={this.state.IsAnonymous} name="IsAnonymous" className="ml-16 mt-8 mr-8 anonymous-check"></Checkbox>
+            <div className="mr-8 anonymous">
+                <div><span className="f-12" style={{ color: 'var(--textlightcolor)' }}>Post as</span><div className="f-14" style={{ marginTop: -6 }}>Anonymous</div></div>
+                <Checkbox onChange={this.handleChange} value={this.state.IsAnonymous} name="IsAnonymous" className="ml-16 anonymous-check"></Checkbox>
             </div>
         </div>
 
