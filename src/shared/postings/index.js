@@ -221,9 +221,15 @@ class Postings extends Component {
                <Paragraph className="post-desc">{post.meassage}</Paragraph>
                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   {<ul className="card-actions-count pl-0">
-                     <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
-                     <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
-                     <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
+                     <li><span className="counter-icon likes"></span></li>
+                     <li><span className="counter-icon loves"></span></li>
+                     <li ><span className="counter-icon claps"></span></li>
+                     <li><span className="counter-icon whistles"></span></li>
+                     <li>
+                        <Tooltip title="Manoj kumar">
+                           <a>Manoj kumar and {post.loves} others</a>
+                        </Tooltip>
+                     </li>
                   </ul>}
                   <ul className="card-actions-count">
                      {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}

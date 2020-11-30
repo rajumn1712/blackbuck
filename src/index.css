@@ -63,7 +63,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .frnds-list-item img{border-radius: 8px 8px 0 0;}
 .frnds-img{height: 150px; position: relative;}
 .frnd-name{font-size: var(--f-14); font-weight: 500; margin-bottom: 10px !important; width: 100%; line-height: normal;}
-.addfrnd{ color: var(--primary) !important;}
+.addfrnd{ color: var(--primary) !important; min-width: auto !important; min-height: 34px !important; font-size: 14px !important;}
 @media (min-width: 1200px) {
   .container { width: 1180px; box-sizing: content-box; margin: auto;padding-left: 0;padding-right: 0; }
 }
@@ -84,7 +84,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .post-card .ant-card-actions li a:hover, .post-card .ant-card-actions li a.focus, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
 .post-tag .ant-tag{background:var(--secondary);}
 .card-actions-count li span{color:#9B9B9B;}
-.grp-type-icon{background: url(styles/images/icons.svg) no-repeat;}
+.grp-type-icon,.custom-select .anticon.anticon-down{background: url(styles/images/icons.svg) no-repeat;}
 .anticon-loading svg{fill: var(--primary) !important;}
 .loader-middle,.loader-top-middle{display: flex;align-items: center;justify-content: center;margin-top:10px;}
 .loader-middle{height: 100vh;}

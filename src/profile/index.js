@@ -49,8 +49,12 @@ class Profile extends Component {
         profileData: {},
         disabled: false,
         visible: false,
-        isProfilePic: false
+        isProfilePic: false,
+        isDataRefresh:false
     };
+    isDataRefreshed = (refresh) => {
+        this.setState({ ...this.state, isDataRefresh: refresh });
+    }
     uploadProps = {
         name: 'file',
         multiple: false,
@@ -132,7 +136,7 @@ class Profile extends Component {
 
     render() {
 
-        const { navigations, profileData, disabled, visible } = this.state;
+        const { navigations, profileData, disabled, visible,isDataRefresh } = this.state;
         return (
             profileData ? <div className="main">
                 <Row gutter={16}>
@@ -235,8 +239,8 @@ class Profile extends Component {
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <FriendRequests />
-                                        <Friends />
+                                        <FriendRequests isDataRefreshed={(refresh)=>this.isDataRefreshed(refresh)}/>
+                                        <Friends isDataRefreshed={isDataRefresh}/>
                                     </Col>
                                 </Row>
                             </TabPane>

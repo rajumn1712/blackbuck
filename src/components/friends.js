@@ -8,7 +8,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 class Friends extends Component {
     componentDidMount() {
-        fetchUserFriends((this.props.userId?this.props.userId:(this.props?.profile?.Id)))
+        this.getFriends();
+    }
+    componentDidUpdate() {
+        if (this.props.isDataRefreshed) {
+            this.getFriends();
+        }
+    }
+    getFriends() {
+        fetchUserFriends((this.props.userId ? this.props.userId : (this.props?.profile?.Id)))
             .then(res => {
                 const friendsInfo = res.data;
                 this.setState({ FriendsList: friendsInfo });
@@ -36,7 +44,7 @@ class Friends extends Component {
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Link to="/commingsoon"><Avatar className="request-image" src={item.Image} /></Link>}
-                                    title={<div className="d-flex align-items-center"><Link to={"/profileview/"+item.UserId}><span className="overflow-text post-title">{item.Firstname}</span></Link></div>}
+                                    title={<div className="d-flex align-items-center"><Link to={"/profileview/" + item.UserId}><span className="overflow-text post-title">{item.Firstname}</span></Link></div>}
                                     description={
                                         <div className="mt-8 d-flex align-items-center">
                                             <span className="list-request">
@@ -46,7 +54,7 @@ class Friends extends Component {
                                                     maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                                 >
                                                     {item.MutualFriends?.map((friend, index) => {
-                                                        return <Avatar key={index} src={friend.Image}/>
+                                                        return <Avatar key={index} src={friend.Image} />
                                                     })
                                                     }
                                                 </Avatar.Group>
@@ -66,5 +74,5 @@ class Friends extends Component {
 }
 const mapStateToProps = ({ oidc }) => {
     return { profile: oidc.profile }
- }
+}
 export default connect(mapStateToProps)(Friends);
