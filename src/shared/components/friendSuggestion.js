@@ -30,7 +30,7 @@ class FriendSuggestions extends Component {
         this.loadSuggestions();
     }
     async loadSuggestions() {
-        const response = await getFriendSuggestions(this.props?.profile?.Id, 1, 5);
+        const response = await getFriendSuggestions(this.props?.profile?.Id, 1, 100);
         if (response.ok) {
             this.setState({ ...this.state, friends: response.data });
         }
