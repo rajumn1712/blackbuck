@@ -70,15 +70,6 @@ class PostCardModal extends Component {
     goToNextSlide = () => {
         this.slider.current.next();
     }
-
-    handleSubmit = () => {
-
-    }
-
-    handleChange = () => {
-
-    }
-
     renderPostImages = (imageObj, type) => {
         const _result = {
             Video: () => {
@@ -111,7 +102,7 @@ class PostCardModal extends Component {
 
     render() {
 
-        const { post, submitting, comments, value, commentsection } = this.state;
+        const { post } = this.state;
 
         const { Title, Paragraph } = Typography;
 
@@ -178,17 +169,17 @@ class PostCardModal extends Component {
                                         </ul>
                                         <ul className="card-actions-count">
                                             {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
-                                            {post.comments != null && post.comments.length != 0 && <li><span></span>{post.comments.length} <span> Comment(s)</span></li>}
+                                            {post.commentsCount != null && <li><span></span>{post.commentsCount} <span> Comments</span></li>}
                                         </ul>
                                         {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                                             {post.tags?.map((tag, index) => {
-                                                return <Tag key={index}><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
+                                                return <Tag key={index}><Link to="/commingsoon">{`#${tag.Name}`}</Link></Tag>
                                             })}
                                         </div>}
                                     </div>
                                 </Card>
-                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} comments={post.comments} submitting={this.state.submitting} value={this.state.value}
-                                    submitted={this.handleSubmit} changed={this.handleChange} />}
+                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount}
+                                />}
                             </div>
                         </Col>
                     </Row>

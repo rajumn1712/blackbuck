@@ -23,4 +23,7 @@ const postComment = (post_id, object) => {
 const deletePost = (post_id) => {
     return apiClient.get(POSTS_END_POINT + `deletePosts/${post_id}`);
 }
-export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost };
+const fetchComments = (post_id, take, skip) => {
+    return apiClient.get(POSTS_END_POINT + `getPostComments/${post_id}/${take || 10}/${skip}`)
+}
+export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost,fetchComments };

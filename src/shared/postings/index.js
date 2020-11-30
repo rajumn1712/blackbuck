@@ -227,7 +227,7 @@ class Postings extends Component {
                   </ul>}
                   <ul className="card-actions-count">
                      {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
-                     {post.comments != null && post.comments.length != 0 && <li><span></span>{post.comments.length} <span> Comment(s)</span></li>}
+                     {post.commentsCount != null && <li><span></span>{post.commentsCount} <span> Comments</span></li>}
                      {/* <li><span></span>2 <span> Shares</span></li> */}
                   </ul>
                </div>
@@ -238,8 +238,7 @@ class Postings extends Component {
                </div>}
             </div>
          </Card>
-         {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} comments={post.comments} submitting={this.state.submitting} value={this.state.value}
-            submitted={this.handleSubmit} changed={this.handleChange} />}
+         {this.state.commentselection.indexOf(post.id) > -1 && <Comments onUpdate={(prop, value) => { this.updatePost(post, prop, value) }} count={post.commentsCount} postId={post.id} />}
          {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} />}
       </div>
    }
@@ -252,6 +251,15 @@ class Postings extends Component {
          commentselection.push(post.id);
       }
       this.setState({ ...this.state, commentselection })
+   }
+   updatePost = (post, prop, value) => {
+      let { allPosts } = this.state;
+      for (let i in allPosts) {
+         if (allPosts[i].id === post.id) {
+            allPosts[i][prop] = value
+         }
+      }
+      this.setState({ ...this.state, allPosts });
    }
    render() {
       return <div onScroll={this.handleScroll}>
