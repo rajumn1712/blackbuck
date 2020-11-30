@@ -197,7 +197,7 @@ class Postings extends Component {
       return result;
    }
    deletePost = (post) => {
-      deletePost(post.id).then(() => {
+      deletePost(post.id,this.props?.profile?.Id).then(() => {
          let { allPosts } = this.state;
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });

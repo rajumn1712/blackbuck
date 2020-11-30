@@ -20,8 +20,8 @@ const deleteActions = (post_id, user_id, type) => {
 const postComment = (post_id, object) => {
     return apiClient.post(POSTS_END_POINT + `saveComment/${post_id}`, object);
 }
-const deletePost = (post_id) => {
-    return apiClient.get(POSTS_END_POINT + `deletePosts/${post_id}`);
+const deletePost = (post_id,user_id) => {
+    return apiClient.get(POSTS_END_POINT + `deletePosts/${post_id}/${user_id}`);
 }
 const fetchComments = (post_id, take, skip) => {
     return apiClient.get(POSTS_END_POINT + `getPostComments/${post_id}/${take || 10}/${skip}`)
