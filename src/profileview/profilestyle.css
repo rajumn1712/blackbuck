@@ -61,6 +61,7 @@
     width: 150px;
     height: 150px;
     border-radius: 50px !important;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.16);
 }
 
 .user-statistic .user-banner .ant-card-body {

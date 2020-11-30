@@ -59,7 +59,6 @@
     display: block;
 }
 .btn-position{top:15px;}
-.img-camera{bottom: 39px;}
 .user-statistic .group-banner .ant-card-body {
     padding: 0 !important;
 }
@@ -215,7 +214,6 @@
         width: 150px;
         height: 150px;
     }
-    .img-camera {width: 150px;}
     
     .user-statistic .ant-statistic {
         display: flex;

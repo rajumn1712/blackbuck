@@ -167,7 +167,7 @@ class Profile extends Component {
                                     <ImgCrop shape="rect" aspect beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profileData.ProfilePic || defaultUser} />
-                                            <a className="img-camera overlay" onClick={() => this.setState({ isProfilePic: true })}><span className="icons camera" /> </a>
+                                            <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="icons camera" /> </a>
                                         </Upload>
                                     </ImgCrop>
                                 </div>}

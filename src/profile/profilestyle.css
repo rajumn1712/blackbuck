@@ -60,6 +60,10 @@
     width: 150px;
     height: 150px;
     border-radius: 50px !important;
+    box-shadow: var(--boxShadow);
+}
+.user-banner .ant-upload-select{
+    position: relative;
 }
 
 .user-statistic .user-banner .ant-card-body {

@@ -154,7 +154,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .fw-400{font-weight: 400;color: var(--black);}
 .justify-content-around .ant-list-item-meta{background: #F9F9F9;border-radius: 5px;}
 .ant-input:focus, .ant-input-focused, .ant-input:hover, .ant-select:focus, .ant-select-focused, .ant-select:not(.ant-select-disabled):hover .ant-select-selector,.ant-upload.ant-upload-drag:not(.ant-upload-disabled):hover{border-color: var(--primary) !important;}
-.icons.camera{background-position: -289px -49px;}
+.icons.camera{background-position: -288px -50px;}
 .card-box .ant-list-item-action{margin-left: 5px !important;}
 .card-box .ant-list-item-meta .ant-avatar-image{ width: 40px;height: 40px;}
 .card-box .ant-list-item-meta-title{font-size: var(--f-16);line-height: 24px;}
@@ -256,12 +256,8 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
 .center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
-/* .img-camera{position: relative;bottom: 46px;left: 65px;} */
-.img-camera{display: block;
-    width: 150px;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;}
 .icon.education-icon{background-position: -263px -254px;}
+.img-camera{width: 38px; height: 36px; background: var(--white); position: absolute; right: -16px; bottom: 52px; border-radius: 8px; box-shadow: var(--boxshadow); text-align: center; line-height: 36px;}
 .education .ant-list-item-meta-avatar{border: 1px solid #ccc;border-radius: 11px;background: #ffff;padding: 4px 5px;}
 .overlay {
     position: absolute; 
@@ -279,6 +275,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .hobbies-tag .ant-tag{color: var(--black);font-size: 14px;}
 .hobbies-tag .ant-tag-close-icon{color: var(--black) !important; margin-left: 4px;font-size: 11px;}
 .comment-list .ant-comment:last-child .ant-comment-inner{padding-bottom: 0px;}
+.more-comments{display: inline-block;}
 .sub-text .ant-list-item-meta-description{font-size: 12px;}
 .display-flex{display: flex;}
 .text-overflow{    white-space: nowrap; overflow: hidden;text-overflow: ellipsis;}

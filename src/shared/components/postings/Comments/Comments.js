@@ -84,7 +84,7 @@ class Comments extends Component {
                                 /> */}
                     </Comment>
                     }
-                /> {comments.length !== count && <a onClick={() => this.loadComments(5, comments.length)}>View more comments</a>}</>}
+                /> {comments.length !== count && <a className="more-comments mt-16" onClick={() => this.loadComments(5, comments.length)}>View more comments</a>}</>}
             </div>
         )
     }
