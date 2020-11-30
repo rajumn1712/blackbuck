@@ -47,12 +47,13 @@ to{visibility: visible;transform: translateY(0px);}
 .l-emojis li a img{width: 40px;}
 .ant-dropdown-menu{min-width: 125px; border-radius: 5px;box-shadow: var(--boxshadow);}
 .ant-dropdown-menu li a{font-weight: 500;}
-.post-comment{background: var(--white);margin-bottom: 24px;border-radius: 0 0 10px 10px; display: none; padding-bottom: 16px;}
+.post-comment{background: var(--white);margin-bottom: 16px;border-radius: 0 0 10px 10px; display: none; padding-bottom: 16px;}
 .post-card.comment-show .post-comment,.post-preview-box.comment-show .post-comment{display: block;}
 .post-card.comment-show .ant-card-actions{border-radius: 0;}
 .post-comment .ant-form-item-control-input-content{position: relative;}
-.post-btn{position: absolute; right: 4px; top: 4px;}
-.post-comment .ant-input{height: 40px !important; border-radius: 5px; resize: none;padding-right: 60px;padding-top: 6px;}
+.post-btn{position: absolute; right: 4px; top: 1px; min-height: auto !important;}
+.post-btn:hover {border-color: transparent !important;}
+.post-comment .ant-input{min-height: 40px !important; border-radius: 5px; resize: none;padding-right: 60px;padding-top: 6px;}
 .post-comment .ant-comment-avatar img{border-radius: 13px;}
 .post-comment .ant-comment-content-author-time{margin-left: auto;}
 .post-comment .ant-comment-content-author-time, .post-comment .ant-comment-content-detail{font-size: var(--f-12); color: var(--textsecondary);}
@@ -63,7 +64,7 @@ to{visibility: visible;transform: translateY(0px);}
 .card-actions-count{list-style: none; display: flex; align-items: center; margin-bottom: 0;}
 .card-actions-count li{font-weight: 500; margin-right: 2px;font-size: 12px;}
 .card-actions-count li span{font-size: var(--f-11);font-weight: normal;}
-.card-actions-count li a{font-size: var(--f-12);font-weight: normal; color: var(--textsecondary);}
+.card-actions-count li a{font-size: var(--f-14);font-weight: normal; color: var(--textsecondary); line-height: normal;margin-left: 2px;}
 .custom-dropdown{min-width: 180px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 8px;}
 .custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 8px; border-radius: 4px; font-weight: 500; font-size: 14px;}
 .custom-dropdown li svg, .custom-dropdown li span {margin-right: 12px;}
