@@ -39,7 +39,7 @@ class FriendRequests extends Component {
             "Email": this.props?.profile?.Email,
             "Type": "accept"
         }
-        acceptFrienRequest(this.props.profile?.Id, friend.id, "accept", obj).then(() => {
+        acceptFrienRequest(this.props.profile?.Id, friend.UserId, "accept", obj).then(() => {
             message.success("Action Success");
             this.loadRequests();
         })
@@ -54,7 +54,7 @@ class FriendRequests extends Component {
             "Email": this.props?.profile?.Email,
             "Type": "decline"
         }
-        acceptFrienRequest(this.props.profile?.Id, friend.id, "decline", obj).then(() => {
+        acceptFrienRequest(this.props.profile?.Id, friend.UserId, "decline", obj).then(() => {
             message.success("Action Success");
             this.loadRequests();
         })

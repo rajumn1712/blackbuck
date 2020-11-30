@@ -9,6 +9,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import { Formik } from 'formik';
 import { savePost } from '../../shared/api/postsApi';
 import Loader from '../../common/loader';
+import { uuidv4 } from '../../utils';
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -92,7 +93,7 @@ class ShareBox extends Component {
     }
     createObject = () => {
         return {
-            "PostId": this.uuidv4(),
+            "PostId": uuidv4(),
             "Type": "Text",
             "Message": "",
             "Title": "",
@@ -221,7 +222,7 @@ class ShareBox extends Component {
                     this.handleClose(tag);
                 }}
             >
-                {tag}
+                #{tag}
             </Tag>
         );
         return (
@@ -348,19 +349,12 @@ class ShareBox extends Component {
         this.postObject[target.name] = target.type === "checkbox" ? target.checked : target.value;
         this.setState({ ...this.state, post });
     }
-    uuidv4() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
     validate = () => {
         let { errors, post } = this.state;
         errors = { validate: true };
-        if (!post.Title || !post.Message) {
+        if (!post.Title) {
             errors.validate = false
             if (!post.Title) { errors.Title = "Title is required" }
-            if (!post.Message) { errors.Message = "Description is required" }
         }
         this.setState({ ...this.state, errors })
         return errors;

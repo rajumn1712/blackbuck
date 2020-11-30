@@ -37,7 +37,7 @@ a:hover,a:active{color: var(--primaryhover) !important;}
 .friends-list.one .friends-list--name{background: linear-gradient(to top, rgba(70, 10, 156, 1), rgba(70, 10, 156, 0));}
 .friends-list.two .friends-list--name{background: linear-gradient(to top, rgba(112, 165, 113, 1), rgba(112, 165, 113, 0));}
 .friends-list img {object-fit: cover;}
-.post-icons.addfriend-icon{background-position:-433px -200px;}
+.post-icons.addfriend-icon{background-position:-433px -226px;}
 .friends-list--name {position: absolute; left: 0; right: 0; bottom: 0; text-align: center; top: 60%;
 background: linear-gradient(to top, rgba(18, 66, 128, 1), rgba(18, 66, 128, 0));
 font-size: 14px; display: flex; justify-content: flex-end; flex-direction: column; align-items: center;padding: 8px;}
@@ -46,10 +46,10 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .friends-list:hover .friends-list--course{ display: block;}
 .friends-list:hover ._name{transform: translate3d(0, -3px, 0); transition: transform 80ms linear;}
 .addfrnd-btn{ background: var(--primary); box-shadow: var(--boxshadow); left: 8px;  border-radius: 8px;}
-.removefrnd-btn, .addfrnd-btn{position: absolute; top: 8px;padding: 4px 5px;border-radius: 8px; opacity: 0;}
-.removefrnd-btn{ width: 20px; height: 20px; display: inline-block; right: 8px; left: auto; background: rgba(255,255,255,0.85) url(../src/styles/images/icons.svg) no-repeat; background-position: 0px -393px; }
-.friends-list:hover .addfrnd-btn, .friends-list:hover .removefrnd-btn{opacity: 1; transition: opacity 80ms linear;}
-.more-frnd-btn{width: 36px; height: 36px; border-radius: 10px; background: var(--white); box-shadow: var(--boxshadow); position: absolute; top: 50%; transform: translateY(-50%); right: 0;
+.removefrnd-btn, .addfrnd-btn{position: absolute; top: 8px;padding: 4px 5px;border-radius: 6px;}
+.removefrnd-btn{ width: 20px; height: 20px; display: inline-block; right: 8px; left: auto; background: rgba(255,255,255,0.85) url(../src/styles/images/icons.svg) no-repeat; background-position: -1px -393px; }
+/* .friends-list:hover .addfrnd-btn, .friends-list:hover .removefrnd-btn{opacity: 1; transition: opacity 80ms linear;} */
+.more-frnd-btn{width: 36px; height: 36px; border-radius: 8px; background: var(--white); box-shadow: var(--boxshadow); position: absolute; top: 50%; transform: translateY(-50%); right: 10px; z-index: 3;
   display: flex; align-items: center; justify-content: center;}
 .icon.left-arrow{background-position: -483px -203px;}
 .icon.right-arrow{background-position: -460px -203px;}
@@ -59,6 +59,11 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .more-frnd-btn.next{right: 16px; z-index: 9;}
 .more-frnd-btn:hover{background: var(--primary);}
 .container{padding-left: 15px;padding-right: 15px;}
+.frnds-list-item{background: var(--white); border-radius: 8px; box-shadow: var(--boxshadow); margin-right: 10px; width: 150px;}
+.frnds-list-item img{border-radius: 8px 8px 0 0;}
+.frnds-img{height: 150px; position: relative;}
+.frnd-name{font-size: var(--f-14); font-weight: 500; margin-bottom: 10px !important; width: 100%; line-height: normal;}
+.addfrnd{ color: var(--primary) !important;}
 @media (min-width: 1200px) {
   .container { width: 1180px; box-sizing: content-box; margin: auto;padding-left: 0;padding-right: 0; }
 }

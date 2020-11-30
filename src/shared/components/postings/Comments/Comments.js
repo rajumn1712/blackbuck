@@ -3,45 +3,37 @@ import { Avatar, Comment, Form, Button, List, message } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import user from '../../../../styles/images/user.jpg';
 import { connect } from 'react-redux';
-import { postComment } from '../../../api/postsApi';
+import { fetchComments, postComment } from '../../../api/postsApi';
 import defaultUser from '../../../../styles/images/defaultuser.jpg';
 import Moment from 'react-moment'
-
-const CommentList = ({ comments }) => (
-    <List
-        className="comment-list"
-        dataSource={comments}
-        header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
-        itemLayout="horizontal"
-        renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={<Moment fromNow>{item.CreatedDate}</Moment>} avatar={<Avatar src={item.Image||defaultUser} />}>
-            {/* {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
-            {/* <Comment style={{ marginLeft: 10 }} className="reply-comment"
-                avatar={
-                    <Avatar src={item.Image} />
-                }
-                content={
-                    <Editor />
-                }
-            /> */}
-        </Comment>
-        }
-    />
-);
+import { uuidv4 } from '../../../../utils';
 class Comments extends Component {
     constructor(props) {
         super(props)
     }
     state = {
         Comment: "",
-        comments: this.props.comments || []
+        comments: [],
+        count: this.props.count
     }
     onChange = ({ target }) => {
         let { Comment } = this.state;
         Comment = target.value;
         this.setState({ Comment });
     }
+    componentDidMount() {
+        this.loadComments(2, 0);
+    }
+    async loadComments(take, skip) {
+        const commentResponse = await fetchComments(this.props.postId, take, skip);
+        if (commentResponse.ok) {
+            let { comments } = this.state
+            this.setState({ ...this.state, comments: comments.concat(commentResponse.data[0].Comments) });
+        }
+    }
     onSubmit = async () => {
         const object = {
+            "CommentId":uuidv4(),
             "UserId": this.props.profile?.Id,
             "Firstname": this.props.profile?.FirstName,
             "Lastname": this.props.profile?.LastName,
@@ -51,22 +43,22 @@ class Comments extends Component {
             "CreatedDate": new Date(),
             "Replies": []
         }
-        debugger
         const saveResponse = await postComment(this.props.postId, object);
         if (saveResponse.ok) {
             let { comments } = this.state;
-            comments.push(object);
-            this.setState({ ...this.state, comments,Comment:"" });
+            comments.unshift(object);
+           if(this.props.onUpdate){ this.props.onUpdate("commentsCount", this.state.count + 1);}
+            this.setState({ ...this.state, comments, Comment: "", count: this.state.count + 1 });
         }
     }
     render() {
-        const { comments } = this.state;
+        const { comments, count } = this.state;
         return (
             <div className="post-comment px-16">
 
                 <Comment
                     avatar={
-                        <Avatar src={this.props.profile?.ProfilePic||defaultUser} />
+                        <Avatar src={this.props.profile?.ProfilePic || defaultUser} />
                     }
                     content={
                         <Form.Item><TextArea onChange={this.onChange} value={this.state.Comment} />
@@ -75,7 +67,24 @@ class Comments extends Component {
                             </Button></Form.Item>
                     }
                 />
-                {comments.length > 0 && <CommentList comments={comments} />}
+                {comments.length > 0 && <> <List
+                    className="comment-list"
+                    dataSource={comments}
+                    header={`${count} ${count > 1 ? 'Comments' : 'Comment'}`}
+                    itemLayout="horizontal"
+                    renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={<Moment fromNow>{item.CreatedDate}</Moment>} avatar={<Avatar src={item.Image || defaultUser} />}>
+                        {/* {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
+                                {/* <Comment style={{ marginLeft: 10 }} className="reply-comment"
+                                    avatar={
+                                        <Avatar src={item.Image} />
+                                    }
+                                    content={
+                                        <Editor />
+                                    }
+                                /> */}
+                    </Comment>
+                    }
+                /> {comments.length !== count && <a onClick={() => this.loadComments(5, comments.length)}>View more comments</a>}</>}
             </div>
         )
     }

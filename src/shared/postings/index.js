@@ -19,7 +19,7 @@ import PostCardModal from '../components/postings/PostModal';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
-let postObj = { tags: [],userdetails:{} };
+let postObj = { tags: [], userdetails: {} };
 class Postings extends Component {
    state = {
       allPosts: [],
@@ -29,7 +29,7 @@ class Postings extends Component {
       commentselection: [],
       page: 1,
       pageSize: 10,
-      showModal:false,
+      showModal: false,
    }
    componentDidMount() {
       window.addEventListener('scroll', (e) => {
@@ -82,6 +82,9 @@ class Postings extends Component {
             break;
       }
    }
+   editPost = (post) => {
+
+   }
    handleSubmit = () => {
 
    }
@@ -115,11 +118,11 @@ class Postings extends Component {
          },
          Video: () => {
             return <div className="video-post">
-                     <video width="100%" controls>
-                        <source src={imageObj} />
-                     </video>
-                     <div className="play"></div>
-                  </div>
+               <video width="100%" controls>
+                  <source src={imageObj} />
+               </video>
+               <div className="play"></div>
+            </div>
          },
          Text: () => {
             return null
@@ -171,8 +174,9 @@ class Postings extends Component {
          let { allPosts } = this.state;
          for (let i in allPosts) {
             if (allPosts[i].id === post.id) {
-               allPosts[i][type.toLowerCase()] = (allPosts[i][type.toLowerCase()]?allPosts[i][type.toLowerCase()]:0) + 1;
-               allPosts[i].IsUserLikes =  !allPosts[i].IsUserLikes;
+               allPosts[i][type.toLowerCase()] = post.IsUserLikes ? (allPosts[i][type.toLowerCase()] ? allPosts[i][type.toLowerCase()] : 0) - 1 : (allPosts[i][type.toLowerCase()] ? allPosts[i][type.toLowerCase()] : 0) + 1;
+               allPosts[i].IsUserLikes = !allPosts[i].IsUserLikes;
+               postObj = allPosts[i]//added for re usablity code
             }
          }
          this.setState({ ...this.state, allPosts })
@@ -193,10 +197,10 @@ class Postings extends Component {
       return result;
    }
    deletePost = (post) => {
-      deletePost(post.id).then(() => {
+      deletePost(post.id,this.props?.profile?.Id).then(() => {
          let { allPosts } = this.state;
          allPosts = allPosts.filter(item => item.id !== post.id);
-         this.setState({ ...this.state, allPosts });
+         this.setState({ ...this.state, allPosts, showModal: false });
          message.success("Post deleted");
       })
    }
@@ -206,39 +210,36 @@ class Postings extends Component {
          <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
-         actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
+            actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
-            cover={<div onClick={()=>this.showModal(post)}>{this.renderPostImages(post.image, post.type,post)}</div>}
+            cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             <div className="p-16">
-            <div onClick={()=>this.showModal(post)}>
                <Title level={5} className="post-title">{post.title}</Title>
                <Paragraph className="post-desc">{post.meassage}</Paragraph>
-               </div>
                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <ul className="card-actions-count pl-0">
+                  {<ul className="card-actions-count pl-0">
                      <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
                      <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
                      <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
-                  </ul>
+                  </ul>}
                   <ul className="card-actions-count">
                      {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
-                     {post.comments != null && post.comments.length != 0 && <li><span></span>{post.comments.length} <span> Comment(s)</span></li>}
+                     {post.commentsCount != null && <li><span></span>{post.commentsCount} <span> Comments</span></li>}
                      {/* <li><span></span>2 <span> Shares</span></li> */}
                   </ul>
                </div>
                {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <Tag key={index}><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
+                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
                   })}
                </div>}
             </div>
          </Card>
-         {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} comments={post.comments} submitting={this.state.submitting} value={this.state.value}
-            submitted={this.handleSubmit} changed={this.handleChange} />}
-         {<PostCardModal postData={postObj}   visible={this.state.showModal} closed={() =>  this.closed() } /> }
+         {this.state.commentselection.indexOf(post.id) > -1 && <Comments onUpdate={(prop, value) => { this.updatePost(post, prop, value) }} count={post.commentsCount} postId={post.id} />}
+         {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} />}
       </div>
    }
    showComment = (post) => {
@@ -251,7 +252,15 @@ class Postings extends Component {
       }
       this.setState({ ...this.state, commentselection })
    }
-
+   updatePost = (post, prop, value) => {
+      let { allPosts } = this.state;
+      for (let i in allPosts) {
+         if (allPosts[i].id === post.id) {
+            allPosts[i][prop] = value
+         }
+      }
+      this.setState({ ...this.state, allPosts });
+   }
    render() {
       return <div onScroll={this.handleScroll}>
          {this.props.sharebox && <ShareBox />}
