@@ -155,14 +155,14 @@ class About extends Component {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12}>
-                                    <Form.Item label="State" className="custom-fields">
+                                    <Form.Item label="State" className="custom-fields custom-select">
                                         <Select defaultValue="Select Option" value={address[0]?.State} name="State" onChange={this.handleOnChange}>
                                             <Option value="Select Option">Select State</Option>
                                         </Select>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12}>
-                                    <Form.Item label="Country" className="custom-fields">
+                                    <Form.Item label="Country" className="custom-fields custom-select">
                                         <Select id="select" value={address[0]?.Country} name="Country" onChange={this.handleOnChange.bind(this)}>
                                             <Option value="Select Option">Select Option</Option>
                                             <Option value="India">India</Option>
