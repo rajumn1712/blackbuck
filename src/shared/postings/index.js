@@ -82,6 +82,9 @@ class Postings extends Component {
             break;
       }
    }
+   editPost = (post) => {
+
+   }
    handleSubmit = () => {
 
    }
@@ -217,11 +220,11 @@ class Postings extends Component {
                <Title level={5} className="post-title">{post.title}</Title>
                <Paragraph className="post-desc">{post.meassage}</Paragraph>
                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <ul className="card-actions-count pl-0">
+                  {<ul className="card-actions-count pl-0">
                      <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
                      <li ><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
                      <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
-                  </ul>
+                  </ul>}
                   <ul className="card-actions-count">
                      {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
                      {post.comments != null && post.comments.length != 0 && <li><span></span>{post.comments.length} <span> Comment(s)</span></li>}
@@ -230,7 +233,7 @@ class Postings extends Component {
                </div>
                {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <Tag key={index}><Link to="/commingsoon">{`${tag.Name}`}</Link></Tag>
+                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
                   })}
                </div>}
             </div>
@@ -250,7 +253,6 @@ class Postings extends Component {
       }
       this.setState({ ...this.state, commentselection })
    }
-
    render() {
       return <div onScroll={this.handleScroll}>
          {this.props.sharebox && <ShareBox />}

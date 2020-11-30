@@ -221,7 +221,7 @@ class ShareBox extends Component {
                     this.handleClose(tag);
                 }}
             >
-                {tag}
+                #{tag}
             </Tag>
         );
         return (
