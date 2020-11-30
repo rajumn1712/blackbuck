@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { message, Typography } from 'antd';
+import { message, Typography, Button } from 'antd';
 import { apiClient } from '../api/clients';
 import notify from './notification';
 import { getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
@@ -52,7 +52,7 @@ class FriendSuggestions extends Component {
                     <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title><div className="link-color"><Link to="/commingsoon" className="link-color">View all</Link></div>
                 </div>
                 <div className="friends">
-                    {friends.map((friend, index) => {
+                    {/* {friends.map((friend, index) => {
                         return <div className={"friends-list "+this.className[Math.floor(Math.random() * this.className.length)]}>
                             <img src={friend.Image || defaultUser} width="100%" height="100%" />
                             <div className="friends-list--name">
@@ -64,9 +64,25 @@ class FriendSuggestions extends Component {
                             </a>
                             <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                         </div>
+                    }) 
+                    }*/}
+                    {friends.length > 4 && <Link to="/commingsoon" className="more-frnd-btn" onClick={() => this.goToFriendsSuggestions()}><span className="icon right-arrow mr-0"></span></Link>}
+                    {friends.map((friend, index) => {
+                    return<div className="frnds-list-item">
+                        <div className="frnds-img">
+                            <img src={friend.Image || defaultUser} width="100%" height="100%" />
+                            <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
+                        </div>
+                        <div style={{ padding: 10 }}>
+                            <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
+                            <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
+                            <div className="text-center">
+                                <Button type="dashed" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
+                            </div>
+                        </div>
+                    </div>
                     })
                     }
-                    {friends.length > 4 && <Link to="/commingsoon" className="more-frnd-btn" onClick={() => this.goToFriendsSuggestions()}><span className="icon right-arrow mr-0"></span></Link>}
                 </div>
             </div>
         )
