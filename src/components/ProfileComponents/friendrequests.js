@@ -24,10 +24,14 @@ class FriendRequests extends Component {
     componentDidMount() {
         this.loadRequests();
     }
-    async loadRequests() {
+    async loadRequests(isDataRefreshed) {
         const requests = await fetchFriendRequests(this.props.profile?.Id);
         if (requests.ok) {
             this.setState({ friendRequests: requests.data })
+            if (isDataRefreshed) {
+                this.props.isDataRefreshed(isDataRefreshed);
+                this.props.isDataRefreshed(false);
+            }
         }
     }
     handleAccept = async (friend) => {
@@ -41,7 +45,7 @@ class FriendRequests extends Component {
         }
         acceptFrienRequest(this.props.profile?.Id, friend.UserId, "accept", obj).then(() => {
             message.success("Action Success");
-            this.loadRequests();
+            this.loadRequests(true);
         })
     }
 
