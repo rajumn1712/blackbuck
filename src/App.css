@@ -53,6 +53,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .left-menu.post-icon,.icons.edit{background-position: -64px -201px;}
 .left-menu.group-icon{background-position: -94px -200px;}
 .left-menu.noti-icon{background-position: -123px -200px;}
+.left-menu.savedpost-icon{background-position: -350px -200px;}
 .left-menu.interest{background-position: -206px -254px;}
 .left-menu.hobbies{background-position: -234px -254px;}
 .left-menu.intenship{background-position: -263px -254px;}
@@ -76,6 +77,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .profile-menu li:hover a .left-menu.play,.profile-menu .ant-menu-item-selected a .left-menu.play{background-position: -292px -281px;}
 .profile-menu li:hover a .left-menu.education,.profile-menu .ant-menu-item-selected a .left-menu.education{background-position: -325px -281px;}
 .profile-menu li:hover a .left-menu.courses,.profile-menu .ant-menu-item-selected a .left-menu.courses{background-position: -350px -281px;}
+.profile-menu li:hover a .left-menu.savedpost-icon,.profile-menu .ant-menu-item-selected a .left-menu.savedpost-icon{background-position: -350px -260px;}
 .invite-card .ant-card-head{border-bottom: 1px solid #D6E6FB; color: var(--textprimary); font-size: var(--f-16);}
 .invite-card .ant-card-body{text-align:center;}
 .invite-card .ant-avatar-group .ant-avatar{width: 60px; height: 60px; line-height: 60px; border-radius: 18px; border:0; font-size: 24px; color: var(--primary); font-weight: 600;}
@@ -125,6 +127,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .tags{text-align: center;}
 .tags .ant-tag{background: #D7FDFE;border: 0;border-radius: 10px;padding: 3px 10px;color: var(--primary);font-size: 12px;margin-bottom: 10px;}
 .ant-tag-close-icon{color: var(--primary) !important;}
+/* .ant-input:focus, .ant-input-focused, .ant-input:hover{border-color: var(--primary) !important;} */
 .custom-dropdown{min-width: 300px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 8px;}
 .custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 15px 8px; border-radius: 6px; font-weight: 500; font-size: var(--f-16);}
 .custom-dropdown li svg, .custom-dropdown li span {margin-right: 16px;}
@@ -238,6 +241,7 @@ body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .custom-fields .ant-select-selector,.custom-fields .ant-picker.ant-picker-range{min-height: 45px;height: 45px !important;border-radius: 4px !important;}
 .custom-fields .ant-select-selector .ant-select-selection-item{line-height: 45px !important;}
 .custom-fields textarea.ant-input{min-height: 90px !important;}
+.ant-input,.ant-select{border-radius: 4px !important;}.ant-modal-content{border-radius: 10px !important;}
 .ant-input,.ant-select{border-radius: 4px !important;}
 .ant-modal-content{border-radius: 10px !important;}
 .ant-modal-header{border-radius: 10px 10px 0 0 !important;}

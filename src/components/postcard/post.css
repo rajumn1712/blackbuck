@@ -118,3 +118,5 @@ to{visibility: visible;transform: translateY(0px);}
 .image-box.gif, .image-box.single{height: auto;}
 .image-box img {width: 100%; left: 0; top: 0; object-fit: cover;}
 .image2, .image3{width: 100%;}
+.image-box.img-3{width: 50%;}
+.image-box.img-4{width: 33.333%;}
