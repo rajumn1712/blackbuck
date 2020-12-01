@@ -33,4 +33,7 @@ const saveProfileImage = (user_id, type,obj) => {
 const saveInnternship = (user_id, obj) => {
     return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}`, obj)
 }
-export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage,saveInnternship }
+const saveEducation = (user_id, obj) => {
+    return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}`, obj)
+}
+export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage,saveInnternship,saveEducation }

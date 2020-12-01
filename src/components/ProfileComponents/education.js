@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, List, Divider, Row, Col, Form, Input, Select, DatePicker } from 'antd'
+import { Card, Avatar, List, Divider, Row, Col, Form, Input, Select, DatePicker, message } from 'antd'
 import { Link } from 'react-router-dom';
 // import { userManager } from '../../shared/authentication/auth';
 import { store } from '../../store'
@@ -13,6 +13,8 @@ import '../../App.css';
 import { Meta } from 'antd/lib/list/Item';
 import Dragger from 'antd/lib/upload/Dragger';
 import CommonModal from './CommonModal';
+import notify from '../../shared/components/notification';
+import { saveEducation } from '../../shared/api/apiServer';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const docs = [
@@ -24,15 +26,19 @@ const docs = [
 class Education extends Component {
     state = {
         education: this.props.education,
-        visible: false
+        visible: false,
+        lstEducation: [],
     };
     showModal = () => {
         this.setState({
             visible: true,
         });
     };
-    handleOk = e => {
+    saveEducation = (e) => {
         console.log(e);
+        saveEducation(this.props?.profile?.Id, this.state.lstEducation).then(res => {
+            message.success('Education saved successfully')
+        })
         this.setState({
             visible: false,
         });
@@ -43,11 +49,71 @@ class Education extends Component {
             visible: false,
         });
     }
-
+    addEducation = () => {
+        let educatioObj = {
+            EducationType: '',
+            College: '',
+            AcademicYear: '',
+            Place: '',
+            marksGrade: '',
+            EducationTypeLu: ['School', 'College'],
+            RecordStatus: 'Added',
+            uploadSources: []
+        },
+            { lstEducation } = this.state;
+        lstEducation.push(educatioObj);
+        this.setState({ lstEducation: lstEducation })
+    }
+    deleteEducation = (education, idx) => {
+        let { lstEducation } = this.state;
+        if (education.RecordStatus == null)
+            lstEducation.forEach(function (index, key) {
+                if (education.Id == lstEducation[key]) {
+                    education.RecordStatus = 'Deleted';
+                    lstEducation[key] = education;
+                }
+            });
+        else {
+            lstEducation.splice(idx, 1)
+        }
+        this.setState({ lstEducation: lstEducation })
+    }
+    handleChange = (event, index, fieldName) => {
+        const { lstEducation } = this.state;
+        lstEducation[index][event.currentTarget ? event.currentTarget.name : fieldName] = event.currentTarget ? event.currentTarget.value : event;
+        this.setState({ lstEducation: lstEducation })
+    }
+    handleDdlChange = (event, index) => {
+        const { lstEducation } = this.state;
+        lstEducation[index].EducationType = event;
+        this.setState({ lstEducation: lstEducation })
+    }
+    onChange = (info, index) => {
+        const { status } = info.file;
+        const { lstEducation } = this.state;
+        if (status === 'done') {
+            lstEducation[index].uploadSources.push(info.file);
+            this.setState({ ...this.state, lstEducation: lstEducation })
+            notify({ description: `${info.file.name} file uploaded successfully.`, message: "Upload" });
+        } else if (status === 'error') {
+            notify({ description: `${info.file.name} file upload failed.`, type: "error", message: "Upload" });
+        }
+    }
+    uploadProps = {
+        name: 'file',
+        multiple: false,
+        action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
+        showUploadList: false,
+    };
+    deleteFile = (key, index, education) => {
+        const { lstEducation } = this.state;
+        lstEducation[index].uploadSources.splice(key, 1)
+        this.setState({ ...this.state, lstEducation: lstEducation })
+    }
     render() {
         const { user } = store.getState().oidc;
 
-        const { education, visible } = this.state
+        const { education, visible, lstEducation } = this.state;
         return (
             <div className="custom-card">
                 <Card title="Education" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons add" /></Link> : null} >
@@ -76,8 +142,8 @@ class Education extends Component {
                         )}
                     />
                 </Card>
-                <CommonModal className="custom-popup" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.handleOk}>
-                    <div className="">
+                <CommonModal className="custom-popup" visible={this.state.visible} title="Education" cancel={this.handleCancel} saved={this.saveEducation}>
+                    {/* <div className="">
                         <Divider className="text-left-line" orientation="left">School <Link><span className=" icons white-close" /></Link></Divider>
                         <Form layout="vertical" >
                             <Row gutter={16}>
@@ -185,7 +251,69 @@ class Education extends Component {
                             />
                         </div>
                         <Divider className="text-left-line" orientation="left">Add Education <Link><span className=" icons white-add" /></Link></Divider>
-                    </div>
+                    </div> */}
+                    {lstEducation.map((education, index) => {
+                        return <div className="">
+                            {education.RecordStatus != 'Deleted' && <div>
+                                <Divider className="text-left-line" orientation="left">{education.EducationType} <Link onClick={() => { this.deleteEducation(education, index) }}><span className=" icons white-close" /></Link></Divider>
+                                <Form layout="vertical" >
+                                    <Row gutter={16}>
+                                        <Col xs={24} sm={12}>
+                                            <Form.Item label="Education Type" className="custom-fields custom-select">
+                                                <Select defaultValue="" name="EducationType" value={education.EducationType} onChange={(event) => this.handleDdlChange(event, index)}>
+                                                    <Option value="">Select State</Option>
+                                                    {education.EducationTypeLu.map((item, index) => { return <Option key={index} value={item}>{item}</Option> })}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={12}>
+                                            <Form.Item label="College/University Name" className="custom-fields">
+                                                <Input value={education.College} name="College" onChange={(event) => this.handleChange(event, index, education)} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={12}>
+                                            <Form.Item label="Academic Year" className="custom-fields">
+                                                <Input.Group compact>
+                                                    <RangePicker name="AcademicYear" value={education.AcademicYear} onChange={(event) => this.handleChange(event, index, 'AcademicYear')} />
+                                                </Input.Group>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={12}>
+                                            <Form.Item label="Place of College/University" className="custom-fields">
+                                                <Input value={education.Place} name="Place" onChange={(event) => this.handleChange(event, index, education)} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={12}>
+                                            <Form.Item label="Marks Grade" className="custom-fields">
+                                                <Input value={education.MarksGrade} name="MarksGrade" onChange={(event) => this.handleChange(event, index, education)} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                                <Dragger {...this.uploadProps} onChange={(info) => this.onChange(info, index)} className="upload mb-24" >
+                                    <span className="sharebox-icons photo-upload"></span>
+                                    <p className="ant-upload-text mt-8 mb-0">Upload Certificate</p>
+                                </Dragger>
+                                <div className="docs about-icons mb-16 education">
+                                    <List
+                                        itemLayout="horizontal"
+                                        dataSource={education.uploadSources}
+                                        renderItem={(item, key) => (
+                                            <List.Item className="upload-preview">
+                                                <List.Item.Meta
+                                                    title={item.name}
+                                                    description={<div className="file-size f-14">{item.size}</div>}
+                                                />
+                                                <span className="close-icon" onClick={() => this.deleteFile(key, index, education)}></span>
+                                            </List.Item>
+                                        )}
+                                    />
+                                </div>
+
+                            </div>}
+                        </div>
+                    })}
+                    <Divider className="text-left-line" orientation="left">Add Education <Link onClick={() => this.addEducation()}><span className=" icons white-add" /></Link></Divider>
                 </CommonModal>
             </div >
 
