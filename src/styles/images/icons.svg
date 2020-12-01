@@ -1461,6 +1461,16 @@
 	<circle id="Ellipse_2_1_" fill="#07A3B2" cx="1384.47" cy="665.879" r="1.905"/>
 	<circle id="Ellipse_3_1_" fill="#07A3B2" cx="1384.47" cy="671.974" r="1.905"/>
 </g>
+<g id="Group_20_3_" transform="translate(-1140 -429)">
+	<circle id="Ellipse_1_3_" fill="#9B9B9B" cx="1711.565" cy="639.879" r="1.905"/>
+	<circle id="Ellipse_2_3_" fill="#9B9B9B" cx="1705.47" cy="639.879" r="1.905"/>
+	<circle id="Ellipse_3_3_" fill="#9B9B9B" cx="1699.375" cy="639.879" r="1.905"/>
+</g>
+<g id="Group_20_2_" transform="translate(-1140 -429)">
+	<circle id="Ellipse_1_2_" fill="#07A3B2" cx="1711.565" cy="665.879" r="1.905"/>
+	<circle id="Ellipse_2_2_" fill="#07A3B2" cx="1705.47" cy="665.879" r="1.905"/>
+	<circle id="Ellipse_3_2_" fill="#07A3B2" cx="1699.375" cy="665.879" r="1.905"/>
+</g>
 <g id="send" transform="translate(-0.001 -35.111)">
 	<g id="Group_462" transform="translate(0.001 35.111)">
 		<path id="Path_615" fill="#9B9B9B" d="M282.913,209.019l-14.964-6.209c-0.912-0.379-1.969,0.053-2.35,0.966
@@ -2181,7 +2191,7 @@
 			c0.056-0.707,0.676-1.236,1.386-1.185c0.63,0.052,1.131,0.55,1.186,1.185L74.537,420.211z"/>
 	</g>
 </g>
-<rect x="-28.75" y="381.768" fill="#9B9B9B" width="11.001" height="19.625"/>
+<rect x="606.427" y="207.826" fill="#9B9B9B" width="11.001" height="19.625"/>
 <g transform="translate(-646 -130.314)">
 	<g transform="translate(646 130.314)">
 		<path fill="#07A3B2" d="M305.273,63.217c0,2.18-1.771,3.947-3.948,3.946c-2.181,0-3.943-1.769-3.943-3.948

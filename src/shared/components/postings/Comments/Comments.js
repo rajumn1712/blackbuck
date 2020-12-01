@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Avatar, Comment, Form, Button, List, message } from 'antd';
+import { Avatar, Comment, Form, Button, List, message, Menu, Dropdown } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import user from '../../../../styles/images/user.jpg';
 import { connect } from 'react-redux';
@@ -7,6 +7,16 @@ import { fetchComments, postComment } from '../../../api/postsApi';
 import defaultUser from '../../../../styles/images/defaultuser.jpg';
 import Moment from 'react-moment'
 import { uuidv4 } from '../../../../utils';
+const commentEdit = (
+    <Menu className="custom-dropdown">
+      <Menu.Item key="0">
+        <a>Edit</a>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <a>Delete</a>
+      </Menu.Item>
+    </Menu>
+  );
 class Comments extends Component {
     constructor(props) {
         super(props)
@@ -72,7 +82,7 @@ class Comments extends Component {
                     dataSource={comments}
                     header={`${count} ${count > 1 ? 'Comments' : 'Comment'}`}
                     itemLayout="horizontal"
-                    renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={<Moment fromNow>{item.CreatedDate}</Moment>} avatar={<Avatar src={item.Image || defaultUser} />}>
+                    renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={<><Moment fromNow>{item.CreatedDate}</Moment><Dropdown placement="bottomRight" overlay={commentEdit} trigger={['click']}><a className="ant-dropdown-link"><span class="post-icons h-more-icon mr-0 ml-8 c-pointer"></span></a></Dropdown></>} avatar={<Avatar src={item.Image || defaultUser} />}>
                         {/* {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
                                 {/* <Comment style={{ marginLeft: 10 }} className="reply-comment"
                                     avatar={
@@ -82,6 +92,7 @@ class Comments extends Component {
                                         <Editor />
                                     }
                                 /> */}
+                                
                     </Comment>
                     }
                 /> {comments.length !== count && <a className="more-comments mt-16" onClick={() => this.loadComments(5, comments.length)}>View more comments</a>}</>}
