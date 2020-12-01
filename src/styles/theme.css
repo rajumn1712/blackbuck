@@ -3,8 +3,8 @@
     --primary:#07A3B2;
     --primaryhover:#20838c;
     --secondary: #D7FDFE;
-    --textprimary:#272727;
-    --textsecondary: #5D5D5D;
+    --textprimary: #00000099;
+    --textsecondary:#666666;
     --bodybg: #F1F7FF;
     --textlightcolor: #BBB9B9;
     --white: #ffffff;
@@ -12,7 +12,7 @@
     --btnlight: #DEDFE1;
     --boxshadow: 0 3px 15px rgba(0, 0, 0, 0.06);
     --transparent: transparent;
-    --line: #D6E6FB;
+    --line: #e9e5df;
     --grey:#f9f9f9;
     --bordergrey: #bdbdbd;
     --red: #ff0000;
