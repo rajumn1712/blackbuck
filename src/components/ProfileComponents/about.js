@@ -120,13 +120,7 @@ class About extends Component {
                             layout="vertical"
                         >
                             <Row gutter={16}>
-                                <Col xs={24}>
-                                    <Form.Item label="About Me" className="custom-fields mb-24">
-                                        <TextArea autoSize={{ minRows: 2, maxRows: 6 }} value={AboutMe}
-                                            name="AboutMe" onChange={this.handleOnChange} />
-                                        <ErrorMessage name="AboutMe" />
-                                    </Form.Item>
-                                </Col>
+                                
                                 <Col xs={24}>
                                     <h3>Contact</h3>
                                 </Col>
@@ -142,12 +136,12 @@ class About extends Component {
                                         <ErrorMessage name="BuildingEstate" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={12}>
-                                    <Form.Item label="Address Line 1" className="custom-fields">
+                                <Col xs={24}>
+                                    <Form.Item label="Address" className="custom-fields">
                                         <Input value={address[0]?.UnitNo} name="UnitNo" onChange={this.handleOnChange} />
                                         <ErrorMessage name="UnitNo" />
                                     </Form.Item>
-                                </Col>
+                                </Col> 
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="City" className="custom-fields">
                                         <Input value={address[0]?.City} name="City" onChange={this.handleOnChange} />
@@ -185,6 +179,13 @@ class About extends Component {
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="Email" className="custom-fields">
                                         <Input value={Email} name="Email" onChange={this.handleOnChange} disabled />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24}>
+                                    <Form.Item label="About Me" className="custom-fields mb-24">
+                                        <TextArea autoSize={{ minRows: 2, maxRows: 6 }} value={AboutMe}
+                                            name="AboutMe" onChange={this.handleOnChange} />
+                                        <ErrorMessage name="AboutMe" />
                                     </Form.Item>
                                 </Col>
                             </Row>

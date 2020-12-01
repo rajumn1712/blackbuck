@@ -119,7 +119,7 @@ to{visibility: visible;transform: translateY(0px);}
 .ant-checkbox-checked .ant-checkbox-inner{background: var(--primary); border-color: var(--primary);}
 .ant-checkbox-checked::after, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{border-color: var(--primary);}
 .images{width: 100%; display: flex; flex-wrap: wrap; align-items: flex-start; position: relative;}
-.image-box{width: 100%; height: 250px; font-size: 30px; color: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;background: #e9e1ff;}
+.image-box{width: 100%; height: 250px; font-size: 30px; color: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;}
 .image-box.gif, .image-box.single{height: auto;}
 .image-box img {width: 100%; left: 0; top: 0; object-fit: cover;}
 .image2, .image3{width: 100%;}

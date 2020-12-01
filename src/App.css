@@ -4,7 +4,7 @@ body,h1,h2,h3,h4,h5,h6,p,span,div{font-family: 'Neue Haas Grotesk Text Pro' !imp
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
 .ant-card-head{padding: 0 16px !important; min-height: 44px !important;}
 .ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal;}
-.ant-btn{min-height: 45px !important; min-width: 120px;font-size: 16px !important;}
+.ant-btn{min-height: 45px !important;font-size: 16px !important;}
 .ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
 .ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{color: var(--primary) !important;}
@@ -117,8 +117,10 @@ body,h1,h2,h3,h4,h5,h6,p,span,div{font-family: 'Neue Haas Grotesk Text Pro' !imp
 .ant-btn.btn-cancel{background: #DEDFE1;color:var(--black)}
 .menu-droupdown{width: 120px;}
 .menu-droupdown a{font-size: 11px;}
-.ant-modal-header,.ant-modal-footer{padding: 20px 24px !important;}
-.ant-modal-body{padding: 16px 24px!important;}
+.ant-modal-header{padding: 16px 30px !important;}
+.ant-modal-body{padding: 16px 30px!important;}
+.ant-modal-footer{padding: 16px 30px!important;}
+.ant-modal-footer .ant-btn{width: 100%;border-radius: 8px !important;}
 .share-popup .ant-modal-content, .share-popup.ant-modal-header{border-radius: 10px;}
 .anonymous{display: flex;align-items: center;}
 .ant-input:hover{box-shadow: none !important;}
@@ -227,7 +229,7 @@ body,h1,h2,h3,h4,h5,h6,p,span,div{font-family: 'Neue Haas Grotesk Text Pro' !imp
 .edu-card .edu-certificate .about-icons {background: var(--white) ;}
 .edu-card .edu-certificate .ant-list-item-meta-title{color: var(--primary);}
 .ant-input-affix-wrapper:hover,.ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused{border-color: var(--primary) !important;}
-.custom-input{margin-bottom: 15px;border-radius: 4px;padding:  0 !important;}
+.custom-input{margin-bottom: 15px;border-radius: 8px;padding:  0 !important;}
 .custom-input .ant-input-suffix{ border-left: 1px solid var(--bordergrey); padding-left: 3px;padding-right: 3px;}
 .custom-input .ant-input{padding: 7px 10px !important;}
 .custom-modal-header{display: flex;justify-content: space-between;align-items: center;}
@@ -241,12 +243,12 @@ body,h1,h2,h3,h4,h5,h6,p,span,div{font-family: 'Neue Haas Grotesk Text Pro' !imp
 .ant-form-vertical .ant-form-item-label{padding-bottom: 0px !important;}
 .custom-fields .ant-form-item-label > label{color: var(--textsecondary) !important;font-size: var(--f-14);font-weight: 500;margin-bottom: 3px !important;}
 .custom-fields{margin-bottom: 16px !important;}
-.custom-fields .ant-input, .custom-fields .ant-select{min-height: 45px;}
-.custom-fields .ant-select-selector,.custom-fields .ant-picker.ant-picker-range{min-height: 45px;height: 45px !important;border-radius: 4px !important;}
-.custom-fields .ant-select-selector .ant-select-selection-item{line-height: 45px !important;}
+.custom-fields .ant-input, .custom-fields .ant-select{min-height: 48px;}
+.custom-fields .ant-select-selector,.custom-fields .ant-picker.ant-picker-range{min-height: 48px;height: 48px !important;border-radius: 8px !important;}
+.custom-fields .ant-select-selector .ant-select-selection-item{line-height: 48px !important;}
 .custom-fields textarea.ant-input{min-height: 90px !important;}
-.ant-input,.ant-select{border-radius: 4px !important;}.ant-modal-content{border-radius: 10px !important;}
-.ant-input,.ant-select{border-radius: 4px !important;}
+.ant-input,.ant-select-selector{border: 1px solid #dfe3eb !important;}
+.ant-input,.ant-select{border-radius: 8px !important;}
 .ant-modal-content{border-radius: 10px !important;}
 .ant-modal-header{border-radius: 10px 10px 0 0 !important;}
 .ant-btn:hover, .ant-btn:focus{
@@ -286,10 +288,14 @@ body,h1,h2,h3,h4,h5,h6,p,span,div{font-family: 'Neue Haas Grotesk Text Pro' !imp
 .group-member .ant-avatar{width: 40px;height: 40px;}
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
 @media (min-width:576px){
-    .w-medium{width: 575px !important;}
-    .custom-popup,.ant-modal{width: 600px !important;}
+    .custom-popup,.ant-modal{width: 500px !important;}
     .custom-popup .ant-modal-body{max-height: calc(60vh - 20px); overflow: auto;} 
 }
 .group-member .ant-avatar-group .ant-avatar:not(:first-child){margin-left: 0; }
 .group-member .ant-avatar{width: 40px;height: 40px;}
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
+textarea{resize: unset !important;}
+
+* { scrollbar-width: thin; scrollbar-color: var(--primary) var(--secondary);}
+*::-webkit-scrollbar { width: 8px;}
+*::-webkit-scrollbar-thumb {background-color: var(--primary);border-radius: 20px;}
