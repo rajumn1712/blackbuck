@@ -140,7 +140,7 @@ class Profile extends Component {
         return (
             profileData ? <div className="main">
                 <Row gutter={16}>
-                    <Col xs={24} sm={16} md={16} lg={18} xl={18}>
+                    <Col xs={24} sm={16} md={17} lg={17} xl={17}>
                         <div className="coverpage">
                             <Avatar className="center-focus" src={profileData.CoverPic || defaultCover} />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
@@ -211,7 +211,7 @@ class Profile extends Component {
                             </TabPane>
                             <TabPane tab="Profile" key="2">
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
+                                    {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
                                         <div className="left-rail">
                                             <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
                                                 {navigations.map(navigatieItem => {
@@ -221,8 +221,8 @@ class Profile extends Component {
                                         </div>
                                         <Invite />
                                         <Tags />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    </Col> */}
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <div ref={this.getOrCreateRef('AboutComp')}>{profileData && <About about={profileData} />}</div>
                                         <div ref={this.getOrCreateRef('InterestComp')}>{profileData.Interests && <Interests interests={profileData.Interests} />}</div>
                                         <div ref={this.getOrCreateRef('HobbyComp')}>{profileData.Hobbies && <Hobbies hobbies={profileData.Hobbies} />}</div>
@@ -235,10 +235,10 @@ class Profile extends Component {
                             </TabPane>
                             <TabPane tab="Friends" key="3">
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                    {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    </Col> */}
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <FriendRequests isDataRefreshed={(refresh)=>this.isDataRefreshed(refresh)}/>
                                         <Friends isDataRefreshed={isDataRefresh}/>
                                     </Col>
@@ -246,17 +246,17 @@ class Profile extends Component {
                             </TabPane>
                             <TabPane tab="Groups" className="m-0" key="4">
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                    {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    </Col> */}
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <GroupsPage />
                                     </Col>
                                 </Row>
                             </TabPane>
                         </Tabs>
                     </Col>
-                    <Col xs={24} sm={8} md={8} lg={6} xl={6}>
+                    <Col xs={24} sm={8} md={7} lg={7} xl={7}>
                         {/* <FriendsSuggestioncard /> */}
                         <Groups />
                         <Ads />
