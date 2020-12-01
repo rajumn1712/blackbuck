@@ -402,10 +402,10 @@ class ShareBox extends Component {
                         {/* <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                             Close
                         </Button> */}
-                        <Button disabled={!this.state.post.Message} key="submit" type="primary" onClick={this.popupOk}>
+                        <Button disabled={!this.state.post.Message} type="primary" onClick={()=>this.popupOk()}>
                             Post
                         </Button></div>
-                    ]}>
+                    ]} >
                     <div className="mb-24">{title}</div>
                     <div className="upload-image">
                         {this.renderUploadType(modal)}
