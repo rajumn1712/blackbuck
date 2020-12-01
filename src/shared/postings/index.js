@@ -174,19 +174,25 @@ class Postings extends Component {
          "Type": type
       }
       const saveResponse = await saveActions(post.id, saveObj);
-      debugger
       if (saveResponse.ok) {
          let { allPosts } = this.state;
          for (let i in allPosts) {
             if (allPosts[i].id === post.id) {
-               allPosts[i][type.toLowerCase()] = post.IsUserLikes ? (allPosts[i][type.toLowerCase()] ? parseInt(allPosts[i][type.toLowerCase()]) : 1) - 1 : (allPosts[i][type.toLowerCase()] ? parseInt(allPosts[i][type.toLowerCase()]) : 0) + 1;
+               if (allPosts[i].IsUserLikes) {
+                  const _type = allPosts[i].UserLikesType ? allPosts[i].UserLikesType.toLowerCase() : "likes";
+                  if (allPosts[i][_type] > 0) {
+                     allPosts[i][_type] = allPosts[i][_type] - 1;
+                  }
+               } else {
+                  allPosts[i][type.toLowerCase()] = allPosts[i][type.toLowerCase()] ? allPosts[i][type.toLowerCase()] + 1 : 1;
+               }
                allPosts[i].IsUserLikes = !allPosts[i].IsUserLikes;
                postObj = allPosts[i]//added for re usablity code
             }
          }
          this.setState({ ...this.state, allPosts })
       } else {
-        notify({message:"Error",description:"Something went wrong :)",type:"error"});
+         notify({ message: "Error", description: "Something went wrong :)", type: "error" });
       }
    }
    fetchCardActions = (user) => {
@@ -206,7 +212,7 @@ class Postings extends Component {
          let { allPosts } = this.state;
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });
-         notify({message:"Delete",description:"Post delete success"});
+         notify({ message: "Delete", description: "Post delete success" });
       })
    }
    fetchPostReactions = async (id) => {
@@ -216,10 +222,10 @@ class Postings extends Component {
       if (reactionsResponse.ok) {
          const data = reactionsResponse.data[0].Likes;
          actions = {
-            Likes: data.filter(item=>item.Type==="Likes"),
-            Claps: data.filter(item=>item.Type==="Claps"),
-            Loves: data.filter(item=>item.Type==="Loves"),
-            Whistiles: data.filter(item=>item.Type==="Whistiles"),
+            Likes: data.filter(item => item.Type === "Likes"),
+            Claps: data.filter(item => item.Type === "Claps"),
+            Loves: data.filter(item => item.Type === "Loves"),
+            Whistiles: data.filter(item => item.Type === "Whistiles"),
          }
          this.setState({ reactionsLoading: false, postReactions: actions })
       }
@@ -234,7 +240,7 @@ class Postings extends Component {
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
-            cover={<div style={{cursor:"pointer"}} onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
+            cover={<div style={{ cursor: "pointer" }} onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             <div className="p-16">
                <Title level={5} className="post-title">{post.title}</Title>
@@ -245,19 +251,19 @@ class Postings extends Component {
                      <li><span className="counter-icon loves"></span></li>
                      <li ><span className="counter-icon claps"></span></li>
                      <li><span className="counter-icon whistles"></span></li>
-                     <li onMouseEnter={()=>this.fetchPostReactions(post.id)}>
-                        <Tooltip overlayStyle={{color:"#ffff"}} title={<>{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
-                           <TabPane tab="Likes" key="1" style={{floodColor:"#ffff",height:200}}>
+                     <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
+                        <Tooltip overlayStyle={{ color: "#ffff" }} title={<>{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                           <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
                               {this.state.postReactions?.Likes?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
                            </TabPane>
-                           <TabPane tab="Loves" key="2" style={{floodColor:"#ffff",height:200}}>
-                           {this.state.postReactions?.Loves?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
-                            </TabPane>
-                           <TabPane tab="Claps" key="3" style={{floodColor:"#ffff",height:200}}>
-                           {this.state.postReactions?.Claps?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
+                           <TabPane tab="Loves" key="2" style={{ floodColor: "#ffff", height: 200 }}>
+                              {this.state.postReactions?.Loves?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
                            </TabPane>
-                           <TabPane tab="Whistiles" key="4" style={{floodColor:"#ffff",height:200}}>
-                           {this.state.postReactions?.Whistiles?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
+                           <TabPane tab="Claps" key="3" style={{ floodColor: "#ffff", height: 200 }}>
+                              {this.state.postReactions?.Claps?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
+                           </TabPane>
+                           <TabPane tab="Whistiles" key="4" style={{ floodColor: "#ffff", height: 200 }}>
+                              {this.state.postReactions?.Whistiles?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
                            </TabPane>
                         </Tabs>}</>}>
                            <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>

@@ -1,6 +1,7 @@
 import { apiClient } from './clients';
 
 const POSTS_END_POINT = "service/api/posts/";
+const PROFILE_END_POINT = "service/api/profile/"
 const getPosts = (userid, pageNo, pageSize, postingsType) => {
     const method = {
         "all": "getAllPosts",
@@ -29,4 +30,7 @@ const fetchComments = (post_id, take, skip) => {
 const fetchPostReactions = (post_id)=>{
     return apiClient.get(POSTS_END_POINT+"getPostsLikes/"+post_id);
 }
-export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost,fetchComments,fetchPostReactions };
+const saveUserPosts = (obj)=>{
+    return apiClient.post(PROFILE_END_POINT+"savePosts",obj);
+}
+export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost,fetchComments,fetchPostReactions,saveUserPosts };
