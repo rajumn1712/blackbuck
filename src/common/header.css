@@ -87,7 +87,7 @@
 
 .header-searchbar .ant-input-group-addon .ant-btn {
     border: 0 !important;
-    border-left: 1px solid #D6E6FB !important;
+    border-left: 1px solid var(--line) !important;
     max-height: 26px;
     box-shadow: none!important;
     border-radius: 0 10px 10px 0 !important;
@@ -271,7 +271,7 @@
 }
 
 .notification-dropdown .ant-list-items .ant-list-item:hover, .messenger-drawer .ant-card-meta:hover {
-    background-color: #F9F9F9;
+    background-color: var(--grey);
     border-radius: 4px;
 }
 

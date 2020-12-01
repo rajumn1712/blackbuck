@@ -5,7 +5,7 @@
 .post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px; cursor: default;}
 .post-card .ant-card-meta-description{font-size: 12px; font-weight: 400; margin-top: 2px;}
 .post-card .ant-card-body{padding: 16px;}
-.post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: #F9F9F9; }
+.post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: var(--grey); }
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important; }
 .post-title{color: var(--textprimary) !important; margin-bottom: 6px !important; line-height: normal !important; font-size: var(--f-16) !important;}
 .post-title:hover{color: var(--primary)!important ;}
@@ -124,7 +124,7 @@ to{visibility: visible;transform: translateY(0px);}
 .ant-checkbox-checked .ant-checkbox-inner{background: var(--primary); border-color: var(--primary);}
 .ant-checkbox-checked::after, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{border-color: var(--primary);}
 .images{width: 100%; display: flex; flex-wrap: wrap; align-items: flex-start; position: relative;}
-.image-box{width: 100%; height: 250px; font-size: 30px; color: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;}
+.image-box{width: 100%; height: 250px; font-size: 30px; color: var(--white); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;}
 .image-box.gif, .image-box.single{height: auto;}
 .image-box img {width: 100%; left: 0; top: 0; object-fit: cover;}
 .image2, .image3{width: 100%;}

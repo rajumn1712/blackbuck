@@ -147,7 +147,7 @@
     position: absolute;
     width: 1px;
     height: 45px;
-    background-color: #D6E6FB;
+    background-color: var(--line);
     top: 10px;
     right: -25px;
     left: auto;
@@ -196,7 +196,7 @@
     position: absolute;
     right: 10px;
     top: 10px;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 30px;
     height: 30px;
     border-radius: 11px;
@@ -251,7 +251,7 @@
         position: absolute;
         width: 75px;
         height: 1px;
-        background-color: #D6E6FB;
+        background-color: var(--line);
         top: auto;
         right: 0;
         left: 0;
