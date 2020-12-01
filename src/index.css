@@ -8,6 +8,9 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .normalbold{font-weight: 400 !important;}
 .semibold{font-weight: 500 !important;}
 .bold{font-weight: 600 !important;}
+.c-pointer{cursor: pointer !important;}
+.c-default{cursor: default !important;}
+.c-text{cursor: text !important;}
 
 a{color: var(--primary);}
 a:hover,a:active{color: var(--primaryhover) !important;}

@@ -15,10 +15,10 @@ class CommonModal extends React.Component {
                 onOk={modal.saved}
                 className={modal.className}
                 onCancel={modal.cancel}
-                footer={[<div className="d-flex justify-content-between">
-                    <Button key="back" onClick={modal.cancel} className="btn-cancel">
+                footer={[<div className="">
+                    {/* <Button key="back" onClick={modal.cancel} className="btn-cancel">
                         Close
-                </Button>
+                </Button> */}
                     <Button key="submit" type="primary" onClick={modal.saved}>
                         Save
                 </Button></div>
