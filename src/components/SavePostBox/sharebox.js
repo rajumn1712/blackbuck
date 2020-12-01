@@ -395,44 +395,46 @@ class ShareBox extends Component {
                     })}
                 </ul>
                 <Modal className="share-popup"
-                    title={title}
+                    title="Create a Post"
+                    className="custom-popup"
                     visible={visible}
                     onOk={this.handleOk}
-                    onCancel={this.popupOk}
+                    onCancel={this.handleCancel}
                     footer={[<div className="d-flex justify-content-between">
-                        <Button key="back" onClick={this.handleCancel} className="btn-cancel">
+                        {/* <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                             Close
-                        </Button>
+                        </Button> */}
                         <Button key="submit" type="primary" onClick={this.popupOk}>
                             Post
                         </Button></div>
                     ]}>
+                    <div className="mb-24">{title}</div>
                     <div className="upload-image">
                         {this.state.errors && !this.state.errors.validate && <Alert className="mb-16" showIcon type="error" message={<>{Object.keys(this.state.errors).map((value, indx) => <>{this.state.errors[value] && <><span>{this.state.errors[value]}</span><br /></>}</>)}</>} />}
                         {this.renderUploadType(modal)}
                         <form >
                             <div className="title-img">
                                 <TextArea
-                                    placeholder={`Title of the post here`}
+                                    placeholder={`What's on Your Mind?`}
                                     autoSize={{ minRows: 1, maxRows: 6 }}
-                                    style={{ resize: 'none' }}
+                                    style={{ resize: 'none',fontWeight:'400' }}
                                     name="Title"
                                     onChange={this.handleChange}
                                     value={this.state.post.Title}
                                     required={true}
                                 />
                             </div>
-                            <div className="caption-image">
+                            {/* <div className="caption-image">
                                 <TextArea
-                                    placeholder={`Add a caption of post, if you like`}
+                                    placeholder={`What's on Your Mind?`}
                                     autoSize={{ minRows: 1, maxRows: 6 }}
-                                    style={{ resize: 'none' }}
+                                    style={{ resize: 'none',fontSize:'20px' }}
                                     name="Message"
                                     onChange={this.handleChange}
                                     value={this.state.post.Message}
                                     required={true}
                                 />
-                            </div>
+                            </div> */}
                         </form>
                     </div>
                     <Divider dashed />

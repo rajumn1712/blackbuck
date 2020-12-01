@@ -256,7 +256,7 @@ class Postings extends Component {
             cover={<div style={{ cursor: "pointer" }} onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             <div className="p-16">
-               <Title level={5} className="post-title">{post.title}</Title>
+               {/* <Title level={5} className="post-title">{post.title}</Title> */}
                <Paragraph className="post-desc">{post.meassage}</Paragraph>
                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   {<ul className="card-actions-count pl-0">
