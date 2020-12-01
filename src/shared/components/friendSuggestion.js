@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { message, Typography, Button } from 'antd';
+import { Typography, Button } from 'antd';
 import { apiClient } from '../api/clients';
 import notify from './notification';
 import { getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
@@ -8,7 +8,7 @@ import connectStateProps from '../stateConnect';
 import defaultUser from '../../styles/images/defaultuser.jpg';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
-    className = ["one","two","three"]
+    className = ["one", "two", "three"]
     state = {
         friends: []
     }
@@ -22,7 +22,7 @@ class FriendSuggestions extends Component {
             "Type": "request"
         }
         sendFirendRequest(friend.UserId, obj).then(() => {
-            message.success("Request sent");
+            notify({ message: "Friend request", description: "Request sent successfully" });
             this.removeSuggestion(friend)
         })
     }
@@ -45,7 +45,7 @@ class FriendSuggestions extends Component {
     }
     render() {
         const { friends } = this.state;
-        if(!friends||friends.length===0){return null;}
+        if (!friends || friends.length === 0) { return null; }
         return (
             <div>
                 <div className="friends-thead">
@@ -68,19 +68,19 @@ class FriendSuggestions extends Component {
                     }*/}
                     {friends.length > 4 && <Link to="/commingsoon" className="more-frnd-btn" onClick={() => this.goToFriendsSuggestions()}><span className="icon right-arrow mr-0"></span></Link>}
                     {friends.map((friend, index) => {
-                    return<div className="frnds-list-item">
-                        <div className="frnds-img">
-                            <img src={friend.Image || defaultUser} width="100%" height="100%" />
-                            <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
-                        </div>
-                        <div style={{ padding: 10 }}>
-                            <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
-                            <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
-                            <div className="text-center">
-                                <Button type="dashed" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
+                        return <div className="frnds-list-item">
+                            <div className="frnds-img">
+                                <img src={friend.Image || defaultUser} width="100%" height="100%" />
+                                <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
+                            </div>
+                            <div style={{ padding: 10 }}>
+                                <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
+                                <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
+                                <div className="text-center">
+                                    <Button type="dashed" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     })
                     }
                 </div>

@@ -6,7 +6,8 @@ const notify = type => {
         message: type.message,
         description:
             type.description,
-        placement: type.placement
+        placement: type.placement||"topRight",
+        type:type.type|| "success"
     });
 };
 export default notify;

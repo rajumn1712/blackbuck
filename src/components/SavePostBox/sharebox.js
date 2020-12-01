@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Menu, Modal, Card, Avatar, Dropdown, Checkbox, message, Tag, Divider, Image, Input, Tooltip, Upload, List, Alert } from 'antd'
+import { Button, Menu, Modal, Card, Avatar, Dropdown, Checkbox, Tag, Divider, Image, Input, Tooltip, Upload, List, Alert } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { TweenOneGroup } from 'rc-tween-one';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { Formik } from 'formik';
 import { savePost } from '../../shared/api/postsApi';
 import Loader from '../../common/loader';
 import { uuidv4 } from '../../utils';
+import notify from '../../shared/components/notification';
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -134,10 +135,10 @@ class ShareBox extends Component {
             if (status === 'done') {
                 this.postObject.ImageUrl = info.file.response;
                 this.setState({ ...this.state, uploadSources: [info.file.response] })
-                message.success(`${info.file.name} file uploaded successfully.`);
+                notify({description:`${info.file.name} file uploaded successfully.`,message:"Upload"});
                 this.setState({ ...this.state, fileUploading: false })
             } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
+                notify({description:`${info.file.name} file upload failed.`,type:"error",message:"Upload"});
                 this.setState({ ...this.state, fileUploading: false })
             }
         },
@@ -159,7 +160,7 @@ class ShareBox extends Component {
             this.setState({
                 visible: false,
             }, () => {
-                message.success("Posting completed successfully")
+               notify({description:"Posting completed successfully",message:"Post"})
             });
         }
     };

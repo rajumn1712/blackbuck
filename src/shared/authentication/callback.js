@@ -2,6 +2,7 @@ import { message } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { CallbackComponent } from "redux-oidc";
+import Loader from "../../common/loader";
 import { profileSuccess } from "../../reducers/auth";
 import { fetchProfile } from "../api/apiServer";
 import { userManager } from "./auth";
@@ -24,7 +25,7 @@ class CallbackPage extends React.Component {
                     console.error(error);
                 }}
             >
-                <div>Redirecting...</div>
+                <Loader className="loader-middle"/>
             </CallbackComponent>
         );
     }

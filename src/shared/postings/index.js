@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Card, Avatar, Typography, Tooltip, Dropdown, Menu, Comment, Input, Form, Button, List, Popover, Tag, Empty, Space, Spin, message } from 'antd';
+import { Card, Avatar, Typography, Tooltip, Input, Tag, Empty, Tabs, Spin } from 'antd';
 import SideAction from '../components/postings/Actions/SideActions';
 import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
 import ShareAction from '../components/postings/Actions/ShareActions';
 import EmojiAction from '../components/postings/Actions/EmojiActions';
-import { deletePost, getPosts, saveActions } from '../api/postsApi';
+import { deletePost, fetchPostReactions, getPosts, saveActions } from '../api/postsApi';
 import FriendSuggestions from '../components/friendSuggestion';
 import ShareBox from '../../components/SavePostBox/sharebox';
 import Moment from 'react-moment';
@@ -17,9 +17,10 @@ import Loader from '../../common/loader';
 import defaultUser from '../../styles/images/defaultuser.jpg';
 import PostCardModal from '../components/postings/PostModal';
 import dialog from '../components/dialog'
+import notify from '../components/notification';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
-const { TextArea } = Input;
+const { TabPane } = Tabs;
 let postObj = { tags: [], userdetails: {} };
 class Postings extends Component {
    state = {
@@ -31,6 +32,7 @@ class Postings extends Component {
       page: 1,
       pageSize: 10,
       showModal: false,
+      reactionsLoading: false
    }
    componentDidMount() {
       window.addEventListener('scroll', (e) => {
@@ -73,7 +75,7 @@ class Postings extends Component {
    handleEvent = (e, name, post) => {
       switch (name) {
          case "Delete":
-            dialog({ title: 'Alert', icon: '', content: 'Are you sure want to delete post?', okText: 'Delete', cancelText: 'Cancel', onOk: ()=>this.deletePost(post) });
+            dialog({ title: 'Alert', icon: '', content: 'Are you sure want to delete post?', okText: 'Delete', cancelText: 'Cancel', onOk: () => this.deletePost(post) });
             //this.deletePost(post);
             break;
          case "Edit":
@@ -123,7 +125,7 @@ class Postings extends Component {
                <video width="100%" controls>
                   <source src={imageObj} />
                </video>
-               <div className="play"></div>
+               {/* <div className="play"></div> */}
             </div>
          },
          Text: () => {
@@ -177,14 +179,14 @@ class Postings extends Component {
          let { allPosts } = this.state;
          for (let i in allPosts) {
             if (allPosts[i].id === post.id) {
-               allPosts[i][type.toLowerCase()] = post.IsUserLikes ? (allPosts[i][type.toLowerCase()] ?parseInt( allPosts[i][type.toLowerCase()]) : 1) - 1 : (allPosts[i][type.toLowerCase()] ? parseInt(allPosts[i][type.toLowerCase()]) : 0) + 1;
+               allPosts[i][type.toLowerCase()] = post.IsUserLikes ? (allPosts[i][type.toLowerCase()] ? parseInt(allPosts[i][type.toLowerCase()]) : 1) - 1 : (allPosts[i][type.toLowerCase()] ? parseInt(allPosts[i][type.toLowerCase()]) : 0) + 1;
                allPosts[i].IsUserLikes = !allPosts[i].IsUserLikes;
                postObj = allPosts[i]//added for re usablity code
             }
          }
          this.setState({ ...this.state, allPosts })
       } else {
-         message.error("Action failed")
+        notify({message:"Error",description:"Something went wrong :)",type:"error"});
       }
    }
    fetchCardActions = (user) => {
@@ -204,8 +206,23 @@ class Postings extends Component {
          let { allPosts } = this.state;
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });
-         message.success("Post deleted");
+         notify({message:"Delete",description:"Post delete success"});
       })
+   }
+   fetchPostReactions = async (id) => {
+      this.setState({ ...this.state, reactionsLoading: true });
+      let actions = {};
+      const reactionsResponse = await fetchPostReactions(id);
+      if (reactionsResponse.ok) {
+         const data = reactionsResponse.data[0].Likes;
+         actions = {
+            Likes: data.filter(item=>item.Type==="Likes"),
+            Claps: data.filter(item=>item.Type==="Claps"),
+            Loves: data.filter(item=>item.Type==="Loves"),
+            Whistiles: data.filter(item=>item.Type==="Whistiles"),
+         }
+         this.setState({ reactionsLoading: false, postReactions: actions })
+      }
    }
    renderPost = (post) => {
 
@@ -217,7 +234,7 @@ class Postings extends Component {
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
-            cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
+            cover={<div style={{cursor:"pointer"}} onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             <div className="p-16">
                <Title level={5} className="post-title">{post.title}</Title>
@@ -228,8 +245,21 @@ class Postings extends Component {
                      <li><span className="counter-icon loves"></span></li>
                      <li ><span className="counter-icon claps"></span></li>
                      <li><span className="counter-icon whistles"></span></li>
-                     <li>
-                        <Tooltip title="">
+                     <li onMouseEnter={()=>this.fetchPostReactions(post.id)}>
+                        <Tooltip overlayStyle={{color:"#ffff"}} title={<>{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                           <TabPane tab="Likes" key="1" style={{floodColor:"#ffff",height:200}}>
+                              {this.state.postReactions?.Likes?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
+                           </TabPane>
+                           <TabPane tab="Loves" key="2" style={{floodColor:"#ffff",height:200}}>
+                           {this.state.postReactions?.Loves?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
+                            </TabPane>
+                           <TabPane tab="Claps" key="3" style={{floodColor:"#ffff",height:200}}>
+                           {this.state.postReactions?.Claps?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
+                           </TabPane>
+                           <TabPane tab="Whistiles" key="4" style={{floodColor:"#ffff",height:200}}>
+                           {this.state.postReactions?.Whistiles?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)}
+                           </TabPane>
+                        </Tabs>}</>}>
                            <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
                         </Tooltip>
                      </li>
@@ -248,7 +278,7 @@ class Postings extends Component {
             </div>
          </Card>
          {this.state.commentselection.indexOf(post.id) > -1 && <Comments onUpdate={(prop, value) => { this.updatePost(post, prop, value) }} count={post.commentsCount} postId={post.id} />}
-         {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)}/>}
+         {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />}
       </div>
    }
    showComment = (post) => {

@@ -26,4 +26,7 @@ const deletePost = (post_id,user_id) => {
 const fetchComments = (post_id, take, skip) => {
     return apiClient.get(POSTS_END_POINT + `getPostComments/${post_id}/${take || 10}/${skip}`)
 }
-export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost,fetchComments };
+const fetchPostReactions = (post_id)=>{
+    return apiClient.get(POSTS_END_POINT+"getPostsLikes/"+post_id);
+}
+export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost,fetchComments,fetchPostReactions };
