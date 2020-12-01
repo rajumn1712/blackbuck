@@ -1,4 +1,4 @@
-import { Card, Carousel, Col, Empty, Modal, Row, Tag, Typography, message, Avatar } from 'antd';
+import { Card, Carousel, Col, Empty, Modal, Row, Tag, Typography, message, Avatar,Tooltip } from 'antd';
 import React, { Component, createRef } from 'react';
 import CommentAction from './Actions/CommentAction';
 import EmojiAction from './Actions/EmojiActions';
@@ -160,17 +160,26 @@ class PostCardModal extends Component {
                                     ]}
                                 >
                                     <div className="p-16">
-                                        <Title level={5} className="post-title f-16">{post.title}</Title>
-                                        <Paragraph className="f-14 post-desc">{post.meassage}</Paragraph>
-                                        <ul className="card-actions-count pl-0">
-                                            <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
-                                            <li><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
-                                            <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
-                                        </ul>
-                                        <ul className="card-actions-count">
-                                            {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
-                                            {post.commentsCount != null && <a><li onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li></a>}
-                                        </ul>
+                                        <Title level={5} className="post-title">{post.title}</Title>
+                                        <Paragraph className="post-desc">{post.meassage}</Paragraph>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            {<ul className="card-actions-count pl-0">
+                                                <li><span className="counter-icon likes"></span></li>
+                                                <li><span className="counter-icon loves"></span></li>
+                                                <li ><span className="counter-icon claps"></span></li>
+                                                <li><span className="counter-icon whistles"></span></li>
+                                                <li>
+                                                    <Tooltip title="">
+                                                        <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
+                                                    </Tooltip>
+                                                </li>
+                                            </ul>}
+                                            <ul className="card-actions-count">
+                                                {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
+                                                {post.commentsCount != null && <li style={{ cursor: "pointer" }} onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                                                {/* <li><span></span>2 <span> Shares</span></li> */}
+                                            </ul>
+                                        </div>
                                         {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                                             {post.tags?.map((tag, index) => {
                                                 return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
@@ -178,7 +187,7 @@ class PostCardModal extends Component {
                                         </div>}
                                     </div>
                                 </Card>
-                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount}
+                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount} onUpdate={(prop, value) => { this.props.updatePost(post, prop, value) }}
                                 />}
                             </div>
                         </Col>
