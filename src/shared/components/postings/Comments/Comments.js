@@ -61,7 +61,7 @@ class Comments extends Component {
                         <Avatar src={this.props.profile?.ProfilePic || defaultUser} />
                     }
                     content={
-                        <Form.Item><TextArea onChange={this.onChange} value={this.state.Comment} />
+                        <Form.Item><TextArea onChange={this.onChange} value={this.state.Comment}  autoSize={{ minRows: 1, maxRows: 6 }} />
                             <Button disabled={!this.state.Comment} htmlType="submit" onClick={this.onSubmit} shape="circle" type="link" className="post-btn">
                                 <span className="post-icons send-icon mr-0"></span>
                             </Button></Form.Item>
@@ -84,7 +84,7 @@ class Comments extends Component {
                                 /> */}
                     </Comment>
                     }
-                /> {comments.length !== count && <a onClick={() => this.loadComments(5, comments.length)}>View more comments</a>}</>}
+                /> {comments.length !== count && <a className="more-comments mt-16" onClick={() => this.loadComments(5, comments.length)}>View more comments</a>}</>}
             </div>
         )
     }

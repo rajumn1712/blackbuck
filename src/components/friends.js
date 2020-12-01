@@ -4,6 +4,7 @@ import { store } from '../store'
 import '../index.css';
 import '../App.css';
 import { fetchUserFriends } from '../shared/api/apiServer';
+import defaultUser from '../styles/images/defaultuser.jpg';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 class Friends extends Component {
@@ -43,7 +44,7 @@ class Friends extends Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Link to="/commingsoon"><Avatar className="request-image" src={item.Image} /></Link>}
+                                    avatar={<Link to="/commingsoon"><Avatar className="request-image" src={item.Image||defaultUser} /></Link>}
                                     title={<div className="d-flex align-items-center"><Link to={"/profileview/" + item.UserId}><span className="overflow-text post-title">{item.Firstname}</span></Link></div>}
                                     description={
                                         <div className="mt-8 d-flex align-items-center">
@@ -54,7 +55,7 @@ class Friends extends Component {
                                                     maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                                 >
                                                     {item.MutualFriends?.map((friend, index) => {
-                                                        return <Avatar key={index} src={friend.Image} />
+                                                        return <Avatar key={index} src={friend.Image||defaultUser} />
                                                     })
                                                     }
                                                 </Avatar.Group>

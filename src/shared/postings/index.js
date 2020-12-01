@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import Loader from '../../common/loader';
 import defaultUser from '../../styles/images/defaultuser.jpg';
 import PostCardModal from '../components/postings/PostModal';
+import dialog from '../components/dialog'
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -58,7 +59,7 @@ class Postings extends Component {
          avatar={
             <Avatar src={user.Image || defaultUser} />
          }
-         title={user.Firstname}
+         title={<Link to={"/profileview/" + user.UserId}><span className="overflow-text post-title">{user.Firstname}</span></Link>}
          description={<Moment fromNow>{date}</Moment>}
       />
    }
@@ -72,7 +73,8 @@ class Postings extends Component {
    handleEvent = (e, name, post) => {
       switch (name) {
          case "Delete":
-            this.deletePost(post);
+            dialog({ title: 'Alert', icon: '', content: 'Are you sure want to delete post?', okText: 'Delete', cancelText: 'Cancel', onOk: ()=>this.deletePost(post) });
+            //this.deletePost(post);
             break;
          case "Edit":
             break;

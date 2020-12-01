@@ -53,7 +53,7 @@ class Groups extends Component {
                                          Members
                                     </span> | <span>
                                         <span className="mr-4" style={{ color: 'var(--textprimary)',fontWeight: '500' }}>5</span> 
-                                         posts
+                                         Posts
                                     </span></div>
                                     </div>}
                                 />
