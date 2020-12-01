@@ -83,7 +83,7 @@ class About extends Component {
                             {address.length > 0 && <Col xs={24} sm={12}>
                                 <div className="about-details">
                                     <div className="about-icons">
-                                        <span className="icons location" />
+                                        <span className="icons location c-default" />
                                     </div>
                                     {address.map((address, index) => {
                                         return <p key={index}>
@@ -95,7 +95,7 @@ class About extends Component {
                             {PhoneNumber && <Col xs={24} sm={12}>
                                 <div className="about-details">
                                     <div className="about-icons">
-                                        <span className="icons phone" />
+                                        <span className="icons phone c-default" />
                                     </div>
                                     <p>{PhoneNumber}</p>
                                 </div>
@@ -103,7 +103,7 @@ class About extends Component {
                             {Email && <Col xs={24} sm={12}>
                                 <div className="about-details">
                                     <div className="about-icons">
-                                        <span className="icons email" />
+                                        <span className="icons email c-default" />
                                     </div>
                                     <p>{Email}</p>
                                 </div>
