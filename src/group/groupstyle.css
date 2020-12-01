@@ -85,8 +85,9 @@
 }
 
 .user-statistic .ant-statistic-content .ant-statistic-content-value {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 26px;
+    color: var(--textprimary)
 }
 
 .profile-tabs .ant-tabs-nav {
