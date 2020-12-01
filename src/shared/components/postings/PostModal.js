@@ -47,7 +47,7 @@ class PostCardModal extends Component {
             avatar={
                 <Avatar src={user.Image || defaultUser} />
             }
-            title={user.Firstname}
+            title={<Link to={"/profileview/" + user.UserId}><span className="overflow-text post-title">{user.Firstname}</span></Link>}
             description={<Moment fromNow>{date}</Moment>}
         />
     }
