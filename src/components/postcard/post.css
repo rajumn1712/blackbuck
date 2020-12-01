@@ -85,6 +85,7 @@ to{visibility: visible;transform: translateY(0px);}
 .post-preview .post-preview-box .preview-content .ant-card-body{padding: 0;}
 .post-preview .post-preview-box .preview-content .post-title ,.post-preview .post-preview-box .preview-content .post-desc{max-width: 360px;}
 .post-preview .preview-content .post-comment{margin-bottom: 5px;}
+.post-preview .post-preview-box {background: var(--black);border-radius: 10px;}
 .post-preview-box.post-card{margin-bottom: 0; height: calc(100vh - 120px);}
 .preview-content .post-card{border-radius: 0;}
 .reply-comment .ant-form-item{margin-bottom: 5px !important;}

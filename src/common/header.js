@@ -251,7 +251,7 @@ class HeaderComponent extends React.Component {
                 </Row>
                 {/* Mobile Naviagtion */}
                 <div className="">
-                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="320px" className="messenger-chat" closable="true" footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
+                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true" footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
                         <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
                         <div className="messenger-drawer">
 
