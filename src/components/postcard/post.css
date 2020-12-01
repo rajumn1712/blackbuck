@@ -8,7 +8,8 @@
 .post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: #F9F9F9; }
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important; }
 .post-title{color: var(--textprimary) !important; margin-bottom: 6px !important; line-height: normal !important; font-size: var(--f-14) !important;}
-.post-desc{color: var(--textsecondary); font-size: var(--f-12) !important; line-height: 16px;}
+.post-title:hover{color: var(--primary)!important ;}
+.post-desc{color: var(--textdescription); font-size: var(--f-14) !important; line-height: 16px;}
 .post-card .ant-card-actions > li, .post-card .ant-card-meta {margin: 0;}
 .post-card .ant-card-actions li a{padding: 10px 8px;}
 .post-tag{margin-top: 16px;}
