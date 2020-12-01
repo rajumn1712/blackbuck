@@ -16,7 +16,8 @@ a{color: var(--primary);}
 a:hover,a:active{color: var(--primaryhover) !important;}
 .d-flex{display: flex;}
 .align-items-center{align-items: center;}
-.site-layout-content { background: #f0f7ff url(../src/styles/images/body.svg) no-repeat; background-size: cover; background-attachment: fixed; height: 100%; margin-top: 70px;}
+/* .site-layout-content { background: #f0f7ff url(../src/styles/images/body.svg) no-repeat; background-size: cover; background-attachment: fixed; height: 100%; margin-top: 70px;} */
+.site-layout-content { background: #f3f2ef; height: 100%; margin-top: 70px;background-size: cover; background-attachment: fixed; }
 .site-page-header {border: 1px solid rgb(235, 237, 240); bottom: 20px; }
 #components-layout-demo-top-side-2 .logo { width: 120px; height: 31px; background: rgba(255, 255, 255, 0.2); margin: 16px 28px 16px 0; float: left;}
 .main { padding-top: 16px; }
@@ -93,6 +94,8 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .loader-middle{height: 100vh;}
 .coming-soon{height: calc(100vh - 70px); margin-bottom: 0;display: flex;align-items: center;justify-content: center;}
 .coming-soon h1{font-size: 80px;margin-bottom: 0;margin-right: 15px;}
+.likes-counters .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .ant-tabs-tab-btn {color: var(--white) !important;}
+.likes-counters .ant-tabs-ink-bar{background: var(--white) !important;}
 @media (max-width:767px){
 .coming-soon h1{font-size: 30px;margin-bottom: 0;margin-right: 10px;}
 .coming-soon img{width: 50px; }

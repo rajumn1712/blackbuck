@@ -176,32 +176,49 @@ class Intership extends Component {
                                     <span className="sharebox-icons photo-upload"></span>
                                     <p className="ant-upload-text mt-8 mb-0">Upload Logo</p>
                                 </Dragger>
+                                <div className="docs about-icons education">
+                                    <List
+                                        itemLayout="horizontal"
+                                        dataSource={docs}
+                                        renderItem={item => (
+                                            <List.Item className="upload-preview mt-8">
+                                                <List.Item.Meta
+                                                    avatar={item.avatar}
+                                                    title={item.title}
+                                                    description={<div className="file-size f-14">{item.fileSize}</div>}
+                                                />
+                                                <span className="close-icon"></span>
+                                            </List.Item>
+                                        )}
+                                    />
+                                </div>
                             </Col>
                             <Col xs={12}>
                                 <Dragger className="upload" {...this.uploadfileProps} onRemove={() => this.setState({ ...this.state.internshipsObj, lstUploadFiles: [] })}>
                                     {this.state.fileUpload && <Loader className="loader-top-middle" />}
                                     <span className="sharebox-icons photo-upload"></span>
-                                    <p className="ant-upload-text mt-8 mb-0">Upload certificate</p>
+                                    <p className="ant-upload-text mt-8 mb-0">Upload Certificate</p>
                                 </Dragger>
+                                <div className="docs about-icons education">
+                                    <List
+                                        itemLayout="horizontal"
+                                        dataSource={docs}
+                                        renderItem={item => (
+                                            <List.Item className="upload-preview mt-8">
+                                                <List.Item.Meta
+                                                    avatar={item.avatar}
+                                                    title={item.title}
+                                                    description={<div className="file-size f-14">{item.fileSize}</div>}
+                                                />
+                                                <span className="close-icon"></span>
+                                            </List.Item>
+                                        )}
+                                    />
+                                </div>
                             </Col>
                         </Row>
                     </Form>
-                    <div className="docs about-icons education">
-                        <List
-                            itemLayout="horizontal"
-                            dataSource={docs}
-                            renderItem={item => (
-                                <List.Item className="upload-preview">
-                                    <List.Item.Meta
-                                        avatar={item.avatar}
-                                        title={item.title}
-                                        description={<div className="file-size f-14">{item.fileSize}</div>}
-                                    />
-                                    <span className="close-icon"></span>
-                                </List.Item>
-                            )}
-                        />
-                    </div>
+
                 </CommonModal>
             </div>
 
