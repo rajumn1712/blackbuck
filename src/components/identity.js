@@ -27,7 +27,7 @@ class Identity extends Component {
                         avatar={
                             <Avatar src={homeInfo?.ProfilePic||defaultUser} />
                         }
-                        title={<div>{homeInfo?.FirstName}<span className="premium-icon"></span></div>}
+                        title={<div>{homeInfo?.FirstName}<span className="premium-icon c-default"></span></div>}
                         description="Groups"
                     />
                 </Card>
