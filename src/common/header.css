@@ -1,9 +1,9 @@
 @import '../styles/theme.css';
 .main-header {
-    background: #f3f2ef !important;
+    background: #f0f2f5 !important;
     /* background: var(--bodybg) !important; */
     padding: 0 24px 0 16px !important;
-    border-top: 2px solid var(--primary);
+    border-top: 2px solid var(--line);
     height: 70px !important;
     border-bottom: 1px solid #dae6f4;
     position: fixed;

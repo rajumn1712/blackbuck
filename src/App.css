@@ -14,16 +14,17 @@
 .notification-count .ant-badge-count{background: var(--primary) !important; border-radius: 0px !important; min-width: 16px; height: 16px; padding: 0 3px; font-size: 10px; line-height: 16px; top: -5px; right: -6px;}
 .share-box{border-radius: 10px; text-align: center; margin-bottom: 16px; box-shadow: var(--boxshadow); background: var(--white);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
-.left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--primary); border-radius: 10px; color: var(--white); border: 0;}
+.left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 10px; color: var(--white); border: 0; position: relative;}
+.profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;}
 .profile-card .ant-avatar{width: 91px; height: 91px; padding-right: 0; border-radius: 24px !important; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);}
 .profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: -3px; bottom: 8px; background: #33DF00;}
 .profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 90px; height: 90px; margin: auto;}
 .profile-card .ant-card-meta-detail{color: var(--white) !important; margin-top: 10px;}
-.profile-card .ant-card-meta-title{color: var(--white); font-size: 18px; font-weight: 500; margin-bottom: 0 !important; white-space: normal !important;}
-.profile-card .ant-card-meta-description{color: var(--white); font-size: 12px; font-weight: 500;}
-.profile-card .ant-card-actions{width: 100%; background: transparent; border: 0;}
-.profile-card .profile-status{display: flex; flex-direction: column; align-items: center; color: var(--white); font-size: 24px; font-weight: 500; line-height: 30px; cursor: text;}
-.profile-card .profile-status span{font-size: 12px; line-height: 24px; font-weight: normal;}
+.profile-card .ant-card-meta-title{color: var(--textprimary); font-size: 18px; font-weight: 500; margin-bottom: 0 !important; white-space: normal !important;}
+.profile-card .ant-card-meta-description{color: var(--textsecondary); font-size: 12px; font-weight: 500;}
+.profile-card .ant-card-actions{width: 100%; background: transparent; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);}
+.profile-card .profile-status{display: flex; flex-direction: column; align-items: center; color: var(--textprimary); font-size: 24px; font-weight: 500; line-height: 30px; cursor: text;}
+.profile-card .profile-status span{font-size: 12px; line-height: 24px; font-weight: normal; color: var(--textsecondary);}
 .sharebox-icons.text-icon{background-position: -5px -103px;}
 .share-box ul li:hover .sharebox-icons.text-icon{background-position: -5px -149px;}
 .sharebox-icons.photo-icon{background-position: -63px -101px;}
@@ -85,7 +86,7 @@
 .invite-card .ant-avatar-group{margin-bottom: 30px; position: relative;}
 .invite-card .ant-avatar-group:after{content: ''; width: 45px; height: 20px; display: inline-block; cursor: pointer; vertical-align: text-bottom; background: url(../src/styles/images/circle-arrow.svg) no-repeat; position: absolute; bottom: -23px; transform: rotate(-5deg); text-align: center; left: 28%; background-size: cover;}
 .premium-icon{width: 16px; height: 16px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(../src/styles/images/icons.svg) no-repeat; background-position:-6px -84px; margin-left: 4px;}
-.profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid #0CD5E8;}
+.profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid var(--line);}
 .share-popup .ant-modal-content .ant-modal-close{display: none;}
 .justify-content-between, .speekar-block{justify-content: space-between;}
 .share-popup .ant-modal-footer{background: #F9F9F9; border-top: 0;border-radius: 10px;}
@@ -160,7 +161,7 @@
 .card-box .ant-list-item-action{margin-left: 5px !important;}
 .card-box .ant-list-item-meta .ant-avatar-image{ width: 40px;height: 40px;}
 .card-box .ant-list-item-meta-title{font-size: var(--f-16);line-height: 24px;}
-@media(min-width: 768px) {.share-box ul li::after{content: ""; position: absolute; width: 1px; height: 45px; background-color: #D6E6FB; top: 4px; right: -22px; left: auto;}}
+@media(min-width: 768px) {.share-box ul li::after{content: ""; position: absolute; width: 1px; height: 45px; background-color: var(--line); top: 4px; right: -22px; left: auto;}}
 .invite-btn{display: flex;align-items: center;justify-content: center;}
 .custom-card .ant-card{ border-radius: 0.8rem; box-shadow: var(--boxshadow); margin-bottom: 16px;}
 .custom-card .ant-card-body{ padding: 16px;}
