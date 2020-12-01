@@ -1,5 +1,4 @@
 @import 'styles/theme.css';
-body,h1,h2,h3,h4,h5,h6,p,span,div{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-avatar{border-radius: 13px !important;}
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
 .ant-card-head{padding: 0 16px !important; min-height: 44px !important;}
@@ -295,7 +294,3 @@ body,h1,h2,h3,h4,h5,h6,p,span,div{font-family: 'Neue Haas Grotesk Text Pro' !imp
 .group-member .ant-avatar{width: 40px;height: 40px;}
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
 textarea{resize: unset !important;}
-
-* { scrollbar-width: thin; scrollbar-color: var(--primary) var(--secondary);}
-*::-webkit-scrollbar { width: 8px;}
-*::-webkit-scrollbar-thumb {background-color: var(--primary);border-radius: 20px;}
