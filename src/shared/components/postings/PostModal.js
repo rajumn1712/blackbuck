@@ -142,43 +142,47 @@ class PostCardModal extends Component {
                 footer={null}
                 width="100%"
             >
-                
-                <div className="post-preview-box post-card comment-show">
-                    {(post.type == 'Image' || post.type == 'Gif') && post.image.length > 1 ? carouselData : noCarousel}
-                    {(post.type !== 'Image' && post.type !== 'Gif') && <div>{this.renderPostImages(post.image, post.type)}</div>}
-
-                    <div className="preview-content">
-                        <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%', borderRadius: 10 }} bordered={false}
-                            extra={
-                                <SideAction clickedEvent={(event, name) => this.props.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
-                            }
-                            actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name) => this.props.handleActions(event, name, post)} />,
-                            <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
-                            <ShareAction key="share" />
-                            ]}
-                        >
-                            <div className="p-16">
-                                <Title level={5} className="post-title f-16">{post.title}</Title>
-                                <Paragraph className="f-14 post-desc">{post.meassage}</Paragraph>
-                                <ul className="card-actions-count pl-0">
-                                    <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
-                                    <li><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
-                                    <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
-                                </ul>
-                                <ul className="card-actions-count">
-                                    {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
-                                    {post.commentsCount != null && <a><li onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li></a>}
-                                </ul>
-                                {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
-                                    {post.tags?.map((tag, index) => {
-                                        return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
-                                    })}
-                                </div>}
+                 <div className="post-preview-box post-card comment-show">
+                    <Row align="middle">
+                        <Col xs={24} sm={16} md={16} lg={17} >
+                            {(post.type == 'Image' || post.type == 'Gif') && post.image.length > 1 ? carouselData : noCarousel}
+                            {(post.type !== 'Image' && post.type !== 'Gif') && <div>{this.renderPostImages(post.image, post.type)}</div>}
+                        </Col>
+                        <Col xs={24} sm={8} md={8} lg={7}>
+                            <div className="preview-content">
+                                <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%', borderRadius: 10 }} bordered={false}
+                                    extra={
+                                        <SideAction clickedEvent={(event, name) => this.props.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
+                                    }
+                                    actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name) => this.props.handleActions(event, name, post)} />,
+                                    <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
+                                    <ShareAction key="share" />
+                                    ]}
+                                >
+                                    <div className="p-16">
+                                        <Title level={5} className="post-title f-16">{post.title}</Title>
+                                        <Paragraph className="f-14 post-desc">{post.meassage}</Paragraph>
+                                        <ul className="card-actions-count pl-0">
+                                            <li><span className="counter-icon loves"></span>{post.loves}<span> Loves</span></li>
+                                            <li><span className="counter-icon claps"></span>{post.claps}<span> Claps</span></li>
+                                            <li><span className="counter-icon whistles"></span>{post.whistiles}<span> Whistles</span></li>
+                                        </ul>
+                                        <ul className="card-actions-count">
+                                            {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Like</span></li>}
+                                            {post.commentsCount != null && <a><li onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li></a>}
+                                        </ul>
+                                        {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
+                                            {post.tags?.map((tag, index) => {
+                                                return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
+                                            })}
+                                        </div>}
+                                    </div>
+                                </Card>
+                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount}
+                                />}
                             </div>
-                        </Card>
-                        {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount}
-                        />}
-                    </div>
+                        </Col>
+                    </Row>
                 </div>
             </Modal>
         )
