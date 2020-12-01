@@ -129,7 +129,7 @@ class ProfileView extends Component {
         return (
             profileData ? <div className="main">
                 <Row gutter={16}>
-                    <Col xs={24} sm={16} md={16} lg={18} xl={18}>
+                    <Col xs={24} sm={16} md={16} lg={17} xl={17}>
                         <div className="coverpage">
                             <img className="center-focus" src={profileData.CoverPic || defaultCover} alt="profilecover" />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
@@ -171,7 +171,7 @@ class ProfileView extends Component {
                             </TabPane>
                             <TabPane tab="Profile" key="2">
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
+                                    {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
                                         <div className="left-rail">
                                             <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
                                                 {navigations.map(navigatieItem => {
@@ -180,8 +180,8 @@ class ProfileView extends Component {
                                             </Menu>
                                         </div>
                                         <Tags />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    </Col> */}
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <div ref={this.getOrCreateRef('AboutComp')}>{profileData && <About about={profileData} IsHideAction={true}/>}</div>
                                         <div ref={this.getOrCreateRef('InterestComp')}>{profileData.Interests && <Interests interests={profileData.Interests} IsHideAction={true}/>}</div>
                                         <div ref={this.getOrCreateRef('HobbyComp')}>{profileData.Hobbies && <Hobbies hobbies={profileData.Hobbies} IsHideAction={true}/>}</div>
@@ -208,7 +208,7 @@ class ProfileView extends Component {
                             </TabPane>
                         </Tabs>
                     </Col>
-                    <Col xs={24} sm={8} md={8} lg={6} xl={6}>
+                    <Col xs={24} sm={8} md={8} lg={7} xl={7}>
                         {/* <FriendsSuggestioncard /> */}
                         <Groups userId={this.props.match.params.userId}  key={this.props.match.params.userId}/>
                         <Ads />
