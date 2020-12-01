@@ -191,15 +191,23 @@ class Postings extends Component {
          let { allPosts } = this.state;
          for (let i in allPosts) {
             if (allPosts[i].id === post.id) {
-               if (allPosts[i].IsUserLikes) {
+               if (allPosts[i].IsUserLikes && type == allPosts[i].UserLikesType) {
                   const _type = allPosts[i].UserLikesType ? allPosts[i].UserLikesType.toLowerCase() : "likes";
                   if (allPosts[i][_type] > 0) {
                      allPosts[i][_type] = allPosts[i][_type] - 1;
+                     allPosts[i].UserLikesType = null;
                   }
+                  allPosts[i].IsUserLikes = !allPosts[i].IsUserLikes;
                } else {
+                  if (allPosts[i].IsUserLikes) {
+                     const _type = allPosts[i].UserLikesType.toLowerCase();
+                     allPosts[i][_type] = allPosts[i][_type] - 1;
+                  } else {
+                     allPosts[i].IsUserLikes = !allPosts[i].IsUserLikes;
+                  }
                   allPosts[i][type.toLowerCase()] = allPosts[i][type.toLowerCase()] ? allPosts[i][type.toLowerCase()] + 1 : 1;
+                  allPosts[i].UserLikesType = type;
                }
-               allPosts[i].IsUserLikes = !allPosts[i].IsUserLikes;
                postObj = allPosts[i]//added for re usablity code
             }
          }
