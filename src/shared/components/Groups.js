@@ -45,7 +45,7 @@ class Groups extends Component {
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.image} />}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text" title={item.name}>{item.name}</span></div>}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text" title={item.name}>{item.name}<span className="icons-small lock-icon ml-4" /></span></div>}
                                     description={<div><div className="overflow-text">{item.description}</div>
                                     <div className="text-overflow">
                                     <span>

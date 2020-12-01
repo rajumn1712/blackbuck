@@ -60,7 +60,7 @@
 .user-statistic .user-banner .ant-card-meta .ant-avatar-image {
     width: 150px;
     height: 150px;
-    border-radius: 50px !important;
+    border-radius: 40px !important;
     box-shadow: 0 3px 15px rgba(0,0,0,0.16);
 }
 
@@ -188,7 +188,7 @@
     background-color: #ffffff;
     width: 30px;
     height: 30px;
-    border-radius: 11px;
+    border-radius: 8px;
     display: none;
     justify-content: center;
     align-items: center;
