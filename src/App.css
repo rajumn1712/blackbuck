@@ -1,5 +1,5 @@
 @import 'styles/theme.css';
-body,h1,h2,h3,h4,h5,h6,p{font-family: 'Neue Haas Grotesk Text Pro' !important;}
+body,h1,h2,h3,h4,h5,h6,p,span,div{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 .ant-avatar{border-radius: 13px !important;}
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
 .ant-card-head{padding: 0 16px !important; min-height: 44px !important;}

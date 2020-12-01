@@ -33,8 +33,7 @@
 }
 
 .header-searchbar .ant-input-group>.ant-input:first-child, .header-searchbar .ant-input-group-addon:first-child {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-radius: 10px 0 0 10px !important;
 }
 
 .header-searchbar input {
@@ -50,6 +49,7 @@
 
 .header-searchbar .ant-input-search-button {
     width: 40px;
+    min-width: 40px;
 }
 
 .main-header .menu-items {
@@ -88,7 +88,7 @@
     border-left: 1px solid #D6E6FB !important;
     max-height: 26px;
     box-shadow: none!important;
-    border-radius: 0 !important;
+    border-radius: 0 10px 10px 0 !important;
 }
 
 .main-header .ant-menu-item {
