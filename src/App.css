@@ -87,7 +87,7 @@
 .invite-card .ant-avatar-group:after{content: ''; width: 45px; height: 20px; display: inline-block; cursor: pointer; vertical-align: text-bottom; background: url(../src/styles/images/circle-arrow.svg) no-repeat; position: absolute; bottom: -23px; transform: rotate(-5deg); text-align: center; left: 28%; background-size: cover;}
 .premium-icon{width: 16px; height: 16px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(../src/styles/images/icons.svg) no-repeat; background-position:-6px -84px; margin-left: 4px;}
 .profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid var(--line);}
-.share-popup .ant-modal-content .ant-modal-close{display: none;}
+.ant-modal-close{display: none !important;}
 .justify-content-between, .speekar-block{justify-content: space-between;}
 .share-popup .ant-modal-footer{background: #F9F9F9; border-top: 0;border-radius: 10px;}
 .share-box ul li:hover .sharebox-icons.video-icon{background-position: -297px -149px;}
@@ -148,6 +148,8 @@
 .docs .ant-list-item{min-width: calc(50% - 8px); background: #F9F9F9; padding: 10px; border-radius: 6px; border: 1px solid #EAF2FD;margin: 0 8px 8px 0;}
 .docs .ant-list-item h4{margin-bottom: 0;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;color: var(--primary);}
 .addpost-user .ant-card-meta-title{font-size: var(--f-16);margin-bottom: 2px !important; line-height: normal; margin-bottom: -3px;}
+.addpost-user .ant-card-meta-avatar .ant-avatar-image{width: 40px;height: 40px;}
+.addpost-user  .ant-card-meta-avatar{padding-right: 10px !important;}
 .post-privacy{color: var(--textsecondary) !important; font-size: var(--f-12); cursor: pointer; background: #e4e6eb;padding-left: 4px; padding-right: 8px; margin-top: 2px; border-radius: 10px; width: 90px; display: flex; justify-content: space-between; align-items: center;}
 .upload-image .ant-upload.ant-upload-drag p.ant-upload-text {margin: 0 0 4px;color: var(--black);font-size: var(--f-16);font-weight: 500;}
 .speekar-block{padding: 30px 0;background: var(--bodybg);border-radius: 10px;}
