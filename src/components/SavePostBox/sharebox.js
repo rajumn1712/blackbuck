@@ -135,10 +135,10 @@ class ShareBox extends Component {
             if (status === 'done') {
                 this.postObject.ImageUrl = info.file.response;
                 this.setState({ ...this.state, uploadSources: [info.file.response] })
-                notify({description:`${info.file.name} file uploaded successfully.`,message:"Upload"});
+                notify({ description: `${info.file.name} file uploaded successfully.`, message: "Upload" });
                 this.setState({ ...this.state, fileUploading: false })
             } else if (status === 'error') {
-                notify({description:`${info.file.name} file upload failed.`,type:"error",message:"Upload"});
+                notify({ description: `${info.file.name} file upload failed.`, type: "error", message: "Upload" });
                 this.setState({ ...this.state, fileUploading: false })
             }
         },
@@ -150,18 +150,17 @@ class ShareBox extends Component {
         this.setState({ visible: true, modal: modal })
     }
     popupOk = async e => {
-        const validateResponse = this.validate();
-        if (!validateResponse.validate) {
-
-        } else {
-            this.postObject.CreatedDate = new Date();
-            this.postObject.Tags = this.state.tags;
-            const response = await savePost(this.postObject);
+        this.postObject.CreatedDate = new Date();
+        this.postObject.Tags = this.state.tags;
+        const response = await savePost(this.postObject);
+        if (response.ok) {
             this.setState({
                 visible: false,
             }, () => {
-               notify({description:"Posting completed successfully",message:"Post"})
+                notify({ description: "Posting completed successfully", message: "Post" })
             });
+        } else {
+            notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
         }
     };
     clearUploaddata = () => {
@@ -378,7 +377,7 @@ class ShareBox extends Component {
                 title={<h4 className="mb-0">{this.props.profile?.FirstName}</h4>}
                 description={<div className="mb-0"><Dropdown overlay={menu} trigger={['click']}>
                     <div className="post-privacy" style={{ color: '#9B9B9B', fontSize: 12 }} onClick={e => e.preventDefault()}>
-                    <span className="grp-type-icon public mr-4"></span>Public<span className="grp-type-icon down ml-4"></span>
+                        <span className="grp-type-icon public mr-4"></span>Public<span className="grp-type-icon down ml-4"></span>
                     </div>
                 </Dropdown></div>} />
             <div className="mr-8 anonymous">
@@ -403,23 +402,22 @@ class ShareBox extends Component {
                         {/* <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                             Close
                         </Button> */}
-                        <Button key="submit" type="primary" onClick={this.popupOk}>
+                        <Button disabled={!this.state.post.Message} key="submit" type="primary" onClick={this.popupOk}>
                             Post
                         </Button></div>
                     ]}>
                     <div className="mb-24">{title}</div>
                     <div className="upload-image">
-                        {this.state.errors && !this.state.errors.validate && <Alert className="mb-16" showIcon type="error" message={<>{Object.keys(this.state.errors).map((value, indx) => <>{this.state.errors[value] && <><span>{this.state.errors[value]}</span><br /></>}</>)}</>} />}
                         {this.renderUploadType(modal)}
                         <form >
                             <div className="title-img">
                                 <TextArea
                                     placeholder={`What's on Your Mind?`}
                                     autoSize={{ minRows: 1, maxRows: 6 }}
-                                    style={{ resize: 'none',fontWeight:'400' }}
-                                    name="Title"
+                                    style={{ resize: 'none', fontWeight: '400' }}
+                                    name="Message"
                                     onChange={this.handleChange}
-                                    value={this.state.post.Title}
+                                    value={this.state.post.Message}
                                     required={true}
                                 />
                             </div>
