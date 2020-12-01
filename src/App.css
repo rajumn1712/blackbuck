@@ -177,14 +177,14 @@
 .icons.add{background-position:-505px -198px;}
 .icons.add:hover{background-position: -505px -224px;}
 .icons.white-add{background-position:-528px -224px;}
-.icons.white-close{background-position:-527px -198px;}
+.icons.white-close{background-position:-528px -198px;}
 .icons.close{background-position:-401px -197px;}
 .icons.close:hover{background-position:-401px -223px;}   
 .hobbies-card .tags{ background-color: var(--secondary); color: var(--textprimary);font-size: var(--f-14);font-weight: 500; border-radius: 40px;padding: 4px 15px;border: none;margin-bottom: 8px;}
 .text-left-line.ant-divider-horizontal.ant-divider-with-text-left::before{width: 0 !important;}
 .text-left-line .ant-divider-inner-text{padding-left: 0;color: var(--textprimary);}
 .text-left-line{position: relative;}
-.text-left-line .icons{position: absolute;right: -10px;background-color: var(--primary);border-radius: 50%;}
+.text-left-line .icons{position: absolute;right: -10px;background-color: var(--primary);border-radius: 50%;z-index: 1;}
 .icons.location{background-position: -148px -252px;}
 .icons.email{background-position: -122px -252px;}
 .icons.phone{background-position: -174px -252px;}
@@ -233,9 +233,9 @@
 .custom-input .ant-input{padding: 7px 10px !important;}
 .custom-modal-header{display: flex;justify-content: space-between;align-items: center;}
 .custom-modal-header h4{margin-bottom: 0;}
-.modal-search .header-searchbar .ant-input-group{box-shadow: none;border: 1px solid var(--bordergrey);border-radius: 4px;}
+.modal-search .header-searchbar .ant-input-group{box-shadow: none;border: 1px solid var(--bordergrey);border-radius: 8px;}
 .modal-search .header-searchbar{max-width: 100%;}
-.modal-search .header-searchbar input{min-height: 35px !important;}
+/* .modal-search .header-searchbar input{min-height: 35px !important;} */
 .modal-interest .ant-modal-body {background-color: #f9f9f9;padding: 0!important;}
 .text-red,.text-red:hover{color: var(--red) !important;}
 .bg-white{background-color: var(--white);}
@@ -250,27 +250,14 @@
 .ant-input,.ant-select{border-radius: 8px !important;}
 .ant-modal-content{border-radius: 10px !important;}
 .ant-modal-header{border-radius: 10px 10px 0 0 !important;}
-.ant-btn:hover, .ant-btn:focus{
-    color: var(--primary) !important;
-    border-color: var(--primary) !important;
-}
+.ant-btn:hover, .ant-btn:focus,.ant-picker:hover, .ant-picker-focused{ color: var(--primary) !important;border-color: var(--primary) !important;}
 .ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
 .center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
 .icon.education-icon{background-position: -263px -254px;}
 .img-camera{width: 30px; height: 30px; background: var(--white); position: absolute; right: 16px; top: 16px; border-radius: 8px; box-shadow: var(--boxshadow); text-align: center; line-height: 34px;}
 .education .ant-list-item-meta-avatar{border: 1px solid #ccc;border-radius: 11px;background: #ffff;padding: 4px 5px;}
-.overlay {
-    position: absolute; 
-    bottom: 0; 
-    background: var(--black);
-    background: rgba(0, 0, 0, 0.5); /* Black see-through */
-    color: #f1f1f1; 
-    transition: .5s ease;
-    color: var(--white);
-    font-size: 22px;
-    padding: 19px;
-    text-align: center;
+.overlay { position: absolute;  bottom: 0;  background: var(--black); background: rgba(0, 0, 0, 0.5); color: #f1f1f1; transition: .5s ease;  color: var(--white);  font-size: 22px; padding: 19px; text-align: center;
   }
 .img-container{position: relative;width: 100%;}
 .hobbies-tag .ant-tag{color: var(--black);font-size: 14px;}
@@ -294,3 +281,4 @@
 .group-member .ant-avatar{width: 40px;height: 40px;}
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
 textarea{resize: unset !important;}
+.ant-divider-horizontal.ant-divider-with-text-left::after{width: 80%;}
