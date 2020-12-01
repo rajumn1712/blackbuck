@@ -145,7 +145,7 @@ class ProfileView extends Component {
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="img-container">
                                             <Avatar src={profileData.ProfilePic||defaultUser}/>
-                                            <a className="img-camera overlay"><span className="icons camera" /> </a>
+                                            {/* <a className="img-camera overlay"><span className="icons camera" /> </a> */}
                                         
                                 </div>}
                                     title={<div>{profileData.Firstname} {profileData.Lastname}<span className="premium-icon"></span></div>}
