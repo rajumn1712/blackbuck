@@ -94,8 +94,8 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .loader-middle{height: 100vh;}
 .coming-soon{height: calc(100vh - 70px); margin-bottom: 0;display: flex;align-items: center;justify-content: center;}
 .coming-soon h1{font-size: 80px;margin-bottom: 0;margin-right: 15px;}
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .ant-tabs-tab-btn {color: var(--white) !important;}
-.ant-tabs-ink-bar{background: var(--white) !important;}
+.likes-counters .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .ant-tabs-tab-btn {color: var(--white) !important;}
+.likes-counters .ant-tabs-ink-bar{background: var(--white) !important;}
 @media (max-width:767px){
 .coming-soon h1{font-size: 30px;margin-bottom: 0;margin-right: 10px;}
 .coming-soon img{width: 50px; }
