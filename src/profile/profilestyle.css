@@ -115,7 +115,7 @@
 
 .profile-tabs .ant-tabs-tab {
     font-size: 16px;
-    color: var(--textcolor);
+    color: var(--primary);
      font-weight: 500;
 }
 

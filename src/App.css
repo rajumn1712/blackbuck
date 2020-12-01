@@ -116,9 +116,10 @@
 .ant-btn.btn-cancel{background: #DEDFE1;color:var(--black)}
 .menu-droupdown{width: 120px;}
 .menu-droupdown a{font-size: 11px;}
-.ant-modal-header{padding: 16px 30px !important;}
+.ant-modal-header{padding: 16px 30px !important;border-radius: 10px 10px 0 0 !important;}
 .ant-modal-body{padding: 16px 30px!important;}
 .ant-modal-footer{padding: 16px 30px!important;}
+.ant-modal-header .ant-modal-title{color:  var(--textprimary);}
 .ant-modal-footer .ant-btn{width: 100%;border-radius: 8px !important;}
 .share-popup .ant-modal-content, .share-popup.ant-modal-header{border-radius: 10px;}
 .anonymous{display: flex;align-items: center;}
@@ -248,7 +249,6 @@
 .ant-input,.ant-select-selector{border: 1px solid #dfe3eb !important;}
 .ant-input,.ant-select{border-radius: 8px !important;}
 .ant-modal-content{border-radius: 10px !important;}
-.ant-modal-header{border-radius: 10px 10px 0 0 !important;}
 .ant-btn:hover, .ant-btn:focus,.ant-picker:hover, .ant-picker-focused{ color: var(--primary) !important;border-color: var(--primary) !important;}
 .ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}

@@ -70,6 +70,8 @@ to{visibility: visible;transform: translateY(0px);}
 .card-actions-count li a{font-size: var(--f-14);font-weight: normal; color: var(--textsecondary); line-height: normal;margin-left: 2px;}
 .custom-dropdown{min-width: 180px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 8px;}
 .custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 8px; border-radius: 4px; font-weight: 500; font-size: 14px;}
+.custom-dropdown .ant-dropdown-menu-item a{color: var(--textprimary);}
+.custom-dropdown .ant-dropdown-menu-item:hover a{color: var(--primary);}
 .custom-dropdown li svg, .custom-dropdown li span {margin-right: 12px;}
 .custom-dropdown li a{display: block;}
 .post-card .ant-avatar-group .ant-avatar-string{font-size: 16px; line-height: 38px; font-weight: 500;}
