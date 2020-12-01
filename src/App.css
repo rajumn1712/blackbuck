@@ -87,7 +87,7 @@
 .invite-card .ant-avatar-group:after{content: ''; width: 45px; height: 20px; display: inline-block; cursor: pointer; vertical-align: text-bottom; background: url(../src/styles/images/circle-arrow.svg) no-repeat; position: absolute; bottom: -23px; transform: rotate(-5deg); text-align: center; left: 28%; background-size: cover;}
 .premium-icon{width: 16px; height: 16px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(../src/styles/images/icons.svg) no-repeat; background-position:-6px -84px; margin-left: 4px;}
 .profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid var(--line);}
-.ant-modal-close{display: none !important;}
+.custom-popup .ant-modal-close{display: none !important;}
 .justify-content-between, .speekar-block{justify-content: space-between;}
 .share-popup .ant-modal-footer{background: #F9F9F9; border-top: 0;border-radius: 10px;}
 .share-box ul li:hover .sharebox-icons.video-icon{background-position: -297px -149px;}
