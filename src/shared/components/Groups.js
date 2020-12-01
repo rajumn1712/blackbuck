@@ -40,19 +40,21 @@ class Groups extends Component {
                 ]} >
                     <List
                         itemLayout="horizontal"
+                        split={false}
                         dataSource={this.state.data}
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
+                                
                                     avatar={<Avatar src={item.image} />}
                                     title={<div className="d-flex align-items-center"><span className="overflow-text" title={item.name}>{item.name}<span className="icons-small lock-icon ml-4" /></span></div>}
                                     description={<div><div className="overflow-text">{item.description}</div>
                                     <div className="text-overflow">
                                     <span>
-                                        <span className="mr-4" style={{ color: 'var(--textprimary)',fontWeight: '500' }}>{item.members}</span> 
+                                        <span className="mr-4">{item.members}</span> 
                                          Members
                                     </span> | <span>
-                                        <span className="mr-4" style={{ color: 'var(--textprimary)',fontWeight: '500' }}>5</span> 
+                                        <span className="mr-4">5</span> 
                                          Posts
                                     </span></div>
                                     </div>}

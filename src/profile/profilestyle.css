@@ -91,8 +91,9 @@
 }
 
 .user-statistic .ant-statistic-content .ant-statistic-content-value {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 26px;
+    color: var(--textprimary);
 }
 
 .profile-tabs .ant-tabs-nav {
@@ -115,7 +116,7 @@
 
 .profile-tabs .ant-tabs-tab {
     font-size: 16px;
-    color: var(--primary);
+    color: var(--textprimary);
      font-weight: 500;
 }
 
@@ -240,9 +241,10 @@
         justify-content: flex-end;
     }
     .user-statistic .ant-statistic-content .ant-statistic-content-value {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 20px;
         margin-right: 8px;
+        color: var(--textprimary);
     }
     .ant-statistic.afterline:after {
         content: "";

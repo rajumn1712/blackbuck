@@ -89,8 +89,9 @@
 }
 
 .user-statistic .ant-statistic-content .ant-statistic-content-value {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 26px;
+    color: var(--textprimary);
 }
 
 .profile-tabs .ant-tabs-nav {
@@ -106,7 +107,7 @@
 
 .profile-tabs .ant-tabs-tab {
     font-size: 16px;
-    color: var(--primary);
+    color: var(--textprimary);
 }
 
 .profile-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .ant-tabs-tab:hover, .ant-tabs-tab:active, .ant-tabs-tab-btn:focus, .ant-tabs-tab-remove:focus, .ant-tabs-tab-btn:active, .ant-tabs-tab-remove:active {
@@ -227,7 +228,7 @@
         justify-content: flex-end;
     }
     .user-statistic .ant-statistic-content .ant-statistic-content-value {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 20px;
         margin-right: 8px;
     }

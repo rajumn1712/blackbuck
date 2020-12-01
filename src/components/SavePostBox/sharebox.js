@@ -394,11 +394,10 @@ class ShareBox extends Component {
                     })}
                 </ul>
                 <Modal className="share-popup"
-                    title="Create a Post"
+                    title={<div className="custom-modal-header"><h4>Create a Post</h4><a><span className="close-icon" onClick={this.handleCancel}></span></a></div>}
                     className="custom-popup"
                     visible={visible}
                     onOk={this.handleOk}
-                    onCancel={this.handleCancel}
                     footer={[<div className="d-flex justify-content-between">
                         {/* <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                             Close
