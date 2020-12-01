@@ -263,45 +263,43 @@ class Postings extends Component {
             ]}
             cover={<div style={{ cursor: "pointer" }} onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
-            <div className="p-16">
-               {/* <Title level={5} className="post-title">{post.title}</Title> */}
-               <Paragraph className="post-desc">{post.meassage}</Paragraph>
-               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  {<ul className="card-actions-count pl-0">
-                     <li><span className="counter-icon likes"></span></li>
-                     <li><span className="counter-icon loves"></span></li>
-                     <li ><span className="counter-icon claps"></span></li>
-                     <li><span className="counter-icon whistles"></span></li>
-                     <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
-                        <Tooltip overlayStyle={{ color: "#ffff" }} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
-                           <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
-                              {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
-                           </TabPane>
-                           <TabPane tab="Loves" key="2" style={{ floodColor: "#ffff", height: 200 }}>
-                              {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
-                           </TabPane>
-                           <TabPane tab="Claps" key="3" style={{ floodColor: "#ffff", height: 200 }}>
-                              {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
-                           </TabPane>
-                           <TabPane tab="Whistiles" key="4" style={{ floodColor: "#ffff", height: 200 }}>
-                              {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
-                           </TabPane>
-                        </Tabs>}</div>}>
-                           <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
-                        </Tooltip>
-                     </li>
-                  </ul>}
-                  <ul className="card-actions-count">
-                     {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-                     {post.commentsCount != null && <li style={{ cursor: "pointer" }} onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
-                     {/* <li><span></span>2 <span> Shares</span></li> */}
-                  </ul>
-               </div>
-               {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
-                  {post.tags?.map((tag, index) => {
-                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
-                  })}
-               </div>}
+            {/* <Title level={5} className="post-title">{post.title}</Title> */}
+            <Paragraph className="post-desc">{post.meassage}</Paragraph>
+            {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
+               {post.tags?.map((tag, index) => {
+                  return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
+               })}
+            </div>}
+            <div className="d-flex justify-content-between mt-8">
+               {<ul className="card-actions-count pl-0">
+                  <li><span className="counter-icon likes"></span></li>
+                  <li><span className="counter-icon loves"></span></li>
+                  <li ><span className="counter-icon claps"></span></li>
+                  <li><span className="counter-icon whistles"></span></li>
+                  <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
+                     <Tooltip overlayStyle={{ color: "#ffff" }} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                        <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
+                           {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                        </TabPane>
+                        <TabPane tab="Loves" key="2" style={{ floodColor: "#ffff", height: 200 }}>
+                           {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                        </TabPane>
+                        <TabPane tab="Claps" key="3" style={{ floodColor: "#ffff", height: 200 }}>
+                           {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                        </TabPane>
+                        <TabPane tab="Whistiles" key="4" style={{ floodColor: "#ffff", height: 200 }}>
+                           {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                        </TabPane>
+                     </Tabs>}</div>}>
+                        <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
+                     </Tooltip>
+                  </li>
+               </ul>}
+               <ul className="card-actions-count">
+                  {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
+                  {post.commentsCount != null && <li style={{ cursor: "pointer" }} onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                  {/* <li><span></span>2 <span> Shares</span></li> */}
+               </ul>
             </div>
          </Card>
          {this.state.commentselection.indexOf(post.id) > -1 && <Comments onUpdate={(prop, value) => { this.updatePost(post, prop, value) }} count={post.commentsCount} postId={post.id} />}

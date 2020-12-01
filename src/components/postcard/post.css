@@ -4,15 +4,15 @@
 .post-card .ant-card-meta-title {margin-bottom: 0 !important; font-size: 15px; margin-top: 2px;}
 .post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px; cursor: default;}
 .post-card .ant-card-meta-description{font-size: 12px; font-weight: 400; margin-top: 2px;}
-.post-card .ant-card-body{padding: 0;}
+.post-card .ant-card-body{padding: 16px;}
 .post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: #F9F9F9; }
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important; }
 .post-title{color: var(--textprimary) !important; margin-bottom: 6px !important; line-height: normal !important; font-size: var(--f-16) !important;}
 .post-title:hover{color: var(--primary)!important ;}
-.post-desc{color: var(--textdescription); font-size: var(--f-14) !important; line-height: 16px;}
+.post-desc{color: var(--textdescription); font-size: var(--f-14) !important; line-height: 16px;margin-bottom: 0!important;}
 .post-card .ant-card-actions > li, .post-card .ant-card-meta {margin: 0;}
 .post-card .ant-card-actions li a{padding: 10px 8px;}
-.post-tag{margin-top: 16px;}
+.post-tag{margin-top: 8px;}
 .post-tag .ant-tag{border-radius: 12px; min-height: 24px; font-weight: 500; border: none; cursor: pointer; line-height: 24px;padding-left: 12px; padding-right: 12px;}
 .post-tag .ant-tag a{color: var(--primary);}
 .post-card .ant-card-meta-avatar, .share-popup .ant-card-meta-avatar{padding-right: 12px;}
