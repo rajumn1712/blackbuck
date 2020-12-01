@@ -1,6 +1,7 @@
 @import '../styles/theme.css';
 .main-header {
-    background: var(--bodybg) !important;
+    background: #f3f2ef !important;
+    /* background: var(--bodybg) !important; */
     padding: 0 24px 0 16px !important;
     border-top: 2px solid var(--primary);
     height: 70px !important;
