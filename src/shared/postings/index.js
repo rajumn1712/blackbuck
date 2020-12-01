@@ -5,7 +5,7 @@ import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
 import ShareAction from '../components/postings/Actions/ShareActions';
 import EmojiAction from '../components/postings/Actions/EmojiActions';
-import { deletePost, fetchPostReactions, getPosts, saveActions } from '../api/postsApi';
+import { deletePost, fetchPostReactions, getPosts, saveActions, saveUserPosts } from '../api/postsApi';
 import FriendSuggestions from '../components/friendSuggestion';
 import ShareBox from '../../components/SavePostBox/sharebox';
 import Moment from 'react-moment';
@@ -18,6 +18,7 @@ import defaultUser from '../../styles/images/defaultuser.jpg';
 import PostCardModal from '../components/postings/PostModal';
 import dialog from '../components/dialog'
 import notify from '../components/notification';
+import { uuidv4 } from '../../utils';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -72,7 +73,7 @@ class Postings extends Component {
       postObj = post;
       this.setState({ showModal: true })
    }
-   handleEvent = (e, name, post) => {
+   handleEvent = async (e, name, post) => {
       switch (name) {
          case "Delete":
             dialog({ title: 'Alert', icon: '', content: 'Are you sure want to delete post?', okText: 'Delete', cancelText: 'Cancel', onOk: () => this.deletePost(post) });
@@ -81,6 +82,18 @@ class Postings extends Component {
          case "Edit":
             break;
          case "Save Post":
+            const obj = {
+               "Id": uuidv4(),
+               "PostId": post.id,
+               "UserId": this.props?.profile?.Id,
+               "CreatedDate": new Date()
+            }
+            const saveResponse = await saveUserPosts(obj);
+            if (saveResponse.ok) {
+               notify({ description: "Post saved in 'Saved Posts'", message: "Post save" });
+            } else {
+               notify({ description: "Something went wrong'", message: "Error", type: "error" })
+            }
             break;
          default:
             break;
@@ -251,19 +264,19 @@ class Postings extends Component {
                      <li><span className="counter-icon loves"></span></li>
                      <li ><span className="counter-icon claps"></span></li>
                      <li><span className="counter-icon whistles"></span></li>
-                     <li onMouseEnter={()=>this.fetchPostReactions(post.id)}>
-                        <Tooltip overlayStyle={{color:"#ffff"}} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
-                        <TabPane tab="Likes" key="1" style={{floodColor:"#ffff",height:200}}>
-                              {this.state.postReactions?.Likes?.map((item, indx) => <p style={{color: 'var(--white)', marginBottom: 0}} key={indx}>{item.Firstname}</p>)}
+                     <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
+                        <Tooltip overlayStyle={{ color: "#ffff" }} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                           <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
+                              {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
                            </TabPane>
-                           <TabPane tab="Loves" key="2" style={{floodColor:"#ffff",height:200}}>
-                           {this.state.postReactions?.Loves?.map((item, indx) => <p style={{color: 'var(--white)', marginBottom: 0}} key={indx}>{item.Firstname}</p>)}
-                            </TabPane>
-                           <TabPane tab="Claps" key="3" style={{floodColor:"#ffff",height:200}}>
-                           {this.state.postReactions?.Claps?.map((item, indx) => <p style={{color: 'var(--white)', marginBottom: 0}} key={indx}>{item.Firstname}</p>)}
+                           <TabPane tab="Loves" key="2" style={{ floodColor: "#ffff", height: 200 }}>
+                              {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
                            </TabPane>
-                           <TabPane tab="Whistiles" key="4" style={{floodColor:"#ffff",height:200}}>
-                           {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{color: 'var(--white)', marginBottom: 0}} key={indx}>{item.Firstname}</p>)}
+                           <TabPane tab="Claps" key="3" style={{ floodColor: "#ffff", height: 200 }}>
+                              {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                           </TabPane>
+                           <TabPane tab="Whistiles" key="4" style={{ floodColor: "#ffff", height: 200 }}>
+                              {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
                            </TabPane>
                         </Tabs>}</div>}>
                            <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>

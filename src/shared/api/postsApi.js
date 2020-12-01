@@ -33,4 +33,10 @@ const fetchPostReactions = (post_id)=>{
 const saveUserPosts = (obj)=>{
     return apiClient.post(PROFILE_END_POINT+"savePosts",obj);
 }
-export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost,fetchComments,fetchPostReactions,saveUserPosts };
+const fetchUserSavedPosts = (user_id,take,skip)=>{
+    return apiClient.get(PROFILE_END_POINT+`getUserSavedPosts/${user_id}/100/0`)
+}
+const deleteUserSavedPost = (post_id)=>{
+    return apiClient.get(PROFILE_END_POINT+"deleteSavedPost/"+post_id);
+}
+export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost,fetchComments,fetchPostReactions,saveUserPosts,fetchUserSavedPosts,deleteUserSavedPost };
