@@ -3,7 +3,7 @@
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
 .ant-card-head{padding: 0 16px !important; min-height: 44px !important;}
 .ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal;}
-.ant-btn{min-height: 45px !important;font-size: 16px !important;}
+.ant-btn{min-height: 56px !important;font-size: 18px !important;border-radius:8px !important;font-weight: 500 !important;}
 .ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
 .ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{color: var(--primary) !important;}
@@ -171,7 +171,6 @@
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-14);line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .w-150{width: 150px;}
-.ant-btn{border-radius:4px !important;font-weight: 500 !important;}
 .custom-card .list-link{color: var(--primary);margin-left: 3px; font-weight: 500;}
 .custom-card .ant-card-actions{ background-color: #F9F9F9;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top: 0;}
 .icons.add{background-position:-505px -198px;}
@@ -274,7 +273,7 @@
 .group-member .ant-avatar{width: 40px;height: 40px;}
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
 @media (min-width:576px){
-    .custom-popup,.ant-modal{width: 500px !important;}
+    .custom-popup,.ant-modal{width: 480px !important;}
     .custom-popup .ant-modal-body{max-height: calc(60vh - 20px); overflow: auto;} 
 }
 .group-member .ant-avatar-group .ant-avatar:not(:first-child){margin-left: 0; }

@@ -50,6 +50,7 @@
 .header-searchbar .ant-input-search-button {
     width: 40px;
     min-width: 40px;
+    min-height: 30px !important;
 }
 
 .main-header .menu-items {
