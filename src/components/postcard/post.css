@@ -104,6 +104,8 @@ to{visibility: visible;transform: translateY(0px);}
 .post-preview .post-preview-box {background: #181817;border-radius: 0.8rem;}
 .post-preview-box.post-card{margin-bottom: 0; height: calc(100vh - 120px);}
 .preview-content .post-card{border-radius: 0;}
+.preview-content .post-comment{border-bottom: 0;}
+
 .reply-comment .ant-form-item{margin-bottom: 5px !important;}
 .share-pop{margin: -8px -8px 0; border-right: none; width: 230px;}
 .share-pop .ant-menu-item{padding: 8px; display: flex; align-items: center; font-size: var(--f-14); font-weight: 500; margin-bottom: 0 !important;}
@@ -141,6 +143,6 @@ to{visibility: visible;transform: translateY(0px);}
 .image2, .image3{width: 100%;}
 .image-box.img-3{width: 50%;}
 .image-box.img-4{width: 33.333%;}
-.post-card .ant-card-meta-title,.post-card .ant-card-actions li a, .post-comment .ant-comment-content-author-name{color: var(--textprimary) !important;}
+.post-card .ant-card-meta-title,.post-card .ant-card-actions li a, .post-comment .ant-comment-content-author-name{color: var(--textprimary) !important;text-transform: capitalize;}
 .post-card .ant-card-meta-description, .post-desc, .post-comment .ant-comment-content-detail p, .post-comment .ant-comment-content-author-time{color: var(--textsecondary);}
 .post-card .ant-card-actions li a.focus, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
