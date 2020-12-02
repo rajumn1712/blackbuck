@@ -159,10 +159,10 @@ class PostCardModal extends Component {
                                     <ShareAction key="share" />
                                     ]}
                                 >
-                                    <div className="p-16">
-                                        <Title level={5} className="post-title">{post.title}</Title>
+                                    <div className="">
+                                        {/* <Title level={5} className="post-title">{post.title}</Title> */}
                                         <Paragraph className="post-desc">{post.meassage}</Paragraph>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <div >
                                             {<ul className="card-actions-count pl-0">
                                                 <li><span className="counter-icon likes"></span></li>
                                                 <li><span className="counter-icon loves"></span></li>

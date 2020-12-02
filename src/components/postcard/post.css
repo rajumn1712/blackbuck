@@ -11,7 +11,7 @@
 .post-card .ant-card-extra{padding-top: 0;padding-bottom:0 ;}
 .post-card .ant-card-actions{border-radius: 0 0 0.8rem 0.8rem;}
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important; }
-.post-title{color: var(--textprimary) !important; margin-bottom: 6px !important; line-height: normal !important; font-size: var(--f-16) !important;}
+.post-title{color: var(--textprimary) !important; margin-bottom: 6px !important; line-height: normal !important;}
 .post-title:hover{color: var(--primary)!important ;}
 .post-card .ant-card-body .post-desc{color: var(--textdescription);font-size: var(--f-14)!important; line-height: 19px;font-weight: 400;margin: 0 16px !important;}
 .post-card .ant-card-actions{padding:4px 8px;}
