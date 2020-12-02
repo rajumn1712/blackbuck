@@ -61,21 +61,23 @@ class Postings extends Component {
             const videoElements = document.querySelectorAll("video");
             for (const i in videoElements) {
                if (typeof (videoElements[i]) == "object") {
-                  var myVideo = videoElements[i]
-                  var videoElementArea = VisSense(myVideo);
-                  var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
-                  monitorBuilder.on('fullyvisible', function () {
-                     myVideo.play(); // start playing the video (or keep playing)
-                  });
-                  monitorBuilder.on('hidden', function () {
-                     myVideo.pause();
-                  });
-                  var videoVisibilityMonitor = monitorBuilder.build();
-                  videoVisibilityMonitor.start();
+                 this.enableVideoAutoPlay(videoElements[i])
                }
             }
          })
       }
+   }
+   enableVideoAutoPlay(myVideo){
+      var videoElementArea = VisSense(myVideo);
+      var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
+      monitorBuilder.on('fullyvisible', function () {
+         myVideo.play(); // start playing the video (or keep playing)
+      });
+      monitorBuilder.on('hidden', function () {
+         myVideo.pause();
+      });
+      var videoVisibilityMonitor = monitorBuilder.build();
+      videoVisibilityMonitor.start();
    }
    titleAvatar = (user, date) => {
       return <Meta

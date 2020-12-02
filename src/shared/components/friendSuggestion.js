@@ -80,7 +80,7 @@ class FriendSuggestions extends Component {
                                 </div>
                                 <div style={{ padding: 10 }}>
                                     <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
-                                    <Paragraph className="m-frnds">22 Mutual Friends</Paragraph>
+                                    <Paragraph className="m-frnds">{friend.MutualFriendsCount||"No"} Mutual friends</Paragraph>
                                     <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                                     <div className="text-center">
                                         <Button type="dashed" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
