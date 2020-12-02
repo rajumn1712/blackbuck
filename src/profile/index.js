@@ -112,8 +112,10 @@ class Profile extends Component {
             .then(res => {
                 if (this.state.isProfilePic) {
                     this.props.profile.ProfilePic = this.imageObject.ImageUrl;
-                    this.props.updateProfile(this.props.profile);
+                }else{
+                    this.props.profile.CoverPic = this.imageObject.ImageUrl;
                 }
+                this.props.updateProfile(this.props.profile);
                 this.imageObject = {};
                 this.profielDetails();
             })
