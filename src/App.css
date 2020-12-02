@@ -166,10 +166,13 @@
 @media(min-width: 768px) {.share-box ul li::after{content: ""; position: absolute; width: 1px; height: 45px; background-color: var(--line); top: 4px; right: -22px; left: auto;}}
 .invite-btn{display: flex;align-items: center;justify-content: center;}
 .custom-card .ant-card{ border-radius: 0.8rem; box-shadow: var(--boxshadow); margin-bottom: 16px;}
-.custom-card .ant-card-body{ padding: 16px;}
+.custom-card .ant-card-body{ padding: 12px 0px;}
 .custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);}
-.custom-card .ant-list-item:first-child{padding-top: 0 !important;}
-.custom-card .ant-list-item:last-child{ padding-bottom: 0 !important;}
+.custom-card .ant-list-item{padding: 6px 20px;}
+.custom-card .ant-card-head{padding: 0 20px !important;min-height: 24px !important;}
+.custom-card .ant-list-item:hover{background: #f3f6f8;}
+/* .custom-card .ant-list-item:first-child{padding-top: 0 !important;}
+.custom-card .ant-list-item:last-child{ padding-bottom: 0 !important;} */
 .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image{width: 40px;height: 40px;border-radius: 12px;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; box-shadow: var(--boxshadow); border-radius: 13px;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-14);line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
