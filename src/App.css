@@ -15,6 +15,7 @@
 .share-box{border-radius: 10px; text-align: center; margin-bottom: 16px; box-shadow: var(--boxshadow); background: var(--white);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 10px; color: var(--white); border: 0; position: relative;}
+.left-rail{border: 1px solid var(--line);}
 .profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;}
 .profile-card .ant-avatar{width: 91px; height: 91px; padding-right: 0; border-radius: 24px !important; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);}
 .profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: -5px; bottom: 8px; background: #33DF00;}
@@ -46,13 +47,13 @@
 .icon-animation{color:var(--primary) !important;font-size: 14px; font-weight: 500;}
 .share-box li{position: relative; padding-top: 5px;}
 .share-box ul li:last-child:after{content: none;}
-.left-rail, .invite-card .ant-card{background: var(--white); border-radius: 10px !important; box-shadow: var(--boxshadow); margin-bottom: 16px;}
-.left-menu{width: 20px; height: 20px; vertical-align: initial; display: inline-block; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
+.left-rail, .invite-card .ant-card{background: var(--white); border-radius: 10px !important; margin-bottom: 16px;}
+.left-menu{width: 20px; height: 20px; vertical-align: initial; padding-left: 0 !important; display: inline-block; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
 .left-menu.profile-icon{background-position: -5px -200px;}
 .left-menu.friends-icon{background-position: -35px -200px;}
 .left-menu.post-icon,.icons.edit{background-position: -64px -201px;}
 .left-menu.group-icon{background-position: -94px -200px;}
-.left-menu.noti-icon{background-position: -123px -200px;}
+.left-menu.noti-icon{background-position: -124px -200px;}
 .left-menu.savedpost-icon{background-position: -350px -200px;}
 .left-menu.interest{background-position: -206px -254px;}
 .left-menu.hobbies{background-position: -234px -254px;}
@@ -60,13 +61,16 @@
 .left-menu.play{background-position: -292px -254px;}
 .left-menu.education{background-position: -325px -254px;}
 .left-menu.courses{background-position: -350px -254px;}
-.profile-menu{ border: 0 !important; padding-top: 20px !important; padding-bottom: 10px !important; margin-top: -10px !important; background-color: transparent !important;}
-.profile-menu .ant-menu-item a span{font-size: var(--f-16); padding-left: 20px; font-weight: 500;color: var(--textprimary);}
+.profile-menu{ border: 0 !important; 
+    /* padding-top: 20px !important; padding-bottom: 10px !important; margin-top: -10px !important;  */
+    padding-bottom: 8px !important;
+    background-color: transparent !important;}
+.profile-menu .ant-menu-item a span{font-size: var(--f-14); padding-left: 12px; font-weight: 500;color: var(--textprimary);}
 .profile-menu .ant-menu-item a{width:100%;height: 100%;}
-.profile-menu .ant-menu-item{margin:0 !important; height: 46px !important; line-height: 46px !important;}
-.profile-menu li:hover, .profile-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background-color: #F9F9F9;}
-.profile-menu li:hover a span{color: var(--primary);}
-.profile-menu li:hover a .left-menu.profile-icon,.profile-menu .ant-menu-item-selected a .left-menu.profile-icon{background-position: -5px -226px;}
+.profile-menu .ant-menu-item{margin:0 !important; padding: 0 12px !important;}
+.profile-menu li:hover, .profile-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background: rgba(0, 0, 0, 0.05) !important;}
+/* .profile-menu li:hover a span{color: var(--primary);} */
+/* .profile-menu li:hover a .left-menu.profile-icon,.profile-menu .ant-menu-item-selected a .left-menu.profile-icon{background-position: -5px -226px;}
 .profile-menu li:hover a .left-menu.friends-icon,.profile-menu .ant-menu-item-selected a .left-menu.friends-icon{background-position: -35px -226px;}
 .profile-menu li:hover a .left-menu.post-icon,.profile-menu .ant-menu-item-selected a .left-menu.post-icon,.icons.edit:hover{background-position: -64px -227px;}
 .profile-menu li:hover a .left-menu.group-icon,.profile-menu .ant-menu-item-selected a .left-menu.group-icon{background-position: -94px -226px;}
@@ -77,7 +81,7 @@
 .profile-menu li:hover a .left-menu.play,.profile-menu .ant-menu-item-selected a .left-menu.play{background-position: -292px -281px;}
 .profile-menu li:hover a .left-menu.education,.profile-menu .ant-menu-item-selected a .left-menu.education{background-position: -325px -281px;}
 .profile-menu li:hover a .left-menu.courses,.profile-menu .ant-menu-item-selected a .left-menu.courses{background-position: -350px -281px;}
-.profile-menu li:hover a .left-menu.savedpost-icon,.profile-menu .ant-menu-item-selected a .left-menu.savedpost-icon{background-position: -350px -226px;}
+.profile-menu li:hover a .left-menu.savedpost-icon,.profile-menu .ant-menu-item-selected a .left-menu.savedpost-icon{background-position: -350px -226px;} */
 .invite-card .ant-card-head{border-bottom: 1px solid #e9e5df; color: var(--textprimary); font-size: var(--f-16);}
 .invite-card .ant-card-body{text-align:center;}
 .invite-card .ant-avatar-group .ant-avatar{width: 60px; height: 60px; line-height: 60px; border-radius: 18px; border:0; font-size: 24px; color: var(--primary); font-weight: 600;}
