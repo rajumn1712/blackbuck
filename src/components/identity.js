@@ -23,7 +23,7 @@ class Identity extends Component {
                         <div className="profile-status f-16">{homeInfo?.Groups}<span className="f-12">Groups</span></div>,
                         <div className="profile-status f-16">{homeInfo?.Posts?homeInfo.Posts:0}<span className="f-12">Post</span></div>,
                     ]}
-                    cover={<img src={coverphoto} />}
+                    cover={<img src={homeInfo?.CoverPic || coverphoto} />}
                 >
                     <Meta
                         avatar={
