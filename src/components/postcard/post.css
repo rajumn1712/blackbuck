@@ -1,7 +1,8 @@
 @import '../../styles/theme.css';
 .post-card{border-radius: 0.8rem; margin-bottom: 6px;}
-.post-card .ant-card-head{padding: 12px 16px 0 !important;border: 0;margin-bottom: 8px;}
+.post-card .ant-card-head{padding: 12px 16px 4px !important;border: 0;margin-bottom: 8px;}
 .post-card .ant-card{ border-radius: 0.8rem; border-color: var(--line);}
+.post-card .ant-card-head-title{padding: 0 !important;}
 .post-card .ant-card-head .ant-card-meta-title {padding: 0 !important;margin-bottom: 0 !important; font-size: 15px;text-transform: capitalize;margin-top: 2px;}
 .post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px; cursor: default;}
 .post-card .ant-card-meta-description{font-size: 12px; font-weight: 400; margin-top: 2px;}
