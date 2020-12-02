@@ -77,6 +77,14 @@ class Postings extends Component {
          })
       }
    }
+   stopAudio = () => {
+      const audioElemets = document.querySelectorAll("audio");
+      for (const i in audioElemets) {
+         if (typeof (audioElemets[i]) == "object") {
+            audioElemets[i].pause()
+         }
+      }
+   }
    enableVideoAutoPlay(myVideo) {
       var videoElementArea = VisSense(myVideo);
       var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
@@ -184,7 +192,7 @@ class Postings extends Component {
             return null
          },
          Audio: () => {
-            return <div style={{ width: '100%', position: 'relative' }}>
+            return <div style={{ width: '100%', position: 'relative' }} onClick={()=>this.stopAudio()}>
                <div class="audio">
                   <AudioPlayer
                      src={imageObj}
