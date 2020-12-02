@@ -10,10 +10,10 @@ import { uuidv4 } from '../../../../utils';
 const commentEdit = (
     <Menu className="custom-dropdown">
       <Menu.Item key="0">
-        <a>Edit</a>
+        <a><span className="post-icons edit-icon" />Edit</a>
       </Menu.Item>
       <Menu.Item key="1">
-        <a>Delete</a>
+        <a><span className="post-icons delete-icon" />Delete</a>
       </Menu.Item>
     </Menu>
   );
