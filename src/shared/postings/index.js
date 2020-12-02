@@ -34,22 +34,29 @@ class Postings extends Component {
       loading: true,
       commentselection: [],
       page: 1,
-      pageSize: 10,
+      pageSize: 2,
       showModal: false,
-      reactionsLoading: false
+      reactionsLoading: false,
+      loadMore: true
    }
    componentDidMount() {
       window.addEventListener('scroll', (e) => {
-         let element = e.target.scrollingElement
-         if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+         this.loadMore(e);
+      })
+      this.loadPosts();
+   }
+   loadMore(e) {
+      let element = e.target.scrollingElement
+      if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+         debugger
+         if (this.state.loadMore) {
             let { page } = this.state;
             page += 1;
             this.setState({ ...this.state, page }, () => {
                this.loadPosts();
             })
          }
-      })
-      this.loadPosts();
+      }
    }
    async loadPosts() {
       this.setState({ ...this.state, loading: true });
@@ -57,17 +64,17 @@ class Postings extends Component {
       let { allPosts } = this.state;
       allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
-         this.setState({ ...this.state, loading: false, allPosts }, () => {
+         this.setState({ ...this.state, loading: false, allPosts, loadMore: posts.data.length === this.state.pageSize }, () => {
             const videoElements = document.querySelectorAll("video");
             for (const i in videoElements) {
                if (typeof (videoElements[i]) == "object") {
-                 this.enableVideoAutoPlay(videoElements[i])
+                  this.enableVideoAutoPlay(videoElements[i])
                }
             }
          })
       }
    }
-   enableVideoAutoPlay(myVideo){
+   enableVideoAutoPlay(myVideo) {
       var videoElementArea = VisSense(myVideo);
       var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
       monitorBuilder.on('fullyvisible', function () {

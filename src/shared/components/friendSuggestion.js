@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Button } from 'antd';
 import { apiClient } from '../api/clients';
 import notify from './notification';
-import { getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
+import { cancelFriendRequest, getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
 import { Link } from 'react-router-dom'
 import connectStateProps from '../stateConnect';
 import defaultUser from '../../styles/images/defaultuser.jpg';
@@ -26,8 +26,8 @@ class FriendSuggestions extends Component {
             "Type": "request"
         }
         sendFirendRequest(friend.UserId, obj).then(() => {
+            this.updateFriendSuggestions(friend.UserId, "Type", "request");
             notify({ message: "Friend request", description: "Request sent successfully" });
-            this.removeSuggestion(friend)
         })
     }
     componentDidMount() {
@@ -44,8 +44,23 @@ class FriendSuggestions extends Component {
         friends = friends.filter(item => item.UserId !== friend.UserId);
         this.setState({ friends })
     }
-    goToFriendsSuggestions = () => {
-
+    cancelRequest = async (friend) => {
+        const cancelResponse = await cancelFriendRequest(this.props?.profile?.Id, friend.UserId);
+        if (cancelResponse.ok) {
+            notify({ message: "Friend request", description: "Request cancelled" });
+            this.updateFriendSuggestions(friend.UserId, "Type", null);
+        } else {
+            notify({ message: "Friend request", description: "Something went wrong:)", type: "error" });
+        }
+    }
+    updateFriendSuggestions(id, prop, val) {
+        let { friends } = this.state;
+        for (const i in friends) {
+            if (id === friends[i].UserId) {
+                friends[i][prop] = val;
+            }
+        }
+        this.setState({ ...this.state, friends });
     }
     render() {
         const { friends } = this.state;
@@ -70,20 +85,21 @@ class FriendSuggestions extends Component {
                         </div>
                     }) 
                     }*/}
-                    {friends.length > 4 && <Link className="more-frnd-btn" onClick={() => {this.carouselRef.next()}}><span className="icon right-arrow mr-0"></span></Link>}
-                    <OwlCarousel items={5} autoWidth={true} loop ref={(ref)=>this.carouselRef=ref}>
+                    {friends.length > 4 && <Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link>}
+                    <OwlCarousel items={3} autoWidth={true} loop ref={(ref) => this.carouselRef = ref}>
                         {friends.map((friend, index) => {
-                            return <div className="frnds-list-item">
+                            return <div className="frnds-list-item" key={index}>
                                 <div className="frnds-img">
                                     <img src={friend.Image || defaultUser} width="100%" height="100%" />
                                     <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                                 </div>
                                 <div style={{ padding: 16 }}>
                                     <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
-                                    <Paragraph className="m-frnds">{friend.MutualFriendsCount||"No"} Mutual friends</Paragraph>
+                                    <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
                                     <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                                     <div className="text-center">
-                                        <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
+                                        {friend.Type == null && <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>}
+                                        {friend.Type == "request" && <Button type="default" className="addfrnd semibold" onClick={() => this.cancelRequest(friend)}>Cancel request</Button>}
                                     </div>
                                 </div>
                             </div>
