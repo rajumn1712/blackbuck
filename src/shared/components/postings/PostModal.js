@@ -5,7 +5,7 @@ import EmojiAction from './Actions/EmojiActions';
 import ShareAction from './Actions/ShareActions';
 import Comments from './Comments/Comments';
 import defaultUser from '../../../styles/images/defaultuser.jpg';
-import { deletePost, getPosts, saveActions } from '../../api/postsApi';
+import { deletePost, getPosts, saveActions,fetchPostReactions } from '../../api/postsApi';
 import SideAction from '../../components/postings/Actions/SideActions';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -31,8 +31,25 @@ class PostCardModal extends Component {
         submitting: false,
         loading: true,
         comments: [],
-        commentsection: false
+        commentsection: false,
+        reactionsLoading:false,
+        postReactions:[],
     }
+    fetchPostReactions = async (id) => {
+        this.setState({ ...this.state, reactionsLoading: true });
+        let actions = {};
+        const reactionsResponse = await fetchPostReactions(id);
+        if (reactionsResponse.ok) {
+           const data = reactionsResponse.data[0].Likes;
+           actions = {
+              Likes: data.filter(item => item.Type === "Likes"),
+              Claps: data.filter(item => item.Type === "Claps"),
+              Loves: data.filter(item => item.Type === "Loves"),
+              Whistiles: data.filter(item => item.Type === "Whistiles"),
+           }
+           this.setState({ reactionsLoading: false, postReactions: actions })
+        }
+     }
     showComment = (post) => {
         const { commentselection } = this.state;
         const idx = commentselection.indexOf(post.id);
@@ -174,19 +191,19 @@ class PostCardModal extends Component {
                                                 <li><span className="counter-icon loves"></span></li>
                                                 <li ><span className="counter-icon claps"></span></li>
                                                 <li><span className="counter-icon whistles"></span></li>
-                                                <li onMouseEnter={() => this.props.fetchPostReactions(post.id)}>
-                                                    <Tooltip overlayStyle={{ color: "#ffff" }} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
-                                                        <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
-                                                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                                                <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
+                                                    <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                                                        <TabPane tab="Likes" key="1" style={{ floodColor: "#fff", height: 200 }}>
+                                                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                                                         </TabPane>
-                                                        <TabPane tab="Loves" key="2" style={{ floodColor: "#ffff", height: 200 }}>
-                                                            {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                                                        <TabPane tab="Loves" key="2" style={{ floodColor: "#fff", height: 200 }}>
+                                                            {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                                                         </TabPane>
-                                                        <TabPane tab="Claps" key="3" style={{ floodColor: "#ffff", height: 200 }}>
-                                                            {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                                                        <TabPane tab="Claps" key="3" style={{ floodColor: "#fff", height: 200 }}>
+                                                            {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                                                         </TabPane>
-                                                        <TabPane tab="Whistiles" key="4" style={{ floodColor: "#ffff", height: 200 }}>
-                                                            {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                                                        <TabPane tab="Whistiles" key="4" style={{ floodColor: "#fff", height: 200 }}>
+                                                            {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                                                         </TabPane>
                                                     </Tabs>}</div>}>
                                                         <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
