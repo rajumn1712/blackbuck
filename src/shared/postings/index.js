@@ -19,6 +19,7 @@ import PostCardModal from '../components/postings/PostModal';
 import dialog from '../components/dialog'
 import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
+import { postDeletion } from '../../reducers/auth';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -234,6 +235,7 @@ class Postings extends Component {
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });
          notify({ message: "Delete", description: "Post delete success" });
+         this.props.upadateProfile(this.props.profile);
       })
    }
    fetchPostReactions = async (id) => {
@@ -344,4 +346,9 @@ class Postings extends Component {
 const mapStateToProps = ({ oidc }) => {
    return { profile: oidc.profile }
 }
-export default connect(mapStateToProps)(Postings);
+const mapDispatchToProps = dispatch => {
+   return {
+      upadateProfile: (info) => { dispatch(postDeletion(info)) }
+   }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Postings);
