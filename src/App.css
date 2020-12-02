@@ -102,7 +102,7 @@
 .upload-image .ant-avatar{width: 64px;height: 50px;margin-bottom: 5px;}
 .upload-image.ant-upload-text{color: var(--black);margin-bottom: 0px;}
 .upload-image{margin-bottom: 24px;}
-.title-img .ant-input{border: none !important;text-align: left;font-size: 24px !important;font-weight: 600;color: var(--textprimary); line-height: normal; margin-bottom: 10px;padding: 0;}
+.title-img .ant-input{border: none !important;text-align: left;font-size: 18px !important;font-weight: 600;color: var(--textprimary); margin-bottom: 10px;padding: 0; min-height: 32px !important}
 .title-img .ant-input:focus, .title-img .ant-input-focused, .caption-image .ant-input:focus{ border: none; box-shadow: none !important;}
 .caption-image .ant-input{color: var(--textsecondary); font-size: 14px; border: none !important; text-align: left;padding: 0;}
 .upload{border-radius: 6px !important;}
@@ -262,9 +262,11 @@
 .custom-fields textarea.ant-input{min-height: 90px !important;}
 .ant-input,.ant-select-selector{border: 1px solid #dfe3eb !important;}
 .ant-input,.ant-select{border-radius: 8px !important;}
-.ant-modal-content{border-radius: 10px !important;}
+.ant-modal-content{border-radius: 0.8rem !important;}
 .ant-btn:hover, .ant-btn:focus,.ant-picker:hover, .ant-picker-focused{ color: var(--primary) !important;border-color: var(--primary) !important;}
 .ant-btn-primary:hover, .ant-btn-primary:focus{color: var(--white) !important;}
+.ant-btn-primary:disabled{background: rgba(0, 0, 0, 0.05) !important; border-color: var(--line) !important;}
+.ant-btn-primary:disabled:hover {color: rgba(0, 0, 0, 0.25) !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
 .center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
 .icon.education-icon{background-position: -263px -254px;}
