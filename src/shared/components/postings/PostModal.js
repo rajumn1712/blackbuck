@@ -162,7 +162,7 @@ class PostCardModal extends Component {
                                     <div className="">
                                         {/* <Title level={5} className="post-title">{post.title}</Title> */}
                                         <Paragraph className="post-desc">{post.meassage}</Paragraph>
-                                        <div >
+                                        <div className="d-flex justify-content-between mx-16">
                                             {<ul className="card-actions-count pl-0">
                                                 <li><span className="counter-icon likes"></span></li>
                                                 <li><span className="counter-icon loves"></span></li>
@@ -176,7 +176,7 @@ class PostCardModal extends Component {
                                             </ul>}
                                             <ul className="card-actions-count">
                                                 {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-                                                {post.commentsCount != null && <li style={{ cursor: "pointer" }} onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                                                {post.commentsCount != null && <li style={{ cursor: "pointer" }} className="pl-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
                                                 {/* <li><span></span>2 <span> Shares</span></li> */}
                                             </ul>
                                         </div>
