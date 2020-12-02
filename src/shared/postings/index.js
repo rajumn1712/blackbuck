@@ -254,7 +254,7 @@ class Postings extends Component {
    renderPost = (post) => {
 
       return <div className={`post-card ${this.state.commentselection.indexOf(post.id) > -1 ? 'comment-show' : ""}`}>
-         <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
+         <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={true} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
             actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
@@ -265,6 +265,10 @@ class Postings extends Component {
          >
             {/* <Title level={5} className="post-title">{post.title}</Title> */}
             <Paragraph className="post-desc">{post.meassage}</Paragraph>
+            {/* <Card.Meta
+               avatar={<><img src={post.image} /></>}
+            >
+            </Card.Meta> */}
             {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                {post.tags?.map((tag, index) => {
                   return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>

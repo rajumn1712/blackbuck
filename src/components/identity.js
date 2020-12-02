@@ -18,9 +18,9 @@ class Identity extends Component {
             <div className="left-rail">
                 <Card className="profile-card"
                     actions={[
-                        <div className="profile-status">{homeInfo?.Friends}<span>Friends</span></div>,
-                        <div className="profile-status">{homeInfo?.Groups}<span>Groups</span></div>,
-                        <div className="profile-status">{homeInfo?.Posts}<span>Post</span></div>,
+                        <div className="profile-status f-16">{homeInfo?.Friends}<span className="f-12">Friends</span></div>,
+                        <div className="profile-status f-16">{homeInfo?.Groups}<span className="f-12">Groups</span></div>,
+                        <div className="profile-status f-16">{homeInfo?.Posts}<span className="f-12">Post</span></div>,
                     ]}
                 >
                     <Meta
