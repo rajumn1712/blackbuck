@@ -166,7 +166,7 @@ class PostComponent extends Component {
                 </div>
                 }
                 {type !== 'text' &&
-                    <p className="title-img mb-0"><Input placeholder="Title of the image here" value={postObj.Title} /></p>
+                    <p className="title-img mb-0"><Input autoSize={{ minRows: 1, maxRows: 6 }} placeholder="Title of the image here" value={postObj.Title} /></p>
                 }
                 {type !== 'text' && <p className="caption-image"><Input placeholder="Add a caption of image, if you like" value={postObj.Caption} /></p>}
                 <div style={{ margin: 10 }}>
