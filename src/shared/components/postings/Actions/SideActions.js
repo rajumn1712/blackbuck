@@ -26,7 +26,7 @@ class SideAction extends Component {
         return (
             <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
                 <a className="ant-dropdown-link">
-                    <span className="post-icons more-icon mr-0"></span>
+                    <span className="post-icons h-more-icon mr-0"></span>
                 </a>
             </Dropdown>
         )
