@@ -313,7 +313,7 @@ class Postings extends Component {
                   <li ><span className="counter-icon claps"></span></li>
                   <li><span className="counter-icon whistles"></span></li>
                   <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
-                     <Tooltip overlayStyle={{ color: "#ffff" }} style={{width:'280px'}} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                     <Tooltip overlayStyle={{ color: "#ffff" }} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
                         <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
