@@ -20,7 +20,7 @@ import dialog from '../components/dialog'
 import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
 import VisSenseFactory from 'vissense';
-import { postDeletion } from '../../reducers/auth';
+import { postUpdation } from '../../reducers/auth';
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
@@ -51,23 +51,27 @@ class Postings extends Component {
       })
       this.loadPosts();
    }
-   async loadPosts() {
+   async loadPosts(isFromSave) {
       this.setState({ ...this.state, loading: true });
       const posts = await getPosts((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageSize, this.props.postingsType);
       let { allPosts } = this.state;
-      allPosts = allPosts.concat(posts.data);
+      if (!isFromSave) {
+         allPosts = allPosts.concat(posts.data);
+      } else {
+         allPosts = posts.data;
+      }
       if (posts.ok) {
          this.setState({ ...this.state, loading: false, allPosts }, () => {
             const videoElements = document.querySelectorAll("video");
             for (const i in videoElements) {
                if (typeof (videoElements[i]) == "object") {
-                 this.enableVideoAutoPlay(videoElements[i])
+                  this.enableVideoAutoPlay(videoElements[i])
                }
             }
          })
       }
    }
-   enableVideoAutoPlay(myVideo){
+   enableVideoAutoPlay(myVideo) {
       var videoElementArea = VisSense(myVideo);
       var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
       monitorBuilder.on('fullyvisible', function () {
@@ -130,6 +134,10 @@ class Postings extends Component {
 
    handleChange = () => {
 
+   }
+   dataRefreshed = () => {
+      this.loadPosts(true)
+      this.props.upadateProfile(this.props.profile, 'Increment');
    }
    renderPostImages = (imageObj, type) => {
       const _result = {
@@ -256,7 +264,7 @@ class Postings extends Component {
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });
          notify({ message: "Delete", description: "Post delete success" });
-         this.props.upadateProfile(this.props.profile);
+         this.props.upadateProfile(this.props.profile,'Decrement');
       })
    }
    fetchPostReactions = async (id) => {
@@ -305,7 +313,7 @@ class Postings extends Component {
                   <li ><span className="counter-icon claps"></span></li>
                   <li><span className="counter-icon whistles"></span></li>
                   <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
-                     <Tooltip overlayStyle={{ color: "#ffff" }} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                     <Tooltip overlayStyle={{ color: "#ffff" }} style={{width:'280px'}} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
                         <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
@@ -325,7 +333,7 @@ class Postings extends Component {
                </ul>}
                <ul className="card-actions-count">
                   {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-                  {post.commentsCount != null && <li style={{ cursor: "pointer" }} onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                  {post.commentsCount != null && <li className="mr-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
                   {/* <li><span></span>2 <span> Shares</span></li> */}
                </ul>
             </div>
@@ -355,7 +363,7 @@ class Postings extends Component {
    }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox />}
+         {this.props.sharebox && <ShareBox  dataRefreshed={()=>this.dataRefreshed()}/>}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
@@ -370,7 +378,7 @@ const mapStateToProps = ({ oidc }) => {
 }
 const mapDispatchToProps = dispatch => {
    return {
-      upadateProfile: (info) => { dispatch(postDeletion(info)) }
+      upadateProfile: (info,type) => { dispatch(postUpdation(info,type)) }
    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Postings);

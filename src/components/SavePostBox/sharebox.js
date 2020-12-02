@@ -157,6 +157,7 @@ class ShareBox extends Component {
             this.setState({
                 visible: false,
             }, () => {
+                    this.props.dataRefreshed();
                 notify({ description: "Posting completed successfully", message: "Post" })
             });
         } else {
