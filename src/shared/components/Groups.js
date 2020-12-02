@@ -35,7 +35,7 @@ class Groups extends Component {
     render() {
         return (
             <div className="custom-card sub-text">
-                <Card title="Groups" bordered={false} extra={<Link to="/commingsoon">View all</Link>} actions={[
+                <Card title="Groups" bordered={true} extra={<Link to="/commingsoon">View all</Link>} actions={[
                     <Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button>
                 ]} >
                     <List
