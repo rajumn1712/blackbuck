@@ -133,9 +133,11 @@
 .anonymous{display: flex;align-items: center;}
 .ant-input:hover{box-shadow: none !important;}
 .tags .anticon-plus{display: none;}
-.tags .site-tag-plus{border: 0;text-align: center;font-size: 14px;color: #BDBDBD !important;background: transparent !important;border-top: 1px solid #D6E6FB;}
-.tags{text-align: center;}
-.tags .ant-tag{background: #D7FDFE;border: 0;border-radius: 10px;padding: 3px 10px;color: var(--primary);font-size: 12px;margin-bottom: 10px;}
+.tags .site-tag-plus{border: 0;text-align: center;font-size: 14px;color: #BDBDBD !important;background: transparent !important;border-top: 1px solid var(--border); cursor: pointer;}
+.tags{text-align: center; min-height: 90px;}
+.tags .ant-tag{background: #D7FDFE;border: 0;border-radius: 0.4rem;padding: 3px 10px;color: var(--textprimary);font-size: var(--f-14);margin-bottom: 10px;}
+.tags .ant-input{border: 0 !important; min-height: 30px; border-radius: 0 !important; width: 100% !important; text-align: center; font-size: var(--f-14)}
+.tags .ant-input:focus{outline: none !important;}
 .ant-tag-close-icon{color: var(--primary) !important;}
 /* .ant-input:focus, .ant-input-focused, .ant-input:hover{border-color: var(--primary) !important;} */
 .custom-dropdown{min-width: 300px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 6px; padding: 4px 0;}

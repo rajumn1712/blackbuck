@@ -469,7 +469,7 @@ class ShareBox extends Component {
                         )}
                         {!inputVisible && (
                             <Tag onClick={this.showInput} className="site-tag-plus">
-                                <PlusOutlined /> # tag
+                                <PlusOutlined /> Add hashtag
                             </Tag>
                         )}
                     </div>
