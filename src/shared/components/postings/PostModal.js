@@ -141,6 +141,7 @@ class PostCardModal extends Component {
                 onCancel={this.props.closed}
                 footer={null}
                 width="100%"
+                destroyOnClose
             >
                  <div className="post-preview-box post-card comment-show">
                     <Row align="middle">
