@@ -34,21 +34,20 @@ class Postings extends Component {
       loading: true,
       commentselection: [],
       page: 1,
-      pageSize: 2,
+      pageSize: 200,
       showModal: false,
       reactionsLoading: false,
       loadMore: true
    }
    componentDidMount() {
-      window.addEventListener('scroll', (e) => {
-         this.loadMore(e);
-      })
+      // document.addEventListener('scroll', (e) => {
+      //    this.loadMore(e);
+      // })
       this.loadPosts();
    }
    loadMore(e) {
       let element = e.target.scrollingElement
-      if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-         debugger
+      if ((element.scrollHeight - element.scrollTop) === element.clientHeight) {
          if (this.state.loadMore) {
             let { page } = this.state;
             page += 1;
@@ -340,7 +339,7 @@ class Postings extends Component {
                </ul>}
                <ul className="card-actions-count">
                   {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-                  {post.commentsCount != null && <li className="mr-0 cursor-pointer" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                  {post.commentsCount != null && <li className="mr-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
                   {/* <li><span></span>2 <span> Shares</span></li> */}
                </ul>
             </div>
@@ -376,7 +375,7 @@ class Postings extends Component {
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
          {this.state.loading && <Loader className="loader-top-middle" />}
          {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
-         <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} fetchPostReactions={(id)=>this.fetchPostReactions(id)} />
+         <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />
       </div>
    }
 }
