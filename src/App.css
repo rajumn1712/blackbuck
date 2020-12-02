@@ -109,9 +109,9 @@
 .upload .ant-upload-text{color: var(--black); font-size: var(--f-16); font-weight: 500;}
 .upload-image .ant-upload-drag{margin-bottom: 16px;}
 .upload-preview{position: relative;}
-.item-close{position: absolute; background: var(--white); box-shadow: var(--boxshadow); top: 10px; right: 25px; border-radius: 8px; z-index: 9; opacity: 0;}
+.item-close{position: absolute; background: var(--white); box-shadow: var(--boxshadow); top: 12px; right: 12px; border-radius: 8px; z-index: 9; opacity: 0;}
 .upload-preview:hover .item-close{opacity: 1;}
-.upload-preview .ant-image{height: 300px;overflow: auto;}
+.upload-preview .ant-image{width: 100%; overflow: auto;}
 .upload-preview .ant-list-item-meta{align-items: center;}
 .close-icon, .anticon.anticon-delete{width: 30px; height: 30px; vertical-align: middle; display: inline-block; background: url(../src/styles/images/icons.svg) no-repeat; background-position: -401px -196px;}
 .doc-icons.word{background-position: -469px -104px;}
