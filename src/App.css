@@ -307,3 +307,5 @@ textarea{resize: unset !important;}
 .like-tabs .ant-tabs-tab{font-weight: 500;}
 .like-tabs .ant-tabs-tab:active, .like-tabs .ant-tabs-tab .ant-tabs-tab-btn:active, .like-tabs .ant-tabs-tab .ant-tabs-tab-btn:focus {color: var(--white) !important;}
 .group-page .ant-card-bordered{border: 1px solid var(--line) !important;}
+.rhap_container{box-shadow: none !important; border: 1px solid var(--line); border-radius: 0.4rem;}
+.post-image .audio, .post-preview-box .audio{margin: 4px 16px 4px;}
