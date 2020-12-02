@@ -1,5 +1,5 @@
 @import '../../styles/theme.css';
-.post-card{border-radius: 0.8rem;margin-bottom: 16px;}
+.post-card{border-radius: 0.8rem; margin-bottom: 6px;}
 .post-card .ant-card{ border-radius: 0.8rem; border-color: var(--line);}
 .post-card .ant-card-meta-title {margin-bottom: 0 !important; font-size: 15px; margin-top: 2px;}
 .post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px; cursor: default;}
@@ -54,17 +54,18 @@ to{visibility: visible;transform: translateY(0px);}
 .like-icon.whistle{background-position: -624px -109px;}
 .ant-dropdown-menu{min-width: 125px; border-radius: 5px;box-shadow: var(--boxshadow);}
 .ant-dropdown-menu li a{font-weight: 500;}
-.post-comment{background: var(--white);margin-bottom: 16px;border-radius: 0 0 10px 10px; display: none; padding-bottom: 16px;}
+.post-comment{background: var(--white); border-radius: 0 0 0.8rem 0.8rem; display: none; padding: 0 12px 12px; border: 1px solid var(--line); border-top: 0;}
 .post-card.comment-show .post-comment,.post-preview-box.comment-show .post-comment{display: block;}
 .post-card.comment-show .ant-card-actions{border-radius: 0;}
+.post-card.comment-show .ant-card{border-radius: 0.8rem 0.8rem 0 0;}
 .post-comment .ant-form-item-control-input-content{position: relative;}
 .post-btn{position: absolute; right: 4px; top: 1px; min-height: auto !important;}
 .post-btn:hover {border-color: transparent !important;}
 .post-comment .ant-input{min-height: 40px !important; border-radius: 5px; resize: none;padding-right: 60px;padding-top: 6px;}
-.post-comment .ant-comment-avatar img{border-radius: 13px;}
-.post-comment .ant-comment-content-author-time{margin-left: auto; padding-right: 0;}
-.post-comment .ant-comment-content-author-time, .post-comment .ant-comment-content-detail{font-size: var(--f-12); color: var(--textsecondary);}
-.post-comment .ant-comment-content-author-name{font-size: var(--f-14); font-weight: 500;}
+.post-comment .ant-comment-avatar img{border-radius: 12px;}
+.post-comment .ant-comment-content-author-time{display: flex; align-items: center; margin-left: auto; font-size: var(--f-12);padding-right: 0; line-height: 1.33333 !important;color: var(--textsecondary);}
+.post-comment .ant-comment-content-detail{font-size: var(--f-14); color: var(--textprimary); line-height: 1.42857 !important;}
+.post-comment .ant-comment-content-author-name{font-size: var(--f-14); font-weight: 500; line-height: 1.42857 !important;}
 .post-comment .ant-comment-inner{padding-bottom: 0;}
 .comment-list .ant-list-header{font-weight: 500;padding-bottom: 8px;}
 .post-comment .ant-form-item{margin-bottom: 0;}

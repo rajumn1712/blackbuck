@@ -78,12 +78,12 @@ class FriendSuggestions extends Component {
                                     <img src={friend.Image || defaultUser} width="100%" height="100%" />
                                     <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                                 </div>
-                                <div style={{ padding: 10 }}>
+                                <div style={{ padding: 16 }}>
                                     <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
                                     <Paragraph className="m-frnds">{friend.MutualFriendsCount||"No"} Mutual friends</Paragraph>
                                     <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                                     <div className="text-center">
-                                        <Button type="dashed" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
+                                        <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
                                     </div>
                                 </div>
                             </div>

@@ -349,7 +349,7 @@ class PostCard extends React.Component {
                             </div>
                         </div>
                     </Card>
-                    <div className="post-comment px-16">
+                    <div className="post-comment">
                         {comments.length > 0 && <CommentList comments={comments} />}
                         <Comment
                             avatar={
