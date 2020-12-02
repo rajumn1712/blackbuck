@@ -11,6 +11,7 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .c-pointer{cursor: pointer !important;}
 .c-default{cursor: default !important;}
 .c-text{cursor: text !important;}
+.cursor-pointer{cursor: pointer;}
 
 a{color: var(--primary);}
 a:hover,a:active{color: var(--primaryhover) !important;}
