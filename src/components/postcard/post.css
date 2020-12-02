@@ -1,17 +1,17 @@
 @import '../../styles/theme.css';
-.post-card{box-shadow: var(--boxshadow) !important; border-radius: 0.8rem;margin-bottom: 16px;}
-.post-card .ant-card{ border-radius: 0.8rem;}
+.post-card{border-radius: 0.8rem;margin-bottom: 16px;}
+.post-card .ant-card{ border-radius: 0.8rem; border-color: var(--line);}
 .post-card .ant-card-meta-title {margin-bottom: 0 !important; font-size: 15px; margin-top: 2px;}
 .post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px; cursor: default;}
 .post-card .ant-card-meta-description{font-size: 12px; font-weight: 400; margin-top: 2px;}
 .post-card .ant-card-body{padding: 16px;}
-.post-card .ant-card-actions{border-radius: 0 0 10px 10px; background: #F9F9F9; }
+.post-card .ant-card-actions{border-radius: 0 0 0.8rem 0.8rem;}
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important; }
 .post-title{color: var(--textprimary) !important; margin-bottom: 6px !important; line-height: normal !important; font-size: var(--f-16) !important;}
 .post-title:hover{color: var(--primary)!important ;}
 .post-desc{color: var(--textdescription); font-size: var(--f-14) !important; line-height: 16px;}
 .post-card .ant-card-actions > li, .post-card .ant-card-meta {margin: 0;}
-.post-card .ant-card-actions li a{padding: 10px 8px;}
+.post-card .ant-card-actions li a{padding: 12px 8px;}
 .post-tag{margin-top: 16px;}
 .post-tag .ant-tag{border-radius: 12px; min-height: 24px; font-weight: 500; border: none; cursor: pointer; line-height: 24px;padding-left: 12px; padding-right: 12px;}
 .post-tag .ant-tag a{color: var(--primary);}
@@ -32,9 +32,9 @@
 .post-icons.delete-icon{background-position: -377px -200px;}
 .post-icons.more-icon:hover {background-position: -235px -226px;}
 .post-icons.h-more-icon:hover {background-position: -555px -226px;}
-.post-card .ant-card-actions li a:hover .post-icons.like-icon{background-position:  -150px -226px;}
+/* .post-card .ant-card-actions li a:hover .post-icons.like-icon{background-position:  -150px -226px;}
 .post-card .ant-card-actions li a:hover .post-icons.comment-icon{background-position: -177px -225px;}
-.post-card .ant-card-actions li a:hover .post-icons.share-icon{background-position: -205px -226px;}
+.post-card .ant-card-actions li a:hover .post-icons.share-icon{background-position: -205px -226px;} */
 .post-card .ant-card-actions li a.focus .post-icons.like-icon{background-position:  -150px -226px;}
 .more-opt li:hover .post-icons.edit-icon{background-position: -64px -226px;}
 .more-opt li:hover .notify-icon{background-position: -124px -226px;}

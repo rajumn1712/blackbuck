@@ -28,7 +28,7 @@ class Invite extends Component {
         let keys = Object.keys(invite);
         return (
             <div className="invite-card">
-                <Card title="Invite" bordered={false}>
+                <Card title="Invite" bordered={true}>
                     {
                         keys.length > 0 && <div>
                             <Avatar.Group>

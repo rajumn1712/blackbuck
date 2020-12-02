@@ -87,7 +87,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .post-card .ant-card-meta-title, .post-title, .post-card .ant-card-actions li a, .post-comment .ant-comment-content-author-name,
 .card-actions-count li{color: var(--textprimary) !important;}
 .post-card .ant-card-meta-description, .post-desc, .post-comment .ant-comment-content-detail p, .post-comment .ant-comment-content-author-time{color: var(--textsecondary);}
-.post-card .ant-card-actions li a:hover, .post-card .ant-card-actions li a.focus, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
+.post-card .ant-card-actions li a.focus, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
 .post-tag .ant-tag{background:var(--secondary);}
 .card-actions-count li span{color:#9B9B9B;}
 .grp-type-icon,.custom-select .anticon.anticon-down{background: url(styles/images/icons.svg) no-repeat;}
