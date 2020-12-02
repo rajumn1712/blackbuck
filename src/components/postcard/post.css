@@ -1,18 +1,18 @@
 @import '../../styles/theme.css';
 .post-card{border-radius: 0.8rem; margin-bottom: 6px;}
-.post-card .ant-card-head{padding: 12px 16px 0;border: 0;margin-bottom: 8px;}
+.post-card .ant-card-head{padding: 12px 16px 0 !important;border: 0;margin-bottom: 8px;}
 .post-card .ant-card{ border-radius: 0.8rem; border-color: var(--line);}
-.post-card .ant-card-meta-title {padding: 0;margin-bottom: 0 !important; font-size: 15px; margin-top: 2px;}
+.post-card .ant-card-head .ant-card-head-title {padding: 0 !important;margin-bottom: 0 !important; font-size: 15px; margin-top: 2px;}
 .post-card .ant-avatar, .post-comment .ant-comment-avatar img {width: 40px; height: 40px; cursor: default;}
 .post-card .ant-card-meta-description{font-size: 12px; font-weight: 400; margin-top: 2px;}
-.post-card .ant-card-body{padding: 16px;}
+.post-card .ant-card-body{padding: 0;}
 .post-image .ant-card-meta-avatar{ width:100%;height: auto;padding: 0 !important;margin-top:8px !important ;}
 .post-card .ant-card-extra{padding-top: 0;padding-bottom:0 ;}
 .post-card .ant-card-actions{border-radius: 0 0 0.8rem 0.8rem;}
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important; }
 .post-title{color: var(--textprimary) !important; margin-bottom: 6px !important; line-height: normal !important; font-size: var(--f-16) !important;}
 .post-title:hover{color: var(--primary)!important ;}
-.post-desc{color: var(--textdescription); font-size: var(--f-14) !important; line-height: 16px;}
+.post-card .ant-card-body .post-desc{color: var(--textdescription);font-size: var(--f-14)!important; line-height: 19px;font-weight: 400;margin: 0 16px !important;}
 .post-card .ant-card-actions > li, .post-card .ant-card-meta {margin: 0;}
 .post-card .ant-card-actions li a{padding: 12px 8px;}
 .post-tag{margin: 0 16px;}
