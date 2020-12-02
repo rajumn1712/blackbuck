@@ -6,8 +6,12 @@ import { getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
 import { Link } from 'react-router-dom'
 import connectStateProps from '../stateConnect';
 import defaultUser from '../../styles/images/defaultuser.jpg';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
+    carouselRef;
     className = ["one", "two", "three"]
     state = {
         friends: []
@@ -66,24 +70,26 @@ class FriendSuggestions extends Component {
                         </div>
                     }) 
                     }*/}
-                    {friends.length > 4 && <Link to="/commingsoon" className="more-frnd-btn" onClick={() => this.goToFriendsSuggestions()}><span className="icon right-arrow mr-0"></span></Link>}
-                    {friends.map((friend, index) => {
-                        return <div className="frnds-list-item">
-                            <div className="frnds-img">
-                                <img src={friend.Image || defaultUser} width="100%" height="100%" />
-                                <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
-                            </div>
-                            <div style={{ padding: 10 }}>
-                                <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
-                                <Paragraph className="m-frnds">22 Mutual Friends</Paragraph>
-                                <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
-                                <div className="text-center">
-                                    <Button type="dashed" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
+                    {friends.length > 4 && <Link className="more-frnd-btn" onClick={() => {this.carouselRef.next()}}><span className="icon right-arrow mr-0"></span></Link>}
+                    <OwlCarousel items={5} autoWidth={true} loop ref={(ref)=>this.carouselRef=ref}>
+                        {friends.map((friend, index) => {
+                            return <div className="frnds-list-item">
+                                <div className="frnds-img">
+                                    <img src={friend.Image || defaultUser} width="100%" height="100%" />
+                                    <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
+                                </div>
+                                <div style={{ padding: 10 }}>
+                                    <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
+                                    <Paragraph className="m-frnds">22 Mutual Friends</Paragraph>
+                                    <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
+                                    <div className="text-center">
+                                        <Button type="dashed" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    })
-                    }
+                        })
+                        }
+                    </OwlCarousel>
                 </div>
             </div>
         )
