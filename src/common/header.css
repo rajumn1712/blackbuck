@@ -83,7 +83,7 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     min-height: 36px;
-    padding-top: 8px !important;
+    /* padding-top: 8px !important; */
 }
 
 .header-searchbar .ant-input-group-addon .ant-btn {

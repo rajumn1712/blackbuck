@@ -1,4 +1,4 @@
-import { Card, Carousel, Col, Empty, Modal, Row, Tag, Typography, message, Avatar,Tooltip } from 'antd';
+import { Card, Carousel, Col, Empty, Modal, Row, Tag, Typography, message, Avatar,Tooltip,Tabs,Spin } from 'antd';
 import React, { Component, createRef } from 'react';
 import CommentAction from './Actions/CommentAction';
 import EmojiAction from './Actions/EmojiActions';
@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import '../../../components/postcard/post.css'
 import AudioPlayer from "react-h5-audio-player";
 const { Meta } = Card;
+const { TabPane } = Tabs;
 
 
 
@@ -43,14 +44,14 @@ class PostCardModal extends Component {
         this.setState({ ...this.state, commentselection })
     }
     titleAvatar = (user, date) => {
-        return <Meta
-            avatar={
-                <Avatar src={user.Image || defaultUser} />
-            }
-            title={<Link to={"/profileview/" + user.UserId}><span className="overflow-text post-title">{user.Firstname}</span></Link>}
-            description={<Moment fromNow>{date}</Moment>}
-        />
-    }
+        return <Link to={"/profileview/" + user.UserId}>
+           <Meta
+              avatar={<Avatar src={user.Image || defaultUser} />}
+              title={<span className="overflow-text post-title">{user.Firstname}</span>}
+              description={<Moment fromNow>{date}</Moment>}
+           />
+        </Link>
+     }
     fetchCardActions = (user) => {
         const ownerActions = [
             { action: 'Edit', icons: 'post-icons edit-icon' },
@@ -73,27 +74,26 @@ class PostCardModal extends Component {
     renderPostImages = (imageObj, type) => {
         const _result = {
             Video: () => {
-                return <div className="video-post">
-                    <video width="100%" controls>
-                        <source src={imageObj} />
-                    </video>
-                    <div className="play"></div>
+                return <div className="video-post" >
+                   <video width="100%" controls>
+                      <source src={imageObj} />
+                   </video>
                 </div>
-            },
+             },
             Document: () => {
                 return null
             },
             Audio: () => {
                 return <div style={{ width: '100%', position: 'relative' }}>
-                    <div class="audio">
-                        <AudioPlayer
-                            src={imageObj[0]}
-                            onPlay={e => console.log("onPlay")}
-                            layout="horizontal-reverse"
-                        />
-                    </div>
+                   <div class="audio">
+                      <AudioPlayer
+                         src={imageObj}
+                         onPlay={e => console.log("onPlay")}
+                         layout="horizontal-reverse"
+                      />
+                   </div>
                 </div>
-            },
+             },
         }
 
 
@@ -150,7 +150,7 @@ class PostCardModal extends Component {
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={7}>
                             <div className="preview-content">
-                                <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%', borderRadius: 10 }} bordered={false}
+                                <Card title={this.titleAvatar(post.userdetails, post.date)}  bordered={true}
                                     extra={
                                         <SideAction clickedEvent={(event, name) => this.props.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
                                     }
@@ -162,29 +162,42 @@ class PostCardModal extends Component {
                                     <div className="">
                                         {/* <Title level={5} className="post-title">{post.title}</Title> */}
                                         <Paragraph className="post-desc">{post.meassage}</Paragraph>
-                                        <div className="d-flex justify-content-between mx-16">
+                                        {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
+                                            {post.tags?.map((tag, index) => {
+                                                return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
+                                            })}
+                                        </div>}
+                                        <div className="d-flex justify-content-between mx-16 py-8">
                                             {<ul className="card-actions-count pl-0">
                                                 <li><span className="counter-icon likes"></span></li>
                                                 <li><span className="counter-icon loves"></span></li>
                                                 <li ><span className="counter-icon claps"></span></li>
                                                 <li><span className="counter-icon whistles"></span></li>
-                                                <li>
-                                                    <Tooltip title="">
+                                                <li onMouseEnter={() => this.props.fetchPostReactions(post.id)}>
+                                                    <Tooltip overlayStyle={{ color: "#ffff" }} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                                                        <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
+                                                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                                                        </TabPane>
+                                                        <TabPane tab="Loves" key="2" style={{ floodColor: "#ffff", height: 200 }}>
+                                                            {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                                                        </TabPane>
+                                                        <TabPane tab="Claps" key="3" style={{ floodColor: "#ffff", height: 200 }}>
+                                                            {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                                                        </TabPane>
+                                                        <TabPane tab="Whistiles" key="4" style={{ floodColor: "#ffff", height: 200 }}>
+                                                            {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                                                        </TabPane>
+                                                    </Tabs>}</div>}>
                                                         <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
                                                     </Tooltip>
                                                 </li>
                                             </ul>}
                                             <ul className="card-actions-count">
                                                 {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-                                                {post.commentsCount != null && <li style={{ cursor: "pointer" }} className="pl-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                                                {post.commentsCount != null && <li className="mr-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
                                                 {/* <li><span></span>2 <span> Shares</span></li> */}
                                             </ul>
                                         </div>
-                                        {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
-                                            {post.tags?.map((tag, index) => {
-                                                return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
-                                            })}
-                                        </div>}
                                     </div>
                                 </Card>
                                 {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount} onUpdate={(prop, value) => { this.props.updatePost(post, prop, value) }}

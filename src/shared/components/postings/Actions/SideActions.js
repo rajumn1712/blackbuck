@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 
 const actionsList = [
     { action: 'Save Post', icons: 'post-icons savepost-icon' },
-    // { action: 'Edit', icons: 'post-icons edit-icon' },
-    // { action: 'Turn on Notifications', icons: 'post-icons notify-icon' },
-    // { action: 'Delete', icons: 'post-icons delete-icon' }
+    { action: 'Edit', icons: 'post-icons edit-icon' },
+    { action: 'Turn on Notifications', icons: 'post-icons notify-icon' },
+    { action: 'Delete', icons: 'post-icons delete-icon' }
 ]
 
 
@@ -16,8 +16,7 @@ class SideAction extends Component {
             <Menu className="custom-dropdown more-opt">
                 {this.props.actionsList?.map((menu, index) => {
                     return <Menu.Item key={index}>
-                        <a onClick={(event) => this.props.clickedEvent(event, menu.action)}><span className={menu.icons}></span> {menu.action}</a>
-                        
+                        <a onClick={(event) => this.props.clickedEvent(event, menu.action)}><span className={menu.icons}></span><div>{menu.action}<p className="f-12">Save it for later</p></div></a>
                     </Menu.Item>
                 })}
             </Menu>

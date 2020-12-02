@@ -27,8 +27,8 @@ const acceptFrienRequest = (user_id, friend_id, type, obj) => {
 const fetchFriendRequests = (user_id) => {
     return apiClient.get(PROFILE_API + "getFriendRequests/" + user_id)
 }
-const saveProfileImage = (user_id, type,obj) => {
-    return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}/${type}`,obj)
+const saveProfileImage = (user_id, type, obj) => {
+    return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}/${type}`, obj)
 }
 const saveInnternship = (user_id, obj) => {
     return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}`, obj)
@@ -36,4 +36,7 @@ const saveInnternship = (user_id, obj) => {
 const saveEducation = (user_id, obj) => {
     return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}`, obj)
 }
-export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage,saveInnternship,saveEducation }
+const cancelFriendRequest = (user_id, friend_id) => {
+    return apiClient.get(FRIENDS_API + `cancelRequest/${user_id}/${friend_id}`)
+}
+export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage, saveInnternship, saveEducation, cancelFriendRequest }
