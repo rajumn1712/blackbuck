@@ -388,7 +388,7 @@ class ShareBox extends Component {
 
         return (
             <div className="share-box">
-                <ul className="justify-content-around">
+                <ul className="justify-content-around mb-0">
                     {postsmenu.map(menu => {
                         return <li key={menu.Id}><Link className="icon-animation" onClick={() => this.openpopup(menu.Id)}><span className={menu.CssSprite}></span><p className="text-hover mb-0">{menu.Heading}</p></Link></li>
                     })}

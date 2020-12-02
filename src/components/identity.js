@@ -3,6 +3,7 @@ import { Card, Avatar, Menu } from 'antd'
 import { Link } from 'react-router-dom';
 import { profileSuccess } from '../reducers/auth';
 import defaultUser from '../styles/images/defaultuser.jpg';
+import coverphoto from '../styles/images/post-image.jpg';
 import { connect } from 'react-redux';
 const { Meta } = Card;
 const { SubMenu } = Menu;
@@ -22,6 +23,7 @@ class Identity extends Component {
                         <div className="profile-status f-16">{homeInfo?.Groups}<span className="f-12">Groups</span></div>,
                         <div className="profile-status f-16">{homeInfo?.Posts}<span className="f-12">Post</span></div>,
                     ]}
+                    cover={<img src={coverphoto} />}
                 >
                     <Meta
                         avatar={

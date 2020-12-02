@@ -1,8 +1,8 @@
 @import 'styles/theme.css';
-.ant-avatar{border-radius: 13px !important;}
+.ant-avatar{border-radius: 12px !important;}
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
-.ant-card-head{padding: 0 16px !important; min-height: 44px !important;}
-.ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal;}
+.ant-card-head{padding: 0 12px !important; min-height: 44px !important;}
+.ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal; padding-top: 12px; padding-bottom: 12px;}
 .ant-btn{min-height: 50px !important;font-size: 18px !important;border-radius:8px !important;font-weight: 500 !important;}
 .ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
@@ -12,17 +12,18 @@
 .avatar-menu{padding: 0 !important;}
 .avatar-menu img{width: 45px; height: 45px; border-radius: 12px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1)}
 .notification-count .ant-badge-count{background: var(--primary) !important; border-radius: 0px !important; min-width: 16px; height: 16px; padding: 0 3px; font-size: 10px; line-height: 16px; top: -5px; right: -6px;}
-.share-box{border-radius: 10px; text-align: center; margin-bottom: 16px; box-shadow: var(--boxshadow); background: var(--white);}
+.share-box{border-radius: 0.8rem; text-align: center; margin-bottom: 16px; background: var(--white); border: 1px solid var(--line);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
-.left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 10px; color: var(--white); border: 0; position: relative;}
+.left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 0.8rem; color: var(--white); border: 0; position: relative;}
+.profile-card .ant-card-cover{position: absolute; left: 0; top: 0; right: 0; height: 56px; border-radius: 0.8rem 0.8rem 0 0; overflow: hidden;}
 .left-rail{border: 1px solid var(--line);}
-.profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;}
-.profile-card .ant-avatar{width: 91px; height: 91px; padding-right: 0; border-radius: 24px !important; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);}
-.profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: -5px; bottom: 8px; background: #33DF00;}
-.profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 90px; height: 90px; margin: auto;}
+/* .profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;} */
+.profile-card .ant-avatar{width: 72px; height: 72px; padding-right: 0; border-radius: 20px !important;}
+.profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: -4px; bottom: 6px; background: #33DF00;}
+.profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 72px; height: 72px; margin: auto;}
 .profile-card .ant-card-meta-detail{color: var(--white) !important; margin-top: 10px;}
-.profile-card .ant-card-meta-title{color: var(--textprimary); font-size: 18px; font-weight: 500; margin-bottom: 0 !important; white-space: normal !important;}
-.profile-card .ant-card-meta-description{color: var(--textsecondary); font-size: 12px; font-weight: 500;}
+.profile-card .ant-card-meta-title{color: var(--textprimary); font-size: 16px; font-weight: 500; margin: 10px 0 2px !important; white-space: normal !important;}
+.profile-card .ant-card-meta-description{color: var(--textsecondary); font-size: 12px;}
 .profile-card .ant-card-actions{width: 100%; background: transparent; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);}
 .profile-card .profile-status{display: flex; flex-direction: column; align-items: center; color: var(--textprimary); font-size: 24px; font-weight: 500; line-height: 30px; cursor: text;}
 .profile-card .profile-status span{font-size: 12px; line-height: 24px; font-weight: normal; color: var(--textsecondary);}
@@ -47,8 +48,8 @@
 .icon-animation{color:var(--primary) !important;font-size: 14px; font-weight: 500;}
 .share-box li{position: relative; padding-top: 5px;}
 .share-box ul li:last-child:after{content: none;}
-.left-rail, .invite-card .ant-card{background: var(--white); border-radius: 10px !important; margin-bottom: 16px;}
-.left-menu{width: 20px; height: 20px; vertical-align: initial; padding-left: 0 !important; display: inline-block; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
+.left-rail, .invite-card .ant-card{background: var(--white); border-radius: 10px !important; margin-bottom: 16px; border-color: var(--line);}
+.left-menu{width: 18px; height: 18px; vertical-align: initial; padding-left: 0 !important; display: inline-block; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
 .left-menu.profile-icon{background-position: -5px -200px;}
 .left-menu.friends-icon{background-position: -35px -200px;}
 .left-menu.post-icon,.icons.edit{background-position: -64px -201px;}
@@ -62,8 +63,8 @@
 .left-menu.education{background-position: -325px -254px;}
 .left-menu.courses{background-position: -350px -254px;}
 .profile-menu{ border: 0 !important; 
-    /* padding-top: 20px !important; padding-bottom: 10px !important; margin-top: -10px !important;  */
     padding-bottom: 8px !important;
+    padding-top: 8px !important;
     background-color: transparent !important;}
 .profile-menu .ant-menu-item a span{font-size: var(--f-14); padding-left: 12px; font-weight: 500;color: var(--textprimary);}
 .profile-menu .ant-menu-item a{width:100%;height: 100%;}
@@ -91,6 +92,7 @@
 .invite-card .ant-avatar-group:after{content: ''; width: 45px; height: 20px; display: inline-block; cursor: pointer; vertical-align: text-bottom; background: url(../src/styles/images/circle-arrow.svg) no-repeat; position: absolute; bottom: -23px; transform: rotate(-5deg); text-align: center; left: 28%; background-size: cover;}
 .premium-icon{width: 16px; height: 16px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(../src/styles/images/icons.svg) no-repeat; background-position:-6px -84px; margin-left: 4px;}
 .profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid var(--line);}
+.profile-card .ant-card-body{padding: 24px 12px 16px !important;}
 .custom-popup .ant-modal-close{display: none !important;}
 .justify-content-between, .speekar-block{justify-content: space-between;}
 .share-popup .ant-modal-footer{background: #F9F9F9; border-top: 0;border-radius: 10px;}
