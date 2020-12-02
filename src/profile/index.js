@@ -146,7 +146,7 @@ class Profile extends Component {
                         <div className="coverpage">
                             <Avatar className="center-focus" src={profileData.CoverPic || defaultCover} />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <ImgCrop aspect={6/2} maxZoom={20} beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
+                            <ImgCrop aspect={6/2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
                                 <Upload {...this.uploadProps}>
                                     <Tooltip title="Change Coverphoto">
                                     <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
