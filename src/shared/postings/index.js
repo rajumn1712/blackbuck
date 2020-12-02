@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Avatar, Typography, Tooltip, Input, Tag, Empty, Tabs, Spin } from 'antd';
+import { Card, Avatar, Typography, Tooltip, Input, Tag, Empty, Tabs, Spin,Modal } from 'antd';
 import SideAction from '../components/postings/Actions/SideActions';
 import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
@@ -108,7 +108,7 @@ class Postings extends Component {
    handleEvent = async (e, name, post) => {
       switch (name) {
          case "Delete":
-            dialog({ title: 'Alert', icon: '', content: 'Are you sure want to delete post?', okText: 'Delete', cancelText: 'Cancel', onOk: () => this.deletePost(post) });
+            Modal.confirm({ title: 'Alert', icon: '', content: 'Are you sure want to delete post?', okText: 'Delete', cancelText: 'Cancel', onOk: () => this.deletePost(post) });
             //this.deletePost(post);
             break;
          case "Edit":
