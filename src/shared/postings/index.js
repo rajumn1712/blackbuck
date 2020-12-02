@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Avatar, Typography, Tooltip, Input, Tag, Empty, Tabs, Spin,Modal } from 'antd';
+import { Card, Avatar, Typography, Tooltip, Input, Tag, Empty, Tabs, Spin, Modal } from 'antd';
 import SideAction from '../components/postings/Actions/SideActions';
 import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
@@ -321,16 +321,16 @@ class Postings extends Component {
                   <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
                      <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
                         <TabPane tab="Likes" key="1" style={{ floodColor: "#fff", height: 200 }}>
-                           {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                           {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
                         <TabPane tab="Loves" key="2" style={{ floodColor: "#fff", height: 200 }}>
-                           {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                           {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
                         <TabPane tab="Claps" key="3" style={{ floodColor: "#fff", height: 200 }}>
-                           {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                           {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
                         <TabPane tab="Whistiles" key="4" style={{ floodColor: "#fff", height: 200 }}>
-                           {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
+                           {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
                      </Tabs>}</div>}>
                         <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
@@ -339,7 +339,7 @@ class Postings extends Component {
                </ul>}
                <ul className="card-actions-count">
                   {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-                  {post.commentsCount != null && <li className="mr-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                  {post.commentsCount != null && <li className="mr-0 cursor-pointer" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
                   {/* <li><span></span>2 <span> Shares</span></li> */}
                </ul>
             </div>

@@ -48,14 +48,20 @@
 .more-opt li:hover .notify-icon{background-position: -124px -226px;}
 .more-opt li:hover .savepost-icon{background-position: -351px -226px;}
 .more-opt li:hover .delete-icon{background-position: -377px -226px;} */
-.l-emojis{position: absolute; min-height: 48px; background: var(--white);visibility: hidden;transform: translateY(16px);box-shadow: var(--boxshadow); border-radius: 28px;min-width: 140px;left: 36px; top: -48px; list-style: none; display: flex; padding-left: 0;justify-content: space-around;align-items: center;cursor: default;}
+.l-emojis{position: absolute; min-height: 48px; background: var(--white);visibility: hidden;transform: translateY(16px);box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125); border-radius: 28px;min-width: 150px;left: 36px; top: -48px; list-style: none; display: flex; padding-left: 8px; padding-right: 8px; justify-content: space-around;align-items: center;cursor: default;
+border: 1px solid var(--line);}
 .like-emojis:hover .l-emojis{ animation: 0.3s forwards 0.5s fadein;}
 @keyframes fadein{from{visibility: hidden; transform: translateY(16px);}
 to{visibility: visible;transform: translateY(0px);}
 }
+@keyframes likeiconAnim{from{transform: translateY(20px);}
+to{transform: translateY(0px);}
+}
 .l-emojis li a{font-size: 24px;padding: 0 !important; transition: all .2s ease-in-out; cursor: pointer;}
 .l-emojis li a:hover {transform: scale(1.25);}
-.l-emojis li a img{width: 40px;}
+.like-emojis:hover .l-emojis li{animation: 0.4s forwards 0.5s likeiconAnim;}
+.like-emojis:hover .l-emojis li:nth-child(2){animation: 0.6s forwards 0.5s likeiconAnim;}
+.like-emojis:hover .l-emojis li:nth-child(3){animation: 0.8s forwards 0.5s likeiconAnim;}
 .l-emojis li a .like-icon{width: 32px; height: 32px;}
 .like-icon.love{background-position: -529px -109px;}
 .like-icon.claps{background-position: -577px -109px;}
