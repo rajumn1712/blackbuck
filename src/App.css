@@ -10,7 +10,7 @@
 .ant-menu-item, .ant-menu-item-selected{border: 0 !important;}
 .icons, .like-icon{width: 28px; height: 28px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .avatar-menu{padding: 0 !important;}
-.avatar-menu img{width: 45px; height: 45px; border-radius: 12px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1)}
+.avatar-menu img{width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1)}
 .notification-count .ant-badge-count{background: var(--primary) !important; border-radius: 0px !important; min-width: 16px; height: 16px; padding: 0 3px; font-size: 10px; line-height: 16px; top: -5px; right: -6px;}
 .share-box{border-radius: 0.8rem; text-align: center; margin-bottom: 16px; background: var(--white); border: 1px solid var(--line);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}

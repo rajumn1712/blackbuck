@@ -53,6 +53,7 @@
     min-width: 40px;
     min-height: 30px !important;
 }
+.header-searchbar .ant-input-search-button .anticon.anticon-search{margin-top: 3px;}
 
 .main-header .menu-items {
     border-bottom: 0;
