@@ -20,8 +20,8 @@ import dialog from '../components/dialog'
 import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
 import VisSenseFactory from 'vissense';
-const VisSense = VisSenseFactory(window);
 import { postDeletion } from '../../reducers/auth';
+const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
