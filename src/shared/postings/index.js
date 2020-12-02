@@ -19,6 +19,7 @@ import PostCardModal from '../components/postings/PostModal';
 import dialog from '../components/dialog'
 import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
+import { postDeletion } from '../../reducers/auth';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -234,6 +235,7 @@ class Postings extends Component {
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });
          notify({ message: "Delete", description: "Post delete success" });
+         this.props.upadateProfile(this.props.profile);
       })
    }
    fetchPostReactions = async (id) => {
@@ -254,7 +256,7 @@ class Postings extends Component {
    renderPost = (post) => {
 
       return <div className={`post-card ${this.state.commentselection.indexOf(post.id) > -1 ? 'comment-show' : ""}`}>
-         <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={false} extra={
+         <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={true} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
             actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
@@ -265,6 +267,10 @@ class Postings extends Component {
          >
             {/* <Title level={5} className="post-title">{post.title}</Title> */}
             <Paragraph className="post-desc">{post.meassage}</Paragraph>
+            {/* <Card.Meta
+               avatar={<><img src={post.image} /></>}
+            >
+            </Card.Meta> */}
             {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                {post.tags?.map((tag, index) => {
                   return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
@@ -340,4 +346,9 @@ class Postings extends Component {
 const mapStateToProps = ({ oidc }) => {
    return { profile: oidc.profile }
 }
-export default connect(mapStateToProps)(Postings);
+const mapDispatchToProps = dispatch => {
+   return {
+      upadateProfile: (info) => { dispatch(postDeletion(info)) }
+   }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Postings);
