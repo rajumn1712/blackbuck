@@ -72,7 +72,7 @@ class About extends Component {
         const { PhoneNumber, Email, AboutMe, address, visible } = this.state;
 
         return (
-            <div className="custom-card">
+            <div className="custom-card profile-card">
                 <Card title="About Me" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons edit" /></Link> : null} actions={[
                     !this.props.IsHideAction ? <Button type="primary">Download Profile as PDF</Button> : null
                 ]} >

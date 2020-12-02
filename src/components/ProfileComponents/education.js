@@ -115,7 +115,7 @@ class Education extends Component {
 
         const { education, visible, lstEducation } = this.state;
         return (
-            <div className="custom-card">
+            <div className="custom-card profile-card">
                 <Card title="Education" bordered={false} extra={!this.props.IsHideAction ? <Link onClick={this.showModal}><span className="icons add" /></Link> : null} >
                     <List
                         itemLayout="horizontal"
