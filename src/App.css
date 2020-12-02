@@ -1,8 +1,13 @@
 @import 'styles/theme.css';
 .ant-avatar{border-radius: 12px !important;}
+.ant-card-head{padding: 0 12px !important;}
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
+<<<<<<< HEAD
 .ant-card-head{padding: 0 20px !important; min-height: 20px !important;border-bottom: 0 !important;}
 .ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal; padding-top: 12px; padding-bottom: 12px;}
+=======
+.ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal; padding: 12px 0 !important;}
+>>>>>>> 6366a95a1df4582e1eb9fee95ac33c53f1848e26
 .ant-btn{min-height: 50px !important;font-size: 18px !important;border-radius:8px !important;font-weight: 500 !important;}
 .ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
@@ -15,7 +20,7 @@
 .share-box{border-radius: 0.8rem; text-align: center; margin-bottom: 16px; background: var(--white); border: 1px solid var(--line);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 0.8rem; color: var(--white); border: 0; position: relative;}
-.profile-card .ant-card-cover{position: absolute; left: 0; top: 0; right: 0; height: 56px; border-radius: 0.8rem 0.8rem 0 0; overflow: hidden;}
+.profile-card .ant-card-cover{position: absolute; left: 0; top: 0; right: 0; height: 56px; border-radius: 0.8rem 0.8rem 0 0; overflow: hidden; border: 1px solid transparent;}
 .left-rail{border: 1px solid var(--line);}
 /* .profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;} */
 .profile-card .ant-avatar{width: 72px; height: 72px; padding-right: 0; border-radius: 20px !important;}
@@ -153,10 +158,10 @@
 .docs .ant-list-items{display: flex; flex-wrap: wrap;}
 .docs .ant-list-item{min-width: calc(50% - 8px); background: #F9F9F9; padding: 10px; border-radius: 6px; border: 1px solid #EAF2FD;margin: 0 8px 8px 0;}
 .docs .ant-list-item h4{margin-bottom: 0;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;color: var(--primary);}
-.addpost-user .ant-card-meta-title{font-size: var(--f-16);margin-bottom: 2px !important; line-height: normal; margin-bottom: -3px;}
+.addpost-user .ant-card-meta-title{font-size: var(--f-16);margin-bottom: 0 !important; line-height: inherit; margin-top: -4px;}
 .addpost-user .ant-card-meta-avatar .ant-avatar-image{width: 40px;height: 40px;}
 .addpost-user  .ant-card-meta-avatar{padding-right: 10px !important;}
-.post-privacy{color: var(--textsecondary) !important; font-size: var(--f-12); cursor: pointer; background: #e4e6eb;padding-left: 4px; padding-right: 8px; margin-top: 2px; border-radius: 10px; width: 90px; display: flex; justify-content: space-between; align-items: center; font-weight: 500;}
+.post-privacy{color: var(--textprimary) !important; font-size: var(--f-12); cursor: pointer; background: #e4e6eb;padding: 2px 8px 2px 8px; margin-top: 2px; border-radius: 0.8rem; width: 90px; display: flex; justify-content: space-between; align-items: center; font-weight: 500;}
 .upload-image .ant-upload.ant-upload-drag p.ant-upload-text {margin: 0 0 4px;color: var(--black);font-size: var(--f-16);font-weight: 500;}
 .speekar-block{padding: 30px 0;background: var(--bodybg);border-radius: 10px;}
 .radious, .upload-image .ant-upload.ant-upload-drag{border-radius: 10px;}
@@ -171,22 +176,23 @@
 .card-box .ant-list-item-meta-title{font-size: var(--f-16);line-height: 24px;}
 @media(min-width: 768px) {.share-box ul li::after{content: ""; position: absolute; width: 1px; height: 45px; background-color: var(--line); top: 4px; right: -22px; left: auto;}}
 .invite-btn{display: flex;align-items: center;justify-content: center;}
-.custom-card .ant-card{ border-radius: 0.8rem; box-shadow: var(--boxshadow); margin-bottom: 16px;}
-.custom-card .ant-card-body{ padding: 0px;}
+.custom-card .ant-card{ border-radius: 0.8rem; margin-bottom: 12px; border-color: var(--line);}
+.custom-card .ant-card-body{ padding: 0;}
 .custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);}
-.custom-card .ant-list-item{padding: 6px 20px;}
-.custom-card .ant-card-head{padding: 0 20px !important;min-height: 24px !important;}
-.custom-card .ant-list-item:hover{background: #f3f6f8;}
-.custom-card .ant-card-extra{padding: 0px;}
+.custom-card .ant-list-item{padding: 8px 12px;}
+.custom-card .ant-card-head{padding: 0 12px !important;}
+.custom-card .ant-list-item:hover{background: rgba(0, 0, 0, 0.05);}
 /* .custom-card .ant-list-item:first-child{padding-top: 0 !important;}
 .custom-card .ant-list-item:last-child{ padding-bottom: 0 !important;} */
 .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image{width: 40px;height: 40px;border-radius: 12px;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; box-shadow: var(--boxshadow); border-radius: 13px;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-14);line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
+.custom-card .ant-list-item .overflow-text{cursor: pointer;}
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .w-150{width: 150px;}
 .custom-card .list-link{color: var(--primary);margin-left: 3px; font-weight: 500;}
-.custom-card .ant-card-actions{ background-color: #F9F9F9;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top: 0;}
+.custom-card .ant-card-extra{padding: 12px 0;}
+.custom-card .ant-card-actions{border-bottom-left-radius: 0.8rem;border-bottom-right-radius: 0.8rem;border-top: 0;}
 .icons.add{background-position:-505px -198px;}
 .icons.add:hover{background-position: -505px -224px;}
 .icons.white-add{background-position:-528px -224px;}
