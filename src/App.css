@@ -177,6 +177,7 @@
 .custom-card .ant-list-item{padding: 8px 12px;}
 .custom-card .ant-card-head{padding: 0 12px !important;}
 .custom-card .ant-list-item:hover{background: rgba(0, 0, 0, 0.05);}
+.requests .ant-list-item:hover{background: none}
 /* .custom-card .ant-list-item:first-child{padding-top: 0 !important;}
 .custom-card .ant-list-item:last-child{ padding-bottom: 0 !important;} */
 .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image{width: 40px;height: 40px;border-radius: 12px;}
@@ -298,5 +299,5 @@
 textarea{resize: unset !important;}
 .ant-divider-horizontal.ant-divider-with-text-left::after{width: 80%;}
 .ant-btn.ant-btn-primary{padding-left:30px;padding-right: 30px;}
-.ant-modal-root .ant-modal-footer .ant-btn:first-child{display: none;}
+.antd-img-crop-modal .ant-modal-footer .ant-btn:first-child{display: none;}
 .ant-modal-footer button + button{margin: 0 !important;}
