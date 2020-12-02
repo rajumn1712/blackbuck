@@ -254,12 +254,12 @@ class Postings extends Component {
    }
    fetchCardActions = (user) => {
       const ownerActions = [
-         { action: 'Edit', icons: 'post-icons edit-icon' },
-         { action: 'Delete', icons: 'post-icons delete-icon' }
+         { action: 'Edit', icons: 'post-icons edit-icon',subTitle:"Edit your post" },
+         { action: 'Delete', icons: 'post-icons delete-icon',subTitle:"Delete your post" }
       ]
       const actionsList = [
-         { action: 'Save Post', icons: 'post-icons savepost-icon' },
-         { action: 'Turn on Notifications', icons: 'post-icons notify-icon' },
+         { action: 'Save Post', icons: 'post-icons savepost-icon',subTitle:"Save this item for later" },
+         { action: 'Turn on Notifications', icons: 'post-icons notify-icon',subTitle:"Keep notify from this user" },
       ]
       const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
       return result;
