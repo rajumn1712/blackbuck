@@ -44,11 +44,11 @@
 .post-card .ant-card-actions li a:hover .post-icons.comment-icon{background-position: -177px -225px;}
 .post-card .ant-card-actions li a:hover .post-icons.share-icon{background-position: -205px -226px;} */
 .post-card .ant-card-actions li a.focus .post-icons.like-icon{background-position:  -150px -226px;}
-/* .more-opt li:hover .post-icons.edit-icon{background-position: -64px -226px;} */
-/* .more-opt li:hover .notify-icon{background-position: -124px -226px;} */
-/* .more-opt li:hover .savepost-icon{background-position: -351px -226px;} */
-/* .more-opt li:hover .delete-icon{background-position: -377px -226px;} */
-.l-emojis{position: absolute; min-height: 48px; background: var(--white);visibility: hidden;transform: translateY(16px);box-shadow: var(--boxshadow); border-radius: 28px;min-width: 140px;left: 36px; top: -48px; list-style: none; display: flex; padding-left: 0;justify-content: space-around;align-items: center;cursor: default;border: 1px solid var(--border);}
+/* .more-opt li:hover .post-icons.edit-icon{background-position: -64px -226px;}
+.more-opt li:hover .notify-icon{background-position: -124px -226px;}
+.more-opt li:hover .savepost-icon{background-position: -351px -226px;}
+.more-opt li:hover .delete-icon{background-position: -377px -226px;} */
+.l-emojis{position: absolute; min-height: 48px; background: var(--white);visibility: hidden;transform: translateY(16px);box-shadow: var(--boxshadow); border-radius: 28px;min-width: 140px;left: 36px; top: -48px; list-style: none; display: flex; padding-left: 0;justify-content: space-around;align-items: center;cursor: default;}
 .like-emojis:hover .l-emojis{ animation: 0.3s forwards 0.5s fadein;}
 @keyframes fadein{from{visibility: hidden; transform: translateY(16px);}
 to{visibility: visible;transform: translateY(0px);}
@@ -81,9 +81,8 @@ to{visibility: visible;transform: translateY(0px);}
 .card-actions-count li{font-weight: 500; margin-right: -5px;font-size: 12px;}
 .card-actions-count li span{font-size: var(--f-12);font-weight: normal;}
 .card-actions-count li a{font-size: var(--f-14);font-weight: normal; color: var(--textsecondary); line-height: normal;margin-left: 8px;}
-.custom-dropdown .ant-dropdown-menu-item {display: flex; align-items: center;padding: 8px; border-radius: 4px; font-weight: 500; font-size: 14px;}
-.custom-dropdown .ant-dropdown-menu-item a,.custom-dropdown .ant-dropdown-menu-item a:hover{color: var(--textprimary) !important;}
-/* .custom-dropdown .ant-dropdown-menu-item:hover a{color: var(--primary);} */
+.custom-dropdown{min-width: 180px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06); border-radius: 0.4rem;}
+.custom-dropdown .ant-dropdown-menu-item a{color: var(--textprimary) !important;}
 .custom-dropdown li svg, .custom-dropdown li span {margin-right: 12px;}
 .custom-dropdown li a{display: block;}
 .post-card .ant-avatar-group .ant-avatar-string{font-size: 16px; line-height: 38px; font-weight: 500;}
@@ -108,7 +107,7 @@ to{visibility: visible;transform: translateY(0px);}
 .reply-comment .ant-form-item{margin-bottom: 5px !important;}
 .share-pop{margin: -8px -8px 0; border-right: none; width: 230px;}
 .share-pop .ant-menu-item{padding: 8px; display: flex; align-items: center; font-size: var(--f-14); font-weight: 500; margin-bottom: 0 !important;}
-.share-pop .ant-menu-item:hover, .share-pop .ant-menu-item-selected{background:var(--bghover); border-radius: 4px; color: var(--primary)}
+.share-pop .ant-menu-item:hover, .share-pop .ant-menu-item-selected{background: var(--bghover); border-radius: 4px; color: var(--primary)}
 .share-pop .ant-menu-item svg, .share-pop .ant-menu-item span{margin-right: 12px;}
 .ant-popover-inner{border-radius: 8px;}
 .share-pop li:hover .post-icons.sharenow-icon{background-position: -294px -226px;}
@@ -142,7 +141,6 @@ to{visibility: visible;transform: translateY(0px);}
 .image2, .image3{width: 100%;}
 .image-box.img-3{width: 50%;}
 .image-box.img-4{width: 33.333%;}
-
 .post-card .ant-card-meta-title,.post-card .ant-card-actions li a, .post-comment .ant-comment-content-author-name{color: var(--textprimary) !important;}
 .post-card .ant-card-meta-description, .post-desc, .post-comment .ant-comment-content-detail p, .post-comment .ant-comment-content-author-time{color: var(--textsecondary);}
 .post-card .ant-card-actions li a.focus, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}

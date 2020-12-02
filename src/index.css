@@ -8,11 +8,9 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .normalbold{font-weight: 400 !important;}
 .semibold{font-weight: 500 !important;}
 .bold{font-weight: 600 !important;}
-.c-pointer{cursor: pointer !important;}
+.c-pointer, .cursor-pointer{cursor: pointer !important;}
 .c-default{cursor: default !important;}
 .c-text{cursor: text !important;}
-.cursor-pointer{cursor: pointer;}
-
 a{color: var(--primary);}
 a:hover,a:active{color: var(--primaryhover) !important;}
 .d-flex{display: flex;}
@@ -57,6 +55,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 /* .friends-list:hover .addfrnd-btn, .friends-list:hover .removefrnd-btn{opacity: 1; transition: opacity 80ms linear;} */
 .more-frnd-btn{width: 36px; height: 36px; border-radius: 8px; background: var(--white); box-shadow: var(--boxshadow); position: absolute; top: 50%; transform: translateY(-50%); right: 16px; z-index: 3;
   display: flex; align-items: center; justify-content: center;}
+.more-frnd-btn.left{left: 16px;}
 .icon.left-arrow{background-position: -483px -203px;}
 .icon.right-arrow{background-position: -460px -203px;}
 .more-frnd-btn:hover .icon.left-arrow{background-position: -483px -227px;}
