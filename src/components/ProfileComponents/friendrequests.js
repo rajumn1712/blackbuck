@@ -87,7 +87,7 @@ class FriendRequests extends Component {
                                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                             >
                                                 {item?.mutualFriends?.map((member, index) => {
-                                                    return <Avatar src='' key={index} style={{ backgroundColor: (member.Image ? '' : '#f56a00') }}>
+                                                    return <Avatar src={member.Image} key={index} style={{ backgroundColor: (member.Image ? '' : '#f56a00') }}>
                                                         {member.Image ? null : [member.Firstname.charAt(0),member.Lastname.charAt(0)].join('')}
                                                     </Avatar>
                                                 })}
