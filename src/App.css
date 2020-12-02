@@ -2,13 +2,8 @@
 .ant-avatar{border-radius: 12px !important;}
 .ant-card-head{padding: 0 12px !important;}
 .share-popup .ant-avatar{width: 40px !important; height: 40px !important;}
-<<<<<<< HEAD
-.ant-card-head{padding: 0 20px !important; min-height: 20px !important;border-bottom: 0 !important;}
-.ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal; padding-top: 12px; padding-bottom: 12px;}
-=======
 .ant-card-head .ant-card-head-title{font-weight: 500; font-size: 16px; color:  var(--textprimary); line-height: normal; padding: 12px 0 !important;}
->>>>>>> 6366a95a1df4582e1eb9fee95ac33c53f1848e26
-.ant-btn{min-height: 50px !important;font-size: 18px !important;border-radius:8px !important;font-weight: 500 !important;}
+.ant-btn{min-height: 40px !important;font-size: var(--f-16) !important;border-radius: 6px !important;font-weight: 500 !important;}
 .ant-btn-primary{color: #fff; background: var(--primary) !important; border-color: var(--primary) !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); border-radius: 4px; padding: 5px 15px;}
 .ant-btn-primary:hover{background-color: #20838c !important;}
 .ant-menu-item a:hover ,.ant-menu-item-selected a, .ant-menu-item-selected a:hover{color: var(--primary) !important;}
@@ -97,6 +92,7 @@
 .invite-card .ant-avatar-group:after{content: ''; width: 45px; height: 20px; display: inline-block; cursor: pointer; vertical-align: text-bottom; background: url(../src/styles/images/circle-arrow.svg) no-repeat; position: absolute; bottom: -23px; transform: rotate(-5deg); text-align: center; left: 28%; background-size: cover;}
 .premium-icon{width: 16px; height: 16px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(../src/styles/images/icons.svg) no-repeat; background-position:-6px -84px; margin-left: 4px;}
 .profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid var(--line);}
+.ant-card-actions > li, .ant-card-actions > li > span{cursor: default !important;}
 .profile-card .ant-card-body{padding: 24px 12px 16px !important;}
 .custom-popup .ant-modal-close{display: none !important;}
 .justify-content-between, .speekar-block{justify-content: space-between;}
@@ -151,7 +147,6 @@
 .ok-image img{width: 48px !important;height: 48px !important;vertical-align: middle;margin-top: 20px;}
 .image-close{position: absolute;background: var(--white);box-shadow: var(--boxshadow);top: 8px;right: 25px;border-radius: 9px;cursor: pointer;}
 .close-icon, .anticon.anticon-delete{margin-top: 3px; width: 25px; height: 25px;vertical-align: middle;display: inline-block;background: url(../src/styles/images/icons.svg) no-repeat;background-position: -402px -199px;}
-.image-shadow{box-shadow: var(--boxshadow);}
 .doc-icons.word{background-position: -469px -104px;}
 .doc-icons.excel{background-position: -412px -104px;}
 .doc-icons.ppt{background-position: -354px -103px;}
