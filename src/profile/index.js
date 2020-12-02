@@ -172,7 +172,9 @@ class Profile extends Component {
                                     <ImgCrop shape="rect" beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profile.ProfilePic || defaultUser} />
+                                            <Tooltip placement="top" title="Change Photo">
                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu post-icon" /> </a>
+                                            </Tooltip>
                                         </Upload>
                                     </ImgCrop>
                                 </div>}
