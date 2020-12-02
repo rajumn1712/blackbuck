@@ -34,7 +34,7 @@ class Postings extends Component {
       loading: true,
       commentselection: [],
       page: 1,
-      pageSize: 200,
+      pageSize: 100,
       showModal: false,
       reactionsLoading: false,
       loadMore: true
