@@ -1,9 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { Tooltip } from 'antd';
-import Love from '../../../../styles/images/love.gif';
-import Claps from '../../../../styles/images/claps.gif';
-import Whistle from '../../../../styles/images/whistle.gif';
-
 
 class EmojiAction extends Component {
     render() {
