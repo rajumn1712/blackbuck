@@ -19,6 +19,8 @@ import PostCardModal from '../components/postings/PostModal';
 import dialog from '../components/dialog'
 import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
+import VisSenseFactory from 'vissense';
+const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -54,7 +56,37 @@ class Postings extends Component {
       let { allPosts } = this.state;
       allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
-         this.setState({ ...this.state, loading: false, allPosts })
+         this.setState({ ...this.state, loading: false, allPosts }, () => {
+            const videoElements = document.querySelectorAll("video");
+            for (const i in videoElements) {
+               if (typeof (videoElements[i]) == "object") {
+                  // locate the DOM element
+                  var myVideo = videoElements[i]
+
+                  // create a VisSense instance with our video
+                  var videoElementArea = VisSense(myVideo);
+
+                  // create a monitor builder with the VisSense object
+                  var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
+
+                  // register a function that is called when the element becomes fully visible
+                  monitorBuilder.on('fullyvisible', function () {
+                     myVideo.play(); // start playing the video (or keep playing)
+                  });
+
+                  // register a function that is called when the element becomes hidden
+                  monitorBuilder.on('hidden', function () {
+                     myVideo.pause(); // pause the video (or stay paused)
+                  });
+
+                  // finish the builder an make a concrete monitor
+                  var videoVisibilityMonitor = monitorBuilder.build();
+
+                  // start observing the element
+                  videoVisibilityMonitor.start();
+               }
+            }
+         })
       }
    }
    titleAvatar = (user, date) => {
@@ -134,7 +166,7 @@ class Postings extends Component {
             }
          },
          Video: () => {
-            return <div className="video-post">
+            return <div className="video-post" >
                <video width="100%" controls>
                   <source src={imageObj} />
                </video>
