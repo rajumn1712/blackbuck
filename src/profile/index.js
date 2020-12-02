@@ -25,6 +25,7 @@ import { profileDetail, saveProfileImage } from '../shared/api/apiServer';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import defaultCover from '../styles/images/defaultcover.png';
 import ImgCrop from 'antd-img-crop';
+import { profileSuccess } from '../reducers/auth';
 const { Meta } = Card;
 const { Dragger } = Upload;
 
@@ -67,9 +68,9 @@ class Profile extends Component {
                 this.handleImageOk();
             }
             if (status === 'done') {
-                message.success(`${file.name} file uploaded successfully.`);
+                message.success(`${this.state.isProfilePic ? 'Profil picture' : 'Cover picture'} uploaded successfully.`);
             } else if (status === 'error') {
-                message.error(`${file.name} file upload failed.`);
+                message.error(`File upload failed.`);
             }
         },
 
@@ -107,11 +108,12 @@ class Profile extends Component {
     }
     handleImageOk = () => {
         const imageType = this.state.isProfilePic ? 'ProfilePic' : 'CoverPic';
-        if (this.state.isProfilePic) {
-            this.props.profile.ProfilePic = this.imageObject.ImageUrl;
-        }
         saveProfileImage(this.props?.profile?.Id, imageType, this.imageObject)
             .then(res => {
+                if (this.state.isProfilePic) {
+                    this.props.profile.ProfilePic = this.imageObject.ImageUrl;
+                    this.props.updateProfile(this.props.profile);
+                }
                 this.imageObject = {};
                 this.profielDetails();
             })
@@ -144,7 +146,7 @@ class Profile extends Component {
                         <div className="coverpage">
                             <Avatar className="center-focus" src={profileData.CoverPic || defaultCover} />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <ImgCrop beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
+                            <ImgCrop aspect={6/2} maxZoom={20} beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
                                 <Upload {...this.uploadProps}>
                                     <Tooltip title="Change Coverphoto">
                                     <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
@@ -164,7 +166,7 @@ class Profile extends Component {
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="">
-                                    <ImgCrop shape="rect" aspect beforeCrop={this.handleBeforUpload}>
+                                    <ImgCrop shape="rect" beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profileData.ProfilePic || defaultUser} />
                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu post-icon" /> </a>
@@ -271,5 +273,8 @@ class Profile extends Component {
 const mapStateToProps = ({ oidc }) => {
     return { profile: oidc.profile }
 }
+const mapDispatchToProps = dispatch => {
+    return { updateProfile: (info) => { dispatch(profileSuccess(info)) } }
+}
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps,mapDispatchToProps)(Profile);

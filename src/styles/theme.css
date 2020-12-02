@@ -1,12 +1,11 @@
 /* -----Colors------- */
 :root {
     --primary:#07A3B2;
+    --primary-10: rgba(7, 163, 178, 0.1);
     --primaryhover:#20838c;
     --secondary: #D7FDFE;
-    --textprimary: rgba(0,0,0,0.65);
-    /* --textprimary: #191919; */
+    --textprimary: rgba(0,0,0,0.75);
     --textsecondary: rgba(0,0,0,0.5);
-    /* --textsecondary: #666666; */
     --textdescription : rgba(0,0,0,0.65);
     --bodybg: #F1F7FF;
     --textlightcolor: #BBB9B9;

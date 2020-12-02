@@ -64,7 +64,7 @@ class Comments extends Component {
     render() {
         const { comments, count } = this.state;
         return (
-            <div className="post-comment px-16">
+            <div className="post-comment">
 
                 <Comment
                     avatar={

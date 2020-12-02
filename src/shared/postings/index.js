@@ -19,7 +19,9 @@ import PostCardModal from '../components/postings/PostModal';
 import dialog from '../components/dialog'
 import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
+import VisSenseFactory from 'vissense';
 import { postDeletion } from '../../reducers/auth';
+const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -55,8 +57,27 @@ class Postings extends Component {
       let { allPosts } = this.state;
       allPosts = allPosts.concat(posts.data);
       if (posts.ok) {
-         this.setState({ ...this.state, loading: false, allPosts })
+         this.setState({ ...this.state, loading: false, allPosts }, () => {
+            const videoElements = document.querySelectorAll("video");
+            for (const i in videoElements) {
+               if (typeof (videoElements[i]) == "object") {
+                 this.enableVideoAutoPlay(videoElements[i])
+               }
+            }
+         })
       }
+   }
+   enableVideoAutoPlay(myVideo){
+      var videoElementArea = VisSense(myVideo);
+      var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
+      monitorBuilder.on('fullyvisible', function () {
+         myVideo.play(); // start playing the video (or keep playing)
+      });
+      monitorBuilder.on('hidden', function () {
+         myVideo.pause();
+      });
+      var videoVisibilityMonitor = monitorBuilder.build();
+      videoVisibilityMonitor.start();
    }
    titleAvatar = (user, date) => {
       return <Link to={"/profileview/" + user.UserId}>
@@ -135,7 +156,7 @@ class Postings extends Component {
             }
          },
          Video: () => {
-            return <div className="video-post">
+            return <div className="video-post" >
                <video width="100%" controls>
                   <source src={imageObj} />
                </video>
