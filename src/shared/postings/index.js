@@ -339,7 +339,7 @@ class Postings extends Component {
                </ul>}
                <ul className="card-actions-count">
                   {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-                  {post.commentsCount != null && <li className="mr-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                  {post.commentsCount != null && <li className="mr-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span>  {post.commentsCount > 1 ? 'Comments' : 'Comment'}</span></li>}
                   {/* <li><span></span>2 <span> Shares</span></li> */}
                </ul>
             </div>
