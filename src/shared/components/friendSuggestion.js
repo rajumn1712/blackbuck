@@ -85,7 +85,7 @@ class FriendSuggestions extends Component {
                         </div>
                     }) 
                     }*/}
-                    {friends.length > 4 && <Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link>}
+                    {friends.length > 4 && <><Link className="more-frnd-btn left" onClick={() => { this.carouselRef.next() }}><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link></>}
                     <OwlCarousel items={3} autoWidth={true} loop ref={(ref) => this.carouselRef = ref}>
                         {friends.map((friend, index) => {
                             return <div className="frnds-list-item" key={index}>
