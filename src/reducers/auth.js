@@ -41,7 +41,7 @@ const authReducer = (state = initialState, action) => {
             state = { ...state, profile: action.payload };
             return state;
         case post_Increment:
-            action.payload.Posts = action.payload.Posts + 1;
+            action.payload.Posts = (action.payload.Posts?action.payload.Posts:0) + 1;
             state = { ...state, profile: action.payload };
             return state;
         case post_Decrement:

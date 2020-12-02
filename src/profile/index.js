@@ -163,7 +163,7 @@ class Profile extends Component {
                             <div className="left-statistic">
                                 <Statistic title="Friends" className="afterline" value={profile.Friends} />
                                 <Statistic className="afterline" title="Groups" value={profile.Groups} />
-                                <Statistic title="Posts" value={profile.Posts} />
+                                <Statistic title="Posts" value={profile?.Posts?profile.Posts:0} />
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="">
