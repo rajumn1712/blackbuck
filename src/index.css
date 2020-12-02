@@ -88,7 +88,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .card-actions-count li{color: var(--textprimary) !important;}
 .post-card .ant-card-meta-description, .post-desc, .post-comment .ant-comment-content-detail p, .post-comment .ant-comment-content-author-time{color: var(--textsecondary);}
 .post-card .ant-card-actions li a:hover, .post-card .ant-card-actions li a.focus, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
-.post-tag .ant-tag{background:var(--secondary);}
+.post-tag .ant-tag{background:none;}
 .card-actions-count li span{color:#9B9B9B;}
 .grp-type-icon,.custom-select .anticon.anticon-down{background: url(styles/images/icons.svg) no-repeat;}
 .anticon-loading svg{fill: var(--primary) !important;}

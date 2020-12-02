@@ -4,7 +4,9 @@
     --primaryhover:#20838c;
     --secondary: #D7FDFE;
     --textprimary: rgba(0,0,0,0.65);
+    /* --textprimary: #191919; */
     --textsecondary: rgba(0,0,0,0.5);
+    /* --textsecondary: #666666; */
     --textdescription : rgba(0,0,0,0.65);
     --bodybg: #F1F7FF;
     --textlightcolor: #BBB9B9;
@@ -16,12 +18,13 @@
     --line: #e9e5df;
     --grey:#f9f9f9;
     --bordergrey: #bdbdbd;
+    --border: #e0dfdb;
     --red: #ff0000;
     --f-9: 9px;
     --f-10: 10px;
     --f-11: 11px;
     --f-12: 12px;
-    --f-14: 14px;
+    --f-14:  0.875rem;
     --f-16: 16px;
     --f-18: 18px;
     --f-20: 20px;

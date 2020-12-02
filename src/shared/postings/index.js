@@ -59,13 +59,13 @@ class Postings extends Component {
       }
    }
    titleAvatar = (user, date) => {
-      return <Meta
-         avatar={
-            <Avatar src={user.Image || defaultUser} />
-         }
-         title={<Link to={"/profileview/" + user.UserId}><span className="overflow-text post-title">{user.Firstname}</span></Link>}
-         description={<Moment fromNow>{date}</Moment>}
-      />
+      return <Link to={"/profileview/" + user.UserId}>
+         <Meta
+            avatar={<Avatar src={user.Image || defaultUser} />}
+            title={<span className="overflow-text post-title">{user.Firstname}</span>}
+            description={<Moment fromNow>{date}</Moment>}
+         />
+      </Link>
    }
    closed = () => {
       this.setState({ showModal: false });
@@ -256,27 +256,28 @@ class Postings extends Component {
    renderPost = (post) => {
 
       return <div className={`post-card ${this.state.commentselection.indexOf(post.id) > -1 ? 'comment-show' : ""}`}>
-         <Card title={this.titleAvatar(post.userdetails, post.date)} style={{ width: '100%' }} bordered={true} extra={
+         <Card title={this.titleAvatar(post.userdetails, post.date)} bordered={true} extra={
             <SideAction clickedEvent={(event, name) => this.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
          }
             actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
             <ShareAction key="share" />
             ]}
-            cover={<div style={{ cursor: "pointer" }} onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
+         // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             {/* <Title level={5} className="post-title">{post.title}</Title> */}
             <Paragraph className="post-desc">{post.meassage}</Paragraph>
-            {/* <Card.Meta
-               avatar={<><img src={post.image} /></>}
-            >
-            </Card.Meta> */}
             {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                {post.tags?.map((tag, index) => {
                   return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
                })}
             </div>}
-            <div className="d-flex justify-content-between mt-8">
+            <Card.Meta
+               className="post-image"
+               avatar={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
+            >
+            </Card.Meta>
+            <div className="d-flex justify-content-between mx-16 py-8">
                {<ul className="card-actions-count pl-0">
                   <li><span className="counter-icon likes"></span></li>
                   <li><span className="counter-icon loves"></span></li>
