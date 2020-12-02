@@ -139,6 +139,7 @@ class Profile extends Component {
     render() {
 
         const { navigations, profileData, disabled, visible,isDataRefresh } = this.state;
+        const  {profile}  = this.props;
         return (
             profileData ? <div className="main">
                 <Row gutter={16}>
@@ -160,15 +161,15 @@ class Profile extends Component {
                         </div>
                         <div className="user-statistic">
                             <div className="left-statistic">
-                                <Statistic title="Friends" className="afterline" value={profileData.Friend} />
-                                <Statistic className="afterline" title="Groups" value={profileData.Groups} />
-                                <Statistic title="Posts" value={profileData.Posts} />
+                                <Statistic title="Friends" className="afterline" value={profile.Friends} />
+                                <Statistic className="afterline" title="Groups" value={profile.Groups} />
+                                <Statistic title="Posts" value={profile.Posts} />
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="">
                                     <ImgCrop shape="rect" beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
-                                            <Avatar src={profileData.ProfilePic || defaultUser} />
+                                            <Avatar src={profile.ProfilePic || defaultUser} />
                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu post-icon" /> </a>
                                         </Upload>
                                     </ImgCrop>
