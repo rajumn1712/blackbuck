@@ -99,7 +99,7 @@ class FriendSuggestions extends Component {
                                 <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                                 <div className="text-center">
                                     {friend.Type == null && <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>}
-                                    {friend.Type == "request" && <Button type="default" className="addfrnd semibold" onClick={() => this.cancelRequest(friend)}>Cancel request</Button>}
+                                    {friend.Type == "request" && <Button type="default" className="addfrnd semibold" onClick={() => this.cancelRequest(friend)}>Cancel Request</Button>}
                                 </div>
                             </div>
                         </div>)}
