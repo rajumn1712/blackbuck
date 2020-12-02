@@ -303,7 +303,7 @@ class Postings extends Component {
             </div>
          </Card>
          {this.state.commentselection.indexOf(post.id) > -1 && <Comments onUpdate={(prop, value) => { this.updatePost(post, prop, value) }} count={post.commentsCount} postId={post.id} />}
-         {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />}
+         {/* {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />} */}
       </div>
    }
    showComment = (post) => {
@@ -333,6 +333,7 @@ class Postings extends Component {
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
          {this.state.loading && <Loader className="loader-top-middle" />}
          {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
+         <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />
       </div>
    }
 }
