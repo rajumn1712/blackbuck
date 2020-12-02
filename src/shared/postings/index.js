@@ -20,7 +20,7 @@ import dialog from '../components/dialog'
 import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
 import VisSenseFactory from 'vissense';
-import { postDeletion } from '../../reducers/auth';
+import { postUpdation } from '../../reducers/auth';
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
@@ -51,23 +51,27 @@ class Postings extends Component {
       })
       this.loadPosts();
    }
-   async loadPosts() {
+   async loadPosts(isFromSave) {
       this.setState({ ...this.state, loading: true });
       const posts = await getPosts((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageSize, this.props.postingsType);
       let { allPosts } = this.state;
-      allPosts = allPosts.concat(posts.data);
+      if (!isFromSave) {
+         allPosts = allPosts.concat(posts.data);
+      } else {
+         allPosts = posts.data;
+      }
       if (posts.ok) {
          this.setState({ ...this.state, loading: false, allPosts }, () => {
             const videoElements = document.querySelectorAll("video");
             for (const i in videoElements) {
                if (typeof (videoElements[i]) == "object") {
-                 this.enableVideoAutoPlay(videoElements[i])
+                  this.enableVideoAutoPlay(videoElements[i])
                }
             }
          })
       }
    }
-   enableVideoAutoPlay(myVideo){
+   enableVideoAutoPlay(myVideo) {
       var videoElementArea = VisSense(myVideo);
       var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
       monitorBuilder.on('fullyvisible', function () {
@@ -130,6 +134,10 @@ class Postings extends Component {
 
    handleChange = () => {
 
+   }
+   dataRefreshed = () => {
+      this.loadPosts(true)
+      this.props.upadateProfile(this.props.profile, 'Increment');
    }
    renderPostImages = (imageObj, type) => {
       const _result = {
@@ -256,7 +264,7 @@ class Postings extends Component {
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });
          notify({ message: "Delete", description: "Post delete success" });
-         this.props.upadateProfile(this.props.profile);
+         this.props.upadateProfile(this.props.profile,'Decrement');
       })
    }
    fetchPostReactions = async (id) => {
@@ -355,7 +363,7 @@ class Postings extends Component {
    }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox />}
+         {this.props.sharebox && <ShareBox  dataRefreshed={()=>this.dataRefreshed()}/>}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
@@ -370,7 +378,7 @@ const mapStateToProps = ({ oidc }) => {
 }
 const mapDispatchToProps = dispatch => {
    return {
-      upadateProfile: (info) => { dispatch(postDeletion(info)) }
+      upadateProfile: (info,type) => { dispatch(postUpdation(info,type)) }
    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Postings);

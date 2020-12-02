@@ -1,11 +1,11 @@
 @import '../styles/theme.css';
 .main-header {
-    background: #f0f2f5 !important;
+    background: var(--white) !important;
     /* background: var(--bodybg) !important; */
     padding: 0 24px 0 16px !important;
-    border-top: 2px solid var(--line);
+    border-top: 2px solid var(--primary);
     height: 70px !important;
-    border-bottom: 1px solid #dae6f4;
+    border-bottom: 1px solid  var(--border);
     position: fixed;
     top: 0;
     width: 100vw;
@@ -29,12 +29,12 @@
 }
 
 .header-searchbar .ant-input-group {
-    box-shadow: var(--boxshadow);
     border-radius: 8px;
+    border: 1px solid var(--border);
 }
 
 .header-searchbar .ant-input-group>.ant-input:first-child, .header-searchbar .ant-input-group-addon:first-child {
-    border-radius: 10px 0 0 10px !important;
+    border-radius: 0.8rem 0 0 0.8rem !important;
 }
 
 .header-searchbar input {
@@ -83,6 +83,7 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     min-height: 36px;
+    padding-top: 8px !important;
 }
 
 .header-searchbar .ant-input-group-addon .ant-btn {
@@ -98,15 +99,16 @@
 }
 
 .main-header .ant-menu-item a {
-    padding: 12px 12px 20px;
+    padding: 12px 12px 19px;
     background: var(--white);
-    border-radius: 15px;
-    box-shadow: var(--boxshadow);
+    border-radius: 0.8rem;
     transition: color 2s linear 1s !important;
+    border: 1px solid var(--border);
 }
 
 .main-header .ant-menu-item a:hover, .main-header .ant-menu-item-selected a {
     background: var(--primary);
+    border-color: var(--primary);
 
 }
 
