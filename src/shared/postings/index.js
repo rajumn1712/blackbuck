@@ -34,22 +34,29 @@ class Postings extends Component {
       loading: true,
       commentselection: [],
       page: 1,
-      pageSize: 10,
+      pageSize: 2,
       showModal: false,
-      reactionsLoading: false
+      reactionsLoading: false,
+      loadMore: true
    }
    componentDidMount() {
       window.addEventListener('scroll', (e) => {
-         let element = e.target.scrollingElement
-         if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+         this.loadMore(e);
+      })
+      this.loadPosts();
+   }
+   loadMore(e) {
+      let element = e.target.scrollingElement
+      if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+         debugger
+         if (this.state.loadMore) {
             let { page } = this.state;
             page += 1;
             this.setState({ ...this.state, page }, () => {
                this.loadPosts();
             })
          }
-      })
-      this.loadPosts();
+      }
    }
    async loadPosts(isFromSave) {
       this.setState({ ...this.state, loading: true });
@@ -61,7 +68,7 @@ class Postings extends Component {
          allPosts = posts.data;
       }
       if (posts.ok) {
-         this.setState({ ...this.state, loading: false, allPosts }, () => {
+         this.setState({ ...this.state, loading: false, allPosts, loadMore: posts.data.length === this.state.pageSize }, () => {
             const videoElements = document.querySelectorAll("video");
             for (const i in videoElements) {
                if (typeof (videoElements[i]) == "object") {
@@ -313,7 +320,7 @@ class Postings extends Component {
                   <li ><span className="counter-icon claps"></span></li>
                   <li><span className="counter-icon whistles"></span></li>
                   <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
-                     <Tooltip overlayStyle={{ color: "#ffff" }} style={{width:'280px'}} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+                     <Tooltip overlayStyle={{ color: "#ffff" }} title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
                         <TabPane tab="Likes" key="1" style={{ floodColor: "#ffff", height: 200 }}>
                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0 }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
@@ -333,7 +340,7 @@ class Postings extends Component {
                </ul>}
                <ul className="card-actions-count">
                   {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-                  {post.commentsCount != null && <li className="mr-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
+                  {post.commentsCount != null && <li className="mr-0 cursor-pointer" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
                   {/* <li><span></span>2 <span> Shares</span></li> */}
                </ul>
             </div>
@@ -369,7 +376,7 @@ class Postings extends Component {
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
          {this.state.loading && <Loader className="loader-top-middle" />}
          {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
-         <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />
+         <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} fetchPostReactions={(id)=>this.fetchPostReactions(id)} />
       </div>
    }
 }
