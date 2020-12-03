@@ -304,7 +304,7 @@ class Postings extends Component {
             <Paragraph className="post-desc">{post.meassage}</Paragraph>
             {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                {post.tags?.map((tag, index) => {
-                  return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
+                  return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name ||tag|| ""}`}</Link></Tag>}</>
                })}
             </div>}
             <Card.Meta
