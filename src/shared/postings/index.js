@@ -153,13 +153,6 @@ class Postings extends Component {
    editPost = (post) => {
 
    }
-   handleSubmit = () => {
-
-   }
-
-   handleChange = () => {
-
-   }
    dataRefreshed = () => {
       this.loadPosts(true)
       this.props.upadateProfile(this.props.profile, 'Increment');
@@ -280,17 +273,23 @@ class Postings extends Component {
          { action: 'Save Post', icons: 'post-icons savepost-icon', subTitle: "Save this item for later" },
          { action: 'Turn on Notifications', icons: 'post-icons notify-icon', subTitle: "Keep notify from this user" },
       ]
+      if (this.props.postingsType === "saved") { return [{ action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete from saved posts" }] }
       const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
       return result;
    }
    deletePost = (post) => {
-      deletePost(post.id, this.props?.profile?.Id).then(() => {
-         let { allPosts } = this.state;
-         allPosts = allPosts.filter(item => item.id !== post.id);
-         this.setState({ ...this.state, allPosts, showModal: false });
-         notify({ message: "Delete", description: "Post delete success" });
-         this.props.upadateProfile(this.props.profile, 'Decrement');
-      })
+      if (this.props?.onPostDelete) {
+         this.props.onPostDelete(post)
+      }
+      else {
+         deletePost(post.id, this.props?.profile?.Id).then(() => {
+            let { allPosts } = this.state;
+            allPosts = allPosts.filter(item => item.id !== post.id);
+            this.setState({ ...this.state, allPosts, showModal: false });
+            notify({ message: "Delete", description: "Post delete success" });
+            this.props.upadateProfile(this.props.profile, 'Decrement');
+         })
+      }
    }
    fetchPostReactions = async (id) => {
       this.setState({ ...this.state, reactionsLoading: true });
