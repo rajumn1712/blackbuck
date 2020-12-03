@@ -184,7 +184,7 @@
 /* .custom-card .ant-list-item:first-child{padding-top: 0 !important;}
 .custom-card .ant-list-item:last-child{ padding-bottom: 0 !important;} */
 .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image{width: 40px;height: 40px;border-radius: 12px;}
-.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; box-shadow: var(--boxshadow); border-radius: 13px;}
+.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; border-radius: 13px;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-14);line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
 .custom-card .ant-list-item .overflow-text{cursor: pointer;}
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
