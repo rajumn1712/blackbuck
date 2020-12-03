@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Avatar, Col, Row, Typography, Empty } from 'antd'
+import { Link } from 'react-router-dom';
 import { store } from '../../store'
 import connectStateProps from '../stateConnect';
 import { fetchUserGroups } from '../api/apiServer'
@@ -61,10 +62,10 @@ class GroupsPage extends Component {
                         return <Col className="mb-16" md={12} lg={6}>
                             <Card key={index}
                                 cover={<img className="obj-fit" src={group.image} />} actions={[
-                                    <a className="list-link f-14" href="/commingsoon">Leave Group</a>
+                                    <Link className="list-link f-14" to="/commingsoon">Leave Group</Link>
                                 ]}
                             >
-                                <Meta title={<a href="/groupview" className="post-title">{group.name}</a>}
+                                <Meta title={<Link to="/commingsoon" className="post-title">{group.name}</Link>}
                                     description={<div>
                                         <div className="d-flex align-items-center">
                                             <span className="list-request">
@@ -73,18 +74,13 @@ class GroupsPage extends Component {
                                                     size="large"
                                                     maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                                 >
-                                                    <Avatar src={user} />
-                                                <Avatar src={user} />
-                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                                     {group.mutulFnds?.map((friend, index) => {
-                                                        return <Avatar key={index} src={friend} />
+                                                        return <Avatar key={index} src={friend.image} />
                                                     })
                                                     }
                                                 </Avatar.Group>
                                             </span>
-                                            {group.mutulFnds && <span>Mutual Friends</span>}
+                                            {group.mutulFnds && <span><span>{group.MutualFriends.length}</span>Mutual Friends</span>}
 
                                         </div>
                                     </div>}
