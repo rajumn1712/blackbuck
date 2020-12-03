@@ -3,7 +3,7 @@ import { Button, Card, Avatar, List } from 'antd'
 import notify from './notification';
 import { apiClient } from '../api/clients'
 import { Link } from 'react-router-dom';
-import { fetchGroupSuggestions, joinGroup } from '../api/apiServer';
+import { cancelGroupRequest, fetchGroupSuggestions, joinGroup } from '../api/apiServer';
 import { connect } from 'react-redux';
 
 
@@ -15,7 +15,6 @@ class Groups extends Component {
         pageNo: 5
     };
     joinGroup = async (item) => {
-        console.log(item)
         const obj = {
             "UserId": this.props?.profile?.Id,
             "Firstname": this.props?.profile?.FirstName,
@@ -26,14 +25,28 @@ class Groups extends Component {
         if (item.type == "Private") { obj.Type = "request" }
         const joinResponse = await joinGroup(item.id, obj);
         if (joinResponse.ok) {
-            notify({ message: "Group join", description: item.isPrivate ? "Request sent" : "Joined to group" });
-            this.getAllGroups();
+            notify({ message: "Group join", description: item.type==="Private" ? "Request sent" : "Joined to group" });
+            this.updateGroup(item)
         } else {
             notify({ message: "Error", description: "Something went wrong :)", type: "error" });
         }
     }
     newGroup = () => {
 
+    }
+    updateGroup(item) {
+        let { data } = this.state;
+        if (item.type === "Private") {
+            for (const i in data) {
+                let _item = data[i];
+                if (_item.id === item.id) {
+                    _item.requestJoin = _item.requestJoin ? null : "request";
+                }
+            }
+            this.setState({ ...this.state, data });
+        } else {
+            this.getAllGroups();
+        }
     }
     componentDidMount() {
         this.getAllGroups();
@@ -44,8 +57,14 @@ class Groups extends Component {
             this.setState({ loading: false, data: response.data });
         }
     }
-    cancelGroupRequest(item){
-
+    async cancelGroupRequest(item) {
+        const joinResponse = await cancelGroupRequest(item.id, this.props?.profile?.Id);
+        if (joinResponse.ok) {
+            notify({ message: "Group Request", description: "Request cancelled" });
+            this.updateGroup(item)
+        } else {
+            notify({ message: "Error", description: "Something went wrong :)", type: "error" });
+        }
     }
     render() {
         return (
@@ -73,7 +92,7 @@ class Groups extends Component {
                                     </span></div>
                                     </div>}
                                 />
-                               {item.requestJoin==="request"? <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.cancelGroupRequest(item)}>Cancel request</Link>: <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.joinGroup(item)}>Join</Link>}
+                                {item.requestJoin === "request" ? <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.cancelGroupRequest(item)}>Cancel request</Link> : <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.joinGroup(item)}>Join</Link>}
                             </List.Item>
                         )}
                     />

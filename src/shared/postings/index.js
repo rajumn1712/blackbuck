@@ -37,7 +37,8 @@ class Postings extends Component {
       pageSize: 5,
       showModal: false,
       reactionsLoading: false,
-      loadMore: true
+      loadMore: true,
+      descriptionSelection: []
    }
    componentDidMount() {
       window.addEventListener('scroll', this.handleScroll)
@@ -51,7 +52,7 @@ class Postings extends Component {
       const body = document.body;
       const html = document.documentElement;
       const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-      const windowBottom =Math.ceil( windowHeight + window.pageYOffset);
+      const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
       if (windowBottom >= docHeight) {
          this.loadMore();
       } else {
@@ -62,7 +63,7 @@ class Postings extends Component {
       if (this.state.loadMore) {
          let { page } = this.state;
          page += 1;
-         this.setState({ ...this.state, page,loading:true }, () => {
+         this.setState({ ...this.state, page, loading: true }, () => {
             this.loadPosts();
          })
       }
@@ -150,13 +151,6 @@ class Postings extends Component {
       }
    }
    editPost = (post) => {
-
-   }
-   handleSubmit = () => {
-
-   }
-
-   handleChange = () => {
 
    }
    dataRefreshed = () => {
@@ -279,17 +273,23 @@ class Postings extends Component {
          { action: 'Save Post', icons: 'post-icons savepost-icon', subTitle: "Save this item for later" },
          { action: 'Turn on Notifications', icons: 'post-icons notify-icon', subTitle: "Keep notify from this user" },
       ]
+      if (this.props.postingsType === "saved") { return [{ action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete from saved posts" }] }
       const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
       return result;
    }
    deletePost = (post) => {
-      deletePost(post.id, this.props?.profile?.Id).then(() => {
-         let { allPosts } = this.state;
-         allPosts = allPosts.filter(item => item.id !== post.id);
-         this.setState({ ...this.state, allPosts, showModal: false });
-         notify({ message: "Delete", description: "Post delete success" });
-         this.props.upadateProfile(this.props.profile, 'Decrement');
-      })
+      if (this.props?.onPostDelete) {
+         this.props.onPostDelete(post)
+      }
+      else {
+         deletePost(post.id, this.props?.profile?.Id).then(() => {
+            let { allPosts } = this.state;
+            allPosts = allPosts.filter(item => item.id !== post.id);
+            this.setState({ ...this.state, allPosts, showModal: false });
+            notify({ message: "Delete", description: "Post delete success" });
+            this.props.upadateProfile(this.props.profile, 'Decrement');
+         })
+      }
    }
    fetchPostReactions = async (id) => {
       this.setState({ ...this.state, reactionsLoading: true });
@@ -319,12 +319,16 @@ class Postings extends Component {
          // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             {/* <Title level={5} className="post-title">{post.title}</Title> */}
-            <Paragraph className="post-desc">{post.meassage}</Paragraph>
-            {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
-               {post.tags?.map((tag, index) => {
-                  return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || tag || ""}`}</Link></Tag>}</>
-               })}
-            </div>}
+            <Paragraph className="post-desc">
+               {this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage.substr(0, 500)}
+               {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
+                  {post.tags?.map((tag, index) => {
+                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || tag || ""}`}</Link></Tag>}</>
+                  })}
+               </div>}
+               {post.meassage.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}
+            </Paragraph>
+
             <Card.Meta
                className="post-image"
                avatar={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
@@ -384,6 +388,16 @@ class Postings extends Component {
          }
       }
       this.setState({ ...this.state, allPosts });
+   }
+   seeMore = (post) => {
+      let { descriptionSelection } = this.state;
+      const idx = descriptionSelection.indexOf(post.id);
+      if (idx > -1) {
+         descriptionSelection.splice(idx, 1);
+      } else {
+         descriptionSelection.push(post.id);
+      }
+      this.setState({ ...this.state, descriptionSelection });
    }
    render() {
       return <div onScroll={this.handleScroll}>

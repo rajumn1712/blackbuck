@@ -39,7 +39,13 @@ const saveEducation = (user_id, obj) => {
 const cancelFriendRequest = (user_id, friend_id) => {
     return apiClient.get(FRIENDS_API + `cancelRequest/${user_id}/${friend_id}`)
 }
-const joinGroup = (group_id,obj) => {
-    return apiClient.post(FRIENDS_API + "joinGroup/" + group_id,obj);
+const joinGroup = (group_id, obj) => {
+    return apiClient.post(FRIENDS_API + "joinGroup/" + group_id, obj);
 }
-export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage, saveInnternship, saveEducation, cancelFriendRequest,joinGroup }
+const cancelGroupRequest = (group_id, user_id) => {
+    return apiClient.get(FRIENDS_API + `cancelJoinGroup/${group_id}/${user_id}`)
+}
+const fetchUserGroups = (user_id,take,skip)=>{
+    return apiClient.get(GROUPS_API+`getUserGroups/${user_id}/${take}/${skip}`)
+}
+export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage, saveInnternship, saveEducation, cancelFriendRequest, joinGroup,cancelGroupRequest,fetchUserGroups }
