@@ -44,7 +44,9 @@ class Groups extends Component {
             this.setState({ loading: false, data: response.data });
         }
     }
+    cancelGroupRequest(item){
 
+    }
     render() {
         return (
             <div className="custom-card sub-text">
@@ -71,7 +73,7 @@ class Groups extends Component {
                                     </span></div>
                                     </div>}
                                 />
-                                <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.joinGroup(item)}>Join</Link>
+                               {item.requestJoin==="request"? <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.cancelGroupRequest(item)}>Cancel request</Link>: <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.joinGroup(item)}>Join</Link>}
                             </List.Item>
                         )}
                     />
