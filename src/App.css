@@ -255,7 +255,7 @@
 .modal-search .header-searchbar .ant-input-group{box-shadow: none;border: 1px solid var(--bordergrey);border-radius: 8px;}
 .modal-search .header-searchbar{max-width: 100%;}
 /* .modal-search .header-searchbar input{min-height: 35px !important;} */
-.modal-interest .ant-modal-body {background-color: #f9f9f9;padding: 0!important;}
+.modal-interest .ant-modal-body {background-color: #f9f9f9;padding: 16px 30px !important;}
 .text-red,.text-red:hover{color: var(--red) !important;}
 .bg-white{background-color: var(--white);}
 .ant-form-vertical .ant-form-item-label{padding-bottom: 0px !important;}

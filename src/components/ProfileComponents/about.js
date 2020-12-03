@@ -140,29 +140,29 @@ class About extends Component {
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="Plot No" className="custom-fields" rules={[{required:true,message:'is required'}]}>
                                         <Field className="ant-input" value={address[0]?.BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange} />
-                                        <span style={{ color: 'red', textAlign: 'right' }}><ErrorMessage name="BlockHouseNo" /></span>
-                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['BlockHouseNo'] ? errors['BlockHouseNo'] : null}</span>
+                                        <span style={{ color: 'red', textAlign: 'right', display:'block' }}><ErrorMessage name="BlockHouseNo" /></span>
+                                        <span style={{ color: 'red', textAlign: 'right', display:'block' }}>{errors['BlockHouseNo'] ? errors['BlockHouseNo'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="Street Name" className="custom-fields">
                                         <Field className="ant-input" value={address[0]?.BuildingEstate} name="BuildingEstate" onChange={this.handleOnChange} />
                                         <span style={{ color: 'red' }}><ErrorMessage name="BuildingEstate" /></span>
-                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['BuildingEstate'] ? errors['BuildingEstate'] : null}</span>
+                                        <span style={{ color: 'red', textAlign: 'right', display:'block' }}>{errors['BuildingEstate'] ? errors['BuildingEstate'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24}>
                                     <Form.Item label="Address" className="custom-fields">
                                         <Field className="ant-input" value={address[0]?.Address} name="Address" onChange={this.handleOnChange} />
                                         <span style={{ color: 'red' }}><ErrorMessage name="Address" /></span>
-                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['Address'] ? errors['Address'] : null}</span>
+                                        <span style={{ color: 'red', textAlign: 'right', display:'block' }}>{errors['Address'] ? errors['Address'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="City" className="custom-fields">
                                         <Field className="ant-input" value={address[0]?.City} name="City" onChange={this.handleOnChange} />
                                         <span style={{ color: 'red' }}><ErrorMessage name="City" /></span>
-                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['City'] ? errors['City'] : null}</span>
+                                        <span style={{ color: 'red', textAlign: 'right', display:'block' }}>{errors['City'] ? errors['City'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12}>
@@ -185,14 +185,14 @@ class About extends Component {
                                     <Form.Item label="Pin Code" className="custom-fields">
                                         <Field className="ant-input" value={address[0]?.PostalCode} name="PostalCode" onChange={this.handleOnChange} />
                                         <span style={{ color: 'red' }}><ErrorMessage name="PostalCode" /></span>
-                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['PostalCode'] ? errors['PostalCode'] : null}</span>
+                                        <span style={{ color: 'red', textAlign: 'right', display:'block' }}>{errors['PostalCode'] ? errors['PostalCode'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24}>
                                     <Form.Item label="Phone Number" className="custom-fields">
                                         <Field className="ant-input" value={PhoneNumber} name="PhoneNumber" onChange={this.handleOnChange} />
                                         <span style={{ color: 'red' }}><ErrorMessage name="PhoneNumber" /></span>
-                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['PhoneNumber'] ? errors['PhoneNumber'] : null}</span>
+                                        <span style={{ color: 'red', textAlign: 'right', display:'block' }}>{errors['PhoneNumber'] ? errors['PhoneNumber'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24}>
@@ -205,7 +205,7 @@ class About extends Component {
                                         <Field component="textarea" className="ant-input" autoSize={{ minRows: 2, maxRows: 6 }} value={AboutMe}
                                             name="AboutMe" onChange={this.handleOnChange} />
                                         <span style={{ color: 'red' }}><ErrorMessage name="AboutMe" /></span>
-                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['AboutMe'] ? errors['AboutMe'] : null}</span>
+                                        <span style={{ color: 'red', textAlign: 'right', display:'block' }}>{errors['AboutMe'] ? errors['AboutMe'] : null}</span>
                                     </Form.Item>
                                 </Col>
                             </Row>

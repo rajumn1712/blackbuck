@@ -94,7 +94,7 @@ class Interests extends Component {
                     />
                 </Card>
                 <CommonModal className="custom-popup modal-interest" visible={visible} title="Interests" cancel={this.handleCancel} saved={this.handleOk}>
-                    <div className="modal-search p-16">
+                    <div className="modal-search py-16">
                         <Search className="header-searchbar" placeholder="Search Groups / Courses" onChange={(e => this.handleSearch(e))} />
                     </div>
                     <div className="custom-card p-16 bg-white">
