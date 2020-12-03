@@ -33,7 +33,7 @@ a:hover,a:active{color: var(--primaryhover) !important;}
 .justify-content-around{display: flex;justify-content: space-around;}
 
 /*---Friend Suggestions---*/
-.friends{display: flex; overflow: hidden; margin-bottom: 16px; position: relative;}
+.friends{display: flex; overflow: hidden; margin-bottom: 6px; position: relative;}
 .friends .owl-carousel{height: 310px;}
 .friends-thead{display: flex;justify-content: space-between;}
 .friends-thead h5{color: var(--textprimary) !important;}
