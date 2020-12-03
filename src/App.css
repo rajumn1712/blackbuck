@@ -312,5 +312,5 @@ textarea{resize: unset !important;}
 .post-image .audio, .post-preview-box .audio{margin: 4px 16px 4px;}
 .obj-fit{height: 100%;object-fit: cover;}
 .group-page .ant-card-cover{height: 200px;}
-.see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;max-height: 3rem;}
+.see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;}
 .see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}
