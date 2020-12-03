@@ -26,8 +26,8 @@ class Home extends Component {
             <div className="main">
                 <Row gutter={16}>
                     <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
+                        <Identity />
                         <Affix offsetTop={86} >
-                            <Identity />
                             <Invite />
                         </Affix>
                     </Col>
@@ -40,8 +40,8 @@ class Home extends Component {
                         </Switch>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
+                        <Groups />
                         <Affix offsetTop={86} >
-                            <Groups />
                             <Ads />
                         </Affix>    
                     </Col>
