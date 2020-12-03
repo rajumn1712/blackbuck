@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, List } from 'antd'
-// import { Link } from 'react-router-dom';
+ import { Link } from 'react-router-dom';
 // import { userManager } from '../../shared/authentication/auth';
 // import { store } from '../../store'
 // import User1 from '../styles/images/avatar.png';
@@ -33,7 +33,7 @@ class FriendRequests extends Component {
                     itemLayout="vertical"
                     dataSource={data}
                     renderItem={item => (
-                    <div className="tag-color">{item.title}</div>
+                    <div className="tag-color"><Link to="/commingsoon">{item.title}</Link></div>
                    
                     )}
                     />
