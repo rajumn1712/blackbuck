@@ -311,6 +311,6 @@ textarea{resize: unset !important;}
 .rhap_container{box-shadow: none !important; border: 1px solid var(--line); border-radius: 0.4rem;}
 .post-image .audio, .post-preview-box .audio{margin: 4px 16px 4px;}
 .obj-fit{height: 100%;object-fit: cover;}
-.group-page .ant-card-cover{height: 200px;}
+.group-page .ant-card-cover{height: 261px;}
 .see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;}
 .see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}

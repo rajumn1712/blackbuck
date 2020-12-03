@@ -15,6 +15,8 @@ import notify from '../../shared/components/notification';
 import { acceptFrienRequest, fetchFriendRequests } from '../../shared/api/apiServer';
 import defaultUser from '../../styles/images/defaultuser.jpg';
 import connectStateProps from '../../shared/stateConnect';
+import {profileSuccess} from '../../reducers/auth'
+import { connect } from 'react-redux';
 
 class FriendRequests extends Component {
 
@@ -46,6 +48,8 @@ class FriendRequests extends Component {
         acceptFrienRequest(this.props.profile?.Id, friend.UserId, "accept", obj).then(() => {
             message.success("Action Success");
             this.loadRequests(true);
+            this.props.profile.Friends = this.props.profile.Friends ? (this.props.profile.Friends + 1) : 1
+            this.props.updateProfile(this.props.profile)
         })
     }
 
@@ -105,4 +109,11 @@ class FriendRequests extends Component {
         )
     }
 }
-export default connectStateProps(FriendRequests);
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+}
+const mapDispatchToProps = dispatch => {
+    return { updateProfile: (info) => { dispatch(profileSuccess(info)) } }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FriendRequests);

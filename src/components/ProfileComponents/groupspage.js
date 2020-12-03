@@ -46,7 +46,7 @@ class GroupsPage extends Component {
                             ]}
                         >
                             <Meta title=""
-                                description={<div>{group.name}
+                                description={<div><h4>{group.name}</h4>
                                 <div className="d-flex align-items-center">
                                         {/* <span className="list-request">
                                             <Avatar.Group
