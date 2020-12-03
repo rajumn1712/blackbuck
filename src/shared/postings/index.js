@@ -183,7 +183,7 @@ class Postings extends Component {
          },
          Video: () => {
             return <div className="video-post cursor-pointer" >
-               <video width="100%" controls>
+               <video width="100%" controls muted>
                   <source src={imageObj} />
                </video>
                {/* <div className="play"></div> */}
