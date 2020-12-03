@@ -73,6 +73,11 @@ class GroupsPage extends Component {
                                                     size="large"
                                                     maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                                 >
+                                                    <Avatar src={user} />
+                                                <Avatar src={user} />
+                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                                     {group.mutulFnds?.map((friend, index) => {
                                                         return <Avatar key={index} src={friend} />
                                                     })

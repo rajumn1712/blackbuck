@@ -16,7 +16,7 @@ import About from '../components/ProfileComponents/about';
 import Intership from '../components/ProfileComponents/internships';
 import VideoProfile from '../components/ProfileComponents/videoprofile';
 import Education from '../components/ProfileComponents/education';
-import GroupsPage from '../components/ProfileComponents/groupspage';
+import GroupsPage from '../shared/components/GroupsPage';
 import FriendsRequestsCard from '../shared/components/friendsRequests'
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import Postings from '../shared/postings';
