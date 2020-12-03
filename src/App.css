@@ -176,7 +176,7 @@
 .invite-btn{display: flex;align-items: center;justify-content: center;}
 .custom-card .ant-card{ border-radius: 0.8rem; margin-bottom: 12px; border-color: var(--line);border: 1px solid var(--line);}
 .custom-card .ant-card-body{ padding: 0;}
-.custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);}
+/* .custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);} */
 .custom-card .ant-list-item{padding: 8px 12px;}
 .custom-card .ant-card-head{padding: 0 12px !important;}
 .custom-card .ant-list-item:hover{background: rgba(0, 0, 0, 0.05);}
