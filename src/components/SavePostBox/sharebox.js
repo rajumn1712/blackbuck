@@ -420,6 +420,7 @@ class ShareBox extends Component {
                                     onChange={this.handleChange}
                                     value={this.state.post.Message}
                                     required={true}
+                                    maxLength={1306}
                                 />
                             </div>
                             {/* <div className="caption-image">

@@ -45,4 +45,7 @@ const joinGroup = (group_id, obj) => {
 const cancelGroupRequest = (group_id, user_id) => {
     return apiClient.get(FRIENDS_API + `cancelJoinGroup/${group_id}/${user_id}`)
 }
-export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage, saveInnternship, saveEducation, cancelFriendRequest, joinGroup,cancelGroupRequest }
+const fetchUserGroups = (user_id,take,skip)=>{
+    return apiClient.get(GROUPS_API+`getUserGroups/${user_id}/${take}/${skip}`)
+}
+export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage, saveInnternship, saveEducation, cancelFriendRequest, joinGroup,cancelGroupRequest,fetchUserGroups }

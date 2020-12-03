@@ -37,7 +37,8 @@ class Postings extends Component {
       pageSize: 5,
       showModal: false,
       reactionsLoading: false,
-      loadMore: true
+      loadMore: true,
+      descriptionSelection: []
    }
    componentDidMount() {
       window.addEventListener('scroll', this.handleScroll)
@@ -62,7 +63,7 @@ class Postings extends Component {
       if (this.state.loadMore) {
          let { page } = this.state;
          page += 1;
-         this.setState({ ...this.state, page,loading:true }, () => {
+         this.setState({ ...this.state, page, loading: true }, () => {
             this.loadPosts();
          })
       }
@@ -320,13 +321,13 @@ class Postings extends Component {
          >
             {/* <Title level={5} className="post-title">{post.title}</Title> */}
             <Paragraph className="post-desc">
-               {post.meassage}
+               {this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage.substr(0, 500)}
                {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
                      return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || tag || ""}`}</Link></Tag>}</>
                   })}
                </div>}
-               <a className="see-more">…see more</a>
+               {post.meassage.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}
             </Paragraph>
 
             <Card.Meta
@@ -388,6 +389,16 @@ class Postings extends Component {
          }
       }
       this.setState({ ...this.state, allPosts });
+   }
+   seeMore = (post) => {
+      let { descriptionSelection } = this.state;
+      const idx = descriptionSelection.indexOf(post.id);
+      if (idx > -1) {
+         descriptionSelection.splice(idx, 1);
+      } else {
+         descriptionSelection.push(post.id);
+      }
+      this.setState({ ...this.state, descriptionSelection });
    }
    render() {
       return <div onScroll={this.handleScroll}>
