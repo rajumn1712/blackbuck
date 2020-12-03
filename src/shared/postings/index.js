@@ -34,27 +34,37 @@ class Postings extends Component {
       loading: true,
       commentselection: [],
       page: 1,
-      pageSize: 100,
+      pageSize: 5,
       showModal: false,
       reactionsLoading: false,
       loadMore: true
    }
    componentDidMount() {
-      // document.addEventListener('scroll', (e) => {
-      //    this.loadMore(e);
-      // })
+      window.addEventListener('scroll', this.handleScroll)
       this.loadPosts();
    }
+   componentWillUnmount() {
+      window.removeEventListener("scroll", this.handleScroll)
+   }
+   handleScroll = () => {
+      const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+      const body = document.body;
+      const html = document.documentElement;
+      const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+      const windowBottom =Math.ceil( windowHeight + window.pageYOffset);
+      if (windowBottom >= docHeight) {
+         this.loadMore();
+      } else {
+
+      }
+   }
    loadMore(e) {
-      let element = e.target.scrollingElement
-      if ((element.scrollHeight - element.scrollTop) === element.clientHeight) {
-         if (this.state.loadMore) {
-            let { page } = this.state;
-            page += 1;
-            this.setState({ ...this.state, page }, () => {
-               this.loadPosts();
-            })
-         }
+      if (this.state.loadMore) {
+         let { page } = this.state;
+         page += 1;
+         this.setState({ ...this.state, page }, () => {
+            this.loadPosts();
+         })
       }
    }
    async loadPosts(isFromSave) {
@@ -192,7 +202,7 @@ class Postings extends Component {
             return null
          },
          Audio: () => {
-            return <div style={{ width: '100%', position: 'relative' }} onClick={()=>this.stopAudio()}>
+            return <div style={{ width: '100%', position: 'relative' }} onClick={() => this.stopAudio()}>
                <div class="audio">
                   <AudioPlayer
                      src={imageObj}
@@ -262,12 +272,12 @@ class Postings extends Component {
    }
    fetchCardActions = (user) => {
       const ownerActions = [
-         { action: 'Edit', icons: 'post-icons edit-icon',subTitle:"Edit your post" },
-         { action: 'Delete', icons: 'post-icons delete-icon',subTitle:"Delete your post" }
+         { action: 'Edit', icons: 'post-icons edit-icon', subTitle: "Edit your post" },
+         { action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete your post" }
       ]
       const actionsList = [
-         { action: 'Save Post', icons: 'post-icons savepost-icon',subTitle:"Save this item for later" },
-         { action: 'Turn on Notifications', icons: 'post-icons notify-icon',subTitle:"Keep notify from this user" },
+         { action: 'Save Post', icons: 'post-icons savepost-icon', subTitle: "Save this item for later" },
+         { action: 'Turn on Notifications', icons: 'post-icons notify-icon', subTitle: "Keep notify from this user" },
       ]
       const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
       return result;
@@ -278,7 +288,7 @@ class Postings extends Component {
          allPosts = allPosts.filter(item => item.id !== post.id);
          this.setState({ ...this.state, allPosts, showModal: false });
          notify({ message: "Delete", description: "Post delete success" });
-         this.props.upadateProfile(this.props.profile,'Decrement');
+         this.props.upadateProfile(this.props.profile, 'Decrement');
       })
    }
    fetchPostReactions = async (id) => {
@@ -312,7 +322,7 @@ class Postings extends Component {
             <Paragraph className="post-desc">{post.meassage}</Paragraph>
             {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                {post.tags?.map((tag, index) => {
-                  return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name ||tag|| ""}`}</Link></Tag>}</>
+                  return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || tag || ""}`}</Link></Tag>}</>
                })}
             </div>}
             <Card.Meta
@@ -377,7 +387,7 @@ class Postings extends Component {
    }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox  dataRefreshed={()=>this.dataRefreshed()}/>}
+         {this.props.sharebox && <ShareBox dataRefreshed={() => this.dataRefreshed()} />}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
@@ -392,7 +402,7 @@ const mapStateToProps = ({ oidc }) => {
 }
 const mapDispatchToProps = dispatch => {
    return {
-      upadateProfile: (info,type) => { dispatch(postUpdation(info,type)) }
+      upadateProfile: (info, type) => { dispatch(postUpdation(info, type)) }
    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Postings);
