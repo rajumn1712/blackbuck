@@ -99,6 +99,10 @@ class Profile extends Component {
             .then(res => {
                 const profiledata = res.data[0].User;
                 const navigations = res.data[0].ProfileItems;
+                this.props.profile.Friends=profiledata.Friend?profiledata.Friend:0;
+                this.props.profile.Posts=profiledata.Posts?profiledata.Posts:0;
+                this.props.profile.Groups=profiledata.Groups?profiledata.Groups:0;
+                this.props.updateProfile(this.props.profile);
                 this.setState({ profileData: profiledata, navigations: navigations, loading: false });
             })
     }

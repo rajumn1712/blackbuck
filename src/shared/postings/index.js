@@ -335,13 +335,7 @@ class Postings extends Component {
             >
             </Card.Meta>
             <div className="d-flex justify-content-between mx-16 py-8">
-               {<ul className="card-actions-count pl-0">
-                  <li><span className="counter-icon likes"></span></li>
-                  <li><span className="counter-icon loves"></span></li>
-                  <li ><span className="counter-icon claps"></span></li>
-                  <li><span className="counter-icon whistles"></span></li>
-                  <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
-                     <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+               {<span onMouseEnter={() => this.fetchPostReactions(post.id)}><Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
                         <TabPane tab="Likes" key="1" style={{ floodColor: "#fff", height: 200 }}>
                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
@@ -354,11 +348,17 @@ class Postings extends Component {
                         <TabPane tab="Whistiles" key="4" style={{ floodColor: "#fff", height: 200 }}>
                            {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
-                     </Tabs>}</div>}>
+                     </Tabs>}</div>}><ul className="card-actions-count pl-0">
+                  <li><span className="counter-icon likes"></span></li>
+                  <li><span className="counter-icon loves"></span></li>
+                  <li ><span className="counter-icon claps"></span></li>
+                  <li><span className="counter-icon whistles"></span></li>
+                  <li >
+                     
                         <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
-                     </Tooltip>
+                     
                   </li>
-               </ul>}
+               </ul></Tooltip></span>}
                <ul className="card-actions-count">
                   {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
                   {post.commentsCount != null && <li className="mr-0 cursor-pointer" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
