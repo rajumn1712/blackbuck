@@ -315,5 +315,4 @@ textarea{resize: unset !important;}
 .group-page .ant-card-cover{height: 200px;}
 .see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;}
 .see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}
-.tag-card .ant-list-split{padding: 0 12px;}
-.tag-card .ant-list-split{background:url('./styles/images/hash.svg') no-repeat;;}
+.tag-card .ant-list-split{padding: 12px;background:url('./styles/images/hash.svg') no-repeat;background-position: center right;}
