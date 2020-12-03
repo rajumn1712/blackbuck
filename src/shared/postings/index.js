@@ -196,7 +196,7 @@ class Postings extends Component {
             return null
          },
          Audio: () => {
-            return <div style={{ width: '100%', position: 'relative' }} onClick={() => this.stopAudio()}>
+            return <div style={{ width: '100%', position: 'relative' }} onClick={() => this.stopAudio()} className="cursor-pointer">
                <div class="audio">
                   <AudioPlayer
                      src={imageObj}
