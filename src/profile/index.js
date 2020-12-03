@@ -26,18 +26,14 @@ import defaultUser from '../styles/images/defaultuser.jpg';
 import defaultCover from '../styles/images/defaultcover.png';
 import ImgCrop from 'antd-img-crop';
 import { profileSuccess } from '../reducers/auth';
+import Loader from '../common/loader';
+import { store } from '../store';
 const { Meta } = Card;
-const { Dragger } = Upload;
-
-
 const { TabPane } = Tabs;
-
-
 class Profile extends Component {
-
     references = {};
     imageObject = {};
-
+    storeSubscription;
     getOrCreateRef(id) {
         if (!this.references.hasOwnProperty(id)) {
             this.references[id] = createRef();
@@ -51,7 +47,9 @@ class Profile extends Component {
         disabled: false,
         visible: false,
         isProfilePic: false,
-        isDataRefresh:false
+        isDataRefresh: false,
+        loading: true,
+        profile:this.props?.profile
     };
     isDataRefreshed = (refresh) => {
         this.setState({ ...this.state, isDataRefresh: refresh });
@@ -82,6 +80,13 @@ class Profile extends Component {
 
     componentDidMount() {
         this.profielDetails();
+        this.storeSubscription = store.subscribe(() => {
+            const { profile } = store.getState().oidc;
+            this.setState({ ...this.state, profile })
+        })
+    }
+    componentWillUnmount() {
+        this.storeSubscription();
     }
     showModal = () => {
         this.setState({
@@ -89,11 +94,12 @@ class Profile extends Component {
         });
     };
     profielDetails = () => {
+        this.setState({ ...this.state, loading: true })
         profileDetail(this.props?.profile?.Id)
             .then(res => {
                 const profiledata = res.data[0].User;
                 const navigations = res.data[0].ProfileItems;
-                this.setState({ profileData: profiledata, navigations: navigations });
+                this.setState({ profileData: profiledata, navigations: navigations, loading: false });
             })
     }
     handleBeforUpload = (file) => {
@@ -112,7 +118,7 @@ class Profile extends Component {
             .then(res => {
                 if (this.state.isProfilePic) {
                     this.props.profile.ProfilePic = this.imageObject.ImageUrl;
-                }else{
+                } else {
                     this.props.profile.CoverPic = this.imageObject.ImageUrl;
                 }
                 this.props.updateProfile(this.props.profile);
@@ -140,21 +146,21 @@ class Profile extends Component {
 
     render() {
 
-        const { navigations, profileData, disabled, visible,isDataRefresh } = this.state;
-        const  {profile}  = this.props;
+        const { navigations, profileData, disabled, visible, isDataRefresh, profile } = this.state;
+        if (this.state.loading) { return <Loader className="loader-middle" /> }
         return (
-            profileData ? <div className="main">
+            <div className="main">
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={17} lg={17} xl={17}>
                         <div className="coverpage">
                             <Avatar className="center-focus" src={profileData.CoverPic || defaultCover} />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
-                            <ImgCrop aspect={6/2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
+                            <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
                                 <Upload {...this.uploadProps}>
                                     <Tooltip title="Change Coverphoto">
-                                    <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
-                                        <span className="left-menu post-icon" />
-                                    </a>
+                                        <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
+                                            <span className="left-menu post-icon" />
+                                        </a>
                                     </Tooltip>
                                 </Upload>
                             </ImgCrop>
@@ -163,9 +169,9 @@ class Profile extends Component {
                         </div>
                         <div className="user-statistic">
                             <div className="left-statistic">
-                                <Statistic title="Friends" className="afterline" value={profile?.Friends?profile.Friends:0} />
-                                <Statistic className="afterline" title="Groups" value={profile?.Groups?profile.Groups:0} />
-                                <Statistic title="Posts" value={profile?.Posts?profile.Posts:0} />
+                                <Statistic title="Friends" className="afterline" value={profile?.Friends ? profile.Friends : 0} />
+                                <Statistic className="afterline" title="Groups" value={profile?.Groups ? profile.Groups : 0} />
+                                <Statistic title="Posts" value={profile?.Posts ? profile.Posts : 0} />
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="">
@@ -173,7 +179,7 @@ class Profile extends Component {
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profile.ProfilePic || defaultUser} />
                                             <Tooltip placement="top" title="Change Photo">
-                                            <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu post-icon" /> </a>
+                                                <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu post-icon" /> </a>
                                             </Tooltip>
                                         </Upload>
                                     </ImgCrop>
@@ -246,8 +252,8 @@ class Profile extends Component {
                                         <Invite />
                                     </Col> */}
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <FriendRequests isDataRefreshed={(refresh)=>this.isDataRefreshed(refresh)}/>
-                                        <Friends isDataRefreshed={isDataRefresh}/>
+                                        <FriendRequests isDataRefreshed={(refresh) => this.isDataRefreshed(refresh)} />
+                                        <Friends isDataRefreshed={isDataRefresh} />
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -270,7 +276,7 @@ class Profile extends Component {
 
                     </Col>
                 </Row>
-            </div> : null
+            </div>
         )
     }
 }
@@ -282,4 +288,4 @@ const mapDispatchToProps = dispatch => {
     return { updateProfile: (info) => { dispatch(profileSuccess(info)) } }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
