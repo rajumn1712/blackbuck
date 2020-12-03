@@ -68,7 +68,7 @@ class FriendSuggestions extends Component {
         if (!this.state.friends || this.state.friends.length === 0) { return null; }
         return (
             <div>
-                <div className="friends-thead">
+                <div className="friends-thead px-4">
                     <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title><div className="link-color"><Link to="/commingsoon" className="link-color">View all</Link></div>
                 </div>
                 <div className="friends">
@@ -103,6 +103,9 @@ class FriendSuggestions extends Component {
                                 </div>
                             </div>
                         </div>)}
+                        <div className="frnds-list-item viewall-item">
+                            <Link to="/commingsoon">View all</Link>
+                        </div>
                     </OwlCarousel>
                 </div>
             </div>

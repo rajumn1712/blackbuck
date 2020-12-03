@@ -121,9 +121,9 @@ class About extends Component {
                         >
                             <Row gutter={16}>
                                 
-                                <Col xs={24}>
+                                {/* <Col xs={24}>
                                     <h3>Contact</h3>
-                                </Col>
+                                </Col> */}
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="Plot No" className="custom-fields">
                                         <Input value={address[0]?.BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange} />
@@ -170,13 +170,13 @@ class About extends Component {
                                         <ErrorMessage name="PostalCode" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={12}>
+                                <Col xs={24} sm={24}>
                                     <Form.Item label="Phone Number" className="custom-fields">
                                         <Input value={PhoneNumber} name="PhoneNumber" onChange={this.handleOnChange} />
                                         <ErrorMessage name="PhoneNumber" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={12}>
+                                <Col xs={24} sm={24}>
                                     <Form.Item label="Email" className="custom-fields">
                                         <Input value={Email} name="Email" onChange={this.handleOnChange} disabled />
                                     </Form.Item>
