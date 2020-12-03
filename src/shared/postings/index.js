@@ -62,7 +62,7 @@ class Postings extends Component {
       if (this.state.loadMore) {
          let { page } = this.state;
          page += 1;
-         this.setState({ ...this.state, page }, () => {
+         this.setState({ ...this.state, page,loading:true }, () => {
             this.loadPosts();
          })
       }
