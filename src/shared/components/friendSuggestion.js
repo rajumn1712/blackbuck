@@ -6,9 +6,9 @@ import { cancelFriendRequest, getFriendSuggestions, sendFirendRequest } from '..
 import { Link } from 'react-router-dom'
 import connectStateProps from '../stateConnect';
 import defaultUser from '../../styles/images/defaultuser.jpg';
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import OwlCarousel from 'react-owl-carousel2';
+import 'react-owl-carousel2/src/owl.carousel.css';
+import 'react-owl-carousel2/src/owl.theme.default.css'
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     carouselRef;
