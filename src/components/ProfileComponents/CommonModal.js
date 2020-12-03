@@ -19,7 +19,7 @@ class CommonModal extends React.Component {
                     {/* <Button key="back" onClick={modal.cancel} className="btn-cancel">
                         Close
                 </Button> */}
-                    <Button key="submit" type="primary" onClick={modal.saved}>
+                    <Button key="submit" type="primary" htmlType="submit" onClick={modal.saved}>
                         Save
                 </Button></div>
                 ]}>

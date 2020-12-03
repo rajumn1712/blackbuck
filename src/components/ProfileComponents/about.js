@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { Button, Card, Divider, Row, Col, Form, Input, Select } from 'antd'
 import { Link } from 'react-router-dom';
 // import { userManager } from '../../shared/authentication/auth';
@@ -21,24 +21,32 @@ class About extends Component {
         Email: this.props.about.Email,
         AboutMe: this.props.about.Aboutme,
         address: this.props.about.Address,
-        visible: false
+        visible: false,
+        errors:{}
     };
     initialValues = {
-        AboutMe: '',
+        BlockHouseNo: '',
+        BuildingEstate: '',
+        Address: '',
+        City: '',
+        State: '',
+        Country: '',
+        PostalCode: '',
         PhoneNumber: '',
-        Email: ''
-
+        AboutMe: ''
     }
-    handleValidate = (value) => {
+    handleValidate = (values) => {
         let errors = {};
 
-        if (!value.Email) {
-            errors.Email = "Required!";
-        } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.Email)) {
-            errors.Email = "Invalid email address!";
-        }
-        if (!value.AboutMe) {
-            errors.AboutMe = "Required";
+        // if (!value.Email) {
+        //     errors.Email = "Required!";
+        // } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.Email)) {
+        //     errors.Email = "Invalid email address!";
+        // }
+        for (var key in values) {
+            if (!values[key]) {
+                errors[key] = "is required";
+            }
         }
 
         return errors;
@@ -56,20 +64,24 @@ class About extends Component {
             visible: true,
         });
     };
-    handleOk = e => {
-        this.setState({
-            visible: false,
-        });
+    handleOk = () => {
+        let {errors} = this.state
+        errors = this.handleValidate(this.formRef.current.values);
+        this.setState({errors:errors});
+        // this.setState({
+        //     visible: false,
+        // });
     };
     handleCancel = e => {
         this.setState({
             visible: false,
         });
     };
+    formRef = createRef();      
     render() {
         const { user } = store.getState().oidc;
 
-        const { PhoneNumber, Email, AboutMe, address, visible } = this.state;
+        const { PhoneNumber, Email, AboutMe, address, visible,errors } = this.state;
 
         return (
             <div className="custom-card profile-card">
@@ -111,41 +123,46 @@ class About extends Component {
                         </Row>
                     </div>
                 </Card>
-                <CommonModal className="custom-popup" visible={visible} title="About Me" cancel={this.handleCancel} saved={this.handleOk}>
-                    <Formik initialValues={this.initialValues}
+                <CommonModal className="custom-popup" visible={visible} title="About Me" cancel={this.handleCancel} saved={this.handleOk.bind(this)}>
+                    <Formik initialValues={this.initialValues} innerRef={this.formRef}
                         validate={(values) => this.handleValidate(values)}
-                        onSubmit={this.handleOk}
+                        onSubmit={this.handleOk.bind(this)}
                     >
-                        <Form
+                        {props =>{
+                           return <Form
                             layout="vertical"
                         >
                             <Row gutter={16}>
-                                
+
                                 {/* <Col xs={24}>
                                     <h3>Contact</h3>
                                 </Col> */}
                                 <Col xs={24} sm={12}>
-                                    <Form.Item label="Plot No" className="custom-fields">
-                                        <Input value={address[0]?.BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange} />
-                                        <ErrorMessage name="BlockHouseNo" />
+                                    <Form.Item label="Plot No" className="custom-fields" rules={[{required:true,message:'is required'}]}>
+                                        <Field className="ant-input" value={address[0]?.BlockHouseNo} name="BlockHouseNo" onChange={this.handleOnChange} />
+                                        <span style={{ color: 'red', textAlign: 'right' }}><ErrorMessage name="BlockHouseNo" /></span>
+                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['BlockHouseNo'] ? errors['BlockHouseNo'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="Street Name" className="custom-fields">
-                                        <Input value={address[0]?.BuildingEstate} name="BuildingEstate" onChange={this.handleOnChange} />
-                                        <ErrorMessage name="BuildingEstate" />
+                                        <Field className="ant-input" value={address[0]?.BuildingEstate} name="BuildingEstate" onChange={this.handleOnChange} />
+                                        <span style={{ color: 'red' }}><ErrorMessage name="BuildingEstate" /></span>
+                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['BuildingEstate'] ? errors['BuildingEstate'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24}>
                                     <Form.Item label="Address" className="custom-fields">
-                                        <Input value={address[0]?.UnitNo} name="UnitNo" onChange={this.handleOnChange} />
-                                        <ErrorMessage name="UnitNo" />
+                                        <Field className="ant-input" value={address[0]?.Address} name="Address" onChange={this.handleOnChange} />
+                                        <span style={{ color: 'red' }}><ErrorMessage name="Address" /></span>
+                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['Address'] ? errors['Address'] : null}</span>
                                     </Form.Item>
-                                </Col> 
+                                </Col>
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="City" className="custom-fields">
-                                        <Input value={address[0]?.City} name="City" onChange={this.handleOnChange} />
-                                        <ErrorMessage name="City" />
+                                        <Field className="ant-input" value={address[0]?.City} name="City" onChange={this.handleOnChange} />
+                                        <span style={{ color: 'red' }}><ErrorMessage name="City" /></span>
+                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['City'] ? errors['City'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12}>
@@ -166,14 +183,16 @@ class About extends Component {
                                 </Col>
                                 <Col xs={24} sm={12}>
                                     <Form.Item label="Pin Code" className="custom-fields">
-                                        <Input value={address[0]?.PostalCode} name="PostalCode" onChange={this.handleOnChange} />
-                                        <ErrorMessage name="PostalCode" />
+                                        <Field className="ant-input" value={address[0]?.PostalCode} name="PostalCode" onChange={this.handleOnChange} />
+                                        <span style={{ color: 'red' }}><ErrorMessage name="PostalCode" /></span>
+                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['PostalCode'] ? errors['PostalCode'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24}>
                                     <Form.Item label="Phone Number" className="custom-fields">
-                                        <Input value={PhoneNumber} name="PhoneNumber" onChange={this.handleOnChange} />
-                                        <ErrorMessage name="PhoneNumber" />
+                                        <Field className="ant-input" value={PhoneNumber} name="PhoneNumber" onChange={this.handleOnChange} />
+                                        <span style={{ color: 'red' }}><ErrorMessage name="PhoneNumber" /></span>
+                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['PhoneNumber'] ? errors['PhoneNumber'] : null}</span>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24}>
@@ -183,13 +202,15 @@ class About extends Component {
                                 </Col>
                                 <Col xs={24}>
                                     <Form.Item label="About Me" className="custom-fields mb-24">
-                                        <TextArea autoSize={{ minRows: 2, maxRows: 6 }} value={AboutMe}
+                                        <Field component="textarea" className="ant-input" autoSize={{ minRows: 2, maxRows: 6 }} value={AboutMe}
                                             name="AboutMe" onChange={this.handleOnChange} />
-                                        <ErrorMessage name="AboutMe" />
+                                        <span style={{ color: 'red' }}><ErrorMessage name="AboutMe" /></span>
+                                        <span style={{ color: 'red', textAlign: 'right' }}>{errors['AboutMe'] ? errors['AboutMe'] : null}</span>
                                     </Form.Item>
                                 </Col>
                             </Row>
                         </Form>
+                        }}
                     </Formik>
                 </CommonModal>
             </div>

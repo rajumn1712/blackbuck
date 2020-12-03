@@ -147,7 +147,7 @@ class Profile extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={17} lg={17} xl={17}>
                         <div className="coverpage">
-                            <Avatar className="center-focus" src={profileData.CoverPic || defaultCover} />
+                            <Avatar className="center-focus" src={profileData?.CoverPic || defaultCover} />
                             <span className="premium-badge"><img src={PremiumBadge} /></span>
                             <ImgCrop aspect={6/2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{cropSize:{width:1000,height:400},cropShape:"round"}}>
                                 <Upload {...this.uploadProps}>
@@ -171,7 +171,7 @@ class Profile extends Component {
                                 <Meta avatar={<div className="">
                                     <ImgCrop shape="rect" beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
-                                            <Avatar src={profile.ProfilePic || defaultUser} />
+                                            <Avatar src={profile?.ProfilePic || defaultUser} />
                                             <Tooltip placement="top" title="Change Photo">
                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu post-icon" /> </a>
                                             </Tooltip>
