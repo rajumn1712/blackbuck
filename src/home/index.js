@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { Row, Col, Affix } from 'antd';
 import ShareBox from '../components/SavePostBox/sharebox';
 import Identity from '../components/identity';
 import Invite from '../shared/components/Invite';
+import Tags from '../components/ProfileComponents/tags';
 import Ads from '../components/ads';
 import FriendSuggestions from '../shared/components/friendSuggestion';
 import PostCard from '../components/postcard/Post';
@@ -28,6 +30,7 @@ class Home extends Component {
                     <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
                         <Identity />
                         <Affix offsetTop={86} >
+                        <Tags />
                             <Invite />
                         </Affix>
                     </Col>
