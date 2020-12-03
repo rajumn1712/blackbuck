@@ -110,7 +110,7 @@ class HeaderComponent extends React.Component {
         });
     };
     menu = () => {
-        return (<Menu className="profile-dropdown">
+        return (<Menu className="profile-dropdown custom-dropdown">
             <Menu.Item key="0">
                 <Link to="/profile">
                     <Meta

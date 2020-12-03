@@ -245,13 +245,16 @@
 }
 
 .profile-dropdown li {
-    margin: 3px 8px;
+    margin: 4px 0px;
     line-height: 36px;
 }
 
+.profile-dropdown.custom-dropdown li span {
+    margin-right: 0px;
+}
+
 .profile-dropdown .ant-dropdown-menu-item {
-    padding: 8px;
-    border-radius: 6px;
+    padding: 8px 16px;
 }
 
 .profile-dropdown .ant-dropdown-menu-item a {

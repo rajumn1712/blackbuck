@@ -12,7 +12,7 @@
   --white: #ffffff;
   --black : #000000;
   --btnlight: #DEDFE1;
-  --boxshadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+  --boxshadow: 0 3px 6px rgba(0, 0, 0, 0.125);
   --bghover: rgba(0, 0, 0, 0.05);
   --transparent: transparent;
   --line: #e9e5df;
