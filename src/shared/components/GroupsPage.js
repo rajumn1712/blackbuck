@@ -25,8 +25,8 @@ class GroupsPage extends Component {
                 <Row gutter={16} className="">
                     {Groups.length>0 && Groups?.map((group, index) => {
                         return <Col className="mb-16" md={12} lg={6}>
-                            <Card key={index}
-                                cover={<img src={group.image} />} actions={[
+                            <Card key={index} 
+                                cover={<img className="obj-fit" src={group.image} />} actions={[
                                     <a className="list-link f-14" href="/commingsoon">Leave Group</a>
                                 ]}
                             >

@@ -41,7 +41,7 @@ class GroupsPage extends Component {
                         { this.state.usergroups[usergroup].map((group,indx)=>{
                             return <Col className="" span={8} key={indx}>
                         <Card to="/groupview"
-                            cover={<img src={group.image} />} actions={[
+                            cover={<img className="obj-fit" src={group.image} />} actions={[
                                 <a className="list-link f-14">Leave Group</a>
                             ]}
                         >
