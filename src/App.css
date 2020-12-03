@@ -310,3 +310,5 @@ textarea{resize: unset !important;}
 .group-page .ant-card-bordered{border: 1px solid var(--line) !important;}
 .rhap_container{box-shadow: none !important; border: 1px solid var(--line); border-radius: 0.4rem;}
 .post-image .audio, .post-preview-box .audio{margin: 4px 16px 4px;}
+.see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;max-height: 3rem;}
+.see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}
