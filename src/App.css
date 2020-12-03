@@ -238,7 +238,7 @@
 .intern-cards .card-options-left{ position: absolute; top: 8px;left: 8px;}
 .intern-cards .card-options-right{ position: absolute; top: 8px; right:8px;}
 .intern-cards .intern-cardbody .description .afterline:after{height: 16px !important;top: 3px !important;right: -10px !important;}
-.tag-color{color: var(--primary);font-size: var(--f-14);font-weight: 500;padding: 5px 0;}
+.tag-color{color: var(--primary);font-size: var(--f-14);font-weight: 500;padding: 0 0 4px;}
 .edu-card{display: flex;align-items: center;}
 .edu-card .ant-list-item-meta-avatar{margin-right: 0px !important;}
 .edu-card .edu-study .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-16);}
@@ -312,7 +312,8 @@ textarea{resize: unset !important;}
 .rhap_container{box-shadow: none !important; border: 1px solid var(--line); border-radius: 0.4rem;}
 .post-image .audio, .post-preview-box .audio{margin: 4px 16px 4px;}
 .obj-fit{height: 100%;object-fit: cover;}
-.group-page .ant-card-cover{height: 200px;}
+.group-page .ant-card-cover{height: 180px;}
 .see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;}
 .see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}
 .tag-card .ant-list-split{padding: 12px;background:url('./styles/images/hash.svg') no-repeat;background-position: center right;}
+.profile-tabs .group-page{background: #f3f2ef;padding: 16px;border-radius: 0.8rem;border-color: var(--line);border: 1px solid var(--line);}
