@@ -112,12 +112,14 @@ class HeaderComponent extends React.Component {
     menu = () => {
         return (<Menu className="profile-dropdown">
             <Menu.Item key="0">
-                <Meta
-                    className="account-holder"
-                    avatar={<Avatar src={this.state?.ProfilePic||defaultUser} />}
-                    title={this.state?.FirstName}
-                    description={this.state?.Email}
-                />
+                <Link to="/profile">
+                    <Meta
+                        className="account-holder"
+                        avatar={<Avatar src={this.state?.ProfilePic || defaultUser} />}
+                        title={this.state?.FirstName}
+                        description={this.state?.Email}
+                    />
+                </Link>
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="1">
@@ -185,18 +187,18 @@ class HeaderComponent extends React.Component {
                             <Menu.Item key="">
                                 <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
                                     <Tooltip title="Notifications">
-                                    <Link to="/about">
-                                        <Badge className="notification-count" count={5} showZero>
-                                            <span className="icons notification-icon" />
-                                        </Badge>
-                                    </Link>
+                                        <Link to="/about">
+                                            <Badge className="notification-count" count={5} showZero>
+                                                <span className="icons notification-icon" />
+                                            </Badge>
+                                        </Link>
                                     </Tooltip>
                                 </Dropdown>
                             </Menu.Item>
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
-                                        <img src={this.props?.profile?.ProfilePic||defaultUser} />
+                                        <img src={this.props?.profile?.ProfilePic || defaultUser} />
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>
@@ -233,7 +235,7 @@ class HeaderComponent extends React.Component {
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
-                                        <img src={this.state.ProfilePic||defaultUser} />
+                                        <img src={this.state.ProfilePic || defaultUser} />
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>
