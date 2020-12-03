@@ -13,13 +13,13 @@
 .post-title, .post-card .ant-card-actions li a{font-weight: 500 !important; }
 .post-title{color: var(--textprimary) !important; margin-bottom: 6px !important; line-height: normal !important;}
 .post-title:hover{color: var(--primary)!important ;}
-.post-card .ant-card-body .post-desc{color: var(--textdescription);font-size: var(--f-14)!important; line-height: 19px;font-weight: 400;margin: 0 16px !important;}
+.post-card .ant-card-body .post-desc{color: var(--textdescription);font-size: var(--f-14)!important; line-height: 19px;font-weight: 400;margin: 0 16px !important;position: relative;}
 .post-card .ant-card-actions{padding:4px 8px;}
 .post-card .ant-card-actions > li {border: 0 !important;}
 .post-card .ant-card-actions > li:hover {background-color:var(--bghover);border-radius: 0.25rem;}
 .post-card .ant-card-actions > li, .post-card .ant-card-meta {margin: 0;}
 .post-card .ant-card-actions li a{padding: 8px;}
-.post-tag{margin: 0 16px;}
+/* .post-tag{margin: 0 16px;} */
 .post-tag .ant-tag{font-weight: 500; border: none; cursor: pointer;background:none;}
 .post-tag .ant-tag a{color: var(--primary);padding: 0 !important;}
 .post-tag .ant-tag a:hover{text-decoration: underline;}

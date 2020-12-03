@@ -51,7 +51,7 @@ class Postings extends Component {
       const body = document.body;
       const html = document.documentElement;
       const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-      const windowBottom =Math.ceil( windowHeight + window.pageYOffset);
+      const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
       if (windowBottom >= docHeight) {
          this.loadMore();
       } else {
@@ -319,12 +319,16 @@ class Postings extends Component {
          // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             {/* <Title level={5} className="post-title">{post.title}</Title> */}
-            <Paragraph className="post-desc">{post.meassage}</Paragraph>
-            {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
-               {post.tags?.map((tag, index) => {
-                  return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || tag || ""}`}</Link></Tag>}</>
-               })}
-            </div>}
+            <Paragraph className="post-desc">
+               {post.meassage}
+               {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
+                  {post.tags?.map((tag, index) => {
+                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || tag || ""}`}</Link></Tag>}</>
+                  })}
+               </div>}
+               <a className="see-more">…see more</a>
+            </Paragraph>
+
             <Card.Meta
                className="post-image"
                avatar={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}

@@ -104,7 +104,8 @@ class FriendSuggestions extends Component {
                             </div>
                         </div>)}
                         <div className="frnds-list-item viewall-item">
-                            <Link to="/commingsoon">View all</Link>
+                            <Link to="/commingsoon"><Button type="default" className="addfrnd semibold">View all</Button></Link>
+
                         </div>
                     </OwlCarousel>
                 </div>
