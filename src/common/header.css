@@ -245,7 +245,7 @@
 }
 
 .profile-dropdown li {
-    margin: 4px 0px;
+    margin: 0px;
     line-height: 36px;
 }
 
@@ -401,7 +401,7 @@
     background-position: -91px -252px;
 }
 
-.profile-dropdown li a:hover .icons.swap-icon {
+/* .profile-dropdown li a:hover .icons.swap-icon {
     background-position: -3px -279px;
 }
 
@@ -415,7 +415,7 @@
 
 .profile-dropdown li a:hover .icons.signout-icon {
     background-position: -91px -279px;
-}
+} */
 
 @media (min-width:576px) {
     .mobile-navigation {

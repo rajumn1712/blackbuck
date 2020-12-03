@@ -114,7 +114,7 @@ class HeaderComponent extends React.Component {
             <Menu.Item key="0">
                 <Link to="/profile">
                     <Meta
-                        className="account-holder"
+                        className="account-holder profilename"
                         avatar={<Avatar src={this.state?.ProfilePic || defaultUser} />}
                         title={this.state?.FirstName}
                         description={this.state?.Email}
