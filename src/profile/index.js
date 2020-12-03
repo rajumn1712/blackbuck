@@ -163,8 +163,8 @@ class Profile extends Component {
                         </div>
                         <div className="user-statistic">
                             <div className="left-statistic">
-                                <Statistic title="Friends" className="afterline" value={profile.Friends} />
-                                <Statistic className="afterline" title="Groups" value={profile.Groups} />
+                                <Statistic title="Friends" className="afterline" value={profile?.Friends?profile.Friends:0} />
+                                <Statistic className="afterline" title="Groups" value={profile?.Groups?profile.Groups:0} />
                                 <Statistic title="Posts" value={profile?.Posts?profile.Posts:0} />
                             </div>
                             <Card className="user-banner" >
@@ -172,7 +172,9 @@ class Profile extends Component {
                                     <ImgCrop shape="rect" beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profile.ProfilePic || defaultUser} />
+                                            <Tooltip placement="top" title="Change Photo">
                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu post-icon" /> </a>
+                                            </Tooltip>
                                         </Upload>
                                     </ImgCrop>
                                 </div>}
