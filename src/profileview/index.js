@@ -138,9 +138,9 @@ class ProfileView extends Component {
                         </div>
                         <div className="user-statistic">
                             <div className="left-statistic">
-                                <Statistic title="Friends" className="afterline" value={profileData.Friend} />
-                                <Statistic className="afterline" title="Groups" value={profileData.Groups} />
-                                <Statistic title="Posts" value={profileData.Posts} />
+                                <Statistic title="Friends" className="afterline" value={profileData?.Friend?profileData.Friend:0} />
+                                <Statistic className="afterline" title="Groups" value={profileData?.Groups?profileData.Groups:0} />
+                                <Statistic title="Posts" value={profileData?.Posts?profileData.Posts:0} />
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="img-container">

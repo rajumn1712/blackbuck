@@ -21,7 +21,7 @@ class Identity extends Component {
                     actions={[
                         <div className="profile-status f-16">{homeInfo?.Friends?homeInfo?.Friends:0}<span className="f-12">Friends</span></div>,
                         <div className="profile-status f-16">{homeInfo?.Groups?homeInfo?.Groups:0}<span className="f-12">Groups</span></div>,
-                        <div className="profile-status f-16">{homeInfo?.Posts?homeInfo.Posts:0}<span className="f-12">Post</span></div>,
+                        <div className="profile-status f-16">{homeInfo?.Posts?homeInfo.Posts:0}<span className="f-12">Posts</span></div>,
                     ]}
                     cover={<img src={homeInfo?.CoverPic || coverphoto} />}
                 >
