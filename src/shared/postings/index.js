@@ -34,27 +34,38 @@ class Postings extends Component {
       loading: true,
       commentselection: [],
       page: 1,
-      pageSize: 100,
+      pageSize: 5,
       showModal: false,
       reactionsLoading: false,
-      loadMore: true
+      loadMore: true,
+      descriptionSelection: []
    }
    componentDidMount() {
-      // document.addEventListener('scroll', (e) => {
-      //    this.loadMore(e);
-      // })
+      window.addEventListener('scroll', this.handleScroll)
       this.loadPosts();
    }
+   componentWillUnmount() {
+      window.removeEventListener("scroll", this.handleScroll)
+   }
+   handleScroll = () => {
+      const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+      const body = document.body;
+      const html = document.documentElement;
+      const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+      const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+      if (windowBottom >= docHeight) {
+         this.loadMore();
+      } else {
+
+      }
+   }
    loadMore(e) {
-      let element = e.target.scrollingElement
-      if ((element.scrollHeight - element.scrollTop) === element.clientHeight) {
-         if (this.state.loadMore) {
-            let { page } = this.state;
-            page += 1;
-            this.setState({ ...this.state, page }, () => {
-               this.loadPosts();
-            })
-         }
+      if (this.state.loadMore) {
+         let { page } = this.state;
+         page += 1;
+         this.setState({ ...this.state, page, loading: true }, () => {
+            this.loadPosts();
+         })
       }
    }
    async loadPosts(isFromSave) {
@@ -142,13 +153,6 @@ class Postings extends Component {
    editPost = (post) => {
 
    }
-   handleSubmit = () => {
-
-   }
-
-   handleChange = () => {
-
-   }
    dataRefreshed = () => {
       this.loadPosts(true)
       this.props.upadateProfile(this.props.profile, 'Increment');
@@ -178,8 +182,8 @@ class Postings extends Component {
             }
          },
          Video: () => {
-            return <div className="video-post" >
-               <video width="100%" controls>
+            return <div className="video-post cursor-pointer" >
+               <video width="100%" controls muted>
                   <source src={imageObj} />
                </video>
                {/* <div className="play"></div> */}
@@ -192,7 +196,7 @@ class Postings extends Component {
             return null
          },
          Audio: () => {
-            return <div style={{ width: '100%', position: 'relative' }} onClick={()=>this.stopAudio()}>
+            return <div style={{ width: '100%', position: 'relative' }} onClick={() => this.stopAudio()}>
                <div class="audio">
                   <AudioPlayer
                      src={imageObj}
@@ -262,24 +266,30 @@ class Postings extends Component {
    }
    fetchCardActions = (user) => {
       const ownerActions = [
-         { action: 'Edit', icons: 'post-icons edit-icon',subTitle:"Edit your post" },
-         { action: 'Delete', icons: 'post-icons delete-icon',subTitle:"Delete your post" }
+         { action: 'Edit', icons: 'post-icons edit-icon', subTitle: "Edit your post" },
+         { action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete your post" }
       ]
       const actionsList = [
-         { action: 'Save Post', icons: 'post-icons savepost-icon',subTitle:"Save this item for later" },
-         { action: 'Turn on Notifications', icons: 'post-icons notify-icon',subTitle:"Keep notify from this user" },
+         { action: 'Save Post', icons: 'post-icons savepost-icon', subTitle: "Save this item for later" },
+         { action: 'Turn on Notifications', icons: 'post-icons notify-icon', subTitle: "Keep notify from this user" },
       ]
+      if (this.props.postingsType === "saved") { return [{ action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete from saved posts" }] }
       const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
       return result;
    }
    deletePost = (post) => {
-      deletePost(post.id, this.props?.profile?.Id).then(() => {
-         let { allPosts } = this.state;
-         allPosts = allPosts.filter(item => item.id !== post.id);
-         this.setState({ ...this.state, allPosts, showModal: false });
-         notify({ message: "Delete", description: "Post delete success" });
-         this.props.upadateProfile(this.props.profile,'Decrement');
-      })
+      if (this.props?.onPostDelete) {
+         this.props.onPostDelete(post)
+      }
+      else {
+         deletePost(post.id, this.props?.profile?.Id).then(() => {
+            let { allPosts } = this.state;
+            allPosts = allPosts.filter(item => item.id !== post.id);
+            this.setState({ ...this.state, allPosts, showModal: false });
+            notify({ message: "Delete", description: "Post delete success" });
+            this.props.upadateProfile(this.props.profile, 'Decrement');
+         })
+      }
    }
    fetchPostReactions = async (id) => {
       this.setState({ ...this.state, reactionsLoading: true });
@@ -309,25 +319,23 @@ class Postings extends Component {
          // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
             {/* <Title level={5} className="post-title">{post.title}</Title> */}
-            <Paragraph className="post-desc">{post.meassage}</Paragraph>
-            {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
-               {post.tags?.map((tag, index) => {
-                  return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name ||tag|| ""}`}</Link></Tag>}</>
-               })}
-            </div>}
+            <Paragraph className="post-desc">
+               {this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage.substr(0, 500)}
+               {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
+                  {post.tags?.map((tag, index) => {
+                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || tag || ""}`}</Link></Tag>}</>
+                  })}
+               </div>}
+               {post.meassage.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}
+            </Paragraph>
+
             <Card.Meta
                className="post-image"
                avatar={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
             >
             </Card.Meta>
             <div className="d-flex justify-content-between mx-16 py-8">
-               {<ul className="card-actions-count pl-0">
-                  <li><span className="counter-icon likes"></span></li>
-                  <li><span className="counter-icon loves"></span></li>
-                  <li ><span className="counter-icon claps"></span></li>
-                  <li><span className="counter-icon whistles"></span></li>
-                  <li onMouseEnter={() => this.fetchPostReactions(post.id)}>
-                     <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
+               {<span onMouseEnter={() => this.fetchPostReactions(post.id)}><Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
                         <TabPane tab="Likes" key="1" style={{ floodColor: "#fff", height: 200 }}>
                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
@@ -340,11 +348,17 @@ class Postings extends Component {
                         <TabPane tab="Whistiles" key="4" style={{ floodColor: "#fff", height: 200 }}>
                            {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
                         </TabPane>
-                     </Tabs>}</div>}>
+                     </Tabs>}</div>}><ul className="card-actions-count pl-0">
+                  <li><span className="counter-icon likes"></span></li>
+                  <li><span className="counter-icon loves"></span></li>
+                  <li ><span className="counter-icon claps"></span></li>
+                  <li><span className="counter-icon whistles"></span></li>
+                  <li >
+                     
                         <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || (post.likes || 0))}</a>
-                     </Tooltip>
+                     
                   </li>
-               </ul>}
+               </ul></Tooltip></span>}
                <ul className="card-actions-count">
                   {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
                   {post.commentsCount != null && <li className="mr-0 cursor-pointer" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
@@ -375,9 +389,19 @@ class Postings extends Component {
       }
       this.setState({ ...this.state, allPosts });
    }
+   seeMore = (post) => {
+      let { descriptionSelection } = this.state;
+      const idx = descriptionSelection.indexOf(post.id);
+      if (idx > -1) {
+         descriptionSelection.splice(idx, 1);
+      } else {
+         descriptionSelection.push(post.id);
+      }
+      this.setState({ ...this.state, descriptionSelection });
+   }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox  dataRefreshed={()=>this.dataRefreshed()}/>}
+         {this.props.sharebox && <ShareBox dataRefreshed={() => this.dataRefreshed()} />}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
@@ -392,7 +416,7 @@ const mapStateToProps = ({ oidc }) => {
 }
 const mapDispatchToProps = dispatch => {
    return {
-      upadateProfile: (info,type) => { dispatch(postUpdation(info,type)) }
+      upadateProfile: (info, type) => { dispatch(postUpdation(info, type)) }
    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Postings);

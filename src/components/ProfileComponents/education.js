@@ -255,7 +255,7 @@ class Education extends Component {
                     {lstEducation.map((education, index) => {
                         return <div className="">
                             {education.RecordStatus != 'Deleted' && <div>
-                                <Divider className="text-left-line" orientation="left">{education.EducationType} <Link onClick={() => { this.deleteEducation(education, index) }}><span className=" icons white-close" /></Link></Divider>
+                                {/* <Divider className="text-left-line" orientation="left">{education.EducationType} <Link onClick={() => { this.deleteEducation(education, index) }}><span className=" icons white-close" /></Link></Divider> */}
                                 <Form layout="vertical" >
                                     <Row gutter={16}>
                                         <Col xs={24} sm={12}>

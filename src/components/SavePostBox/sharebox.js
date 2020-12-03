@@ -152,12 +152,21 @@ class ShareBox extends Component {
     popupOk = async e => {
         this.postObject.CreatedDate = new Date();
         this.postObject.Tags = this.state.tags;
+        if (this.postObject.IsAnonymous) {
+            this.postObject.UserDetails = {
+                "UserId": "",
+                "Firstname": "Anonymous",
+                "Lastname": "Anonymous",
+                "Image": null,
+                "Email": "Anonymous"
+            }
+        }
         const response = await savePost(this.postObject);
         if (response.ok) {
             this.setState({
                 visible: false,
             }, () => {
-                    this.props.dataRefreshed();
+                this.props.dataRefreshed();
                 notify({ description: "Posting completed successfully", message: "Post" })
             });
         } else {
@@ -403,7 +412,7 @@ class ShareBox extends Component {
                         {/* <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                             Close
                         </Button> */}
-                        <Button disabled={!this.state.post.Message} type="primary" onClick={()=>this.popupOk()}>
+                        <Button disabled={!this.state.post.Message} type="primary" onClick={() => this.popupOk()}>
                             Post
                         </Button></div>
                     ]} >
@@ -420,6 +429,7 @@ class ShareBox extends Component {
                                     onChange={this.handleChange}
                                     value={this.state.post.Message}
                                     required={true}
+                                    maxLength={1306}
                                 />
                             </div>
                             {/* <div className="caption-image">

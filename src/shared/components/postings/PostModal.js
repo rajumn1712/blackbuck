@@ -34,6 +34,7 @@ class PostCardModal extends Component {
         commentsection: false,
         reactionsLoading:false,
         postReactions:[],
+        descriptionSelection:[]
     }
     fetchPostReactions = async (id) => {
         this.setState({ ...this.state, reactionsLoading: true });
@@ -116,6 +117,16 @@ class PostCardModal extends Component {
 
         return imageObj ? (_result[type] ? _result[type]() : null) : null;
     }
+    seeMore = (post) => {
+        let { descriptionSelection } = this.state;
+        const idx = descriptionSelection.indexOf(post.id);
+        if (idx > -1) {
+           descriptionSelection.splice(idx, 1);
+        } else {
+           descriptionSelection.push(post.id);
+        }
+        this.setState({ ...this.state, descriptionSelection });
+     }
 
     render() {
 
@@ -179,12 +190,13 @@ class PostCardModal extends Component {
                                 >
                                     <div className="">
                                         {/* <Title level={5} className="post-title">{post.title}</Title> */}
-                                        <Paragraph className="post-desc">{post.meassage}</Paragraph>
+                                        <Paragraph className="post-desc">{this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage?.substr(0, 500)}
                                         {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                                             {post.tags?.map((tag, index) => {
                                                 return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
                                             })}
                                         </div>}
+                                        {post.meassage?.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}</Paragraph>
                                         <div className="d-flex justify-content-between mx-16 py-8">
                                             {<ul className="card-actions-count pl-0">
                                                 <li><span className="counter-icon likes"></span></li>

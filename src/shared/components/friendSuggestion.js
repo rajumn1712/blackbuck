@@ -69,7 +69,7 @@ class FriendSuggestions extends Component {
         return (
             <div>
                 <div className="friends-thead px-4">
-                    <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title><div className="link-color"><Link to="/commingsoon" className="link-color">View all</Link></div>
+                    <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title><Link to="/commingsoon" className="link-color d-flex align-items-center">View all</Link>
                 </div>
                 <div className="friends">
                     {/* {friends.map((friend, index) => {
@@ -104,7 +104,8 @@ class FriendSuggestions extends Component {
                             </div>
                         </div>)}
                         <div className="frnds-list-item viewall-item">
-                            <Link to="/commingsoon">View all</Link>
+                            <Link to="/commingsoon"><Button type="default" className="addfrnd semibold">View all</Button></Link>
+
                         </div>
                     </OwlCarousel>
                 </div>

@@ -1,13 +1,14 @@
 import { apiClient } from './clients';
-
 const POSTS_END_POINT = "service/api/posts/";
 const PROFILE_END_POINT = "service/api/profile/"
 const getPosts = (userid, pageNo, pageSize, postingsType) => {
     const method = {
         "all": "getAllPosts",
-        "user": "getUsersPosts"
+        "user": "getUsersPosts",
+        "saved": "getUserSavedPosts"
     }
-    return apiClient.get(POSTS_END_POINT + `${method[postingsType]}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`);
+    const endPoint = postingsType === "saved" ? PROFILE_END_POINT : POSTS_END_POINT;
+    return apiClient.get(endPoint + `${method[postingsType]}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`);
 }
 const savePost = (post) => {
     return apiClient.post(POSTS_END_POINT + "savePosts", post)

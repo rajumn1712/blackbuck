@@ -10,7 +10,13 @@ import { Card, List } from 'antd'
 // import { userLogout } from '../../reducers/auth';
 import '../../index.css';
 import '../../App.css';
-
+const data = [
+    {title: '#IPL'},
+    {title: '#COVID-19'},
+    {title: '#HBD@PK'},
+    {title: '#RRRMovie'},
+    {title: '#IPL 2020'}
+];
 class FriendRequests extends Component {
 
     state = {
@@ -21,11 +27,11 @@ class FriendRequests extends Component {
 
         const {tags} = this.state;
         return (
-            <div className="custom-card requests">
+            <div className="custom-card tag-card">
                 <Card title="#Tags" bordered={false} >
                 <List
                     itemLayout="vertical"
-                    dataSource={tags}
+                    dataSource={data}
                     renderItem={item => (
                     <div className="tag-color">{item.title}</div>
                    

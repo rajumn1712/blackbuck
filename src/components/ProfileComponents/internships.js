@@ -147,12 +147,12 @@ class Intership extends Component {
 
                     >
                         <Row gutter={16} className="mb-16">
-                            <Col xs={12}>
+                            <Col xs={24}>
                                 <Form.Item label="Company Name" className="custom-fields">
                                     <Input name="CompanyName" value={internshipsObj.CompanyName} onChange={(event) => this.handleChange(event)} />
                                 </Form.Item>
                             </Col>
-                            <Col xs={12}>
+                            <Col xs={24}>
                                 <Form.Item label="Short Name" className="custom-fields">
                                     <Input name="ShortName" value={internshipsObj.ShortName} onChange={(event) => this.handleChange(event)} />
                                 </Form.Item>
@@ -170,7 +170,7 @@ class Intership extends Component {
                                 </Form.Item>
                             </Col>
 
-                            <Col xs={12}>
+                            <Col className="mb-16" xs={24}>
                                 <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state.internshipsObj, lstUploadLogos: [] })}>
                                     {this.state.fileUploading && <Loader className="loader-top-middle" />}
                                     <span className="sharebox-icons photo-upload"></span>
@@ -193,7 +193,7 @@ class Intership extends Component {
                                     />
                                 </div>
                             </Col>
-                            <Col xs={12}>
+                            <Col xs={24}>
                                 <Dragger className="upload" {...this.uploadfileProps} onRemove={() => this.setState({ ...this.state.internshipsObj, lstUploadFiles: [] })}>
                                     {this.state.fileUpload && <Loader className="loader-top-middle" />}
                                     <span className="sharebox-icons photo-upload"></span>

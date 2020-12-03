@@ -22,6 +22,7 @@
 .profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: -4px; bottom: 6px; background: #33DF00;}
 .profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 72px; height: 72px; margin: auto;}
 .profile-card .ant-card-meta-detail{color: var(--white) !important; margin-top: 10px;}
+.left-rail .profile-card .ant-card-meta-detail{margin-top: 0px;}
 .profile-card .ant-card-meta-title{color: var(--textprimary); font-size: 16px; font-weight: 500; margin: 10px 0 2px !important; white-space: normal !important; text-transform: capitalize;}
 .profile-card .ant-card-meta-description{color: var(--textsecondary); font-size: 12px;}
 .profile-card .ant-card-actions{width: 100%; background: transparent; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);}
@@ -52,7 +53,7 @@
 .left-menu{width: 18px; height: 18px; vertical-align: initial; padding-left: 0 !important; display: inline-block; vertical-align: text-bottom; background: url(styles/images/icons.svg) no-repeat;}
 .left-menu.profile-icon{background-position: -5px -200px;}
 .left-menu.friends-icon{background-position: -35px -200px;}
-.left-menu.post-icon{background-position: -65px -202px;}
+.left-menu.post-icon{background-position: -65px -203px;}
 .icons.edit{background-position:-61px -198px;}
 .left-menu.group-icon{background-position: -94px -200px;}
 .left-menu.noti-icon{background-position: -124px -200px;}
@@ -176,7 +177,7 @@
 .invite-btn{display: flex;align-items: center;justify-content: center;}
 .custom-card .ant-card{ border-radius: 0.8rem; margin-bottom: 12px; border-color: var(--line);border: 1px solid var(--line);}
 .custom-card .ant-card-body{ padding: 0;}
-.custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);}
+/* .custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);} */
 .custom-card .ant-list-item{padding: 8px 12px;}
 .custom-card .ant-card-head{padding: 0 12px !important;}
 .custom-card .ant-list-item:hover{background: rgba(0, 0, 0, 0.05);}
@@ -184,7 +185,7 @@
 /* .custom-card .ant-list-item:first-child{padding-top: 0 !important;}
 .custom-card .ant-list-item:last-child{ padding-bottom: 0 !important;} */
 .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image{width: 40px;height: 40px;border-radius: 12px;}
-.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; box-shadow: var(--boxshadow); border-radius: 13px;}
+.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; border-radius: 13px;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-14);line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
 .custom-card .ant-list-item .overflow-text{cursor: pointer;}
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
@@ -212,7 +213,7 @@
 /* FriendRequests */
 .ant-avatar.request-image{width: 60px !important;height: 60px !important;border-radius: 12px;}
 .list-remove, .list-remove:hover{color: #FF0000 !important; font-weight: 500;}
-.requests .ant-row .ant-col{margin: 16px 5px 0; border-bottom: 1px solid var(--line);}
+.requests .ant-row .ant-col{margin: 16px 5px 0;}
 .group-page .ant-card-meta-detail .ant-card-meta-title{margin-bottom: 0;}
 .group-page .list-link{color: var(--primary) !important;font-weight: 500;}
 .group-page .ant-card, .group-page .ant-card-actions{border-radius: 10px;}
@@ -237,7 +238,7 @@
 .intern-cards .card-options-left{ position: absolute; top: 8px;left: 8px;}
 .intern-cards .card-options-right{ position: absolute; top: 8px; right:8px;}
 .intern-cards .intern-cardbody .description .afterline:after{height: 16px !important;top: 3px !important;right: -10px !important;}
-.tag-color{color: var(--primary);font-size: var(--f-16);font-weight: 500;padding: 5px 0;}
+.tag-color{color: var(--primary);font-size: var(--f-14);font-weight: 500;padding: 5px 0;}
 .edu-card{display: flex;align-items: center;}
 .edu-card .ant-list-item-meta-avatar{margin-right: 0px !important;}
 .edu-card .edu-study .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-16);}
@@ -304,9 +305,14 @@ textarea{resize: unset !important;}
 .ant-btn.ant-btn-primary{padding-left:30px;padding-right: 30px;}
 .antd-img-crop-modal .ant-modal-footer .ant-btn:first-child{display: none;}
 .ant-modal-footer button + button{margin: 0 !important;}
-.like-tabs .ant-tooltip-content{width: 350px;}
+.like-tabs .ant-tooltip-content{width: 300px;}
 .like-tabs .ant-tabs-tab{font-weight: 500;}
 .like-tabs .ant-tabs-tab:active, .like-tabs .ant-tabs-tab .ant-tabs-tab-btn:active, .like-tabs .ant-tabs-tab .ant-tabs-tab-btn:focus {color: var(--white) !important;}
 .group-page .ant-card-bordered{border: 1px solid var(--line) !important;}
 .rhap_container{box-shadow: none !important; border: 1px solid var(--line); border-radius: 0.4rem;}
 .post-image .audio, .post-preview-box .audio{margin: 4px 16px 4px;}
+.obj-fit{height: 100%;object-fit: cover;}
+.group-page .ant-card-cover{height: 200px;}
+.see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;}
+.see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}
+.tag-card .ant-list-split{padding: 12px;background:url('./styles/images/hash.svg') no-repeat;background-position: center right;}
