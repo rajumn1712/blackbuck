@@ -110,11 +110,11 @@ class HeaderComponent extends React.Component {
         });
     };
     menu = () => {
-        return (<Menu className="profile-dropdown">
+        return (<Menu className="profile-dropdown custom-dropdown">
             <Menu.Item key="0">
                 <Link to="/profile">
                     <Meta
-                        className="account-holder"
+                        className="account-holder profilename"
                         avatar={<Avatar src={this.state?.ProfilePic || defaultUser} />}
                         title={this.state?.FirstName}
                         description={this.state?.Email}
@@ -122,10 +122,10 @@ class HeaderComponent extends React.Component {
                 </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key="1">
+            {/* <Menu.Item key="1">
                 <Link to="/commingsoon"><span className="icons swap-icon" /><span className="pl-16">Switch Accounts</span>
                 </Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item key="2">
                 <Link to="/commingsoon"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
                 </Link>

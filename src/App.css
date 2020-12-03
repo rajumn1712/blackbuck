@@ -22,6 +22,7 @@
 .profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: -4px; bottom: 6px; background: #33DF00;}
 .profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 72px; height: 72px; margin: auto;}
 .profile-card .ant-card-meta-detail{color: var(--white) !important; margin-top: 10px;}
+.left-rail .profile-card .ant-card-meta-detail{margin-top: 0px;}
 .profile-card .ant-card-meta-title{color: var(--textprimary); font-size: 16px; font-weight: 500; margin: 10px 0 2px !important; white-space: normal !important; text-transform: capitalize;}
 .profile-card .ant-card-meta-description{color: var(--textsecondary); font-size: 12px;}
 .profile-card .ant-card-actions{width: 100%; background: transparent; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);}
@@ -176,7 +177,7 @@
 .invite-btn{display: flex;align-items: center;justify-content: center;}
 .custom-card .ant-card{ border-radius: 0.8rem; margin-bottom: 12px; border-color: var(--line);border: 1px solid var(--line);}
 .custom-card .ant-card-body{ padding: 0;}
-.custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);}
+/* .custom-card .ant-list-split .ant-list-item{ border-bottom: 1px solid var(--line);} */
 .custom-card .ant-list-item{padding: 8px 12px;}
 .custom-card .ant-card-head{padding: 0 12px !important;}
 .custom-card .ant-list-item:hover{background: rgba(0, 0, 0, 0.05);}
@@ -184,7 +185,7 @@
 /* .custom-card .ant-list-item:first-child{padding-top: 0 !important;}
 .custom-card .ant-list-item:last-child{ padding-bottom: 0 !important;} */
 .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image{width: 40px;height: 40px;border-radius: 12px;}
-.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; box-shadow: var(--boxshadow); border-radius: 13px;}
+.custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar{ margin-right: 16px; border-radius: 13px;}
 .custom-card .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-14);line-height: 18px; margin-bottom: 3px;color: var(--textprimary);}   
 .custom-card .ant-list-item .overflow-text{cursor: pointer;}
 .overflow-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
@@ -312,5 +313,5 @@ textarea{resize: unset !important;}
 .post-image .audio, .post-preview-box .audio{margin: 4px 16px 4px;}
 .obj-fit{height: 100%;object-fit: cover;}
 .group-page .ant-card-cover{height: 261px;}
-.see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;max-height: 3rem;}
+.see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;}
 .see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}

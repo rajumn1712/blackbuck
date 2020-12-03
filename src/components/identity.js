@@ -9,29 +9,31 @@ const { Meta } = Card;
 const { SubMenu } = Menu;
 class Identity extends Component {
     state = {
-       
+
     };
     componentDidMount() {
     }
     render() {
-        const { profile:homeInfo } = this.props;
+        const { profile: homeInfo } = this.props;
         return (
             <div className="left-rail">
                 <Card className="profile-card"
                     actions={[
-                        <div className="profile-status f-16">{homeInfo?.Friends?homeInfo?.Friends:0}<span className="f-12">Friends</span></div>,
-                        <div className="profile-status f-16">{homeInfo?.Groups?homeInfo?.Groups:0}<span className="f-12">Groups</span></div>,
-                        <div className="profile-status f-16">{homeInfo?.Posts?homeInfo.Posts:0}<span className="f-12">Posts</span></div>,
+                        <div className="profile-status f-16">{homeInfo?.Friends ? homeInfo?.Friends : 0}<span className="f-12">Friends</span></div>,
+                        <div className="profile-status f-16">{homeInfo?.Groups ? homeInfo?.Groups : 0}<span className="f-12">Groups</span></div>,
+                        <div className="profile-status f-16">{homeInfo?.Posts ? homeInfo.Posts : 0}<span className="f-12">Posts</span></div>,
                     ]}
                     cover={<img src={homeInfo?.CoverPic || coverphoto} />}
                 >
-                    <Meta
-                        avatar={
-                            <Avatar src={homeInfo?.ProfilePic||defaultUser} />
-                        }
-                        title={<div>{homeInfo?.FirstName}<span className="premium-icon c-default"></span></div>}
-                        description="Groups"
-                    />
+                    <Link to="/profile">
+                        <Meta
+                            avatar={
+                                <Avatar src={homeInfo?.ProfilePic || defaultUser} />
+                            }
+                            title={<div>{homeInfo?.FirstName}<span className="premium-icon c-default"></span></div>}
+                            description="Groups"
+                        />
+                    </Link>
                 </Card>
                 <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
                     <Menu.Item key="profile"><Link to="/profile"><span className="left-menu profile-icon"></span><span>Profile</span></Link></Menu.Item>
@@ -46,7 +48,7 @@ class Identity extends Component {
     }
 }
 const mapStateToProps = ({ oidc }) => {
-    return { user:oidc.user,profile:oidc.profile }
+    return { user: oidc.user, profile: oidc.profile }
 }
 const mapDispatchToProps = dispatch => {
     return {
