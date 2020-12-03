@@ -32,7 +32,7 @@ class Friends extends Component {
         const { FriendsList } = this.state;
         return (
             <div className="custom-card requests">
-                <Card title="Friends" bordered={false} >
+                <Card title="Friends" bordered={true} >
                     <List grid={{
                         gutter: 16,
                         column: 2,
