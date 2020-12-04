@@ -56,7 +56,8 @@ class About extends Component {
     user[input.name] = input.value;
     this.setState(user);
   };
-  showModal = () => {
+  showModal = (e) => {
+    e.preventDefault();
     this.setState({
       visible: true,
     });

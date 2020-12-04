@@ -39,7 +39,8 @@ class Education extends Component {
     lstEducation: [],
     errors: {},
   };
-  showModal = () => {
+  showModal = (e) => {
+    e.preventDefault();
     this.setState({
       visible: true,
     });

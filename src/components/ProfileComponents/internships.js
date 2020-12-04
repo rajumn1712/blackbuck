@@ -39,6 +39,7 @@ class Intership extends Component {
     CompanyName: "",
     ShortName: "",
     Place: "",
+    Duration: "",
   };
   uploadProps = {
     name: "file",
@@ -84,7 +85,8 @@ class Intership extends Component {
       }
     },
   };
-  showModal = () => {
+  showModal = (e) => {
+    e.preventDefault();
     this.setState({
       visible: true,
     });
@@ -120,9 +122,9 @@ class Intership extends Component {
         message.success("Intership saved successfully");
       }
     );
-    this.setState({
-      visible: false,
-    });
+    // this.setState({
+    //   visible: false,
+    // });
   };
   handleCancel = (e) => {
     this.setState({
@@ -194,7 +196,7 @@ class Intership extends Component {
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
           >
-            {({ touched }) => {
+            {({ touched, handleBlur }) => {
               return (
                 <Form layout="vertical">
                   <Row gutter={16} className="mb-16">
@@ -205,6 +207,7 @@ class Intership extends Component {
                           name="CompanyName"
                           value={internshipsObj.CompanyName}
                           onChange={(event) => this.handleChange(event)}
+                          onBlur={handleBlur}
                         />
                         <span className="validateerror">
                           <ErrorMessage name="CompanyName" />
@@ -265,6 +268,14 @@ class Intership extends Component {
                         >
                           <Option value="Select Option">Select Duration</Option>
                         </Select>
+                        <span className="validateerror">
+                          <ErrorMessage name="Duration" />
+                        </span>
+                        {errors["Duration"] && !touched.Duration ? (
+                          <span className="validateerror">
+                            {errors["Duration"]}
+                          </span>
+                        ) : null}
                       </Form.Item>
                     </Col>
 
