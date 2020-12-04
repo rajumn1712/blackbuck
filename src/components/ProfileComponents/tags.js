@@ -33,7 +33,7 @@ class FriendRequests extends Component {
                     itemLayout="vertical"
                     dataSource={data}
                     renderItem={item => (
-                    <div className="tag-color"><Link to="/commingsoon">{item.title}</Link></div>
+                    <div className="tag-name"><Link to="/commingsoon">{item.title}</Link></div>
                    
                     )}
                     />

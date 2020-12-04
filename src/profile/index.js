@@ -163,7 +163,7 @@ class Profile extends Component {
                                 <Upload {...this.uploadProps}>
                                     <Tooltip title="Change Coverphoto">
                                         <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
-                                            <span className="left-menu post-icon" />
+                                            <span className="left-menu camera-icon" />
                                         </a>
                                     </Tooltip>
                                 </Upload>
@@ -183,7 +183,7 @@ class Profile extends Component {
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profile?.ProfilePic || defaultUser} />
                                             <Tooltip placement="top" title="Change Photo">
-                                                <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu post-icon" /> </a>
+                                                <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                             </Tooltip>
                                         </Upload>
                                     </ImgCrop>
