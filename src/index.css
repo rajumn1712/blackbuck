@@ -97,7 +97,8 @@ transition-duration: 167ms;}
 .anticon-loading svg{fill: var(--primary) !important;}
 .loader-middle,.loader-top-middle{display: flex;align-items: center;justify-content: center;margin-top:10px;}
 .loader-middle{height: 100vh;}
-.coming-soon{height: calc(100vh - 70px); margin-bottom: 0;display: flex;align-items: center;justify-content: center;}
+/* .coming-soon{height: calc(100vh - 70px); margin-bottom: 0;display: flex;align-items: center;justify-content: center;} */
+.coming-soon{height: calc(100vh - 70px);}
 .coming-soon h1{font-size: 80px;margin-bottom: 0;margin-right: 15px;}
 .likes-counters .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .likes-counters .ant-tabs-tab-btn {color: var(--white);}
 .likes-counters .ant-tabs-ink-bar{background: var(--white);}
