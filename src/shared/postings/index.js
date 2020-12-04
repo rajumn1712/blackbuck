@@ -334,7 +334,7 @@ class Postings extends Component {
                avatar={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
             >
             </Card.Meta>
-            <div className="d-flex justify-content-between mx-16 py-8">
+            <div className="d-flex justify-content-between mx-16 py-16">
                {<span onMouseEnter={() => this.fetchPostReactions(post.id)}><Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <Tabs defaultActiveKey="1" onChange={() => { }}>
                         <TabPane tab="Likes" key="1" style={{ floodColor: "#fff", height: 200 }}>
                            {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)}
