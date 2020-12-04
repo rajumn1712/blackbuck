@@ -179,7 +179,7 @@ class Profile extends Component {
                             </div>
                             <Card className="user-banner" >
                                 <Meta avatar={<div className="">
-                                    <ImgCrop shape="rect" beforeCrop={this.handleBeforUpload}>
+                                    <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                         <Upload {...this.uploadProps}>
                                             <Avatar src={profile?.ProfilePic || defaultUser} />
                                             <Tooltip placement="top" title="Change Photo">
