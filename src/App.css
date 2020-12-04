@@ -327,3 +327,4 @@ textarea{resize: unset !important;}
 .notification-list .notification-image .ant-avatar-image,  .messenger-drawer .ant-card-meta .ant-avatar-image, .profile-dropdown .ant-card-meta .ant-avatar-image,
 .addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius: 50% !important;}
 .validateerror{color:red;text-align: right; display: block;}
+.sub-text .ant-card-actions li{padding-bottom: 12px;}
