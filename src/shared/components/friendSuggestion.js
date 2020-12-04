@@ -87,7 +87,7 @@ class FriendSuggestions extends Component {
                     }) 
                     }*/}
                     {this.state.friends.length > 4 && <><Link className="more-frnd-btn left" onClick={() => { this.carouselRef.prev() }}><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link></>}
-                    <OwlCarousel items={3} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${this.state.friends.length}`}>
+                    <OwlCarousel margin="15px" items={3} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${this.state.friends.length}`}>
                         {this.state.friends.map((friend, index) => <div className="frnds-list-item" key={index}>
                             <div className="frnds-img">
                                 <img src={friend.Image || defaultUser} width="100%" height="100%" />
@@ -105,7 +105,6 @@ class FriendSuggestions extends Component {
                         </div>)}
                         <div className="frnds-list-item viewall-item">
                             <Link to="/commingsoon"><Button type="default" className="addfrnd semibold">View all</Button></Link>
-
                         </div>
                     </OwlCarousel>
                 </div>

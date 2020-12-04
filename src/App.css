@@ -15,7 +15,7 @@
 .share-box{border-radius: 0.8rem; text-align: center; margin-bottom: 16px; background: var(--white); border: 1px solid var(--line);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 0.8rem; color: var(--white); border: 0; position: relative;}
-.profile-card .ant-card-cover{position: absolute; left: 0; top: 0; right: 0; height: 60px; border-radius: 0.8rem 0.8rem 0 0; overflow: hidden; border: 1px solid transparent;}
+.profile-card .ant-card-cover{position: absolute; left: 0; top: 0; right: 0; height: 68px; border-radius: 0.8rem 0.8rem 0 0; overflow: hidden; border: 1px solid transparent;}
 .left-rail{border: 1px solid var(--line);}
 /* .profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;} */
 .profile-card .ant-avatar{width: 84px; height: 84px; padding-right: 0; border: 2px solid var(--white);}
@@ -193,7 +193,8 @@
 .w-150{width: 150px;}
 .custom-card .list-link{color: var(--primary);margin-left: 3px; font-weight: 500;}
 .custom-card .ant-card-extra{padding: 12px 0;}
-.custom-card .ant-card-actions, .group-page .ant-card-actions{border-bottom-left-radius: 0.8rem;border-bottom-right-radius: 0.8rem;border-top: 0;}
+.custom-card .ant-card-actions, .group-page .ant-card-actions{border-bottom-left-radius: 0.8rem;border-bottom-right-radius: 0.8rem;}
+.custom-card .ant-card-actions{padding-bottom: 0 !important}
 .custom-card .ant-card-cover, .group-page .ant-card-cover{border: 1px solid var(--line) !important;border-bottom: 0;border-radius: 10px;}
 .icons.add{background-position:-505px -198px;}
 .icons.add:hover{background-position: -505px -224px;}
