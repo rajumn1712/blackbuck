@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider, Image, Upload, message, Button } from 'antd';
+import { Row, Col, Tabs, Card, Statistic, Avatar, Menu, Tooltip, Slider, Image, Upload, message, Button, Affix } from 'antd';
 import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import './profilestyle.css'
@@ -276,7 +276,9 @@ class Profile extends Component {
                     <Col xs={24} sm={8} md={7} lg={7} xl={7}>
                         {/* <FriendsSuggestioncard /> */}
                         <Groups />
-                        <Ads />
+                        <Affix offsetTop={86} >
+                            <Ads />
+                        </Affix>  
 
                     </Col>
                 </Row>
