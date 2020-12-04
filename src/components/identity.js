@@ -5,16 +5,25 @@ import { profileSuccess } from '../reducers/auth';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import coverphoto from '../styles/images/post-image.jpg';
 import { connect } from 'react-redux';
+import { store } from '../store';
 const { Meta } = Card;
 const { SubMenu } = Menu;
 class Identity extends Component {
+    storeSubscription
     state = {
-
+        profile:this.props?.profile
     };
     componentDidMount() {
+        this.storeSubscription = store.subscribe(() => {
+            const { profile } = store.getState().oidc;
+            this.setState({ ...this.state, profile })
+        })
+    }
+    componentWillUnmount() {
+        this.storeSubscription();
     }
     render() {
-        const { profile: homeInfo } = this.props;
+        const { profile: homeInfo } = this.state;
         return (
             <div className="left-rail">
                 <Card className="profile-card"
