@@ -326,3 +326,4 @@ textarea{resize: unset !important;}
 .user-statistic .user-banner .ant-card-meta .ant-avatar-image, .coverpage .editpost, .img-camera, .main-header .ant-menu-item a,
 .notification-list .notification-image .ant-avatar-image,  .messenger-drawer .ant-card-meta .ant-avatar-image, .profile-dropdown .ant-card-meta .ant-avatar-image,
 .addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius: 50% !important;}
+.validateerror{color:red;text-align: right; display: block;}
