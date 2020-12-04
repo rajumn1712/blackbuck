@@ -18,9 +18,9 @@
 .profile-card .ant-card-cover{position: absolute; left: 0; top: 0; right: 0; height: 60px; border-radius: 0.8rem 0.8rem 0 0; overflow: hidden; border: 1px solid transparent;}
 .left-rail{border: 1px solid var(--line);}
 /* .profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;} */
-.profile-card .ant-avatar{width: 72px; height: 72px; padding-right: 0; border: 2px solid var(--white);}
+.profile-card .ant-avatar{width: 86px; height: 86px; padding-right: 0; border: 2px solid var(--white);}
 .profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: 5px; bottom: 7px; background: #33DF00;}
-.profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 72px; height: 72px; margin: auto;}
+.profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 86px; height: 86px; margin: auto;}
 .profile-card .ant-card-meta-detail{color: var(--white) !important; margin-top: 10px;}
 .left-rail .profile-card .ant-card-meta-detail{margin-top: 0px;}
 .profile-card .ant-card-meta-title{color: var(--textprimary); font-size: 16px; font-weight: 500; margin: 10px 0 2px !important; white-space: normal !important; text-transform: capitalize;}
