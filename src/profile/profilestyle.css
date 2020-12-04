@@ -59,7 +59,6 @@
 .user-statistic .user-banner .ant-card-meta .ant-avatar-image {
     width: 150px;
     height: 150px;
-    box-shadow: var(--boxShadow);
 }
 .user-banner .ant-upload-select{
     position: relative;

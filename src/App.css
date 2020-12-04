@@ -15,11 +15,11 @@
 .share-box{border-radius: 0.8rem; text-align: center; margin-bottom: 16px; background: var(--white); border: 1px solid var(--line);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .left-rail .profile-card{display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 0.8rem; color: var(--white); border: 0; position: relative;}
-.profile-card .ant-card-cover{position: absolute; left: 0; top: 0; right: 0; height: 56px; border-radius: 0.8rem 0.8rem 0 0; overflow: hidden; border: 1px solid transparent;}
+.profile-card .ant-card-cover{position: absolute; left: 0; top: 0; right: 0; height: 60px; border-radius: 0.8rem 0.8rem 0 0; overflow: hidden; border: 1px solid transparent;}
 .left-rail{border: 1px solid var(--line);}
 /* .profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;} */
-.profile-card .ant-avatar{width: 72px; height: 72px; padding-right: 0; border-radius: 20px !important;}
-.profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: 3px; bottom: 6px; background: #33DF00;}
+.profile-card .ant-avatar{width: 72px; height: 72px; padding-right: 0; border: 2px solid var(--white);}
+.profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: 5px; bottom: 7px; background: #33DF00;}
 .profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 72px; height: 72px; margin: auto;}
 .profile-card .ant-card-meta-detail{color: var(--white) !important; margin-top: 10px;}
 .left-rail .profile-card .ant-card-meta-detail{margin-top: 0px;}
@@ -54,6 +54,7 @@
 .left-menu.profile-icon{background-position: -5px -200px;}
 .left-menu.friends-icon{background-position: -35px -200px;}
 .left-menu.post-icon{background-position: -65px -203px;}
+.left-menu.camera-icon{background-position: -378px -254px;}
 .icons.edit{background-position:-61px -198px;}
 .left-menu.group-icon{background-position: -94px -200px;}
 .left-menu.noti-icon{background-position: -124px -200px;}
@@ -238,7 +239,10 @@
 .intern-cards .card-options-left{ position: absolute; top: 8px;left: 8px;}
 .intern-cards .card-options-right{ position: absolute; top: 8px; right:8px;}
 .intern-cards .intern-cardbody .description .afterline:after{height: 16px !important;top: 3px !important;right: -10px !important;}
-.tag-color{color: var(--primary);font-size: var(--f-14);font-weight: 500;padding: 0 0 4px;}
+.tag-name{font-size: var(--f-12); padding: 6px 12px;}
+.tag-name:hover {background: var(--bghover);}
+.tag-name a{color: var(--textsecondary) !important; display: block;}
+.tag-name a:hover {color: var(--textprimary) !important}
 .edu-card{display: flex;align-items: center;}
 .edu-card .ant-list-item-meta-avatar{margin-right: 0px !important;}
 .edu-card .edu-study .ant-list-item-meta-content .ant-list-item-meta-title{font-size: var(--f-16);}
@@ -275,7 +279,7 @@
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
 .center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
 .icon.education-icon{background-position: -263px -254px;}
-.img-camera{width: 30px; height: 30px; background: var(--white); position: absolute; right: 24px; top: 16px; box-shadow: var(--boxshadow); text-align: center; line-height: 34px;}
+.img-camera{width: 30px; height: 30px; background: var(--white); position: absolute; right: 8px; top: 16px; box-shadow: var(--boxshadow); text-align: center; line-height: 30px;}
 .education .ant-list-item-meta-avatar{border: 1px solid #ccc;border-radius: 11px;background: #ffff;padding: 4px 5px;}
 .overlay { position: absolute;  bottom: 0;  background: var(--black); background: rgba(0, 0, 0, 0.5); color: #f1f1f1; transition: .5s ease;  color: var(--white);  font-size: 22px; padding: 19px; text-align: center;}
 .img-container{position: relative;width: 100%;}
@@ -315,7 +319,7 @@ textarea{resize: unset !important;}
 .group-page .ant-card-cover{height: 180px;}
 .see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;}
 .see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}
-.tag-card .ant-list-split{padding: 12px;background:url('./styles/images/hash.svg') no-repeat;background-position: center right;}
+.tag-card .ant-list-split{padding: 8px 0;}
 .profile-tabs .group-page{background: #f3f2ef;padding: 16px;border-radius: 0.8rem;border-color: var(--line);border: 1px solid var(--line);}
 .profile-card .ant-avatar, .post-card .ant-avatar, .post-comment .ant-comment-avatar img, .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image,
 .user-statistic .user-banner .ant-card-meta .ant-avatar-image, .coverpage .editpost, .img-camera, .main-header .ant-menu-item a,

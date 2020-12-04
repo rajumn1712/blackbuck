@@ -100,7 +100,7 @@
 }
 
 .main-header .ant-menu-item a {
-    padding: 12px 12px 19px;
+    padding: 12px 11px 19px;
     background: var(--white);
     border-radius: 0.8rem;
     transition: color 2s linear 1s !important;
