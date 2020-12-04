@@ -26,7 +26,7 @@ class GroupsPage extends Component {
             .then(res => {
                 if (res.ok) {
                     let { Groups } = this.state;
-                    Groups= Groups.concat(res.data)
+                    Groups = Groups.concat(res.data)
                     this.setState({ ...this.state, loading: false, Groups: Groups, loadMore: res.data.length === this.state.pageSize })
                 }
             })
@@ -66,19 +66,24 @@ class GroupsPage extends Component {
                                 ]}
                             >
                                 <Meta title={<Link to="/commingsoon" className="post-title">{group.name}</Link>}
-                                    description={<div>
+                                    description={<div><div className="mb-4 f-12 text-overflow">Digital Marketing</div>
                                         <div className="d-flex align-items-center">
                                             <span className="list-request">
-                                                <Avatar.Group
+                                                {/* <Avatar.Group
                                                     maxCount={4}
                                                     size="large"
                                                     maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                                                 >
+                                                    <Avatar src={user} />
+                                                    <Avatar src={user} />
+                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                                     {group.mutulFnds?.map((friend, index) => {
                                                         return <Avatar key={index} src={friend.image} />
                                                     })
                                                     }
-                                                </Avatar.Group>
+                                                </Avatar.Group> */}
                                             </span>
                                             {group.mutulFnds && <span><span>{group.MutualFriends.length}</span>Mutual Friends</span>}
 
