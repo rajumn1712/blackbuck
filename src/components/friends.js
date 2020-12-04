@@ -34,7 +34,6 @@ class Friends extends Component {
             <div className="custom-card requests">
                 <Card title="Friends" bordered={true} >
                     <List grid={{
-                        gutter: 16,
                         column: 2,
                         xs: 1,
                         md: 2,
