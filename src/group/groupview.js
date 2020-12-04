@@ -1,84 +1,35 @@
-import React, { Component, createRef } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button } from 'antd';
-import ShareBox from '../components/SavePostBox/sharebox';
-import Invite from '../components/invite';
+import React, { Component } from 'react';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image } from 'antd';
+import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
-import PostCard from '../components/postcard/Post';
+import Postings from '../shared/postings/index';
 import './groupstyle.css'
 import PadLock from '../styles/images/padlock.svg'
 import { Link } from 'react-router-dom';
-import Courses from '../components/ProfileComponents/courses'
-import Groups from '../shared/components/Groups';
 import GroupAbout from '../shared/components/groupabout';
-import FriendsRequestsCard from '../shared/components/friendsRequests'
 import CommonModal from '../components/ProfileComponents/CommonModal';
-import { profileDetail } from '../shared/api/apiServer';
+import { profileDetail, joinGroup, saveProfileImage } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
-const { Meta } = Card;
+import { profileSuccess } from '../reducers/auth';
+import notify from '../shared/components/notification';
+import ImgCrop from 'antd-img-crop';
+import defaultUser from '../styles/images/defaultuser.jpg';
 
 const { TabPane } = Tabs;
-const data = [
-    { title: 'Programmers' }
-];
-
-const navigations =
-    [
-        {
-            "Heading": "About Me",
-            "Url": "/aboutme",
-            "CssSprite": "left-menu profile-icon",
-            "IsActive": false
-        },
-        {
-            "Heading": "Interests",
-            "Url": "/interests",
-            "CssSprite": "left-menu interest",
-            "IsActive": false
-        },
-        {
-            "Heading": "Hobbies",
-            "Url": "/hobbies",
-            "CssSprite": "left-menu hobbies",
-            "IsActive": false
-        },
-        {
-            "Heading": "Internships",
-            "Url": "/internships",
-            "CssSprite": "left-menu intenship",
-            "IsActive": false
-        },
-        {
-            "Heading": "Video as Profile",
-            "Url": "/videoprofile",
-            "CssSprite": "left-menu play",
-            "IsActive": false
-        },
-        {
-            "Heading": "Education",
-            "Url": "/education",
-            "CssSprite": "left-menu education",
-            "IsActive": false
-        },
-        {
-            "Heading": "Courses",
-            "Url": "/courses",
-            "CssSprite": "left-menu courses",
-            "IsActive": false
-        },
-        {
-            "Heading": "Groups",
-            "Url": "/profilegroups",
-            "CssSprite": "left-menu group-icon",
-            "IsActive": false
-        }
-    ]
 class Group extends Component {
-
-    aboutRef = createRef(null);
-
+    imageObject = {};
     state = {
-        navigations: navigations,
-        profileData: {},
+        groupData: {
+            lstDetails: [
+                {
+                    title: "Programmers",
+                    Type: "Private Group",
+                    CreatedDate: '2020-10-11',
+                    Members: '2.5k'
+                }
+            ],
+            isProfilePic: false,
+        },
         disabled: false,
         visible: false
     };
@@ -86,12 +37,83 @@ class Group extends Component {
     handleDisabledChange = disabled => {
         this.setState({ disabled });
     };
+    handleBeforUpload = (file) => {
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJPG) {
+            message.error('You can only upload JPG or PNG file!');
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+    handleImageOk = () => {
+        const imageType = this.state.isProfilePic ? 'ProfilePic' : 'CoverPic';
+        saveProfileImage(this.props?.profile?.Id, imageType, this.imageObject)
+            .then(res => {
+                if (this.state.isProfilePic) {
+                    this.props.profile.ProfilePic = this.imageObject.ImageUrl;
+                } else {
+                    this.props.profile.CoverPic = this.imageObject.ImageUrl;
+                }
+                this.imageObject = {};
+            })
+
+    }
+    uploadProps = {
+        name: 'file',
+        multiple: false,
+        fileList: [],
+        action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
+        onChange: ({ file }) => {
+            const { status } = file;
+            if (status !== 'uploading') {
+                this.imageObject.ImageUrl = file.response[0];
+                this.handleImageOk();
+            }
+            if (status === 'done') {
+                message.success(`${this.state.isProfilePic ? 'Profil picture' : 'Cover picture'} uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`File upload failed.`);
+            }
+        },
+
+    };
+
+    joinGroup = async (item) => {
+        const obj = {
+            "UserId": this.props?.profile?.Id,
+            "Firstname": this.props?.profile?.FirstName,
+            "Lastname": this.props?.profile?.LastName,
+            "Image": this.props?.profile?.ProfilePic,
+            "Email": this.props?.profile?.Email
+        }
+        if (item.type == "Private") { obj.Type = "request" }
+        const joinResponse = await joinGroup(item.id, obj);
+        if (joinResponse.ok) {
+            notify({ message: "Group join", description: item.type === "Private" ? "Request sent" : "Joined to group" });
+            if (item.type !== 'Private') {
+                this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
+                this.props.updateProfile(this.props.profile)
+            }
+        } else {
+            notify({ message: "Error", description: "Something went wrong :)", type: "error" });
+        }
+    }
 
     componentDidMount() {
         profileDetail(this.props?.profile?.Id)
             .then(res => {
-                const profiledata = res.data[0].User;
-                this.setState({ profileData: profiledata });
+                
+                const groupData = res.data[0].User;
+                groupData.lstDetails = [
+                    {}
+                ];
+                groupData.lstDetails[0].title = "Programmers";
+                groupData.lstDetails[0].Type = "Private Group";
+                groupData.lstDetails[0].CreatedDate = '2020-10-11';
+                groupData.lstDetails[0].Members = '2.5K';
+                this.setState({ groupData: groupData });
             })
     }
     showModal = () => {
@@ -119,40 +141,47 @@ class Group extends Component {
     }
 
     render() {
-        const { navigations, profileData, disabled, visible } = this.state;
+        const { groupData, disabled, visible } = this.state;
         return (
-            profileData ? <div className="main">
+            groupData ? <div className="main">
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <img className="center-focus" src={profileData.CoverPic} alt="profilecover" />
+                            <img className="center-focus" src={groupData.CoverPic} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
-                            <Tooltip title="Change Coverphoto">
-                                <Link to="#" className="editpost">
-                                    <span className="left-menu post-icon" />
-                                </Link>
-                            </Tooltip>
+                            <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
+                                <Upload {...this.uploadProps}>
+                                    <Tooltip title="Change Coverphoto">
+                                        <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
+                                            <span className="left-menu camera-icon" />
+                                        </a>
+                                    </Tooltip>
+                                </Upload>
+                            </ImgCrop>
 
                         </div>
                         <div className="user-statistic">
                             <Card className="group-banner w-btn" >
-                                {/* <Meta avatar={<div><Avatar src={profileData.ProfilePic} /> <a onClick={this.showModal} className="img-camera"><span className="icons camera" /> </a></div>}
-                                    title={<div>sdfghjk</div>}
-                                    description={<div>ASDFGH</div>}
-                                /> */}
                                 <List
                                     itemLayout="horizontal"
-                                    dataSource={data}
+                                    dataSource={groupData.lstDetails}
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<div className="img-container"><Avatar src={profileData.ProfilePic} /> <div className="text-center mt-8"><span className="f-20 fw-400">2.5K</span> Members</div><a onClick={this.showModal} className="img-camera overlay"><span className="icons camera" /> </a></div>}
+                                                avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
+                                                    <Upload {...this.uploadProps}>
+                                                        <Avatar src={groupData?.ProfilePic || defaultUser} />
+                                                        <Tooltip placement="top" title="Change Photo">
+                                                            <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
+                                                        </Tooltip>
+                                                    </Upload>
+                                                </ImgCrop> <div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div></div>}
                                                 title={<a href="https://ant.design">{item.title}</a>}
-                                                
-                                                description={<div><div className="f-12">Private Group</div><div className="f-12">Created on <span className="fw-400">31-10-2020</span></div></div>}
-                                                   
+
+                                                description={<div><div className="f-12">{item.Type}</div><div className="f-12">Created on <span className="fw-400">{item.CreatedDate}</span></div></div>}
+
                                             />
-                                            <Button type="primary" className="btn-position" onClick={() => this.joinGroup(item)}>Jion Group</Button>
+                                            {!groupData.IsMember && <Button type="primary" className="btn-position" onClick={() => this.joinGroup(item)}>Jion Group</Button>}
                                         </List.Item>
                                     )}
                                 />
@@ -161,8 +190,8 @@ class Group extends Component {
                             </Card>
                             <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                                 <div className="">
-                                    <div className=" upload-preview">
-                                        {/* <Image src={profileData.ProfilePic} /> */}
+                                    <div className="upload-preview">
+                                        <Image src={groupData.ProfilePic} />
                                         <a class="item-close">
                                             <Tooltip title="Remove">
                                                 <span className="close-icon"></span>
@@ -181,7 +210,6 @@ class Group extends Component {
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
-                                        <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         <GroupAbout />
@@ -192,11 +220,9 @@ class Group extends Component {
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
-                                        <Courses />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <ShareBox />
-                                        <PostCard />
+                                        <Postings sharebox={false} friendsSuggestions={false} postingsType="all" />
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -204,10 +230,7 @@ class Group extends Component {
                         </Tabs>
                     </Col>
                     <Col xs={24} sm={8} md={8} lg={6} xl={6}>
-                        {/* <FriendsSuggestioncard /> */}
-                        <FriendsRequestsCard />
                         <Ads />
-                        <Groups />
                     </Col>
                 </Row>
             </div> : null
@@ -216,7 +239,11 @@ class Group extends Component {
 }
 
 const mapStateToProps = ({ oidc }) => {
-    return { profile: oidc.profile }
+    return { user: oidc.user, profile: oidc.profile }
 }
-
-export default connect(mapStateToProps)(Group);
+const mapDispatchToProps = dispatch => {
+    return {
+        upadateProfile: (info) => { dispatch(profileSuccess(info)) }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Group);

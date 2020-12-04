@@ -65,7 +65,7 @@ class GroupsPage extends Component {
                                     <Link className="list-link f-14" to="/commingsoon">Leave Group</Link>
                                 ]}
                             >
-                                <Meta title={<Link to="/commingsoon" className="post-title">{group.name}</Link>}
+                                <Meta title={<Link to="/groupview" className="post-title">{group.name}</Link>}
                                     description={<div>
                                         <div className="mb-4 f-12 text-overflow">{group.description}</div>
                                         <div className="d-flex align-items-center">
