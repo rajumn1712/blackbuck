@@ -39,7 +39,7 @@ class Identity extends Component {
                             avatar={
                                 <Avatar src={homeInfo?.ProfilePic || defaultUser} />
                             }
-                            title={<div>{homeInfo?.FirstName}<span className="premium-icon c-default"></span></div>}
+                            title={<div>{homeInfo?.FirstName} {homeInfo?.LastName}<span className="premium-icon c-default"></span></div>}
                             description="Groups"
                         />
                     </Link>

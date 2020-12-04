@@ -17,12 +17,7 @@ import notify from '../../shared/components/notification';
 import { saveEducation } from '../../shared/api/apiServer';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-const docs = [
-    {
-        avatar: [<span className="icon education-icon mr-0"></span>],
-        title: 'Inter Marks memo.jpeg'
-    }
-]
+
 class Education extends Component {
     state = {
         education: this.props.education,
@@ -313,7 +308,7 @@ class Education extends Component {
                             </div>}
                         </div>
                     })}
-                    <Divider className="text-left-line" orientation="left">Add Education <Link onClick={() => this.addEducation()}><span className=" icons white-add" /></Link></Divider>
+                    {lstEducation.length == 0 && <Divider className="text-left-line" orientation="left">Add Education <Link onClick={() => this.addEducation()}><span className=" icons white-add" /></Link></Divider>}
                 </CommonModal>
             </div >
 
