@@ -11,13 +11,9 @@ import { savePost } from '../../shared/api/postsApi';
 import Loader from '../../common/loader';
 import { uuidv4 } from '../../utils';
 import notify from '../../shared/components/notification';
-
 const { Dragger } = Upload;
 const { TextArea } = Input;
-
-
 const { Meta } = Card;
-
 const postsmenu =
     [
         {
@@ -140,8 +136,15 @@ class ShareBox extends Component {
             } else if (status === 'error') {
                 notify({ description: `${info.file.name} file upload failed.`, type: "error", message: "Upload" });
                 this.setState({ ...this.state, fileUploading: false })
+            } else if (status == undefined) {
+                this.setState({ ...this.state, fileUploading: false })
             }
         },
+        beforeUpload: (file, list) => {
+            const fileMaxSize = 25 * 1000000;
+            if (!file.size <= fileMaxSize) { notify({ message: "Upload", description: `File size should not be greater than 25 MB`,type:"warning" }) }
+            return file.size <= fileMaxSize;
+        }
     };
     openpopup = (modal) => {
         this.clearUploaddata();

@@ -66,7 +66,8 @@ class GroupsPage extends Component {
                                 ]}
                             >
                                 <Meta title={<Link to="/commingsoon" className="post-title">{group.name}</Link>}
-                                    description={<div><div className="mb-4 f-12 text-overflow">Digital Marketing</div>
+                                    description={<div>
+                                        {/* <div className="mb-4 f-12 text-overflow">Digital Marketing</div> */}
                                         <div className="d-flex align-items-center">
                                             <span className="list-request">
                                                 {/* <Avatar.Group

@@ -5,6 +5,7 @@ import { apiClient } from '../api/clients'
 import { Link } from 'react-router-dom';
 import { cancelGroupRequest, fetchGroupSuggestions, joinGroup } from '../api/apiServer';
 import { connect } from 'react-redux';
+import {profileSuccess} from '../../reducers/auth'
 
 
 class Groups extends Component {
@@ -26,6 +27,11 @@ class Groups extends Component {
         const joinResponse = await joinGroup(item.id, obj);
         if (joinResponse.ok) {
             notify({ message: "Group join", description: item.type==="Private" ? "Request sent" : "Joined to group" });
+            debugger;
+            if(item.type!=='Private'){
+                this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
+                this.props.updateProfile(this.props.profile)
+            }
             this.updateGroup(item)
         } else {
             notify({ message: "Error", description: "Something went wrong :)", type: "error" });
@@ -105,4 +111,7 @@ class Groups extends Component {
 const mapStateToProps = ({ oidc }) => {
     return { profile: oidc.profile }
 }
-export default connect(mapStateToProps)(Groups);
+const mapDispatchToProps = dispatch => {
+    return { updateProfile: (info) => { dispatch(profileSuccess(info)) } }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Groups);
