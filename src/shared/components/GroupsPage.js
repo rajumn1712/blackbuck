@@ -67,26 +67,10 @@ class GroupsPage extends Component {
                             >
                                 <Meta title={<Link to="/commingsoon" className="post-title">{group.name}</Link>}
                                     description={<div>
-                                        {/* <div className="mb-4 f-12 text-overflow">Digital Marketing</div> */}
+                                        <div className="mb-4 f-12 text-overflow">{group.description}</div>
                                         <div className="d-flex align-items-center">
-                                            <span className="list-request">
-                                                {/* <Avatar.Group
-                                                    maxCount={4}
-                                                    size="large"
-                                                    maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
-                                                >
-                                                    <Avatar src={user} />
-                                                    <Avatar src={user} />
-                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                                    {group.mutulFnds?.map((friend, index) => {
-                                                        return <Avatar key={index} src={friend.image} />
-                                                    })
-                                                    }
-                                                </Avatar.Group> */}
-                                            </span>
-                                            {group.mutulFnds && <span><span>{group.MutualFriends.length}</span>Mutual Friends</span>}
+                            
+                                            {group.members && <span><span>{group.members?group.members:0}</span> Members</span>}
 
                                         </div>
                                     </div>}

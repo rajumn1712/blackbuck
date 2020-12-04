@@ -223,7 +223,7 @@
 .group-page .ant-card-body{padding: 16px !important;}
 .group-page .ant-card-actions{color:#f9f9f9;}
 .list-request{display: inherit; margin-right: 4px;}
-.list-request .ant-avatar{width: 25px !important;height: 25px !important;line-height: 20px;border-radius: 8px !important;}
+.list-request .ant-avatar{width: 25px !important;height: 25px !important;line-height: 20px;border-radius: 50% !important;}
 .list-request .ant-avatar-string{font-size: var(--f-10);}
 .requests .ant-list-item-meta{align-items: center;}
 .profile-tab .profile-menu{margin-top: 0 !important;padding-top: 16px !important;}
