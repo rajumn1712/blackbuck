@@ -59,7 +59,6 @@
 .user-statistic .user-banner .ant-card-meta .ant-avatar-image {
     width: 150px;
     height: 150px;
-    border-radius: 50px !important;
     box-shadow: var(--boxShadow);
 }
 .user-banner .ant-upload-select{
@@ -199,7 +198,6 @@
     background-color: var(--white);
     width: 30px;
     height: 30px;
-    border-radius: 11px;
     display: none;
     justify-content: center;
     align-items: center;

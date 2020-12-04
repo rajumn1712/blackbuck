@@ -10,7 +10,7 @@
 .ant-menu-item, .ant-menu-item-selected{border: 0 !important;}
 .icons, .like-icon{width: 28px; height: 28px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
 .avatar-menu{padding: 0 !important;}
-.avatar-menu img{width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1)}
+.avatar-menu img{width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1)}
 .notification-count .ant-badge-count{background: var(--primary) !important; border-radius: 0px !important; min-width: 16px; height: 16px; padding: 0 3px; font-size: 10px; line-height: 16px; top: -5px; right: -6px;}
 .share-box{border-radius: 0.8rem; text-align: center; margin-bottom: 16px; background: var(--white); border: 1px solid var(--line);}
 .sharebox-icons, .doc-icons{width: 45px; height: 40px; vertical-align: initial; display: inline-block; vertical-align: middle; background: url(styles/images/icons.svg) no-repeat;}
@@ -19,7 +19,7 @@
 .left-rail{border: 1px solid var(--line);}
 /* .profile-card::before{content: ''; position: absolute; left: 0;top: 0;right: 0; background: var(--primary); height: 70px; border-radius: 0.8rem 0.8rem 0 0;} */
 .profile-card .ant-avatar{width: 72px; height: 72px; padding-right: 0; border-radius: 20px !important;}
-.profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: -4px; bottom: 6px; background: #33DF00;}
+.profile-card .ant-card-meta-avatar:after{ content: ""; position: absolute; width: 12px; height: 12px; display: inline-block; border: 1px solid var(--white); border-radius: 50%; right: 3px; bottom: 6px; background: #33DF00;}
 .profile-card .ant-card-meta-avatar{float: none; padding-right: 0; position: relative; width: 72px; height: 72px; margin: auto;}
 .profile-card .ant-card-meta-detail{color: var(--white) !important; margin-top: 10px;}
 .left-rail .profile-card .ant-card-meta-detail{margin-top: 0px;}
@@ -275,7 +275,7 @@
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
 .center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
 .icon.education-icon{background-position: -263px -254px;}
-.img-camera{width: 30px; height: 30px; background: var(--white); position: absolute; right: 16px; top: 16px; border-radius: 8px; box-shadow: var(--boxshadow); text-align: center; line-height: 34px;}
+.img-camera{width: 30px; height: 30px; background: var(--white); position: absolute; right: 24px; top: 16px; box-shadow: var(--boxshadow); text-align: center; line-height: 34px;}
 .education .ant-list-item-meta-avatar{border: 1px solid #ccc;border-radius: 11px;background: #ffff;padding: 4px 5px;}
 .overlay { position: absolute;  bottom: 0;  background: var(--black); background: rgba(0, 0, 0, 0.5); color: #f1f1f1; transition: .5s ease;  color: var(--white);  font-size: 22px; padding: 19px; text-align: center;}
 .img-container{position: relative;width: 100%;}
@@ -317,3 +317,7 @@ textarea{resize: unset !important;}
 .see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}
 .tag-card .ant-list-split{padding: 12px;background:url('./styles/images/hash.svg') no-repeat;background-position: center right;}
 .profile-tabs .group-page{background: #f3f2ef;padding: 16px;border-radius: 0.8rem;border-color: var(--line);border: 1px solid var(--line);}
+.profile-card .ant-avatar, .post-card .ant-avatar, .post-comment .ant-comment-avatar img, .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image,
+.user-statistic .user-banner .ant-card-meta .ant-avatar-image, .coverpage .editpost, .img-camera, .main-header .ant-menu-item a,
+.notification-list .notification-image .ant-avatar-image,  .messenger-drawer .ant-card-meta .ant-avatar-image, .profile-dropdown .ant-card-meta .ant-avatar-image,
+.addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius: 50% !important;}

@@ -50,10 +50,10 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .friends-list:hover .friends-list--course{ display: block;}
 .friends-list:hover ._name{transform: translate3d(0, -3px, 0); transition: transform 80ms linear;}
 .addfrnd-btn{ background: var(--primary); box-shadow: var(--boxshadow); left: 8px;  border-radius: 8px;}
-.removefrnd-btn, .addfrnd-btn{position: absolute; top: 8px;padding: 4px 5px;border-radius: 6px;}
+.removefrnd-btn, .addfrnd-btn{position: absolute; top: 8px;padding: 10px;border-radius: 50%}
 .removefrnd-btn{ width: 20px; height: 20px; display: inline-block; right: 8px; left: auto; background: rgba(0,0,0,0.65) url(../src/styles/images/icons.svg) no-repeat; background-position:-1px -429px; }
 /* .friends-list:hover .addfrnd-btn, .friends-list:hover .removefrnd-btn{opacity: 1; transition: opacity 80ms linear;} */
-.more-frnd-btn{width: 36px; height: 36px; border-radius: 8px; background: var(--white); box-shadow: var(--boxshadow); position: absolute; top: 50%; transform: translateY(-50%); right: 16px; z-index: 3;
+.more-frnd-btn{width: 36px; height: 36px; border-radius: 50%; background: var(--white); box-shadow: var(--boxshadow); position: absolute; top: 50%; transform: translateY(-50%); right: 16px; z-index: 3;
   display: flex; align-items: center; justify-content: center;}
 .more-frnd-btn.left{left: 16px;}
 .icon.left-arrow{background-position: -483px -203px;}
