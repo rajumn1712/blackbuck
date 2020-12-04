@@ -193,7 +193,8 @@
 .w-150{width: 150px;}
 .custom-card .list-link{color: var(--primary);margin-left: 3px; font-weight: 500;}
 .custom-card .ant-card-extra{padding: 12px 0;}
-.custom-card .ant-card-actions{border-bottom-left-radius: 0.8rem;border-bottom-right-radius: 0.8rem;border-top: 0;}
+.custom-card .ant-card-actions, .group-page .ant-card-actions{border-bottom-left-radius: 0.8rem;border-bottom-right-radius: 0.8rem;border-top: 0;}
+.custom-card .ant-card-cover, .group-page .ant-card-cover{border: 1px solid var(--line) !important;border-bottom: 0;border-radius: 10px;}
 .icons.add{background-position:-505px -198px;}
 .icons.add:hover{background-position: -505px -224px;}
 .icons.white-add{background-position:-528px -224px;}
@@ -320,7 +321,7 @@ textarea{resize: unset !important;}
 .see-more{font-weight: 400;color: var(--textsecondary) !important;position: absolute;background-color: var(--white);bottom: 0; right: 0; margin-bottom: 0;padding-left: 8px;}
 .see-more:hover{color: var(--textsecondary)!important;text-decoration: underline;}
 .tag-card .ant-list-split{padding: 8px 0;}
-.profile-tabs .group-page{background: #f3f2ef;padding: 16px;border-radius: 0.8rem;border-color: var(--line);border: 1px solid var(--line);}
+.profile-tabs .group-page{background: var(--white);padding: 16px;border-radius: 0.8rem;border-color: var(--line);border: 1px solid var(--line);}
 .profile-card .ant-avatar, .post-card .ant-avatar, .post-comment .ant-comment-avatar img, .custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image,
 .user-statistic .user-banner .ant-card-meta .ant-avatar-image, .coverpage .editpost, .img-camera, .main-header .ant-menu-item a,
 .notification-list .notification-image .ant-avatar-image,  .messenger-drawer .ant-card-meta .ant-avatar-image, .profile-dropdown .ant-card-meta .ant-avatar-image,
