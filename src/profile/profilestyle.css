@@ -56,10 +56,10 @@
     align-items: center;
 }
 
-.user-statistic .user-banner .ant-card-meta .ant-avatar-image {
+/* .user-statistic .user-banner .ant-card-meta .ant-avatar-image {
     width: 150px;
     height: 150px;
-}
+} */
 .user-banner .ant-upload-select{
     position: relative;
 }
@@ -223,10 +223,10 @@
     .profile-tabs .ant-tabs-tab {
         margin: 0 !important;
     }
-    .user-statistic .user-banner .ant-card-meta .ant-avatar-image {
+    /* .user-statistic .user-banner .ant-card-meta .ant-avatar-image {
         width: 150px;
         height: 150px;
-    }
+    } */
     .user-statistic .user-banner {
         margin-top: -50px;
     }
