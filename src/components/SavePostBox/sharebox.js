@@ -206,12 +206,14 @@ class ShareBox extends Component {
         this.setState({ inputValue: e.target.value });
     };
     handleInputConfirm = () => {
-        const { inputValue } = this.state;
+        let { inputValue } = this.state;
+        if (!inputValue) { return; }
         let { tags } = this.state;
+        if (!inputValue.startsWith("#")) { inputValue = "#" + inputValue }
         if (inputValue && tags.indexOf(inputValue) === -1) {
+
             tags = [...tags, inputValue];
         }
-        console.log(tags);
         this.setState({
             tags,
             inputVisible: false,
@@ -232,7 +234,7 @@ class ShareBox extends Component {
                     this.handleClose(tag);
                 }}
             >
-                #{tag}
+                {tag}
             </Tag>
         );
         return (

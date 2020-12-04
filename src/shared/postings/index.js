@@ -323,7 +323,7 @@ class Postings extends Component {
                {this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage.substr(0, 500)}
                {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || tag || ""}`}</Link></Tag>}</>
+                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`${(tag?.Name || tag).startsWith("#")?"":"#"}${tag?.Name || tag || ""}`}</Link></Tag>}</>
                   })}
                </div>}
                {post.meassage.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}
