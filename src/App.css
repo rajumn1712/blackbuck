@@ -332,3 +332,7 @@ textarea{resize: unset !important;}
 .addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius: 50% !important;}
 .validateerror{color:red;text-align: right; display: block !important;}
 .profile-tabs .ant-tabs-extra-content .profile-download{ margin-left:12px;border: 0;font-size: 16px !important;color: var(--textprimary);}
+.left-menu.private-icon{background-position: -434px -256px;}
+.left-menu.private-icon:hover{background-position: -434px -284px;}
+.left-menu.preview-icon{background-position: -464px -256px;}
+.left-menu.preview-icon:hover{background-position: -464px -284px;}
