@@ -50,9 +50,9 @@
 }
 
 .user-statistic .ant-list-items .ant-avatar-image, .user-statistic .ant-avatar.ant-avatar-circle{
-    width: 150px;
-    height: 150px;
-    border-radius: 50px !important;
+    width: 176px;
+    height: 176px;
+    border-radius: 50% !important;
 }
 .group-banner .ant-list-item-meta-avatar .img-camera.overlay{display: none;}
 .group-banner .ant-list-item-meta-avatar:hover .img-camera.overlay {
@@ -240,3 +240,4 @@
         bottom: -8px;
     }
 }
+.group-member .ant-card-body{padding: 12px;}

@@ -43,7 +43,7 @@ class GroupAbout extends Component {
         const { user } = store.getState().oidc;
         const grouppost = { ...this.state };
         return (
-            <div className="custom-card group-member">
+            <div className="custom-card group-member ">
                 <Card title="About This Group" bordered={false}>
                     <div>
                         <p>Programming is the process of creating a set of instructions that tell a computer how to perform a task</p>
@@ -54,7 +54,7 @@ class GroupAbout extends Component {
                                 renderItem={item => (
                                     <List.Item>
                                         <List.Item.Meta
-                                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                            avatar={<span className="left-menu camera-icon" />}
                                             title={item.title}
                                             description={item.description}
                                         />
