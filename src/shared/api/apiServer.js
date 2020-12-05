@@ -2,6 +2,7 @@ const { apiClient } = require("./clients");
 const FRIENDS_API = "service/api/home/";
 const GROUPS_API = "service/api/groups/";
 const PROFILE_API = "service/api/profile/";
+const TAGS_API="service/api/posts/"
 
 const getFriendSuggestions = (userid, page, pageSize) => {
     return apiClient.get(FRIENDS_API + `friendsSuggestions/${userid}/${pageSize || 10}/${page * pageSize - pageSize}`)
@@ -48,4 +49,7 @@ const cancelGroupRequest = (group_id, user_id) => {
 const fetchUserGroups = (user_id,take,skip)=>{
     return apiClient.get(GROUPS_API+`getUserGroups/${user_id}/${take}/${skip}`)
 }
-export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage, saveInnternship, saveEducation, cancelFriendRequest, joinGroup,cancelGroupRequest,fetchUserGroups }
+const fetchTags = (take, skip) => {
+    return apiClient.get(TAGS_API + `getTags/${take}/${skip}`)
+}
+export { getFriendSuggestions, fetchGroupSuggestions, fetchProfile, profileDetail, fetchUserFriends, sendFirendRequest, acceptFrienRequest, fetchFriendRequests, saveProfileImage, saveInnternship, saveEducation, cancelFriendRequest, joinGroup, cancelGroupRequest, fetchUserGroups, fetchTags }

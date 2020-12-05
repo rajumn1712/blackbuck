@@ -1,41 +1,49 @@
 import React, { Component } from 'react';
 import { Card, List } from 'antd'
- import { Link } from 'react-router-dom';
-// import { userManager } from '../../shared/authentication/auth';
-// import { store } from '../../store'
-// import User1 from '../styles/images/avatar.png';
-// import User2 from '../styles/images/user.jpg';
-// import User3 from '../styles/images/user_image.jpg';
-// import User4 from '../styles/images/user-image.jpg';
-// import { userLogout } from '../../reducers/auth';
+import { Link } from 'react-router-dom';
+import { fetchTags } from '../../shared/api/apiServer';
 import '../../index.css';
 import '../../App.css';
 const data = [
-    {title: '#IPL'},
-    {title: '#COVID-19'},
-    {title: '#HBD@PK'},
-    {title: '#RRRMovie'},
-    {title: '#IPL 2020'}
+    { title: '#IPL' },
+    { title: '#COVID-19' },
+    { title: '#HBD@PK' },
+    { title: '#RRRMovie' },
+    { title: '#IPL 2020' }
 ];
 class FriendRequests extends Component {
+    componentDidMount() {
+        fetchTags(10, 0).then(res => {
+            const { tags } = this.state;
+            res.data.forEach(item => {
+                if (Array.isArray(item)) {
+                    item.forEach(index => {
+                        if (typeof (index) !== 'object')
+                            tags.push(index);
+                    })
+                }
+            });
+            this.setState({ tags: tags })
+        });
+    }
 
     state = {
-        tags:[]
+        tags: []
     }
 
     render() {
 
-        const {tags} = this.state;
+        const { tags } = this.state;
         return (
             <div className="custom-card tag-card">
                 <Card title="#Tags" bordered={false} >
-                <List
-                    itemLayout="vertical"
-                    dataSource={data}
-                    renderItem={item => (
-                    <div className="tag-name"><Link to="/commingsoon">{item.title}</Link></div>
-                   
-                    )}
+                    <List
+                        itemLayout="vertical"
+                        dataSource={tags}
+                        renderItem={item => (
+                            <div className="tag-name"><Link to="/commingsoon">{item}</Link></div>
+
+                        )}
                     />
                 </Card>
             </div>
