@@ -329,7 +329,7 @@ class Postings extends Component {
                {this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage.substr(0, 500)}
                {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
-                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`${(tag?.Name || tag).startsWith("#")?"":"#"}${tag?.Name || tag || ""}`}</Link></Tag>}</>
+                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`${(tag?.Name || tag).startsWith("#") ? "" : "#"}${tag?.Name || tag || ""}`}</Link></Tag>}</>
                   })}
                </div>}
                {post.meassage.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}
@@ -343,25 +343,13 @@ class Postings extends Component {
             <div className="d-flex justify-content-between mx-16 py-16">
                {<span onMouseEnter={() => this.fetchPostReactions(post.id)}>
                   <ul className="card-actions-count pl-0">
-                     {post.likes > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                        <di> {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                     }</div>}> <li><span className="counter-icon likes"></span></li></Tooltip>}
-                     {post.loves > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                        <di> {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                     }</div>}><li><span className="counter-icon loves"></span></li></Tooltip>}
-                     {post.claps > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                        <di> {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                     }</div>}>   <li ><span className="counter-icon claps"></span></li></Tooltip>}
-                     {post.whistiles > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                        <di> {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                     }</div>}>  <li><span className="counter-icon whistles"></span></li></Tooltip>}
-
-                     {((post.loves || 0) + (post.claps || 0) + (post.whistiles || 0) + (post.likes || 0)) > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                        <di> {this.state.postReactions?.PostActions?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                     }</div>}> <li >
-                           <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || 0) + (post.likes || 0)}</a>
-                        </li></Tooltip>}
-                  </ul></span>}
+                     {post.likes > 0 && <Tooltip overlayClassName="like-tabs" title={<div >{this.state.reactionsLoading ? <Spin /> : <div className="likes-counters"><h4>Likes</h4>{this.state.postReactions?.Likes?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>} </div>}><li><span className="counter-icon likes"></span></li></Tooltip>}
+                     {post.loves > 0 && <Tooltip overlayClassName="like-tabs" title={<div >{this.state.reactionsLoading ? <Spin /> : <div className="likes-counters"><h4>Loves</h4> {this.state.postReactions?.Loves?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>} </div>}><li><span className="counter-icon loves"></span></li></Tooltip>}
+                     {post.claps > 0 && <Tooltip overlayClassName="like-tabs" title={<div >{this.state.reactionsLoading ? <Spin /> : <div className="likes-counters"><h4>Claps</h4>{this.state.postReactions?.Claps?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>}</div>}><li><span className="counter-icon claps"></span></li></Tooltip>}
+                     {post.whistiles > 0 && <Tooltip overlayClassName="like-tabs" title={<div>{this.state.reactionsLoading ? <Spin /> : <div className="likes-counters"><h4>Whistiles</h4> {this.state.postReactions?.Whistiles?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>}</div>}><li><span className="counter-icon whistles"></span></li></Tooltip>}
+                     {((post.loves || 0) + (post.claps || 0) + (post.whistiles || 0) + (post.likes || 0)) > 0 && <Tooltip overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <div> {this.state.postReactions?.PostActions?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>}</div>}> <li ><a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || 0) + (post.likes || 0)}</a></li></Tooltip>}
+                  </ul>
+               </span>}
                <ul className="card-actions-count">
                   {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
                   {post.commentsCount != null && <li className="mr-0 cursor-pointer" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}

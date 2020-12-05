@@ -314,7 +314,7 @@ textarea{resize: unset !important;}
 .ant-btn.ant-btn-primary{padding-left:30px;padding-right: 30px;}
 .antd-img-crop-modal .ant-modal-footer .ant-btn:first-child{display: none;}
 .ant-modal-footer button + button{margin: 0 !important;}
-.like-tabs .ant-tooltip-content{width: 300px;}
+.like-tabs .ant-tooltip-content{width: 120px;}
 .like-tabs .ant-tabs-tab{font-weight: 500;}
 .like-tabs .ant-tabs-tab:active, .like-tabs .ant-tabs-tab .ant-tabs-tab-btn:active, .like-tabs .ant-tabs-tab .ant-tabs-tab-btn:focus {color: var(--white) !important;}
 .group-page .ant-card-bordered{border: 1px solid var(--line) !important;}

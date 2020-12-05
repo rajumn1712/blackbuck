@@ -1,11 +1,11 @@
-import { Card, Carousel, Col, Empty, Modal, Row, Tag, Typography, message, Avatar,Tooltip,Tabs,Spin } from 'antd';
+import { Card, Carousel, Col, Empty, Modal, Row, Tag, Typography, message, Avatar, Tooltip, Tabs, Spin } from 'antd';
 import React, { Component, createRef } from 'react';
 import CommentAction from './Actions/CommentAction';
 import EmojiAction from './Actions/EmojiActions';
 import ShareAction from './Actions/ShareActions';
 import Comments from './Comments/Comments';
 import defaultUser from '../../../styles/images/defaultuser.jpg';
-import { deletePost, getPosts, saveActions,fetchPostReactions } from '../../api/postsApi';
+import { deletePost, getPosts, saveActions, fetchPostReactions } from '../../api/postsApi';
 import SideAction from '../../components/postings/Actions/SideActions';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -36,26 +36,26 @@ class PostCardModal extends Component {
         loading: true,
         comments: [],
         commentsection: false,
-        reactionsLoading:false,
-        postReactions:[],
-        descriptionSelection:[]
+        reactionsLoading: false,
+        postReactions: [],
+        descriptionSelection: []
     }
     fetchPostReactions = async (id) => {
         this.setState({ ...this.state, reactionsLoading: true });
         let actions = {};
         const reactionsResponse = await fetchPostReactions(id);
         if (reactionsResponse.ok) {
-           const data = reactionsResponse.data[0].Likes;
-           actions = {
-              Likes: data.filter(item => item.Type === "Likes"),
-              Claps: data.filter(item => item.Type === "Claps"),
-              Loves: data.filter(item => item.Type === "Loves"),
-              Whistiles: data.filter(item => item.Type === "Whistiles"),
-               PostActions: data.filter(item => item.Type === "Likes" || item.Type === "Claps" || item.Type === "Loves" || item.Type === "Whistiles"),
-           }
-           this.setState({ reactionsLoading: false, postReactions: actions })
+            const data = reactionsResponse.data[0].Likes;
+            actions = {
+                Likes: data.filter(item => item.Type === "Likes"),
+                Claps: data.filter(item => item.Type === "Claps"),
+                Loves: data.filter(item => item.Type === "Loves"),
+                Whistiles: data.filter(item => item.Type === "Whistiles"),
+                PostActions: data.filter(item => item.Type === "Likes" || item.Type === "Claps" || item.Type === "Loves" || item.Type === "Whistiles"),
+            }
+            this.setState({ reactionsLoading: false, postReactions: actions })
         }
-     }
+    }
     showComment = (post) => {
         const { commentselection } = this.state;
         const idx = commentselection.indexOf(post.id);
@@ -68,13 +68,13 @@ class PostCardModal extends Component {
     }
     titleAvatar = (user, date) => {
         return <Link to={"/profileview/" + user.UserId}>
-           <Meta
-              avatar={<Avatar src={user.Image || defaultUser} />}
-              title={<span className="overflow-text post-title">{user.Firstname}</span>}
-              description={<Moment fromNow>{date}</Moment>}
-           />
+            <Meta
+                avatar={<Avatar src={user.Image || defaultUser} />}
+                title={<span className="overflow-text post-title">{user.Firstname}</span>}
+                description={<Moment fromNow>{date}</Moment>}
+            />
         </Link>
-     }
+    }
     fetchCardActions = (user) => {
         const ownerActions = [
             { action: 'Edit', icons: 'post-icons edit-icon' },
@@ -98,25 +98,25 @@ class PostCardModal extends Component {
         const _result = {
             Video: () => {
                 return <div className="video-post" >
-                   <video width="100%" controls>
-                      <source src={imageObj} />
-                   </video>
+                    <video width="100%" controls>
+                        <source src={imageObj} />
+                    </video>
                 </div>
-             },
+            },
             Document: () => {
                 return null
             },
             Audio: () => {
                 return <div style={{ width: '100%', position: 'relative' }}>
-                   <div class="audio">
-                      <AudioPlayer
-                         src={imageObj}
-                         onPlay={e => console.log("onPlay")}
-                         layout="horizontal-reverse"
-                      />
-                   </div>
+                    <div class="audio">
+                        <AudioPlayer
+                            src={imageObj}
+                            onPlay={e => console.log("onPlay")}
+                            layout="horizontal-reverse"
+                        />
+                    </div>
                 </div>
-             },
+            },
         }
 
 
@@ -126,12 +126,12 @@ class PostCardModal extends Component {
         let { descriptionSelection } = this.state;
         const idx = descriptionSelection.indexOf(post.id);
         if (idx > -1) {
-           descriptionSelection.splice(idx, 1);
+            descriptionSelection.splice(idx, 1);
         } else {
-           descriptionSelection.push(post.id);
+            descriptionSelection.push(post.id);
         }
         this.setState({ ...this.state, descriptionSelection });
-     }
+    }
 
     render() {
 
@@ -176,7 +176,7 @@ class PostCardModal extends Component {
                 width="100%"
                 destroyOnClose
             >
-                 <div className="post-preview-box post-card comment-show">
+                <div className="post-preview-box post-card comment-show">
                     <Row align="middle">
                         <Col xs={24} sm={16} md={16} lg={17} >
                             {(post.type == 'Image' || post.type == 'Gif') && post.image?.length > 1 ? carouselData : noCarousel}
@@ -184,7 +184,7 @@ class PostCardModal extends Component {
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={7}>
                             <div className="preview-content">
-                                <Card title={this.titleAvatar(post.userdetails, post.date)}  bordered={true}
+                                <Card title={this.titleAvatar(post.userdetails, post.date)} bordered={true}
                                     extra={
                                         <SideAction clickedEvent={(event, name) => this.props.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
                                     }
@@ -196,34 +196,22 @@ class PostCardModal extends Component {
                                     <div className="">
                                         {/* <Title level={5} className="post-title">{post.title}</Title> */}
                                         <Paragraph className="post-desc">{this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage?.substr(0, 500)}
-                                        {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
-                                            {post.tags?.map((tag, index) => {
-                                                return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
-                                            })}
-                                        </div>}
-                                        {post.meassage?.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}</Paragraph>
+                                            {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
+                                                {post.tags?.map((tag, index) => {
+                                                    return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
+                                                })}
+                                            </div>}
+                                            {post.meassage?.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}</Paragraph>
                                         <div className="d-flex justify-content-between mx-16 py-16">
                                             {<span onMouseEnter={() => this.fetchPostReactions(post.id)}>
                                                 <ul className="card-actions-count pl-0">
-                                                    {post.likes > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                                                        <di> {this.state.postReactions?.Likes?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                                                    }</div>}> <li><span className="counter-icon likes"></span></li></Tooltip>}
-                                                    {post.loves > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                                                        <di> {this.state.postReactions?.Loves?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                                                    }</div>}><li><span className="counter-icon loves"></span></li></Tooltip>}
-                                                    {post.claps > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                                                        <di> {this.state.postReactions?.Claps?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                                                    }</div>}>   <li ><span className="counter-icon claps"></span></li></Tooltip>}
-                                                    {post.whistiles > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                                                        <di> {this.state.postReactions?.Whistiles?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                                                    }</div>}>  <li><span className="counter-icon whistles"></span></li></Tooltip>}
-
-                                                    {((post.loves || 0) + (post.claps || 0) + (post.whistiles || 0) + (post.likes || 0)) > 0 && <Tooltip overlayStyle={{ color: "#fff" }} overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> :
-                                                        <di> {this.state.postReactions?.PostActions?.map((item, indx) => <p style={{ color: 'var(--white)', marginBottom: 0, textTransform: 'capitalize' }} key={indx}>{item.Firstname}</p>)} </di>
-                                                    }</div>}> <li >
-                                                            <a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || 0) + (post.likes || 0)}</a>
-                                                        </li></Tooltip>}
-                                                </ul></span>}
+                                                    {post.likes > 0 && <Tooltip overlayClassName="like-tabs" title={<div >{this.state.reactionsLoading ? <Spin /> : <div className="likes-counters"><h4>Likes</h4>{this.state.postReactions?.Likes?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>} </div>}><li><span className="counter-icon likes"></span></li></Tooltip>}
+                                                    {post.loves > 0 && <Tooltip overlayClassName="like-tabs" title={<div >{this.state.reactionsLoading ? <Spin /> : <div className="likes-counters"><h4>Loves</h4> {this.state.postReactions?.Loves?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>} </div>}><li><span className="counter-icon loves"></span></li></Tooltip>}
+                                                    {post.claps > 0 && <Tooltip overlayClassName="like-tabs" title={<div >{this.state.reactionsLoading ? <Spin /> : <div className="likes-counters"><h4>Claps</h4>{this.state.postReactions?.Claps?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>}</div>}><li><span className="counter-icon claps"></span></li></Tooltip>}
+                                                    {post.whistiles > 0 && <Tooltip overlayClassName="like-tabs" title={<div>{this.state.reactionsLoading ? <Spin /> : <div className="likes-counters"><h4>Whistiles</h4> {this.state.postReactions?.Whistiles?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>}</div>}><li><span className="counter-icon whistles"></span></li></Tooltip>}
+                                                    {((post.loves || 0) + (post.claps || 0) + (post.whistiles || 0) + (post.likes || 0)) > 0 && <Tooltip overlayClassName="like-tabs" title={<div className="likes-counters">{this.state.reactionsLoading ? <Spin /> : <div> {this.state.postReactions?.PostActions?.map((item, indx) => <p key={indx}>{item.Firstname}</p>)} </div>}</div>}> <li ><a> {(post.loves || 0) + (post.claps || 0) + (post.whistiles || 0) + (post.likes || 0)}</a></li></Tooltip>}
+                                                </ul>
+                                            </span>}
                                             <ul className="card-actions-count">
                                                 {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
                                                 {post.commentsCount != null && <li className="mr-0" onClick={() => this.showComment(post)}><span></span>{post.commentsCount} <span> Comments</span></li>}
