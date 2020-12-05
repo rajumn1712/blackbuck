@@ -21,6 +21,7 @@ import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
 import VisSenseFactory from 'vissense';
 import { postUpdation } from '../../reducers/auth';
+import ShowMoreText from 'react-show-more-text';
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
@@ -326,13 +327,18 @@ class Postings extends Component {
          >
             {/* <Title level={5} className="post-title">{post.title}</Title> */}
             <Paragraph className="post-desc">
-               {this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage.substr(0, 500)}
+               <ShowMoreText
+                  lines={3}
+                  more='see more'
+                  less='see less'
+               >
+                  {post.meassage}
+               </ShowMoreText>
                {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                   {post.tags?.map((tag, index) => {
                      return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`${(tag?.Name || tag).startsWith("#") ? "" : "#"}${tag?.Name || tag || ""}`}</Link></Tag>}</>
                   })}
                </div>}
-               {post.meassage.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}
             </Paragraph>
 
             <Card.Meta

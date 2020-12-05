@@ -12,6 +12,7 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import '../../../components/postcard/post.css'
 import AudioPlayer from "react-h5-audio-player";
+import ShowMoreText from 'react-show-more-text';
 const { Meta } = Card;
 const { TabPane } = Tabs;
 
@@ -195,13 +196,20 @@ class PostCardModal extends Component {
                                 >
                                     <div className="">
                                         {/* <Title level={5} className="post-title">{post.title}</Title> */}
-                                        <Paragraph className="post-desc">{this.state.descriptionSelection.indexOf(post.id) > -1 ? post.meassage : post.meassage?.substr(0, 500)}
+                                        <Paragraph className="post-desc">
+                                            <ShowMoreText
+                                                lines={3}
+                                                more='see more'
+                                                less='see less'
+                                            >
+                                                {post.meassage}
+                                            </ShowMoreText>
                                             {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                                                 {post.tags?.map((tag, index) => {
                                                     return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
                                                 })}
                                             </div>}
-                                            {post.meassage?.length > 500 && <a style={{ cursor: "pointer" }} onClick={() => { this.seeMore(post) }} className="see-more">{`${this.state.descriptionSelection.indexOf(post.id) == -1 ? "…see more" : "see less"}`}</a>}</Paragraph>
+                                            </Paragraph>
                                         <div className="d-flex justify-content-between mx-16 py-16">
                                             {<span onMouseEnter={() => this.fetchPostReactions(post.id)}>
                                                 <ul className="card-actions-count pl-0">
