@@ -1,7 +1,6 @@
 import React, { Component, createRef } from "react";
 import {
   Card,
-  Avatar,
   List,
   Divider,
   Row,
@@ -13,13 +12,7 @@ import {
   message,
 } from "antd";
 import { Link } from "react-router-dom";
-// import { userManager } from '../../shared/authentication/auth';
 import { store } from "../../store";
-// import User1 from '../styles/images/avatar.png';
-// import User2 from '../styles/images/user.jpg';
-// import User3 from '../styles/images/user_image.jpg';
-// import User4 from '../styles/images/user-image.jpg';
-// import { userLogout } from '../../reducers/auth';
 import "../../index.css";
 import "../../App.css";
 import { Meta } from "antd/lib/list/Item";
@@ -28,6 +21,7 @@ import CommonModal from "./CommonModal";
 import notify from "../../shared/components/notification";
 import { saveEducation } from "../../shared/api/apiServer";
 import { ErrorMessage, Field, Formik } from "formik";
+import deepEqual from "lodash.isequal";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -46,18 +40,25 @@ class Education extends Component {
   };
   saveEducation = (e) => {
     this.formRef.current.handleSubmit();
-    saveEducation(this.props?.profile?.Id, this.state.lstEducation).then(
-      (res) => {
-        message.success("Education saved successfully");
-      }
+    const hasChanged = deepEqual(
+      this.formRef.current.values,
+      this.initialValues
     );
-    // this.setState({
-    //   visible: false,
-    // });
+    if (!hasChanged) {
+      saveEducation(this.props?.profile?.Id, this.state.lstEducation).then(
+        (res) => {
+          message.success("Education saved successfully");
+          this.setState({
+            visible: false,
+          });
+        }
+      );
+    }
   };
   handleCancel = (e) => {
     this.formRef.current.setErrors({});
     this.setState({
+      lstEducation: [],
       visible: false,
     });
   };

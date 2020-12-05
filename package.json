@@ -11,6 +11,7 @@
     "apisauce": "^1.1.2",
     "formik": "^2.2.5",
     "lodash": "^4.17.20",
+    "lodash.isequal": "^4.5.0",
     "oidc-client": "^1.10.1",
     "rc-tween-one": "^2.7.3",
     "react": "^16.13.1",

@@ -1,18 +1,12 @@
 import React, { Component, createRef } from "react";
-import { Button, Card, Divider, Row, Col, Form, Input, Select } from "antd";
+import { Card, Divider, Row, Col, Form, Input, Select } from "antd";
 import { Link } from "react-router-dom";
-// import { userManager } from '../../shared/authentication/auth';
 import { store } from "../../store";
-// import User1 from '../../styles/images/avatar.png';
-// import User2 from '../../styles/images/user.jpg';
-// import User3 from '../../styles/images/user_image.jpg';
-// import User4 from '../../styles/images/user-image.jpg';
-// import { userLogout } from '../../reducers/auth';
 import "../../index.css";
 import "../../App.css";
-import TextArea from "antd/lib/input/TextArea";
 import CommonModal from "./CommonModal";
 import { ErrorMessage, Field, Formik } from "formik";
+import deepEqual from "lodash.isequal";
 const { Option } = Select;
 
 class About extends Component {
@@ -63,9 +57,15 @@ class About extends Component {
   };
   handleOk = () => {
     this.formRef.current.handleSubmit();
-    // this.setState({
-    //     visible: false,
-    // });
+    const hasChanged = deepEqual(
+      this.formRef.current.values,
+      this.initialValues
+    );
+    if (!hasChanged) {
+      this.setState({
+        visible: false,
+      });
+    }
   };
   handleCancel = (e) => {
     this.formRef.current.setErrors({});
