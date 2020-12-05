@@ -21,12 +21,12 @@ const data = [
     },
     {
         title: 'General Group',
-        img:'left-menu private-icon',
+        img:'left-menu group-icon',
     },
     {
         title: 'History',
         description: 'Group created on March 17, 2012  ',
-        img:'left-menu private-icon',
+        img:'left-menu history-icon',
     },
 ];
 class GroupAbout extends Component {
