@@ -12,17 +12,21 @@ const data = [
     {
         title: 'Public',
         description: 'Only members can see whos in the group and what they post',
+        img:'left-menu private-icon',
     },
     {
         title: 'Visible',
         description: 'Anyone can find this group.',
+        img: 'left-menu preview-icon',
     },
     {
         title: 'General Group',
+        img:'left-menu group-icon',
     },
     {
         title: 'History',
         description: 'Group created on March 17, 2012  ',
+        img:'left-menu history-icon',
     },
 ];
 class GroupAbout extends Component {
@@ -54,7 +58,7 @@ class GroupAbout extends Component {
                                 renderItem={item => (
                                     <List.Item>
                                         <List.Item.Meta
-                                            avatar={<span className="left-menu camera-icon" />}
+                                            avatar={<span className={item.img} />}
                                             title={item.title}
                                             description={item.description}
                                         />
