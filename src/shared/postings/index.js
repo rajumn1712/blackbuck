@@ -78,11 +78,16 @@ class Postings extends Component {
          allPosts = posts.data;
       }
       if (posts.ok) {
-         this.setState({ ...this.state, loading: false, allPosts, loadMore: posts.data.length === this.state.pageSize }, () => {
+         this.setState({ ...this.state, loading: false, allPosts, loadMore: posts.data.length === this.state.pageSize, commentselection: [] }, () => {
             const videoElements = document.querySelectorAll("video");
             for (const i in videoElements) {
                if (typeof (videoElements[i]) == "object") {
                   this.enableVideoAutoPlay(videoElements[i])
+               }
+            }
+            for (const k in allPosts) {
+               if (allPosts[k].commentsCount > 0) {
+                  this.showComment(allPosts[k])
                }
             }
          })

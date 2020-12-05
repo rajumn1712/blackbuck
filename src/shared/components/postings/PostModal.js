@@ -22,7 +22,11 @@ class PostCardModal extends Component {
     slider = createRef(null);
     componentDidMount() { }
     componentWillReceiveProps(props) {
-        this.setState({ ...this.state, post: props.postData, visible: props.visible })
+        this.setState({ ...this.state, post: props.postData, visible: props.visible, commentselection: [] }, () => {
+            if (this.state.post.commentsCount > 0) {
+                this.showComment(this.state.post)
+            }
+        })
     }
     state = {
         post: this.props.postData,
