@@ -40,6 +40,8 @@
 .share-box ul li:hover .sharebox-icons.gif-icon,  .sharebox-icons.gif-upload{background-position: -236px -147px;}
 .sharebox-icons.video-icon{background-position: -297px -100px;}
 .share-box ul li:hover .sharebox-icons.video-icon, .sharebox-icons.video-upload{background-position: -297px -149px;}
+.post-icons.download-icon{background-position:-405px -254px;}
+.post-icons.download-icon:hover, .ant-btn:hover{background-position:-405px -281px;}
 .sharebox-icons.speekar-icon{background-position: -124px -147px;}
 .speekar-block .ant-avatar{width: 100% !important;height: 100% !important;}
 .text-hover{opacity: 0; line-height: 1;}
@@ -329,3 +331,4 @@ textarea{resize: unset !important;}
 .notification-list .notification-image .ant-avatar-image,  .messenger-drawer .ant-card-meta .ant-avatar-image, .profile-dropdown .ant-card-meta .ant-avatar-image,
 .addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius: 50% !important;}
 .validateerror{color:red;text-align: right; display: block;}
+.profile-tabs .ant-tabs-extra-content .profile-download{ margin-left:12px;border: 0;font-size: 16px !important;color: var(--textprimary);}

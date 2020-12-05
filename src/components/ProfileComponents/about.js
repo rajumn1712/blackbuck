@@ -102,11 +102,7 @@ class About extends Component {
               </Link>
             ) : null
           }
-          actions={[
-            !this.props.IsHideAction ? (
-              <Button type="primary">Download Profile as PDF</Button>
-            ) : null,
-          ]}
+          
         >
           <div>
             {AboutMe && <p>{AboutMe}</p>}

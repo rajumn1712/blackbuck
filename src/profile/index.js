@@ -30,6 +30,7 @@ import Loader from '../common/loader';
 import { store } from '../store';
 const { Meta } = Card;
 const { TabPane } = Tabs;
+const operations = <Button className="profile-download"><span className="post-icons download-icon"></span>Download Profile</Button>;
 class Profile extends Component {
     references = {};
     imageObject = {};
@@ -214,7 +215,7 @@ class Profile extends Component {
                                 <Statistic title="Internships" value={profileData.Internships?.length} />
                             </div>
                         </div>
-                        <Tabs defaultActiveKey="1" centered className="profile-tabs">
+                        <Tabs defaultActiveKey="1" centered className="profile-tabs" tabBarExtraContent={operations}>
                             <TabPane tab="Posts" key="1">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
@@ -271,6 +272,7 @@ class Profile extends Component {
                                     </Col>
                                 </Row>
                             </TabPane>
+                            
                         </Tabs>
                     </Col>
                     <Col xs={24} sm={8} md={7} lg={7} xl={7}>
