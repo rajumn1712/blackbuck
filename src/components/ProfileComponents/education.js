@@ -56,7 +56,7 @@ class Education extends Component {
     // });
   };
   handleCancel = (e) => {
-    console.log(e);
+    this.formRef.current.setErrors({});
     this.setState({
       visible: false,
     });

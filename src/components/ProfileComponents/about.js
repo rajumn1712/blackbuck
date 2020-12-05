@@ -68,7 +68,7 @@ class About extends Component {
     // });
   };
   handleCancel = (e) => {
-    this.errors = {};
+    this.formRef.current.setErrors({});
     this.setState({
       visible: false,
       errors: {},

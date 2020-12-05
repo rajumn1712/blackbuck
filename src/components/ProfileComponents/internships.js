@@ -126,6 +126,7 @@ class Intership extends Component {
     // });
   };
   handleCancel = (e) => {
+    this.formRef.current.setErrors({});
     this.setState({
       visible: false,
     });
