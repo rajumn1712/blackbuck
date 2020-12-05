@@ -9,13 +9,9 @@ import CommonModal from "./CommonModal";
 import { saveInnternship } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { ErrorMessage, Field, Formik } from "formik";
+import * as Yup from "yup";
 
-const docs = [
-  {
-    avatar: [<span className="icon education-icon mr-0"></span>],
-    title: "Inter Marks memo.jpeg",
-  },
-];
+const docs = [];
 const { Option } = Select;
 const internshipsObj = {
   CompanyName: "",
@@ -33,7 +29,6 @@ class Intership extends Component {
     visible: false,
     fileUploading: false,
     fileUpload: false,
-    errors: {},
   };
   initialValues = {
     CompanyName: "",
@@ -41,6 +36,12 @@ class Intership extends Component {
     Place: "",
     Duration: "",
   };
+  validateSchema = Yup.object().shape({
+    CompanyName: Yup.string().required("is required"),
+    ShortName: Yup.string().required("is required"),
+    Place: Yup.string().required("is required"),
+    Duration: Yup.string().required("is required"),
+  });
   uploadProps = {
     name: "file",
     multiple: false,
@@ -91,15 +92,15 @@ class Intership extends Component {
       visible: true,
     });
   };
-  errors = {};
   handleValidate = (values) => {
+    let errors = {};
     for (var key in values) {
       if (!values[key]) {
-        this.errors[key] = "is required";
+        errors[key] = "is required";
       }
     }
 
-    return this.errors;
+    return errors;
   };
   handleChange = (target) => {
     const { internshipsObj } = this.state;
@@ -114,14 +115,12 @@ class Intership extends Component {
     this.setState({ internshipsObj: internshipsObj });
   };
   handleOk = (e) => {
-    let { errors } = this.state;
-    errors = this.handleValidate(this.formRef.current.values);
-    this.setState({ errors: errors });
-    saveInnternship(this.props?.profile?.Id, this.state.internshipsObj).then(
-      (res) => {
-        message.success("Intership saved successfully");
-      }
-    );
+    this.formRef.current.handleSubmit();
+    // saveInnternship(this.props?.profile?.Id, this.state.internshipsObj).then(
+    //   (res) => {
+    //     message.success("Intership saved successfully");
+    //   }
+    // );
     // this.setState({
     //   visible: false,
     // });
@@ -195,8 +194,9 @@ class Intership extends Component {
             initialValues={this.initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
+            // validationSchema={this.validateSchema}
           >
-            {({ touched, handleBlur }) => {
+            {({ values }) => {
               return (
                 <Form layout="vertical">
                   <Row gutter={16} className="mb-16">
@@ -205,18 +205,11 @@ class Intership extends Component {
                         <Field
                           className="ant-input"
                           name="CompanyName"
-                          value={internshipsObj.CompanyName}
-                          onChange={(event) => this.handleChange(event)}
-                          onBlur={handleBlur}
+                          value={values.CompanyName}
                         />
                         <span className="validateerror">
                           <ErrorMessage name="CompanyName" />
                         </span>
-                        {errors["CompanyName"] && !touched.CompanyName ? (
-                          <span className="validateerror">
-                            {errors["CompanyName"]}
-                          </span>
-                        ) : null}
                       </Form.Item>
                     </Col>
                     <Col xs={24}>
@@ -224,17 +217,11 @@ class Intership extends Component {
                         <Field
                           className="ant-input"
                           name="ShortName"
-                          value={internshipsObj.ShortName}
-                          onChange={(event) => this.handleChange(event)}
+                          value={values.ShortName}
                         />
                         <span className="validateerror">
                           <ErrorMessage name="ShortName" />
                         </span>
-                        {errors["ShortName"] && !touched.ShortName ? (
-                          <span className="validateerror">
-                            {errors["ShortName"]}
-                          </span>
-                        ) : null}
                       </Form.Item>
                     </Col>
                     <Col xs={12}>
@@ -242,17 +229,11 @@ class Intership extends Component {
                         <Field
                           className="ant-input"
                           name="Place"
-                          value={internshipsObj.Place}
-                          onChange={(event) => this.handleChange(event)}
+                          value={values.Place}
                         />
                         <span className="validateerror">
                           <ErrorMessage name="Place" />
                         </span>
-                        {errors["Place"] && !touched.Place ? (
-                          <span className="validateerror">
-                            {errors["Place"]}
-                          </span>
-                        ) : null}
                       </Form.Item>
                     </Col>
                     <Col xs={12}>
@@ -263,7 +244,7 @@ class Intership extends Component {
                         <Select
                           name="Duration"
                           defaultValue="Select Option"
-                          value={internshipsObj.Duration}
+                          value={values.Duration}
                           onChange={(event) => this.handleddlChange(event)}
                         >
                           <Option value="Select Option">Select Duration</Option>
@@ -271,11 +252,6 @@ class Intership extends Component {
                         <span className="validateerror">
                           <ErrorMessage name="Duration" />
                         </span>
-                        {errors["Duration"] && !touched.Duration ? (
-                          <span className="validateerror">
-                            {errors["Duration"]}
-                          </span>
-                        ) : null}
                       </Form.Item>
                     </Col>
 

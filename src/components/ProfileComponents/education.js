@@ -37,7 +37,6 @@ class Education extends Component {
     education: this.props.education,
     visible: false,
     lstEducation: [],
-    errors: {},
   };
   showModal = (e) => {
     e.preventDefault();
@@ -46,17 +45,15 @@ class Education extends Component {
     });
   };
   saveEducation = (e) => {
-    let { errors } = this.state;
-    errors = this.handleValidate(this.formRef.current.values);
-    this.setState({ errors: errors });
+    this.formRef.current.handleSubmit();
     saveEducation(this.props?.profile?.Id, this.state.lstEducation).then(
       (res) => {
         message.success("Education saved successfully");
       }
     );
-    this.setState({
-      visible: false,
-    });
+    // this.setState({
+    //   visible: false,
+    // });
   };
   handleCancel = (e) => {
     console.log(e);
@@ -71,15 +68,16 @@ class Education extends Component {
     Place: "",
     MarksGrade: "",
   };
-  errors = {};
+
   handleValidate = (values) => {
+    let errors = {};
     for (var key in values) {
       if (!values[key]) {
-        this.errors[key] = "is required";
+        errors[key] = "is required";
       }
     }
 
-    return this.errors;
+    return errors;
   };
   addEducation = () => {
     let educatioObj = {
@@ -154,7 +152,7 @@ class Education extends Component {
   render() {
     const { user } = store.getState().oidc;
 
-    const { education, visible, lstEducation, errors } = this.state;
+    const { education, visible, lstEducation } = this.state;
     return (
       <div className="custom-card profile-card">
         <Card
@@ -220,7 +218,7 @@ class Education extends Component {
         </Card>
         <CommonModal
           className="custom-popup"
-          visible={this.state.visible}
+          visible={visible}
           title="Education"
           cancel={this.handleCancel}
           saved={this.saveEducation}
@@ -236,7 +234,7 @@ class Education extends Component {
                       innerRef={this.formRef}
                       validate={(values) => this.handleValidate(values)}
                     >
-                      {({ touched }) => {
+                      {({ values }) => {
                         return (
                           <Form layout="vertical">
                             <Row gutter={16}>
@@ -248,7 +246,7 @@ class Education extends Component {
                                   <Select
                                     defaultValue=""
                                     name="EducationType"
-                                    value={education.EducationType}
+                                    value={values.EducationType}
                                     onChange={(event) =>
                                       this.handleDdlChange(event, index)
                                     }
@@ -267,12 +265,6 @@ class Education extends Component {
                                   <span className="validateerror">
                                     <ErrorMessage name="EducationType" />
                                   </span>
-                                  {errors["EducationType"] &&
-                                  !touched.EducationType ? (
-                                    <span className="validateerror">
-                                      {errors["EducationType"]}
-                                    </span>
-                                  ) : null}
                                 </Form.Item>
                               </Col>
                               <Col xs={24} sm={12}>
@@ -282,20 +274,12 @@ class Education extends Component {
                                 >
                                   <Field
                                     className="ant-input"
-                                    value={education.College}
+                                    value={values.College}
                                     name="College"
-                                    onChange={(event) =>
-                                      this.handleChange(event, index, education)
-                                    }
                                   />
                                   <span className="validateerror">
                                     <ErrorMessage name="College" />
                                   </span>
-                                  {errors["College"] && !touched.College ? (
-                                    <span className="validateerror">
-                                      {errors["College"]}
-                                    </span>
-                                  ) : null}
                                 </Form.Item>
                               </Col>
                               <Col xs={24} sm={12}>
@@ -306,7 +290,7 @@ class Education extends Component {
                                   <Input.Group compact>
                                     <RangePicker
                                       name="AcademicYear"
-                                      value={education.AcademicYear}
+                                      value={values.AcademicYear}
                                       onChange={(event) =>
                                         this.handleChange(
                                           event,
@@ -318,12 +302,6 @@ class Education extends Component {
                                     <span className="validateerror">
                                       <ErrorMessage name="AcademicYear" />
                                     </span>
-                                    {errors["AcademicYear"] &&
-                                    !touched.AcademicYear ? (
-                                      <span className="validateerror">
-                                        {errors["AcademicYear"]}
-                                      </span>
-                                    ) : null}
                                   </Input.Group>
                                 </Form.Item>
                               </Col>
@@ -334,20 +312,12 @@ class Education extends Component {
                                 >
                                   <Field
                                     className="ant-input"
-                                    value={education.Place}
+                                    value={values.Place}
                                     name="Place"
-                                    onChange={(event) =>
-                                      this.handleChange(event, index, education)
-                                    }
                                   />
                                   <span className="validateerror">
                                     <ErrorMessage name="Place" />
                                   </span>
-                                  {errors["Place"] && !touched.Place ? (
-                                    <span className="validateerror">
-                                      {errors["Place"]}
-                                    </span>
-                                  ) : null}
                                 </Form.Item>
                               </Col>
                               <Col xs={24} sm={12}>
@@ -357,21 +327,12 @@ class Education extends Component {
                                 >
                                   <Field
                                     className="ant-input"
-                                    value={education.MarksGrade}
+                                    value={values.MarksGrade}
                                     name="MarksGrade"
-                                    onChange={(event) =>
-                                      this.handleChange(event, index, education)
-                                    }
                                   />
                                   <span className="validateerror">
                                     <ErrorMessage name="MarksGrade" />
                                   </span>
-                                  {errors["MarksGrade"] &&
-                                  !touched.MarksGrade ? (
-                                    <span className="validateerror">
-                                      {errors["MarksGrade"]}
-                                    </span>
-                                  ) : null}
                                 </Form.Item>
                               </Col>
                             </Row>
