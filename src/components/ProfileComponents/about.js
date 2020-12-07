@@ -7,27 +7,36 @@ import "../../App.css";
 import CommonModal from "./CommonModal";
 import { ErrorMessage, Field, Formik } from "formik";
 import deepEqual from "lodash.isequal";
+import { saveAboutMe } from "../../shared/api/apiServer";
+import { uuidv4 } from "../../utils";
+import { values } from "lodash";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 const { Option } = Select;
 
 class About extends Component {
   state = {
-    PhoneNumber: this.props.about.PhoneNumber,
+    PhoneNumber: this.props.about.PhoneNumber
+      ? this.props.about.PhoneNumber
+      : "",
     Email: this.props.about.Email,
-    AboutMe: this.props.about.Aboutme,
-    address: this.props.about.Address,
+    AboutMe: this.props.about.Aboutme ? this.props.about.Aboutme : "",
+    finalAddress: this.props.about.Address,
+    address:
+      this.props.about.Address.length > 0
+        ? this.props.about.Address[0]
+        : {
+            PlatNo: "",
+            Street: "",
+            Address: "",
+            City: "",
+            State: "",
+            Country: "",
+            PinCode: "",
+          },
+
     visible: false,
   };
-  initialValues = {
-    BlockHouseNo: "",
-    BuildingEstate: "",
-    Address: "",
-    City: "",
-    State: "",
-    Country: "",
-    PostalCode: "",
-    PhoneNumber: "",
-    AboutMe: "",
-  };
+
   handleValidate = (values) => {
     let errors = {};
     // if (!value.Email) {
@@ -55,6 +64,7 @@ class About extends Component {
       visible: true,
     });
   };
+
   handleOk = () => {
     this.formRef.current.handleSubmit();
     const hasChanged = deepEqual(
@@ -62,10 +72,49 @@ class About extends Component {
       this.initialValues
     );
     if (!hasChanged) {
-      this.setState({
-        visible: false,
+      const saveObj = this.createSaveObj(this.formRef.current.values);
+      saveAboutMe(saveObj).then((res) => {
+        this.setState({
+          visible: false,
+        });
       });
     }
+  };
+  createSaveObj = (values) => {
+    const saveObj = {
+      UserId: this.props.about.UserId,
+      Aboutme: values.AboutMe,
+      PhoneNumber: values.PhoneNumber,
+      Address: [
+        {
+          AddressId: this.state.address.AddressId
+            ? this.state.address.AddressId
+            : uuidv4(),
+          PlatNo: values["PlatNo"],
+          Street: values["Street"],
+          Address: values["Address"],
+          City: values["City"],
+          State: values["State"],
+          Country: values["Country"],
+          PinCode: values["PinCode"],
+        },
+      ],
+    };
+    return saveObj;
+  };
+  selectCountry = (val) => {
+    this.formRef.current.setValues({
+      ...this.formRef.current.values,
+      Country: val,
+    });
+    console.log(this.formRef.current.values);
+  };
+  selectRegion = (val) => {
+    this.formRef.current.setValues({
+      ...this.formRef.current.values,
+      State: val,
+    });
+    console.log(this.formRef.current.values);
   };
   handleCancel = (e) => {
     this.formRef.current.setErrors({});
@@ -78,7 +127,26 @@ class About extends Component {
   render() {
     const { user } = store.getState().oidc;
 
-    const { PhoneNumber, Email, AboutMe, address, visible } = this.state;
+    const {
+      PhoneNumber,
+      Email,
+      AboutMe,
+      finalAddress,
+      visible,
+      address,
+    } = this.state;
+
+    const initialValues = {
+      PlatNo: address.PlatNo,
+      Street: address.Street,
+      Address: address.Address,
+      City: address.City,
+      State: address.State,
+      Country: address.Country,
+      PinCode: address.PinCode,
+      PhoneNumber: PhoneNumber,
+      AboutMe: AboutMe,
+    };
 
     return (
       <div className="custom-card profile-card">
@@ -99,13 +167,13 @@ class About extends Component {
               Contact
             </Divider>
             <Row gutter={16}>
-              {address.length > 0 && (
+              {finalAddress.length > 0 && (
                 <Col xs={24} sm={12}>
                   <div className="about-details">
                     <div className="about-icons">
                       <span className="icons location c-default" />
                     </div>
-                    {address.map((address, index) => {
+                    {finalAddress.map((address, index) => {
                       return (
                         <p key={index}>
                           {Object.keys(address)
@@ -150,11 +218,11 @@ class About extends Component {
           saved={this.handleOk.bind(this)}
         >
           <Formik
-            initialValues={this.initialValues}
+            initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
           >
-            {({ values }) => {
+            {({ values, setFieldValue }) => {
               return (
                 <Form layout="vertical">
                   <Row gutter={16}>
@@ -165,11 +233,11 @@ class About extends Component {
                       <Form.Item label="Plot No" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.BlockHouseNo}
-                          name="BlockHouseNo"
+                          value={values.PlatNo}
+                          name="PlatNo"
                         />
                         <span className="validateerror">
-                          <ErrorMessage name="BlockHouseNo" />
+                          <ErrorMessage name="PlatNo" />
                         </span>
                       </Form.Item>
                     </Col>
@@ -177,11 +245,11 @@ class About extends Component {
                       <Form.Item label="Street Name" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.BuildingEstate}
-                          name="BuildingEstate"
+                          value={values.Street}
+                          name="Street"
                         />
                         <span className="validateerror">
-                          <ErrorMessage name="BuildingEstate" />
+                          <ErrorMessage name="Street" />
                         </span>
                       </Form.Item>
                     </Col>
@@ -211,48 +279,59 @@ class About extends Component {
                     </Col>
                     <Col xs={24} sm={12}>
                       <Form.Item
-                        label="State"
-                        className="custom-fields custom-select"
-                      >
-                        <Select
-                          defaultValue="Select Option"
-                          value={values.State}
-                          name="State"
-                        >
-                          <Option value="Select Option">Select State</Option>
-                        </Select>
-                        <span className="validateerror">
-                          <ErrorMessage name="State" />
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <Form.Item
                         label="Country"
                         className="custom-fields custom-select"
                       >
-                        <Select
+                        <CountryDropdown
+                          onChange={(value) => setFieldValue("Country", value)}
+                          value={values.Country}
+                          name="Country"
+                        />
+                        {/* <Select
                           id="select"
                           value={values.Country}
                           name="Country"
                           onChange={this.handleOnChange.bind(this)}
                         >
                           <Option value="Select Option">Select Option</Option>
-                        </Select>
+                        </Select> */}
                         <span className="validateerror">
                           <ErrorMessage name="Country" />
                         </span>
                       </Form.Item>
                     </Col>
                     <Col xs={24} sm={12}>
+                      <Form.Item
+                        label="State"
+                        className="custom-fields custom-select"
+                      >
+                        <RegionDropdown
+                          onChange={(value) => setFieldValue("State", value)}
+                          country={values.Country}
+                          value={values.State}
+                        />
+                        {/* <Select
+                          defaultValue="Select Option"
+                          value={values.State}
+                          name="State"
+                        >
+                          <Option value="Select Option">Select State</Option>
+                        </Select> */}
+                        <span className="validateerror">
+                          <ErrorMessage name="State" />
+                        </span>
+                      </Form.Item>
+                    </Col>
+
+                    <Col xs={24} sm={12}>
                       <Form.Item label="Pin Code" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.PostalCode}
-                          name="PostalCode"
+                          value={values.PinCode}
+                          name="PinCode"
                         />
                         <span className="validateerror">
-                          <ErrorMessage name="PostalCode" />
+                          <ErrorMessage name="PinCode" />
                         </span>
                       </Form.Item>
                     </Col>
