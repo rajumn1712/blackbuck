@@ -1,10 +1,11 @@
 import React, { Component, createRef } from 'react';
 import { Row, Col, Tabs, Card, Avatar, Input, Tooltip, Slider, List,Form  } from 'antd';
-import './groupstyle.css'
-import PadLock from '../styles/images/padlock.svg'
+import '../../group/groupstyle.css';
+import PadLock from '../../styles/images/padlock.svg'
 import { Link } from 'react-router-dom';
-import CommonModal from '../components/ProfileComponents/CommonModal';
+import CommonModal from '../../components/ProfileComponents/CommonModal';
 import { profileDetail } from '../../shared/api/apiServer';
+import {connect} from 'react-redux';
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
@@ -63,7 +64,7 @@ const navigations =
             "IsActive": false
         }
     ]
-class Group extends Component {
+class CreateGroup extends Component {
     state = {
         value: 1,
       };
@@ -90,8 +91,8 @@ class Group extends Component {
     componentDidMount() {
         profileDetail(this.props?.profile?.id)
             .then(res => {
-                const profiledata = res.data[0].User;
-                this.setState({ profileData: profiledata });
+                // const profiledata = res.data[0].User;
+                // this.setState({ profileData: profiledata });
             })
     }
     showModal = () => {
@@ -210,4 +211,7 @@ class Group extends Component {
     }
 }
 
-export default Group;
+const mapStateToProps = ({ oidc }) => {
+    return { user: oidc.user, profile: oidc.profile }
+}
+export default connect(mapStateToProps)(CreateGroup);
