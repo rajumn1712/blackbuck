@@ -14,6 +14,7 @@ import Postings from '../shared/postings';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import SavedPostsComponent from '../shared/postings/savedPosts';
 import CommingSoon from '../components/comingsoon';
+import OnBoard from '../components/onboard';
 const PostingsComponent = () => {
     return <Postings sharebox={true} friendsSuggestions={true} postingsType="all" />
 }
@@ -35,6 +36,7 @@ class Home extends Component {
                         </Affix>
                     </Col>
                     <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
+                      {/* <OnBoard /> */}
                         <Switch >
                             <Route path="/newsfeed" component={PostingsComponent} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
