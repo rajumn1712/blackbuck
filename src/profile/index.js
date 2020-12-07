@@ -307,7 +307,6 @@ class Profile extends Component {
             </div>
             <Tabs
               defaultActiveKey="1"
-              centered
               className="profile-tabs"
               tabBarExtraContent={this.state.showDownload && operations}
               onChange={this.handleTabChange}
