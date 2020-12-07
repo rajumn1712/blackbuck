@@ -307,7 +307,6 @@ class Profile extends Component {
             </div>
             <Tabs
               defaultActiveKey="1"
-              centered
               className="profile-tabs"
               tabBarExtraContent={this.state.showDownload && operations}
               onChange={this.handleTabChange}
@@ -346,12 +345,10 @@ class Profile extends Component {
                       )}
                     </div>
                     <div ref={this.getOrCreateRef("HobbyComp")}>
-                      {profileData.Hobbies && (
-                        <Hobbies
-                          hobbies={profileData.Hobbies}
-                          userid={this.props?.profile?.Id}
-                        />
-                      )}
+                      <Hobbies
+                        hobbies={profileData.Hobbies}
+                        userid={this.props?.profile?.Id}
+                      />
                     </div>
                     <div ref={this.getOrCreateRef("InternshipComp")}>
                       {profileData.Internships && (

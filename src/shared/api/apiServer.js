@@ -44,6 +44,9 @@ const fetchFriendRequests = (user_id) => {
 const saveProfileImage = (user_id, type, obj) => {
   return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}/${type}`, obj);
 };
+const saveAboutMe = (obj) => {
+  return apiClient.post(PROFILE_API + `saveAboutMe`, obj);
+};
 const saveInnternship = (user_id, obj) => {
   return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}`, obj);
 };
@@ -78,6 +81,7 @@ export {
   acceptFrienRequest,
   fetchFriendRequests,
   saveProfileImage,
+  saveAboutMe,
   saveInnternship,
   saveHobbies,
   saveEducation,

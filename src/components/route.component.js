@@ -11,6 +11,7 @@ import Profile from '../profile';
 import Group from '../group';
 import ProfileView from '../profileview';
 import GroupView from '../group/groupview';
+import CreateGroup from '../components/ProfileComponents/creategroup';
 // import CreateGroup from './creategroup';
 const Router = () => {
     return (
@@ -25,6 +26,7 @@ const Router = () => {
             {/* <Route path="/creategroup" component={CreateGroup} /> */}
             <Route path="/commingsoon" component={CommingSoon} />
             <ProtectedRoute path="/post/:name" component={Post} />
+            <ProtectedRoute path="/newgroup/:id" component={CreateGroup} />
             <ProtectedRoute path="" component={Home} />
         </Switch>
     )

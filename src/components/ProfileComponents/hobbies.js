@@ -10,8 +10,8 @@ import { saveHobbies } from "../../shared/api/apiServer";
 
 class Hobbies extends Component {
   state = {
-    hobbies: this.props.hobbies.split(","),
-    tags: this.props.hobbies.split(","),
+    hobbies: this.props.hobbies ? this.props.hobbies.split(",") : [],
+    tags: this.props.hobbies ? this.props.hobbies.split(",") : [],
     inputVisible: false,
     inputValue: "",
     visible: false,
@@ -111,13 +111,14 @@ class Hobbies extends Component {
             ) : null
           }
         >
-          {hobbies.map((hobby, index) => {
-            return (
-              <Tag className="tags" key={index}>
-                {hobby}
-              </Tag>
-            );
-          })}
+          {hobbies &&
+            hobbies.map((hobby, index) => {
+              return (
+                <Tag className="tags" key={index}>
+                  {hobby}
+                </Tag>
+              );
+            })}
         </Card>
         <CommonModal
           className="custom-popup"

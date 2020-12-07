@@ -40,8 +40,7 @@
 .share-box ul li:hover .sharebox-icons.gif-icon,  .sharebox-icons.gif-upload{background-position: -236px -147px;}
 .sharebox-icons.video-icon{background-position: -297px -100px;}
 .share-box ul li:hover .sharebox-icons.video-icon, .sharebox-icons.video-upload{background-position: -297px -149px;}
-.post-icons.download-icon{background-position:-405px -254px;}
-.post-icons.download-icon:hover, .ant-btn:hover{background-position:-405px -281px;}
+.post-icons.download-icon{background-position:-405px -281px;}
 .sharebox-icons.speekar-icon{background-position: -124px -147px;}
 .speekar-block .ant-avatar{width: 100% !important;height: 100% !important;}
 .text-hover{opacity: 0; line-height: 1;}
@@ -331,7 +330,7 @@ textarea{resize: unset !important;}
 .notification-list .notification-image .ant-avatar-image,  .messenger-drawer .ant-card-meta .ant-avatar-image, .profile-dropdown .ant-card-meta .ant-avatar-image,
 .addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius: 50% !important;}
 .validateerror{color:red;text-align: right; display: block !important;}
-.profile-tabs .ant-tabs-extra-content .profile-download{ margin-left:12px;border: 0;font-size: 16px !important;color: var(--textprimary);}
+.profile-tabs .ant-tabs-extra-content .profile-download{border: 1px solid var(--primary);margin-right:12px;font-size: 14px !important;color: var(--primary);}
 .left-menu.private-icon{background-position: -434px -256px;}
 .left-menu.preview-icon{background-position: -464px -256px;}
 .left-menu.group-icon{background-position: -527px -258px;}
@@ -340,6 +339,8 @@ textarea{resize: unset !important;}
 .left-menu.private-icon:hover{background-position: -434px -284px;}
 .left-menu.preview-icon:hover{background-position: -464px -284px;}
 .left-menu.group-icon:hover{background-position: -527px -286px;} */
+.hobbies-card .ant-card-body, .group-member .ant-card-body{padding: 12px;}
+.hobbies-card .tags{min-height: auto;}
 .onboard-process .ant-card-body .steps-content{min-height: 350px; align-items: center; justify-content: center;display: flex;}
 .onboard-process .intro1{padding: 12px;text-align: center;max-width: 75%;margin: auto;}
 .onboard-process {border-radius:0.8rem !important; border-color: var(--line);}
