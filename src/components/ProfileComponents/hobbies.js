@@ -10,8 +10,8 @@ import { saveHobbies } from "../../shared/api/apiServer";
 
 class Hobbies extends Component {
   state = {
-    hobbies: this.props.hobbies.split(","),
-    tags: this.props.hobbies.split(","),
+    hobbies: this.props.hobbies?.split(","),
+    tags: this.props.hobbies?.split(","),
     inputVisible: false,
     inputValue: "",
     visible: false,
