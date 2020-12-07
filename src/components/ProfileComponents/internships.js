@@ -10,7 +10,7 @@ import { saveInnternship } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { ErrorMessage, Field, Formik } from "formik";
 import * as Yup from "yup";
-import deeepEqual from "lodash.isequal";
+import { hasChanged } from "../../utils";
 
 const docs = [];
 const { Option } = Select;
@@ -117,11 +117,7 @@ class Intership extends Component {
   };
   handleOk = (e) => {
     this.formRef.current.handleSubmit();
-    const hasChanged = deeepEqual(
-      this.formRef.current.values,
-      this.initialValues
-    );
-    if (!hasChanged) {
+    if (!hasChanged(this.formRef.current.values)) {
       saveInnternship(this.props?.profile?.Id, this.state.internshipsObj).then(
         (res) => {
           message.success("Intership saved successfully");

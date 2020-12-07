@@ -21,7 +21,7 @@ import CommonModal from "./CommonModal";
 import notify from "../../shared/components/notification";
 import { saveEducation } from "../../shared/api/apiServer";
 import { ErrorMessage, Field, Formik } from "formik";
-import deepEqual from "lodash.isequal";
+import { hasChanged } from "../../utils";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -40,11 +40,7 @@ class Education extends Component {
   };
   saveEducation = (e) => {
     this.formRef.current.handleSubmit();
-    const hasChanged = deepEqual(
-      this.formRef.current.values,
-      this.initialValues
-    );
-    if (!hasChanged) {
+    if (!hasChanged(this.formRef.current.values)) {
       saveEducation(this.props?.profile?.Id, this.state.lstEducation).then(
         (res) => {
           message.success("Education saved successfully");
