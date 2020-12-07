@@ -77,6 +77,7 @@ class About extends Component {
         this.setState({
           visible: false,
         });
+        this.props.callback(true);
       });
     }
   };

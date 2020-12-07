@@ -308,7 +308,7 @@ class Profile extends Component {
             <Tabs
               defaultActiveKey="1"
               className="profile-tabs"
-              tabBarExtraContent={this.state.showDownload && operations}
+              tabBarExtraContent={operations}
               onChange={this.handleTabChange}
             >
               <TabPane tab="Posts" key="1">
@@ -337,7 +337,14 @@ class Profile extends Component {
                                     </Col> */}
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div ref={this.getOrCreateRef("AboutComp")}>
-                      {profileData && <About about={profileData} />}
+                      {profileData && (
+                        <About
+                          about={profileData}
+                          callback={(reload) =>
+                            reload ? this.profielDetails() : null
+                          }
+                        />
+                      )}
                     </div>
                     <div ref={this.getOrCreateRef("InterestComp")}>
                       {profileData.Interests && (
@@ -348,6 +355,9 @@ class Profile extends Component {
                       <Hobbies
                         hobbies={profileData.Hobbies}
                         userid={this.props?.profile?.Id}
+                        callback={(reload) =>
+                          reload ? this.profielDetails() : null
+                        }
                       />
                     </div>
                     <div ref={this.getOrCreateRef("InternshipComp")}>

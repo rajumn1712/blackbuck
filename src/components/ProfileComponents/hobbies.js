@@ -32,6 +32,7 @@ class Hobbies extends Component {
       this.setState({
         visible: false,
       });
+      this.props.callback(true);
     });
   };
   handleCancel = (e) => {
