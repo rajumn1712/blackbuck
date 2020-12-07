@@ -347,7 +347,10 @@ class Profile extends Component {
                     </div>
                     <div ref={this.getOrCreateRef("HobbyComp")}>
                       {profileData.Hobbies && (
-                        <Hobbies hobbies={profileData.Hobbies} />
+                        <Hobbies
+                          hobbies={profileData.Hobbies}
+                          userid={this.props?.profile?.Id}
+                        />
                       )}
                     </div>
                     <div ref={this.getOrCreateRef("InternshipComp")}>
