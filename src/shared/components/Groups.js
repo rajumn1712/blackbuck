@@ -76,7 +76,7 @@ class Groups extends Component {
         return (
             <div className="custom-card sub-text">
                 <Card title="Groups" bordered={true} extra={<Link to="/commingsoon">View all</Link>} actions={[
-                    <Link to="/commingsoon"><Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button></Link>
+                    <Link to={"/newgroup/" + 'new'}><Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button></Link>
                 ]} >
                     <List
                         itemLayout="horizontal"
