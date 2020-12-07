@@ -23,8 +23,8 @@ class PostCardModal extends Component {
     slider = createRef(null);
     componentDidMount() { }
     componentWillReceiveProps(props) {
-        this.setState({ ...this.state, post: props.postData, visible: props.visible, commentselection: [] }, () => {
-            if (this.state.post.commentsCount > 0) {
+        this.setState({ ...this.state, post: props.postData, visible: props.visible}, () => {
+            if (this.state.post.commentsCount > 0 && this.state.commentselection.length == 0) {
                 this.showComment(this.state.post)
             }
         })
@@ -189,7 +189,7 @@ class PostCardModal extends Component {
                                     extra={
                                         <SideAction clickedEvent={(event, name) => this.props.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
                                     }
-                                    actions={[<EmojiAction key="emoji" mystate={post} clickedEvent={(event, name) => this.props.handleActions(event, name, post)} />,
+                                    actions={[<EmojiAction key="emoji" IsUserLikes={post.IsUserLikes} mystate={post} clickedEvent={(event, name) => this.props.handleActions(event, name, post)} />,
                                     <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
                                     <ShareAction key="share" />
                                     ]}
@@ -228,7 +228,7 @@ class PostCardModal extends Component {
                                         </div>
                                     </div>
                                 </Card>
-                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount} onUpdate={(prop, value) => { this.props.updatePost(post, prop, value) }}
+                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount} onUpdate={(prop, value,object) => { this.props.updatePost(post, prop, value,object) }}
                                 />}
                             </div>
                         </Col>
