@@ -9,7 +9,7 @@ import Post from '../common/post';
 import Callback from "../shared/authentication/callback";
 import Profile from '../profile';
 import Group from '../group';
-import ProfileView from '../profileview';
+import ProfileView from '../profile/profileView';
 import GroupView from '../group/groupview';
 import CreateGroup from '../group/creategroup';
 // import CreateGroup from './creategroup';

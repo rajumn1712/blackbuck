@@ -5,7 +5,6 @@ import Courses from '../components/ProfileComponents/courses';
 import Friends from '../components/friends';
 import Groups from '../shared/components/Groups';
 import Identity from '../components/identity';
-import Invite from '../components/invite';
 
 class Aboutus extends Component {
 
