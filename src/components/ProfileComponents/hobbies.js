@@ -125,6 +125,7 @@ class Hobbies extends Component {
           className="custom-popup"
           visible={visible}
           title="Hobbies"
+          disable={tags.length == 0}
           cancel={this.handleCancel}
           saved={this.handleOk}
         >
