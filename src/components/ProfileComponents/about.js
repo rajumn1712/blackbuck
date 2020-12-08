@@ -169,6 +169,7 @@ class About extends Component {
                       <span className="icons location c-default" />
                     </div>
                     {finalAddress.map((address, index) => {
+                      delete address.AddressId;
                       return (
                         <p key={index}>
                           {Object.keys(address)

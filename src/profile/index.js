@@ -366,9 +366,7 @@ class Profile extends Component {
                       )}
                     </div>
                     <div ref={this.getOrCreateRef("VideoComp")}>
-                      {profileData.VideoAsProfile && (
-                        <VideoProfile video={profileData.VideoAsProfile} />
-                      )}
+                      {<VideoProfile video={profileData.VideoAsProfile} />}
                     </div>
                     <div ref={this.getOrCreateRef("EducationComp")}>
                       {profileData.Education && (
