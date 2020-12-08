@@ -104,7 +104,7 @@ const OnBoard = () => {
     return (
         <>
             <div className="intro1">
-                <img src={Logo} alt="blackbuck" width="250px" />
+                {/* <img src={Logo} alt="blackbuck" width="250px" /> */}
                 <h1> Welcome to Blackbuck</h1>
                 <p>To bring premier and practical formal education closer to students and professionals.</p>
             </div>
