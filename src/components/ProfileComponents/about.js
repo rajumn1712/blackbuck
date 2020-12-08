@@ -21,31 +21,8 @@ class About extends Component {
     Email: this.props.about.Email,
     AboutMe: this.props.about.Aboutme ? this.props.about.Aboutme : "",
     finalAddress: this.props.about.Address,
-    address:
-      this.props.about.Address.length > 0
-        ? this.props.about.Address[0]
-        : {
-            PlatNo: "",
-            Street: "",
-            Address: "",
-            City: "",
-            State: "",
-            Country: "",
-            PinCode: "",
-          },
-
+    address: {},
     visible: false,
-  };
-  initialValues = {
-    PlatNo: this.state.address.PlatNo,
-    Street: this.state.address.Street,
-    Address: this.state.address.Address,
-    City: this.state.address.City,
-    State: this.state.address.State,
-    Country: this.state.address.Country,
-    PinCode: this.state.address.PinCode,
-    PhoneNumber: this.state.PhoneNumber,
-    AboutMe: this.state.AboutMe,
   };
 
   handleValidate = (values) => {
@@ -71,8 +48,23 @@ class About extends Component {
   };
   showModal = (e) => {
     e.preventDefault();
+    let { address } = this.state;
+    address =
+      this.props.about.Address.length > 0
+        ? this.props.about.Address[0]
+        : {
+            PlatNo: "",
+            Street: "",
+            Address: "",
+            City: "",
+            State: "",
+            Country: "",
+            PinCode: "",
+          };
+
     this.setState({
       visible: true,
+      address,
     });
   };
 
@@ -118,25 +110,11 @@ class About extends Component {
     };
     return saveObj;
   };
-  selectCountry = (val) => {
-    this.formRef.current.setValues({
-      ...this.formRef.current.values,
-      Country: val,
-    });
-    console.log(this.formRef.current.values);
-  };
-  selectRegion = (val) => {
-    this.formRef.current.setValues({
-      ...this.formRef.current.values,
-      State: val,
-    });
-    console.log(this.formRef.current.values);
-  };
   handleCancel = (e) => {
     this.formRef.current.setErrors({});
     this.setState({
       visible: false,
-      errors: {},
+      address: {},
     });
   };
   formRef = createRef();
@@ -223,8 +201,9 @@ class About extends Component {
           saved={this.handleOk.bind(this)}
         >
           <Formik
-            initialValues={this.initialValues}
+            enableReinitialize
             innerRef={this.formRef}
+            initialValues={address}
             validate={(values) => this.handleValidate(values)}
           >
             {({ values, setFieldValue }) => {
@@ -238,7 +217,7 @@ class About extends Component {
                       <Form.Item label="Plot No" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.PlatNo}
+                          value={values?.PlatNo}
                           name="PlatNo"
                         />
                         <span className="validateerror">
@@ -250,7 +229,7 @@ class About extends Component {
                       <Form.Item label="Street Name" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.Street}
+                          value={values?.Street}
                           name="Street"
                         />
                         <span className="validateerror">
@@ -262,7 +241,7 @@ class About extends Component {
                       <Form.Item label="Address" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.Address}
+                          value={values?.Address}
                           name="Address"
                         />
                         <span className="validateerror">
@@ -274,7 +253,7 @@ class About extends Component {
                       <Form.Item label="City" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.City}
+                          value={values?.City}
                           name="City"
                         />
                         <span className="validateerror">
@@ -289,7 +268,7 @@ class About extends Component {
                       >
                         <CountryDropdown
                           onChange={(value) => setFieldValue("Country", value)}
-                          value={values.Country}
+                          value={values?.Country}
                           name="Country"
                         />
                         {/* <Select
@@ -312,8 +291,8 @@ class About extends Component {
                       >
                         <RegionDropdown
                           onChange={(value) => setFieldValue("State", value)}
-                          country={values.Country}
-                          value={values.State}
+                          country={values?.Country}
+                          value={values?.State}
                         />
                         {/* <Select
                           defaultValue="Select Option"
@@ -332,7 +311,7 @@ class About extends Component {
                       <Form.Item label="Pin Code" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.PinCode}
+                          value={values?.PinCode}
                           name="PinCode"
                         />
                         <span className="validateerror">
@@ -344,7 +323,7 @@ class About extends Component {
                       <Form.Item label="Phone Number" className="custom-fields">
                         <Field
                           className="ant-input"
-                          value={values.PhoneNumber}
+                          value={values?.PhoneNumber}
                           name="PhoneNumber"
                         />
                         <span className="validateerror">
@@ -366,7 +345,7 @@ class About extends Component {
                           component="textarea"
                           className="ant-input"
                           autoSize={{ minRows: 2, maxRows: 6 }}
-                          value={values.AboutMe}
+                          value={values?.AboutMe}
                           name="AboutMe"
                         />
                         <span className="validateerror">

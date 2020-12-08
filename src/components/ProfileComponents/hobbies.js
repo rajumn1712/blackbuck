@@ -12,7 +12,7 @@ import notify from "../../shared/components/notification";
 class Hobbies extends Component {
   state = {
     hobbies: this.props.hobbies ? this.props.hobbies.split(",") : [],
-    tags: this.props.hobbies ? this.props.hobbies.split(",") : [],
+    tags: [],
     inputVisible: false,
     inputValue: "",
     visible: false,
@@ -21,8 +21,11 @@ class Hobbies extends Component {
 
   showModal = (e) => {
     e.preventDefault();
+    let { tags } = this.state;
+    tags = this.props.hobbies ? this.props.hobbies.split(",") : [];
     this.setState({
       visible: true,
+      tags,
     });
   };
   handleOk = (e) => {

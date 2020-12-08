@@ -266,6 +266,7 @@ class Intership extends Component {
           saved={this.handleOk}
         >
           <Formik
+            enableReinitialize
             initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
