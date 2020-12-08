@@ -252,7 +252,6 @@ class CreateGroup extends Component {
                                                 description={<div><div className="f-12">{item.Type}</div><div className="f-12">Created on <span className="fw-400">{item.CreatedDate}</span></div></div>}
 
                                             />
-                                            {!groupData.IsMember &&  <div className="btn-position"><div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div> <Button type="primary" onClick={() => this.joinGroup(item)}>Jion Group</Button></div>}
                                         </List.Item>
                                     )}
                                 />
@@ -271,6 +270,29 @@ class CreateGroup extends Component {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12}>
+                                                <Form.Item label="Group Type" className="custom-fields">
+                                                <Input placeholder="Ex: IT GRoup" />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Form.Item label="Choose Privacy" className="custom-fields">
+                                                <Input />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Form.Item label="Hide Group" className="custom-fields">
+                                                <Input /><div className="f-12">Private groups can't change to public to protect the privacy of group members. <span>Learn More</span></div>
+                                                </Form.Item>
+                                                
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Form.Item label="Invite Friends (optional)" className="custom-fields">
+                                                <Input />
+                                                </Form.Item>
+                                            </Col>
+                                            </Row>
+                                            <Row gutter={24}>
+                                            <Col xs={24}>
                                                 <Form.Item label="Description" className="custom-fields">
                                                     <TextArea
                                                         placeholder="Autosize height with minimum and maximum number of lines"
@@ -278,16 +300,14 @@ class CreateGroup extends Component {
                                                     />
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12}>
+                                            {/* <Col xs={12}>
                                                 <Form.Item label="Group Rules" className="custom-fields">
-                                                    <TextArea
-                                                        placeholder="Autosize height with minimum and maximum number of lines"
-
-                                                    />
+                                                    <TextArea placeholder="Autosize height with minimum and maximum number of lines" />
                                                 </Form.Item>
-                                            </Col>
+                                            </Col> */}
+                                            
 
-                                            <Col xs={24}>
+                                            {/* <Col xs={24}>
                                                 <Form.Item label="Group discoverability" className="custom-fields">
                                                     <Radio.Group onChange={this.onChange} value={value}>
                                                         <Radio style={radioStyle} value={1}>Listed</Radio>
@@ -299,7 +319,7 @@ class CreateGroup extends Component {
                                                 <Form.Item label="Permissions" className="custom-fields">
                                                 <Checkbox.Group options={options} onChange={onChange} />
                                                 </Form.Item>
-                                            </Col>
+                                            </Col> */}
                                         </Row>
                                     </Form>
                                 </div>
