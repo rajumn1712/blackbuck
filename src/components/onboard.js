@@ -31,49 +31,43 @@ const data = [
         title: 'Civili',
         members: 21,
     },
+    {
+        avatar: User4,
+        title: 'Mech',
+        members: 21,
+    },
 ];
 
 const steps = [
     {
-        content: <div className="intro1">
-            <img src={Logo} alt="blackbuck" width="250px" />
-            <h1> Welcome to Blackbuck</h1>
-            <p>To bring premier and practical formal education closer to students and professionals.</p>
-        </div>,
-    },
-    {
         content: <div className="intro2">
-            <Form layout="vertical">
-                <Row gutter={16}>
-                    <Col xs={24} className="text-center">
-                        <img src={Onboard1} alt="blackbuck" width="200px" />
-                        <h3 className="text-center">Please Select Your College/University</h3>
-                    </Col>
-                    <Col xs={24} className="custom-fields">
-                        <label >College/University Name</label>
-                        <Input />
-                    </Col>
-                    <Col xs={24} sm={12} className="custom-fields">
-                        <label  >Course Name</label>
-                        <Input />
-                    </Col>
-                    <Col xs={24} sm={12} className="custom-fields">
-                        <label  >Place</label>
-                        <Input />
-                    </Col>
-
-                </Row>
-            </Form>
+            <Card className="custom-card" title="Please Enter Your College/University" bordered={false} >
+                <Form layout="vertical">
+                    <Row gutter={16} className="mt-16">
+                        {/* <Col xs={24} className="text-center">
+                            <img src={Onboard1} alt="blackbuck" width="200px" />
+                          
+                        </Col> */}
+                        <Col xs={24} className="custom-fields">
+                            <label >College/University Name</label>
+                            <Input />
+                        </Col>
+                        <Col xs={24} className="custom-fields">
+                            <label >Course Name</label>
+                            <Input />
+                        </Col>
+                    </Row>
+                </Form>
+            </Card>
         </div >,
     },
     {
         content:
             <div className="intro3">
-                <div className="text-center">
-                    <img src={Onboard2} alt="blackbuck" width="200px" />
-                    <h3>Want to Join in Group?</h3>
-                </div>
-                <Card className="custom-card" bordered={false} >
+                <Card className="custom-card" title="Want to Join in Group?" bordered={false} >
+                    {/* <div className="text-center">
+                        <img src={Onboard2} alt="blackbuck" width="200px" />
+                    </div> */}
                     <List
                         itemLayout="horizontal"
                         dataSource={data}
@@ -109,12 +103,17 @@ const OnBoard = () => {
 
     return (
         <>
+            <div className="intro1">
+                <img src={Logo} alt="blackbuck" width="250px" />
+                <h1> Welcome to Blackbuck</h1>
+                <p>To bring premier and practical formal education closer to students and professionals.</p>
+            </div>
             <Card className="mb-6 custom-card onboard-process" bordered={true} >
                 <div className="steps-content">{steps[current].content}</div>
                 <div className="steps-action ">
                     {current > 0 && (
                         <Button className="backbtn" onClick={() => prev()}>
-                            Previous
+                            Back
                         </Button>
                     )}
                     {current === steps.length - 1 && (
