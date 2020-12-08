@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input, Radio,Checkbox } from 'antd';
 import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import Postings from '../shared/postings/index';
@@ -72,7 +72,17 @@ const navigations =
             "IsActive": false
         }
     ]
+const options = [
+    { label: 'Allow members to invite their connections', value: 'Allow members to invite their connections' },
+    { label: 'Require new posts to be reviewed by admins', value: 'Require new posts to be reviewed by admins' },
+];
+function onChange(checkedValues) {
+    console.log('checked = ', checkedValues);
+  }
+const { TextArea } = Input;
 class CreateGroup extends Component {
+
+
     imageObject = {};
     state = {
         groupData: {
@@ -250,27 +260,46 @@ class CreateGroup extends Component {
                                 <div className="my-16">
                                     <Form layout="vertical" >
                                         <Row gutter={24}>
-                                            <Col xs={16}>
+                                            <Col xs={12}>
                                                 <Form.Item label="Group Name" className="custom-fields">
                                                     <Input placeholder="Enter group name here" />
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={16}>
-                                                <Form.Item label="Description" className="custom-fields">
-                                                    <Input placeholder="Enter description here" />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={16}>
+                                            <Col xs={12}>
                                                 <Form.Item label="Location" className="custom-fields">
                                                     <Input placeholder="Add a Location to your group" />
                                                 </Form.Item>
                                             </Col>
-                                            {/* <Col xs={16}>
-                                            <Radio.Group  onChange={this.onChange} value={value}>
-                                                <Radio style={radioStyle} value={1}>Option A</Radio>
-                                                <Radio style={radioStyle} value={2}>Option B</Radio>
-                                            </Radio.Group>
-                                            </Col> */}
+                                            <Col xs={12}>
+                                                <Form.Item label="Description" className="custom-fields">
+                                                    <TextArea
+                                                        placeholder="Autosize height with minimum and maximum number of lines"
+
+                                                    />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Form.Item label="Group Rules" className="custom-fields">
+                                                    <TextArea
+                                                        placeholder="Autosize height with minimum and maximum number of lines"
+
+                                                    />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={24}>
+                                                <Form.Item label="Group discoverability" className="custom-fields">
+                                                    <Radio.Group onChange={this.onChange} value={value}>
+                                                        <Radio style={radioStyle} value={1}>Listed</Radio>
+                                                        <Radio style={radioStyle} value={2}>Unlisted</Radio>
+                                                    </Radio.Group>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24}>
+                                                <Form.Item label="Permissions" className="custom-fields">
+                                                <Checkbox.Group options={options} onChange={onChange} />
+                                                </Form.Item>
+                                            </Col>
                                         </Row>
                                     </Form>
                                 </div>
