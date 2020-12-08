@@ -47,8 +47,11 @@ const saveProfileImage = (user_id, type, obj) => {
 const saveAboutMe = (obj) => {
   return apiClient.post(PROFILE_API + `saveAboutMe`, obj);
 };
-const saveInnternship = (user_id, obj) => {
-  return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}`, obj);
+const saveInternships = (obj) => {
+  return apiClient.post(PROFILE_API + `saveInternships`, obj);
+};
+const saveVideoAsProfile = (obj) => {
+  return apiClient.post(PROFILE_API + `saveVideoAsProfile`, obj);
 };
 const saveHobbies = (user_id, obj) => {
   return apiClient.post(PROFILE_API + `saveHobbies/${user_id}`, obj);
@@ -82,7 +85,8 @@ export {
   fetchFriendRequests,
   saveProfileImage,
   saveAboutMe,
-  saveInnternship,
+  saveInternships,
+  saveVideoAsProfile,
   saveHobbies,
   saveEducation,
   cancelFriendRequest,
