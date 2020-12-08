@@ -91,7 +91,7 @@ class CreateGroup extends Component {
                     title: "Programmers",
                     Type: "Private Group",
                     CreatedDate: '2020-10-11',
-                    Members: '2.5k'
+                    
                 }
             ],
             isProfilePic: false,
@@ -246,13 +246,13 @@ class CreateGroup extends Component {
                                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                         </Tooltip>
                                                     </Upload>
-                                                </ImgCrop> <div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div></div>}
+                                                </ImgCrop></div>}
                                                 title={<a href="https://ant.design">{item.title}</a>}
 
                                                 description={<div><div className="f-12">{item.Type}</div><div className="f-12">Created on <span className="fw-400">{item.CreatedDate}</span></div></div>}
 
                                             />
-                                            {!groupData.IsMember && <Button type="primary" className="btn-position" onClick={() => this.joinGroup(item)}>Jion Group</Button>}
+                                            {!groupData.IsMember &&  <div className="btn-position"><div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div> <Button type="primary" onClick={() => this.joinGroup(item)}>Jion Group</Button></div>}
                                         </List.Item>
                                     )}
                                 />

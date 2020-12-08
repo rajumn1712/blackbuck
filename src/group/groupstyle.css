@@ -60,7 +60,7 @@
 .group-banner .ant-list-item-meta-avatar:hover .img-camera.overlay {
     display: block;
 }
-.btn-position{top:15px;}
+.btn-position{top:25px;position: relative;}
 .user-statistic .group-banner .ant-card-body {
     padding: 0 !important;
 }
