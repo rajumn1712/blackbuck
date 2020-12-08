@@ -181,7 +181,9 @@ class Group extends Component {
                                                 description={<div><div className="f-12">{item.Type}</div><div className="f-12">Created on <span className="fw-400">{item.CreatedDate}</span></div></div>}
 
                                             />
-                                            {!groupData.IsMember && <div className="btn-position"><div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div> <Button type="primary" onClick={() => this.joinGroup(item)}>Jion Group</Button></div>}
+                                            {!groupData.IsMember && <div className="btn-position"><div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div> 
+                                            <Button type="primary" onClick={() => this.joinGroup(item)}>Invite</Button>
+                                            </div>}
                                         </List.Item>
                                     )}
                                 />
