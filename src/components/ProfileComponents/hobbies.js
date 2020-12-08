@@ -7,6 +7,7 @@ import "../../index.css";
 import "../../App.css";
 import CommonModal from "./CommonModal";
 import { saveHobbies } from "../../shared/api/apiServer";
+import notify from "../../shared/components/notification";
 
 class Hobbies extends Component {
   state = {
@@ -29,10 +30,18 @@ class Hobbies extends Component {
     saveObj.Name = tags.toString();
     this.setState({ saveObj: saveObj });
     saveHobbies(this.props.userid, this.state.saveObj).then((res) => {
-      this.setState({
-        visible: false,
-      });
-      this.props.callback(true);
+      this.setState(
+        {
+          visible: false,
+        },
+        () => {
+          notify({
+            description: "Hobbies saved successfully",
+            message: "Hobbies",
+          });
+          this.props.callback(true);
+        }
+      );
     });
   };
   handleCancel = (e) => {

@@ -362,11 +362,25 @@ class Profile extends Component {
                     </div>
                     <div ref={this.getOrCreateRef("InternshipComp")}>
                       {profileData.Internships && (
-                        <Intership internships={profileData.Internships} />
+                        <Intership
+                          internships={profileData.Internships}
+                          userid={this.props?.profile?.Id}
+                          callback={(reload) =>
+                            reload ? this.profielDetails() : null
+                          }
+                        />
                       )}
                     </div>
                     <div ref={this.getOrCreateRef("VideoComp")}>
-                      {<VideoProfile video={profileData.VideoAsProfile} />}
+                      {
+                        <VideoProfile
+                          video={profileData.VideoAsProfile}
+                          userid={this.props?.profile?.Id}
+                          callback={(reload) =>
+                            reload ? this.profielDetails() : null
+                          }
+                        />
+                      }
                     </div>
                     <div ref={this.getOrCreateRef("EducationComp")}>
                       {profileData.Education && (

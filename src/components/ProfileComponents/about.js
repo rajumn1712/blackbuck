@@ -10,6 +10,7 @@ import { saveAboutMe } from "../../shared/api/apiServer";
 import { hasChanged, uuidv4 } from "../../utils";
 import { values } from "lodash";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import notify from "../../shared/components/notification";
 const { Option } = Select;
 
 class About extends Component {
@@ -80,10 +81,18 @@ class About extends Component {
     if (!hasChanged(this.formRef.current.values)) {
       const saveObj = this.createSaveObj(this.formRef.current.values);
       saveAboutMe(saveObj).then((res) => {
-        this.setState({
-          visible: false,
-        });
-        this.props.callback(true);
+        this.setState(
+          {
+            visible: false,
+          },
+          () => {
+            notify({
+              description: "Profile saved successfully",
+              message: "Abou Me",
+            });
+            this.props.callback(true);
+          }
+        );
       });
     }
   };
