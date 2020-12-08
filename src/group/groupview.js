@@ -14,7 +14,12 @@ import { profileSuccess } from '../reducers/auth';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
-
+const operations = <div className="mb-8 mr-12">
+                        <span className="text-center mt-8 mr-16">
+                            <span className="f-20 fw-400">2.5K</span> Members
+                        </span>
+                        <Button type="primary">Invite</Button>
+                    </div>;
 const { TabPane } = Tabs;
 class Group extends Component {
     imageObject = {};
@@ -104,7 +109,7 @@ class Group extends Component {
     componentDidMount() {
         profileDetail(this.props?.profile?.Id)
             .then(res => {
-                
+
                 const groupData = res.data[0].User;
                 groupData.lstDetails = [
                     {}
@@ -168,7 +173,7 @@ class Group extends Component {
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
+                                                avatar={<div className="img-container"> <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                     <Upload {...this.uploadProps}>
                                                         <Avatar src={groupData?.ProfilePic || defaultUser} />
                                                         <Tooltip placement="top" title="Change Photo">
@@ -181,9 +186,9 @@ class Group extends Component {
                                                 description={<div><div className="f-12">{item.Type}</div><div className="f-12">Created on <span className="fw-400">{item.CreatedDate}</span></div></div>}
 
                                             />
-                                            {!groupData.IsMember && <div className="btn-position"><div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div> 
-                                            <Button type="primary" onClick={() => this.joinGroup(item)}>Invite</Button>
-                                            </div>}
+                                            {/* {!groupData.IsMember && <div className="btn-position"><span className="text-center mt-8 mr-16"><span className="f-20 fw-400">{item.Members}</span> Members</span>
+                                                <Button type="primary" onClick={() => this.joinGroup(item)}>Invite</Button>
+                                            </div>} */}
                                         </List.Item>
                                     )}
                                 />
@@ -207,7 +212,7 @@ class Group extends Component {
                                 </div>
                             </CommonModal>
                         </div>
-                        <Tabs defaultActiveKey="1" centered className="profile-tabs">
+                        <Tabs defaultActiveKey="1" className="profile-tabs" tabBarExtraContent={operations}>
                             <TabPane tab="About" key="3">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
