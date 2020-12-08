@@ -39,7 +39,9 @@
     border: 0;
     background: transparent;
     margin-top: -90px;
-    left: 100px;
+    width: 100%;
+   
+    margin: -90px 12px 0 12px;
 }
 
 .user-statistic .group-banner .ant-card-meta {
@@ -58,7 +60,7 @@
 .group-banner .ant-list-item-meta-avatar:hover .img-camera.overlay {
     display: block;
 }
-.btn-position{top:15px;}
+.btn-position{top:25px;position: relative;}
 .user-statistic .group-banner .ant-card-body {
     padding: 0 !important;
 }
@@ -201,11 +203,12 @@
         width: 100%;
         /* justify-content: space-evenly; */
     }
-    .group-banner.w-btn{
+    /* .group-banner.w-btn{
         min-width: 760px;
-    }
+    } */
     
 }
+.group-banner .ant-list-item-meta{position: relative;left: 65px;}
 /* .user-statistic .ant-avatar.ant-avatar-circle{width: 150px;height: 150px;border-radius: 50px !important;} */
 @media (max-width:575px) {
     .profile-tabs .ant-tabs-tab {

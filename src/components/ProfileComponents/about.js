@@ -6,9 +6,8 @@ import "../../index.css";
 import "../../App.css";
 import CommonModal from "./CommonModal";
 import { ErrorMessage, Field, Formik } from "formik";
-import deepEqual from "lodash.isequal";
 import { saveAboutMe } from "../../shared/api/apiServer";
-import { uuidv4 } from "../../utils";
+import { hasChanged, uuidv4 } from "../../utils";
 import { values } from "lodash";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 const { Option } = Select;
@@ -35,6 +34,17 @@ class About extends Component {
           },
 
     visible: false,
+  };
+  initialValues = {
+    PlatNo: this.state.address.PlatNo,
+    Street: this.state.address.Street,
+    Address: this.state.address.Address,
+    City: this.state.address.City,
+    State: this.state.address.State,
+    Country: this.state.address.Country,
+    PinCode: this.state.address.PinCode,
+    PhoneNumber: this.state.PhoneNumber,
+    AboutMe: this.state.AboutMe,
   };
 
   handleValidate = (values) => {
@@ -67,16 +77,13 @@ class About extends Component {
 
   handleOk = () => {
     this.formRef.current.handleSubmit();
-    const hasChanged = deepEqual(
-      this.formRef.current.values,
-      this.initialValues
-    );
-    if (!hasChanged) {
+    if (!hasChanged(this.formRef.current.values)) {
       const saveObj = this.createSaveObj(this.formRef.current.values);
       saveAboutMe(saveObj).then((res) => {
         this.setState({
           visible: false,
         });
+        this.props.callback(true);
       });
     }
   };
@@ -135,18 +142,6 @@ class About extends Component {
       visible,
       address,
     } = this.state;
-
-    const initialValues = {
-      PlatNo: address.PlatNo,
-      Street: address.Street,
-      Address: address.Address,
-      City: address.City,
-      State: address.State,
-      Country: address.Country,
-      PinCode: address.PinCode,
-      PhoneNumber: PhoneNumber,
-      AboutMe: AboutMe,
-    };
 
     return (
       <div className="custom-card profile-card">
@@ -218,7 +213,7 @@ class About extends Component {
           saved={this.handleOk.bind(this)}
         >
           <Formik
-            initialValues={initialValues}
+            initialValues={this.initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
           >

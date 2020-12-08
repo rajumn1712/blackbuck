@@ -11,7 +11,7 @@ import Profile from '../profile';
 import Group from '../group';
 import ProfileView from '../profileview';
 import GroupView from '../group/groupview';
-import CreateGroup from '../components/ProfileComponents/creategroup';
+import CreateGroup from '../group/creategroup';
 // import CreateGroup from './creategroup';
 const Router = () => {
     return (

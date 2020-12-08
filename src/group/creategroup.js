@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input, Radio,Checkbox } from 'antd';
 import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import Postings from '../shared/postings/index';
@@ -14,9 +14,75 @@ import { profileSuccess } from '../reducers/auth';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
+const { Meta } = Card;
 
 const { TabPane } = Tabs;
-class Group extends Component {
+const data = [
+    { title: 'Programmers' }
+];
+
+const navigations =
+    [
+        {
+            "Heading": "About Me",
+            "Url": "/aboutme",
+            "CssSprite": "left-menu profile-icon",
+            "IsActive": false
+        },
+        {
+            "Heading": "Interests",
+            "Url": "/interests",
+            "CssSprite": "left-menu interest",
+            "IsActive": false
+        },
+        {
+            "Heading": "Hobbies",
+            "Url": "/hobbies",
+            "CssSprite": "left-menu hobbies",
+            "IsActive": false
+        },
+        {
+            "Heading": "Internships",
+            "Url": "/internships",
+            "CssSprite": "left-menu intenship",
+            "IsActive": false
+        },
+        {
+            "Heading": "Video as Profile",
+            "Url": "/videoprofile",
+            "CssSprite": "left-menu play",
+            "IsActive": false
+        },
+        {
+            "Heading": "Education",
+            "Url": "/education",
+            "CssSprite": "left-menu education",
+            "IsActive": false
+        },
+        {
+            "Heading": "Courses",
+            "Url": "/courses",
+            "CssSprite": "left-menu courses",
+            "IsActive": false
+        },
+        {
+            "Heading": "Groups",
+            "Url": "/profilegroups",
+            "CssSprite": "left-menu group-icon",
+            "IsActive": false
+        }
+    ]
+const options = [
+    { label: 'Allow members to invite their connections', value: 'Allow members to invite their connections' },
+    { label: 'Require new posts to be reviewed by admins', value: 'Require new posts to be reviewed by admins' },
+];
+function onChange(checkedValues) {
+    console.log('checked = ', checkedValues);
+  }
+const { TextArea } = Input;
+class CreateGroup extends Component {
+
+
     imageObject = {};
     state = {
         groupData: {
@@ -25,7 +91,7 @@ class Group extends Component {
                     title: "Programmers",
                     Type: "Private Group",
                     CreatedDate: '2020-10-11',
-                    Members: '2.5k'
+                    
                 }
             ],
             isProfilePic: false,
@@ -104,7 +170,7 @@ class Group extends Component {
     componentDidMount() {
         profileDetail(this.props?.profile?.Id)
             .then(res => {
-                
+
                 const groupData = res.data[0].User;
                 groupData.lstDetails = [
                     {}
@@ -139,13 +205,18 @@ class Group extends Component {
             block: "nearest"
         });
     }
-
     render() {
-        const { groupData, disabled, visible } = this.state;
+        const { navigations, disabled, visible, groupData } = this.state;
+        const radioStyle = {
+            display: 'block',
+            height: '30px',
+            lineHeight: '30px',
+        };
+        const { value } = this.state;
         return (
             groupData ? <div className="main">
-                <Row gutter={16}>
-                    <Col xs={24} sm={16} md={16} lg={18} xl={18}>
+                <Row gutter={24}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className="coverpage">
                             <img className="center-focus" src={groupData.CoverPic} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
@@ -175,20 +246,63 @@ class Group extends Component {
                                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                         </Tooltip>
                                                     </Upload>
-                                                </ImgCrop> </div>}
+                                                </ImgCrop></div>}
                                                 title={<a href="https://ant.design">{item.title}</a>}
 
                                                 description={<div><div className="f-12">{item.Type}</div><div className="f-12">Created on <span className="fw-400">{item.CreatedDate}</span></div></div>}
 
                                             />
-                                            {!groupData.IsMember && <div className="btn-position"><div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div> 
-                                            <Button type="primary" onClick={() => this.joinGroup(item)}>Invite</Button>
-                                            </div>}
+                                            {!groupData.IsMember &&  <div className="btn-position"><div className="text-center mt-8"><span className="f-20 fw-400">{item.Members}</span> Members</div> <Button type="primary" onClick={() => this.joinGroup(item)}>Jion Group</Button></div>}
                                         </List.Item>
                                     )}
                                 />
 
+                                <div className="my-16">
+                                    <Form layout="vertical" >
+                                        <Row gutter={24}>
+                                            <Col xs={12}>
+                                                <Form.Item label="Group Name" className="custom-fields">
+                                                    <Input placeholder="Enter group name here" />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Form.Item label="Location" className="custom-fields">
+                                                    <Input placeholder="Add a Location to your group" />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Form.Item label="Description" className="custom-fields">
+                                                    <TextArea
+                                                        placeholder="Autosize height with minimum and maximum number of lines"
 
+                                                    />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Form.Item label="Group Rules" className="custom-fields">
+                                                    <TextArea
+                                                        placeholder="Autosize height with minimum and maximum number of lines"
+
+                                                    />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={24}>
+                                                <Form.Item label="Group discoverability" className="custom-fields">
+                                                    <Radio.Group onChange={this.onChange} value={value}>
+                                                        <Radio style={radioStyle} value={1}>Listed</Radio>
+                                                        <Radio style={radioStyle} value={2}>Unlisted</Radio>
+                                                    </Radio.Group>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24}>
+                                                <Form.Item label="Permissions" className="custom-fields">
+                                                <Checkbox.Group options={options} onChange={onChange} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </div>
                             </Card>
                             <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                                 <div className="">
@@ -207,32 +321,6 @@ class Group extends Component {
                                 </div>
                             </CommonModal>
                         </div>
-                        <Tabs defaultActiveKey="1" centered className="profile-tabs">
-                            <TabPane tab="About" key="3">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <GroupAbout />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                            <TabPane tab="Posts" key="1">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <Postings sharebox={false} friendsSuggestions={false} postingsType="all" />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-
-                        </Tabs>
-                    </Col>
-                    <Col xs={24} sm={8} md={8} lg={6} xl={6}>
-                        <Ads />
                     </Col>
                 </Row>
             </div> : null
@@ -243,9 +331,4 @@ class Group extends Component {
 const mapStateToProps = ({ oidc }) => {
     return { user: oidc.user, profile: oidc.profile }
 }
-const mapDispatchToProps = dispatch => {
-    return {
-        upadateProfile: (info) => { dispatch(profileSuccess(info)) }
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Group);
+export default connect(mapStateToProps)(CreateGroup);

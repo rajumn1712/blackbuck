@@ -34,6 +34,13 @@ class Comments extends Component {
     componentDidMount() {
         this.loadComments(2, 0);
     }
+    componentWillReceiveProps(newProps) {
+        if ((this.props.object !== newProps.object) && Object.keys(newProps.object).length > 0) {
+            let { comments } = this.state;
+            comments.unshift(newProps.object);
+            this.setState({ ...this.state, comments, count: this.state.count + 1 })
+        }
+    }
     async loadComments(take, skip) {
         const commentResponse = await fetchComments(this.props.postId, take, skip);
         if (commentResponse.ok) {
@@ -57,7 +64,7 @@ class Comments extends Component {
         if (saveResponse.ok) {
             let { comments } = this.state;
             comments.unshift(object);
-           if(this.props.onUpdate){ this.props.onUpdate("commentsCount", this.state.count + 1);}
+          if(this.props.onUpdate){ this.props.onUpdate("commentsCount", this.state.count + 1, object); }
             this.setState({ ...this.state, comments, Comment: "", count: this.state.count + 1 });
         }
     }
