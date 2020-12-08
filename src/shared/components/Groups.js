@@ -113,7 +113,7 @@ class Groups extends Component {
                     />
                 </Card>
                 <CommonModal
-                    className="sdfg"
+                    className="creategroup-popup"
                     visible={visible}
                     title="Create group"
                     cancel={this.handleCancel}

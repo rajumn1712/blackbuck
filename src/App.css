@@ -304,9 +304,10 @@
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
 @media (min-width:576px){
     .custom-popup,.ant-modal{width: 480px !important;}
-    .sdfg.ant-modal{width: 750px !important;}
+    .creategroup-popup.ant-modal{width: 750px !important;}
     .custom-popup .ant-modal-body{max-height: calc(60vh - 20px); overflow: auto;} 
 }
+.creategroup-popup .ant-modal-footer .ant-btn{width: auto;}
 .group-member .ant-avatar-group .ant-avatar:not(:first-child){margin-left: 0; }
 .group-member .ant-avatar{width: 40px;height: 40px;}
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
