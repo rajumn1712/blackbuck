@@ -6,7 +6,8 @@ import User2 from '../styles/images/user.jpg';
 import User3 from '../styles/images/user_image.jpg';
 import User4 from '../styles/images/user-image.jpg';
 import Logo from '../styles/images/blackbugs-logo.png';
-
+import Onboard1 from '../styles/images/onboard1.svg';
+import Onboard2 from '../styles/images/onboard2.svg';
 import Form from 'antd/lib/form/Form';
 import { ErrorMessage, Field, Formik } from 'formik';
 
@@ -30,11 +31,6 @@ const data = [
         title: 'Civili',
         members: 21,
     },
-    {
-        avatar: User4,
-        title: 'Technical Group',
-        members: 3,
-    },
 ];
 
 const steps = [
@@ -46,18 +42,22 @@ const steps = [
         </div>,
     },
     {
-        content: <div className="step1">
+        content: <div className="intro2">
             <Form layout="vertical">
                 <Row gutter={16}>
-                    <Col xs={24} sm={12}>
+                    <Col xs={24} className="text-center">
+                        <img src={Onboard1} alt="blackbuck" width="200px" />
+                        <h3 className="text-center">Please Select Your College/University</h3>
+                    </Col>
+                    <Col xs={24} className="custom-fields">
                         <label >College/University Name</label>
                         <Input />
                     </Col>
-                    <Col xs={24} sm={12}>
+                    <Col xs={24} sm={12} className="custom-fields">
                         <label  >Course Name</label>
                         <Input />
                     </Col>
-                    <Col xs={24} sm={12}>
+                    <Col xs={24} sm={12} className="custom-fields">
                         <label  >Place</label>
                         <Input />
                     </Col>
@@ -67,22 +67,31 @@ const steps = [
         </div >,
     },
     {
-        content: <Card className="custom-card" bordered={false} >
-            <List
-                itemLayout="horizontal"
-                dataSource={data}
-                renderItem={item => (
-                    <List.Item>
-                        <List.Item.Meta
-                            avatar={<Avatar src={item.avatar} />}
-                            title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span><span className="icons-small lock-icon ml-4" /></div>}
-                            description={<div><div><span style={{ color: 'var(--textprimary)' }}>{item.members}</span> Members</div></div>}
-                        />
-                        <Link to="" className="f-14 list-link">Join group</Link>
-                    </List.Item>
-                )}
-            />
-        </Card>,
+        content:
+            <div className="intro3">
+                <div className="text-center">
+                    <img src={Onboard2} alt="blackbuck" width="200px" />
+                    <h3>Want to Join in Group?</h3>
+                </div>
+                <Card className="custom-card" bordered={false} >
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={data}
+                        split={false}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar src={item.avatar} />}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.title}</span><span className="icons-small lock-icon ml-4" /></div>}
+                                    description={<div className="f-12 text-overflow"><span className="mr-4">{item.members}</span> Members | <span><span class="mr-4">0</span>Posts</span></div>}
+                                />
+                                <Link to="" className="f-12 list-link">Join</Link>
+                            </List.Item>
+                        )}
+                    />
+                </Card>
+            </div>
+        ,
     },
 
 ];
