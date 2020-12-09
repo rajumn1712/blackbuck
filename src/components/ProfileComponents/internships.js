@@ -338,7 +338,7 @@ class Intership extends Component {
                       </Form.Item>
                     </Col>
 
-                    <Col className="mb-16" xs={24}>
+                    <Col className="mb-16" xs={12}>
                       <Dragger
                         className="upload"
                         {...this.uploadProps}
@@ -392,7 +392,7 @@ class Intership extends Component {
                         />
                       </div>
                     </Col>
-                    <Col xs={24}>
+                    <Col xs={12}>
                       <Dragger
                         className="upload"
                         {...this.uploadfileProps}
