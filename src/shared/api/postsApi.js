@@ -10,8 +10,8 @@ const getPosts = (userid, pageNo, pageSize, postingsType) => {
     const endPoint = postingsType === "saved" ? PROFILE_END_POINT : POSTS_END_POINT;
     return apiClient.get(endPoint + `${method[postingsType]}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`);
 }
-const savePost = (post) => {
-    return apiClient.post(POSTS_END_POINT + "savePosts", post)
+const savePost = (post,isEdit) => {
+    return apiClient.post(POSTS_END_POINT + (isEdit?"updatePosts":"savePosts"), post)
 }
 const saveActions = (post_id, object) => {
     return apiClient.post(POSTS_END_POINT + `saveActions/${post_id}`, object);

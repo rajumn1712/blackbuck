@@ -40,7 +40,8 @@ class Postings extends Component {
       reactionsLoading: false,
       loadMore: true,
       descriptionSelection: [],
-      object:{}
+      object: {},
+      postEditData: {}
    }
    componentDidMount() {
       window.addEventListener('scroll', this.handleScroll)
@@ -81,6 +82,7 @@ class Postings extends Component {
       }
       if (posts.ok) {
          this.setState({ ...this.state, loading: false, allPosts, loadMore: posts.data.length === this.state.pageSize, commentselection: [] }, () => {
+            this.stopAudio();
             const videoElements = document.querySelectorAll("video");
             for (const i in videoElements) {
                if (typeof (videoElements[i]) == "object") {
@@ -138,6 +140,7 @@ class Postings extends Component {
             //this.deletePost(post);
             break;
          case "Edit":
+            this.editPost(post);
             break;
          case "Save Post":
             const obj = {
@@ -158,7 +161,10 @@ class Postings extends Component {
       }
    }
    editPost = (post) => {
-
+      this.setState({ ...this.state, postEditData: post });
+   }
+   handleCancel = () => {
+      this.setState({ postEditData: {} })
    }
    dataRefreshed = () => {
       this.loadPosts(true)
@@ -404,7 +410,7 @@ class Postings extends Component {
    }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox dataRefreshed={() => this.dataRefreshed()} />}
+         {this.props.sharebox && <ShareBox dataRefreshed={() => this.dataRefreshed()} postEditData={this.state.postEditData} handleCancel={() => this.handleCancel()}/>}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
