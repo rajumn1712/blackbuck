@@ -305,6 +305,7 @@
     .custom-popup,.ant-modal{width: 480px !important;}
     .creategroup-popup.ant-modal{width: 750px !important;}
     .custom-popup .ant-modal-body{max-height: calc(60vh - 20px); overflow: auto;} 
+    .modal-interest .ant-modal-body{max-height: none;}
 }
 .creategroup-popup .ant-modal-footer .ant-btn{width: auto;}
 .group-member .ant-avatar-group .ant-avatar:not(:first-child){margin-left: 0; }
