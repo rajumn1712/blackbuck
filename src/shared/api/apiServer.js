@@ -56,8 +56,8 @@ const saveVideoAsProfile = (obj) => {
 const saveHobbies = (user_id, obj) => {
   return apiClient.post(PROFILE_API + `saveHobbies/${user_id}`, obj);
 };
-const saveEducation = (user_id, obj) => {
-  return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}`, obj);
+const saveEducation = (obj) => {
+  return apiClient.post(PROFILE_API + `saveEducation`, obj);
 };
 const cancelFriendRequest = (user_id, friend_id) => {
   return apiClient.get(FRIENDS_API + `cancelRequest/${user_id}/${friend_id}`);

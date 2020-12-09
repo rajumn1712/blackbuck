@@ -384,7 +384,13 @@ class Profile extends Component {
                     </div>
                     <div ref={this.getOrCreateRef("EducationComp")}>
                       {profileData.Education && (
-                        <Education education={profileData.Education} />
+                        <Education
+                          education={profileData.Education}
+                          userid={this.props?.profile?.Id}
+                          callback={(reload) =>
+                            reload ? this.profielDetails() : null
+                          }
+                        />
                       )}
                     </div>
                     <div ref={this.getOrCreateRef("CourseComp")}>
