@@ -319,11 +319,11 @@ class Intership extends Component {
                       >
                         <Select
                           name="Duration"
-                          defaultValue="Select Option"
+                          defaultValue=""
                           onChange={(value) => setFieldValue("Duration", value)}
                           value={values.Duration}
                         >
-                          <Option value="Select Option">Select Duration</Option>
+                          <Option value="">Select Duration</Option>
                           {duration.map((duration, index) => {
                             return (
                               <Option key={index} value={duration}>

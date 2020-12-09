@@ -9,7 +9,6 @@ import {
   Input,
   Select,
   DatePicker,
-  message,
 } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
@@ -21,49 +20,122 @@ import CommonModal from "./CommonModal";
 import notify from "../../shared/components/notification";
 import { saveEducation } from "../../shared/api/apiServer";
 import { ErrorMessage, Field, Formik } from "formik";
-import { hasChanged } from "../../utils";
+import { hasChanged, uuidv4 } from "../../utils";
+import Moment from "react-moment";
+import moment from "moment";
+import Loader from "../../common/loader";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
+
+const educationObj = {
+  EducationType: "",
+  Name: "",
+  AcademicYear: "",
+  Location: "",
+  MarksGrade: "",
+  File: [],
+};
 
 class Education extends Component {
   formRef = createRef();
   state = {
     education: this.props.education,
+    EducationTypeLu: ["School", "College"],
+    educationObj: educationObj,
+    initialValues: {
+      EducationType: "",
+      Name: "",
+      AcademicYear: "",
+      Location: "",
+      MarksGrade: "",
+    },
+    isEdit: false,
     visible: false,
-    lstEducation: [],
+    fileUploading: false,
   };
-  showModal = (e) => {
+  showModal = (e, isedit, education) => {
+    this.setState({ ...this.state, modalLoading: true });
     e.preventDefault();
+    let { initialValues, educationObj } = this.state;
+    if (isedit) {
+      let {
+        Name,
+        Location,
+        EducationType,
+        AcademicYear,
+        MarksGrade,
+      } = education;
+      educationObj = education;
+      AcademicYear = AcademicYear.map((date) => {
+        return moment(moment(new Date(date)));
+      });
+      Object.assign(initialValues, {
+        Name,
+        Location,
+        EducationType,
+        AcademicYear,
+        MarksGrade,
+      });
+    }
     this.setState({
+      ...this.state,
       visible: true,
+      isEdit: isedit ? true : false,
+      initialValues: initialValues,
+      educationObj: educationObj,
     });
+  };
+  createObject = (values) => {
+    return {
+      UserId: this.props.userid,
+      Education: {
+        EducationId: this.state.isEdit
+          ? this.state.educationObj.EducationId
+          : uuidv4(),
+        Name: values.Name,
+        AcademicYear: values.AcademicYear,
+        StartDate: values.AcademicYear[0]._d,
+        EndDate: values.AcademicYear[1]._d,
+        Location: values.Location,
+        MarksGrade: values.MarksGrade,
+        File: this.state.educationObj.File,
+        EducationType: values.EducationType,
+      },
+    };
   };
   saveEducation = (e) => {
     this.formRef.current.handleSubmit();
     if (!hasChanged(this.formRef.current.values)) {
-      saveEducation(this.props?.profile?.Id, this.state.lstEducation).then(
-        (res) => {
-          message.success("Education saved successfully");
-          this.setState({
+      const saveObj = this.createObject(this.formRef.current.values);
+      saveEducation(saveObj).then((res) => {
+        this.setState(
+          {
             visible: false,
-          });
-        }
-      );
+          },
+          () => {
+            notify({
+              description: "Education saved successfully",
+              message: "Education",
+            });
+            this.props.callback(true);
+          }
+        );
+      });
     }
   };
   handleCancel = (e) => {
     this.formRef.current.setErrors({});
     this.setState({
-      lstEducation: [],
+      educationObj: educationObj,
+      initialValues: {
+        EducationType: "",
+        Name: "",
+        AcademicYear: "",
+        Location: "",
+        MarksGrade: "",
+      },
       visible: false,
     });
-  };
-  initialValues = {
-    EducationType: "",
-    College: "",
-    AcademicYear: "",
-    Place: "",
-    MarksGrade: "",
   };
 
   handleValidate = (values) => {
@@ -76,53 +148,23 @@ class Education extends Component {
 
     return errors;
   };
-  addEducation = () => {
-    let educatioObj = {
-        EducationType: "",
-        College: "",
-        AcademicYear: "",
-        Place: "",
-        MarksGrade: "",
-        EducationTypeLu: ["School", "College"],
-        RecordStatus: "Added",
-        uploadSources: [],
-      },
-      { lstEducation } = this.state;
-    lstEducation.push(educatioObj);
-    this.setState({ lstEducation: lstEducation });
+  uploadProps = {
+    name: "file",
+    multiple: false,
+    action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
+    showUploadList: false,
   };
-  deleteEducation = (education, idx) => {
-    let { lstEducation } = this.state;
-    if (education.RecordStatus == null)
-      lstEducation.forEach(function (index, key) {
-        if (education.Id == lstEducation[key]) {
-          education.RecordStatus = "Deleted";
-          lstEducation[key] = education;
-        }
-      });
-    else {
-      lstEducation.splice(idx, 1);
-    }
-    this.setState({ lstEducation: lstEducation });
-  };
-  handleChange = (event, index, fieldName) => {
-    const { lstEducation } = this.state;
-    lstEducation[index][
-      event.currentTarget ? event.currentTarget.name : fieldName
-    ] = event.currentTarget ? event.currentTarget.value : event;
-    this.setState({ lstEducation: lstEducation });
-  };
-  handleDdlChange = (event, index) => {
-    const { lstEducation } = this.state;
-    lstEducation[index].EducationType = event;
-    this.setState({ lstEducation: lstEducation });
-  };
-  onChange = (info, index) => {
+  onChange = (info) => {
+    this.setState({ ...this.state, fileUploading: true });
     const { status } = info.file;
-    const { lstEducation } = this.state;
+    const { educationObj } = this.state;
     if (status === "done") {
-      lstEducation[index].uploadSources.push(info.file);
-      this.setState({ ...this.state, lstEducation: lstEducation });
+      educationObj["File"].push(info.file.response[0]);
+      this.setState({
+        ...this.state,
+        educationObj: educationObj,
+        fileUploading: false,
+      });
       notify({
         description: `${info.file.name} file uploaded successfully.`,
         message: "Upload",
@@ -135,21 +177,21 @@ class Education extends Component {
       });
     }
   };
-  uploadProps = {
-    name: "file",
-    multiple: false,
-    action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
-    showUploadList: false,
-  };
-  deleteFile = (key, index, education) => {
-    const { lstEducation } = this.state;
-    lstEducation[index].uploadSources.splice(key, 1);
-    this.setState({ ...this.state, lstEducation: lstEducation });
+  deleteFile = (key) => {
+    const { educationObj } = this.state;
+    educationObj.File.splice(key, 1);
+    this.setState({ ...this.state, educationObj: educationObj });
   };
   render() {
     const { user } = store.getState().oidc;
 
-    const { education, visible, lstEducation } = this.state;
+    const {
+      education,
+      visible,
+      educationObj,
+      initialValues,
+      EducationTypeLu,
+    } = this.state;
     return (
       <div className="custom-card profile-card">
         <Card
@@ -183,7 +225,8 @@ class Education extends Component {
                   description={
                     <div>
                       <span style={{ color: "var(--textprimary)" }}></span>{" "}
-                      {item.StartDate} - {item.EndDate} |{" "}
+                      <Moment format="YYYY/MM/DD">{item.StartDate}</Moment> -{" "}
+                      <Moment format="YYYY/MM/DD">{item.EndDate}</Moment> |{" "}
                       <span style={{ color: "var(--textprimary)" }}></span>
                       {item.Location}
                     </div>
@@ -205,7 +248,10 @@ class Education extends Component {
                   }
                 />
                 {!this.props.IsHideAction ? (
-                  <Link className="f-12 list-link">
+                  <Link
+                    className="f-12 list-link"
+                    onClick={(e) => this.showModal(e, true, item)}
+                  >
                     <span className="icons edit" />
                   </Link>
                 ) : null}
@@ -220,170 +266,145 @@ class Education extends Component {
           cancel={this.handleCancel}
           saved={this.saveEducation}
         >
-          {lstEducation.map((education, index) => {
-            return (
-              <div className="">
-                {education.RecordStatus != "Deleted" && (
-                  <div>
-                    {/* <Divider className="text-left-line" orientation="left">{education.EducationType} <Link onClick={() => { this.deleteEducation(education, index) }}><span className=" icons white-close" /></Link></Divider> */}
-                    <Formik
-                      initialValues={this.initialValues}
-                      innerRef={this.formRef}
-                      validate={(values) => this.handleValidate(values)}
-                    >
-                      {({ values }) => {
-                        return (
-                          <Form layout="vertical">
-                            <Row gutter={16}>
-                              <Col xs={24} sm={12}>
-                                <Form.Item
-                                  label="Education Type"
-                                  className="custom-fields custom-select"
-                                >
-                                  <Select
-                                    defaultValue=""
-                                    name="EducationType"
-                                    value={values.EducationType}
-                                    onChange={(event) =>
-                                      this.handleDdlChange(event, index)
-                                    }
-                                  >
-                                    <Option value="">Select State</Option>
-                                    {education.EducationTypeLu.map(
-                                      (item, index) => {
-                                        return (
-                                          <Option key={index} value={item}>
-                                            {item}
-                                          </Option>
-                                        );
-                                      }
-                                    )}
-                                  </Select>
-                                  <span className="validateerror">
-                                    <ErrorMessage name="EducationType" />
-                                  </span>
-                                </Form.Item>
-                              </Col>
-                              <Col xs={24} sm={12}>
-                                <Form.Item
-                                  label="College/University Name"
-                                  className="custom-fields"
-                                >
-                                  <Field
-                                    className="ant-input"
-                                    value={values.College}
-                                    name="College"
-                                  />
-                                  <span className="validateerror">
-                                    <ErrorMessage name="College" />
-                                  </span>
-                                </Form.Item>
-                              </Col>
-                              <Col xs={24} sm={12}>
-                                <Form.Item
-                                  label="Academic Year"
-                                  className="custom-fields"
-                                >
-                                  <Input.Group compact>
-                                    <RangePicker
-                                      name="AcademicYear"
-                                      value={values.AcademicYear}
-                                      onChange={(event) =>
-                                        this.handleChange(
-                                          event,
-                                          index,
-                                          "AcademicYear"
-                                        )
-                                      }
-                                    />
-                                    <span className="validateerror">
-                                      <ErrorMessage name="AcademicYear" />
-                                    </span>
-                                  </Input.Group>
-                                </Form.Item>
-                              </Col>
-                              <Col xs={24} sm={12}>
-                                <Form.Item
-                                  label="Place of College/University"
-                                  className="custom-fields"
-                                >
-                                  <Field
-                                    className="ant-input"
-                                    value={values.Place}
-                                    name="Place"
-                                  />
-                                  <span className="validateerror">
-                                    <ErrorMessage name="Place" />
-                                  </span>
-                                </Form.Item>
-                              </Col>
-                              <Col xs={24} sm={12}>
-                                <Form.Item
-                                  label="Marks Grade"
-                                  className="custom-fields"
-                                >
-                                  <Field
-                                    className="ant-input"
-                                    value={values.MarksGrade}
-                                    name="MarksGrade"
-                                  />
-                                  <span className="validateerror">
-                                    <ErrorMessage name="MarksGrade" />
-                                  </span>
-                                </Form.Item>
-                              </Col>
-                            </Row>
-                          </Form>
-                        );
-                      }}
-                    </Formik>
-                    <Dragger
-                      {...this.uploadProps}
-                      onChange={(info) => this.onChange(info, index)}
-                      className="upload mb-24"
-                    >
-                      <span className="sharebox-icons photo-upload"></span>
-                      <p className="ant-upload-text mt-8 mb-0">
-                        Upload Certificate
-                      </p>
-                    </Dragger>
-                    <div className="docs about-icons mb-16 education">
-                      <List
-                        itemLayout="horizontal"
-                        dataSource={education.uploadSources}
-                        renderItem={(item, key) => (
-                          <List.Item className="upload-preview">
-                            <List.Item.Meta
-                              title={item.name}
-                              description={
-                                <div className="file-size f-14">
-                                  {item.size}
-                                </div>
+          <div className="">
+            <Formik
+              enableReinitialize
+              initialValues={initialValues}
+              innerRef={this.formRef}
+              validate={(values) => this.handleValidate(values)}
+            >
+              {({ values, setFieldValue }) => {
+                return (
+                  <Form layout="vertical">
+                    <Row gutter={16}>
+                      <Col xs={24} sm={12}>
+                        <Form.Item
+                          label="Education Type"
+                          className="custom-fields custom-select"
+                        >
+                          <Select
+                            defaultValue=""
+                            name="EducationType"
+                            value={values.EducationType}
+                            onChange={(value) =>
+                              setFieldValue("EducationType", value)
+                            }
+                          >
+                            <Option value="">Select Type</Option>
+                            {EducationTypeLu.map((item, index) => {
+                              return (
+                                <Option key={index} value={item}>
+                                  {item}
+                                </Option>
+                              );
+                            })}
+                          </Select>
+                          <span className="validateerror">
+                            <ErrorMessage name="EducationType" />
+                          </span>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} sm={12}>
+                        <Form.Item
+                          label="College/University Name"
+                          className="custom-fields"
+                        >
+                          <Field
+                            className="ant-input"
+                            value={values.Name}
+                            name="Name"
+                          />
+                          <span className="validateerror">
+                            <ErrorMessage name="Name" />
+                          </span>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} sm={12}>
+                        <Form.Item
+                          label="Academic Year"
+                          className="custom-fields"
+                        >
+                          <Input.Group compact>
+                            <RangePicker
+                              name="AcademicYear"
+                              value={values.AcademicYear}
+                              onChange={(value) =>
+                                setFieldValue("AcademicYear", value)
                               }
                             />
-                            <span
-                              className="close-icon"
-                              onClick={() =>
-                                this.deleteFile(key, index, education)
-                              }
-                            ></span>
-                          </List.Item>
-                        )}
-                      />
-                    </div>
-                  </div>
+                            <span className="validateerror">
+                              <ErrorMessage name="AcademicYear" />
+                            </span>
+                          </Input.Group>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} sm={12}>
+                        <Form.Item
+                          label="Place of College/University"
+                          className="custom-fields"
+                        >
+                          <Field
+                            className="ant-input"
+                            value={values.Location}
+                            name="Location"
+                          />
+                          <span className="validateerror">
+                            <ErrorMessage name="Location" />
+                          </span>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} sm={12}>
+                        <Form.Item
+                          label="Marks Grade"
+                          className="custom-fields"
+                        >
+                          <Field
+                            className="ant-input"
+                            value={values.MarksGrade}
+                            name="MarksGrade"
+                          />
+                          <span className="validateerror">
+                            <ErrorMessage name="MarksGrade" />
+                          </span>
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Form>
+                );
+              }}
+            </Formik>
+            <Dragger
+              {...this.uploadProps}
+              onChange={(info) => this.onChange(info)}
+              className="upload mb-24"
+            >
+              {this.state.fileUploading && (
+                <Loader className="loader-top-middle" />
+              )}
+              <span className="sharebox-icons photo-upload"></span>
+              <p className="ant-upload-text mt-8 mb-0">Upload Certificate</p>
+            </Dragger>
+            <div className="docs about-icons mb-16 education">
+              <List
+                itemLayout="horizontal"
+                dataSource={educationObj.File}
+                renderItem={(item, key) => (
+                  <List.Item className="upload-preview">
+                    <List.Item.Meta
+                      title={item}
+                      description={
+                        <div className="file-size f-14">{item.size}</div>
+                      }
+                    />
+                    <span
+                      className="close-icon"
+                      onClick={() => this.deleteFile(key, educationObj)}
+                    ></span>
+                  </List.Item>
                 )}
-              </div>
-            );
-          })}
-          {lstEducation.length == 0 && (
-            <Divider className="text-left-line" orientation="left">
-              Add Education{" "}
-              <Link onClick={() => this.addEducation()}>
-                <span className=" icons white-add" />
-              </Link>
-            </Divider>
-          )}
+              />
+            </div>
+          </div>
         </CommonModal>
       </div>
     );
