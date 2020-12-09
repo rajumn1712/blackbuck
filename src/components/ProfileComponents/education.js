@@ -76,6 +76,14 @@ class Education extends Component {
         AcademicYear,
         MarksGrade,
       });
+    } else {
+      initialValues = {
+        EducationType: "",
+        Name: "",
+        AcademicYear: "",
+        Location: "",
+        MarksGrade: "",
+      };
     }
     this.setState({
       ...this.state,
@@ -126,14 +134,8 @@ class Education extends Component {
   handleCancel = (e) => {
     this.formRef.current.setErrors({});
     this.setState({
+      ...this.state,
       educationObj: educationObj,
-      initialValues: {
-        EducationType: "",
-        Name: "",
-        AcademicYear: "",
-        Location: "",
-        MarksGrade: "",
-      },
       visible: false,
     });
   };
@@ -268,7 +270,7 @@ class Education extends Component {
         >
           <div className="">
             <Formik
-              enableReinitialize
+              enableReinitialize={true}
               initialValues={initialValues}
               innerRef={this.formRef}
               validate={(values) => this.handleValidate(values)}
@@ -319,10 +321,10 @@ class Education extends Component {
                           </span>
                         </Form.Item>
                       </Col>
-                      <Col xs={24} sm={24}>
+                      <Col xs={24} sm={12}>
                         <Form.Item
                           label="Academic Year"
-                          className="custom-fields education-date"
+                          className="custom-fields"
                         >
                           <Input.Group compact>
                             <RangePicker

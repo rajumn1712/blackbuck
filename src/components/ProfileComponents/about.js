@@ -48,7 +48,7 @@ class About extends Component {
   };
   showModal = (e) => {
     e.preventDefault();
-    let { address } = this.state;
+    let { address, PhoneNumber, AboutMe } = this.state;
     address =
       this.props.about.Address.length > 0
         ? this.props.about.Address[0]
@@ -61,8 +61,10 @@ class About extends Component {
             Country: "",
             PinCode: "",
           };
+    address = Object.assign(address, { PhoneNumber, AboutMe });
 
     this.setState({
+      ...this.state,
       visible: true,
       address,
     });

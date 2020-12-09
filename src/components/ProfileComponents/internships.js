@@ -89,6 +89,7 @@ class Intership extends Component {
     name: "file",
     accept: ".jpg,.jpeg,.png",
     multiple: false,
+    showUploadList: false,
     action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
     onChange: (info) => {
       this.setState({ ...this.state, fileUploading: true });
@@ -137,9 +138,14 @@ class Intership extends Component {
       }
     },
   };
+  deleteFile = () => {
+    const internshipsObj = { ...this.state };
+    internshipsObj.CompanyLogo = "";
+    this.setState({ internshipsObj: internshipsObj });
+  };
   showModal = (e, isedit, internship) => {
     e.preventDefault();
-    const { internshipsObj, initialValues } = this.state;
+    let { internshipsObj, initialValues } = this.state;
     if (isedit) {
       const { CompanyName, ShortName, Location, Duration } = internship;
       Object.assign(initialValues, {
@@ -148,6 +154,13 @@ class Intership extends Component {
         Location,
         Duration,
       });
+    } else {
+      initialValues = {
+        CompanyName: "",
+        ShortName: "",
+        Location: "",
+        Duration: "",
+      };
     }
 
     this.setState({
@@ -202,7 +215,9 @@ class Intership extends Component {
   handleCancel = (e) => {
     this.formRef.current.setErrors({});
     this.setState({
+      ...this.state,
       visible: false,
+      internshipsObj: internshipsObj,
     });
   };
   render() {
@@ -366,9 +381,14 @@ class Intership extends Component {
                             })
                           }
                         >
-                          <Tooltip title="Remove">
-                            <span className="close-icon"></span>
-                          </Tooltip>
+                          {internshipsObj.CompanyLogo && (
+                            <Tooltip title="Remove">
+                              <span
+                                className="close-icon"
+                                onClick={() => this.deleteFile()}
+                              ></span>
+                            </Tooltip>
+                          )}
                         </a>
                       </div>
                       <div className="docs about-icons education">
