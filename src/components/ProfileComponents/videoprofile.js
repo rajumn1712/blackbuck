@@ -36,7 +36,7 @@ class VideoProfile extends Component {
         this.setState({ ...this.state, fileUploading: false });
       }
       if (status === "done") {
-        const { inputValue } = this.state;
+        let { inputValue } = this.state;
         inputValue = info.file.response[0];
         notify({
           description: `${info.file.name} file uploaded successfully.`,
