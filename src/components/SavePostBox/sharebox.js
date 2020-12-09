@@ -86,17 +86,31 @@ class ShareBox extends Component {
         uploadSources: [],
         post: { Title: "", Message: "", IsAnonymous: false },
         errors: null,
-        fileUploading: false
+        fileUploading: false,
+        isEdit:false,
     }
-    createObject = () => {
+    componentWillReceiveProps(newProps) {
+        if ((this.props.postEditData !== newProps.postEditData) && Object.keys(newProps.postEditData).length > 0) {
+            let { post } = this.state;
+            post.Message = newProps.postEditData.meassage;
+            post.Title = newProps.postEditData.title;
+            post.IsAnonymous = newProps.postEditData.IsAnonymous;
+            this.setState({ ...this.state, uploadSources: newProps.postEditData.image ? (Array.isArray(newProps.postEditData.image)?newProps.postEditData.image:[newProps.postEditData.image]) : [], isEdit: true, tags: newProps.postEditData.tags, post }, () => {
+                const object = { "Text": "Text", "Video": "Video", "Gif": "Gif", "Audio": "Audio", "Image": "Images" }
+                this.openpopup(object[newProps.postEditData.type], newProps.postEditData);
+            })
+
+        }
+    }
+    createObject = (object) => {
         return {
-            "PostId": uuidv4(),
+            "PostId": object?object.id:uuidv4(),
             "Type": "Text",
-            "Message": "",
-            "Title": "",
-            "IsAnonymous": false,
-            "ImageUrl": null,
-            "CreatedDate": null,
+            "Message":object?object.meassage: "",
+            "Title": object?object.title:"",
+            "IsAnonymous": object?object.IsAnonymous:false,
+            "ImageUrl": object?(object.image?object.image[0]:null):null,
+            "CreatedDate": object?new Date(object.date):null,
             "UserDetails": {
                 "UserId": this.props.profile?.Id,
                 "Firstname": this.props.profile?.FirstName,
@@ -104,7 +118,7 @@ class ShareBox extends Component {
                 "Image": this.props.profile?.ProfilePic,
                 "Email": this.props.profile?.Email
             },
-            "Tags": [],
+            "Tags": object?object.tags:[],
             "Likes": [],
             "Claps": [],
             "whistiles": [],
@@ -146,15 +160,19 @@ class ShareBox extends Component {
             return file.size <= fileMaxSize;
         }
     };
-    openpopup = (modal) => {
+    openpopup = (modal,postObject) => {
+        if (Object.keys(postObject ? postObject : []).length === 0)
         this.clearUploaddata();
-        this.postObject = this.createObject();
+        this.postObject = this.createObject(postObject);
         this.postObject.Type = modal === "Images" ? "Image" : modal;
+        this.postObject.dupType = modal === "Images" ? "Image" : modal;
         this.setState({ visible: true, modal: modal })
     }
     popupOk = async e => {
-        this.postObject.CreatedDate = new Date();
+        this.postObject.CreatedDate = this.postObject.CreatedDate ? this.postObject.CreatedDate : new Date();
         this.postObject.Tags = this.state.tags;
+        this.postObject.ImageUrl = this.state.uploadSources.length == 0 ? [] : this.postObject.ImageUrl;
+        this.postObject.Type = this.state.uploadSources.length == 0 ? "Text" : this.postObject.dupType;
         if (this.postObject.IsAnonymous) {
             this.postObject.UserDetails = {
                 "UserId": "",
@@ -164,8 +182,9 @@ class ShareBox extends Component {
                 "Email": "Anonymous"
             }
         }
-        const response = await savePost(this.postObject);
+        const response = await savePost(this.postObject, this.state.isEdit);
         if (response.ok) {
+            this.props.handleCancel();
             this.setState({
                 visible: false,
             }, () => {
@@ -190,8 +209,12 @@ class ShareBox extends Component {
     }
     handleCancel = e => {
         this.clearUploaddata();
+        if (this.state.isEdit) {
+            this.props.handleCancel();
+        }
         this.setState({
-            visible: false
+            visible: false,
+            isEdit: false
         });
     };
 
@@ -420,7 +443,8 @@ class ShareBox extends Component {
                         <Button disabled={!this.state.post.Message} type="primary" onClick={() => this.popupOk()}>
                             Post
                         </Button></div>
-                    ]} >
+                    ]}
+                    destroyOnClose >
                     <div className="mb-24">{title}</div>
                     <div className="upload-image">
                         {this.renderUploadType(modal)}

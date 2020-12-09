@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Steps, Button, message, Card, List, Avatar, Row, Col, Select, Input, } from 'antd';
+import { Steps, Button, message, Card, List, Avatar, Row, Col, Select, Input, Checkbox, } from 'antd';
 import { Link } from 'react-router-dom';
 import User1 from '../styles/images/avatar.png';
 import User2 from '../styles/images/user.jpg';
@@ -11,7 +11,9 @@ import Onboard2 from '../styles/images/onboard2.svg';
 import Form from 'antd/lib/form/Form';
 import { ErrorMessage, Field, Formik } from 'formik';
 
-
+function onChange(checkedValues) {
+    console.log('checked = ', checkedValues);
+  }
 // const { Step } = Steps;.
 const data = [
 
@@ -60,6 +62,43 @@ const steps = [
                 </Form>
             </Card>
         </div >,
+    },
+    {
+        content:
+            <div className="intro4">
+                <Card className="custom-card" title="Select the Category that Your are Interested in" bordered={false} >
+                    <Checkbox.Group style={{ width: '100%' }} onChange={onChange}>
+                        <Row>
+                            <Col span={12}>
+                                <Checkbox value="Computers">Computers</Checkbox>
+                            </Col>
+                            <Col span={12}>
+                                <Checkbox value="Entertainment">Entertainment</Checkbox>
+                            </Col>
+                            <Col span={12}>
+                                <Checkbox value="Travel">Travel </Checkbox>
+                            </Col>
+                            <Col span={12}>
+                                <Checkbox value="Business">Business</Checkbox>
+                            </Col>
+                            <Col span={12}>
+                                <Checkbox value="Education">Education</Checkbox>
+                            </Col>
+                            <Col span={12}>
+                                <Checkbox value="Health">Health</Checkbox>
+                            </Col>
+                            <Col span={12}>
+                                <Checkbox value="Shopping">Shopping</Checkbox>
+                            </Col>
+                            <Col span={12}>
+                                <Checkbox value="Sports">Sports </Checkbox>
+                            </Col>
+                            
+                        </Row>
+                    </Checkbox.Group>,
+                </Card>
+            </div>
+        ,
     },
     {
         content:
