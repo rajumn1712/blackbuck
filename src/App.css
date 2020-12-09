@@ -156,7 +156,6 @@
 .doc-icons.word{background-position: -469px -104px;}
 .doc-icons.excel{background-position: -412px -104px;}
 .doc-icons.ppt{background-position: -354px -103px;}
-.docs .ant-list-items{display: flex; flex-wrap: wrap;}
 .docs .ant-list-item{min-width: calc(50% - 8px); background: #F9F9F9; padding: 10px; border-radius: 6px; border: 1px solid #EAF2FD;margin: 0 8px 8px 0;}
 .docs .ant-list-item h4{margin-bottom: 0;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;color: var(--primary);}
 .addpost-user .ant-card-meta-title{font-size: var(--f-16);margin-bottom: 0 !important; line-height: inherit; margin-top: -4px;}
@@ -362,4 +361,3 @@ label{color: var(--textprimary);}
 .onboard-process .step1{padding:8px 12px;}
 .onboard-process .intro4 .ant-checkbox-group .ant-checkbox-wrapper{height: 34px; display: flex; align-items: center;color: var(--textprimary);}
 .steps-content{ transition: all 5s linear 2s;}
-.invite-search .header-searchbar{max-width: 100%;}
