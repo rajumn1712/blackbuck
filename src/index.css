@@ -89,7 +89,7 @@ transition-duration: 167ms;}
 .alert-popup .ant-modal-footer{background: var(--grey); border-radius: 0 0 9px 8px; padding: 16px;}
 .alert-icon{width: 60px;}
 /*---ads---*/
-.ads img{width: 100%;}
+.ads img, .education-date .ant-picker.ant-picker-range{width: 100%;}
 .card-actions-count li{color: var(--textprimary) !important;}
 .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
 .card-actions-count li span{color:#9B9B9B;}

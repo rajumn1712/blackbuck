@@ -319,10 +319,10 @@ class Education extends Component {
                           </span>
                         </Form.Item>
                       </Col>
-                      <Col xs={24} sm={12}>
+                      <Col xs={24} sm={24}>
                         <Form.Item
                           label="Academic Year"
-                          className="custom-fields"
+                          className="custom-fields education-date"
                         >
                           <Input.Group compact>
                             <RangePicker
