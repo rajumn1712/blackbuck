@@ -282,7 +282,7 @@
 .ant-btn-primary:disabled{background: var(--bghover)!important; border-color: var(--line) !important;}
 .ant-btn-primary:disabled:hover {color: rgba(0, 0, 0, 0.25) !important;}
 .requests .ant-row>div:last-child .ant-col,.requests .ant-row>div:nth-last-child(2) .ant-col{border-bottom: 0; margin-bottom: 0;}
-.center-focus{object-position: 50% 50%;object-position: 0 0;height: 315px;object-fit: cover;border-radius:10px}
+.center-focus{object-position: 50% 50%;object-position: 0 0;height: 275px;object-fit: cover;border-radius:10px}
 .icon.education-icon{background-position: -263px -254px;}
 .img-camera{width: 30px; height: 30px; background: var(--white); position: absolute; right: 8px; top: 16px; box-shadow: var(--boxshadow); text-align: center; line-height: 30px;}
 .education .ant-list-item-meta-avatar{border: 1px solid #ccc;border-radius: 11px;background: #ffff;padding: 4px 5px;}
@@ -304,8 +304,10 @@
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}
 @media (min-width:576px){
     .custom-popup,.ant-modal{width: 480px !important;}
+    .creategroup-popup.ant-modal{width: 750px !important;}
     .custom-popup .ant-modal-body{max-height: calc(60vh - 20px); overflow: auto;} 
 }
+.creategroup-popup .ant-modal-footer .ant-btn{width: auto;}
 .group-member .ant-avatar-group .ant-avatar:not(:first-child){margin-left: 0; }
 .group-member .ant-avatar{width: 40px;height: 40px;}
 .ant-upload.ant-upload-drag .ant-upload{padding: 24px 0 !important;}

@@ -1,50 +1,93 @@
 import React, { Component, createRef } from "react";
-import { Card, List, Form, Row, Col, Select, Input, message } from "antd";
+import {
+  Card,
+  List,
+  Form,
+  Row,
+  Col,
+  Select,
+  Input,
+  message,
+  Tooltip,
+  Image,
+} from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
 import "../../App.css";
 import Dragger from "antd/lib/upload/Dragger";
 import CommonModal from "./CommonModal";
-import { saveInnternship } from "../../shared/api/apiServer";
+import { saveInternships } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { ErrorMessage, Field, Formik } from "formik";
 import * as Yup from "yup";
-import { hasChanged } from "../../utils";
+import { hasChanged, uuidv4 } from "../../utils";
+import notify from "../../shared/components/notification";
 
-const docs = [];
+const docs = [
+  {
+    avatar: [<span className="doc-icons word"></span>],
+    title: "Mini Project.Doc",
+    fileSize: "150 KB",
+  },
+];
 const { Option } = Select;
 const internshipsObj = {
   CompanyName: "",
   ShortName: "",
   Place: "",
   Duration: "",
-  lstUploadLogos: [],
-  lstUploadFiles: [],
+  CompanyLogo: "",
+  Certificate: [],
 };
 class Intership extends Component {
   formRef = createRef();
   state = {
     internships: this.props.internships,
     internshipsObj: internshipsObj,
+    certificates: {
+      Avatar: "",
+      File: "",
+      Size: "",
+    },
+    initialValues: {
+      CompanyName: internshipsObj.CompanyName,
+      ShortName: internshipsObj.ShortName,
+      Location: internshipsObj.Location,
+      Duration: internshipsObj.Duration,
+    },
+    duration: ["30 days", "45 days", "2 months", "3 months", "6 months"],
     visible: false,
     fileUploading: false,
     fileUpload: false,
+    isEdit: false,
   };
-  initialValues = {
-    CompanyName: "",
-    ShortName: "",
-    Place: "",
-    Duration: "",
+  createObject = (values) => {
+    return {
+      UserId: this.props.userid,
+      Internships: {
+        InternshipId: this.state.isEdit
+          ? this.state.internshipsObj.InternshipId
+          : uuidv4(),
+        CompanyName: values.CompanyName,
+        ShortName: values.ShortName,
+        CompanyLogo: this.state.internshipsObj.CompanyLogo,
+        Location: values.Location,
+        Duration: values.Duration,
+        Certificate: this.state.internshipsObj.Certificate,
+      },
+    };
   };
-  validateSchema = Yup.object().shape({
-    CompanyName: Yup.string().required("is required"),
-    ShortName: Yup.string().required("is required"),
-    Place: Yup.string().required("is required"),
-    Duration: Yup.string().required("is required"),
-  });
+
+  // validateSchema = Yup.object().shape({
+  //   CompanyName: Yup.string().required("is required"),
+  //   ShortName: Yup.string().required("is required"),
+  //   Place: Yup.string().required("is required"),
+  //   Duration: Yup.string().required("is required"),
+  // });
   uploadProps = {
     name: "file",
+    accept: ".jpg,.jpeg,.png",
     multiple: false,
     action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
     onChange: (info) => {
@@ -55,7 +98,7 @@ class Intership extends Component {
       }
       if (status === "done") {
         const { internshipsObj } = this.state;
-        internshipsObj.lstUploadLogos = [info.file.response];
+        internshipsObj.CompanyLogo = info.file.response[0];
         this.setState({ internshipsObj: internshipsObj });
         message.success(`${info.file.name} file uploaded successfully.`);
         this.setState({ ...this.state, fileUploading: false });
@@ -67,6 +110,7 @@ class Intership extends Component {
   };
   uploadfileProps = {
     name: "file",
+    accept: ".doc,.docx",
     multiple: false,
     action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
     onChange: (info) => {
@@ -76,8 +120,14 @@ class Intership extends Component {
         this.setState({ ...this.state, fileUpload: false });
       }
       if (status === "done") {
-        const { internshipsObj } = this.state;
-        internshipsObj.lstUploadFiles = [info.file.response];
+        const { internshipsObj, certificates } = this.state;
+        certificates.Avatar = info.file.name.split(".")[1];
+        certificates.File = info.file.response[0];
+        certificates.Size = parseFloat(info.file.size * 0.0009765625).toFixed(
+          3
+        );
+        this.setState({ certificates: certificates });
+        internshipsObj.Certificate.push(this.state.certificates);
         this.setState({ internshipsObj: internshipsObj });
         message.success(`${info.file.name} file uploaded successfully.`);
         this.setState({ ...this.state, fileUpload: false });
@@ -87,10 +137,24 @@ class Intership extends Component {
       }
     },
   };
-  showModal = (e) => {
+  showModal = (e, isedit, internship) => {
     e.preventDefault();
+    const { internshipsObj, initialValues } = this.state;
+    if (isedit) {
+      const { CompanyName, ShortName, Location, Duration } = internship;
+      Object.assign(initialValues, {
+        CompanyName,
+        ShortName,
+        Location,
+        Duration,
+      });
+    }
+
     this.setState({
       visible: true,
+      isEdit: isedit ? true : false,
+      internshipsObj: isedit ? internship : internshipsObj,
+      initialValues: initialValues,
     });
   };
   handleValidate = (values) => {
@@ -118,14 +182,21 @@ class Intership extends Component {
   handleOk = (e) => {
     this.formRef.current.handleSubmit();
     if (!hasChanged(this.formRef.current.values)) {
-      saveInnternship(this.props?.profile?.Id, this.state.internshipsObj).then(
-        (res) => {
-          message.success("Intership saved successfully");
-          this.setState({
+      const saveObj = this.createObject(this.formRef.current.values);
+      saveInternships(saveObj).then((res) => {
+        this.setState(
+          {
             visible: false,
-          });
-        }
-      );
+          },
+          () => {
+            notify({
+              description: "Internship saved successfully",
+              message: "Internship",
+            });
+            this.props.callback(true);
+          }
+        );
+      });
     }
   };
   handleCancel = (e) => {
@@ -137,7 +208,7 @@ class Intership extends Component {
   render() {
     const { user } = store.getState().oidc;
     const data = [...this.state.internships];
-    const { internshipsObj, errors } = this.state;
+    const { internshipsObj, duration, initialValues } = this.state;
     return (
       <div className="custom-card">
         <Card
@@ -164,7 +235,7 @@ class Intership extends Component {
             itemLayout="horizontal"
             dataSource={data}
             renderItem={(item) => (
-              <List.Item>
+              <List.Item onClick={(e) => this.showModal(e, true, item)}>
                 <div className="intern-cards">
                   <span className="left-menu intenship card-options-left" />
                   <span className="icons more card-options-right" />
@@ -176,12 +247,12 @@ class Intership extends Component {
                       <span className="">{item.Duration}</span>
                     </p>
                   </div>
-                  <div className="intern-cardfooter">
+                  {/* <div className="intern-cardfooter">
                     <p className="mb-0">
                       <span className="icons pdf mr-8" />
                       {item.Certificate}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </List.Item>
             )}
@@ -195,12 +266,13 @@ class Intership extends Component {
           saved={this.handleOk}
         >
           <Formik
-            initialValues={this.initialValues}
+            enableReinitialize
+            initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
             // validationSchema={this.validateSchema}
           >
-            {({ values }) => {
+            {({ values, setFieldValue }) => {
               return (
                 <Form layout="vertical">
                   <Row gutter={16} className="mb-16">
@@ -232,11 +304,11 @@ class Intership extends Component {
                       <Form.Item label="Place" className="custom-fields">
                         <Field
                           className="ant-input"
-                          name="Place"
-                          value={values.Place}
+                          name="Location"
+                          value={values.Location}
                         />
                         <span className="validateerror">
-                          <ErrorMessage name="Place" />
+                          <ErrorMessage name="Location" />
                         </span>
                       </Form.Item>
                     </Col>
@@ -248,10 +320,17 @@ class Intership extends Component {
                         <Select
                           name="Duration"
                           defaultValue="Select Option"
+                          onChange={(value) => setFieldValue("Duration", value)}
                           value={values.Duration}
-                          onChange={(event) => this.handleddlChange(event)}
                         >
                           <Option value="Select Option">Select Duration</Option>
+                          {duration.map((duration, index) => {
+                            return (
+                              <Option key={index} value={duration}>
+                                {duration}
+                              </Option>
+                            );
+                          })}
                         </Select>
                         <span className="validateerror">
                           <ErrorMessage name="Duration" />
@@ -266,7 +345,7 @@ class Intership extends Component {
                         onRemove={() =>
                           this.setState({
                             ...this.state.internshipsObj,
-                            lstUploadLogos: [],
+                            CompanyLogo: "",
                           })
                         }
                       >
@@ -276,6 +355,22 @@ class Intership extends Component {
                         <span className="sharebox-icons photo-upload"></span>
                         <p className="ant-upload-text mt-8 mb-0">Upload Logo</p>
                       </Dragger>
+                      <div className="mb-16 upload-preview">
+                        <Image src={internshipsObj.CompanyLogo} />
+                        <a
+                          class="item-close"
+                          onClick={() =>
+                            this.setState({
+                              ...this.state.internshipsObj,
+                              CompanyLogo: "",
+                            })
+                          }
+                        >
+                          <Tooltip title="Remove">
+                            <span className="close-icon"></span>
+                          </Tooltip>
+                        </a>
+                      </div>
                       <div className="docs about-icons education">
                         <List
                           itemLayout="horizontal"
@@ -304,7 +399,7 @@ class Intership extends Component {
                         onRemove={() =>
                           this.setState({
                             ...this.state.internshipsObj,
-                            lstUploadFiles: [],
+                            Certificate: [],
                           })
                         }
                       >
@@ -323,7 +418,9 @@ class Intership extends Component {
                           renderItem={(item) => (
                             <List.Item className="upload-preview mt-8">
                               <List.Item.Meta
-                                avatar={item.avatar}
+                                avatar={
+                                  <span className="doc-icons word"></span>
+                                }
                                 title={item.title}
                                 description={
                                   <div className="file-size f-14">

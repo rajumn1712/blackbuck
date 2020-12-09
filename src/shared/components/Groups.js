@@ -5,10 +5,18 @@ import { apiClient } from '../api/clients'
 import { Link } from 'react-router-dom';
 import { cancelGroupRequest, fetchGroupSuggestions, joinGroup } from '../api/apiServer';
 import { connect } from 'react-redux';
-import {profileSuccess} from '../../reducers/auth'
-
+import { profileSuccess } from '../../reducers/auth'
+import CommonModal from "../../components/ProfileComponents/CommonModal";
+import creategroup from '../../group/creategroup';
+import CreateGroup from '../../group/creategroup'
 
 class Groups extends Component {
+    showModal = (e) => {
+        e.preventDefault();
+        this.setState({
+          visible: true,
+        });
+      };
     state = {
         data: [],
         loading: true,
@@ -26,9 +34,9 @@ class Groups extends Component {
         if (item.type == "Private") { obj.Type = "request" }
         const joinResponse = await joinGroup(item.id, obj);
         if (joinResponse.ok) {
-            notify({ message: "Group join", description: item.type==="Private" ? "Request sent" : "Joined to group" });
+            notify({ message: "Group join", description: item.type === "Private" ? "Request sent" : "Joined to group" });
             debugger;
-            if(item.type!=='Private'){
+            if (item.type !== 'Private') {
                 this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
                 this.props.updateProfile(this.props.profile)
             }
@@ -73,10 +81,11 @@ class Groups extends Component {
         }
     }
     render() {
+        const { visible } = this.state;
         return (
             <div className="custom-card sub-text">
                 <Card title="Groups" bordered={true} extra={<Link to="/commingsoon">View all</Link>} actions={[
-                    <Link to={"/newgroup/" + 'new'}><Button type="primary" onClick={() => this.newGroup()}>Create a Group</Button></Link>
+                    <Button type="primary" onClick={this.showModal}>Create a Group</Button>
                 ]} >
                     <List
                         itemLayout="horizontal"
@@ -103,6 +112,17 @@ class Groups extends Component {
                         )}
                     />
                 </Card>
+                <CommonModal
+                    className="creategroup-popup"
+                    visible={visible}
+                    title="Create group"
+                    cancel={this.handleCancel}
+                    saved={this.saveEducation}
+
+                >
+                    <CreateGroup />
+
+                </CommonModal>
             </div>
         )
     }
@@ -114,4 +134,4 @@ const mapStateToProps = ({ oidc }) => {
 const mapDispatchToProps = dispatch => {
     return { updateProfile: (info) => { dispatch(profileSuccess(info)) } }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Groups);
+export default connect(mapStateToProps, mapDispatchToProps)(Groups);

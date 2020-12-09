@@ -7,11 +7,12 @@ import "../../index.css";
 import "../../App.css";
 import CommonModal from "./CommonModal";
 import { saveHobbies } from "../../shared/api/apiServer";
+import notify from "../../shared/components/notification";
 
 class Hobbies extends Component {
   state = {
     hobbies: this.props.hobbies ? this.props.hobbies.split(",") : [],
-    tags: this.props.hobbies ? this.props.hobbies.split(",") : [],
+    tags: [],
     inputVisible: false,
     inputValue: "",
     visible: false,
@@ -20,8 +21,11 @@ class Hobbies extends Component {
 
   showModal = (e) => {
     e.preventDefault();
+    let { tags } = this.state;
+    tags = this.props.hobbies ? this.props.hobbies.split(",") : [];
     this.setState({
       visible: true,
+      tags,
     });
   };
   handleOk = (e) => {
@@ -29,10 +33,18 @@ class Hobbies extends Component {
     saveObj.Name = tags.toString();
     this.setState({ saveObj: saveObj });
     saveHobbies(this.props.userid, this.state.saveObj).then((res) => {
-      this.setState({
-        visible: false,
-      });
-      this.props.callback(true);
+      this.setState(
+        {
+          visible: false,
+        },
+        () => {
+          notify({
+            description: "Hobbies saved successfully",
+            message: "Hobbies",
+          });
+          this.props.callback(true);
+        }
+      );
     });
   };
   handleCancel = (e) => {
