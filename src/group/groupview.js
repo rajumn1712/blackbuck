@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Input,Typography } from 'antd';
 import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import Postings from '../shared/postings/index';
@@ -14,13 +14,13 @@ import { profileSuccess } from '../reducers/auth';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
-const operations = <div className="mb-8 mr-12">
-                        <span className="text-center mt-8 mr-16">
-                            <span className="f-20 fw-400">2.5K</span> Members
-                        </span>
-                        <Button type="primary">Invite</Button>
-                    </div>;
+const { Search } = Input;
+const onSearch = value => console.log(value);
 const { TabPane } = Tabs;
+const data = [
+    { title: 'Jhon Se' }
+];
+const { Title } = Typography;
 class Group extends Component {
     imageObject = {};
     state = {
@@ -146,6 +146,12 @@ class Group extends Component {
     }
 
     render() {
+        const operations = <div className="mb-8 mr-12">
+            <span className="text-center mt-8 mr-16">
+                <span className="f-20 fw-400">2.5K</span> Members
+                        </span>
+            <Button type="primary" onClick={this.showModal}>Invite</Button>
+        </div>;
         const { groupData, disabled, visible } = this.state;
         return (
             groupData ? <div className="main">
@@ -195,19 +201,23 @@ class Group extends Component {
 
 
                             </Card>
-                            <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
-                                <div className="">
-                                    <div className="upload-preview">
-                                        <Image src={groupData.ProfilePic} />
-                                        <a class="item-close">
-                                            <Tooltip title="Remove">
-                                                <span className="close-icon"></span>
-                                            </Tooltip>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <Slider defaultValue={30} disabled={disabled} />
-                                    </div>
+                            <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk} className="invite-search">
+                                <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
+                                <div className=""> 
+                                    <div className="f-16 fw-400">Suggested</div>
+                                    <List
+                                        itemLayout="horizontal"
+                                        dataSource={data}
+                                        renderItem={item => (
+                                            <List.Item>
+                                                <List.Item.Meta
+                                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                                    title={<a href="https://ant.design">{item.title}</a>}
+
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
 
                                 </div>
                             </CommonModal>

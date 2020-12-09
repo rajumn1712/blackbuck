@@ -377,3 +377,4 @@ label{color: var(--textprimary);}
     transition-duration: 167ms;
 }
 .onboard-process .step1{padding:8px 12px;}
+.invite-search .header-searchbar{max-width: 100%;}
