@@ -362,4 +362,4 @@ label{color: var(--textprimary);}
 .onboard-process .step1{padding:8px 12px;}
 .onboard-process .intro4 .ant-checkbox-group .ant-checkbox-wrapper{height: 34px; display: flex; align-items: center;color: var(--textprimary);}
 .steps-content{ transition: all 5s linear 2s;}
-.custom-popup .custom-card.bg-white{overflow: scroll;height: 300px;}
+.custom-popup .custom-card.bg-white{overflow: scroll;height: 265px;}
