@@ -28,18 +28,14 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const educationObj = {
-  EducationType: "",
-  Name: "",
-  AcademicYear: "",
-  Location: "",
-  MarksGrade: "",
-  File: [],
+  EducationId: "",
+  uploadsources: [],
 };
 
 class Education extends Component {
   formRef = createRef();
   state = {
-    education: this.props.education,
+    education: [...this.props.education],
     EducationTypeLu: ["School", "College"],
     educationObj: educationObj,
     initialValues: {
@@ -54,9 +50,8 @@ class Education extends Component {
     fileUploading: false,
   };
   showModal = (e, isedit, education) => {
-    this.setState({ ...this.state, modalLoading: true });
     e.preventDefault();
-    let { initialValues, educationObj } = this.state;
+    let { initialValues, educationObj } = { ...this.state };
     if (isedit) {
       let {
         Name,
@@ -65,7 +60,8 @@ class Education extends Component {
         AcademicYear,
         MarksGrade,
       } = education;
-      educationObj = education;
+      educationObj.EducationId = education.EducationId;
+      educationObj.uploadsources = [...education.File];
       AcademicYear = AcademicYear.map((date) => {
         return moment(moment(new Date(date)));
       });
@@ -76,9 +72,16 @@ class Education extends Component {
         AcademicYear,
         MarksGrade,
       });
+    } else {
+      initialValues = {
+        EducationType: "",
+        Name: "",
+        AcademicYear: "",
+        Location: "",
+        MarksGrade: "",
+      };
     }
     this.setState({
-      ...this.state,
       visible: true,
       isEdit: isedit ? true : false,
       initialValues: initialValues,
@@ -98,7 +101,7 @@ class Education extends Component {
         EndDate: values.AcademicYear[1]._d,
         Location: values.Location,
         MarksGrade: values.MarksGrade,
-        File: this.state.educationObj.File,
+        File: this.state.educationObj.uploadsources,
         EducationType: values.EducationType,
       },
     };
@@ -126,14 +129,8 @@ class Education extends Component {
   handleCancel = (e) => {
     this.formRef.current.setErrors({});
     this.setState({
+      ...this.state,
       educationObj: educationObj,
-      initialValues: {
-        EducationType: "",
-        Name: "",
-        AcademicYear: "",
-        Location: "",
-        MarksGrade: "",
-      },
       visible: false,
     });
   };
@@ -150,6 +147,7 @@ class Education extends Component {
   };
   uploadProps = {
     name: "file",
+    accept: ".jpg,.jpeg,.png",
     multiple: false,
     action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
     showUploadList: false,
@@ -157,11 +155,10 @@ class Education extends Component {
   onChange = (info) => {
     this.setState({ ...this.state, fileUploading: true });
     const { status } = info.file;
-    const { educationObj } = this.state;
+    const educationObj = { ...this.state.educationObj };
     if (status === "done") {
-      educationObj["File"].push(info.file.response[0]);
+      educationObj["uploadsources"].push(info.file.response[0]);
       this.setState({
-        ...this.state,
         educationObj: educationObj,
         fileUploading: false,
       });
@@ -178,9 +175,9 @@ class Education extends Component {
     }
   };
   deleteFile = (key) => {
-    const { educationObj } = this.state;
-    educationObj.File.splice(key, 1);
-    this.setState({ ...this.state, educationObj: educationObj });
+    const educationObj = { ...this.state.educationObj };
+    educationObj.uploadsources.splice(key, 1);
+    this.setState({ educationObj: educationObj });
   };
   render() {
     const { user } = store.getState().oidc;
@@ -241,9 +238,17 @@ class Education extends Component {
                   }
                   title={
                     <div className="d-flex align-items-center">
-                      <span className="overflow-text">
-                        {item.File ? item.File : "No Files"}
-                      </span>
+                      {item?.File?.length > 0 ? (
+                        item.File.map((file, index) => {
+                          return (
+                            <span className="overflow-text" key={index}>
+                              {file}
+                            </span>
+                          );
+                        })
+                      ) : (
+                        <span className="overflow-text">{"No Files"}</span>
+                      )}
                     </div>
                   }
                 />
@@ -268,7 +273,7 @@ class Education extends Component {
         >
           <div className="">
             <Formik
-              enableReinitialize
+              enableReinitialize={true}
               initialValues={initialValues}
               innerRef={this.formRef}
               validate={(values) => this.handleValidate(values)}
@@ -387,7 +392,7 @@ class Education extends Component {
             <div className="docs about-icons mb-16 education">
               <List
                 itemLayout="horizontal"
-                dataSource={educationObj.File}
+                dataSource={educationObj.uploadsources}
                 renderItem={(item, key) => (
                   <List.Item className="upload-preview">
                     <List.Item.Meta

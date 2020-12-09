@@ -1,5 +1,5 @@
 import React, { Component, createRef } from "react";
-import { Card, Divider, Row, Col, Form, Input, Select } from "antd";
+import { Card, Divider, Row, Col, Form, Input } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -8,10 +8,8 @@ import CommonModal from "./CommonModal";
 import { ErrorMessage, Field, Formik } from "formik";
 import { saveAboutMe } from "../../shared/api/apiServer";
 import { hasChanged, uuidv4 } from "../../utils";
-import { values } from "lodash";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import notify from "../../shared/components/notification";
-const { Option } = Select;
 
 class About extends Component {
   state = {
@@ -48,10 +46,10 @@ class About extends Component {
   };
   showModal = (e) => {
     e.preventDefault();
-    let { address } = this.state;
-    address =
+    let editObject = { ...this.state };
+    editObject.address =
       this.props.about.Address.length > 0
-        ? this.props.about.Address[0]
+        ? { ...this.props.about.Address[0] }
         : {
             PlatNo: "",
             Street: "",
@@ -61,10 +59,14 @@ class About extends Component {
             Country: "",
             PinCode: "",
           };
+    editObject.address = Object.assign(editObject.address, {
+      PhoneNumber: editObject.PhoneNumber,
+      AboutMe: editObject.AboutMe,
+    });
 
     this.setState({
       visible: true,
-      address,
+      address: editObject.address,
     });
   };
 
@@ -149,19 +151,19 @@ class About extends Component {
               Contact
             </Divider>
             <Row gutter={16}>
-              {finalAddress.length > 0 && (
+              {finalAddress?.length > 0 && (
                 <Col xs={24} sm={12}>
                   <div className="about-details">
                     <div className="about-icons">
                       <span className="icons location c-default" />
                     </div>
-                    {finalAddress.map((address, index) => {
-                      delete address.AddressId;
+                    {finalAddress?.map((displayaddress, index) => {
+                      delete displayaddress.AddressId;
                       return (
                         <p key={index}>
-                          {Object.keys(address)
+                          {Object.keys(displayaddress)
                             .map((k) => {
-                              return address[k];
+                              return displayaddress[k];
                             })
                             .join(",")}
                         </p>
