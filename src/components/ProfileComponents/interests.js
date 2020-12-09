@@ -20,18 +20,14 @@ class Interests extends Component {
     pageSize: 10,
     loadMore: true,
     loading: true,
+    count:0
   };
   componentDidMount() {
-    debugger;
-    window.addEventListener('scroll', this.handleScroll)
-    this.fetchInterestsLu();
+    this.fetchInterestsLu(10,0);
   }
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll)
-  }
-  fetchInterestsLu = () => {
+  fetchInterestsLu = (take,skip) => {
     this.setState({ ...this.state, loading: true });
-    fetchInterestsLu(this.state.pageSize, (this.state.page * this.state.pageSize - this.state.pageSize))
+    fetchInterestsLu(take, skip)
       .then(res => {
         if (res.ok) {
           let { interestsLu } = this.state;
@@ -40,27 +36,7 @@ class Interests extends Component {
         }
       })
   }
-  handleScroll = () => {
-    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-    const body = document.body;
-    const html = document.documentElement;
-    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-    const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
-    if (windowBottom >= docHeight) {
-      this.loadMore();
-    } else {
 
-    }
-  }
-  loadMore(e) {
-    if (this.state.loadMore) {
-      let { page } = this.state;
-      page += 1;
-      this.setState({ ...this.state, page, loading: true }, () => {
-        this.fetchInterestsLu();
-      })
-    }
-  }
   showModal = (e) => {
     e.preventDefault();
     this.setState({
@@ -96,7 +72,7 @@ class Interests extends Component {
 
   render() {
     const { user } = store.getState().oidc;
-    const { interests, visible, interestsLu } = this.state;
+    const { interests, visible, interestsLu,count } = this.state;
 
     const interesetsList = interestsLu
       .filter((item) => {
@@ -201,6 +177,7 @@ class Interests extends Component {
           <div className="custom-card p-16 bg-white">
             <List itemLayout="horizontal">{interesetsList}</List>
           </div>
+          {interesetsList.length !== count && <a className="more-comments mt-16" onClick={() => this.fetchInterestsLu(5, interesetsList.length)}>View more comments</a>}
         </CommonModal>
       </div>
     );
