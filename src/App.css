@@ -260,7 +260,7 @@
 .custom-modal-header{display: flex;justify-content: space-between;align-items: center;}
 .custom-modal-header h4{margin-bottom: 0;color: var(--textprimary);}
 .modal-search .header-searchbar .ant-input-group{box-shadow: none;border: 1px solid var(--bordergrey);border-radius: 8px;}
-.modal-search .header-searchbar{max-width: 100%;}
+.modal-search .header-searchbar, .invite-search .header-searchbar{max-width: 100%;display: block;}
 /* .modal-search .header-searchbar input{min-height: 35px !important;} */
 .modal-interest .ant-modal-body {background-color: #f9f9f9;padding: 16px 30px !important;}
 .text-red,.text-red:hover{color: var(--red) !important;}

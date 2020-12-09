@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Input,Typography } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Input, Typography, Checkbox } from 'antd';
 import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import Postings from '../shared/postings/index';
@@ -146,6 +146,9 @@ class Group extends Component {
     }
 
     render() {
+        function onChange(e) {
+            console.log(`checked = ${e.target.checked}`);
+        }
         const operations = <div className="mb-8 mr-12">
             <span className="text-center mt-8 mr-16">
                 <span className="f-20 fw-400">2.5K</span> Members
@@ -203,7 +206,7 @@ class Group extends Component {
                             </Card>
                             <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk} className="invite-search">
                                 <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
-                                <div className=""> 
+                                <div className="">
                                     <div className="f-16 fw-400">Suggested</div>
                                     <List
                                         itemLayout="horizontal"
@@ -214,7 +217,7 @@ class Group extends Component {
                                                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                                     title={<a href="https://ant.design">{item.title}</a>}
 
-                                                />
+                                                /><Checkbox onChange={onChange}></Checkbox>
                                             </List.Item>
                                         )}
                                     />
