@@ -1,25 +1,66 @@
 import React, { Component } from "react";
 import { Card, Avatar, List, Input } from "antd";
 import { Link } from "react-router-dom";
-import { userManager } from "../../shared/authentication/auth";
 import { store } from "../../store";
-import User1 from "../../styles/images/avatar.png";
-import User2 from "../../styles/images/user.jpg";
-import User3 from "../../styles/images/user_image.jpg";
-import User4 from "../../styles/images/user-image.jpg";
 import "../../index.css";
 import "../../App.css";
 import CommonModal from "./CommonModal";
 import notify from "../../shared/components/notification";
+import { fetchInterestsLu } from '../../shared/api/apiServer'
 
 const { Search } = Input;
 
 class Interests extends Component {
   state = {
     interests: this.props.interests,
+    interestsLu: [],
     visible: false,
     search: null,
+    page: 1,
+    pageSize: 10,
+    loadMore: true,
+    loading: true,
   };
+  componentDidMount() {
+    debugger;
+    window.addEventListener('scroll', this.handleScroll)
+    this.fetchInterestsLu();
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll)
+  }
+  fetchInterestsLu = () => {
+    this.setState({ ...this.state, loading: true });
+    fetchInterestsLu(this.state.pageSize, (this.state.page * this.state.pageSize - this.state.pageSize))
+      .then(res => {
+        if (res.ok) {
+          let { interestsLu } = this.state;
+          interestsLu = interestsLu.concat(res.data)
+          this.setState({ ...this.state, loading: false, interestsLu: interestsLu, loadMore: res.data.length === this.state.pageSize })
+        }
+      })
+  }
+  handleScroll = () => {
+    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+    if (windowBottom >= docHeight) {
+      this.loadMore();
+    } else {
+
+    }
+  }
+  loadMore(e) {
+    if (this.state.loadMore) {
+      let { page } = this.state;
+      page += 1;
+      this.setState({ ...this.state, page, loading: true }, () => {
+        this.fetchInterestsLu();
+      })
+    }
+  }
   showModal = (e) => {
     e.preventDefault();
     this.setState({
@@ -55,9 +96,9 @@ class Interests extends Component {
 
   render() {
     const { user } = store.getState().oidc;
-    const { interests, visible } = this.state;
+    const { interests, visible, interestsLu } = this.state;
 
-    const interesetsList = interests
+    const interesetsList = interestsLu
       .filter((item) => {
         if (this.state.search == null) {
           return item;
@@ -71,10 +112,10 @@ class Interests extends Component {
         return (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={item.avatar} />}
+              avatar={<Avatar src={item.Image} />}
               title={
                 <div className="d-flex align-items-center">
-                  <span className="overflow-text">{item.title}</span>
+                  <span className="overflow-text">{item.Name}</span>
                 </div>
               }
               description={
@@ -148,6 +189,7 @@ class Interests extends Component {
           title="Interests"
           cancel={this.handleCancel}
           saved={this.handleOk}
+          onScroll={this.handleScroll}
         >
           <div className="modal-search py-16">
             <Search
