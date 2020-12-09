@@ -257,35 +257,35 @@ class HeaderComponent extends React.Component {
                         <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
                         <div className="messenger-drawer">
 
-                            <Link>
+                            <Link to="/">
                                 <Meta
                                     avatar={<Avatar src={avatar} />}
                                     title="Benjamin"
                                     description={<p className="chat-description">great!</p>}
                                 />
                             </Link>
-                            <Link>
+                            <Link to="/">
                                 <Meta
                                     avatar={<Avatar src={avatar2} />}
                                     title="Dylan Eugene"
                                     description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                                 />
                             </Link>
-                            <Link>
+                            <Link to="/">
                                 <Meta
                                     avatar={<Avatar src={userImage} />}
                                     title="Gordon"
                                     description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim Lorem ipsum dolor sit amet,</p>}
                                 />
                             </Link>
-                            <Link>
+                            <Link to="/">
                                 <Meta
                                     avatar={<Avatar src={user_Image} />}
                                     title="Ivan Jason"
                                     description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
                                 />
                             </Link>
-                            <Link>
+                            <Link to="/">
                                 <Meta
                                     avatar={<Avatar src={sherlyn} />}
                                     title="Ethan"
