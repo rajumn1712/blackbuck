@@ -28,11 +28,7 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const educationObj = {
-  EducationType: "",
-  Name: "",
-  AcademicYear: "",
-  Location: "",
-  MarksGrade: "",
+  EducationId: "",
   uploadsources: [],
 };
 
@@ -64,6 +60,7 @@ class Education extends Component {
         AcademicYear,
         MarksGrade,
       } = education;
+      educationObj.EducationId = education.EducationId;
       educationObj.uploadsources = [...education.File];
       AcademicYear = AcademicYear.map((date) => {
         return moment(moment(new Date(date)));
