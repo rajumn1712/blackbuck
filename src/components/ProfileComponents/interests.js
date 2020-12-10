@@ -187,14 +187,6 @@ class Interests extends Component {
                       <span className="overflow-text">{item.Name}</span>
                     </div>
                   }
-                  description={
-                    <div>
-                      <span style={{ color: "var(--textprimary)" }}>
-                        {item.Members}
-                      </span>{" "}
-                      Mutual Friends
-                    </div>
-                  }
                 /><span className="close-icon" onClick={() => this.deleteInterest(item)}></span>
               </List.Item>
             )}
