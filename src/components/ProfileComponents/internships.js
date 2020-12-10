@@ -305,7 +305,9 @@ class Intership extends Component {
             renderItem={(item) => (
               <List.Item className="mb-12">
                 <div className="intern-cards">
-                  <span className="left-menu intenship card-options-left" />
+                  <span className="card-options-left">
+                    <span className="left-menu intenship" />
+                  </span>
                   <span className="card-options-right">
                     <SideAction
                       horclass="icons more"
@@ -353,7 +355,7 @@ class Intership extends Component {
             initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
-            // validationSchema={this.validateSchema}
+          // validationSchema={this.validateSchema}
           >
             {({ values, setFieldValue }) => {
               return (
