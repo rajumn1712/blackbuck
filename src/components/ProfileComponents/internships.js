@@ -23,6 +23,7 @@ import { ErrorMessage, Field, Formik } from "formik";
 import * as Yup from "yup";
 import { hasChanged, uuidv4 } from "../../utils";
 import notify from "../../shared/components/notification";
+import SideAction from "../../shared/components/postings/Actions/SideActions";
 
 const docs = [
   {
@@ -31,6 +32,12 @@ const docs = [
     fileSize: "150 KB",
   },
 ];
+
+const ownerActions = [
+  { action: 'Edit', icons: 'post-icons edit-icon', subTitle: "Edit internship" },
+  { action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete internship" }
+]
+
 const { Option } = Select;
 const internshipsObj = {
   CompanyName: "",
@@ -252,7 +259,10 @@ class Intership extends Component {
               <List.Item onClick={(e) => this.showModal(e, true, item)} className="mb-12">
                 <div className="intern-cards">
                   <span className="left-menu intenship card-options-left" />
-                  <span className="icons more card-options-right" />
+                  <span className="card-options-right">
+                  <SideAction actionsList={ownerActions} />
+                    {/* <span className="icons more"/> */}
+                  </span>
                   <div className="intern-cardbody">
                     <div className="internlogo">
                       <img src={item.CompanyLogo} />
