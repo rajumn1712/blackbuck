@@ -51,8 +51,11 @@ class VideoProfile extends Component {
   };
   showModal = (e) => {
     e.preventDefault();
+    let { inputValue } = { ...this.state.inputValue };
+    inputValue = this.props.video ? this.props.video : "";
     this.setState({
       visible: true,
+      inputValue,
     });
   };
   handleVideoCHange = (e) => {

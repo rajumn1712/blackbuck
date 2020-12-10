@@ -5,7 +5,11 @@ import { store } from "../../store";
 import "../../index.css";
 import "../../App.css";
 import notify from "../../shared/components/notification";
-import { fetchCourseSuggestions, joinGroup } from "../../shared/api/apiServer";
+import {
+  fetchCourseSuggestions,
+  getUserCourses,
+  joinGroup,
+} from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { connect } from "react-redux";
 
@@ -20,11 +24,9 @@ class Courses extends Component {
   }
   async getCourseSuggestions() {
     this.setState({ ...this.state, loading: true });
-    const getcourses = await fetchCourseSuggestions(
-      this.props?.profile?.Id,
-      10,
-      0
-    );
+    const getcourses = await (this.props?.loadUserCourse
+      ? getUserCourses
+      : fetchCourseSuggestions)(this.props?.profile?.Id, 10, 0);
     let { courses } = this.state;
     courses = getcourses.data;
     if (getcourses.ok) {
@@ -108,32 +110,37 @@ class Courses extends Component {
                   }
                   description={
                     <div>
-                      <span style={{ color: "var(--textprimary)" }}>
-                        {item.members}
-                      </span>{" "}
+                      {item.members && (
+                        <span style={{ color: "var(--textprimary)" }}>
+                          {item.members}
+                        </span>
+                      )}{" "}
                       Members |{" "}
-                      <span style={{ color: "var(--textprimary)" }}>
-                        {item.posts}
-                      </span>{" "}
+                      {item.posts && (
+                        <span style={{ color: "var(--textprimary)" }}>
+                          {item.posts}
+                        </span>
+                      )}{" "}
                       posts
                     </div>
                   }
                 />
-                {!this.props.IsHideAction && item.requestJoin === "request" ? (
-                  <Link
-                    className="ml-8 f-12 list-link ml-16"
-                    onClick={() => this.cancelGroupRequest(item)}
-                  >
-                    Cancel request
-                  </Link>
-                ) : (
-                  <Link
-                    className="ml-8 f-12 list-link ml-16"
-                    onClick={() => this.handleCourseJoin(item)}
-                  >
-                    Join
-                  </Link>
-                )}
+                {!this.props?.loadUserCourse &&
+                  (item.requestJoin === "request" ? (
+                    <Link
+                      className="ml-8 f-12 list-link ml-16"
+                      onClick={() => this.cancelGroupRequest(item)}
+                    >
+                      Cancel request
+                    </Link>
+                  ) : (
+                    <Link
+                      className="ml-8 f-12 list-link ml-16"
+                      onClick={() => this.handleCourseJoin(item)}
+                    >
+                      Join
+                    </Link>
+                  ))}
               </List.Item>
             )}
           />

@@ -93,6 +93,11 @@ const deleteInterest = (user_id, interest_id) => {
     PROFILE_API + `deleteInterest/${interest_id}/${user_id}`
   );
 };
+const getUserCourses = (user_id, take, skip) => {
+  return apiClient.get(
+    PROFILE_API + `getUserCourses/${user_id}/${take}/${skip}`
+  );
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -118,4 +123,5 @@ export {
   fetchCourseSuggestions,
   saveInterest,
   deleteInterest,
+  getUserCourses,
 };
