@@ -13,7 +13,7 @@ const { Search } = Input;
 
 class Interests extends Component {
   state = {
-    interests: this.props.interests,
+    interests: this.props.interests?this.props.interests:[],
     interestsLu: [],
     visible: false,
     search: '',
@@ -57,6 +57,20 @@ class Interests extends Component {
     e.preventDefault();
     this.setState({
       visible: true,
+      interestsLu:[],
+      saveObject: {
+        UserId: this.props?.profile?.Id,
+        Interests: [],
+        UserDetails: {
+          UserId: this.props.profile?.Id,
+          Firstname: this.props.profile?.FirstName,
+          Lastname: "",
+          Image: this.props.profile?.ProfilePic,
+          Email: this.props.profile?.FirstName,
+        },
+      }
+    },()=>{
+      this.fetchInterestsLu(10, 0);
     });
   };
   handleOk = async (e) => {
