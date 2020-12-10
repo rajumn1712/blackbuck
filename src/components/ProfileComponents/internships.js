@@ -49,12 +49,9 @@ const ownerActions = [
 
 const { Option } = Select;
 const internshipsObj = {
-  CompanyName: "",
-  ShortName: "",
-  Place: "",
-  Duration: "",
+  InternshipId: "",
   CompanyLogo: "",
-  Certificate: [],
+  uploadsources: [],
 };
 class Intership extends Component {
   formRef = createRef();
@@ -90,7 +87,7 @@ class Intership extends Component {
         CompanyLogo: this.state.internshipsObj.CompanyLogo,
         Location: values.Location,
         Duration: values.Duration,
-        Certificate: this.state.internshipsObj.Certificate,
+        Certificate: this.state.internshipsObj.uploadsources,
       },
     };
   };
@@ -129,6 +126,7 @@ class Intership extends Component {
     name: "file",
     accept: ".doc,.docx",
     multiple: false,
+    showUploadList: false,
     action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
     onChange: (info) => {
       this.setState({ ...this.state, fileUpload: true });
@@ -144,7 +142,7 @@ class Intership extends Component {
           3
         );
         this.setState({ certificates: certificates });
-        internshipsObj.Certificate.push(this.state.certificates);
+        internshipsObj.uploadsources.push(this.state.certificates);
         this.setState({ internshipsObj: internshipsObj });
         message.success(`${info.file.name} file uploaded successfully.`);
         this.setState({ ...this.state, fileUpload: false });
@@ -154,10 +152,15 @@ class Intership extends Component {
       }
     },
   };
-  deleteFile = () => {
+  deleteLogo = () => {
     const internshipsObj = { ...this.state };
     internshipsObj.CompanyLogo = "";
     this.setState({ internshipsObj: internshipsObj });
+  };
+  deleteFile = (key) => {
+    const internship = { ...this.state.internshipsObj };
+    internship.uploadsources.splice(key, 1);
+    this.setState({ internshipsObj: internship });
   };
   handleEvent = async (e, name, item) => {
     switch (name) {
@@ -193,9 +196,12 @@ class Intership extends Component {
   };
   showModal = (e, isedit, internship) => {
     e.preventDefault();
-    let { internshipsObj, initialValues } = this.state;
+    let { internshipsObj, initialValues } = { ...this.state };
     if (isedit) {
       const { CompanyName, ShortName, Location, Duration } = internship;
+      internshipsObj.InternshipId = { ...internship.InternshipId };
+      internshipsObj.CompanyLogo = { ...internship.CompanyLogo };
+      internshipsObj.uploadsources = [...internship.Certificate];
       Object.assign(initialValues, {
         CompanyName,
         ShortName,
@@ -214,7 +220,7 @@ class Intership extends Component {
     this.setState({
       visible: true,
       isEdit: isedit ? true : false,
-      internshipsObj: isedit ? internship : internshipsObj,
+      internshipsObj: internshipsObj,
       initialValues: initialValues,
     });
   };
@@ -323,7 +329,7 @@ class Intership extends Component {
                   <div className="intern-cardfooter">
                     {item.Certificate?.map((certificate, indx) => {
                       return (
-                        <p className="mb-0">
+                        <p className="mb-0" key={indx}>
                           <span className="icons pdf mr-8" />
                           {certificate.File}
                         </p>
@@ -470,7 +476,7 @@ class Intership extends Component {
                             <Tooltip title="Remove">
                               <span
                                 className="close-icon"
-                                onClick={() => this.deleteFile()}
+                                onClick={() => this.deleteLogo()}
                               ></span>
                             </Tooltip>
                           )}
@@ -479,19 +485,26 @@ class Intership extends Component {
                       <div className="docs about-icons education">
                         <List
                           itemLayout="horizontal"
-                          dataSource={docs}
-                          renderItem={(item) => (
+                          dataSource={internshipsObj.uploadsources}
+                          renderItem={(item, indx) => (
                             <List.Item className="upload-preview mt-8">
                               <List.Item.Meta
-                                avatar={item.avatar}
-                                title={item.title}
+                                avatar={[
+                                  <span
+                                    className={`doc-icons ${item.Avatar}`}
+                                  ></span>,
+                                ]}
+                                title={item.File}
                                 description={
                                   <div className="file-size f-14">
-                                    {item.fileSize}
+                                    {item.Size}
                                   </div>
                                 }
                               />
-                              <span className="close-icon"></span>
+                              <span
+                                className="close-icon"
+                                onClick={() => this.deleteFile(indx)}
+                              ></span>
                             </List.Item>
                           )}
                         />
