@@ -204,7 +204,7 @@ class Group extends Component {
 
 
                             </Card>
-                            <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk} className="invite-search">
+                            <CommonModal visible={visible} title="Invite Friends to This Group" cancel={this.handleCancel} saved={this.handleOk} className="invite-search">
                                 <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
                                 <div className="">
                                     <div className="f-16 fw-400">Suggested</div>
@@ -243,6 +243,16 @@ class Group extends Component {
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         <Postings sharebox={false} friendsSuggestions={false} postingsType="all" />
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                            <TabPane tab="More" key="3">
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Invite />
+                                    </Col>
+                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                        <GroupAbout />
                                     </Col>
                                 </Row>
                             </TabPane>

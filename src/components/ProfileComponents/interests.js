@@ -121,7 +121,7 @@ class Interests extends Component {
       });
 
     return (
-      <div className="custom-card">
+      <div className="custom-card interests-popup">
         <Card
           title="Interests"
           bordered={false}
@@ -133,7 +133,7 @@ class Interests extends Component {
             ) : null
           }
         >
-          <List
+          <List className="p-12"
             grid={{ gutter: 16, column: 2 }}
             itemLayout="horizontal"
             dataSource={interests}
@@ -154,7 +154,7 @@ class Interests extends Component {
                       Mutual Friends
                     </div>
                   }
-                />
+                /><span className="close-icon"></span>
               </List.Item>
             )}
           />
