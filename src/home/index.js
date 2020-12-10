@@ -26,8 +26,8 @@ class Home extends Component {
         }
         return (
             <div className="main">
-                {/* <Row gutter={16}>
-                    <Col xs={24} md={18} justify="center">
+                {/* <Row gutter={16} justify="center">
+                    <Col xs={24} md={20} >
                         <OnBoard />
                     </Col>
                 </Row> */}
