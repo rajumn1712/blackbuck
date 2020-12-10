@@ -282,7 +282,7 @@ class Education extends Component {
                 return (
                   <Form layout="vertical">
                     <Row gutter={16}>
-                      <Col xs={24} sm={12}>
+                      <Col xs={24} sm={24}>
                         <Form.Item
                           label="Education Type"
                           className="custom-fields custom-select"
@@ -309,7 +309,7 @@ class Education extends Component {
                           </span>
                         </Form.Item>
                       </Col>
-                      <Col xs={24} sm={12}>
+                      <Col xs={24} sm={24}>
                         <Form.Item
                           label="College/University Name"
                           className="custom-fields"
