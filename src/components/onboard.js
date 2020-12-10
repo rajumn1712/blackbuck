@@ -183,14 +183,15 @@ const OnBoard = () => {
     return (
         <>
 
-            <Card className="mb-6 custom-card onboard-process" bordered={true} >
+            <Card className="mb-16 custom-card onboard-process" bordered={true} >
                 <div className="steps-content">
                     {steps[current].content}</div>
-                <div className="steps-action">
-                    <Row gutter={0}>
-                        <Col xs={24} md={8}>
-                        </Col>
-                        <Col xs={24} md={16}>
+                <Row gutter={8}>
+                    <Col xs={24} md={8}>
+                        <div style={{height:'100%',backgroundColor:'var(--grey)'}}></div>
+                    </Col>
+                    <Col xs={24} md={16}>
+                        <div className="steps-action">
                             {current > 0 && (
                                 <Button className="backbtn" onClick={() => prev()}>
                                     Back
@@ -206,11 +207,12 @@ const OnBoard = () => {
                                     Next
                                 </Button>
                             )}
+                        </div>
 
-                        </Col>
-                    </Row>
+                    </Col>
+                </Row>
 
-                </div>
+
             </Card>
         </>
     );
