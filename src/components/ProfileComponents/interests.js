@@ -24,7 +24,14 @@ class Interests extends Component {
     count: 0,
     saveObject: {
       UserId: this.props?.profile?.Id,
-      Interests: []
+      Interests: [],
+      UserDetails: {
+        UserId: this.props.profile?.Id,
+        Firstname: this.props.profile?.FirstName,
+        Lastname: "",
+        Image: this.props.profile?.ProfilePic,
+        Email: this.props.profile?.FirstName,
+      },
     }
   };
   componentDidMount() {
@@ -93,7 +100,7 @@ class Interests extends Component {
     this.setState({ ...this.state, interestsLu: interestsLu })
   };
   deleteInterest = async (item) => {
-    const response = await deleteInterest(this.state.saveObject);
+    const response = await deleteInterest(this.props?.profile?.Id, item.InterestId);
     if (response.ok) {
       let { interests } = this.state;
       interests = interests.filter(obj => {

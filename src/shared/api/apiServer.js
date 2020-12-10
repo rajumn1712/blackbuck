@@ -81,7 +81,7 @@ const saveInterest = (object) => {
   return apiClient.post(PROFILE_API + "saveInterests", object);
 }
 const deleteInterest = (user_id, interest_id) => {
-  return apiClient.post(PROFILE_API + `deleteInterest/${interest_id}/${user_id}`);
+  return apiClient.get(PROFILE_API + `deleteInterest/${interest_id}/${user_id}`);
 }
 export {
   getFriendSuggestions,
