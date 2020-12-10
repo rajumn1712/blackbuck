@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Avatar, List, Input } from "antd";
+import { Card, Avatar, List, Input,Modal } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -187,25 +187,18 @@ class Interests extends Component {
                       <span className="overflow-text">{item.Name}</span>
                     </div>
                   }
-                  description={
-                    <div>
-                      <span style={{ color: "var(--textprimary)" }}>
-                        {item.Members}
-                      </span>{" "}
-                      Mutual Friends
-                    </div>
-                  }
                 /><span className="close-icon" onClick={() => this.deleteInterest(item)}></span>
               </List.Item>
             )}
           />
         </Card>
-        <CommonModal
+        <Modal
           className="custom-popup modal-interest"
           visible={visible}
           title="Interests"
           cancel={this.handleCancel}
           saved={this.handleOk}
+          destroyOnClose
         >
           <div>
             <div className="modal-search py-16">
@@ -219,7 +212,7 @@ class Interests extends Component {
               <List itemLayout="horizontal">{interesetsList}</List>
             </div>
           </div>
-        </CommonModal>
+        </Modal>
       </div>
     );
   }
