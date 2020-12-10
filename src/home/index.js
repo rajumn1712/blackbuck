@@ -26,16 +26,20 @@ class Home extends Component {
         }
         return (
             <div className="main">
+                {/* <Row gutter={16}>
+                    <Col xs={24} md={18} justify="center">
+                        <OnBoard />
+                    </Col>
+                </Row> */}
                 <Row gutter={16}>
                     <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
                         <Identity />
                         <Affix offsetTop={86} >
-                        <Tags />
+                            <Tags />
                             <Invite />
                         </Affix>
                     </Col>
                     <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
-                      {/* <OnBoard /> */}
                         <Switch >
                             <Route path="/newsfeed" component={PostingsComponent} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
@@ -47,7 +51,7 @@ class Home extends Component {
                         <Groups />
                         <Affix offsetTop={86} >
                             <Ads />
-                        </Affix>    
+                        </Affix>
                     </Col>
                 </Row>
             </div>

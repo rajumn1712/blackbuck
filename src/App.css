@@ -97,7 +97,7 @@
 .premium-icon{width: 16px; height: 16px; vertical-align: initial; display: inline-block; cursor: pointer; vertical-align: middle; background: url(../src/styles/images/icons.svg) no-repeat; background-position:-6px -84px; margin-left: 4px;}
 .profile-card .ant-card-actions > li:not(:last-child){border-right: 1px solid var(--line);}
 .ant-card-actions > li, .ant-card-actions > li > span{cursor: default !important;}
-.profile-card .ant-card-body{padding: 24px 12px 16px !important;}
+.profile-card .ant-card-body{padding: 16px 12px !important;}
 .custom-popup .ant-modal-close{display: none !important;}
 .justify-content-between, .speekar-block{justify-content: space-between;}
 .share-popup .ant-modal-footer{background: #F9F9F9; border-top: 0;border-radius: 10px;}
@@ -233,9 +233,12 @@
 .pfvideocard .ant-card-body{padding: 0 !important;}
 .icons.more{background-position: -235px -200px;}
 .icons.pdf {background-position: -365px -159px ;}
+.internship-card .ant-list-item:hover{background-color: transparent;}
+.internship-card .ant-card-body{padding:12px 0 0;}
 .intern-cards{border: 1px solid var(--secondary ); border-radius: 5px; text-align: center; position: relative;}
 .intern-cards .intern-cardbody{ background-color: var(--grey); padding: 24px 8px;}
-.intern-cards .intern-cardbody img{ width: auto; height:50px; margin-bottom: 8px;}
+.intern-cards .intern-cardbody img{ width: auto; margin-bottom: 8px;height: auto;max-width: 75%;}
+.intern-cards .intern-cardbody .internlogo{height:100px;display: flex;align-items: center;justify-content: center;}
 .intern-cards .intern-cardbody .title{ font-size: 18px; font-weight: 500;line-height: 22px;color: var(--textprimary); margin-bottom: 8px;}
 .intern-cards .intern-cardbody .description{ font-size: var(--f-16);font-weight: 500;line-height: 20px; color: var(--textsecondary); margin-bottom: 2px; text-transform: capitalize;}
 .intern-cards .intern-cardfooter{ background-color:  var(--white); text-align: left; padding: 10px 8px; color: var(--textprimary);}

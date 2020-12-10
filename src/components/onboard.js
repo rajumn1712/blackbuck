@@ -13,7 +13,7 @@ import { ErrorMessage, Field, Formik } from 'formik';
 
 function onChange(checkedValues) {
     console.log('checked = ', checkedValues);
-  }
+}
 // const { Step } = Steps;.
 const data = [
 
@@ -93,7 +93,7 @@ const steps = [
                             <Col span={12}>
                                 <Checkbox value="Sports">Sports </Checkbox>
                             </Col>
-                            
+
                         </Row>
                     </Checkbox.Group>,
                 </Card>
@@ -147,6 +147,10 @@ const OnBoard = () => {
                 <h1> Welcome to Blackbuck</h1>
                 <p>To bring premier and practical formal education closer to students and professionals.</p>
             </div>
+            <Row>
+                <Col flex={2}>2 / 5</Col>
+                <Col flex={3}>3 / 5</Col>
+            </Row>
             <Card className="mb-6 custom-card onboard-process" bordered={true} >
                 <div className="steps-content">{steps[current].content}</div>
                 <div className="steps-action ">

@@ -23,6 +23,7 @@ import { ErrorMessage, Field, Formik } from "formik";
 import * as Yup from "yup";
 import { hasChanged, uuidv4 } from "../../utils";
 import notify from "../../shared/components/notification";
+import SideAction from "../../shared/components/postings/Actions/SideActions";
 
 const docs = [
   {
@@ -31,6 +32,12 @@ const docs = [
     fileSize: "150 KB",
   },
 ];
+
+const ownerActions = [
+  { action: 'Edit', icons: 'post-icons edit-icon', subTitle: "Edit internship" },
+  { action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete internship" }
+]
+
 const { Option } = Select;
 const internshipsObj = {
   CompanyName: "",
@@ -225,7 +232,7 @@ class Intership extends Component {
     const data = [...this.state.internships];
     const { internshipsObj, duration, initialValues } = this.state;
     return (
-      <div className="custom-card">
+      <div className="custom-card internship-card">
         <Card
           title="Internships"
           bordered={false}
@@ -239,23 +246,27 @@ class Intership extends Component {
         >
           <List
             grid={{
-              gutter: 8,
               xs: 1,
               sm: 2,
-              md: 2,
-              lg: 2,
-              xl: 2,
-              xxl: 2,
+              md: 3,
+              lg: 3,
+              xl: 3,
+              xxl: 3,
             }}
             itemLayout="horizontal"
             dataSource={data}
             renderItem={(item) => (
-              <List.Item onClick={(e) => this.showModal(e, true, item)}>
+              <List.Item onClick={(e) => this.showModal(e, true, item)} className="mb-12">
                 <div className="intern-cards">
                   <span className="left-menu intenship card-options-left" />
-                  <span className="icons more card-options-right" />
+                  <span className="card-options-right">
+                  <SideAction actionsList={ownerActions} />
+                    {/* <span className="icons more"/> */}
+                  </span>
                   <div className="intern-cardbody">
-                    <img src={item.CompanyLogo} />
+                    <div className="internlogo">
+                      <img src={item.CompanyLogo} />
+                    </div>
                     <h4 className="title">{item.CompanyName}</h4>
                     <p className="description">
                       <span className="afterline mr-16">{item.Location}</span>
@@ -285,12 +296,12 @@ class Intership extends Component {
             initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
-            // validationSchema={this.validateSchema}
+          // validationSchema={this.validateSchema}
           >
             {({ values, setFieldValue }) => {
               return (
                 <Form layout="vertical">
-                  <Row gutter={16} className="mb-16">
+                  <Row gutter={8}>
                     <Col xs={24}>
                       <Form.Item label="Company Name" className="custom-fields">
                         <Field
