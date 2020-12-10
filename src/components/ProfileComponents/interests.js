@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Avatar, List, Input } from "antd";
+import { Card, Avatar, List, Input,Modal } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -13,7 +13,7 @@ const { Search } = Input;
 
 class Interests extends Component {
   state = {
-    interests: this.props.interests,
+    interests: this.props.interests?this.props.interests:[],
     interestsLu: [],
     visible: false,
     search: '',
@@ -57,6 +57,20 @@ class Interests extends Component {
     e.preventDefault();
     this.setState({
       visible: true,
+      interestsLu:[],
+      saveObject: {
+        UserId: this.props?.profile?.Id,
+        Interests: [],
+        UserDetails: {
+          UserId: this.props.profile?.Id,
+          Firstname: this.props.profile?.FirstName,
+          Lastname: "",
+          Image: this.props.profile?.ProfilePic,
+          Email: this.props.profile?.FirstName,
+        },
+      }
+    },()=>{
+      this.fetchInterestsLu(10, 0);
     });
   };
   handleOk = async (e) => {
@@ -187,14 +201,6 @@ class Interests extends Component {
                       <span className="overflow-text">{item.Name}</span>
                     </div>
                   }
-                  description={
-                    <div>
-                      <span style={{ color: "var(--textprimary)" }}>
-                        {item.Members}
-                      </span>{" "}
-                      Mutual Friends
-                    </div>
-                  }
                 /><span className="close-icon" onClick={() => this.deleteInterest(item)}></span>
               </List.Item>
             )}
@@ -206,6 +212,7 @@ class Interests extends Component {
           title="Interests"
           cancel={this.handleCancel}
           saved={this.handleOk}
+          destroyOnClose
         >
           <div>
             <div className="modal-search py-16">

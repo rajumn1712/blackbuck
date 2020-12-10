@@ -394,9 +394,7 @@ class Profile extends Component {
                       )}
                     </div>
                     <div ref={this.getOrCreateRef("CourseComp")}>
-                      {profileData.Courses && (
-                        <Courses courses={profileData.Courses} />
-                      )}
+                      <Courses loadUserCourse={true} />
                     </div>
                   </Col>
                 </Row>

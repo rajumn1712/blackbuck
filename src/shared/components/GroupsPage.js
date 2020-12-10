@@ -56,10 +56,10 @@ class GroupsPage extends Component {
         const { user } = store.getState().oidc;
         const { Groups } = this.state;
         return (
-            <div className="group-page p-12" >
+            <div className="group-page" >
                 <Row gutter={16} className="">
                     {Groups.length > 0 && Groups?.map((group, index) => {
-                        return <Col className="mb-16" md={12} lg={6}>
+                        return <Col className="mb-16" md={12} lg={8} xl={8} xxl={6}>
                             <Card key={index}
                                 cover={<img className="obj-fit" src={group.image} />} actions={[
                                     <Link className="list-link f-14" to="/commingsoon">Leave Group</Link>
