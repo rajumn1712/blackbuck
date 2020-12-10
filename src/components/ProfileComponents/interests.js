@@ -201,7 +201,7 @@ class Interests extends Component {
                       <span className="overflow-text">{item.Name}</span>
                     </div>
                   }
-                /><span className="close-icon" onClick={() => this.deleteInterest(item)}></span>
+                />{!this.props.IsHideAction && <span className="close-icon" onClick={() => this.deleteInterest(item)}></span>}
               </List.Item>
             )}
           />
