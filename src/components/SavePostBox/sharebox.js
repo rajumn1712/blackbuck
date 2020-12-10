@@ -189,7 +189,7 @@ class ShareBox extends Component {
                 visible: false,
             }, () => {
                 this.props.dataRefreshed();
-                notify({ description: "Posting completed successfully", message: "Post" })
+                notify({ description: this.state.isEdit?"Posting completed successfully":"Post edited successfully", message: "Post" })
             });
         } else {
             notify({ description: "Something went wrong :)", message: "Error", type: 'error' })

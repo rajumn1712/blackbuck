@@ -42,9 +42,13 @@ class Interests extends Component {
     fetchInterestsLu(take, skip)
       .then(res => {
         if (res.ok) {
-          let { interestsLu } = this.state;
+          let { interestsLu, interests } = this.state;
           interestsLu = interestsLu.concat(res.data)
-          this.setState({ ...this.state, loading: false, interestsLu: interestsLu, loadMore: res.data.length === this.state.pageSize })
+          this.setState({ ...this.state, loading: false, interestsLu: interestsLu, loadMore: res.data.length === this.state.pageSize }, () => {
+            interests.forEach(val => {
+              this.handleInterest(val);
+            });
+          })
         }
       })
   }
@@ -60,6 +64,7 @@ class Interests extends Component {
     if (response.ok) {
       this.setState({
         visible: false,
+        interests: this.state.saveObject.Interests,
       }, () => {
         notify({ description: "Interests added successfully", message: "Interests" })
       });
@@ -88,7 +93,7 @@ class Interests extends Component {
     this.setState({ ...this.state, interestsLu: interestsLu, saveObject: saveObject })
 
   };
-  handleRemove = (index, item) => {
+  handleRemove = (item) => {
     let { interestsLu, saveObject } = this.state;
     interestsLu.forEach(interest => {
       if (item.InterestId == interest.InterestId) {
@@ -102,11 +107,13 @@ class Interests extends Component {
   deleteInterest = async (item) => {
     const response = await deleteInterest(this.props?.profile?.Id, item.InterestId);
     if (response.ok) {
+      this.handleRemove(item);
       let { interests } = this.state;
       interests = interests.filter(obj => {
         return obj.InterestId !== item.InterestId;
       })
       this.setState({
+        ...this.state,
         visible: false,
         interests: interests
       }, () => {
@@ -141,12 +148,12 @@ class Interests extends Component {
                 </div>
               }
             />
-            <Link className="f-12 list-link" onClick={() => this.handleInterest(item)}>
+            <Link className="f-12 list-link" onClick={() => item.IsInterest ? '' : this.handleInterest(item)}>
               {item.IsInterest ? 'Intersted' : 'Interest'}
             </Link>
             <Link
               className="f-12 list-link ml-16 text-red"
-              onClick={(e) => this.handleRemove(index, item)}
+              onClick={(e) => this.handleRemove(item)}
             >
               Remove
             </Link>
