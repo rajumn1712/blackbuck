@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Input, Typography, Checkbox } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Input, Typography, Checkbox,Descriptions,Divider } from 'antd';
 import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import Postings from '../shared/postings/index';
 import './groupstyle.css'
 import PadLock from '../styles/images/padlock.svg'
-import { Link } from 'react-router-dom';
 import GroupAbout from '../shared/components/groupabout';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import { profileDetail, joinGroup, saveProfileImage } from '../shared/api/apiServer';
@@ -150,10 +149,9 @@ class Group extends Component {
             console.log(`checked = ${e.target.checked}`);
         }
         const operations = <div className="mb-8 mr-12">
-            <span className="text-center mt-8 mr-16">
-                <span className="f-20 fw-400">2.5K</span> Members
-                        </span>
-            <Button type="primary" onClick={this.showModal}>Invite</Button>
+            <span className="post-icons share-icon mt-8"></span>
+            <span className="post-icons h-more-icon mx-8"></span>
+            
         </div>;
         const { groupData, disabled, visible } = this.state;
         return (
@@ -174,7 +172,12 @@ class Group extends Component {
                             </ImgCrop>
 
                         </div>
-                        <div className="user-statistic">
+
+                        <div className="user-statistic pb-0">
+                            <div className="left-statistic group-leftext">
+                                <Title className="mb-0" level={5}>IT Group</Title>
+                                <div className="f-12">Private Group</div>
+                            </div>
                             <Card className="group-banner w-btn" >
                                 <List
                                     itemLayout="horizontal"
@@ -190,10 +193,9 @@ class Group extends Component {
                                                         </Tooltip>
                                                     </Upload>
                                                 </ImgCrop> </div>}
-                                                title={<a href="https://ant.design">{item.title}</a>}
+                                            // title={<a href="https://ant.design">{item.title}</a>}
 
-                                                description={<div><div className="f-12">{item.Type}</div><div className="f-12">Created on <span className="fw-400">{item.CreatedDate}</span></div></div>}
-
+                                            // description={<div className="f-12">{item.Type}</div>}
                                             />
                                             {/* {!groupData.IsMember && <div className="btn-position"><span className="text-center mt-8 mr-16"><span className="f-20 fw-400">{item.Members}</span> Members</span>
                                                 <Button type="primary" onClick={() => this.joinGroup(item)}>Invite</Button>
@@ -224,7 +226,13 @@ class Group extends Component {
 
                                 </div>
                             </CommonModal>
+                            <div className="right-statistic mt-8">
+                                <span className="text-center mt-8 mr-16">
+                                    <span className="f-20 fw-400">2.5K</span> Members</span>
+                                <Button type="primary" onClick={this.showModal}>Invite</Button>
+                            </div>
                         </div>
+                        {/* <div className=""><Divider className="m-0" /></div> */}
                         <Tabs defaultActiveKey="1" className="profile-tabs" tabBarExtraContent={operations}>
                             <TabPane tab="About" key="3">
                                 <Row gutter={16}>
@@ -246,7 +254,7 @@ class Group extends Component {
                                     </Col>
                                 </Row>
                             </TabPane>
-                            <TabPane tab="More" key="3">
+                            <TabPane tab="More" key="2">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />

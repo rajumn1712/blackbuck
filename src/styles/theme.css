@@ -59,7 +59,7 @@
 .pt-4{padding-top: 4px;}
 .pt-8{padding-top: 8px;}
 .pt-16{padding-top: 16px;}
-.pb-0{padding-bottom: 0px;}
+.pb-0{padding-bottom: 0px !important;}
 .pb-4{padding-bottom: 4px;}
 .pb-8{padding-bottom: 8px;}
 .pb-16{padding-bottom: 16px;}
@@ -73,7 +73,7 @@
 .py-16{padding-top: 16px; padding-bottom: 16px;}
 
 /*----Margin Utilities----*/
-.m-0{margin: 0;}
+.m-0{margin: 0 !important;}
 .m-4{margin: 4px;}
 .m-8{margin: 8px;}
 .m-16{margin: 16px !important;}
