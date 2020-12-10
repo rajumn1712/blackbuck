@@ -192,7 +192,7 @@ class Interests extends Component {
             )}
           />
         </Card>
-        <Modal
+        <CommonModal
           className="custom-popup modal-interest"
           visible={visible}
           title="Interests"
@@ -212,7 +212,7 @@ class Interests extends Component {
               <List itemLayout="horizontal">{interesetsList}</List>
             </div>
           </div>
-        </Modal>
+        </CommonModal>
       </div>
     );
   }
