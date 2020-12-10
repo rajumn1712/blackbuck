@@ -260,7 +260,7 @@ class Intership extends Component {
                 <div className="intern-cards">
                   <span className="left-menu intenship card-options-left" />
                   <span className="card-options-right">
-                  <SideAction actionsList={ownerActions} />
+                    <SideAction actionsList={ownerActions} />
                     {/* <span className="icons more"/> */}
                   </span>
                   <div className="intern-cardbody">
@@ -326,7 +326,7 @@ class Intership extends Component {
                         </span>
                       </Form.Item>
                     </Col>
-                    <Col xs={12}>
+                    <Col xs={24} md={12}>
                       <Form.Item label="Place" className="custom-fields">
                         <Field
                           className="ant-input"
@@ -338,7 +338,7 @@ class Intership extends Component {
                         </span>
                       </Form.Item>
                     </Col>
-                    <Col xs={12}>
+                    <Col xs={24} md={12}>
                       <Form.Item
                         label="Duration"
                         className="custom-fields custom-select"
@@ -364,7 +364,7 @@ class Intership extends Component {
                       </Form.Item>
                     </Col>
 
-                    <Col className="mb-16" xs={12}>
+                    <Col xs={24} md={12} className="mb-16" >
                       <Dragger
                         className="upload"
                         {...this.uploadProps}
@@ -381,6 +381,30 @@ class Intership extends Component {
                         <span className="sharebox-icons photo-upload"></span>
                         <p className="ant-upload-text mt-8 mb-0">Upload Logo</p>
                       </Dragger>
+                    </Col>
+                    <Col xs={24} md={12} className="mb-16">
+                      <Dragger
+                        className="upload"
+                        {...this.uploadfileProps}
+                        onRemove={() =>
+                          this.setState({
+                            ...this.state.internshipsObj,
+                            Certificate: [],
+                          })
+                        }
+                      >
+                        {this.state.fileUpload && (
+                          <Loader className="loader-top-middle" />
+                        )}
+                        <span className="sharebox-icons photo-upload"></span>
+                        <p className="ant-upload-text mt-8 mb-0">
+                          Upload Certificate
+                        </p>
+                      </Dragger>
+                    </Col>
+
+
+                    <Col xs={24}>
                       <div className="mb-16 upload-preview">
                         <Image src={internshipsObj.CompanyLogo} />
                         <a
@@ -410,48 +434,6 @@ class Intership extends Component {
                             <List.Item className="upload-preview mt-8">
                               <List.Item.Meta
                                 avatar={item.avatar}
-                                title={item.title}
-                                description={
-                                  <div className="file-size f-14">
-                                    {item.fileSize}
-                                  </div>
-                                }
-                              />
-                              <span className="close-icon"></span>
-                            </List.Item>
-                          )}
-                        />
-                      </div>
-                    </Col>
-                    <Col xs={12}>
-                      <Dragger
-                        className="upload"
-                        {...this.uploadfileProps}
-                        onRemove={() =>
-                          this.setState({
-                            ...this.state.internshipsObj,
-                            Certificate: [],
-                          })
-                        }
-                      >
-                        {this.state.fileUpload && (
-                          <Loader className="loader-top-middle" />
-                        )}
-                        <span className="sharebox-icons photo-upload"></span>
-                        <p className="ant-upload-text mt-8 mb-0">
-                          Upload Certificate
-                        </p>
-                      </Dragger>
-                      <div className="docs about-icons education">
-                        <List
-                          itemLayout="horizontal"
-                          dataSource={docs}
-                          renderItem={(item) => (
-                            <List.Item className="upload-preview mt-8">
-                              <List.Item.Meta
-                                avatar={
-                                  <span className="doc-icons word"></span>
-                                }
                                 title={item.title}
                                 description={
                                   <div className="file-size f-14">
