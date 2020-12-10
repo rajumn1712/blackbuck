@@ -305,17 +305,21 @@ class Intership extends Component {
             renderItem={(item) => (
               <List.Item className="mb-12">
                 <div className="intern-cards">
-                  <span className="left-menu intenship card-options-left" />
-                  <span className="card-options-right">
-                    <SideAction
-                      horclass="icons more"
-                      clickedEvent={(event, name) =>
-                        this.handleEvent(event, name, item)
-                      }
-                      actionsList={ownerActions}
-                    />
-                    {/* <span className="icons more"/> */}
-                  </span>
+                  <div className="card-options">
+                    <span className="card-options-left">
+                      <span className="left-menu intenship" />
+                    </span>
+                    <span className="card-options-right">
+                      <SideAction
+                        horclass="icons more"
+                        clickedEvent={(event, name) =>
+                          this.handleEvent(event, name, item)
+                        }
+                        actionsList={ownerActions}
+                      />
+                      {/* <span className="icons more"/> */}
+                    </span>
+                  </div>
                   <div className="intern-cardbody">
                     <div className="internlogo">
                       <img src={item.CompanyLogo} />
@@ -353,7 +357,7 @@ class Intership extends Component {
             initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
-            // validationSchema={this.validateSchema}
+          // validationSchema={this.validateSchema}
           >
             {({ values, setFieldValue }) => {
               return (

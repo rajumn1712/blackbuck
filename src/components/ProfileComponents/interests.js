@@ -163,7 +163,7 @@ class Interests extends Component {
               }
             />
             <Link className="f-12 list-link" onClick={() => item.IsInterest ? '' : this.handleInterest(item)}>
-              {item.IsInterest ? 'Intersted' : 'Interest'}
+              {item.IsInterest ? 'Interested' : 'Interest'}
             </Link>
             <Link
               className="f-12 list-link ml-16 text-red"
