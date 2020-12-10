@@ -109,7 +109,7 @@ class ShareBox extends Component {
             "Message":object?object.meassage: "",
             "Title": object?object.title:"",
             "IsAnonymous": object?object.IsAnonymous:false,
-            "ImageUrl": object?(object.image?object.image[0]:null):null,
+            "ImageUrl": object?(object.image?object.image:null):null,
             "CreatedDate": object?new Date(object.date):null,
             "UserDetails": {
                 "UserId": this.props.profile?.Id,
