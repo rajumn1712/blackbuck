@@ -367,3 +367,4 @@ label{color: var(--textprimary);}
 .steps-content{ transition: all 5s linear 2s;}
 .custom-popup .custom-card.bg-white{overflow: scroll;height: 265px;}
 .interests-popup .ant-list-grid .ant-col > .ant-list-item{padding: 6px;margin: 12px;display: flex;}
+.hide-group{padding: 8px 12px;border-radius: 30px;background:var(--secondary);}

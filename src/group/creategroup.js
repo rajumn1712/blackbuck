@@ -272,7 +272,7 @@ class CreateGroup extends Component {
                                             </Col>
                                             <Col xs={12}>
                                                 <Form.Item label="Hide Group" className="custom-fields">
-                                                <Input /><div className="f-12">Private groups can't change to public to protect the privacy of group members. <span className="">Learn More</span></div>
+                                                <Input /><div className="f-12 hide-group">Private groups can't change to public to protect the privacy of group members. <span className="f-14">Learn More</span></div>
                                                 </Form.Item>
                                                 
                                             </Col>
