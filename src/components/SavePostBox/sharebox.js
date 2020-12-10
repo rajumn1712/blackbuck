@@ -173,6 +173,7 @@ class ShareBox extends Component {
         this.postObject.Tags = this.state.tags;
         this.postObject.ImageUrl = this.state.uploadSources.length == 0 ? [] : this.postObject.ImageUrl;
         this.postObject.Type = this.state.uploadSources.length == 0 ? "Text" : this.postObject.dupType;
+        const isEdit = this.state.isEdit ? true : false;
         if (this.postObject.IsAnonymous) {
             this.postObject.UserDetails = {
                 "UserId": "",
@@ -187,9 +188,10 @@ class ShareBox extends Component {
             this.props.handleCancel();
             this.setState({
                 visible: false,
+                isEdit: false
             }, () => {
-                this.props.dataRefreshed();
-                notify({ description: this.state.isEdit?"Posting completed successfully":"Post edited successfully", message: "Post" })
+                    this.props.dataRefreshed(isEdit ? 'Edit' : 'Add');
+                    notify({ description: isEdit ? "Post edited successfully" : "Posting completed successfully", message: "Post" })
             });
         } else {
             notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
@@ -398,7 +400,7 @@ class ShareBox extends Component {
         return errors;
     }
     render() {
-        const { tags, inputVisible, inputValue, visible, modal } = this.state;
+        const { tags, inputVisible, inputValue, visible, modal,isEdit } = this.state;
         const tagChild = tags?.map(this.forMap);
         const menu = (
             <Menu className="custom-dropdown more-opt">
@@ -432,7 +434,7 @@ class ShareBox extends Component {
                     })}
                 </ul>
                 <Modal className="share-popup"
-                    title={<div className="custom-modal-header"><h4>Create a Post</h4><a><span className="close-icon" onClick={this.handleCancel}></span></a></div>}
+                    title={<div className="custom-modal-header"><h4>{isEdit?'Edit':'Create'} a Post</h4><a><span className="close-icon" onClick={this.handleCancel}></span></a></div>}
                     className="custom-popup"
                     visible={visible}
                     onOk={this.handleOk}

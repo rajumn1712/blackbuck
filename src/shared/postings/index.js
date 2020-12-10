@@ -166,8 +166,9 @@ class Postings extends Component {
    handleCancel = () => {
       this.setState({ postEditData: {} })
    }
-   dataRefreshed = () => {
+   dataRefreshed = (type) => {
       this.loadPosts(true)
+      if(type==='Add')
       this.props.upadateProfile(this.props.profile, 'Increment');
    }
    renderPostImages = (imageObj, type) => {
@@ -410,7 +411,7 @@ class Postings extends Component {
    }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox dataRefreshed={() => this.dataRefreshed()} postEditData={this.state.postEditData} handleCancel={() => this.handleCancel()}/>}
+         {this.props.sharebox && <ShareBox dataRefreshed={(type) => this.dataRefreshed(type)} postEditData={this.state.postEditData} handleCancel={() => this.handleCancel()}/>}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
