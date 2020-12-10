@@ -329,10 +329,10 @@ class Intership extends Component {
                   <div className="intern-cardfooter">
                     {item.Certificate?.map((certificate, indx) => {
                       return (
-                        <p className="mb-0" key={indx}>
+                        <div className="mb-0 filename" key={indx}>
                           <span className="icons pdf mr-8" />
-                          {certificate.File}
-                        </p>
+                          <p>{certificate.File}</p>
+                        </div>
                       );
                     })}
                   </div>
