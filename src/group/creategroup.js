@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input, Radio,Checkbox } from 'antd';
-import Invite from '../shared/components/Invite';
-import Ads from '../components/ads';
-import Postings from '../shared/postings/index';
-import './groupstyle.css'
-import PadLock from '../styles/images/padlock.svg'
-import { Link } from 'react-router-dom';
-import GroupAbout from '../shared/components/groupabout';
+import './groupstyle.css';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import { profileDetail, joinGroup, saveProfileImage } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
-import { profileSuccess } from '../reducers/auth';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
@@ -219,7 +212,7 @@ class CreateGroup extends Component {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className="coverpage">
                             <img className="center-focus" src={groupData.CoverPic} alt="profilecover" />
-                            <span className="padlock"><img src={PadLock} /></span>
+                           
                             <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
                                 <Upload {...this.uploadProps}>
                                     <Tooltip title="Change Coverphoto">
@@ -247,10 +240,6 @@ class CreateGroup extends Component {
                                                         </Tooltip>
                                                     </Upload>
                                                 </ImgCrop></div>}
-                                                title={<a href="https://ant.design">{item.title}</a>}
-
-                                                description={<div><div className="f-12">{item.Type}</div><div className="f-12">Created on <span className="fw-400">{item.CreatedDate}</span></div></div>}
-
                                             />
                                         </List.Item>
                                     )}
@@ -259,35 +248,37 @@ class CreateGroup extends Component {
                                 <div className="my-16">
                                     <Form layout="vertical" >
                                         <Row gutter={24}>
-                                            <Col xs={12}>
+                                            <Col xs={24}>
                                                 <Form.Item label="Group Name" className="custom-fields">
                                                     <Input placeholder="Enter group name here" />
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12}>
-                                                <Form.Item label="Location" className="custom-fields">
-                                                    <Input placeholder="Add a Location to your group" />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={12}>
+                                            
+                                            <Col xs={24}>
                                                 <Form.Item label="Group Type" className="custom-fields">
                                                 <Input placeholder="Ex: IT GRoup" />
                                                 </Form.Item>
                                             </Col>
+                                            
                                             <Col xs={12}>
                                                 <Form.Item label="Choose Privacy" className="custom-fields">
                                                 <Input />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12}>
+                                                <Form.Item label="Invite Friends (optional)" className="custom-fields">
+                                                <Input />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={12}>
                                                 <Form.Item label="Hide Group" className="custom-fields">
-                                                <Input /><div className="f-12">Private groups can't change to public to protect the privacy of group members. <span>Learn More</span></div>
+                                                <Input /><div className="f-12">Private groups can't change to public to protect the privacy of group members. <span className="">Learn More</span></div>
                                                 </Form.Item>
                                                 
                                             </Col>
-                                            <Col xs={12}>
-                                                <Form.Item label="Invite Friends (optional)" className="custom-fields">
-                                                <Input />
+                                            <Col xs={24}>
+                                                <Form.Item label="Location" className="custom-fields">
+                                                    <Input placeholder="Add a Location to your group" />
                                                 </Form.Item>
                                             </Col>
                                             </Row>

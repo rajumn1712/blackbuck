@@ -45,6 +45,11 @@ class Education extends Component {
       Location: "",
       MarksGrade: "",
     },
+    certificates: {
+      Avatar: "",
+      File: "",
+      Size: "",
+    },
     isEdit: false,
     visible: false,
     fileUploading: false,
@@ -147,7 +152,7 @@ class Education extends Component {
   };
   uploadProps = {
     name: "file",
-    accept: ".jpg,.jpeg,.png",
+    accept: ".doc,.docx",
     multiple: false,
     action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
     showUploadList: false,
@@ -155,9 +160,15 @@ class Education extends Component {
   onChange = (info) => {
     this.setState({ ...this.state, fileUploading: true });
     const { status } = info.file;
-    const educationObj = { ...this.state.educationObj };
+    let { educationObj, certificates } = {
+      ...this.state,
+    };
     if (status === "done") {
-      educationObj["uploadsources"].push(info.file.response[0]);
+      certificates.Avatar = info.file.name.split(".")[1];
+      certificates.File = info.file.response[0];
+      certificates.Size = parseFloat(info.file.size * 0.0009765625).toFixed(3);
+      this.setState({ certificates: certificates });
+      educationObj.uploadsources.push(this.state.certificates);
       this.setState({
         educationObj: educationObj,
         fileUploading: false,
@@ -242,7 +253,7 @@ class Education extends Component {
                         item.File.map((file, index) => {
                           return (
                             <span className="overflow-text" key={index}>
-                              {file}
+                              {file.File}
                             </span>
                           );
                         })
@@ -282,7 +293,7 @@ class Education extends Component {
                 return (
                   <Form layout="vertical">
                     <Row gutter={16}>
-                      <Col xs={24} sm={12}>
+                      <Col xs={24} sm={24}>
                         <Form.Item
                           label="Education Type"
                           className="custom-fields custom-select"
@@ -309,7 +320,7 @@ class Education extends Component {
                           </span>
                         </Form.Item>
                       </Col>
-                      <Col xs={24} sm={12}>
+                      <Col xs={24} sm={24}>
                         <Form.Item
                           label="College/University Name"
                           className="custom-fields"
@@ -396,9 +407,12 @@ class Education extends Component {
                 renderItem={(item, key) => (
                   <List.Item className="upload-preview">
                     <List.Item.Meta
-                      title={item}
+                      avatar={[
+                        <span className={`doc-icons ${item.Avatar}`}></span>,
+                      ]}
+                      title={item.File}
                       description={
-                        <div className="file-size f-14">{item.size}</div>
+                        <div className="file-size f-14">{item.Size}</div>
                       }
                     />
                     <span
