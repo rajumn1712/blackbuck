@@ -1,52 +1,148 @@
-import React, { Component } from 'react';
-import { Card, Avatar, List } from 'antd'
-import { Link } from 'react-router-dom';
-// import { userManager } from '../../shared/authentication/auth';
-import { store } from '../../store'
-import User1 from '../../styles/images/avatar.png';
-import User2 from '../../styles/images/user.jpg';
-import User3 from '../../styles/images/user_image.jpg';
-import User4 from '../../styles/images/user-image.jpg';
-// import { userLogout } from '../../reducers/auth';
-import '../../index.css';
-import '../../App.css';
-import notify from '../../shared/components/notification';
+import React, { Component } from "react";
+import { Card, Avatar, List } from "antd";
+import { Link } from "react-router-dom";
+import { store } from "../../store";
+import "../../index.css";
+import "../../App.css";
+import notify from "../../shared/components/notification";
+import { fetchCourseSuggestions, joinGroup } from "../../shared/api/apiServer";
+import Loader from "../../common/loader";
+import { connect } from "react-redux";
 
 class Courses extends Component {
+  state = {
+    courses: [],
+    loading: false,
+  };
 
-    state={
-        courses:this.props.courses
+  componentDidMount() {
+    this.getCourseSuggestions();
+  }
+  async getCourseSuggestions() {
+    this.setState({ ...this.state, loading: true });
+    const getcourses = await fetchCourseSuggestions(
+      this.props?.profile?.Id,
+      10,
+      0
+    );
+    let { courses } = this.state;
+    courses = getcourses.data;
+    if (getcourses.ok) {
+      this.setState({ courses, loading: false });
     }
+  }
 
-    handleCourseJoin = ()=>{
-        notify({ placement: 'bottom', message: 'Courses', description: 'Course joined' });
+  handleCourseJoin = async (item) => {
+    const obj = {
+      UserId: this.props?.profile?.Id,
+      Firstname: this.props?.profile?.FirstName,
+      Lastname: this.props?.profile?.LastName,
+      Image: this.props?.profile?.ProfilePic,
+      Email: this.props?.profile?.Email,
+    };
+    if (item.type == "Private") {
+      obj.Type = "request";
     }
-
-    render() {
-        const { user } = store.getState().oidc;
-
-        const {courses} = this.state;
-        return (
-            <div className="custom-card">
-                <Card title="Courses" bordered={false} extra={!this.props.IsHideAction ? <Link to="">View all</Link> : null} >
-                    <List
-                        itemLayout="horizontal"
-                        dataSource={courses}
-                        renderItem={item => (
-                            <List.Item>
-                                <List.Item.Meta
-                                    avatar={<Avatar src={item.Logo} />}
-                                    title={<div className="d-flex align-items-center"><span className="overflow-text">{item.CourseName}</span></div>}
-                                    description={<div><span style={{color:'var(--textprimary)'}}>{item.Members}</span> Members | <span style={{color:'var(--textprimary)'}}>{item.Posts}</span> posts</div>}
-                                />
-                                {!this.props.IsHideAction ? <Link className="f-12 list-link" onClick={this.handleCourseJoin}>Join</Link> : null}
-                            </List.Item>
-                        )}
-                    />
-                </Card>
-            </div>
-
-        )
+    const joinResponse = await joinGroup(item.id, obj);
+    if (joinResponse.ok) {
+      notify({
+        message: "Courses join",
+        description:
+          item.type === "Private" ? "Request sent" : "Joined to course",
+      });
+      // if (item.type !== 'Private') {
+      //     this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
+      //     this.props.updateProfile(this.props.profile)
+      // }
+      this.updateCourse(item);
+    } else {
+      notify({
+        message: "Error",
+        description: "Something went wrong :)",
+        type: "error",
+      });
     }
+  };
+  updateCourse(item) {
+    let { data } = this.state;
+    if (item.type === "Private") {
+      for (const i in data) {
+        let _item = data[i];
+        if (_item.id === item.id) {
+          _item.requestJoin = _item.requestJoin ? null : "request";
+        }
+      }
+      this.setState({ ...this.state, data });
+    } else {
+      this.getCourseSuggestions();
+    }
+  }
+
+  render() {
+    const { user } = store.getState().oidc;
+
+    const { courses } = this.state;
+    return (
+      <div className="custom-card">
+        {this.state.loading && <Loader className="loader-top-middle" />}
+        <Card
+          title="Courses"
+          bordered={false}
+          extra={
+            !this.props.IsHideAction ? (
+              <Link to="/commingsoon">View all</Link>
+            ) : null
+          }
+        >
+          <List
+            itemLayout="horizontal"
+            dataSource={courses}
+            renderItem={(item) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.image} />}
+                  title={
+                    <div className="d-flex align-items-center">
+                      <span className="overflow-text">{item.name}</span>
+                    </div>
+                  }
+                  description={
+                    <div>
+                      <span style={{ color: "var(--textprimary)" }}>
+                        {item.members}
+                      </span>{" "}
+                      Members |{" "}
+                      <span style={{ color: "var(--textprimary)" }}>
+                        {item.posts}
+                      </span>{" "}
+                      posts
+                    </div>
+                  }
+                />
+                {!this.props.IsHideAction && item.requestJoin === "request" ? (
+                  <Link
+                    className="ml-8 f-12 list-link ml-16"
+                    onClick={() => this.cancelGroupRequest(item)}
+                  >
+                    Cancel request
+                  </Link>
+                ) : (
+                  <Link
+                    className="ml-8 f-12 list-link ml-16"
+                    onClick={() => this.handleCourseJoin(item)}
+                  >
+                    Join
+                  </Link>
+                )}
+              </List.Item>
+            )}
+          />
+        </Card>
+      </div>
+    );
+  }
 }
-export default Courses;
+const mapStateToProps = ({ oidc }) => {
+  return { profile: oidc.profile };
+};
+export default connect(mapStateToProps)(Courses);
