@@ -6,7 +6,8 @@ import "../../index.css";
 import "../../App.css";
 import CommonModal from "./CommonModal";
 import notify from "../../shared/components/notification";
-import { fetchInterestsLu } from '../../shared/api/apiServer'
+import { fetchInterestsLu, saveInterest, deleteInterest } from '../../shared/api/apiServer';
+import { connect } from 'react-redux';
 
 const { Search } = Input;
 
@@ -15,17 +16,21 @@ class Interests extends Component {
     interests: this.props.interests,
     interestsLu: [],
     visible: false,
-    search: null,
+    search: '',
     page: 1,
     pageSize: 10,
     loadMore: true,
     loading: true,
-    count:0
+    count: 0,
+    saveObject: {
+      UserId: this.props?.profile?.Id,
+      Interests: []
+    }
   };
   componentDidMount() {
-    this.fetchInterestsLu(10,0);
+    this.fetchInterestsLu(10, 0);
   }
-  fetchInterestsLu = (take,skip) => {
+  fetchInterestsLu = (take, skip) => {
     this.setState({ ...this.state, loading: true });
     fetchInterestsLu(take, skip)
       .then(res => {
@@ -43,10 +48,17 @@ class Interests extends Component {
       visible: true,
     });
   };
-  handleOk = (e) => {
-    this.setState({
-      visible: false,
-    });
+  handleOk = async (e) => {
+    const response = await saveInterest(this.state.saveObject);
+    if (response.ok) {
+      this.setState({
+        visible: false,
+      }, () => {
+        notify({ description: "Interests added successfully", message: "Interests" })
+      });
+    } else {
+      notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
+    }
   };
   handleCancel = (e) => {
     this.setState({
@@ -57,29 +69,56 @@ class Interests extends Component {
     let keyword = e.target.value;
     this.setState({ search: keyword });
   };
-  handleInterest = () => {
-    notify({
-      placement: "bottom",
-      message: "Interest",
-      description: "Request sent successfully.",
+  handleInterest = (item) => {
+    let { interestsLu, saveObject } = this.state;
+    interestsLu.forEach(interest => {
+      if (item.InterestId == interest.InterestId) {
+        interest.IsInterest = true;
+        saveObject.Interests.push(item);
+      }
     });
-  };
-  handleRemove = (e, index) => {
-    const indx = [...this.state.interests];
-    indx.splice(index, 1);
-    this.setState({ interests: indx });
-  };
 
+    this.setState({ ...this.state, interestsLu: interestsLu, saveObject: saveObject })
+
+  };
+  handleRemove = (index, item) => {
+    let { interestsLu, saveObject } = this.state;
+    interestsLu.forEach(interest => {
+      if (item.InterestId == interest.InterestId) {
+        interest.IsInterest = false;
+        saveObject.Interests.splice(saveObject.Interests.indexOf(item), 1);
+      }
+    });
+
+    this.setState({ ...this.state, interestsLu: interestsLu })
+  };
+  deleteInterest = async (item) => {
+    const response = await deleteInterest(this.state.saveObject);
+    if (response.ok) {
+      let { interests } = this.state;
+      interests = interests.filter(obj => {
+        return obj.InterestId !== item.InterestId;
+      })
+      this.setState({
+        visible: false,
+        interests: interests
+      }, () => {
+        notify({ description: "Interest Deleted successfully", message: "Interests" })
+      });
+    } else {
+      notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
+    }
+  };
   render() {
     const { user } = store.getState().oidc;
-    const { interests, visible, interestsLu,count } = this.state;
+    const { interests, visible, interestsLu } = this.state;
 
     const interesetsList = interestsLu
       .filter((item) => {
         if (this.state.search == null) {
           return item;
         } else if (
-          item.title.toLowerCase().includes(this.state.search.toLowerCase())
+          item.Name.toLowerCase().includes(this.state.search.toLowerCase())
         ) {
           return item;
         }
@@ -94,25 +133,13 @@ class Interests extends Component {
                   <span className="overflow-text">{item.Name}</span>
                 </div>
               }
-              description={
-                <div>
-                  <span style={{ color: "var(--textprimary)" }}>
-                    {item.members}
-                  </span>{" "}
-                  Members |{" "}
-                  <span style={{ color: "var(--textprimary)" }}>
-                    {item.post}
-                  </span>{" "}
-                  posts
-                </div>
-              }
             />
-            <Link className="f-12 list-link" onClick={this.handleInterest}>
-              Interest
+            <Link className="f-12 list-link" onClick={() => this.handleInterest(item)}>
+              {item.IsInterest ? 'Intersted' : 'Interest'}
             </Link>
             <Link
               className="f-12 list-link ml-16 text-red"
-              onClick={(e) => this.handleRemove(e, index)}
+              onClick={(e) => this.handleRemove(index, item)}
             >
               Remove
             </Link>
@@ -154,7 +181,7 @@ class Interests extends Component {
                       Mutual Friends
                     </div>
                   }
-                /><span className="close-icon"></span>
+                /><span className="close-icon" onClick={() => this.deleteInterest(item)}></span>
               </List.Item>
             )}
           />
@@ -165,22 +192,25 @@ class Interests extends Component {
           title="Interests"
           cancel={this.handleCancel}
           saved={this.handleOk}
-          onScroll={this.handleScroll}
         >
-          <div className="modal-search py-16">
-            <Search
-              className="header-searchbar"
-              placeholder="Search Groups / Courses"
-              onChange={(e) => this.handleSearch(e)}
-            />
+          <div>
+            <div className="modal-search py-16">
+              <Search
+                className="header-searchbar"
+                placeholder="Search Interests"
+                onChange={(e) => this.handleSearch(e)}
+              />
+            </div>
+            <div className="custom-card p-16 bg-white">
+              <List itemLayout="horizontal">{interesetsList}</List>
+            </div>
           </div>
-          <div className="custom-card p-16 bg-white">
-            <List itemLayout="horizontal">{interesetsList}</List>
-          </div>
-          {interesetsList.length !== count && <a className="more-comments mt-16" onClick={() => this.fetchInterestsLu(5, interesetsList.length)}>View more comments</a>}
         </CommonModal>
       </div>
     );
   }
 }
-export default Interests;
+const mapStateToProps = ({ oidc }) => {
+  return { profile: oidc.profile }
+}
+export default connect(mapStateToProps)(Interests);

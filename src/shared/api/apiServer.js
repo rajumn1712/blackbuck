@@ -77,6 +77,12 @@ const fetchTags = (take, skip) => {
 const fetchInterestsLu = (take, skip) => {
   return apiClient.get(PROFILE_API + `getAllInterests/${take}/${skip}`);
 };
+const saveInterest = (object) => {
+  return apiClient.post(PROFILE_API + "saveInterests", object);
+}
+const deleteInterest = (user_id, interest_id) => {
+  return apiClient.post(PROFILE_API + `deleteInterest/${interest_id}/${user_id}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -97,5 +103,7 @@ export {
   cancelGroupRequest,
   fetchUserGroups,
   fetchTags,
-  fetchInterestsLu
+  fetchInterestsLu,
+  saveInterest,
+  deleteInterest
 };
