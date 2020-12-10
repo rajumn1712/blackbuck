@@ -184,11 +184,11 @@ const OnBoard = () => {
         <>
 
             <Card className="mb-6 custom-card onboard-process" bordered={true} >
-                <div className="steps-content">{steps[current].content}</div>
+                <div className="steps-content">
+                    {steps[current].content}</div>
                 <div className="steps-action">
-                    <Row>
+                    <Row gutter={0}>
                         <Col xs={24} md={8}>
-
                         </Col>
                         <Col xs={24} md={16}>
                             {current > 0 && (
