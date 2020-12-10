@@ -70,10 +70,10 @@
     padding-right: 0 !important;
 }
 
-.user-statistic .group-banner .ant-card-meta-detail {
+.user-statistic .group-banner .ant-card-meta-detail, .text-center{
     text-align: center;
 }
-
+.group-leftext{display: block !important;text-align: center;margin: 10px;}
 .user-statistic .group-banner .ant-card-meta-title {
     font-size: 22px;
     margin-bottom: 0;

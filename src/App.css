@@ -646,7 +646,7 @@
 .custom-dropdown li span {
   margin-right: 16px;
 }
-.custom-dropdown li a {
+.custom-dropdown li a, .d-block{
   display: block;
 }
 .ant-checkbox-checked .ant-checkbox-inner {
