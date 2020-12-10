@@ -50,6 +50,9 @@ const saveAboutMe = (obj) => {
 const saveInternships = (obj) => {
   return apiClient.post(PROFILE_API + `saveInternships`, obj);
 };
+const deleteinternship = (id, user_id) => {
+  return apiClient.get(PROFILE_API + `deleteInternship/${id}/${user_id}`);
+};
 const saveVideoAsProfile = (obj) => {
   return apiClient.post(PROFILE_API + `saveVideoAsProfile`, obj);
 };
@@ -77,12 +80,19 @@ const fetchTags = (take, skip) => {
 const fetchInterestsLu = (take, skip) => {
   return apiClient.get(PROFILE_API + `getAllInterests/${take}/${skip}`);
 };
+const fetchCourseSuggestions = (user_id, take, skip) => {
+  return apiClient.get(
+    PROFILE_API + `userCourseSuggestions/${user_id}/${take}/${skip}`
+  );
+};
 const saveInterest = (object) => {
   return apiClient.post(PROFILE_API + "saveInterests", object);
-}
+};
 const deleteInterest = (user_id, interest_id) => {
-  return apiClient.get(PROFILE_API + `deleteInterest/${interest_id}/${user_id}`);
-}
+  return apiClient.get(
+    PROFILE_API + `deleteInterest/${interest_id}/${user_id}`
+  );
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -95,6 +105,7 @@ export {
   saveProfileImage,
   saveAboutMe,
   saveInternships,
+  deleteinternship,
   saveVideoAsProfile,
   saveHobbies,
   saveEducation,
@@ -104,6 +115,7 @@ export {
   fetchUserGroups,
   fetchTags,
   fetchInterestsLu,
+  fetchCourseSuggestions,
   saveInterest,
-  deleteInterest
+  deleteInterest,
 };
