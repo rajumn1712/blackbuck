@@ -1081,18 +1081,10 @@
   color: var(--textprimary);
 }
 
-.intern-cards .intern-cardfooter
-
-.intern-cards .card-options-left {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-}
-.intern-cards .card-options-right {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-}
+.intern-cards .intern-cardfooter .filename{display: flex;text-overflow: ellipsis;height: 26px;margin-bottom: 8px;}
+.intern-cards .intern-cardfooter .filename p{margin-bottom: 0;overflow: hidden;text-overflow: ellipsis;}
+.intern-cards .intern-cardfooter .filename .icons{flex-shrink: 0;}
+.intern-cards .card-options{position: absolute;top: 8px;display: flex;justify-content: space-between;width: 100%;padding-left: 8px;padding-right: 6px;}
 .intern-cards .intern-cardbody .description .afterline:after {
   height: 16px !important;
   top: 3px !important;

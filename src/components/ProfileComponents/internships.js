@@ -305,19 +305,21 @@ class Intership extends Component {
             renderItem={(item) => (
               <List.Item className="mb-12">
                 <div className="intern-cards">
-                  <span className="card-options-left">
-                    <span className="left-menu intenship" />
-                  </span>
-                  <span className="card-options-right">
-                    <SideAction
-                      horclass="icons more"
-                      clickedEvent={(event, name) =>
-                        this.handleEvent(event, name, item)
-                      }
-                      actionsList={ownerActions}
-                    />
-                    {/* <span className="icons more"/> */}
-                  </span>
+                  <div className="card-options">
+                    <span className="card-options-left">
+                      <span className="left-menu intenship" />
+                    </span>
+                    <span className="card-options-right">
+                      <SideAction
+                        horclass="icons more"
+                        clickedEvent={(event, name) =>
+                          this.handleEvent(event, name, item)
+                        }
+                        actionsList={ownerActions}
+                      />
+                      {/* <span className="icons more"/> */}
+                    </span>
+                  </div>
                   <div className="intern-cardbody">
                     <div className="internlogo">
                       <img src={item.CompanyLogo} />
