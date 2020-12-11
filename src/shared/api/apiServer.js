@@ -97,13 +97,13 @@ const getUserCourses = (user_id, take, skip) => {
   );
 };
 const getColleges = () => {
-  return apiClient.get("getAllColleges/1000/0");
+  return apiClient.get(FRIENDS_API + "getAllColleges/1000/0");
 }
 const getCollegeBranches = (college_id) => {
-  return apiClient.get(`getBranchesByCollegeId/${college_id}/1000/0`);
+  return apiClient.get(FRIENDS_API + `getBranchesByCollegeId/${college_id}/1000/0`);
 }
 const getBranchSubjects = (college_id, branch_id) => {
-  return apiClient.get(`getSubjectsByBranchId/${college_id}/${branch_id}/1000/0`);
+  return apiClient.get(FRIENDS_API + `getSubjectsByBranchId/${college_id}/${branch_id}/1000/0`);
 }
 export {
   getFriendSuggestions,
