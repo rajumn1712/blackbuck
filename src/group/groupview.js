@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Input, Typography, Checkbox,Descriptions,Divider } from 'antd';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Input, Typography, Checkbox, Descriptions, Divider, Menu, Dropdown } from 'antd';
 import Invite from '../shared/components/Invite';
 import Ads from '../components/ads';
 import Postings from '../shared/postings/index';
@@ -146,13 +146,47 @@ class Group extends Component {
     }
 
     render() {
+        const menu = (
+            <Menu className="dropdown-align">
+                <Menu.Item key="0">
+                    <a><span className="post-icons groupshare-icon"></span> Share in a post</a>
+                </Menu.Item>
+                <Menu.Item key="1">
+                    <a><span className="post-icons groupshare-icon"></span> Send in a message</a>
+                </Menu.Item>
+                <Menu.Item key="2">
+                    <a><span className="post-icons groupshare-icon"></span> Copy link</a>
+                </Menu.Item>
+            </Menu>
+        );
+        const menu1 = (
+            <Menu className="dropdown-align">
+                <Menu.Item key="0">
+                    <a><span className="post-icons groupshare-icon"></span> Update your settings</a>
+                </Menu.Item>
+                <Menu.Item key="1">
+                    <a><span className="post-icons groupshare-icon"></span> Leave this group</a>
+                </Menu.Item>
+                <Menu.Item key="2">
+                    <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
+                </Menu.Item>
+            </Menu>
+        );
         function onChange(e) {
             console.log(`checked = ${e.target.checked}`);
         }
-        const operations = <div className="mb-8 mr-12">
-            <span className="post-icons groupshare-icon mt-8"></span>
-            <span className="post-icons h-more-icon mx-8"></span>
-            
+        const operations = <div className="mb-8 mr-12 share-option">
+            <button type="primary"  className=""><Dropdown overlay={menu} trigger={['click']}>
+                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                    <span className="post-icons groupshare-icon m-0"></span>
+                </a>
+            </Dropdown></button>
+            <button className=""><Dropdown overlay={menu1} trigger={['click']}>
+                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                    <span className="post-icons h-more-icon m-0"></span>
+                </a>
+            </Dropdown></button>
+
         </div>;
         const { groupData, disabled, visible } = this.state;
         return (
@@ -261,7 +295,7 @@ class Group extends Component {
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                       <Media />
+                                        <Media />
                                     </Col>
                                 </Row>
                             </TabPane>

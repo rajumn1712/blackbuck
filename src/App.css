@@ -1545,5 +1545,7 @@ textarea {
 .interests-popup .ant-list-grid .ant-col > .ant-list-item{padding: 6px;margin: 12px;display: flex;}
 .hide-group{padding: 8px 12px;border-radius: 30px;background:var(--secondary);}
 /* .ant-list-item-meta-title{margin-top: 10px;} */
-.post-icons.groupshare-icon{background-position: -557px -256px;}
+.post-icons.groupshare-icon{background-position: -557px -255px;}
 .post-icons.groupshare-icon:hover{background-position: -557px -285px;}
+.share-option button, .share-option button:focus{border: none;background: transparent;outline: none;}
+.share-option button:hover{background: #ccc;border-radius: 50%;width: 35px;height: 35px;}

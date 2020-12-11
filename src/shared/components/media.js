@@ -14,16 +14,14 @@ class Media extends Component {
     render() {
         return (
             <div className="custom-card">
-                <Card title="Media" bordered={false} extra={<div><a className="f-14 px-8" href="#">Create Album</a><a className="pl-8 f-14" href="#">Add Photos/Video</a></div>}>
+                <Card title="Media" bordered={false} extra={<div><a className="f-14 px-16" href="#">Create Album</a><a className="pl-8 f-14" href="#">Add Photos/Video</a></div>}>
                 <Tabs defaultActiveKey="1" className="profile-tabs">
                             <TabPane tab="Photos" key="1">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                       
+                                    
                                     </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                       
-                                    </Col>
+                                    
                                 </Row>
                             </TabPane>
                             <TabPane tab="Videos" key="2">
@@ -31,9 +29,7 @@ class Media extends Component {
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                        
                                     </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                       
-                                    </Col>
+                                   
                                 </Row>
                             </TabPane>
                             <TabPane tab="Albums" key="3">
@@ -41,9 +37,7 @@ class Media extends Component {
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         
                                     </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                     
-                                    </Col>
+                                    
                                 </Row>
                             </TabPane>
 

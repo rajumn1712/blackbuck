@@ -139,9 +139,10 @@
     right: -25px;
     left: auto;
 }
-
+.profile-tabs .ant-tabs-tab:first-child {margin-left: 20px !important;}
+.dropdown-align .ant-dropdown-menu-item{padding: 8px 16px;}
 .profile-tabs .ant-tabs-tab {
-    margin: 0 20px !important;
+    margin: 0 10px !important;
     padding-left: 10px;
     padding-right: 10px;
 }
