@@ -284,7 +284,7 @@
 .left-menu.friends-icon {
   background-position: -35px -200px;
 }
-.left-menu.post-icon {
+.left-menu.post-icon, .post-icons.post-icon {
   background-position: -65px -203px;
 }
 .left-menu.camera-icon {
@@ -344,6 +344,10 @@
 .profile-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background: var(--bghover) !important;
 }
+.post-icons.sendmessage-icon{background-position: -265px -200px;}
+.post-icons.Leavegroup-icon{background-position: -586px -255px;}
+.post-icons.groupshare-icon{background-position: -557px -255px;}
+/* .post-icons.groupshare-icon:hover{background-position: -557px -285px;} */
 /* .profile-menu li:hover a span{color: var(--primary);} */
 /* .profile-menu li:hover a .left-menu.profile-icon,.profile-menu .ant-menu-item-selected a .left-menu.profile-icon{background-position: -5px -226px;}
 .profile-menu li:hover a .left-menu.friends-icon,.profile-menu .ant-menu-item-selected a .left-menu.friends-icon{background-position: -35px -226px;}
@@ -887,6 +891,9 @@
 .icons.add {
   background-position: -505px -198px;
 }
+.icons.add-white {
+  background-position: -528px -224px;
+}
 .icons.add:hover {
   background-position: -505px -224px;
 }
@@ -1391,8 +1398,8 @@ textarea {
   width: 80%;
 }
 .ant-btn.ant-btn-primary {
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 .antd-img-crop-modal .ant-modal-footer .ant-btn:first-child {
   display: none;
@@ -1545,7 +1552,5 @@ textarea {
 .interests-popup .ant-list-grid .ant-col > .ant-list-item{padding: 6px;margin: 12px;display: flex;}
 .hide-group{padding: 8px 12px;border-radius: 30px;background:var(--secondary);}
 /* .ant-list-item-meta-title{margin-top: 10px;} */
-.post-icons.groupshare-icon{background-position: -557px -255px;}
-.post-icons.groupshare-icon:hover{background-position: -557px -285px;}
 .share-option button, .share-option button:focus{border: none;background: transparent;outline: none;}
 .share-option button:hover{background: #ccc;border-radius: 50%;width: 35px;height: 35px;}

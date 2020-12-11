@@ -394,7 +394,9 @@
 .icons.settings-icon {
     background-position: -32px -252px;
 }
-
+.post-icons.settings-icon {
+    background-position: -36px -254px;
+}
 .icons.globe-icon {
     background-position: -62px -252px;
 }

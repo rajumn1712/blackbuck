@@ -149,23 +149,23 @@ class Group extends Component {
         const menu = (
             <Menu className="dropdown-align">
                 <Menu.Item key="0">
-                    <a><span className="post-icons groupshare-icon"></span> Share in a post</a>
+                    <a><span className="post-icons post-icon mr-4"></span> Share in a post</a>
                 </Menu.Item>
                 <Menu.Item key="1">
-                    <a><span className="post-icons groupshare-icon"></span> Send in a message</a>
+                    <a><span className="post-icons sendmessage-icon"></span> Send in a message</a>
                 </Menu.Item>
                 <Menu.Item key="2">
-                    <a><span className="post-icons groupshare-icon"></span> Copy link</a>
+                    <a><span className="post-icons sharenow-icon"></span> Copy link</a>
                 </Menu.Item>
             </Menu>
         );
         const menu1 = (
             <Menu className="dropdown-align">
                 <Menu.Item key="0">
-                    <a><span className="post-icons groupshare-icon"></span> Update your settings</a>
+                    <a><span className="post-icons settings-icon"></span> Update your settings</a>
                 </Menu.Item>
                 <Menu.Item key="1">
-                    <a><span className="post-icons groupshare-icon"></span> Leave this group</a>
+                    <a><span className="post-icons Leavegroup-icon"></span> Leave this group</a>
                 </Menu.Item>
                 <Menu.Item key="2">
                     <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
@@ -264,7 +264,7 @@ class Group extends Component {
                             <div className="right-statistic mt-8">
                                 <span className="text-center mt-8 mr-16">
                                     <span className="f-20 fw-400">2.5K</span> Members</span>
-                                <Button type="primary" onClick={this.showModal}>Invite</Button>
+                                <Button type="primary" onClick={this.showModal}><span className="icons add-white"></span> Invite</Button>
                             </div>
                         </div>
                         {/* <div className=""><Divider className="m-0" /></div> */}
