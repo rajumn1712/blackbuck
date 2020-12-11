@@ -7,17 +7,15 @@ const TAGS_API = "service/api/posts/";
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     FRIENDS_API +
-      `friendsSuggestions/${userid}/${pageSize || 10}/${
-        page * pageSize - pageSize
-      }`
+    `friendsSuggestions/${userid}/${pageSize || 10}/${page * pageSize - pageSize
+    }`
   );
 };
 const fetchGroupSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     GROUPS_API +
-      `userGroupSuggestions/${userid}/${pageSize || 10}/${
-        page * pageSize - pageSize
-      }`
+    `userGroupSuggestions/${userid}/${pageSize || 10}/${page * pageSize - pageSize
+    }`
   );
 };
 const fetchProfile = (email) => {
@@ -98,6 +96,15 @@ const getUserCourses = (user_id, take, skip) => {
     PROFILE_API + `getUserCourses/${user_id}/${take}/${skip}`
   );
 };
+const getColleges = () => {
+  return apiClient.get(FRIENDS_API + "getAllColleges/1000/0");
+}
+const getCollegeBranches = (college_id) => {
+  return apiClient.get(FRIENDS_API + `getBranchesByCollegeId/${college_id}/1000/0`);
+}
+const getBranchSubjects = (college_id, branch_id) => {
+  return apiClient.get(FRIENDS_API + `getSubjectsByBranchId/${college_id}/${branch_id}/1000/0`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -124,4 +131,7 @@ export {
   saveInterest,
   deleteInterest,
   getUserCourses,
+  getColleges,
+  getCollegeBranches,
+  getBranchSubjects
 };
