@@ -332,6 +332,7 @@
   font-weight: 500;
   color: var(--textprimary);
 }
+.media-tabs .ant-tabs-tab{font-size: 14px !important;}
 .profile-menu .ant-menu-item a {
   width: 100%;
   height: 100%;
