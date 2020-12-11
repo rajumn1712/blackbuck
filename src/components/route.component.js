@@ -13,9 +13,23 @@ import ProfileView from '../profile/profileView';
 import GroupView from '../group/groupview';
 import CreateGroup from '../group/creategroup';
 // import CreateGroup from './creategroup';
+import OnBoard from '../components/onboard'
+import { Col, Row } from 'antd';
+
+
+const onBoard = () => {
+    return <div className="main">
+        <Row gutter={16} justify="center">
+            <Col xs={24} md={20} >
+                <OnBoard />
+            </Col>
+        </Row>
+    </div>
+}
 const Router = () => {
     return (
         <Switch>
+            <ProtectedRoute path="/student_onboard" component={onBoard} />
             <ProtectedRoute path="/friends" component={About} />
             <Route path="/contact" component={Contact} />
             <Route path="/callback" component={Callback} />

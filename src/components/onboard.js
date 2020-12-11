@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Steps, Button, message, Card, List, Avatar, Row, Col, Select, Input, Checkbox, } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Steps, Button, message, Card, List, Avatar, Row, Col, Select, Input, Checkbox, Form } from 'antd';
 import { Link } from 'react-router-dom';
 import User1 from '../styles/images/avatar.png';
 import User2 from '../styles/images/user.jpg';
@@ -8,7 +8,6 @@ import User4 from '../styles/images/user-image.jpg';
 import Logo from '../styles/images/blackbugs-logo.png';
 import Onboard1 from '../styles/images/onboard1.svg';
 import Onboard2 from '../styles/images/onboard2.svg';
-import Form from 'antd/lib/form/Form';
 import { ErrorMessage, Field, Formik } from 'formik';
 import GroupsPage from '../shared/components/GroupsPage';
 import Computer from '../styles/images/computer.svg';
@@ -64,20 +63,23 @@ const steps = [
                         </h2>
                     </div>
                     <div className="intro2">
-                        <Form layout="vertical">
+                        <Form layout="vertical" initialValues={{ collegeName: "", course: "", branch: "" }} onFinishFailed={(err) => console.log(err)}>
                             <Row gutter={16} className="mt-16">
 
                                 <Col xs={24} className="custom-fields">
-                                    <label >College/University Name</label>
-                                    <Input />
+                                    <Form.Item label="College/University Name" name="collegeName" rules={[{ required: true, message: "College / University name required" }]}>
+                                        <Input />
+                                    </Form.Item>
                                 </Col>
                                 <Col xs={12} className="custom-fields">
-                                    <label >Course Name</label>
-                                    <Input />
+                                    <Form.Item label="Course name" name="course" rules={[{ required: true, message: "Course name required" }]}>
+                                        <Input />
+                                    </Form.Item>
                                 </Col>
                                 <Col xs={12} className="custom-fields">
-                                    <label >Branch Name</label>
-                                    <Input />
+                                    <Form.Item label="Branch name" name="branch" rules={[{ required: true, message: "Branch name required" }]}>
+                                        <Input />
+                                    </Form.Item>
                                 </Col>
                             </Row>
                         </Form>
@@ -179,7 +181,9 @@ const OnBoard = () => {
     const prev = () => {
         setCurrent(current - 1);
     };
+    useEffect(() => {
 
+    }, [])
     return (
         <>
 
@@ -188,7 +192,7 @@ const OnBoard = () => {
                     {steps[current].content}</div>
                 <Row gutter={8}>
                     <Col xs={24} md={8}>
-                        <div style={{height:'100%',backgroundColor:'var(--grey)'}}></div>
+                        <div style={{ height: '100%', backgroundColor: 'var(--grey)' }}></div>
                     </Col>
                     <Col xs={24} md={16}>
                         <div className="steps-action">
