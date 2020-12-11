@@ -6,6 +6,7 @@ import Postings from '../shared/postings/index';
 import './groupstyle.css'
 import PadLock from '../styles/images/padlock.svg'
 import GroupAbout from '../shared/components/groupabout';
+import Media from '../shared/components/media';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import { profileDetail, joinGroup, saveProfileImage } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
@@ -254,13 +255,13 @@ class Group extends Component {
                                     </Col>
                                 </Row>
                             </TabPane>
-                            <TabPane tab="More" key="2">
+                            <TabPane tab="Media" key="2">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                        <GroupAbout />
+                                       <Media />
                                     </Col>
                                 </Row>
                             </TabPane>
