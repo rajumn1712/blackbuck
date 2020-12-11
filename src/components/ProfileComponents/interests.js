@@ -215,7 +215,7 @@ class Interests extends Component {
           destroyOnClose
         >
           <div>
-            <div className="modal-search py-16">
+            <div className="modal-search p-16">
               <Search
                 className="header-searchbar"
                 placeholder="Search Interests"

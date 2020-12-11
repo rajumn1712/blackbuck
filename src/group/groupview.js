@@ -150,7 +150,7 @@ class Group extends Component {
             console.log(`checked = ${e.target.checked}`);
         }
         const operations = <div className="mb-8 mr-12">
-            <span className="post-icons share-icon mt-8"></span>
+            <span className="post-icons groupshare-icon mt-8"></span>
             <span className="post-icons h-more-icon mx-8"></span>
             
         </div>;
