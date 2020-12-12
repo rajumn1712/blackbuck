@@ -974,6 +974,10 @@
   height: 60px !important;
   border-radius: 12px;
 }
+.ant-avatar.select-image{
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;}
 .list-remove,
 .list-remove:hover {
   color: #ff0000 !important;
