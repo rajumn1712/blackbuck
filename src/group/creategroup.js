@@ -1,80 +1,44 @@
-import React, { Component } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input, Radio,Checkbox } from 'antd';
+import React, { Component ,createRef} from 'react';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input, Radio, Checkbox } from 'antd';
 import './groupstyle.css';
 import CommonModal from '../components/ProfileComponents/CommonModal';
-import { profileDetail, joinGroup, saveProfileImage } from '../shared/api/apiServer';
+import { profileDetail, joinGroup, saveProfileImage, saveGroup } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
+import { ErrorMessage, Field, Formik } from "formik";
+import { hasChanged, uuidv4 } from "../utils";
 const { Meta } = Card;
 
 const { TabPane } = Tabs;
 const data = [
     { title: 'Programmers' }
 ];
-
-const navigations =
-    [
-        {
-            "Heading": "About Me",
-            "Url": "/aboutme",
-            "CssSprite": "left-menu profile-icon",
-            "IsActive": false
-        },
-        {
-            "Heading": "Interests",
-            "Url": "/interests",
-            "CssSprite": "left-menu interest",
-            "IsActive": false
-        },
-        {
-            "Heading": "Hobbies",
-            "Url": "/hobbies",
-            "CssSprite": "left-menu hobbies",
-            "IsActive": false
-        },
-        {
-            "Heading": "Internships",
-            "Url": "/internships",
-            "CssSprite": "left-menu intenship",
-            "IsActive": false
-        },
-        {
-            "Heading": "Video as Profile",
-            "Url": "/videoprofile",
-            "CssSprite": "left-menu play",
-            "IsActive": false
-        },
-        {
-            "Heading": "Education",
-            "Url": "/education",
-            "CssSprite": "left-menu education",
-            "IsActive": false
-        },
-        {
-            "Heading": "Courses",
-            "Url": "/courses",
-            "CssSprite": "left-menu courses",
-            "IsActive": false
-        },
-        {
-            "Heading": "Groups",
-            "Url": "/profilegroups",
-            "CssSprite": "left-menu group-icon",
-            "IsActive": false
-        }
-    ]
 const options = [
     { label: 'Allow members to invite their connections', value: 'Allow members to invite their connections' },
     { label: 'Require new posts to be reviewed by admins', value: 'Require new posts to be reviewed by admins' },
 ];
 function onChange(checkedValues) {
     console.log('checked = ', checkedValues);
-  }
+}
 const { TextArea } = Input;
+const groupObject = {
+    GroupName: "",
+    GroupType: "",
+    ProfilePic: "",
+    CoverPic: "",
+    Privacy: "",
+    Location: "",
+    Description: "",
+    Hide: "",
+    InvitationsList: ["Ramu", "Somu"],
+    GroupId: "",
+    UserId: "",
+    Admins: []
+}
 class CreateGroup extends Component {
-
+    formRef = createRef();
 
     imageObject = {};
     state = {
@@ -84,15 +48,40 @@ class CreateGroup extends Component {
                     title: "Programmers",
                     Type: "Private Group",
                     CreatedDate: '2020-10-11',
-                    
+
                 }
             ],
             isProfilePic: false,
         },
         disabled: false,
-        visible: false
+        visible: false,
+        groupObject: groupObject,
+        initialValues: {
+            GroupName: groupObject.GroupName,
+            GroupType: groupObject.GroupType,
+            Privacy: groupObject.Privacy,
+            Location: groupObject.Location,
+            Description: groupObject.Description,
+            Hide: groupObject.Hide,
+            InvitationsList: groupObject.InvitationsList,
+        },
     };
-
+    createObject = (values) => {
+        return {
+            GroupName: values.GroupName,
+            GroupType: values.GroupType,
+            ProfilePic: values.ProfilePic,
+            CoverPic: values.CoverPic,
+            Privacy: values.Privacy,
+            Location: values.Location,
+            Description: values.Description,
+            Hide: values.Hide,
+            InvitationsList: values.InvitationsList,
+            GroupId: values.GroupId,
+            UserId: groupObject.UserId,
+            Admins: values.Admins,
+        };
+    };
     handleDisabledChange = disabled => {
         this.setState({ disabled });
     };
@@ -192,6 +181,37 @@ class CreateGroup extends Component {
             visible: false,
         });
     }
+
+    handleSave = (e) => {
+        debugger;
+        this.formRef.current.handleSubmit();
+        if (!hasChanged(this.formRef.current.values)) {
+            const saveObj = this.createObject(this.formRef.current.values);
+            saveGroup(saveObj).then((res) => {
+                this.setState(
+                    {
+                        visible: false,
+                    },
+                    () => {
+                        notify({
+                            description: "Group saved successfully",
+                            message: "Group",
+                        });
+                    }
+                );
+            });
+        }
+    };
+    handleValidate = (values) => {
+        let errors = {};
+        for (var key in values) {
+            if (!values[key]) {
+                errors[key] = "is required";
+            }
+        }
+
+        return errors;
+    };
     handleDomNavigate = (navigate) => {
         navigate.current.scrollIntoView({
             behavior: "smooth",
@@ -199,143 +219,193 @@ class CreateGroup extends Component {
         });
     }
     render() {
-        const { navigations, disabled, visible, groupData } = this.state;
+        const { disabled, visible, groupData, initialValues } = this.state;
         const radioStyle = {
             display: 'block',
             height: '30px',
             lineHeight: '30px',
         };
         const { value } = this.state;
-        return (
-            groupData ? <div className="main">
-                <Row gutter={24}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className="coverpage">
-                            <img className="center-focus" src={groupData.CoverPic} alt="profilecover" />
-                           
-                            <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
-                                <Upload {...this.uploadProps}>
-                                    <Tooltip title="Change Coverphoto">
-                                        <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
-                                            <span className="left-menu camera-icon" />
-                                        </a>
-                                    </Tooltip>
-                                </Upload>
-                            </ImgCrop>
+        return <Formik
+            enableReinitialize
+            initialValues={initialValues}
+            innerRef={this.formRef}
+            validate={(values) => this.handleValidate(values)}
+        >
+            {({ values, setFieldValue }) => {
+                return (
+                    groupData ? <div className="main">
+                        <Row gutter={24}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className="coverpage">
+                                    <img className="center-focus" src={groupData.CoverPic} alt="profilecover" />
 
-                        </div>
-                        <div className="user-statistic">
-                            <Card className="group-banner w-btn" >
-                                <List
-                                    itemLayout="horizontal"
-                                    dataSource={groupData.lstDetails}
-                                    renderItem={item => (
-                                        <List.Item>
-                                            <List.Item.Meta
-                                                avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
-                                                    <Upload {...this.uploadProps}>
-                                                        <Avatar src={groupData?.ProfilePic || defaultUser} />
-                                                        <Tooltip placement="top" title="Change Photo">
-                                                            <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
-                                                        </Tooltip>
-                                                    </Upload>
-                                                </ImgCrop></div>}
-                                            />
-                                        </List.Item>
-                                    )}
-                                />
-
-                                <div className="my-16">
-                                    <Form layout="vertical" >
-                                        <Row gutter={24}>
-                                            <Col xs={24}>
-                                                <Form.Item label="Group Name" className="custom-fields">
-                                                    <Input placeholder="Enter group name here" />
-                                                </Form.Item>
-                                            </Col>
-                                            
-                                            <Col xs={24}>
-                                                <Form.Item label="Group Type" className="custom-fields">
-                                                <Input placeholder="Ex: IT GRoup" />
-                                                </Form.Item>
-                                            </Col>
-                                            
-                                            <Col xs={12}>
-                                                <Form.Item label="Choose Privacy" className="custom-fields">
-                                                <Input />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={12}>
-                                                <Form.Item label="Invite Friends (optional)" className="custom-fields">
-                                                <Input />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={12}>
-                                                <Form.Item label="Hide Group" className="custom-fields">
-                                                <Input /><div className="f-12 hide-group">Private groups can't change to public to protect the privacy of group members. <span className="f-14">Learn More</span></div>
-                                                </Form.Item>
-                                                
-                                            </Col>
-                                            <Col xs={24}>
-                                                <Form.Item label="Location" className="custom-fields">
-                                                    <Input placeholder="Add a Location to your group" />
-                                                </Form.Item>
-                                            </Col>
-                                            </Row>
-                                            <Row gutter={24}>
-                                            <Col xs={24}>
-                                                <Form.Item label="Description" className="custom-fields">
-                                                    <TextArea
-                                                        placeholder="Autosize height with minimum and maximum number of lines"
-
-                                                    />
-                                                </Form.Item>
-                                            </Col>
-                                            {/* <Col xs={12}>
-                                                <Form.Item label="Group Rules" className="custom-fields">
-                                                    <TextArea placeholder="Autosize height with minimum and maximum number of lines" />
-                                                </Form.Item>
-                                            </Col> */}
-                                            
-
-                                            {/* <Col xs={24}>
-                                                <Form.Item label="Group discoverability" className="custom-fields">
-                                                    <Radio.Group onChange={this.onChange} value={value}>
-                                                        <Radio style={radioStyle} value={1}>Listed</Radio>
-                                                        <Radio style={radioStyle} value={2}>Unlisted</Radio>
-                                                    </Radio.Group>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24}>
-                                                <Form.Item label="Permissions" className="custom-fields">
-                                                <Checkbox.Group options={options} onChange={onChange} />
-                                                </Form.Item>
-                                            </Col> */}
-                                        </Row>
-                                    </Form>
-                                </div>
-                            </Card>
-                            <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
-                                <div className="">
-                                    <div className="upload-preview">
-                                        <Image src={groupData.ProfilePic} />
-                                        <a class="item-close">
-                                            <Tooltip title="Remove">
-                                                <span className="close-icon"></span>
+                                    <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
+                                        <Upload {...this.uploadProps}>
+                                            <Tooltip title="Change Coverphoto">
+                                                <a className="editpost" onClick={() => this.setState({ isProfilePic: false })}>
+                                                    <span className="left-menu camera-icon" />
+                                                </a>
                                             </Tooltip>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <Slider defaultValue={30} disabled={disabled} />
-                                    </div>
+                                        </Upload>
+                                    </ImgCrop>
 
                                 </div>
-                            </CommonModal>
-                        </div>
-                    </Col>
-                </Row>
-            </div> : null
-        )
+                                <div className="user-statistic">
+                                    <Card className="group-banner w-btn" >
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={groupData.lstDetails}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
+                                                            <Upload {...this.uploadProps}>
+                                                                <Avatar src={groupData?.ProfilePic || defaultUser} />
+                                                                <Tooltip placement="top" title="Change Photo">
+                                                                    <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
+                                                                </Tooltip>
+                                                            </Upload>
+                                                        </ImgCrop></div>}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+
+                                        <div className="my-16">
+                                            <Form layout="vertical" >
+                                                <Row gutter={24}>
+                                                    <Col xs={24}>
+                                                        <Form.Item label="Group Name" className="custom-fields">
+                                                            <Field
+                                                                className="ant-input"
+                                                                name="GroupName"
+                                                                value={values.GroupName}
+                                                                placeholder="Enter group name here"
+                                                            />
+                                                            <span className="validateerror">
+                                                                <ErrorMessage name="GroupName" />
+                                                            </span>
+                                                        </Form.Item>
+                                                    </Col>
+
+                                                    <Col xs={24}>
+                                                        <Form.Item label="Group Type" className="custom-fields">
+                                                            <Field
+                                                                className="ant-input"
+                                                                name="GroupType"
+                                                                value={values.GroupType}
+                                                                placeholder="Ex: IT GRoup"
+                                                            />
+                                                            <span className="validateerror">
+                                                                <ErrorMessage name="GroupType" />
+                                                            </span>
+                                                        </Form.Item>
+                                                    </Col>
+
+                                                    <Col xs={12}>
+                                                        <Form.Item label="Choose Privacy" className="custom-fields">
+                                                            <Field
+                                                                className="ant-input"
+                                                                name="Privacy"
+                                                                value={values.Privacy}
+                                                            />
+                                                            <span className="validateerror">
+                                                                <ErrorMessage name="Privacy" />
+                                                            </span>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Form.Item label="Invite Friends (optional)" className="custom-fields">
+                                                            <Field
+                                                                className="ant-input"
+                                                                name="InvitationsList"
+                                                                value={values.InvitationsList}
+                                                            />
+                                                            <span className="validateerror">
+                                                                <ErrorMessage name="InvitationsList" />
+                                                            </span>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Form.Item label="Hide Group" className="custom-fields">
+                                                            <Field
+                                                                className="ant-input"
+                                                                name="Hide"
+                                                                value={values.Hide}
+                                                            />
+                                                            <span className="validateerror">
+                                                                <ErrorMessage name="Hide" />
+                                                            </span>
+                                                        </Form.Item>
+
+                                                    </Col>
+                                                    <Col xs={24}>
+                                                        <Form.Item label="Location" className="custom-fields">
+                                                            <Field
+                                                                className="ant-input"
+                                                                name="Location"
+                                                                value={values.Location}
+                                                                placeholder="Add a Location to your group"
+                                                            />
+                                                            <span className="validateerror">
+                                                                <ErrorMessage name="Location" />
+                                                            </span>
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                                <Row gutter={24}>
+                                                    <Col xs={24}>
+                                                        <Form.Item label="Description" className="custom-fields">
+                                                            <Field
+                                                                className="ant-input"
+                                                                name="Description"
+                                                                type="textarea"
+                                                                value={values.Description}
+                                                                placeholder="Autosize height with minimum and maximum number of lines"
+                                                            />
+                                                            <span className="validateerror">
+                                                                <ErrorMessage name="Description" />
+                                                            </span>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <div className="">
+                                                        <Button
+                                                            key="submit"
+                                                            type="primary"
+                                                            htmlType="submit"
+                                                            onClick={() => this.handleSave()}
+                                                        >
+                                                            Save
+            </Button>
+                                                    </div>,
+                                                </Row>
+                                            </Form>
+                                        </div>
+                                    </Card>
+                                    <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
+                                        <div className="">
+                                            <div className="upload-preview">
+                                                <Image src={groupData.ProfilePic} />
+                                                <a class="item-close">
+                                                    <Tooltip title="Remove">
+                                                        <span className="close-icon"></span>
+                                                    </Tooltip>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <Slider defaultValue={30} disabled={disabled} />
+                                            </div>
+
+                                        </div>
+                                    </CommonModal>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div> : null
+                )
+            }}
+        </Formik>
     }
 }
 

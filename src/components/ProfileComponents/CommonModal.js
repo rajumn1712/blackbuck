@@ -20,7 +20,7 @@ class CommonModal extends React.Component {
         onOk={modal.saved}
         className={modal.className}
         onCancel={modal.cancel}
-        footer={[
+        footer={!modal.isHideFooter?[
           <div className="">
             {/* <Button key="back" onClick={modal.cancel} className="btn-cancel">
                         Close
@@ -35,7 +35,7 @@ class CommonModal extends React.Component {
               Save
             </Button>
           </div>,
-        ]}
+        ]:null}
       >
         {this.props.children}
       </Modal>

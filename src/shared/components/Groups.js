@@ -117,6 +117,7 @@ class Groups extends Component {
                     title="Create group"
                     cancel={this.handleCancel}
                     saved={this.saveEducation}
+                    isHideFooter={true}
 
                 >
                     <CreateGroup />
