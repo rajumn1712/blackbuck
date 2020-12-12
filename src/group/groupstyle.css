@@ -245,3 +245,4 @@
 }
 .multi-select.custom-fields .ant-select-selector .ant-select-selection-item{line-height: 23px !important;}
 .ant-select-dropdown .ant-list-item .ant-list-item-meta-content{margin: auto;}
+.multi-select .ant-select-selector{overflow: overlay;}
