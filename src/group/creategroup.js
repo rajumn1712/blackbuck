@@ -1,29 +1,16 @@
 import React, { Component, createRef } from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input, Radio, Checkbox, Select } from 'antd';
+import { Row, Col, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Select } from 'antd';
 import './groupstyle.css';
 import CommonModal from '../components/ProfileComponents/CommonModal';
-import { profileDetail, joinGroup, saveProfileImage, saveGroup } from '../shared/api/apiServer';
+import { saveGroup, fetchUserFriends } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import { ErrorMessage, Field, Formik } from "formik";
 import { hasChanged, uuidv4 } from "../utils";
-import { Link } from 'react-router-dom';
-const { Meta } = Card;
 const { Option } = Select;
-const { TabPane } = Tabs;
-const data = [
-    { title: 'Programmers' }
-];
-const options = [
-    { label: 'Allow members to invite their connections', value: 'Allow members to invite their connections' },
-    { label: 'Require new posts to be reviewed by admins', value: 'Require new posts to be reviewed by admins' },
-];
-function onChange(checkedValues) {
-    console.log('checked = ', checkedValues);
-}
-const { TextArea } = Input;
+
 const groupObject = {
     GroupName: "",
     GroupType: "",
@@ -33,10 +20,10 @@ const groupObject = {
     Location: "",
     Description: "",
     Hide: "",
-    InvitationsList: ["Ramu", "Somu"],
+    Invitations: [],
     GroupId: "",
-    UserId: "",
-    Admins: []
+    AdminUsers: null,
+    CreatedDate: ""
 }
 class CreateGroup extends Component {
     formRef = createRef();
@@ -72,61 +59,46 @@ class CreateGroup extends Component {
                 Description: "Only members can find this group."
             }
         ],
-        InvitesLu: [
-            {
-                Name: "Ramu",
-                Image: "../styles/images/defaultuser.jpg",
-
-            },
-            {
-
-                Name: "Somu",
-                Image: "../styles/images/defaultuser.jpg",
-            }
-        ],
-        groupData: {
-            lstDetails: [
-                {
-                    title: "Programmers",
-                    Type: "Private Group",
-                    CreatedDate: '2020-10-11',
-
-                }
-            ],
-            isProfilePic: false,
-        },
+        FriendsList: [],
         disabled: false,
         visible: false,
-        groupObject: groupObject,
+        groupObject: this.props.Type == 'Add' ? groupObject : this.props.groupObject,
         initialValues: {
             GroupName: groupObject.GroupName,
             GroupType: groupObject.GroupType,
             Type: groupObject.Type,
             Location: groupObject.Location,
             Description: groupObject.Description,
-            Hide: groupObject.Hide,
-            InvitationsList: groupObject.InvitationsList,
+            Invitations: groupObject.Invitations,
         },
     };
     createObject = (values) => {
+        let { groupObject } = this.state;
+        let InvitesArray = [];
+        values.Invitations.forEach(item => {
+            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item })
+        });
         return {
             GroupName: values.GroupName,
             GroupType: values.GroupType,
-            GroupImage: values.GroupImage,
-            GroupCoverPic: values.GroupCoverPic,
+            GroupImage: groupObject.GroupImage,
+            GroupCoverPic: groupObject.GroupCoverPic,
             Type: values.Type,
             Location: values.Location,
             Description: values.Description,
             Hide: values.Hide,
-            InvitationsList: values.InvitationsList,
-            GroupId: values.GroupId,
+            Invitations: InvitesArray,
+            GroupId: groupObject.GroupId ? groupObject.GroupId : uuidv4,
             UserId: groupObject.UserId,
-            Admins: values.Admins,
+            AdminUsers: groupObject.AdminUsers ? groupObject.AdminUsers : [{
+                "UserId": this.props?.profile?.Id,
+                "Firstname": this.props?.profile?.FirstName,
+                "Lastname": this.props?.profile?.LastName,
+                "Image": this.props?.profile?.ProfilePic,
+                "Email": this.props?.profile?.Email
+            }],
+            CreatedDate: groupObject.CreatedDate ? new Date(groupObject.CreatedDate) : new Date()
         };
-    };
-
-    handleDisabledChange = disabled => {
-        this.setState({ disabled });
     };
     handleBeforUpload = (file) => {
         const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -145,6 +117,7 @@ class CreateGroup extends Component {
         } else {
             groupObject.GroupCoverPic = this.imageObject.ImageUrl;
         }
+        this.imageObject = {};
         this.setState({ ...this.state, groupObject: groupObject });
 
     }
@@ -168,28 +141,12 @@ class CreateGroup extends Component {
 
     };
 
-    joinGroup = async (item) => {
-        const obj = {
-            "UserId": this.props?.profile?.Id,
-            "Firstname": this.props?.profile?.FirstName,
-            "Lastname": this.props?.profile?.LastName,
-            "Image": this.props?.profile?.ProfilePic,
-            "Email": this.props?.profile?.Email
-        }
-        if (item.type == "Private") { obj.Type = "request" }
-        const joinResponse = await joinGroup(item.id, obj);
-        if (joinResponse.ok) {
-            notify({ message: "Group join", description: item.type === "Private" ? "Request sent" : "Joined to group" });
-            if (item.type !== 'Private') {
-                this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
-                this.props.updateProfile(this.props.profile)
-            }
-        } else {
-            notify({ message: "Error", description: "Something went wrong :)", type: "error" });
-        }
-    }
-
     componentDidMount() {
+        fetchUserFriends((this.props.userId ? this.props.userId : (this.props?.profile?.Id)))
+            .then(res => {
+                const friendsInfo = res.data;
+                this.setState({ ...this.state, FriendsList: friendsInfo });
+            })
     }
     showModal = () => {
         this.setState({
@@ -210,7 +167,6 @@ class CreateGroup extends Component {
     }
 
     handleSave = (e) => {
-        debugger;
         this.formRef.current.handleSubmit();
         if (!hasChanged(this.formRef.current.values)) {
             const saveObj = this.createObject(this.formRef.current.values);
@@ -250,14 +206,14 @@ class CreateGroup extends Component {
             <List.Item>
                 <List.Item.Meta
                     avatar={<Avatar className="select-image" src={item.Image || defaultUser} />}
-                    title={<span>{item.Name}</span>}
+                    title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
                     description={item.Description ? <div className="f-12">{item.Description}</div> : ''}
                 />
             </List.Item>
         </div>
     }
     render() {
-        const { disabled, visible, groupData, initialValues, GroupTypeLu, TypeLu, groupObject, HiddenLu, InvitesLu } = this.state;
+        const { disabled, visible, initialValues, GroupTypeLu, TypeLu, groupObject, HiddenLu, InvitesLu, FriendsList } = this.state;
         const radioStyle = {
             display: 'block',
             height: '30px',
@@ -272,7 +228,7 @@ class CreateGroup extends Component {
         >
             {({ values, setFieldValue }) => {
                 return (
-                    groupData ? <div className="main">
+                    <div className="main">
                         <Row gutter={24}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <div className="coverpage">
@@ -299,7 +255,7 @@ class CreateGroup extends Component {
                                                     <List.Item.Meta
                                                         avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                             <Upload {...this.uploadProps}>
-                                                                <Avatar src={groupObject?.GroupImage || defaultUser} />
+                                                                <Avatar src={groupObject?.GroupImage || defaultUser}  onClick={() => this.setState({ isProfilePic: true })}/>
                                                                 <Tooltip placement="top" title="Change Photo">
                                                                     <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                                 </Tooltip>
@@ -357,16 +313,6 @@ class CreateGroup extends Component {
                                                     </Col>
 
                                                     <Col xs={12}>
-                                                        {/* <Form.Item label="Choose Privacy" className="custom-fields">
-                                                            <Field
-                                                                className="ant-input"
-                                                                name="Type"
-                                                                value={values.Type}
-                                                            />
-                                                            <span className="validateerror">
-                                                                <ErrorMessage name="Type" />
-                                                            </span>
-                                                        </Form.Item> */}
                                                         <Form.Item
                                                             label="Choose Privacy"
                                                             className="custom-fields custom-select"
@@ -398,6 +344,7 @@ class CreateGroup extends Component {
                                                         <Form.Item
                                                             label="Invite Friends (optional)"
                                                             className="custom-fields multi-select custom-select "
+                                                            placeholder="Select Invitee"
                                                         >
                                                             <Select
                                                                 defaultValue=""
@@ -409,10 +356,9 @@ class CreateGroup extends Component {
                                                                 optionLabelProp="label"
                                                                 mode="multiple"
                                                             >
-                                                                <Option value="" label="Select Invitee">Select Type</Option>
-                                                                {InvitesLu.map((item, index) => {
+                                                                {FriendsList.map((item, index) => {
                                                                     return (
-                                                                        <Option key={index} value={item.Name} label={item.Name}>
+                                                                        <Option key={index} value={item.UserId} label={item.Firstname}>
                                                                             {this.renderSelectItem(item)}
                                                                         </Option>
                                                                     );
@@ -423,7 +369,7 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                   {values.Type=='Private' && <Col xs={12}>
+                                                    {values.Type == 'Private' && <Col xs={12}>
                                                         <Form.Item
                                                             label="Hide Group"
                                                             className="custom-fields custom-select"
@@ -451,7 +397,7 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-            }
+                                                    }
                                                     <Col xs={24}>
                                                         <Form.Item label="Location" className="custom-fields">
                                                             <Field
@@ -498,7 +444,7 @@ class CreateGroup extends Component {
                                     <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                                         <div className="">
                                             <div className="upload-preview">
-                                                <Image src={groupData.GroupImage} />
+                                                <Image src={groupObject.GroupImage} />
                                                 <a class="item-close">
                                                     <Tooltip title="Remove">
                                                         <span className="close-icon"></span>
@@ -514,7 +460,7 @@ class CreateGroup extends Component {
                                 </div>
                             </Col>
                         </Row>
-                    </div> : null
+                    </div>
                 )
             }}
         </Formik>
