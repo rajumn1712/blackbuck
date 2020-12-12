@@ -26,9 +26,9 @@ const { TextArea } = Input;
 const groupObject = {
     GroupName: "",
     GroupType: "",
-    ProfilePic: "",
-    CoverPic: "",
-    Privacy: "",
+    GroupImage: "",
+    GroupCoverPic: "",
+    Type: "",
     Location: "",
     Description: "",
     Hide: "",
@@ -59,7 +59,7 @@ class CreateGroup extends Component {
         initialValues: {
             GroupName: groupObject.GroupName,
             GroupType: groupObject.GroupType,
-            Privacy: groupObject.Privacy,
+            Type: groupObject.Type,
             Location: groupObject.Location,
             Description: groupObject.Description,
             Hide: groupObject.Hide,
@@ -70,9 +70,9 @@ class CreateGroup extends Component {
         return {
             GroupName: values.GroupName,
             GroupType: values.GroupType,
-            ProfilePic: values.ProfilePic,
-            CoverPic: values.CoverPic,
-            Privacy: values.Privacy,
+            GroupImage: values.GroupImage,
+            GroupCoverPic: values.GroupCoverPic,
+            Type: values.Type,
             Location: values.Location,
             Description: values.Description,
             Hide: values.Hide,
@@ -238,7 +238,7 @@ class CreateGroup extends Component {
                         <Row gutter={24}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <div className="coverpage">
-                                    <img className="center-focus" src={groupData.CoverPic} alt="profilecover" />
+                                    <img className="center-focus" src={groupData.GroupCoverPic} alt="profilecover" />
 
                                     <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
                                         <Upload {...this.uploadProps}>
@@ -261,7 +261,7 @@ class CreateGroup extends Component {
                                                     <List.Item.Meta
                                                         avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                             <Upload {...this.uploadProps}>
-                                                                <Avatar src={groupData?.ProfilePic || defaultUser} />
+                                                                <Avatar src={groupData?.GroupImage || defaultUser} />
                                                                 <Tooltip placement="top" title="Change Photo">
                                                                     <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                                 </Tooltip>
@@ -307,11 +307,11 @@ class CreateGroup extends Component {
                                                         <Form.Item label="Choose Privacy" className="custom-fields">
                                                             <Field
                                                                 className="ant-input"
-                                                                name="Privacy"
-                                                                value={values.Privacy}
+                                                                name="Type"
+                                                                value={values.Type}
                                                             />
                                                             <span className="validateerror">
-                                                                <ErrorMessage name="Privacy" />
+                                                                <ErrorMessage name="Type" />
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
@@ -386,7 +386,7 @@ class CreateGroup extends Component {
                                     <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
                                         <div className="">
                                             <div className="upload-preview">
-                                                <Image src={groupData.ProfilePic} />
+                                                <Image src={groupData.GroupImage} />
                                                 <a class="item-close">
                                                     <Tooltip title="Remove">
                                                         <span className="close-icon"></span>
