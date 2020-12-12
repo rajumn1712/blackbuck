@@ -1,5 +1,5 @@
-import React, { Component ,createRef} from 'react';
-import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input, Radio, Checkbox } from 'antd';
+import React, { Component, createRef } from 'react';
+import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Input, Radio, Checkbox, Select } from 'antd';
 import './groupstyle.css';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import { profileDetail, joinGroup, saveProfileImage, saveGroup } from '../shared/api/apiServer';
@@ -9,8 +9,9 @@ import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import { ErrorMessage, Field, Formik } from "formik";
 import { hasChanged, uuidv4 } from "../utils";
+import { Link } from 'react-router-dom';
 const { Meta } = Card;
-
+const { Option } = Select;
 const { TabPane } = Tabs;
 const data = [
     { title: 'Programmers' }
@@ -42,6 +43,21 @@ class CreateGroup extends Component {
 
     imageObject = {};
     state = {
+        GroupTypeLu: ["IT Group", "science group ", "Learning Group"],
+        TypeLu: [
+            {
+                Name: "Public",
+                Image: "../styles/images/defaultuser.jpg",
+                Decsription: ""
+
+            },
+            {
+
+                Name: "Public",
+                Image: "",
+                Decsription: ""
+            }
+        ],
         groupData: {
             lstDetails: [
                 {
@@ -82,6 +98,7 @@ class CreateGroup extends Component {
             Admins: values.Admins,
         };
     };
+
     handleDisabledChange = disabled => {
         this.setState({ disabled });
     };
@@ -218,8 +235,19 @@ class CreateGroup extends Component {
             block: "nearest"
         });
     }
+    renderItem = (item) => {
+        return <div>
+            <List.Item>
+                <List.Item.Meta
+                    avatar={<Avatar className="request-image" src={item.Image||defaultUser} />}
+                    title={<a>{item.Name}</a>}
+                    description={<div>{item.Description}</div>}
+                />
+            </List.Item>
+        </div>
+    }
     render() {
-        const { disabled, visible, groupData, initialValues } = this.state;
+        const { disabled, visible, groupData, initialValues, GroupTypeLu, TypeLu } = this.state;
         const radioStyle = {
             display: 'block',
             height: '30px',
@@ -290,26 +318,66 @@ class CreateGroup extends Component {
                                                     </Col>
 
                                                     <Col xs={24}>
-                                                        <Form.Item label="Group Type" className="custom-fields">
-                                                            <Field
-                                                                className="ant-input"
+                                                        <Form.Item
+                                                            label="Group Type"
+                                                            className="custom-fields custom-select"
+                                                        >
+                                                            <Select
+                                                                defaultValue=""
                                                                 name="GroupType"
                                                                 value={values.GroupType}
-                                                                placeholder="Ex: IT GRoup"
-                                                            />
+                                                                onChange={(value) =>
+                                                                    setFieldValue("GroupType", value)
+                                                                }
+                                                            >
+                                                                <Option value="">Select Type</Option>
+                                                                {GroupTypeLu.map((item, index) => {
+                                                                    return (
+                                                                        <Option key={index} value={item}>
+                                                                            {item}
+                                                                        </Option>
+                                                                    );
+                                                                })}
+                                                            </Select>
                                                             <span className="validateerror">
                                                                 <ErrorMessage name="GroupType" />
                                                             </span>
                                                         </Form.Item>
+
                                                     </Col>
 
                                                     <Col xs={12}>
-                                                        <Form.Item label="Choose Privacy" className="custom-fields">
+                                                        {/* <Form.Item label="Choose Privacy" className="custom-fields">
                                                             <Field
                                                                 className="ant-input"
                                                                 name="Type"
                                                                 value={values.Type}
                                                             />
+                                                            <span className="validateerror">
+                                                                <ErrorMessage name="Type" />
+                                                            </span>
+                                                        </Form.Item> */}
+                                                        <Form.Item
+                                                            label="Choose Privacy"
+                                                            className="custom-fields custom-select"
+                                                        >
+                                                            <Select
+                                                                defaultValue=""
+                                                                name="Type"
+                                                                value={values.Type}
+                                                                onChange={(value) =>
+                                                                    setFieldValue("GroupType", value)
+                                                                }
+                                                            >
+                                                                <Option value="">Select Type</Option>
+                                                                {TypeLu.map((item, index) => {
+                                                                    return (
+                                                                        <Option key={index} value={item}>
+                                                                            {this.renderItem(item)}
+                                                                        </Option>
+                                                                    );
+                                                                })}
+                                                            </Select>
                                                             <span className="validateerror">
                                                                 <ErrorMessage name="Type" />
                                                             </span>
