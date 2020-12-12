@@ -48,14 +48,40 @@ class CreateGroup extends Component {
             {
                 Name: "Public",
                 Image: "../styles/images/defaultuser.jpg",
-                Decsription: ""
+                Description: "Anyone can see who's in the group and what they post."
 
             },
             {
 
-                Name: "Public",
-                Image: "",
-                Decsription: ""
+                Name: "Private",
+                Image: "../styles/images/defaultuser.jpg",
+                Description: "Only members can see who's in the group and what they post."
+            }
+        ],
+        HiddenLu: [
+            {
+                Name: "Visible",
+                Image: "../styles/images/defaultuser.jpg",
+                Description: "Anyone can find this group."
+
+            },
+            {
+
+                Name: "Hidden",
+                Image: "../styles/images/defaultuser.jpg",
+                Description: "Only members can find this group."
+            }
+        ],
+        InvitesLu: [
+            {
+                Name: "Ramu",
+                Image: "../styles/images/defaultuser.jpg",
+
+            },
+            {
+
+                Name: "Somu",
+                Image: "../styles/images/defaultuser.jpg",
             }
         ],
         groupData: {
@@ -113,16 +139,13 @@ class CreateGroup extends Component {
 
     }
     handleImageOk = () => {
-        const imageType = this.state.isProfilePic ? 'ProfilePic' : 'CoverPic';
-        saveProfileImage(this.props?.profile?.Id, imageType, this.imageObject)
-            .then(res => {
-                if (this.state.isProfilePic) {
-                    this.props.profile.ProfilePic = this.imageObject.ImageUrl;
-                } else {
-                    this.props.profile.CoverPic = this.imageObject.ImageUrl;
-                }
-                this.imageObject = {};
-            })
+        let { groupObject } = this.state;
+        if (this.state.isProfilePic) {
+            groupObject.GroupImage = this.imageObject.ImageUrl;
+        } else {
+            groupObject.GroupCoverPic = this.imageObject.ImageUrl;
+        }
+        this.setState({ ...this.state, groupObject: groupObject });
 
     }
     uploadProps = {
@@ -167,19 +190,6 @@ class CreateGroup extends Component {
     }
 
     componentDidMount() {
-        profileDetail(this.props?.profile?.Id)
-            .then(res => {
-
-                const groupData = res.data[0].User;
-                groupData.lstDetails = [
-                    {}
-                ];
-                groupData.lstDetails[0].title = "Programmers";
-                groupData.lstDetails[0].Type = "Private Group";
-                groupData.lstDetails[0].CreatedDate = '2020-10-11';
-                groupData.lstDetails[0].Members = '2.5K';
-                this.setState({ groupData: groupData });
-            })
     }
     showModal = () => {
         this.setState({
@@ -235,19 +245,19 @@ class CreateGroup extends Component {
             block: "nearest"
         });
     }
-    renderItem = (item) => {
+    renderSelectItem = (item) => {
         return <div>
             <List.Item>
                 <List.Item.Meta
-                    avatar={<Avatar className="request-image" src={item.Image||defaultUser} />}
-                    title={<a>{item.Name}</a>}
-                    description={<div>{item.Description}</div>}
+                    avatar={<Avatar className="request-image" src={item.Image || defaultUser} />}
+                    title={<span>{item.Name}</span>}
+                    description={item.Description ? <div>{item.Description}</div> : ''}
                 />
             </List.Item>
         </div>
     }
     render() {
-        const { disabled, visible, groupData, initialValues, GroupTypeLu, TypeLu } = this.state;
+        const { disabled, visible, groupData, initialValues, GroupTypeLu, TypeLu, groupObject, HiddenLu, InvitesLu } = this.state;
         const radioStyle = {
             display: 'block',
             height: '30px',
@@ -266,7 +276,7 @@ class CreateGroup extends Component {
                         <Row gutter={24}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <div className="coverpage">
-                                    <img className="center-focus" src={groupData.GroupCoverPic} alt="profilecover" />
+                                    <img className="center-focus" src={groupObject.GroupCoverPic || defaultUser} alt="profilecover" />
 
                                     <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
                                         <Upload {...this.uploadProps}>
@@ -283,13 +293,13 @@ class CreateGroup extends Component {
                                     <Card className="group-banner w-btn" >
                                         <List
                                             itemLayout="horizontal"
-                                            dataSource={groupData.lstDetails}
+                                            dataSource={[{}]}
                                             renderItem={item => (
                                                 <List.Item>
                                                     <List.Item.Meta
                                                         avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                             <Upload {...this.uploadProps}>
-                                                                <Avatar src={groupData?.GroupImage || defaultUser} />
+                                                                <Avatar src={groupObject?.GroupImage || defaultUser} />
                                                                 <Tooltip placement="top" title="Change Photo">
                                                                     <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                                 </Tooltip>
@@ -366,14 +376,15 @@ class CreateGroup extends Component {
                                                                 name="Type"
                                                                 value={values.Type}
                                                                 onChange={(value) =>
-                                                                    setFieldValue("GroupType", value)
+                                                                    setFieldValue("Type", value)
                                                                 }
+                                                                optionLabelProp="label"
                                                             >
-                                                                <Option value="">Select Type</Option>
+                                                                <Option value="" label="Select Type">Select Type</Option>
                                                                 {TypeLu.map((item, index) => {
                                                                     return (
-                                                                        <Option key={index} value={item}>
-                                                                            {this.renderItem(item)}
+                                                                        <Option key={index} value={item.Name} label={item.Name}>
+                                                                            {this.renderSelectItem(item)}
                                                                         </Option>
                                                                     );
                                                                 })}
@@ -384,30 +395,63 @@ class CreateGroup extends Component {
                                                         </Form.Item>
                                                     </Col>
                                                     <Col xs={12}>
-                                                        <Form.Item label="Invite Friends (optional)" className="custom-fields">
-                                                            <Field
-                                                                className="ant-input"
-                                                                name="InvitationsList"
-                                                                value={values.InvitationsList}
-                                                            />
+                                                        <Form.Item
+                                                            label="Invite Friends (optional)"
+                                                            className="custom-fields custom-select"
+                                                        >
+                                                            <Select
+                                                                defaultValue=""
+                                                                name="Invitations"
+                                                                value={values.Invitations}
+                                                                onChange={(value) =>
+                                                                    setFieldValue("Invitations", value)
+                                                                }
+                                                                optionLabelProp="label"
+                                                                mode="multiple"
+                                                            >
+                                                                <Option value="" label="Select Invitee">Select Type</Option>
+                                                                {InvitesLu.map((item, index) => {
+                                                                    return (
+                                                                        <Option key={index} value={item.Name} label={item.Name}>
+                                                                            {this.renderSelectItem(item)}
+                                                                        </Option>
+                                                                    );
+                                                                })}
+                                                            </Select>
                                                             <span className="validateerror">
-                                                                <ErrorMessage name="InvitationsList" />
+                                                                <ErrorMessage name="Invitations" />
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                    <Col xs={12}>
-                                                        <Form.Item label="Hide Group" className="custom-fields">
-                                                            <Field
-                                                                className="ant-input"
+                                                   {values.Type=='Private' && <Col xs={12}>
+                                                        <Form.Item
+                                                            label="Hide Group"
+                                                            className="custom-fields custom-select"
+                                                        >
+                                                            <Select
+                                                                defaultValue=""
                                                                 name="Hide"
                                                                 value={values.Hide}
-                                                            />
+                                                                onChange={(value) =>
+                                                                    setFieldValue("Hide", value)
+                                                                }
+                                                                optionLabelProp="label"
+                                                            >
+                                                                <Option value="" label="Select Type">Select Type</Option>
+                                                                {HiddenLu.map((item, index) => {
+                                                                    return (
+                                                                        <Option key={index} value={item.Name} label={item.Name}>
+                                                                            {this.renderSelectItem(item)}
+                                                                        </Option>
+                                                                    );
+                                                                })}
+                                                            </Select>
                                                             <span className="validateerror">
                                                                 <ErrorMessage name="Hide" />
                                                             </span>
                                                         </Form.Item>
-
                                                     </Col>
+            }
                                                     <Col xs={24}>
                                                         <Form.Item label="Location" className="custom-fields">
                                                             <Field
