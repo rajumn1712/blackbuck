@@ -106,7 +106,7 @@ const getBranchSubjects = (college_id, branch_id) => {
   return apiClient.get(FRIENDS_API + `getSubjectsByBranchId/${college_id}/${branch_id}/1000/0`);
 }
 const saveGroup = (obj) => {
-  return apiClient.post(PROFILE_API + `saveVideoAsProfile`, obj);
+  return apiClient.post(GROUPS_API + `saveGroup`, obj);
 }
 export {
   getFriendSuggestions,
