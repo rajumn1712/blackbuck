@@ -23,6 +23,11 @@ class Groups extends Component {
         page: 1,
         pageNo: 5
     };
+    handleCancel = e => {
+        this.setState({
+            visible: false,
+        });
+    }
     joinGroup = async (item) => {
         const obj = {
             "UserId": this.props?.profile?.Id,
@@ -120,7 +125,7 @@ class Groups extends Component {
                     isHideFooter={true}
 
                 >
-                    <CreateGroup />
+                    <CreateGroup Type={"Add"}/>
 
                 </CommonModal>
             </div>
