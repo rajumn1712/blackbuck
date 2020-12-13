@@ -1,49 +1,61 @@
 import React, { Component } from 'react';
 import { Card, Avatar, Button, Empty } from 'antd'
 import notify from './notification';
-import { apiClient } from '../api/clients'
+import { getUserInvitations, acceptDeclineInvitations } from '../api/apiServer';
+import { profileSuccess } from '../../reducers/auth';
+import { connect } from 'react-redux';
+
 class Invite extends Component {
     state = {
-        invite: {},
+        invitations: [],
     }
     componentDidMount() {
-        apiClient.get('/repos/skellock/apisauce/commits').then(res => {
-            // this.setState({ invite: res.data });
+        this.getUserInvites();
+    }
+    getUserInvites = () => {
+        getUserInvitations(this.props.profile?.Id).then(res => {
+            this.setState({ invitations: res.data.length > 0 ? res.data[0] : [] })
         });
     }
-    acceptInvite = () => {
-        apiClient.get('/repos/skellock/apisauce/commits').then(res => {
-            this.setState({ invite: res.data })
-            notify({ placement: 'bottomLeft', message: 'Invite', description: 'Request accepted successfully.' });
-        });
-    }
-    declineInvite = () => {
-        apiClient.get('/repos/skellock/apisauce/commits').then(res => {
-            this.setState({ invite: res.data })
-            notify({ placement: 'bottomLeft', message: 'Invite', description: 'Request declined successfully.' });
+    acceptInvite = (type, obj) => {
+        const object = {
+            "GroupId": obj.GroupId,
+            "Type": type,
+            "UserDetials": {
+                "UserId": this.props?.profile?.Id,
+                "Firstname": this.props?.profile?.FirstName,
+                "Lastname": this.props?.profile?.LastName,
+                "Image": this.props?.profile?.ProfilePic,
+                "Email": this.props?.profile?.Email
+            }
+        }
+        acceptDeclineInvitations(object).then(res => {
+            if (type == 'Accept') {
+                this.getUserInvites();
+            }
+            notify({ placement: 'bottomLeft', message: 'Invite', description: `Request ${type} successfully.` });
         });
     }
     render() {
-        let { invite } = this.state;
-        let keys = Object.keys(invite);
+        let { invitations } = this.state;
         return (
             <div className="invite-card">
                 <Card title="Invite" bordered={true}>
                     {
-                        keys.length > 0 && <div>
+                        invitations.length > 0 && <div>
                             <Avatar.Group>
-                                <Avatar src={invite.Avatar1}></Avatar>
-                                <Avatar src={invite.Avatar2} />
+                                <Avatar src={invitations[0]?.Avatar1}></Avatar>
+                                <Avatar src={invitations[0]?.Avatar2} />
                             </Avatar.Group>
-                            <p><span>{invite.inviter}</span> was invited to join in <span className="text-color invite-grp-name">{invite.Group}</span> group</p>
+                            <p><span>{invitations[0]?.inviter}</span> was invited to join in <span className="text-color invite-grp-name">{invitations[0]?.Group}</span> group</p>
                             <div className="invite-btn">
-                                <Button className="mr-16" type="primary" onClick={() => this.acceptInvite()}>Accept</Button>
-                                <Button type="danger" onClick={() => this.declineInvite()}>Decline</Button>
+                                <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('Accept', invitations[0])}>Accept</Button>
+                                <Button type="danger" onClick={() => this.acceptInvite('Decline', invitations[0])}>Decline</Button>
                             </div>
                         </div>
                     }
                     {
-                        keys.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                        invitations.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                     }
                 </Card>
             </div>
@@ -51,4 +63,12 @@ class Invite extends Component {
     }
 }
 
-export default Invite;
+const mapStateToProps = ({ oidc }) => {
+    return { user: oidc.user, profile: oidc.profile }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        upadateProfile: (info) => { dispatch(profileSuccess(info)) }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Invite);
