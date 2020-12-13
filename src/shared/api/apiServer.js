@@ -108,6 +108,12 @@ const getBranchSubjects = (college_id, branch_id) => {
 const saveGroup = (obj) => {
   return apiClient.post(GROUPS_API + `saveGroup`, obj);
 }
+const getUserInvitations = (user_id) => {
+  return apiClient.get(FRIENDS_API + `userInvitations/${user_id}`);
+}
+const acceptDeclineInvitations = (obj) => {
+  return apiClient.post(FRIENDS_API + `invitationAcceptandDecline`, obj);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -137,5 +143,7 @@ export {
   getColleges,
   getCollegeBranches,
   getBranchSubjects,
-  saveGroup
+  saveGroup,
+  getUserInvitations,
+  acceptDeclineInvitations,
 };
