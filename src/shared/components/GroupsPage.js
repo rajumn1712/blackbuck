@@ -89,7 +89,7 @@ class GroupsPage extends Component {
                                         <div className="mb-4 f-12 text-overflow">{group.description}</div>
                                         <div className="d-flex align-items-center">
                             
-                                            {group.members && <span><span>{group.members?group.members:0}</span> Members</span>}
+                                            {group.members>0 && <span><span>{group.members?group.members:""}</span> Members</span>}
                                             <a className="edit-groupbtn"></a>
                                         </div>
                                     </div>}
