@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 import { store } from '../../store'
 import connectStateProps from '../stateConnect';
 import { fetchUserGroups } from '../api/apiServer'
+import CommonModal from '../../components/ProfileComponents/CommonModal'
+import CreateGroup from '../../group/creategroup'
 const { Meta } = Card;
+let GroupEditObj={};
 class GroupsPage extends Component {
     state = {
         Groups: [],
@@ -12,6 +15,7 @@ class GroupsPage extends Component {
         pageSize: 20,
         loading: true,
         loadMore: true,
+        visible: false,
     }
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll)
@@ -52,9 +56,21 @@ class GroupsPage extends Component {
             })
         }
     }
+    handleCancel = e => {
+        GroupEditObj = {};
+        this.setState({
+            visible: false,
+        });
+    }
+    editPost = (group) => {
+        GroupEditObj = group;
+        this.setState({
+            visible: true,
+        });
+    }
     render() {
         const { user } = store.getState().oidc;
-        const { Groups } = this.state;
+        const { Groups,visible } = this.state;
         return (
             <div className="group-page" >
                 <Row gutter={16} className="">
@@ -85,6 +101,15 @@ class GroupsPage extends Component {
 
 
                 </Row>
+                <CommonModal
+                    className="creategroup-popup"
+                    visible={visible}
+                    title="Edit group"
+                    cancel={this.handleCancel}
+                    isHideFooter={true}
+                >
+                    {visible && <CreateGroup Type={"Edit"} GroupId={GroupEditObj.id} handleCancel={this.handleCancel}/>}
+                </CommonModal>
             </div>
 
 
