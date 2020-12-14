@@ -6,10 +6,7 @@ import {
   Card,
   Statistic,
   Avatar,
-  Menu,
   Tooltip,
-  Slider,
-  Image,
   Upload,
   message,
   Button,
@@ -19,30 +16,22 @@ import Invite from "../shared/components/Invite";
 import Ads from "../components/ads";
 import "./profilestyle.css";
 import PremiumBadge from "../styles/images/premiumbadge.svg";
-import { Link } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import Courses from "../components/ProfileComponents/courses";
 import FriendRequests from "../components/ProfileComponents/friendrequests";
 import Friends from "../components/friends";
-import Tags from "../components/ProfileComponents/tags";
 import Groups from "../shared/components/Groups";
-import Interests from "../components/ProfileComponents/interests";
-import Hobbies from "../components/ProfileComponents/hobbies";
-import About from "../components/ProfileComponents/about";
-import Intership from "../components/ProfileComponents/internships";
-import VideoProfile from "../components/ProfileComponents/videoprofile";
-import Education from "../components/ProfileComponents/education";
 import GroupsPage from "../shared/components/GroupsPage";
-import FriendsRequestsCard from "../shared/components/friendsRequests";
-import CommonModal from "../components/ProfileComponents/CommonModal";
 import Postings from "../shared/postings";
 import { connect } from "react-redux";
-import { profileDetail, saveProfileImage } from "../shared/api/apiServer";
+import { saveProfileImage } from "../shared/api/apiServer";
 import defaultUser from "../styles/images/defaultuser.jpg";
 import defaultCover from "../styles/images/defaultcover.png";
 import ImgCrop from "antd-img-crop";
 import { profileSuccess } from "../reducers/auth";
 import Loader from "../common/loader";
 import { store } from "../store";
+import ProfileDetail from "./profileDetail";
 const { Meta } = Card;
 const { TabPane } = Tabs;
 const operations = (
@@ -51,25 +40,22 @@ const operations = (
   </Button>
 );
 class Profile extends Component {
-  references = {};
+  // references = {};
   imageObject = {};
   storeSubscription;
-  getOrCreateRef(id) {
-    if (!this.references.hasOwnProperty(id)) {
-      this.references[id] = createRef();
-    }
-    return this.references[id];
-  }
+  // getOrCreateRef(id) {
+  //   if (!this.references.hasOwnProperty(id)) {
+  //     this.references[id] = createRef();
+  //   }
+  //   return this.references[id];
+  // }
 
   state = {
-    navigations: [],
-    profileData: {},
-    disabled: false,
-    visible: false,
     isProfilePic: false,
     isDataRefresh: false,
-    loading: true,
+    // loading: true,
     profile: this.props?.profile,
+    tabkey: this.props?.match.params.tabkey,
     showDownload: false,
   };
   isDataRefreshed = (refresh) => {
@@ -103,7 +89,6 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    this.profielDetails();
     this.storeSubscription = store.subscribe(() => {
       const { profile } = store.getState().oidc;
       this.setState({ ...this.state, profile });
@@ -112,27 +97,7 @@ class Profile extends Component {
   componentWillUnmount() {
     this.storeSubscription();
   }
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-  profielDetails = () => {
-    this.setState({ ...this.state, loading: true });
-    profileDetail(this.props?.profile?.Id).then((res) => {
-      const profiledata = res.data[0].User;
-      const navigations = res.data[0].ProfileItems;
-      this.props.profile.Friends = profiledata.Friend ? profiledata.Friend : 0;
-      this.props.profile.Posts = profiledata.Posts ? profiledata.Posts : 0;
-      this.props.profile.Groups = profiledata.Groups ? profiledata.Groups : 0;
-      this.props.updateProfile(this.props.profile);
-      this.setState({
-        profileData: profiledata,
-        navigations: navigations,
-        loading: false,
-      });
-    });
-  };
+
   handleBeforUpload = (file) => {
     const isJPG = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJPG) {
@@ -157,39 +122,22 @@ class Profile extends Component {
       }
     );
   };
-  handleOk = (e) => {
-    this.setState({
-      visible: false,
-    });
-  };
-  handleCancel = (e) => {
-    this.setState({
-      visible: false,
-    });
-  };
-  handleDomNavigate = (navigate) => {
-    navigate.current.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
-  };
+  // handleDomNavigate = (navigate) => {
+  //   navigate.current.scrollIntoView({
+  //     behavior: "smooth",
+  //     block: "nearest",
+  //   });
+  // };
   handleTabChange = (index) => {
-    if (index === "2") this.setState({ showDownload: true });
-    else this.setState({ showDownload: false });
+    this.props.history.push(`/profile/${index}`);
+    this.setState({ tabkey: index });
   };
 
   render() {
-    const {
-      navigations,
-      profileData,
-      disabled,
-      visible,
-      isDataRefresh,
-      profile,
-    } = this.state;
-    if (this.state.loading) {
-      return <Loader className="loader-middle" />;
-    }
+    const { isDataRefresh, profile, tabkey } = this.state;
+    // if (this.state.loading) {
+    //   return <Loader className="loader-middle" />;
+    // }
     return (
       <div className="main">
         <Row gutter={16}>
@@ -197,7 +145,7 @@ class Profile extends Component {
             <div className="coverpage">
               <Avatar
                 className="center-focus"
-                src={profileData?.CoverPic || defaultCover}
+                src={profile?.CoverPic || defaultCover}
               />
               <span className="premium-badge">
                 <img src={PremiumBadge} />
@@ -266,163 +214,96 @@ class Profile extends Component {
                   }
                   title={
                     <div className="user-name">
-                      {profileData.Firstname} {profileData.Lastname}
+                      {profile?.FirstName} {profile?.LastName}
                     </div>
                   }
-                  description={profileData.Branch}
+                  description={profile?.Branch}
                 />
               </Card>
-              {/* <CommonModal visible={visible} title="Edit Photo" cancel={this.handleCancel} saved={this.handleOk}>
-                                <div className="">
-                                    <div className="upload-preview">
-                                        <Image src={profileData.ProfilePic} />
-                                        <a class="item-close">
-                                            <Tooltip title="Remove">
-                                                <span className="close-icon"></span>
-                                            </Tooltip>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <Slider defaultValue={30} disabled={disabled} />
-                                    </div>
-
-                                </div>
-                            </CommonModal> */}
               <div className="right-statistic">
                 <Statistic
                   title="Shares"
                   className="afterline"
-                  value={profileData.Shares}
+                  value={profile?.Shares}
                 />
                 <Statistic
                   title="Interests"
                   className="afterline"
-                  value={profileData.Interest}
+                  value={profile?.Interests}
                 />
-                <Statistic
-                  title="Internships"
-                  value={profileData.Internships?.length}
-                />
+                <Statistic title="Internships" value={profile?.Internships} />
               </div>
             </div>
             <Tabs
-              defaultActiveKey="1"
+              defaultActiveKey={tabkey}
               className="profile-tabs"
               tabBarExtraContent={operations}
               onChange={this.handleTabChange}
             >
               <TabPane tab="Posts" key="1">
-                <Row gutter={16}>
-                  <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Invite />
-                    <Courses />
-                  </Col>
-                  <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                    <Postings postingsType="user" sharebox={true} />
-                  </Col>
-                </Row>
+                <Route
+                  path="/profile/1"
+                  render={() => {
+                    return (
+                      <Row gutter={16}>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                          <Invite />
+                          <Courses />
+                        </Col>
+                        <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                          <Postings postingsType="user" sharebox={true} />
+                        </Col>
+                      </Row>
+                    );
+                  }}
+                />
               </TabPane>
               <TabPane tab="Profile" key="2">
-                <Row gutter={16}>
-                  {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
-                                        <div className="left-rail">
-                                            <Menu className="menu-items profile-menu" mode="vertical" title="Blackbuck">
-                                                {navigations.map(navigatieItem => {
-                                                    return <Menu.Item key={navigatieItem.Id}><Link onClick={() => this.handleDomNavigate(this.references[navigatieItem.Id])}><span className={navigatieItem.CssSprite}></span><span>{navigatieItem.Heading}</span></Link></Menu.Item>
-                                                })}
-                                            </Menu>
-                                        </div>
-                                        <Invite />
-                                        <Tags />
-                                    </Col> */}
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div ref={this.getOrCreateRef("AboutComp")}>
-                      {profileData && (
-                        <About
-                          about={profileData}
-                          callback={(reload) =>
-                            reload ? this.profielDetails() : null
-                          }
-                        />
-                      )}
-                    </div>
-                    <div ref={this.getOrCreateRef("InterestComp")}>
-                      {profileData.Interests && (
-                        <Interests interests={profileData.Interests} />
-                      )}
-                    </div>
-                    <div ref={this.getOrCreateRef("HobbyComp")}>
-                      <Hobbies
-                        hobbies={profileData.Hobbies}
-                        userid={this.props?.profile?.Id}
-                        callback={(reload) =>
-                          reload ? this.profielDetails() : null
-                        }
-                      />
-                    </div>
-                    <div ref={this.getOrCreateRef("InternshipComp")}>
-                      {profileData.Internships && (
-                        <Intership
-                          internships={profileData.Internships}
-                          userid={this.props?.profile?.Id}
-                          callback={(reload) =>
-                            reload ? this.profielDetails() : null
-                          }
-                        />
-                      )}
-                    </div>
-                    <div ref={this.getOrCreateRef("VideoComp")}>
-                      {
-                        <VideoProfile
-                          video={profileData.VideoAsProfile}
-                          userid={this.props?.profile?.Id}
-                          callback={(reload) =>
-                            reload ? this.profielDetails() : null
-                          }
-                        />
-                      }
-                    </div>
-                    <div ref={this.getOrCreateRef("EducationComp")}>
-                      {profileData.Education && (
-                        <Education
-                          education={profileData.Education}
-                          userid={this.props?.profile?.Id}
-                          callback={(reload) =>
-                            reload ? this.profielDetails() : null
-                          }
-                        />
-                      )}
-                    </div>
-                    <div ref={this.getOrCreateRef("CourseComp")}>
-                      <Courses loadUserCourse={true} />
-                    </div>
-                  </Col>
-                </Row>
+                <Route
+                  path="/profile/2"
+                  render={() => {
+                    return <ProfileDetail id={this.props?.profile?.Id} />;
+                  }}
+                />
               </TabPane>
               <TabPane tab="Friends" key="3">
-                <Row gutter={16}>
-                  {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                <Route
+                  path="/profile/3"
+                  render={() => {
+                    return (
+                      <Row gutter={16}>
+                        {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
                                     </Col> */}
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <FriendRequests
-                      isDataRefreshed={(refresh) =>
-                        this.isDataRefreshed(refresh)
-                      }
-                    />
-                    <Friends isDataRefreshed={isDataRefresh} />
-                  </Col>
-                </Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                          <FriendRequests
+                            isDataRefreshed={(refresh) =>
+                              this.isDataRefreshed(refresh)
+                            }
+                          />
+                          <Friends isDataRefreshed={isDataRefresh} />
+                        </Col>
+                      </Row>
+                    );
+                  }}
+                />
               </TabPane>
               <TabPane tab="Groups" className="m-0" key="4">
-                <Row gutter={16}>
-                  {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                <Route
+                  path="/profile/4"
+                  render={() => {
+                    return (
+                      <Row gutter={16}>
+                        {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
                                     </Col> */}
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <GroupsPage />
-                  </Col>
-                </Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                          <GroupsPage />
+                        </Col>
+                      </Row>
+                    );
+                  }}
+                />
               </TabPane>
             </Tabs>
           </Col>
@@ -450,4 +331,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Profile));

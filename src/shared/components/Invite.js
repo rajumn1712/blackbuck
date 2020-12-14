@@ -14,7 +14,7 @@ class Invite extends Component {
     }
     getUserInvites = () => {
         getUserInvitations(this.props.profile?.Id).then(res => {
-            this.setState({ invitations: res.data.length > 0 ? res.data[0] : [] })
+            this.setState({ invitations: res.data?.length > 0 ? res.data : [] })
         });
     }
     acceptInvite = (type, obj) => {
@@ -30,9 +30,11 @@ class Invite extends Component {
             }
         }
         acceptDeclineInvitations(object).then(res => {
-            if (type == 'Accept') {
-                this.getUserInvites();
+            if (type == 'accept') {
+                this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
+                this.props.upadateProfile(this.props.profile)
             }
+            this.getUserInvites();
             notify({ placement: 'bottomLeft', message: 'Invite', description: `Request ${type} successfully.` });
         });
     }
@@ -44,13 +46,13 @@ class Invite extends Component {
                     {
                         invitations.length > 0 && <div>
                             <Avatar.Group>
-                                <Avatar src={invitations[0]?.Avatar1}></Avatar>
-                                <Avatar src={invitations[0]?.Avatar2} />
+                                <Avatar src={this.props?.profile?.ProfilePic}></Avatar>
+                                <Avatar src={invitations[0]?.Image} />
                             </Avatar.Group>
-                            <p><span>{invitations[0]?.inviter}</span> was invited to join in <span className="text-color invite-grp-name">{invitations[0]?.Group}</span> group</p>
+                            <p><span>{invitations[0]?.InviterName}</span> was invited to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
                             <div className="invite-btn">
-                                <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('Accept', invitations[0])}>Accept</Button>
-                                <Button type="danger" onClick={() => this.acceptInvite('Decline', invitations[0])}>Decline</Button>
+                                <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitations[0])}>Accept</Button>
+                                <Button type="danger" onClick={() => this.acceptInvite('decline', invitations[0])}>Decline</Button>
                             </div>
                         </div>
                     }

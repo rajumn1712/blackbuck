@@ -84,6 +84,9 @@ class Groups extends Component {
             notify({ message: "Error", description: "Something went wrong :)", type: "error" });
         }
     }
+    saveGroup = () => {
+        this.creategroup.handleSave();
+    }
     render() {
         const { visible } = this.state;
         return (
@@ -121,11 +124,11 @@ class Groups extends Component {
                     visible={visible}
                     title="Create group"
                     cancel={this.handleCancel}
-                    saved={this.saveEducation}
-                    
+                    saved={this.saveGroup}
+                   // isHideFooter={true}
 
                 >
-                    <CreateGroup Type={"Add"}/>
+                    {visible && <CreateGroup Type={"Add"} handleCancel={this.handleCancel} onRef={creategroup => this.creategroup = creategroup}/>}
 
                 </CommonModal>
             </div>
