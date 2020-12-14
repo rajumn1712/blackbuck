@@ -255,7 +255,7 @@ class CreateGroup extends Component {
                                                     <List.Item.Meta
                                                         avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                             <Upload {...this.uploadProps}>
-                                                                <Avatar src={groupObject?.GroupImage || defaultUser}  onClick={() => this.setState({ isProfilePic: true })}/>
+                                                                <Avatar src={groupObject?.GroupImage || defaultUser} onClick={() => this.setState({ isProfilePic: true })} />
                                                                 <Tooltip placement="top" title="Change Photo">
                                                                     <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                                 </Tooltip>
@@ -427,7 +427,7 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                    <div className="">
+                                                    {/* <div className="">
                                                         <Button
                                                             key="submit"
                                                             type="primary"
@@ -435,8 +435,8 @@ class CreateGroup extends Component {
                                                             onClick={() => this.handleSave()}
                                                         >
                                                             Save
-            </Button>
-                                                    </div>,
+                                                        </Button>
+                                                    </div> */}
                                                 </Row>
                                             </Form>
                                         </div>
