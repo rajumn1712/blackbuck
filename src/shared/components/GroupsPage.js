@@ -1,119 +1,142 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Col, Row, Typography, Empty } from 'antd'
+import { Button, Card, Avatar, List } from 'antd'
+import notify from './notification';
+import { apiClient } from '../api/clients'
 import { Link } from 'react-router-dom';
-import { store } from '../../store'
-import connectStateProps from '../stateConnect';
-import { fetchUserGroups } from '../api/apiServer'
-import CommonModal from '../../components/ProfileComponents/CommonModal'
+import { cancelGroupRequest, fetchGroupSuggestions, joinGroup } from '../api/apiServer';
+import { connect } from 'react-redux';
+import { profileSuccess } from '../../reducers/auth'
+import CommonModal from "../../components/ProfileComponents/CommonModal";
+import creategroup from '../../group/creategroup';
 import CreateGroup from '../../group/creategroup'
-const { Meta } = Card;
-let GroupEditObj={};
-class GroupsPage extends Component {
-    state = {
-        Groups: [],
-        page: 1,
-        pageSize: 20,
-        loading: true,
-        loadMore: true,
-        visible: false,
-    }
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll)
-        this.getGroups();
-    }
-    componentWillUnmount() {
-        window.removeEventListener("scroll", this.handleScroll)
-    }
-    getGroups() {
-        this.setState({ ...this.state, loading: true });
-        fetchUserGroups((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.pageSize, (this.state.page * this.state.pageSize - this.state.pageSize))
-            .then(res => {
-                if (res.ok) {
-                    let { Groups } = this.state;
-                    Groups = Groups.concat(res.data)
-                    this.setState({ ...this.state, loading: false, Groups: Groups, loadMore: res.data.length === this.state.pageSize })
-                }
-            })
-    }
-    handleScroll = () => {
-        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-        const body = document.body;
-        const html = document.documentElement;
-        const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-        const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
-        if (windowBottom >= docHeight) {
-            this.loadMore();
-        } else {
 
-        }
-    }
-    loadMore(e) {
-        if (this.state.loadMore) {
-            let { page } = this.state;
-            page += 1;
-            this.setState({ ...this.state, page, loading: true }, () => {
-                this.getGroups();
-            })
-        }
-    }
+class Groups extends Component {
+    showModal = (e) => {
+        e.preventDefault();
+        this.setState({
+          visible: true,
+        });
+      };
+    state = {
+        data: [],
+        loading: true,
+        page: 1,
+        pageNo: 5
+    };
     handleCancel = e => {
-        GroupEditObj = {};
         this.setState({
             visible: false,
         });
     }
-    editPost = (group) => {
-        GroupEditObj = group;
-        this.setState({
-            visible: true,
-        });
+    joinGroup = async (item) => {
+        const obj = {
+            "UserId": this.props?.profile?.Id,
+            "Firstname": this.props?.profile?.FirstName,
+            "Lastname": this.props?.profile?.LastName,
+            "Image": this.props?.profile?.ProfilePic,
+            "Email": this.props?.profile?.Email
+        }
+        if (item.type == "Private") { obj.Type = "request" }
+        const joinResponse = await joinGroup(item.id, obj);
+        if (joinResponse.ok) {
+            notify({ message: "Group join", description: item.type === "Private" ? "Request sent" : "Joined to group" });
+            if (item.type !== 'Private') {
+                this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
+                this.props.updateProfile(this.props.profile)
+            }
+            this.updateGroup(item)
+        } else {
+            notify({ message: "Error", description: "Something went wrong :)", type: "error" });
+        }
+    }
+    newGroup = () => {
+
+    }
+    updateGroup(item) {
+        let { data } = this.state;
+        if (item.type === "Private") {
+            for (const i in data) {
+                let _item = data[i];
+                if (_item.id === item.id) {
+                    _item.requestJoin = _item.requestJoin ? null : "request";
+                }
+            }
+            this.setState({ ...this.state, data });
+        } else {
+            this.getAllGroups();
+        }
+    }
+    componentDidMount() {
+        this.getAllGroups();
+    }
+    getAllGroups = async () => {
+        const response = await fetchGroupSuggestions((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageNo);
+        if (response.ok) {
+            this.setState({ loading: false, data: response.data });
+        }
+    }
+    async cancelGroupRequest(item) {
+        const joinResponse = await cancelGroupRequest(item.id, this.props?.profile?.Id);
+        if (joinResponse.ok) {
+            notify({ message: "Group Request", description: "Request cancelled" });
+            this.updateGroup(item)
+        } else {
+            notify({ message: "Error", description: "Something went wrong :)", type: "error" });
+        }
     }
     render() {
-        const { user } = store.getState().oidc;
-        const { Groups,visible } = this.state;
+        const { visible } = this.state;
         return (
-            <div className="group-page" >
-                <Row gutter={16} className="">
-                    {Groups.length > 0 && Groups?.map((group, index) => {
-                        return <Col className="mb-16" md={12} lg={8} xl={8} xxl={6}>
-                            <Card key={index}
-                                cover={<img className="obj-fit" src={group.image} />} actions={[
-                                    <Link className="list-link f-14" to="/commingsoon">Leave Group</Link>
-                                ]}
-                            >
-                                <Meta title={<Link to="/groupview" className="post-title">{group.name}</Link>}
-                                    description={<div>
-                                        <div className="mb-4 f-12 text-overflow">{group.description}</div>
-                                        <div className="d-flex align-items-center">
-                            
-                                            {group.members && <span><span>{group.members?group.members:0}</span> Members</span>}
-
-                                        </div>
+            <div className="custom-card sub-text">
+                <Card title="Groups" bordered={true} extra={<Link to="/commingsoon">View all</Link>} actions={[
+                    <Button type="primary" onClick={this.showModal}>Create a Group</Button>
+                ]} >
+                    <List
+                        itemLayout="horizontal"
+                        split={false}
+                        dataSource={this.state.data}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar src={item.image} />}
+                                    title={<div className="d-flex align-items-center"><span className="overflow-text" title={item.name}>{item.name}{item.type == "Private" && <span className="icons-small lock-icon ml-4" />}</span></div>}
+                                    description={<div><div className="overflow-text">{item.description}</div>
+                                        <div className="text-overflow">
+                                            <span>
+                                                <span className="mr-4">{item.members}</span>
+                                         Members
+                                    </span> | <span>
+                                                <span className="mr-4">0</span>
+                                         Posts
+                                    </span></div>
                                     </div>}
                                 />
-                            </Card>
-                        </Col>
-                    })
-                    }
-                    {Groups.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-
-                    }
-
-
-                </Row>
+                                {item.requestJoin === "request" ? <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.cancelGroupRequest(item)}>Cancel request</Link> : <Link className="ml-8 f-12 list-link ml-16" onClick={() => this.joinGroup(item)}>Join</Link>}
+                            </List.Item>
+                        )}
+                    />
+                </Card>
                 <CommonModal
                     className="creategroup-popup"
                     visible={visible}
-                    title="Edit group"
+                    title="Create group"
                     cancel={this.handleCancel}
+                    saved={this.saveEducation}
                     isHideFooter={true}
+
                 >
-                    {visible && <CreateGroup Type={"Edit"} GroupId={GroupEditObj.id} handleCancel={this.handleCancel}/>}
+                    {visible && <CreateGroup Type={"Add"} handleCancel={this.handleCancel}/>}
+
                 </CommonModal>
             </div>
-
-
         )
     }
 }
-export default connectStateProps(GroupsPage);
+
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+}
+const mapDispatchToProps = dispatch => {
+    return { updateProfile: (info) => { dispatch(profileSuccess(info)) } }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Groups);
