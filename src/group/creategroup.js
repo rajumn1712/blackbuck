@@ -12,7 +12,7 @@ import { hasChanged, uuidv4 } from "../utils";
 const { Option } = Select;
 
 class CreateGroup extends Component {
-     groupObject = {
+    groupObject = {
         GroupName: "",
         GroupType: "",
         GroupImage: "",
@@ -165,6 +165,7 @@ class CreateGroup extends Component {
     };
 
     componentDidMount() {
+        this.props.onRef(this)
         this.imageObject = {};
         fetchUserFriends((this.props.userId ? this.props.userId : (this.props?.profile?.Id)))
             .then(res => {
@@ -174,6 +175,9 @@ class CreateGroup extends Component {
         if (this.props.GroupId) {
             this.getGroupObject(this.props.GroupId)
         }
+    }
+    componentWillUnmount() {
+        this.props.onRef(null)
     }
     showModal = () => {
         this.setState({
@@ -451,7 +455,7 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                    <div className="">
+                                                    {/* <div className="">
                                                         <Button
                                                             key="submit"
                                                             type="primary"
@@ -460,7 +464,7 @@ class CreateGroup extends Component {
                                                         >
                                                             Save
             </Button>
-                                                    </div>,
+                                                    </div>, */}
                                                 </Row>
                                             </Form>
                                         </div>
