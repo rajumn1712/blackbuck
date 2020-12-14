@@ -103,7 +103,7 @@ const OnBoard = ({ profile }) => {
                                 A bit about you
                             </h2>
                         </div>
-                        <div className="intro2">
+                        <div className="intro2 pb-0">
                             <Form layout="vertical" initialValues={initialValues} onFinishFailed={(err) => console.log(err)}>
                                 <Row gutter={16}>
 
