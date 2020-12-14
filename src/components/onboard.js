@@ -97,7 +97,7 @@ const OnBoard = ({ profile }) => {
                         </div>
 
                     </Col>
-                    <Col xs={24} md={16}>
+                    <Col xs={24} md={16} className="right">
                         <div className="intro-title">
                             <h2>
                                 A bit about you
@@ -105,7 +105,7 @@ const OnBoard = ({ profile }) => {
                         </div>
                         <div className="intro2">
                             <Form layout="vertical" initialValues={initialValues} onFinishFailed={(err) => console.log(err)}>
-                                <Row gutter={16} className="mt-16">
+                                <Row gutter={16}>
 
                                     <Col xs={24} className="custom-fields">
                                         <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }]}>
@@ -129,7 +129,7 @@ const OnBoard = ({ profile }) => {
                                 </Row>
                             </Form>
                         </div >
-                        {subjects.length > 0 && <><div className="intro-title">
+                        {subjects.length > 0 && <><div className="intro-subtitle">
                             <h2>
                                 Choose you're subjects
                             </h2>
@@ -138,7 +138,7 @@ const OnBoard = ({ profile }) => {
                                 <Checkbox.Group style={{ width: '100%' }} onChange={onChange}>
                                     <Row gutter={8}>
                                         {subjects.map((subject, indx) => <Col span={12}>
-                                            <Checkbox onChange={(val) => onSubjectsSelection(val, subject)} key={indx} className="intro-check" value="Computers"><span><img src={Computer} className="mr-8" /><span>{subject?.SubjectName}</span></span></Checkbox>
+                                            <Checkbox onChange={(val) => onSubjectsSelection(val, subject)} key={indx} className="intro-check" value="Computers"><span>{subject?.SubjectName}</span></Checkbox>
                                         </Col>)}
 
                                     </Row>
@@ -161,7 +161,7 @@ const OnBoard = ({ profile }) => {
                         </div>
 
                     </Col>
-                    <Col xs={24} md={16}>
+                    <Col xs={24} md={16} className="right">
                         <div className="intro-title">
                             <h2>Tell us what you are Interested in?</h2>
                             <p>You can select few</p>
@@ -216,7 +216,7 @@ const OnBoard = ({ profile }) => {
                         </div>
 
                     </Col>
-                    <Col xs={24} md={16}>
+                    <Col xs={24} md={16} className="right">
                         <div className="intro-title">
                             <h2>Want to join in Groups?</h2>
                         </div>
@@ -235,13 +235,9 @@ const OnBoard = ({ profile }) => {
 
             <Card className="mb-16 custom-card onboard-process" bordered={true} >
                 <div className="steps-content">
-                    {steps[current].content}</div>
-                <Row gutter={8}>
-                    <Col xs={24} md={8}>
-                        <div style={{ height: '100%', backgroundColor: 'var(--grey)' }}></div>
-                    </Col>
-                    <Col xs={24} md={16}>
-                        <div className="steps-action">
+                    {steps[current].content}
+                    
+                    <div className="steps-action">
                             {current > 0 && (
                                 <Button className="backbtn" onClick={() => prev()}>
                                     Back
@@ -258,9 +254,17 @@ const OnBoard = ({ profile }) => {
                                 </Button>
                             )}
                         </div>
+                    
+                    </div>
+                {/* <Row gutter={8}>
+                    <Col xs={24} md={8}>
+                        <div style={{ height: '100%', backgroundColor: 'var(--grey)' }}></div>
+                    </Col>
+                    <Col xs={24} md={16}>
+                       
 
                     </Col>
-                </Row>
+                </Row> */}
 
 
             </Card>
