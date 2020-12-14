@@ -11,28 +11,31 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { hasChanged, uuidv4 } from "../utils";
 const { Option } = Select;
 
-const groupObject = {
-    GroupName: "",
-    GroupType: "",
-    GroupImage: "",
-    GroupCoverPic: "",
-    Type: "",
-    Location: "",
-    Description: "",
-    Hide: "",
-    Invitations: [],
-    GroupId: null,
-    AdminUsers: null,
-    CreatedDate: ""
-}
 class CreateGroup extends Component {
+    groupObject = {
+        GroupName: "",
+        GroupType: "",
+        GroupImage: "",
+        GroupCoverPic: "",
+        Type: "",
+        Location: "",
+        Description: "",
+        Hide: "",
+        Invitations: [],
+        GroupId: null,
+        AdminUsers: null,
+        CreatedDate: "",
+        Members: []
+    }
     formRef = createRef();
 
     imageObject = {};
     getGroupObject = (id) => {
         editGroup(id).then(res => {
             this.setInitialvalues(res.data[0]);
-            this.setState({ ...this.state, groupObject: res.data[0] });
+            let { groupObject } = this.state;
+            groupObject = res.data[0]
+            this.setState({ ...this.state, groupObject });
         });
     }
     setInitialvalues = (initialValues) => {
@@ -80,14 +83,14 @@ class CreateGroup extends Component {
         visible: false,
         loading: true,
         isProfilePic: false,
-        groupObject: groupObject,
+        groupObject: this.groupObject,
         initialValues: {
-            GroupName: groupObject.GroupName,
-            GroupType: groupObject.GroupType,
-            Type: groupObject.Type,
-            Location: groupObject.Location,
-            Description: groupObject.Description,
-            Invitations: groupObject.Invitations,
+            GroupName: this.groupObject.GroupName,
+            GroupType: this.groupObject.GroupType,
+            Type: this.groupObject.Type,
+            Location: this.groupObject.Location,
+            Description: this.groupObject.Description,
+            Invitations: this.groupObject.Invitations,
         },
     };
     createObject = (values) => {
@@ -115,7 +118,8 @@ class CreateGroup extends Component {
                 "Image": this.props?.profile?.ProfilePic,
                 "Email": this.props?.profile?.Email
             }],
-            CreatedDate: groupObject.CreatedDate ? new Date(groupObject.CreatedDate) : new Date()
+            CreatedDate: groupObject.CreatedDate ? new Date(groupObject.CreatedDate) : new Date(),
+            Members: []
         };
     };
     handleBeforUpload = (file) => {
@@ -147,10 +151,11 @@ class CreateGroup extends Component {
         onChange: ({ file }) => {
             const { status } = file;
             if (status !== 'uploading') {
-                this.imageObject.ImageUrl = file.response[0];
-                this.handleImageOk();
+
             }
             if (status === 'done') {
+                this.imageObject.ImageUrl = file.response[0];
+                this.handleImageOk();
                 message.success(`${this.state.isProfilePic ? 'Profil picture' : 'Cover picture'} uploaded successfully.`);
             } else if (status === 'error') {
                 message.error(`File upload failed.`);
@@ -160,6 +165,8 @@ class CreateGroup extends Component {
     };
 
     componentDidMount() {
+        this.props.onRef(this)
+        this.imageObject = {};
         fetchUserFriends((this.props.userId ? this.props.userId : (this.props?.profile?.Id)))
             .then(res => {
                 const friendsInfo = res.data;
@@ -168,6 +175,9 @@ class CreateGroup extends Component {
         if (this.props.GroupId) {
             this.getGroupObject(this.props.GroupId)
         }
+    }
+    componentWillUnmount() {
+        this.props.onRef(null)
     }
     showModal = () => {
         this.setState({
@@ -193,6 +203,7 @@ class CreateGroup extends Component {
             const saveObj = this.createObject(this.formRef.current.values);
             const response = await saveGroup(saveObj);
             if (response.ok) {
+                this.props.handleCancel();
                 notify({
                     description: "Group saved successfully",
                     message: "Group",
@@ -444,7 +455,7 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                    <div className="">
+                                                    {/* <div className="">
                                                         <Button
                                                             key="submit"
                                                             type="primary"
@@ -452,8 +463,8 @@ class CreateGroup extends Component {
                                                             onClick={() => this.handleSave()}
                                                         >
                                                             Save
-            </Button>
-                                                    </div>,
+                                                        </Button>
+                                                    </div> */}
                                                 </Row>
                                             </Form>
                                         </div>

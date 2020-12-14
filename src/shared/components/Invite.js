@@ -14,7 +14,7 @@ class Invite extends Component {
     }
     getUserInvites = () => {
         getUserInvitations(this.props.profile?.Id).then(res => {
-            this.setState({ invitations: res.data.length > 0 ? res.data : [] })
+            this.setState({ invitations: res.data?.length > 0 ? res.data : [] })
         });
     }
     acceptInvite = (type, obj) => {
@@ -30,8 +30,9 @@ class Invite extends Component {
             }
         }
         acceptDeclineInvitations(object).then(res => {
-            if (type == 'Accept') {
-                
+            if (type == 'accept') {
+                this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
+                this.props.upadateProfile(this.props.profile)
             }
             this.getUserInvites();
             notify({ placement: 'bottomLeft', message: 'Invite', description: `Request ${type} successfully.` });
@@ -50,8 +51,8 @@ class Invite extends Component {
                             </Avatar.Group>
                             <p><span>{invitations[0]?.InviterName}</span> was invited to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
                             <div className="invite-btn">
-                                <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('Accept', invitations[0])}>Accept</Button>
-                                <Button type="danger" onClick={() => this.acceptInvite('Decline', invitations[0])}>Decline</Button>
+                                <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitations[0])}>Accept</Button>
+                                <Button type="danger" onClick={() => this.acceptInvite('decline', invitations[0])}>Decline</Button>
                             </div>
                         </div>
                     }
