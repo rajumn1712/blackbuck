@@ -14,6 +14,7 @@ import GroupView from "../group/groupview";
 import CreateGroup from "../group/creategroup";
 // import CreateGroup from './creategroup';
 import OnBoard from "../components/onboard";
+import Help from '../components/help';
 import { Col, Row } from "antd";
 
 const onBoard = () => {
@@ -30,6 +31,8 @@ const onBoard = () => {
 const Router = () => {
   return (
     <Switch>
+      <Route path="/support" component={Help} />
+
       <ProtectedRoute path="/student_onboard" component={onBoard} />
       <ProtectedRoute path="/friends" component={About} />
       <Route path="/contact" component={Contact} />

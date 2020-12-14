@@ -248,7 +248,7 @@
 .custom-input .ant-input{padding:7px 10px !important;}
 .custom-modal-header{display:flex;justify-content:space-between;align-items:center;}
 .custom-modal-header h4{margin-bottom:0;color:var(--textprimary);}
-.modal-search .header-searchbar .ant-input-group{box-shadow:none;border:1px solid var(--bordergrey);border-radius:8px;}
+.modal-search .header-searchbar .ant-input-group{box-shadow:none;border:1px solid var(--bordergrey);border-radius:0.8rem;}
 .modal-search .header-searchbar,.invite-search .header-searchbar{max-width:100%;display:block;}
 .modal-interest .ant-modal-body{background-color:#f9f9f9;padding:0 !important;}
 .text-red,.text-red:hover{color:var(--red) !important;}
@@ -363,3 +363,8 @@ textarea{resize:unset !important;}
 .ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder{padding:8px 18px 8px 8px !important;}
 .onboard-process .ant-select-selection-search{padding:8px !important;}
 .ant-select-item-option-content .ant-avatar-image,.ant-select-selection-item .ant-avatar-image{margin-right:8px;}
+.help-search .header-searchbar{max-width: 100%;}
+.help-search{text-align: center;margin-top: 24px;}
+.help-search h2{color: var(--textprimary);}
+.helpcards{text-align: center;padding: 24px;border: 1px solid var(--line);background-color: #ffffff;}
+.helpcards h3{margin-top: 10px ;margin-bottom: 10px;}
