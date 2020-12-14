@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react';
 import { Row, Col, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Select } from 'antd';
 import './groupstyle.css';
 import CommonModal from '../components/ProfileComponents/CommonModal';
-import { saveGroup, fetchUserFriends } from '../shared/api/apiServer';
+import { saveGroup, fetchUserFriends, editGroup } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
@@ -21,7 +21,7 @@ const groupObject = {
     Description: "",
     Hide: "",
     Invitations: [],
-    GroupId: "",
+    GroupId: null,
     AdminUsers: null,
     CreatedDate: ""
 }
@@ -29,6 +29,22 @@ class CreateGroup extends Component {
     formRef = createRef();
 
     imageObject = {};
+    getGroupObject = (id) => {
+        editGroup(id).then(res => {
+            this.setInitialvalues(res.data[0]);
+            this.setState({ ...this.state, groupObject: res.data[0] });
+        });
+    }
+    setInitialvalues = (initialValues) => {
+        this.formRef.current.values.GroupName = initialValues.GroupName;
+        this.formRef.current.values.GroupType = initialValues.GroupType;
+        this.formRef.current.values.Type = initialValues.Type;
+        this.formRef.current.values.Location = initialValues.Location;
+        this.formRef.current.values.Description = initialValues.Description;
+        initialValues.Invitations.forEach(val => {
+            this.formRef.current.values.Invitations.push(val.FriendId)
+        })
+    }
     state = {
         GroupTypeLu: ["IT Group", "science group ", "Learning Group"],
         TypeLu: [
@@ -62,7 +78,9 @@ class CreateGroup extends Component {
         FriendsList: [],
         disabled: false,
         visible: false,
-        groupObject: this.props.Type == 'Add' ? groupObject : this.props.groupObject,
+        loading: true,
+        isProfilePic: false,
+        groupObject: groupObject,
         initialValues: {
             GroupName: groupObject.GroupName,
             GroupType: groupObject.GroupType,
@@ -76,7 +94,7 @@ class CreateGroup extends Component {
         let { groupObject } = this.state;
         let InvitesArray = [];
         values.Invitations.forEach(item => {
-            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item })
+            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item, Image: this.props?.profile.ProfilePic, })
         });
         return {
             GroupName: values.GroupName,
@@ -88,7 +106,7 @@ class CreateGroup extends Component {
             Description: values.Description,
             Hide: values.Hide,
             Invitations: InvitesArray,
-            GroupId: groupObject.GroupId ? groupObject.GroupId : uuidv4,
+            GroupId: groupObject.GroupId ? groupObject.GroupId : uuidv4(),
             UserId: groupObject.UserId,
             AdminUsers: groupObject.AdminUsers ? groupObject.AdminUsers : [{
                 "UserId": this.props?.profile?.Id,
@@ -147,6 +165,9 @@ class CreateGroup extends Component {
                 const friendsInfo = res.data;
                 this.setState({ ...this.state, FriendsList: friendsInfo });
             })
+        if (this.props.GroupId) {
+            this.getGroupObject(this.props.GroupId)
+        }
     }
     showModal = () => {
         this.setState({
@@ -166,23 +187,19 @@ class CreateGroup extends Component {
         });
     }
 
-    handleSave = (e) => {
+    handleSave = async (e) => {
         this.formRef.current.handleSubmit();
         if (!hasChanged(this.formRef.current.values)) {
             const saveObj = this.createObject(this.formRef.current.values);
-            saveGroup(saveObj).then((res) => {
-                this.setState(
-                    {
-                        visible: false,
-                    },
-                    () => {
-                        notify({
-                            description: "Group saved successfully",
-                            message: "Group",
-                        });
-                    }
-                );
-            });
+            const response = await saveGroup(saveObj);
+            if (response.ok) {
+                notify({
+                    description: "Group saved successfully",
+                    message: "Group",
+                });
+            } else {
+                notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
+            }
         }
     };
     handleValidate = (values) => {
@@ -221,7 +238,7 @@ class CreateGroup extends Component {
         };
         const { value } = this.state;
         return <Formik
-            enableReinitialize
+            enableReinitialize={true}
             initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
@@ -255,7 +272,7 @@ class CreateGroup extends Component {
                                                     <List.Item.Meta
                                                         avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                             <Upload {...this.uploadProps}>
-                                                                <Avatar src={groupObject?.GroupImage || defaultUser}  onClick={() => this.setState({ isProfilePic: true })}/>
+                                                                <Avatar src={groupObject?.GroupImage || defaultUser} onClick={() => this.setState({ isProfilePic: true })} />
                                                                 <Tooltip placement="top" title="Change Photo">
                                                                     <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                                 </Tooltip>
