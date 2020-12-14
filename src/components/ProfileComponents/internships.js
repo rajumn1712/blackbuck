@@ -199,8 +199,8 @@ class Intership extends Component {
     let { internshipsObj, initialValues } = { ...this.state };
     if (isedit) {
       const { CompanyName, ShortName, Location, Duration } = internship;
-      internshipsObj.InternshipId = { ...internship.InternshipId };
-      internshipsObj.CompanyLogo = { ...internship.CompanyLogo };
+      internshipsObj.InternshipId = internship.InternshipId;
+      internshipsObj.CompanyLogo = internship.CompanyLogo;
       internshipsObj.uploadsources = [...internship.Certificate];
       Object.assign(initialValues, {
         CompanyName,
@@ -334,7 +334,7 @@ class Intership extends Component {
                     {item.Certificate?.map((certificate, indx) => {
                       return (
                         <div className="mb-0 filename" key={indx}>
-                          <span className="icons pdf mr-8" />
+                          {/* <span className="icons pdf mr-8" /> */}
                           <p>{certificate.File}</p>
                         </div>
                       );
@@ -357,7 +357,7 @@ class Intership extends Component {
             initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
-          // validationSchema={this.validateSchema}
+            // validationSchema={this.validateSchema}
           >
             {({ values, setFieldValue }) => {
               return (
