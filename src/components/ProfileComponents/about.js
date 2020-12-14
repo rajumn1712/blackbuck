@@ -10,6 +10,7 @@ import { saveAboutMe } from "../../shared/api/apiServer";
 import { hasChanged, uuidv4 } from "../../utils";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import notify from "../../shared/components/notification";
+import Loader from "../../common/loader";
 
 class About extends Component {
   state = {
@@ -21,6 +22,7 @@ class About extends Component {
     finalAddress: this.props.about.Address,
     address: {},
     visible: false,
+    loading: false,
   };
 
   handleValidate = (values) => {
@@ -73,10 +75,12 @@ class About extends Component {
   handleOk = () => {
     this.formRef.current.handleSubmit();
     if (!hasChanged(this.formRef.current.values)) {
+      this.setState({ ...this.state, loading: true });
       const saveObj = this.createSaveObj(this.formRef.current.values);
       saveAboutMe(saveObj).then((res) => {
         this.setState(
           {
+            loading: false,
             visible: false,
           },
           () => {
@@ -130,6 +134,7 @@ class About extends Component {
       finalAddress,
       visible,
       address,
+      loading,
     } = this.state;
 
     return (
@@ -202,6 +207,7 @@ class About extends Component {
           cancel={this.handleCancel}
           saved={this.handleOk.bind(this)}
         >
+          {loading && <Loader className="loader-top-middle" />}
           <Formik
             enableReinitialize
             innerRef={this.formRef}

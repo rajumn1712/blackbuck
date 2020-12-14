@@ -249,10 +249,12 @@ class Intership extends Component {
   handleOk = (e) => {
     this.formRef.current.handleSubmit();
     if (!hasChanged(this.formRef.current.values)) {
+      this.setState({ ...this.state, loading: true });
       const saveObj = this.createObject(this.formRef.current.values);
       saveInternships(saveObj).then((res) => {
         this.setState(
           {
+            loading: false,
             visible: false,
           },
           () => {
@@ -354,6 +356,7 @@ class Intership extends Component {
           cancel={this.handleCancel}
           saved={this.handleOk}
         >
+          {this.state.loading && <Loader className="loader-top-middle" />}
           <Formik
             enableReinitialize
             initialValues={initialValues}

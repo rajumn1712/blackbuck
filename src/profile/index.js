@@ -71,7 +71,8 @@ class Profile extends Component {
       }
       if (status === "done") {
         message.success(
-          `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
+          `${
+            this.state.isProfilePic ? "Profil picture" : "Cover picture"
           } uploaded successfully.`
         );
       } else if (status === "error") {

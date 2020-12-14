@@ -8,6 +8,7 @@ import "../../App.css";
 import CommonModal from "./CommonModal";
 import { saveHobbies } from "../../shared/api/apiServer";
 import notify from "../../shared/components/notification";
+import Loader from "../../common/loader";
 
 class Hobbies extends Component {
   state = {
@@ -17,6 +18,7 @@ class Hobbies extends Component {
     inputValue: "",
     visible: false,
     saveObj: { Name: "" },
+    loading: false,
   };
 
   showModal = (e) => {
@@ -29,12 +31,14 @@ class Hobbies extends Component {
     });
   };
   handleOk = (e) => {
+    this.setState({ ...this.state, loading: true });
     let { saveObj, tags } = this.state;
     saveObj.Name = tags.toString();
     this.setState({ saveObj: saveObj });
     saveHobbies(this.props.userid, this.state.saveObj).then((res) => {
       this.setState(
         {
+          loading: false,
           visible: false,
         },
         () => {
@@ -141,6 +145,7 @@ class Hobbies extends Component {
           cancel={this.handleCancel}
           saved={this.handleOk}
         >
+          {this.state.loading && <Loader className="loader-top-middle" />}
           <div className="tags">
             <div style={{ margin: 10 }}>
               <TweenOneGroup

@@ -52,6 +52,7 @@ class Education extends Component {
     },
     isEdit: false,
     visible: false,
+    loading: false,
     fileUploading: false,
   };
   showModal = (e, isedit, education) => {
@@ -114,10 +115,12 @@ class Education extends Component {
   saveEducation = (e) => {
     this.formRef.current.handleSubmit();
     if (!hasChanged(this.formRef.current.values)) {
+      this.setState({ ...this.state, loading: true });
       const saveObj = this.createObject(this.formRef.current.values);
       saveEducation(saveObj).then((res) => {
         this.setState(
           {
+            loading: false,
             visible: false,
           },
           () => {
@@ -283,6 +286,7 @@ class Education extends Component {
           saved={this.saveEducation}
         >
           <div className="">
+            {this.state.loading && <Loader className="loader-top-middle" />}
             <Formik
               enableReinitialize={true}
               initialValues={initialValues}

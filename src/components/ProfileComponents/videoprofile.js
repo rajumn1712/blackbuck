@@ -17,6 +17,7 @@ class VideoProfile extends Component {
     inputValue: this.props.video ? this.props.video : "",
     visible: false,
     fileUploading: false,
+    loading: false,
   };
   createObject = (value) => {
     return {
@@ -64,11 +65,13 @@ class VideoProfile extends Component {
     this.setState({ inputValue });
   };
   handleOk = async (e) => {
+    this.setState({ ...this.state, loading: true });
     const saveObj = this.createObject(this.state.inputValue);
     const response = await saveVideoAsProfile(saveObj);
     if (response.ok) {
       this.setState(
         {
+          loading: false,
           visible: false,
         },
         () => {
@@ -119,6 +122,7 @@ class VideoProfile extends Component {
           saved={() => this.handleOk()}
         >
           <div className="">
+            {this.state.loading && <Loader className="loader-top-middle" />}
             <Dragger
               className="upload mb-16"
               {...this.uploadProps}
