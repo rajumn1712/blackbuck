@@ -127,7 +127,7 @@ class HeaderComponent extends React.Component {
                 </Link>
             </Menu.Item> */}
             <Menu.Item key="2">
-                <Link to="/commingsoon"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
+                <Link to="/settings"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
                 </Link>
             </Menu.Item>
             <Menu.Item key="3">

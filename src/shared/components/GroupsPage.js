@@ -90,7 +90,7 @@ class GroupsPage extends Component {
                                         <div className="d-flex align-items-center">
                             
                                             {group.members && <span><span>{group.members?group.members:0}</span> Members</span>}
-
+                                            <a className="edit-groupbtn"></a>
                                         </div>
                                     </div>}
                                 />
