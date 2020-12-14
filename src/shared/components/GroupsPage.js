@@ -24,6 +24,9 @@ class GroupsPage extends Component {
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll)
     }
+    saveGroup = () => {
+        this.creategroup.handleSave();
+    }
     getGroups() {
         this.setState({ ...this.state, loading: true });
         fetchUserGroups((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.pageSize, (this.state.page * this.state.pageSize - this.state.pageSize))
@@ -106,9 +109,10 @@ class GroupsPage extends Component {
                     visible={visible}
                     title="Edit group"
                     cancel={this.handleCancel}
-                    isHideFooter={true}
+                    saved={this.saveGroup}
+                    // isHideFooter={true}
                 >
-                    {visible && <CreateGroup Type={"Edit"} GroupId={GroupEditObj.id} handleCancel={this.handleCancel}/>}
+                    {visible && <CreateGroup Type={"Edit"} GroupId={GroupEditObj.id} handleCancel={this.handleCancel} onRef={creategroup => this.creategroup = creategroup}/>}
                 </CommonModal>
             </div>
 
