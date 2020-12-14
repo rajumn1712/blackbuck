@@ -125,22 +125,23 @@ class Courses extends Component {
                     </div>
                   }
                 />
-                {!this.props?.loadUserCourse &&
-                  (item.requestJoin === "request" ? (
-                    <Link
-                      className="ml-8 f-12 list-link ml-16"
-                      onClick={() => this.cancelGroupRequest(item)}
-                    >
-                      Cancel request
-                    </Link>
-                  ) : (
-                    <Link
-                      className="ml-8 f-12 list-link ml-16"
-                      onClick={() => this.handleCourseJoin(item)}
-                    >
-                      Join
-                    </Link>
-                  ))}
+                {!this.props?.loadUserCourse ||
+                  (!this.props.IsHideAction &&
+                    (item.requestJoin === "request" ? (
+                      <Link
+                        className="ml-8 f-12 list-link ml-16"
+                        onClick={() => this.cancelGroupRequest(item)}
+                      >
+                        Cancel request
+                      </Link>
+                    ) : (
+                      <Link
+                        className="ml-8 f-12 list-link ml-16"
+                        onClick={() => this.handleCourseJoin(item)}
+                      >
+                        Join
+                      </Link>
+                    )))}
               </List.Item>
             )}
           />

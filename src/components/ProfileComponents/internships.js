@@ -309,16 +309,18 @@ class Intership extends Component {
                     <span className="card-options-left">
                       <span className="left-menu intenship" />
                     </span>
-                    <span className="card-options-right">
-                      <SideAction
-                        horclass="icons more"
-                        clickedEvent={(event, name) =>
-                          this.handleEvent(event, name, item)
-                        }
-                        actionsList={ownerActions}
-                      />
-                      {/* <span className="icons more"/> */}
-                    </span>
+                    {!this.props.IsHideAction && (
+                      <span className="card-options-right">
+                        <SideAction
+                          horclass="icons more"
+                          clickedEvent={(event, name) =>
+                            this.handleEvent(event, name, item)
+                          }
+                          actionsList={ownerActions}
+                        />
+                        {/* <span className="icons more"/> */}
+                      </span>
+                    )}
                   </div>
                   <div className="intern-cardbody">
                     <div className="internlogo">
