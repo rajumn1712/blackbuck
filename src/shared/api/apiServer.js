@@ -114,6 +114,9 @@ const getUserInvitations = (user_id) => {
 const acceptDeclineInvitations = (obj) => {
   return apiClient.post(FRIENDS_API + `invitationAcceptandDecline`, obj);
 }
+const editGroup = (group_id) => {
+  return apiClient.get(FRIENDS_API + `getGroupDetails/${group_id}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -146,4 +149,5 @@ export {
   saveGroup,
   getUserInvitations,
   acceptDeclineInvitations,
+  editGroup
 };
