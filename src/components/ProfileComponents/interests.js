@@ -1,22 +1,26 @@
 import React, { Component } from "react";
-import { Card, Avatar, List, Input,Modal } from "antd";
+import { Card, Avatar, List, Input, Modal } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
 import "../../App.css";
 import CommonModal from "./CommonModal";
 import notify from "../../shared/components/notification";
-import { fetchInterestsLu, saveInterest, deleteInterest } from '../../shared/api/apiServer';
-import { connect } from 'react-redux';
+import {
+  fetchInterestsLu,
+  saveInterest,
+  deleteInterest,
+} from "../../shared/api/apiServer";
+import { connect } from "react-redux";
 
 const { Search } = Input;
 
 class Interests extends Component {
   state = {
-    interests: this.props.interests?this.props.interests:[],
+    interests: this.props.interests ? this.props.interests : [],
     interestsLu: [],
     visible: false,
-    search: '',
+    search: "",
     page: 1,
     pageSize: 10,
     loadMore: true,
@@ -32,58 +36,79 @@ class Interests extends Component {
         Image: this.props.profile?.ProfilePic,
         Email: this.props.profile?.FirstName,
       },
-    }
+    },
   };
   componentDidMount() {
     this.fetchInterestsLu(10, 0);
   }
   fetchInterestsLu = (take, skip) => {
     this.setState({ ...this.state, loading: true });
-    fetchInterestsLu(take, skip)
-      .then(res => {
-        if (res.ok) {
-          let { interestsLu, interests } = this.state;
-          interestsLu = interestsLu.concat(res.data)
-          this.setState({ ...this.state, loading: false, interestsLu: interestsLu, loadMore: res.data.length === this.state.pageSize }, () => {
-            interests.forEach(val => {
+    fetchInterestsLu(take, skip).then((res) => {
+      if (res.ok) {
+        let { interestsLu, interests } = this.state;
+        interestsLu = interestsLu.concat(res.data);
+        this.setState(
+          {
+            ...this.state,
+            loading: false,
+            interestsLu: interestsLu,
+            loadMore: res.data.length === this.state.pageSize,
+          },
+          () => {
+            interests.forEach((val) => {
               this.handleInterest(val);
             });
-          })
-        }
-      })
-  }
+          }
+        );
+      }
+    });
+  };
 
   showModal = (e) => {
     e.preventDefault();
-    this.setState({
-      visible: true,
-      interestsLu:[],
-      saveObject: {
-        UserId: this.props?.profile?.Id,
-        Interests: [],
-        UserDetails: {
-          UserId: this.props.profile?.Id,
-          Firstname: this.props.profile?.FirstName,
-          Lastname: "",
-          Image: this.props.profile?.ProfilePic,
-          Email: this.props.profile?.FirstName,
+    this.setState(
+      {
+        visible: true,
+        interestsLu: [],
+        saveObject: {
+          UserId: this.props?.profile?.Id,
+          Interests: [],
+          UserDetails: {
+            UserId: this.props.profile?.Id,
+            Firstname: this.props.profile?.FirstName,
+            Lastname: "",
+            Image: this.props.profile?.ProfilePic,
+            Email: this.props.profile?.FirstName,
+          },
         },
+      },
+      () => {
+        this.fetchInterestsLu(10, 0);
       }
-    },()=>{
-      this.fetchInterestsLu(10, 0);
-    });
+    );
   };
   handleOk = async (e) => {
     const response = await saveInterest(this.state.saveObject);
     if (response.ok) {
-      this.setState({
-        visible: false,
-        interests: this.state.saveObject.Interests,
-      }, () => {
-        notify({ description: "Interests added successfully", message: "Interests" })
-      });
+      this.setState(
+        {
+          visible: false,
+          interests: this.state.saveObject.Interests,
+        },
+        () => {
+          notify({
+            description: "Interests added successfully",
+            message: "Interests",
+          });
+          this.props.callback(true);
+        }
+      );
     } else {
-      notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
+      notify({
+        description: "Something went wrong :)",
+        message: "Error",
+        type: "error",
+      });
     }
   };
   handleCancel = (e) => {
@@ -97,44 +122,60 @@ class Interests extends Component {
   };
   handleInterest = (item) => {
     let { interestsLu, saveObject } = this.state;
-    interestsLu.forEach(interest => {
+    interestsLu.forEach((interest) => {
       if (item.InterestId == interest.InterestId) {
         interest.IsInterest = true;
         saveObject.Interests.push(item);
       }
     });
 
-    this.setState({ ...this.state, interestsLu: interestsLu, saveObject: saveObject })
-
+    this.setState({
+      ...this.state,
+      interestsLu: interestsLu,
+      saveObject: saveObject,
+    });
   };
   handleRemove = (item) => {
     let { interestsLu, saveObject } = this.state;
-    interestsLu.forEach(interest => {
+    interestsLu.forEach((interest) => {
       if (item.InterestId == interest.InterestId) {
         interest.IsInterest = false;
         saveObject.Interests.splice(saveObject.Interests.indexOf(item), 1);
       }
     });
 
-    this.setState({ ...this.state, interestsLu: interestsLu })
+    this.setState({ ...this.state, interestsLu: interestsLu });
   };
   deleteInterest = async (item) => {
-    const response = await deleteInterest(this.props?.profile?.Id, item.InterestId);
+    const response = await deleteInterest(
+      this.props?.profile?.Id,
+      item.InterestId
+    );
     if (response.ok) {
       this.handleRemove(item);
       let { interests } = this.state;
-      interests = interests.filter(obj => {
+      interests = interests.filter((obj) => {
         return obj.InterestId !== item.InterestId;
-      })
-      this.setState({
-        ...this.state,
-        visible: false,
-        interests: interests
-      }, () => {
-        notify({ description: "Interest Deleted successfully", message: "Interests" })
       });
+      this.setState(
+        {
+          ...this.state,
+          visible: false,
+          interests: interests,
+        },
+        () => {
+          notify({
+            description: "Interest Deleted successfully",
+            message: "Interests",
+          });
+        }
+      );
     } else {
-      notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
+      notify({
+        description: "Something went wrong :)",
+        message: "Error",
+        type: "error",
+      });
     }
   };
   render() {
@@ -162,8 +203,11 @@ class Interests extends Component {
                 </div>
               }
             />
-            <Link className="f-12 list-link" onClick={() => item.IsInterest ? '' : this.handleInterest(item)}>
-              {item.IsInterest ? 'Interested' : 'Interest'}
+            <Link
+              className="f-12 list-link"
+              onClick={() => (item.IsInterest ? "" : this.handleInterest(item))}
+            >
+              {item.IsInterest ? "Interested" : "Interest"}
             </Link>
             <Link
               className="f-12 list-link ml-16 text-red"
@@ -188,7 +232,8 @@ class Interests extends Component {
             ) : null
           }
         >
-          <List className="p-12"
+          <List
+            className="p-12"
             grid={{ gutter: 16, column: 2 }}
             itemLayout="horizontal"
             dataSource={interests}
@@ -201,7 +246,13 @@ class Interests extends Component {
                       <span className="overflow-text">{item.Name}</span>
                     </div>
                   }
-                />{!this.props.IsHideAction && <span className="close-icon" onClick={() => this.deleteInterest(item)}></span>}
+                />
+                {!this.props.IsHideAction && (
+                  <span
+                    className="close-icon"
+                    onClick={() => this.deleteInterest(item)}
+                  ></span>
+                )}
               </List.Item>
             )}
           />
@@ -232,6 +283,6 @@ class Interests extends Component {
   }
 }
 const mapStateToProps = ({ oidc }) => {
-  return { profile: oidc.profile }
-}
+  return { profile: oidc.profile };
+};
 export default connect(mapStateToProps)(Interests);

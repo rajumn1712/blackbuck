@@ -1,5 +1,6 @@
 import { Col, Row } from "antd";
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Loader from "../common/loader";
 import About from "../components/ProfileComponents/about";
 import Courses from "../components/ProfileComponents/courses";
@@ -8,6 +9,7 @@ import Hobbies from "../components/ProfileComponents/hobbies";
 import Interests from "../components/ProfileComponents/interests";
 import Intership from "../components/ProfileComponents/internships";
 import VideoProfile from "../components/ProfileComponents/videoprofile";
+import { profileSuccess } from "../reducers/auth";
 import { profileDetail } from "../shared/api/apiServer";
 
 class ProfileDetail extends Component {
@@ -23,6 +25,9 @@ class ProfileDetail extends Component {
     this.setState({ ...this.state, loading: true });
     profileDetail(this.props?.id).then((res) => {
       const profiledata = res.data[0].User;
+      this.props.profile.Interests = profiledata.Interest;
+      this.props.profile.Internships = profiledata.Internships.length;
+      this.props.updateProfile(this.props.profile);
       this.setState({
         profileData: profiledata,
         loading: false,
@@ -55,7 +60,10 @@ class ProfileDetail extends Component {
                 />
               </div>
               <div>
-                <Interests interests={profileData.Interests} />
+                <Interests
+                  interests={profileData.Interests}
+                  callback={(reload) => (reload ? this.profielDetails() : null)}
+                />
               </div>
               <div>
                 <Hobbies
@@ -99,5 +107,15 @@ class ProfileDetail extends Component {
     );
   }
 }
+const mapStateToProps = ({ oidc }) => {
+  return { profile: oidc.profile };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateProfile: (info) => {
+      dispatch(profileSuccess(info));
+    },
+  };
+};
 
-export default ProfileDetail;
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileDetail);
