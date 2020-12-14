@@ -131,7 +131,7 @@ class HeaderComponent extends React.Component {
                 </Link>
             </Menu.Item>
             <Menu.Item key="3">
-                <Link to="/commingsoon"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
+                <Link to="/support"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
                 </Link>
             </Menu.Item>
             <Menu.Divider />

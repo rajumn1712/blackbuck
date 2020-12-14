@@ -29,7 +29,7 @@
 }
 
 .header-searchbar .ant-input-group {
-    border-radius: 8px;
+    border-radius: 0.8rem;
     border: 1px solid var(--border);
 }
 
@@ -81,8 +81,8 @@
     border: 0!important;
     background: var(--white) !important;
     box-shadow: none !important;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-top-right-radius: 0.8rem;
+    border-bottom-right-radius: 0.8rem;
     min-height: 36px;
     /* padding-top: 8px !important; */
 }
@@ -92,7 +92,7 @@
     border-left: 1px solid var(--line) !important;
     max-height: 26px;
     box-shadow: none!important;
-    border-radius: 0 10px 10px 0 !important;
+    border-radius: 0 0.8rem 0.8rem 0 !important;
 }
 
 .main-header .ant-menu-item {
