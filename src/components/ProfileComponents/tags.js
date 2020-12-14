@@ -39,7 +39,7 @@ class FriendRequests extends Component {
                 <Card title="#Tags" bordered={false} >
                     <List
                         itemLayout="vertical"
-                        dataSource={tags}
+                        dataSource={tags?.slice(0, 10)}
                         renderItem={item => (
                             <div className="tag-name"><Link to="/commingsoon">{item}</Link></div>
 

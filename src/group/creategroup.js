@@ -9,6 +9,7 @@ import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import { ErrorMessage, Field, Formik } from "formik";
 import { hasChanged, uuidv4 } from "../utils";
+import Loader from "../common/loader";
 const { Option } = Select;
 
 class CreateGroup extends Component {
@@ -20,7 +21,7 @@ class CreateGroup extends Component {
         Type: "",
         Location: "",
         Description: "",
-        Hide: "",
+        Hide: "Visible",
         Invitations: [],
         GroupId: null,
         AdminUsers: null,
@@ -81,7 +82,7 @@ class CreateGroup extends Component {
         FriendsList: [],
         disabled: false,
         visible: false,
-        loading: true,
+        loading: false,
         isProfilePic: false,
         groupObject: this.groupObject,
         initialValues: {
@@ -91,6 +92,7 @@ class CreateGroup extends Component {
             Location: this.groupObject.Location,
             Description: this.groupObject.Description,
             Invitations: this.groupObject.Invitations,
+            Hide: this.groupObject.Hide,
         },
     };
     createObject = (values) => {
@@ -107,7 +109,7 @@ class CreateGroup extends Component {
             Type: values.Type,
             Location: values.Location,
             Description: values.Description,
-            Hide: values.Hide,
+            Hide: values.Type == "Private" ? values.Hide : "",
             Invitations: InvitesArray,
             GroupId: groupObject.GroupId ? groupObject.GroupId : uuidv4(),
             UserId: groupObject.UserId,
@@ -200,9 +202,11 @@ class CreateGroup extends Component {
     handleSave = async (e) => {
         this.formRef.current.handleSubmit();
         if (!hasChanged(this.formRef.current.values)) {
+            this.setState({ ...this.state, loading: true });
             const saveObj = this.createObject(this.formRef.current.values);
             const response = await saveGroup(saveObj);
             if (response.ok) {
+                this.setState({ ...this.state, loading: false });
                 this.props.handleCancel();
                 notify({
                     description: "Group saved successfully",
@@ -210,6 +214,7 @@ class CreateGroup extends Component {
                 });
             } else {
                 notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
+                this.setState({ ...this.state, loading: false });
             }
         }
     };
@@ -241,7 +246,7 @@ class CreateGroup extends Component {
         </div>
     }
     render() {
-        const { disabled, visible, initialValues, GroupTypeLu, TypeLu, groupObject, HiddenLu, InvitesLu, FriendsList } = this.state;
+        const { disabled, visible, initialValues, GroupTypeLu, TypeLu, groupObject, HiddenLu, InvitesLu, FriendsList, loading } = this.state;
         const radioStyle = {
             display: 'block',
             height: '30px',
@@ -257,6 +262,7 @@ class CreateGroup extends Component {
             {({ values, setFieldValue }) => {
                 return (
                     <div className="main">
+                        {loading && <Loader className="loader-middle" />}
                         <Row gutter={24}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <div className="coverpage">
@@ -304,6 +310,8 @@ class CreateGroup extends Component {
                                                                 name="GroupName"
                                                                 value={values.GroupName}
                                                                 placeholder="Enter group name here"
+                                                                maxlength={150}
+                                                                autocomplete="off"
                                                             />
                                                             <span className="validateerror">
                                                                 <ErrorMessage name="GroupName" />
@@ -403,7 +411,7 @@ class CreateGroup extends Component {
                                                             className="custom-fields custom-select"
                                                         >
                                                             <Select
-                                                                defaultValue=""
+                                                                defaultValue="Visible"
                                                                 name="Hide"
                                                                 value={values.Hide}
                                                                 onChange={(value) =>
@@ -411,7 +419,6 @@ class CreateGroup extends Component {
                                                                 }
                                                                 optionLabelProp="label"
                                                             >
-                                                                <Option value="" label="Select Type">Select Type</Option>
                                                                 {HiddenLu.map((item, index) => {
                                                                     return (
                                                                         <Option key={index} value={item.Name} label={item.Name}>
@@ -433,6 +440,8 @@ class CreateGroup extends Component {
                                                                 name="Location"
                                                                 value={values.Location}
                                                                 placeholder="Add a Location to your group"
+                                                                autocomplete="off"
+                                                                maxlength={100}
                                                             />
                                                             <span className="validateerror">
                                                                 <ErrorMessage name="Location" />
@@ -447,6 +456,10 @@ class CreateGroup extends Component {
                                                                 className="ant-input"
                                                                 name="Description"
                                                                 type="textarea"
+                                                                as="textarea"
+                                                                autoSize={{ minRows: 3, maxRows: 20 }}
+                                                                maxlength={1360}
+                                                                autocomplete="off"
                                                                 value={values.Description}
                                                                 placeholder="Autosize height with minimum and maximum number of lines"
                                                             />
