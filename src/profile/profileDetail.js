@@ -16,26 +16,29 @@ class ProfileDetail extends Component {
   state = {
     profileData: {},
     loading: false,
+    isDataRefresh: false,
   };
 
   componentDidMount() {
     this.profielDetails();
   }
   profielDetails = () => {
-    this.setState({ ...this.state, loading: true });
+    this.setState({ ...this.state, loading: true, isDataRefresh: false });
     profileDetail(this.props?.id).then((res) => {
-      const profiledata = res.data[0].User;
+      let profiledata = res.data[0].User;
       this.props.profile.Interests = profiledata.Interest;
       this.props.profile.Internships = profiledata.Internships.length;
       this.props.updateProfile(this.props.profile);
       this.setState({
+        ...this.state,
         profileData: profiledata,
         loading: false,
+        isDataRefresh: true,
       });
     });
   };
   render() {
-    const { profileData, loading } = this.state;
+    const { profileData, loading, isDataRefresh } = this.state;
     return (
       <>
         {loading && <Loader className="loader-top-middle" />}
@@ -54,33 +57,49 @@ class ProfileDetail extends Component {
                                     </Col> */}
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
               <div>
-                <About
-                  about={profileData}
-                  callback={(reload) => (reload ? this.profielDetails() : null)}
-                />
+                {isDataRefresh && (
+                  <About
+                    about={profileData}
+                    callback={(reload) =>
+                      reload ? this.profielDetails() : null
+                    }
+                  />
+                )}
               </div>
               <div>
-                <Interests
-                  interests={profileData.Interests}
-                  callback={(reload) => (reload ? this.profielDetails() : null)}
-                />
+                {isDataRefresh && (
+                  <Interests
+                    interests={profileData.Interests}
+                    callback={(reload) =>
+                      reload ? this.profielDetails() : null
+                    }
+                  />
+                )}
               </div>
               <div>
-                <Hobbies
-                  hobbies={profileData.Hobbies}
-                  userid={this.props?.profile?.Id}
-                  callback={(reload) => (reload ? this.profielDetails() : null)}
-                />
+                {isDataRefresh && (
+                  <Hobbies
+                    hobbies={profileData.Hobbies}
+                    userid={this.props?.profile?.Id}
+                    callback={(reload) =>
+                      reload ? this.profielDetails() : null
+                    }
+                  />
+                )}
               </div>
               <div>
-                <Intership
-                  internships={profileData.Internships}
-                  userid={this.props?.profile?.Id}
-                  callback={(reload) => (reload ? this.profielDetails() : null)}
-                />
+                {isDataRefresh && (
+                  <Intership
+                    internships={profileData.Internships}
+                    userid={this.props?.profile?.Id}
+                    callback={(reload) =>
+                      reload ? this.profielDetails() : null
+                    }
+                  />
+                )}
               </div>
               <div>
-                {
+                {isDataRefresh && (
                   <VideoProfile
                     video={profileData.VideoAsProfile}
                     userid={this.props?.profile?.Id}
@@ -88,14 +107,18 @@ class ProfileDetail extends Component {
                       reload ? this.profielDetails() : null
                     }
                   />
-                }
+                )}
               </div>
               <div>
-                <Education
-                  education={profileData.Education}
-                  userid={this.props?.profile?.Id}
-                  callback={(reload) => (reload ? this.profielDetails() : null)}
-                />
+                {isDataRefresh && (
+                  <Education
+                    education={profileData.Education}
+                    userid={this.props?.profile?.Id}
+                    callback={(reload) =>
+                      reload ? this.profielDetails() : null
+                    }
+                  />
+                )}
               </div>
               <div>
                 <Courses loadUserCourse={true} />

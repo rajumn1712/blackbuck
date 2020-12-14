@@ -29,16 +29,13 @@ import defaultUser from "../styles/images/defaultuser.jpg";
 import defaultCover from "../styles/images/defaultcover.png";
 import ImgCrop from "antd-img-crop";
 import { profileSuccess } from "../reducers/auth";
-import Loader from "../common/loader";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import { store } from "../store";
 import ProfileDetail from "./profileDetail";
 const { Meta } = Card;
 const { TabPane } = Tabs;
-const operations = (
-  <Button className="profile-download">
-    <span className="post-icons download-icon"></span>Download Profile
-  </Button>
-);
+
 class Profile extends Component {
   // references = {};
   imageObject = {};
@@ -132,12 +129,27 @@ class Profile extends Component {
     this.props.history.push(`/profile/${index}`);
     this.setState({ tabkey: index });
   };
+  ExportPdf = () => {
+    const input = document.getElementById("divToPrint");
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "JPEG", 0, 0);
+      // pdf.output('dataurlnewwindow');
+      pdf.save("download.pdf");
+    });
+  };
 
   render() {
     const { isDataRefresh, profile, tabkey } = this.state;
     // if (this.state.loading) {
     //   return <Loader className="loader-middle" />;
     // }
+    const operations = (
+      <Button className="profile-download" onClick={this.ExportPdf}>
+        <span className="post-icons download-icon"></span>Download Profile
+      </Button>
+    );
     return (
       <div className="main">
         <Row gutter={16}>
@@ -262,7 +274,11 @@ class Profile extends Component {
                 <Route
                   path="/profile/2"
                   render={() => {
-                    return <ProfileDetail id={this.props?.profile?.Id} />;
+                    return (
+                      <div id="divToPrint">
+                        <ProfileDetail id={this.props?.profile?.Id} />
+                      </div>
+                    );
                   }}
                 />
               </TabPane>
