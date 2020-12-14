@@ -21,7 +21,7 @@ class FriendSuggestions extends Component {
             "UserId": this.props?.profile?.Id,
             "Firstname": this.props?.profile?.FirstName,
             "Lastname": this.props?.profile?.LastName,
-            "Image": null,
+            "Image": friend.Image,
             "Email": this.props?.profile?.Email,
             "Type": "request"
         }
