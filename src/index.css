@@ -112,3 +112,4 @@ transition-duration: 167ms;}
 .ant-empty {background-color: var(--white);border-radius: 10px;margin: 0 auto !important;padding: 16px;}
 .ant-empty-description{color: rgba(0, 0, 0, 0.25) !important;}
 .profilename .ant-card-meta-title,.user-banner ,.post-title{text-transform: capitalize;}
+
