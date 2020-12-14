@@ -125,7 +125,7 @@ class Groups extends Component {
                     isHideFooter={true}
 
                 >
-                    <CreateGroup Type={"Add"}/>
+                    {visible && <CreateGroup Type={"Add"} handleCancel={this.handleCancel}/>}
 
                 </CommonModal>
             </div>
