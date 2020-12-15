@@ -2,8 +2,8 @@ import React, { lazy } from "react";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../shared/authentication/protected_route";
 import CommingSoon from "./comingsoon";
-import About from "../about-us";
-import Contact from "../contact-us";
+// import About from "../about-us";
+// import Contact from "../contact-us";
 import Home from "../home";
 import Callback from "../shared/authentication/callback";
 import Profile from "../profile";
@@ -34,8 +34,8 @@ const Router = () => {
       <Route path="/support" component={Help} />
       <Route path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
-      <ProtectedRoute path="/friends" component={About} />
-      <Route path="/contact" component={Contact} />
+      {/* <ProtectedRoute path="/friends" component={About} /> */}
+      {/* <Route path="/contact" component={Contact} /> */}
       <Route path="/callback" component={Callback} />
       <ProtectedRoute path="/profile/:tabkey" component={Profile} />
       <ProtectedRoute path="/profileview/:userId" component={ProfileView} />
