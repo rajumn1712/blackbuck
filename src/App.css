@@ -221,7 +221,7 @@
 .internship-card .ant-card-body{padding:12px 0 0;}
 .intern-cards{border:1px solid var(--secondary);border-radius:5px;text-align:center;position:relative;}
 .intern-cards .intern-cardbody{background-color:var(--grey);padding:24px 8px;}
-.intern-cards .intern-cardbody img{width:auto;margin-bottom:8px;height:auto;max-width:75%;}
+.intern-cards .intern-cardbody img{width:auto;margin-bottom:8px;height:auto;max-width:75%;max-height: 100%;}
 .intern-cards .intern-cardbody .internlogo{height:100px;display:flex;align-items:center;justify-content:center;}
 .intern-cards .intern-cardbody .title{font-size:18px;font-weight:500;line-height:22px;color:var(--textprimary);margin-bottom:8px;}
 .intern-cards .intern-cardbody .description{font-size:var(--f-16);font-weight:500;line-height:20px;color:var(--textsecondary);margin-bottom:2px;text-transform:capitalize;}
@@ -235,11 +235,11 @@
 .tag-name:hover{background:var(--bghover);}
 .tag-name a{color:var(--textsecondary) !important;display:block;}
 .tag-name a:hover{color:var(--textprimary) !important;}
-.edu-card{display:flex;align-items:center;}
+.edu-card{display:flex;align-items:center;margin-bottom: 8px;}
 .edu-card .ant-list-item-meta-avatar{margin-right:0px !important;}
-.edu-card .edu-study .ant-list-item-meta-content .ant-list-item-meta-title{font-size:var(--f-16);}
+.edu-card .edu-study .ant-list-item-meta-content .ant-list-item-meta-title{font-size:var(--f-16);margin-bottom: 0;}
 .edu-card .edu-certificate{background:var(--grey);padding:5px;border-radius:5px;border:1px solid var(--secondary);margin-left:10px;margin-right:10px;display:flex;align-items:center;}
-.edu-card .edu-study{display:flex;align-items:center;}
+.edu-card .edu-study{display:flex;align-items:center;flex-grow: 2;}
 .edu-card .edu-certificate .about-icons{background:var(--white);}
 .edu-card .edu-certificate .ant-list-item-meta-title{color:var(--primary);}
 .ant-input-affix-wrapper:hover,.ant-input-affix-wrapper:focus,.ant-input-affix-wrapper-focused{border-color:var(--primary) !important;}
