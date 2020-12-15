@@ -9,6 +9,7 @@ import {
   Input,
   Select,
   DatePicker,
+  Tooltip,
 } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
@@ -210,9 +211,11 @@ class Education extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Link onClick={this.showModal}>
-                <span className="icons add" />
-              </Link>
+              <Tooltip title="Add">
+                <Link onClick={this.showModal}>
+                  <span className="icons add" />
+                </Link>
+              </Tooltip>
             ) : null
           }
         >
@@ -261,8 +264,8 @@ class Education extends Component {
                           );
                         })
                       ) : (
-                        <span className="overflow-text">{"No Files"}</span>
-                      )}
+                          <span className="overflow-text">{"No Files"}</span>
+                        )}
                     </div>
                   }
                 />

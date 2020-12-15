@@ -287,9 +287,11 @@ class Intership extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Link onClick={this.showModal}>
-                <span className="icons add" />
-              </Link>
+              <Tooltip title="Add">
+                <Link onClick={this.showModal}>
+                  <span className="icons add" />
+                </Link>
+              </Tooltip>
             ) : null
           }
         >
@@ -362,7 +364,7 @@ class Intership extends Component {
             initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
-            // validationSchema={this.validateSchema}
+          // validationSchema={this.validateSchema}
           >
             {({ values, setFieldValue }) => {
               return (

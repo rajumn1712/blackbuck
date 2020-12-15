@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Avatar, List, Input, Modal } from "antd";
+import { Card, Avatar, List, Input, Modal, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -226,9 +226,11 @@ class Interests extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Link onClick={this.showModal}>
-                <span className="icons add" />
-              </Link>
+              <Tooltip title="Add">
+                <Link onClick={this.showModal}>
+                  <span className="icons add" />
+                </Link>
+              </Tooltip>
             ) : null
           }
         >

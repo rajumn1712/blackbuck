@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Input, Upload, Form, message } from "antd";
+import { Card, Input, Upload, Form, message, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -110,9 +110,11 @@ class VideoProfile extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
+              <Tooltip title="Edit">
               <Link onClick={this.showModal}>
                 <span className={`icons ${video ? "edit" : "add"}`} />
               </Link>
+              </Tooltip>
             ) : null
           }
         ></Card>

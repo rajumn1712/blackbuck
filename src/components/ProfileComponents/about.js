@@ -1,5 +1,5 @@
 import React, { Component, createRef } from "react";
-import { Card, Divider, Row, Col, Form, Input } from "antd";
+import { Card, Divider, Row, Col, Form, Input, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -53,14 +53,14 @@ class About extends Component {
       this.props.about.Address.length > 0
         ? { ...this.props.about.Address[0] }
         : {
-            PlatNo: "",
-            Street: "",
-            Address: "",
-            City: "",
-            State: "",
-            Country: "",
-            PinCode: "",
-          };
+          PlatNo: "",
+          Street: "",
+          Address: "",
+          City: "",
+          State: "",
+          Country: "",
+          PinCode: "",
+        };
     editObject.address = Object.assign(editObject.address, {
       PhoneNumber: editObject.PhoneNumber,
       AboutMe: editObject.AboutMe,
@@ -143,10 +143,12 @@ class About extends Component {
           title="About Me"
           bordered={false}
           extra={
-            !this.props.IsHideAction ? (
-              <Link onClick={this.showModal}>
-                <span className="icons edit" />
-              </Link>
+            !this.props.IsHideAction ? ( 
+            <Tooltip title="Edit">
+                <Link onClick={this.showModal}>
+                  <span className="icons edit" />
+                </Link>
+              </Tooltip>
             ) : null
           }
         >
