@@ -24,15 +24,15 @@ class Help extends Component {
     render() {
 
         return (
-            <div>
+            <div className="helppage">
                 <Row justify="center">
-                    <Col xs={24} md={12}>
+                    <Col xs={24} md={12} className="mb-16">
                         <div className="help-search">
                             <h2>How can we help you?</h2>
                             <Search className="header-searchbar" placeholder="Write a question or problem" />
                         </div>
                     </Col>
-                    <Col xs={24} md={16} className="mt-16">
+                    <Col xs={24} md={16} className="mb-16">
                         <h3 className="sub-title">
                             Popular Questions
                         </h3>
@@ -57,7 +57,7 @@ class Help extends Component {
                             </Panel>
                         </Collapse>
                     </Col>
-                    <Col xs={24} md={16} className="mt-16">
+                    <Col xs={24} md={16} className="mb-16">
                         <h3 className="sub-title">
                             Help by category
                         </h3>
@@ -84,10 +84,7 @@ class Help extends Component {
                                 </div>
                             </Col>
                         </Row>
-
                     </Col>
-
-
                 </Row>
 
             </div>
