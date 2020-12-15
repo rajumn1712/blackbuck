@@ -264,8 +264,8 @@ class Education extends Component {
                           );
                         })
                       ) : (
-                          <span className="overflow-text">{"No Files"}</span>
-                        )}
+                        <span className="overflow-text">{"No Files"}</span>
+                      )}
                     </div>
                   }
                 />
@@ -303,6 +303,8 @@ class Education extends Component {
                       <Col xs={24} sm={24}>
                         <Form.Item
                           label="Education Type"
+                          name="Education Type"
+                          rules={[{ required: true }]}
                           className="custom-fields custom-select"
                         >
                           <Select
@@ -330,6 +332,8 @@ class Education extends Component {
                       <Col xs={24} sm={24}>
                         <Form.Item
                           label="College/University Name"
+                          name="College/University Name"
+                          rules={[{ required: true }]}
                           className="custom-fields"
                         >
                           <Field
@@ -345,6 +349,8 @@ class Education extends Component {
                       <Col xs={24} sm={24}>
                         <Form.Item
                           label="Academic Year"
+                          name="Academic Year"
+                          rules={[{ required: true }]}
                           className="custom-fields education-date"
                         >
                           <Input.Group compact>
@@ -364,6 +370,8 @@ class Education extends Component {
                       <Col xs={24} sm={12}>
                         <Form.Item
                           label="Place of College/University"
+                          name="Place of COllege/University"
+                          rules={[{ required: true }]}
                           className="custom-fields"
                         >
                           <Field
@@ -379,6 +387,8 @@ class Education extends Component {
                       <Col xs={24} sm={12}>
                         <Form.Item
                           label="Marks Grade"
+                          name="Marks Grade"
+                          rules={[{ required: true }]}
                           className="custom-fields"
                         >
                           <Field
