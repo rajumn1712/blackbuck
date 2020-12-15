@@ -211,7 +211,7 @@ class Postings extends Component {
                   itemLayout="horizontal"
                   dataSource={imageObj}
                   renderItem={item => (
-                     <List.Item onClick={() => window.open(item.url, "_blank")}>
+                     <List.Item onClick={(ev) => { ev.stopPropagation(); window.open(item.url, "_blank") }}>
                         <List.Item.Meta
                            avatar={[<span className={`doc-icons ${item.avatar}`}></span>]}
                            title={item.title}
