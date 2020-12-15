@@ -152,7 +152,7 @@
 .radious,.upload-image .ant-upload.ant-upload-drag{border-radius:10px;}
 .doc-text{color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:110px;}
 .ant-upload-list-item-error .ant-upload-list-item-card-actions .anticon,.ant-upload-list-item-card-actions .anticon{color:transparent !important;}
-.fw-400{font-weight:400;color:var(--black);}
+.fw-400{font-weight:400 !important;color:var(--black);}
 .justify-content-around .ant-list-item-meta{background:#f9f9f9;border-radius:5px;}
 .ant-input:focus,.ant-input-focused,.ant-input:hover,.ant-select:focus,.ant-select-focused,.ant-select:not(.ant-select-disabled):hover .ant-select-selector,.ant-upload.ant-upload-drag:not(.ant-upload-disabled):hover{border-color:var(--primary) !important;}
 .icons.camera{background-position:-288px -50px;}

@@ -16,6 +16,7 @@ import CreateGroup from "../group/creategroup";
 import OnBoard from "../components/onboard";
 import Help from '../components/help';
 import { Col, Row } from "antd";
+import Settings from "./settings";
 
 const onBoard = () => {
   return (
@@ -32,7 +33,7 @@ const Router = () => {
   return (
     <Switch>
       <Route path="/support" component={Help} />
-
+      <Route path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
       <ProtectedRoute path="/friends" component={About} />
       <Route path="/contact" component={Contact} />
