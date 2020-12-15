@@ -126,13 +126,16 @@ class ShareBox extends Component {
             }
             if (status === 'done') {
                 if (this.postObject.Type == "Docs") {
-                    let response = { title: info.file.name, avatar: info.file.type, url: info.file.response[0], fileSize: info.file.size }
+                    const avatar = info.file?.name ? info.file.name.substr(info.file.name.lastIndexOf(".")) : "word";
+                    let response = { title: info.file.name, avatar, url: info.file.response[0], fileSize: info.file.size }
                     this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(response) : [response];
+                    this.setState({ ...this.state, uploadSources: this.state.uploadSources ? this.state.uploadSources.concat(response) : [response] })
                 }
                 else {
                     this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(info.file.response) : info.file.response;
+                    this.setState({ ...this.state, uploadSources: this.state.uploadSources ? this.state.uploadSources.concat(info.file.response) : [info.file.response] })
                 }
-                this.setState({ ...this.state, uploadSources: this.state.uploadSources ? this.state.uploadSources.concat(info.file.response) : [info.file.response] })
+
                 notify({ description: `${info.file.name} file uploaded successfully.`, message: "Upload" });
                 this.setState({ ...this.state, fileUploading: false })
             } else if (status === 'error') {
@@ -264,9 +267,9 @@ class ShareBox extends Component {
             Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
             Audio: ".mp3,.aac,.wma,.wav,.flac,.m4a",
             Gif: ".gif",
-            Docs: '.doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.txt,.xls,.xlsx'
+            Docs: '.doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.txt,.xls,.xlsx.,.csv'
         }
-        this.uploadProps = { ...this.uploadProps, accept: fileTypes[type], multiple: type === "Images" }
+        this.uploadProps = { ...this.uploadProps, accept: fileTypes[type], multiple: (type === "Images" || type === "Docs") ? true : false }
         const types = {
             Text: <div>
 
@@ -325,7 +328,7 @@ class ShareBox extends Component {
             </div>,
             Docs: <div>
 
-                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })}>
+                <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })} showUploadList={false}>
                     <span className="sharebox-icons docs-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Documents</p>
                 </Dragger>
@@ -333,14 +336,19 @@ class ShareBox extends Component {
                     <List
                         itemLayout="horizontal"
                         dataSource={this.state.uploadSources}
-                        renderItem={item => (
+                        renderItem={(item, indx) => (
                             <List.Item className="upload-preview">
                                 <List.Item.Meta
                                     avatar={item.avatar}
                                     title={item.title}
                                     description={<div className="file-size f-12">{item.fileSize}</div>}
                                 />
-                                <a class="item-close">
+                                <a class="item-close" onClick={() => {
+                                    let { uploadSources } = this.state;
+                                    uploadSources.splice(indx, 1);
+                                    this.postObject.ImageUrl.splice(indx, 1);
+                                    this.setState({ ...this.state, uploadSources })
+                                }}>
                                     <Tooltip title="Remove">
                                         <span className="close-icon"></span>
                                     </Tooltip>
