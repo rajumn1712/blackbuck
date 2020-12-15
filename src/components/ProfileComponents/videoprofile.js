@@ -104,12 +104,14 @@ class VideoProfile extends Component {
         <Card
           title="Video as Profile"
           className="pfvideocard"
-          cover={<video width="100%" controls src={video}></video>}
+          cover={
+            video ? <video width="100%" controls src={video}></video> : null
+          }
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
               <Link onClick={this.showModal}>
-                <span className="icons edit" />
+                <span className={`icons ${video ? "edit" : "add"}`} />
               </Link>
             ) : null
           }

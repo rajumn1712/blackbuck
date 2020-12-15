@@ -123,7 +123,9 @@ class Hobbies extends Component {
           extra={
             !this.props.IsHideAction ? (
               <Link onClick={this.showModal}>
-                <span className="icons edit" />
+                <span
+                  className={`icons ${hobbies.length > 0 ? "edit" : "add"}`}
+                />
               </Link>
             ) : null
           }

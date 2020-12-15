@@ -131,13 +131,84 @@ class Profile extends Component {
   };
   ExportPdf = () => {
     const input = document.getElementById("downloadpdf");
-    html2canvas(input).then((canvas) => {
+    html2canvas(input, {
+      onclone: function (clonedDoc) {
+        clonedDoc.getElementById("downloadpdf").style.visibility = "visible";
+      },
+    }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
-      let pdf = new jsPDF("portrait", "mm", "a4");
-      pdf.addImage(imgData, "JPEG", 0, 0);
-      // pdf.output('dataurlnewwindow');
+      const pdf = new jsPDF("p", "in", "a4");
+      pdf.addImage(imgData, "JPEG", 0.25, 0.25);
       pdf.save("download.pdf");
     });
+  };
+  renderHtmlPdf = () => {
+    return (
+      <div
+        id="downloadpdf"
+        ref={(r) => (this.downloadpdf = r)}
+        style={{ visibility: "hidden", height: 0 }}
+      >
+        <Row className="downloadprofile">
+          <Col span={8} className="dwnpleft">
+            <div className="contact-information">
+              <h3>Contact</h3>
+              <p>7799036981</p>
+              <p>vishnu@zirafftechnologies.com</p>
+              <p>
+                01-11-65/1,Street Number 2,Road No 5 , Colony
+                ,visakhapatnam,Andhra Pradesh,India,500036
+              </p>
+              <p style={{ wordBreak: "break-all" }}>
+                http://localhost:3000/profile/vishnutrimurthulu
+              </p>
+            </div>
+            <div className="certificate-info">
+              <h3>Certifications</h3>
+              <p>AMCAT Certified Software Engineer - IT Services</p>
+              <p>HARDWARE AND NETWRKING,CCNA,MCSA,RHEL</p>
+            </div>
+            <div className="hobbies-info">
+              <h3>Hobbies</h3>
+              <ul>
+                <li>Cricket</li>
+                <li>Music</li>
+                <li>Dance</li>
+              </ul>
+            </div>
+          </Col>
+          <Col span={16} className="dwnrleft">
+            <div className="primary-info">
+              <h1>VISHNU TRIMURTHULU PALLIVELA</h1>
+              <p>Hyderbad</p>
+            </div>
+            <div className="about-info">
+              <h3>About me</h3>
+              <p>
+                Your About Me page should convey: Who you are and what you’re
+                doing How you got there Where you’re looking to go next Use it
+                to describe your credentials, expertise, and goals. What’s the
+                best way to start? The following exercises can be helpful in
+                figuring all of that out, and will help you determine what to
+                include based on your target audience.
+              </p>
+            </div>
+            <div className="academy-info">
+              <h3>Education</h3>
+              <h4>Blackbuck Educational Society Group of Institutions</h4>
+              <p>
+                Bachelor of Technology - BTech, Electronics and Communications
+                Engineering · (2012 - 2016)
+              </p>
+              <h4>Narayana Junior College</h4>
+              <p>BOI, maths,physics,chemistry · (2010 - 2012)</p>
+              <h4>Krishna Public School</h4>
+              <p>SSC, 10th · (2009 - 2010)</p>
+            </div>
+          </Col>
+        </Row>
+      </div>
+    );
   };
 
   render() {
@@ -331,7 +402,11 @@ class Profile extends Component {
             </Affix>
           </Col>
         </Row>
-        {/* <div id="downloadpdf">
+        <div
+          id="downloadpdf"
+          ref={(r) => (this.downloadpdf = r)}
+          style={{ visibility: "hidden", height: 0 }}
+        >
           <Row className="downloadprofile">
             <Col span={8} className="dwnpleft">
               <div className="contact-information">
@@ -390,7 +465,7 @@ class Profile extends Component {
               </div>
             </Col>
           </Row>
-        </div> */}
+        </div>
       </div>
     );
   }
