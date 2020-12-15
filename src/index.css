@@ -64,7 +64,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .more-frnd-btn.next{right: 16px; z-index: 9;}
 .more-frnd-btn:hover{background: var(--primary);}
 .container{padding-left: 15px;padding-right: 15px;}
-.frnds-list-item{background: var(--white); border-radius: 0.8rem;margin-right: 10px; border: 1px solid var(--line);}
+.frnds-list-item{background: var(--white); border-radius: 0.8rem;margin-right: 5px;margin-left: 5px; border: 1px solid var(--line);}
 .frnds-list-item img{border-radius: 0.8rem 0.8rem 0 0;}
 .frnds-list-item.viewall-item{padding-top: 100%;min-height: 304px !important;}
 .frnds-list-item.viewall-item a{position: absolute;top: 0;right: 0;left: 0;bottom: 0;display: flex;justify-content: center;align-items: center;background: var(--white);border-radius: 0.8rem;margin-right: 8px;color: var(--primary);}
