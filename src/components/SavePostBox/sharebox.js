@@ -59,24 +59,6 @@ const postsmenu =
             "Id": "Video"
         }
     ]
-const docs = [
-    {
-        avatar: [<span className="doc-icons word"></span>],
-        title: 'Mini Project.Doc',
-        fileSize: '150 KB'
-    },
-    {
-        avatar: [<span className="doc-icons excel"></span>],
-        title: 'Project Members list.xl...',
-        fileSize: '40 KB'
-    },
-    {
-        avatar: [<span className="doc-icons ppt"></span>],
-        title: 'Power Point Slides of students.PPT',
-        fileSize: '10MB'
-    }
-];
-
 class ShareBox extends Component {
     postObject;
     state = {
@@ -144,7 +126,7 @@ class ShareBox extends Component {
             }
             if (status === 'done') {
                 if (this.postObject.Type == "Docs") {
-                    let response = { title: info.file.name, avatar: "word", url: info.file.response[0], fileSize: info.file.size }
+                    let response = { title: info.file.name, avatar: info.file.type, url: info.file.response[0], fileSize: info.file.size }
                     this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(response) : [response];
                 }
                 else {
@@ -282,7 +264,7 @@ class ShareBox extends Component {
             Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
             Audio: ".mp3,.aac,.wma,.wav,.flac,.m4a",
             Gif: ".gif",
-            Docs: '.doc,.docx'
+            Docs: '.doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.txt,.xls,.xlsx'
         }
         this.uploadProps = { ...this.uploadProps, accept: fileTypes[type], multiple: type === "Images" }
         const types = {
