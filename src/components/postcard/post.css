@@ -111,6 +111,10 @@ to{transform: translateY(0px);}
 .post-preview-box.post-card{margin-bottom: 0; height: calc(100vh - 120px);}
 .preview-content .post-card{border-radius: 0;}
 .preview-content .post-comment{border-bottom: 0;}
+.post-preview .post-preview-box .preview-image .ant-carousel .slick-slider .slick-track >div{height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;}
 
 .reply-comment .ant-form-item{margin-bottom: 5px !important;}
 .share-pop{margin: -8px -8px 0; border-right: none; width: 230px;}
