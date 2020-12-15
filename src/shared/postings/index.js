@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 import Loader from '../../common/loader';
 import defaultUser from '../../styles/images/defaultuser.jpg';
 import PostCardModal from '../components/postings/PostModal';
-import dialog from '../components/dialog'
 import notify from '../components/notification';
 import { uuidv4 } from '../../utils';
 import VisSenseFactory from 'vissense';
@@ -24,7 +23,7 @@ import { postUpdation } from '../../reducers/auth';
 import ShowMoreText from 'react-show-more-text';
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 const { TabPane } = Tabs;
 let postObj = { tags: [], userdetails: {} };
 class Postings extends Component {

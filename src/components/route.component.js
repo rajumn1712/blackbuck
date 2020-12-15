@@ -5,7 +5,6 @@ import CommingSoon from "./comingsoon";
 import About from "../about-us";
 import Contact from "../contact-us";
 import Home from "../home";
-import Post from "../common/post";
 import Callback from "../shared/authentication/callback";
 import Profile from "../profile";
 import Group from "../group";
@@ -44,7 +43,6 @@ const Router = () => {
       <Route path="/groupview" component={GroupView} />
       {/* <Route path="/creategroup" component={CreateGroup} /> */}
       <Route path="/commingsoon" component={CommingSoon} />
-      <ProtectedRoute path="/post/:name" component={Post} />
       <ProtectedRoute path="/newgroup/:id" component={CreateGroup} />
       <ProtectedRoute path="" component={Home} />
     </Switch>

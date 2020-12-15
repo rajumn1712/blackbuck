@@ -135,7 +135,7 @@ class ShareBox extends Component {
     uploadProps = {
         name: 'file',
         multiple: false,
-        action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
+        action: process.env.REACT_APP_AUTHORITY + '/Home/UploadFile',
         onChange: (info) => {
             this.setState({ ...this.state, fileUploading: true });
             const { status } = info.file;
