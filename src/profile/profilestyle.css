@@ -264,7 +264,7 @@
 }
 .overlay{padding: 16px;}
 
-.downloadprofile{background-color: var(--primary);}
+.downloadprofile{background-color: var(--primary);width: 794px;}
 .downloadprofile h1{font-weight: 400;font-size: 36px;color: var(--textprimary);margin-bottom: 5px;line-height: 40px;}
 .downloadprofile h3{font-size: 22px;font-weight: 400;line-height: 26px;color: var(--textprimary);}
 .downloadprofile h4{font-size: 18px;font-weight: 400;line-height: 22px;}
@@ -276,4 +276,5 @@
 .downloadprofile .contact-information,.downloadprofile .certificate-info,.downloadprofile .primary-info,.downloadprofile .about-info, .downloadprofile .academy-info{margin-bottom: 24px;}
 .downloadprofile .contact-information h3,.downloadprofile .certificate-info h3,.downloadprofile .contact-information p,.downloadprofile .certificate-info p,.downloadprofile .hobbies-info,.downloadprofile .hobbies-info h3{color: var(--white) !important;}
 .downloadprofile ul{list-style: none;padding-left: 0;}
+
 

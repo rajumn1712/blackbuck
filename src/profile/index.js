@@ -138,7 +138,7 @@ class Profile extends Component {
     }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "in", "a4");
-      pdf.addImage(imgData, "JPEG", 0.25, 0.25);
+      pdf.addImage(imgData, "JPEG", 0, 0, 0 ,0);
       pdf.save("download.pdf");
     });
   };
@@ -150,13 +150,13 @@ class Profile extends Component {
         style={{ visibility: "hidden", height: 0 }}
       >
         <Row className="downloadprofile">
-          <Col span={8} className="dwnpleft">
+          <Col span={9} className="dwnpleft">
             <div className="contact-information">
               <h3>Contact</h3>
               <p>7799036981</p>
               <p>vishnu@zirafftechnologies.com</p>
               <p>
-                01-11-65/1,Street Number 2,Road No 5 , Colony
+                01-11-65/1,Street Number 2,Road No 5, Colony
                 ,visakhapatnam,Andhra Pradesh,India,500036
               </p>
               <p style={{ wordBreak: "break-all" }}>
@@ -177,7 +177,7 @@ class Profile extends Component {
               </ul>
             </div>
           </Col>
-          <Col span={16} className="dwnrleft">
+          <Col span={15} className="dwnrleft">
             <div className="primary-info">
               <h1>VISHNU TRIMURTHULU PALLIVELA</h1>
               <p>Hyderbad</p>
