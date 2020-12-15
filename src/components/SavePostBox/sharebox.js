@@ -143,7 +143,13 @@ class ShareBox extends Component {
 
             }
             if (status === 'done') {
-                this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(info.file.response) : info.file.response;
+                if (this.postObject.Type == "Docs") {
+                    let response = { title: info.file.name, avatar: "word", url: info.file.response[0], fileSize: info.file.size }
+                    this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(response) : [response];
+                }
+                else {
+                    this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(info.file.response) : info.file.response;
+                }
                 this.setState({ ...this.state, uploadSources: this.state.uploadSources ? this.state.uploadSources.concat(info.file.response) : [info.file.response] })
                 notify({ description: `${info.file.name} file uploaded successfully.`, message: "Upload" });
                 this.setState({ ...this.state, fileUploading: false })

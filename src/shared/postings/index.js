@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Avatar, Typography, Tooltip, Input, Tag, Empty, Tabs, Spin, Modal } from 'antd';
+import { Card, Avatar, Typography, Tooltip, Input, Tag, Empty, Tabs, Spin, Modal, List } from 'antd';
 import SideAction from '../components/postings/Actions/SideActions';
 import Comments from '../components/postings/Comments/Comments';
 import CommentAction from '../components/postings/Actions/CommentAction';
@@ -205,8 +205,22 @@ class Postings extends Component {
          Text: () => {
             return null
          },
-         Document: () => {
-            return null
+         Docs: () => {
+            return <div className="docs mb-16">
+               <List
+                  itemLayout="horizontal"
+                  dataSource={imageObj}
+                  renderItem={item => (
+                     <List.Item>
+                        <List.Item.Meta
+                           avatar={[<span className={`doc-icons ${item.avatar}`}></span>]}
+                           title={item.title}
+                           description={<div className="file-size f-12">{item.fileSize}</div>}
+                        />
+                     </List.Item>
+                  )}
+               />
+            </div>
          },
          Audio: () => {
             return <div style={{ width: '100%', position: 'relative' }} onClick={() => this.stopAudio()} className="cursor-pointer">
