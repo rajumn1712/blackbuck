@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Tag, Input } from "antd";
+import { Card, Tag, Input, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { TweenOneGroup } from "rc-tween-one";
 import { Link } from "react-router-dom";
@@ -122,9 +122,11 @@ class Hobbies extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Link onClick={this.showModal}>
-                <span className="icons edit" />
-              </Link>
+              <Tooltip title="Add">
+                <Link onClick={this.showModal}>
+                  <span className="icons add" />
+                </Link>
+              </Tooltip>
             ) : null
           }
         >
