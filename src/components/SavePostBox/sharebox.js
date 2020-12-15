@@ -87,7 +87,7 @@ class ShareBox extends Component {
         post: { Title: "", Message: "", IsAnonymous: false },
         errors: null,
         fileUploading: false,
-        isEdit:false,
+        isEdit: false,
     }
     componentWillReceiveProps(newProps) {
         if ((this.props.postEditData !== newProps.postEditData) && Object.keys(newProps.postEditData).length > 0) {
@@ -95,7 +95,7 @@ class ShareBox extends Component {
             post.Message = newProps.postEditData.meassage;
             post.Title = newProps.postEditData.title;
             post.IsAnonymous = newProps.postEditData.IsAnonymous;
-            this.setState({ ...this.state, uploadSources: newProps.postEditData.image ? (Array.isArray(newProps.postEditData.image)?newProps.postEditData.image:[newProps.postEditData.image]) : [], isEdit: true, tags: newProps.postEditData.tags, post }, () => {
+            this.setState({ ...this.state, uploadSources: newProps.postEditData.image ? (Array.isArray(newProps.postEditData.image) ? newProps.postEditData.image : [newProps.postEditData.image]) : [], isEdit: true, tags: newProps.postEditData.tags, post }, () => {
                 const object = { "Text": "Text", "Video": "Video", "Gif": "Gif", "Audio": "Audio", "Image": "Images" }
                 this.openpopup(object[newProps.postEditData.type], newProps.postEditData);
             })
@@ -104,13 +104,13 @@ class ShareBox extends Component {
     }
     createObject = (object) => {
         return {
-            "PostId": object?object.id:uuidv4(),
+            "PostId": object ? object.id : uuidv4(),
             "Type": "Text",
-            "Message":object?object.meassage: "",
-            "Title": object?object.title:"",
-            "IsAnonymous": object?object.IsAnonymous:false,
-            "ImageUrl": object?(object.image?object.image:null):null,
-            "CreatedDate": object?new Date(object.date):null,
+            "Message": object ? object.meassage : "",
+            "Title": object ? object.title : "",
+            "IsAnonymous": object ? object.IsAnonymous : false,
+            "ImageUrl": object ? (object.image ? object.image : null) : null,
+            "CreatedDate": object ? new Date(object.date) : null,
             "UserDetails": {
                 "UserId": this.props.profile?.Id,
                 "Firstname": this.props.profile?.FirstName,
@@ -118,7 +118,7 @@ class ShareBox extends Component {
                 "Image": this.props.profile?.ProfilePic,
                 "Email": this.props.profile?.Email
             },
-            "Tags": object?object.tags:[],
+            "Tags": object ? object.tags : [],
             "Likes": [],
             "Claps": [],
             "whistiles": [],
@@ -143,8 +143,8 @@ class ShareBox extends Component {
 
             }
             if (status === 'done') {
-                this.postObject.ImageUrl = info.file.response;
-                this.setState({ ...this.state, uploadSources: [info.file.response] })
+                this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(info.file.response) : info.file.response;
+                this.setState({ ...this.state, uploadSources: this.state.uploadSources ? this.state.uploadSources.concat(info.file.response) : [info.file.response] })
                 notify({ description: `${info.file.name} file uploaded successfully.`, message: "Upload" });
                 this.setState({ ...this.state, fileUploading: false })
             } else if (status === 'error') {
@@ -156,13 +156,13 @@ class ShareBox extends Component {
         },
         beforeUpload: (file, list) => {
             const fileMaxSize = 25 * 1000000;
-            if (!file.size <= fileMaxSize) { notify({ message: "Upload", description: `File size should not be greater than 25 MB`,type:"warning" }) }
+            if (file.size > fileMaxSize) { notify({ message: "Upload", description: `File size should not be greater than 25 MB`, type: "warning" }) }
             return file.size <= fileMaxSize;
         }
     };
-    openpopup = (modal,postObject) => {
+    openpopup = (modal, postObject) => {
         if (Object.keys(postObject ? postObject : []).length === 0)
-        this.clearUploaddata();
+            this.clearUploaddata();
         this.postObject = this.createObject(postObject);
         this.postObject.Type = modal === "Images" ? "Image" : modal;
         this.postObject.dupType = modal === "Images" ? "Image" : modal;
@@ -190,8 +190,8 @@ class ShareBox extends Component {
                 visible: false,
                 isEdit: false
             }, () => {
-                    this.props.dataRefreshed(isEdit ? 'Edit' : 'Add');
-                    notify({ description: isEdit ? "Post edited successfully" : "Posting completed successfully", message: "Post" })
+                this.props.dataRefreshed(isEdit ? 'Edit' : 'Add');
+                notify({ description: isEdit ? "Post edited successfully" : "Posting completed successfully", message: "Post" })
             });
         } else {
             notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
@@ -222,7 +222,6 @@ class ShareBox extends Component {
 
     handleClose = removedTag => {
         const tags = this.state.tags.filter(tag => tag !== removedTag);
-        console.log(tags);
         this.setState({ tags });
     };
 
@@ -271,9 +270,7 @@ class ShareBox extends Component {
             </span>
         );
     }
-
     renderUploadType = (type) => {
-
         const fileTypes = {
             Images: ".jpg,.jpeg,.png",
             Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
@@ -281,7 +278,7 @@ class ShareBox extends Component {
             Gif: ".gif",
             Docs: '.doc,.docx'
         }
-        this.uploadProps = { ...this.uploadProps, accept: fileTypes[type] }
+        this.uploadProps = { ...this.uploadProps, accept: fileTypes[type], multiple: type === "Images" }
         const types = {
             Text: <div>
 
@@ -400,7 +397,7 @@ class ShareBox extends Component {
         return errors;
     }
     render() {
-        const { tags, inputVisible, inputValue, visible, modal,isEdit } = this.state;
+        const { tags, inputVisible, inputValue, visible, modal, isEdit } = this.state;
         const tagChild = tags?.map(this.forMap);
         const menu = (
             <Menu className="custom-dropdown more-opt">
@@ -434,7 +431,7 @@ class ShareBox extends Component {
                     })}
                 </ul>
                 <Modal className="share-popup"
-                    title={<div className="custom-modal-header"><h4>{isEdit?'Edit':'Create'} a Post</h4><a><span className="close-icon" onClick={this.handleCancel}></span></a></div>}
+                    title={<div className="custom-modal-header"><h4>{isEdit ? 'Edit' : 'Create'} a Post</h4><a><span className="close-icon" onClick={this.handleCancel}></span></a></div>}
                     className="custom-popup"
                     visible={visible}
                     onOk={this.handleOk}

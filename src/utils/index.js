@@ -13,5 +13,10 @@ const hasChanged = (values) => {
   }
   return isValid;
 };
-
+class ErrorMessages {
+  error; success; delete; postSuccess; postDelete
+  constructor(title = "") {
+    this.error = "Something went wrong. please try again!";
+  }
+}
 export { uuidv4, hasChanged };

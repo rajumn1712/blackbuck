@@ -168,8 +168,8 @@ class Postings extends Component {
    }
    dataRefreshed = (type) => {
       this.loadPosts(true)
-      if(type==='Add')
-      this.props.upadateProfile(this.props.profile, 'Increment');
+      if (type === 'Add')
+         this.props.upadateProfile(this.props.profile, 'Increment');
    }
    renderPostImages = (imageObj, type) => {
       const _result = {
@@ -178,9 +178,9 @@ class Postings extends Component {
                return <div style={{ width: '100%', position: 'relative' }}>
                   <div class="images">
                      {imageObj.map((image, index) => {
-                        return <div key={index} className={index === 0 ? "image-box single" : 'image-box ' + imageObj.length}>
+                        return <>{index <= 3 ? <div key={index} className={index === 0 ? "image-box single" : 'image-box img-' + (imageObj.length <= 4 ? imageObj.length : 4)}>
                            <img src={image.Name || image} />
-                        </div>
+                        </div> : null}</>
                      })}
                      {imageObj.length > 4 ? <span class="more-images">+2</span> : null}
                   </div>
@@ -371,7 +371,7 @@ class Postings extends Component {
                </ul>
             </div>
          </Card>
-         {this.state.commentselection.indexOf(post.id) > -1 && <Comments onUpdate={(prop, value) => { this.updatePost(post, prop, value) }} count={post.commentsCount} postId={post.id} object={this.state.object}/>}
+         {this.state.commentselection.indexOf(post.id) > -1 && <Comments onUpdate={(prop, value) => { this.updatePost(post, prop, value) }} count={post.commentsCount} postId={post.id} object={this.state.object} />}
          {/* {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />} */}
       </div>
    }
@@ -385,7 +385,7 @@ class Postings extends Component {
       }
       this.setState({ ...this.state, commentselection })
    }
-   updatePost = (post, prop, value,object) => {
+   updatePost = (post, prop, value, object) => {
       let { allPosts } = this.state;
       for (let i in allPosts) {
          if (allPosts[i].id === post.id) {
@@ -411,7 +411,7 @@ class Postings extends Component {
    }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox dataRefreshed={(type) => this.dataRefreshed(type)} postEditData={this.state.postEditData} handleCancel={() => this.handleCancel()}/>}
+         {this.props.sharebox && <ShareBox dataRefreshed={(type) => this.dataRefreshed(type)} postEditData={this.state.postEditData} handleCancel={() => this.handleCancel()} />}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
