@@ -11,18 +11,18 @@ const { Meta } = Card;
 let GroupEditObj = {};
 const ownerActions = [
     {
-      action: "Edit",
-      icons: "post-icons edit-icon",
-      subTitle: "Edit Group",
+        action: "Edit",
+        icons: "post-icons edit-icon",
+        subTitle: "Edit Group",
     },
     {
-      action: "Delete",
-      icons: "post-icons delete-icon",
-      subTitle: "Delete Group",
+        action: "Delete",
+        icons: "post-icons delete-icon",
+        subTitle: "Delete Group",
     },
-  ];
+];
 class GroupsPage extends Component {
- 
+
     state = {
         Groups: [],
         page: 1,
@@ -104,7 +104,7 @@ class GroupsPage extends Component {
                                         <div className="d-flex align-items-center">
 
                                             {group.members > 0 && <span><span>{group.members ? group.members : ""}</span> Members</span>}
-                                            <span className="card-options-right">
+                                            {group.IsGroupAdmin && <span className="card-options-right">
                                                 <SideAction
                                                     horclass="icons more"
                                                     clickedEvent={(event, name) =>
@@ -114,6 +114,7 @@ class GroupsPage extends Component {
                                                 />
                                                 {/* <span className="icons more"/> */}
                                             </span>
+                                            }
                                         </div>
                                     </div>}
                                 />
