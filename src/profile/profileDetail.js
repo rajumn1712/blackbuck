@@ -14,6 +14,7 @@ import { profileSuccess } from "../reducers/auth";
 import { profileDetail } from "../shared/api/apiServer";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { store } from '../store';
 
 class ProfileDetail extends Component {
   state = {
@@ -24,6 +25,13 @@ class ProfileDetail extends Component {
 
   componentDidMount() {
     this.profielDetails();
+    this.storeSubscription = store.subscribe(() => {
+      const { profile } = store.getState().oidc;
+      this.setState({ ...this.state, profile });
+    });
+  }
+  componentWillUnmount() {
+    this.storeSubscription();
   }
   profielDetails = () => {
     this.setState({ ...this.state, loading: true, isDataRefresh: false });

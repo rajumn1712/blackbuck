@@ -187,7 +187,7 @@ class PostCardModal extends Component {
                             <div className="preview-content">
                                 <Card title={this.titleAvatar(post.userdetails, post.date)} bordered={true}
                                     extra={
-                                        <SideAction clickedEvent={(event, name) => this.props.handleEvent(event, name, post)} actionsList={this.fetchCardActions(post.userdetails)} />
+                                        <SideAction clickedEvent={(event, name) => this.props.handleEvent(event, name, post)} actionsList={this.props.fetchCardActions(post.userdetails)} />
                                     }
                                     actions={[<EmojiAction key="emoji" IsUserLikes={post.IsUserLikes} mystate={post} clickedEvent={(event, name) => this.props.handleActions(event, name, post)} />,
                                     <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,

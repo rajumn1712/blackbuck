@@ -296,12 +296,15 @@ class Postings extends Component {
          { action: 'Edit', icons: 'post-icons edit-icon', subTitle: "Edit your post" },
          { action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete your post" }
       ]
+      const groupActions = [
+         { action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete your post" }
+      ]
       const actionsList = [
          { action: 'Save Post', icons: 'post-icons savepost-icon', subTitle: "Save this item for later" },
          { action: 'Turn on Notifications', icons: 'post-icons notify-icon', subTitle: "Keep notify from this user" },
       ]
       if (this.props.postingsType === "saved") { return [{ action: 'Delete', icons: 'post-icons delete-icon', subTitle: "Delete from saved posts" }] }
-      const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : actionsList;
+      const result = user.UserId === this.props.profile.Id ? ownerActions.concat(actionsList) : ((this.props.postingsType === "group" && this.props.groupData?.IsAdmin) ? groupActions.concat(actionsList) : actionsList);
       return result;
    }
    deletePost = (post) => {
@@ -430,7 +433,7 @@ class Postings extends Component {
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
          {this.state.loading && <Loader className="loader-top-middle" />}
          {!this.state.loading && (!this.state.allPosts || this.state.allPosts?.length == 0) && <Empty />}
-         <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post, object) => { this.updatePost(event, type, post, object) }} />
+         <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post, object) => { this.updatePost(event, type, post, object) }} fetchCardActions={(user)=>this.fetchCardActions(user)}/>
       </div>
    }
 }
