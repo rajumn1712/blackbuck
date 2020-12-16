@@ -424,7 +424,7 @@ class Postings extends Component {
    }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox dataRefreshed={(type) => this.dataRefreshed(type)} onRef={sharebox=>this.sharebox=sharebox} handleCancel={() => this.handleCancel()} />}
+         {this.props.sharebox && <ShareBox dataRefreshed={(type) => this.dataRefreshed(type)} onRef={sharebox => this.sharebox = sharebox} handleCancel={() => this.handleCancel()} groupData={this.props.groupData ? this.props.groupData : null}/>}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
