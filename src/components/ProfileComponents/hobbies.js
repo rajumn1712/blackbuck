@@ -66,20 +66,19 @@ class Hobbies extends Component {
     this.setState({ inputVisible: true }, () => this.input.focus());
   };
 
-  handleInputChange = (e) => {
+  handleInputChange = (value) => {
     this.setState({
-      inputValue: e.target.value,
+      inputValue: value,
     });
   };
-  handleInputConfirm = () => {
-    const { inputValue } = this.state;
+  handleInputConfirm = (value) => {
+    const inputValue = value;
     let { tags } = this.state;
     if (inputValue && tags.indexOf(inputValue) === -1) {
       tags = [...tags, inputValue];
     }
     this.setState({
       tags,
-      inputVisible: false,
       inputValue: "",
     });
   };
@@ -87,7 +86,14 @@ class Hobbies extends Component {
   saveInputRef = (input) => {
     this.input = input;
   };
-
+  tagRender = (props) => {
+    const { label, closable, onClose } = props;
+    return (
+      <Tag closable={closable} onClose={onClose}>
+        {label}
+      </Tag>
+    );
+  };
   forMap = (tag, index) => {
     const tagElem = (
       <Tag
@@ -184,9 +190,14 @@ class Hobbies extends Component {
               </Tag>
             )}
           </div> */}
-          <Select mode="tags" style={{ width: '100%' }} placeholder="Enter Hobbies" onChange={this.handleInputChange}>
-            
-          </Select>
+          <Select
+            mode="tags"
+            style={{ width: "100%" }}
+            placeholder="Enter Hobbies"
+            value={tags}
+            onSelect={this.handleInputConfirm}
+            onDeselect={this.handleClose}
+          ></Select>
         </CommonModal>
       </div>
     );
