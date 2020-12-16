@@ -8,7 +8,7 @@ import PadLock from '../styles/images/padlock.svg'
 import GroupAbout from '../shared/components/groupabout';
 import Media from '../shared/components/media';
 import CommonModal from '../components/ProfileComponents/CommonModal';
-import { profileDetail, joinGroup, saveProfileImage } from '../shared/api/apiServer';
+import { profileDetail, joinGroup, saveProfileImage, editGroup } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
 import { profileSuccess } from '../reducers/auth';
 import notify from '../shared/components/notification';
@@ -107,19 +107,11 @@ class Group extends Component {
     }
 
     componentDidMount() {
-        profileDetail(this.props?.profile?.Id)
-            .then(res => {
-
-                const groupData = res.data[0].User;
-                groupData.lstDetails = [
-                    {}
-                ];
-                groupData.lstDetails[0].title = "Programmers";
-                groupData.lstDetails[0].Type = "Private Group";
-                groupData.lstDetails[0].CreatedDate = '2020-10-11';
-                groupData.lstDetails[0].Members = '2.5K';
-                this.setState({ groupData: groupData });
-            })
+        let { groupData } = this.state;
+        editGroup(this.props?.match?.params.id).then(res => {
+            groupData = res.data[0];
+            this.setState({ ...this.state, groupData });
+        });
     }
     showModal = () => {
         this.setState({
@@ -161,26 +153,26 @@ class Group extends Component {
         );
         const menu1 = (
             <Menu className="dropdown-align">
-                <Menu.Item key="0">
+                {/* <Menu.Item key="0">
                     <a><span className="post-icons settings-icon"></span> Update your settings</a>
-                </Menu.Item>
+                </Menu.Item> please don't delete */}
                 <Menu.Item key="1">
                     <a><span className="post-icons Leavegroup-icon"></span> Leave this group</a>
                 </Menu.Item>
-                <Menu.Item key="2">
+                {/* <Menu.Item key="2">
                     <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
-                </Menu.Item>
+                </Menu.Item> please don't delete*/ }
             </Menu>
         );
         function onChange(e) {
             console.log(`checked = ${e.target.checked}`);
         }
         const operations = <div className="mb-8 mr-12 share-option">
-            <button type="primary"  className=""><Dropdown overlay={menu} trigger={['click']}>
+            {/* <button type="primary" className=""><Dropdown overlay={menu} trigger={['click']}>
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                     <span className="post-icons groupshare-icon m-0"></span>
                 </a>
-            </Dropdown></button>
+            </Dropdown></button>  please don't delete*/}
             <button className=""><Dropdown overlay={menu1} trigger={['click']}>
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                     <span className="post-icons h-more-icon m-0"></span>
@@ -194,7 +186,7 @@ class Group extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <img className="center-focus" src={groupData.CoverPic} alt="profilecover" />
+                            <img className="center-focus" src={groupData.GroupCoverPic|| defaultUser} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
                             <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
                                 <Upload {...this.uploadProps}>
@@ -210,19 +202,19 @@ class Group extends Component {
 
                         <div className="user-statistic pb-0">
                             <div className="left-statistic group-leftext">
-                                <Title className="mb-0" level={5}>IT Group</Title>
-                                <div className="f-12">Private Group</div>
+                                <Title className="mb-0" level={5}>{groupData.GroupName}</Title>
+                                <div className="f-12">{groupData.Type} Group</div>
                             </div>
                             <Card className="group-banner w-btn" >
                                 <List
                                     itemLayout="horizontal"
-                                    dataSource={groupData.lstDetails}
+                                    dataSource={[{}]}
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
                                                 avatar={<div className="img-container"> <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                     <Upload {...this.uploadProps}>
-                                                        <Avatar src={groupData?.ProfilePic || defaultUser} />
+                                                        <Avatar src={groupData?.GroupImage || defaultUser} />
                                                         <Tooltip placement="top" title="Change Photo">
                                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                         </Tooltip>
@@ -262,8 +254,8 @@ class Group extends Component {
                                 </div>
                             </CommonModal>
                             <div className="right-statistic mt-8">
-                                <span className="text-center mt-8 mr-16">
-                                    <span className="f-20 fw-400">2.5K</span> Members</span>
+                               {groupData.Members?.length>0 &&  <span className="text-center mt-8 mr-16">
+                                    <span className="f-20 fw-400">{groupData.Members.length}</span> Members</span>}
                                 <Button type="primary" onClick={this.showModal}><span className="icons add-white"></span> Invite</Button>
                             </div>
                         </div>
