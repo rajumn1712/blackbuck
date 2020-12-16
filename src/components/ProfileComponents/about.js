@@ -53,14 +53,14 @@ class About extends Component {
       this.props.about.Address.length > 0
         ? { ...this.props.about.Address[0] }
         : {
-          PlatNo: "",
-          Street: "",
-          Address: "",
-          City: "",
-          State: "",
-          Country: "",
-          PinCode: "",
-        };
+            PlatNo: "",
+            Street: "",
+            Address: "",
+            City: "",
+            State: "",
+            Country: "",
+            PinCode: "",
+          };
     editObject.address = Object.assign(editObject.address, {
       PhoneNumber: editObject.PhoneNumber,
       AboutMe: editObject.AboutMe,
@@ -143,8 +143,8 @@ class About extends Component {
           title="About Me"
           bordered={false}
           extra={
-            !this.props.IsHideAction ? ( 
-            <Tooltip title="Edit">
+            !this.props.IsHideAction ? (
+              <Tooltip title="Edit">
                 <Link onClick={this.showModal}>
                   <span className="icons edit" />
                 </Link>
@@ -224,7 +224,12 @@ class About extends Component {
                                     <h3>Contact</h3>
                                 </Col> */}
                     <Col xs={24} sm={12}>
-                      <Form.Item label="Plot No" className="custom-fields">
+                      <Form.Item
+                        label="Plot No"
+                        name="Plot No"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           value={values?.PlatNo}
@@ -236,7 +241,12 @@ class About extends Component {
                       </Form.Item>
                     </Col>
                     <Col xs={24} sm={12}>
-                      <Form.Item label="Street Name" className="custom-fields">
+                      <Form.Item
+                        label="Street Name"
+                        name="Street Name"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           value={values?.Street}
@@ -248,7 +258,12 @@ class About extends Component {
                       </Form.Item>
                     </Col>
                     <Col xs={24}>
-                      <Form.Item label="Address" className="custom-fields">
+                      <Form.Item
+                        label="Address"
+                        name="Address"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           value={values?.Address}
@@ -260,7 +275,12 @@ class About extends Component {
                       </Form.Item>
                     </Col>
                     <Col xs={24} sm={12}>
-                      <Form.Item label="City" className="custom-fields">
+                      <Form.Item
+                        label="City"
+                        name="City"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           value={values?.City}
@@ -274,6 +294,8 @@ class About extends Component {
                     <Col xs={24} sm={12}>
                       <Form.Item
                         label="Country"
+                        name="Country"
+                        rules={[{ required: true }]}
                         className="custom-fields custom-select"
                       >
                         <CountryDropdown
@@ -297,6 +319,8 @@ class About extends Component {
                     <Col xs={24} sm={12}>
                       <Form.Item
                         label="State"
+                        name="State"
+                        rules={[{ required: true }]}
                         className="custom-fields custom-select"
                       >
                         <RegionDropdown
@@ -318,7 +342,12 @@ class About extends Component {
                     </Col>
 
                     <Col xs={24} sm={12}>
-                      <Form.Item label="Pin Code" className="custom-fields">
+                      <Form.Item
+                        label="Pin Code"
+                        name="Pin Code"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           value={values?.PinCode}
@@ -330,7 +359,12 @@ class About extends Component {
                       </Form.Item>
                     </Col>
                     <Col xs={24} sm={24}>
-                      <Form.Item label="Phone Number" className="custom-fields">
+                      <Form.Item
+                        label="Phone Number"
+                        name="Phone Number"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           value={values?.PhoneNumber}
@@ -349,6 +383,8 @@ class About extends Component {
                     <Col xs={24}>
                       <Form.Item
                         label="About Me"
+                        name="About Me"
+                        rules={[{ required: true }]}
                         className="custom-fields mb-24"
                       >
                         <Field

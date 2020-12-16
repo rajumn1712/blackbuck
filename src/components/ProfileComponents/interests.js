@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Avatar, List, Input, Modal, Tooltip } from "antd";
+import { Card, Avatar, List, Input, Modal, Tooltip, Select, Row, Col, Form } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -14,11 +14,13 @@ import {
 import { connect } from "react-redux";
 
 const { Search } = Input;
+const { Option } = Select;
 
 class Interests extends Component {
   state = {
     interests: this.props.interests ? this.props.interests : [],
     interestsLu: [],
+    lstInterests: [],
     visible: false,
     search: "",
     page: 1,
@@ -40,6 +42,29 @@ class Interests extends Component {
   };
   componentDidMount() {
     this.fetchInterestsLu(10, 0);
+  }
+  setFieldValue = (value) => {
+    let { saveObject, interestsLu, lstInterests } = this.state;
+    saveObject.Interests = [];
+    value.forEach(item => {
+      interestsLu.forEach(obj => {
+        if (item === obj.InterestId) {
+          saveObject.Interests.push(obj)
+        }
+      })
+    })
+    lstInterests = value;
+    this.setState({ ...this.state, saveObject, lstInterests });
+  }
+  renderSelectItem = (item) => {
+    return <div>
+      <List.Item>
+        <List.Item.Meta
+          avatar={<Avatar className="select-image" src={item.Image} />}
+          title={<span>{item.Name}</span>}
+        />
+      </List.Item>
+    </div>
   }
   fetchInterestsLu = (take, skip) => {
     this.setState({ ...this.state, loading: true });
@@ -70,6 +95,7 @@ class Interests extends Component {
       {
         visible: true,
         interestsLu: [],
+        lstInterests: [],
         saveObject: {
           UserId: this.props?.profile?.Id,
           Interests: [],
@@ -121,11 +147,11 @@ class Interests extends Component {
     this.setState({ search: keyword });
   };
   handleInterest = (item) => {
-    let { interestsLu, saveObject } = this.state;
+    let { interestsLu, saveObject, lstInterests } = this.state;
     interestsLu.forEach((interest) => {
       if (item.InterestId == interest.InterestId) {
-        interest.IsInterest = true;
         saveObject.Interests.push(item);
+        lstInterests.push(item?.InterestId);
       }
     });
 
@@ -133,13 +159,13 @@ class Interests extends Component {
       ...this.state,
       interestsLu: interestsLu,
       saveObject: saveObject,
+      lstInterests: lstInterests
     });
   };
   handleRemove = (item) => {
     let { interestsLu, saveObject } = this.state;
     interestsLu.forEach((interest) => {
       if (item.InterestId == interest.InterestId) {
-        interest.IsInterest = false;
         saveObject.Interests.splice(saveObject.Interests.indexOf(item), 1);
       }
     });
@@ -180,7 +206,7 @@ class Interests extends Component {
   };
   render() {
     const { user } = store.getState().oidc;
-    const { interests, visible, interestsLu } = this.state;
+    const { interests, visible, interestsLu, saveObject, lstInterests } = this.state;
 
     const interesetsList = interestsLu
       .filter((item) => {
@@ -269,14 +295,29 @@ class Interests extends Component {
         >
           <div>
             <div className="modal-search p-16">
-              <Search
-                className="header-searchbar"
-                placeholder="Search Interests"
-                onChange={(e) => this.handleSearch(e)}
-              />
-            </div>
-            <div className="custom-card p-16 bg-white">
-              <List itemLayout="horizontal">{interesetsList}</List>
+
+              <Form layout="vertical" >
+                <Select
+                  defaultValue=""
+                  name="Invitations"
+                  value={lstInterests}
+                  optionLabelProp="label"
+                  mode="multiple"
+                  placeholder="Select Interests"
+                  style={{ width: '100%' }}
+                  onChange={(value) =>
+                    this.setFieldValue(value)
+                  }
+                >
+                  {interestsLu.map((item, index) => {
+                    return (
+                      <Option key={index} value={item.InterestId} label={item.Name}>
+                        {this.renderSelectItem(item)}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </Form>
             </div>
           </div>
         </CommonModal>

@@ -364,14 +364,19 @@ class Intership extends Component {
             initialValues={initialValues}
             innerRef={this.formRef}
             validate={(values) => this.handleValidate(values)}
-          // validationSchema={this.validateSchema}
+            // validationSchema={this.validateSchema}
           >
             {({ values, setFieldValue }) => {
               return (
                 <Form layout="vertical">
                   <Row gutter={8}>
                     <Col xs={24}>
-                      <Form.Item label="Company Name" className="custom-fields">
+                      <Form.Item
+                        label="Company Name"
+                        name="Company Name"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           name="CompanyName"
@@ -383,7 +388,12 @@ class Intership extends Component {
                       </Form.Item>
                     </Col>
                     <Col xs={24}>
-                      <Form.Item label="Short Name" className="custom-fields">
+                      <Form.Item
+                        label="Short Name"
+                        name="Short Name"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           name="ShortName"
@@ -395,7 +405,12 @@ class Intership extends Component {
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
-                      <Form.Item label="Place" className="custom-fields">
+                      <Form.Item
+                        label="Place"
+                        name="Place"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
                         <Field
                           className="ant-input"
                           name="Location"
@@ -409,6 +424,8 @@ class Intership extends Component {
                     <Col xs={24} md={12}>
                       <Form.Item
                         label="Duration"
+                        name="Duration"
+                        rules={[{ required: true }]}
                         className="custom-fields custom-select"
                       >
                         <Select

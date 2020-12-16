@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Tag, Input, Tooltip } from "antd";
+import { Card, Tag, Input, Tooltip, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { TweenOneGroup } from "rc-tween-one";
 import { Link } from "react-router-dom";
@@ -147,7 +147,7 @@ class Hobbies extends Component {
           cancel={this.handleCancel}
           saved={this.handleOk}
         >
-          {this.state.loading && <Loader className="loader-top-middle" />}
+          {/* {this.state.loading && <Loader className="loader-top-middle" />}
           <div className="tags">
             <div style={{ margin: 10 }}>
               <TweenOneGroup
@@ -183,7 +183,10 @@ class Hobbies extends Component {
                 <PlusOutlined /> Enter Hobbies
               </Tag>
             )}
-          </div>
+          </div> */}
+          <Select mode="tags" style={{ width: '100%' }} placeholder="Enter Hobbies" onChange={this.handleInputChange}>
+            
+          </Select>
         </CommonModal>
       </div>
     );

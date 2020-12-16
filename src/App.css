@@ -186,6 +186,8 @@
 .icons.white-close{background-position:-528px -198px;}
 .icons.close{background-position:-401px -197px;}
 .icons.close:hover{background-position:-401px -223px;}
+.sharebox-icons.textdoc-icon{background-position:-665px -52px;}
+.sharebox-icons.office-icon{background-position: -661px -105px}
 .hobbies-card .tags{background-color:var(--secondary);color:var(--textprimary);font-size:var(--f-14);font-weight:500;border-radius:40px;padding:4px 15px;border:none;margin-bottom:8px;}
 .text-left-line.ant-divider-horizontal.ant-divider-with-text-left::before{width:0 !important;}
 .text-left-line .ant-divider-inner-text{padding-left:0;color:var(--textprimary);}
@@ -221,7 +223,7 @@
 .internship-card .ant-card-body{padding:12px 0 0;}
 .intern-cards{border:1px solid var(--secondary);border-radius:5px;text-align:center;position:relative;}
 .intern-cards .intern-cardbody{background-color:var(--grey);padding:24px 8px;}
-.intern-cards .intern-cardbody img{width:auto;margin-bottom:8px;height:auto;max-width:75%;}
+.intern-cards .intern-cardbody img{width:auto;margin-bottom:8px;height:auto;max-width:75%;max-height: 100%;}
 .intern-cards .intern-cardbody .internlogo{height:100px;display:flex;align-items:center;justify-content:center;}
 .intern-cards .intern-cardbody .title{font-size:18px;font-weight:500;line-height:22px;color:var(--textprimary);margin-bottom:8px;}
 .intern-cards .intern-cardbody .description{font-size:var(--f-16);font-weight:500;line-height:20px;color:var(--textsecondary);margin-bottom:2px;text-transform:capitalize;}
@@ -235,11 +237,11 @@
 .tag-name:hover{background:var(--bghover);}
 .tag-name a{color:var(--textsecondary) !important;display:block;}
 .tag-name a:hover{color:var(--textprimary) !important;}
-.edu-card{display:flex;align-items:center;}
+.edu-card{display:flex;align-items:center;margin-bottom: 8px;}
 .edu-card .ant-list-item-meta-avatar{margin-right:0px !important;}
-.edu-card .edu-study .ant-list-item-meta-content .ant-list-item-meta-title{font-size:var(--f-16);}
+.edu-card .edu-study .ant-list-item-meta-content .ant-list-item-meta-title{font-size:var(--f-16);margin-bottom: 0;}
 .edu-card .edu-certificate{background:var(--grey);padding:5px;border-radius:5px;border:1px solid var(--secondary);margin-left:10px;margin-right:10px;display:flex;align-items:center;}
-.edu-card .edu-study{display:flex;align-items:center;}
+.edu-card .edu-study{display:flex;align-items:center;flex-grow: 2;}
 .edu-card .edu-certificate .about-icons{background:var(--white);}
 .edu-card .edu-certificate .ant-list-item-meta-title{color:var(--primary);}
 .ant-input-affix-wrapper:hover,.ant-input-affix-wrapper:focus,.ant-input-affix-wrapper-focused{border-color:var(--primary) !important;}
@@ -332,11 +334,14 @@ textarea{resize:unset !important;}
 .interests-popup .ant-list-grid .ant-col > .ant-list-item{padding:6px;margin:12px;display:flex;}
 .hobbies-card .ant-card-body, .group-member .ant-card-body{padding:12px;}
 .hobbies-card .tags{min-height:auto;}
-.onboard-process .steps-content{color:var(--textprimary);position:relative;background-color:var(--grey);}
-.intro1{padding:12px;text-align:center;margin:auto;min-height:500px;}
+.onboard-process .steps-content{color:var(--white);position:relative;background-color:var(--primary);}
+.intro1{padding:12px;text-align:center;margin:auto;min-height:500px;display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;}
 .onboard-process .steps-content .right{background-color:#ffffff;}
-.intro1 h1{color:var(--textprimary) !important;}
-.intro1 p{color:var(--textsecondary) !important;}
+.intro1 h1{color:var(--white) !important;}
+.intro1 p{color:var(--white) !important;}
 .intro-title{text-align:left;color:var(--textprimary);margin-top:30px;}
 .intro-subtitle{text-align:left;color:var(--textprimary);padding:8px 12px;}
 .intro-title h2,.intro-subtitle h2{margin-bottom:0 !important;}
@@ -370,3 +375,6 @@ textarea{resize:unset !important;}
 .helpcards h3{margin-top: 10px ;margin-bottom: 10px;color: var(--textprimary);}
 .helpcards p{color: var(--textsecondary);margin-bottom: 0;}
 .helppage .ant-collapse-header{font-weight: 500;}
+.settings-left .ant-card-body{padding: 6px 0;}
+.settings-card .ant-list-item-meta-title{width: 220px;}
+.settings-card .ant-list-item-meta-content{display:flex;}
