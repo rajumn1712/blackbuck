@@ -334,11 +334,14 @@ textarea{resize:unset !important;}
 .interests-popup .ant-list-grid .ant-col > .ant-list-item{padding:6px;margin:12px;display:flex;}
 .hobbies-card .ant-card-body, .group-member .ant-card-body{padding:12px;}
 .hobbies-card .tags{min-height:auto;}
-.onboard-process .steps-content{color:var(--textprimary);position:relative;background-color:var(--grey);}
-.intro1{padding:12px;text-align:center;margin:auto;min-height:500px;}
+.onboard-process .steps-content{color:var(--white);position:relative;background-color:var(--primary);}
+.intro1{padding:12px;text-align:center;margin:auto;min-height:500px;display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;}
 .onboard-process .steps-content .right{background-color:#ffffff;}
-.intro1 h1{color:var(--textprimary) !important;}
-.intro1 p{color:var(--textsecondary) !important;}
+.intro1 h1{color:var(--white) !important;}
+.intro1 p{color:var(--white) !important;}
 .intro-title{text-align:left;color:var(--textprimary);margin-top:30px;}
 .intro-subtitle{text-align:left;color:var(--textprimary);padding:8px 12px;}
 .intro-title h2,.intro-subtitle h2{margin-bottom:0 !important;}
