@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Steps, Button, message, Card, List, Avatar, Row, Col, Select, Input, Checkbox, Form } from 'antd';
+import { Steps, Button, message, Card, List, Avatar, Row, Col, Select, Input, Checkbox, Form, DatePicker } from 'antd';
 import Logo from '../styles/images/blackbugs-logo.png';
 import Onboard1 from '../styles/images/onboard1.svg';
 import Onboard2 from '../styles/images/onboard2.svg';
@@ -121,11 +121,27 @@ const OnBoard = ({ profile }) => {
                                             </Select>
                                         </Form.Item>
                                     </Col>
-                                    {/* <Col xs={12} className="custom-fields">
-                                        <Form.Item label="Branch name" name="branch" rules={[{ required: true, message: "Branch name required" }]}>
-                                            <Input />
+                                    <Col xs={12} className="custom-fields">
+                                        <Form.Item label="Date of Joining" name="JoiningDate" rules={[{ required: true, message: "Date of Joining required" }]}>
+                                            <DatePicker onChange={()=>{}}/>
                                         </Form.Item>
-                                    </Col> */}
+                                    </Col>
+                                    <Col xs={12} className="custom-fields">
+                                        <Form.Item label="Passing out year" name="PassOutYear" rules={[{ required: true, message: "Date of Joining required" }]}>
+                                        <DatePicker onChange={()=>{}} picker="year"/>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={12} className="custom-fields">
+                                        <Form.Item label="Current Year" name="CurrentYear" rules={[{ required: true, message: "Date of Joining required" }]}>
+                                            <Select placeholder="Select an option">
+                                                <Option value="1">1</Option>
+                                                <Option value="2">2</Option>
+                                                <Option value="3">3</Option>
+                                                <Option value="4">4</Option>
+                                                <Option value="5">5</Option>
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
                                 </Row>
                             </Form>
                         </div >
@@ -236,26 +252,26 @@ const OnBoard = ({ profile }) => {
             <Card className="mb-16 custom-card onboard-process" bordered={true} >
                 <div className="steps-content">
                     {steps[current].content}
-                    
+
                     <div className="steps-action">
-                            {current > 0 && (
-                                <Button className="backbtn" onClick={() => prev()}>
-                                    Back
-                                </Button>
-                            )}
-                            {current === steps.length - 1 && (
-                                <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                                    Finish
-                                </Button>
-                            )}
-                            {current < steps.length - 1 && (
-                                <Button type="primary" onClick={() => next()}>
-                                    Next
-                                </Button>
-                            )}
-                        </div>
-                    
+                        {current > 0 && (
+                            <Button className="backbtn" onClick={() => prev()}>
+                                Back
+                            </Button>
+                        )}
+                        {current === steps.length - 1 && (
+                            <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                                Finish
+                            </Button>
+                        )}
+                        {current < steps.length - 1 && (
+                            <Button type="primary" onClick={() => next()}>
+                                Next
+                            </Button>
+                        )}
                     </div>
+
+                </div>
                 {/* <Row gutter={8}>
                     <Col xs={24} md={8}>
                         <div style={{ height: '100%', backgroundColor: 'var(--grey)' }}></div>

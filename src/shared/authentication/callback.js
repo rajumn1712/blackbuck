@@ -11,7 +11,9 @@ class CallbackPage extends React.Component {
         const profileResponse = await fetchProfile(user.profile.email);
         if (profileResponse.ok) {
             this.props.updateProfile(profileResponse.data[0])
-            this.props.history.push("/")
+            if (!profileResponse.data[0].IsOnBoardProcess) {
+                this.props.history.push("/student_onboard")
+            } else { this.props.history.push("/") }
         } else {
             message.error("Something went wrong:)")
         }
@@ -25,7 +27,7 @@ class CallbackPage extends React.Component {
                     console.error(error);
                 }}
             >
-                <Loader className="loader-middle"/>
+                <Loader className="loader-middle" />
             </CallbackComponent>
         );
     }
