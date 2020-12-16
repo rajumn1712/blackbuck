@@ -13,7 +13,7 @@ class Invite extends Component {
         this.getUserInvites();
     }
     getUserInvites = () => {
-        getUserInvitations(this.props.profile?.Id).then(res => {
+        getUserInvitations(this.props.profile?.Id,1,0).then(res => {
             this.setState({ invitations: res.data?.length > 0 ? res.data : [] })
         });
     }

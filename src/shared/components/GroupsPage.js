@@ -6,9 +6,23 @@ import connectStateProps from '../stateConnect';
 import { fetchUserGroups } from '../api/apiServer'
 import CommonModal from '../../components/ProfileComponents/CommonModal'
 import CreateGroup from '../../group/creategroup'
+import SideAction from "../../shared/components/postings/Actions/SideActions";
 const { Meta } = Card;
-let GroupEditObj={};
+let GroupEditObj = {};
+const ownerActions = [
+    {
+        action: "Edit",
+        icons: "post-icons edit-icon",
+        subTitle: "Edit Group",
+    },
+    {
+        action: "Delete",
+        icons: "post-icons delete-icon",
+        subTitle: "Delete Group",
+    },
+];
 class GroupsPage extends Component {
+
     state = {
         Groups: [],
         page: 1,
@@ -65,15 +79,26 @@ class GroupsPage extends Component {
             visible: false,
         });
     }
-    editPost = (group) => {
+    editGroup = (group) => {
         GroupEditObj = group;
         this.setState({
             visible: true,
         });
     }
+    handleEvent = async (e, name, item) => {
+        switch (name) {
+            case "Edit":
+                this.editGroup(item);
+                break;
+            case "Delete":
+                break;
+            default:
+                break;
+        }
+    };
     render() {
         const { user } = store.getState().oidc;
-        const { Groups,visible } = this.state;
+        const { Groups, visible } = this.state;
         return (
             <div className="group-page" >
                 <Row gutter={16} className="">
@@ -84,13 +109,23 @@ class GroupsPage extends Component {
                                     <Link className="list-link f-14" to="/commingsoon">Leave Group</Link>
                                 ]}
                             >
-                                <Meta title={<Link to="/groupview" className="post-title">{group.name}</Link>}
+                                <Meta title={<Link to={"/groupview/"+group.id} className="post-title">{group.name}</Link>}
                                     description={<div>
                                         <div className="mb-4 f-12 text-overflow">{group.description}</div>
                                         <div className="d-flex align-items-center">
-                            
-                                            {group.members>0 && <span><span>{group.members?group.members:""}</span> Members</span>}
-                                            <a className="edit-groupbtn"></a>
+
+                                            {group.members > 0 && <span><span>{group.members ? group.members : ""}</span> Members</span>}
+                                            {group.IsGroupAdmin && <span className="card-options-right">
+                                                <SideAction
+                                                    horclass="icons more"
+                                                    clickedEvent={(event, name) =>
+                                                        this.handleEvent(event, name, group)
+                                                    }
+                                                    actionsList={ownerActions}
+                                                />
+                                                {/* <span className="icons more"/> */}
+                                            </span>
+                                            }
                                         </div>
                                     </div>}
                                 />
@@ -110,9 +145,9 @@ class GroupsPage extends Component {
                     title="Edit group"
                     cancel={this.handleCancel}
                     saved={this.saveGroup}
-                    // isHideFooter={true}
+                // isHideFooter={true}
                 >
-                    {visible && <CreateGroup Type={"Edit"} GroupId={GroupEditObj.id} handleCancel={this.handleCancel} onRef={creategroup => this.creategroup = creategroup}/>}
+                    {visible && <CreateGroup Type={"Edit"} GroupId={GroupEditObj.id} handleCancel={this.handleCancel} onRef={creategroup => this.creategroup = creategroup} />}
                 </CommonModal>
             </div>
 
