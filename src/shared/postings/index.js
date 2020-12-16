@@ -160,7 +160,7 @@ class Postings extends Component {
       }
    }
    editPost = (post) => {
-      this.setState({ ...this.state, postEditData: post });
+      this.sharebox.editPost(post);
    }
    handleCancel = () => {
       this.setState({ postEditData: {} })
@@ -424,7 +424,7 @@ class Postings extends Component {
    }
    render() {
       return <div onScroll={this.handleScroll}>
-         {this.props.sharebox && <ShareBox dataRefreshed={(type) => this.dataRefreshed(type)} postEditData={this.state.postEditData} handleCancel={() => this.handleCancel()} />}
+         {this.props.sharebox && <ShareBox dataRefreshed={(type) => this.dataRefreshed(type)} onRef={sharebox=>this.sharebox=sharebox} handleCancel={() => this.handleCancel()} />}
          {this.props.friendsSuggestions && <FriendSuggestions />}
 
          {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
