@@ -376,5 +376,5 @@ textarea{resize:unset !important;}
 .helpcards p{color: var(--textsecondary);margin-bottom: 0;}
 .helppage .ant-collapse-header{font-weight: 500;}
 .settings-left .ant-card-body{padding: 6px 0;}
-.settings-card .ant-list-item-meta-title{width: 200px;}
+.settings-card .ant-list-item-meta-title{width: 220px;}
 .settings-card .ant-list-item-meta-content{display:flex;}

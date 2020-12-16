@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Collapse, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip, List, Form } from 'antd';
+import React, { Component, useState } from 'react';
+import { Collapse, Menu, Row, Col, Input, Checkbox, Button, Card, Divider, Tooltip, List, Form, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 import { store } from '../store'
 import '../index.css';
@@ -11,33 +11,56 @@ import AccSettings from '../styles/images/acc-settings.svg';
 import Password from '../styles/images/password.svg';
 import Privacy from '../styles/images/privacy.svg';
 import Item from 'antd/lib/list/Item';
+import { ErrorMessage, Field, Formik } from "formik";
 const data = [
     {
-      title: 'Name',
-      description: 'saranya'
+        title: 'Name',
+        description: 'saranya'
     },
     {
-      title: 'Username',
-      description: ' https://www.blackbuck.com/saranya'
+        title: 'Username',
+        description: ' https://www.blackbuck.com/saranya'
     },
     {
-      title: 'Contact',
-      description: 'saranyamallampati1201@gmail.com'
+        title: 'Contact',
+        description: 'saranyamallampati1201@gmail.com'
     },
     {
-      title: 'Ad account contact',
-      description: 'saranyamallampati1201@gmail.com'
+        title: 'Ad account contact',
+        description: 'saranyamallampati1201@gmail.com'
     },
     {
         title: 'Memorialization Settings',
         description: 'Decide what happens to your account after you pass away.'
-      },
-  ];
+    },
+];
+const tailLayout = {
+    wrapperCol: { span: 16 },
+  };
+class Settings extends React.Component {
+    state = {
+        loading: false,
+        visible: false,
+    };
 
-class Settings extends Component {
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
 
+    handleOk = () => {
+        this.setState({ loading: true });
+        setTimeout(() => {
+            this.setState({ loading: false, visible: false });
+        }, 3000);
+    };
+
+    handleCancel = () => {
+        this.setState({ visible: false });
+    };
     render() {
-
+        const { visible, loading } = this.state;
         return (
             <div>
                 <div className="main">
@@ -95,44 +118,55 @@ class Settings extends Component {
                                     itemLayout="horizontal"
                                     dataSource={data}
                                     renderItem={item => (
-                                        <List.Item actions={[<a key="list-loadmore-edit">Edit</a>]}>
-                                            <List.Item.Meta 
-                                                title={<a>{item.title}</a>}
-                                                description={<a>{item.description}</a>}
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                            <List.Item.Meta
+                                                title={<h3>{item.title}</h3>}
+                                                description={<div>{item.description}</div>}
                                             />
                                         </List.Item>
                                     )}
                                 />
 
                             </Card>
+                            <Modal
+                                visible={visible}
+                                title="Name"
+                                onOk={this.handleOk}
+                                onCancel={this.handleCancel}
+                                footer={[
+                                    <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>Save</Button>,
+                                ]}
+                            >
+                                <div>
+                                    <Form layout="vertical">
+                                        <Row gutter={16}>
+
+                                            <Col xs={24} sm={24}>
+                                                <Form.Item
+                                                    label="Firstname"
+                                                    name="username"
+                                                >
+                                                    <Input />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    label="Lastname"
+                                                    name="username"
+                                                >
+                                                    <Input />
+                                                </Form.Item>
+                                                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+                                                    <Checkbox>Remember me</Checkbox>
+                                                </Form.Item>
+                                                <div className="p-12"><span className="fw-400">Please note:</span> If you change your name on Facebook, you can't change it again for 60 days. Don't add any unusual capitalization, punctuation, characters or random words. <a>Learn more.</a></div>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </div>
+                            </Modal>
                         </Col>
                     </Row>
                 </div>
-                {/* <Row justify="center">
-                    <Col xs={24} md={16} className="mt-16">
-                        <Card title="General Account Settings" bordered={true}  >
-                        <Col xs={24} sm={12}>
-                      <Form.Item label="Email" className="custom-fields">
-                        <Input  name="Email" /> 
-                      </Form.Item>
-                      <Form.Item label="Email" className="custom-fields">
-                        <Input  name="Email" /> 
-                      </Form.Item>
-                    </Col>
-                            <List
-                                itemLayout="horizontal"
-                                dataSource={data}
-                                renderItem={item => (
-                                    <List.Item>
-                                        <Form.Item label="Email" className="custom-fields">
-                                            <Input name="Email" />
-                                        </Form.Item>
-                                    </List.Item>
-                                )}
-                            />
-                        </Card>
-                    </Col>
-                </Row> */}
+
 
 
 
