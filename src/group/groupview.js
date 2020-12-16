@@ -159,6 +159,7 @@ class Group extends Component {
                 </Menu.Item> please don't delete */}
                 <Menu.Item key="1">
                     <a><span className="post-icons Leavegroup-icon"></span> Leave this group</a>
+                    <a><span className="post-icons edit-icon"></span> Edit group</a>
                 </Menu.Item>
                 {/* <Menu.Item key="2">
                     <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
@@ -176,7 +177,7 @@ class Group extends Component {
             </Dropdown></button>  please don't delete*/}
             <button className=""><Dropdown overlay={menu1} trigger={['click']}>
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                    <span className="post-icons h-more-icon m-0"></span>
+                    <span className="icons h-more-icon m-0"></span>
                 </a>
             </Dropdown></button>
 
@@ -254,8 +255,8 @@ class Group extends Component {
 
                                 </div>
                             </CommonModal>
-                            <div className="right-statistic mt-8">
-                               {groupData.Members?.length>0 &&  <span className="text-center mt-8">
+                            <div className="right-statistic group-right mt-12 mx-12">
+                               {groupData.Members?.length>0 &&  <span className="text-center mr-16">
                                     <span className="f-20 fw-400">{groupData.Members.length}</span> Members</span>}
                                 <Button type="primary" onClick={this.showModal}><span className="icons add-white"></span> Invite</Button>
                             </div>

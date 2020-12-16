@@ -40,6 +40,8 @@
 .post-icons.delete-icon{background-position: -377px -200px;}
 .post-icons.more-icon:hover {background-position: -235px -226px;}
 .post-icons.h-more-icon:hover {background-position: -555px -226px;}
+.icons.h-more-icon{background-position: -556px -197px;width: 20px;}
+.icons.h-more-icon:hover{background-position: -556px -223px;width: 20px;}
 /* .post-card .ant-card-actions li a:hover .post-icons.like-icon{background-position:  -150px -226px;}
 .post-card .ant-card-actions li a:hover .post-icons.comment-icon{background-position: -177px -225px;}
 .post-card .ant-card-actions li a:hover .post-icons.share-icon{background-position: -205px -226px;} */

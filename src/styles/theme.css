@@ -90,6 +90,7 @@
 .mt-4{margin-top: 4px;}
 .mt-8{margin-top: 8px !important;}
 .mt-16{margin-top: 16px !important;}
+.mt-12{margin-top: 12px;}
 .mb-0{margin-bottom: 0px !important;}
 .mb-4{margin-bottom: 4px !important;}
 .mb-6{margin-bottom: 6px !important;}
@@ -100,6 +101,7 @@
 .mx-0{margin-left: 0; margin-right: 0;}
 .mx-4{margin-left: 4px; margin-right: 4px;}
 .mx-8{margin-left: 8px; margin-right: 8px !important;}
+.mx-12{margin-left: 12px; margin-right: 12px;}
 .mx-16{margin-left: 16px; margin-right: 16px;}
 .my-0{margin-top: 0; margin-bottom: 0;}
 .my-4{margin-top: 4px; margin-bottom: 4px;}
