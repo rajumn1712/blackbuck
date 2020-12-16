@@ -294,7 +294,7 @@ class Interests extends Component {
           destroyOnClose
         >
           <div>
-            <div className="modal-search p-16">
+            <div className="modal-search p-16 custom-fields">
 
               <Form layout="vertical" >
                 <Select

@@ -253,6 +253,8 @@
 .modal-search .header-searchbar .ant-input-group{box-shadow:none;border:1px solid var(--bordergrey);border-radius:0.8rem;}
 .modal-search .header-searchbar,.invite-search .header-searchbar{max-width:100%;display:block;}
 .modal-interest .ant-modal-body{background-color:#f9f9f9;padding:0 !important;}
+.modal-interest .modal-search .ant-select-selector .ant-select-selection-item{line-height: 24px !important;}
+.modal-interest .modal-search .ant-select-selector {height: auto !important;}
 .text-red,.text-red:hover{color:var(--red) !important;}
 .bg-white{background-color:var(--white);}
 .ant-form-vertical .ant-form-item-label{padding-bottom:0px !important;}
@@ -317,7 +319,7 @@ textarea{resize:unset !important;}
 .see-more:hover{color:var(--textsecondary) !important;text-decoration:underline;}
 .tag-card .ant-list-split{padding:8px 0;}
 .profile-tabs .group-page{background:var(--white);padding:16px;border-radius:0.8rem;border-color:var(--line);border:1px solid var(--line);}
-.profile-card .ant-avatar,.post-card .ant-avatar,.post-comment .ant-comment-avatar img,.custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image,.user-statistic .user-banner .ant-card-meta .ant-avatar-image,.coverpage .editpost,.img-camera,.main-header .ant-menu-item a,.notification-list .notification-image .ant-avatar-image,.messenger-drawer .ant-card-meta .ant-avatar-image,.profile-dropdown .ant-card-meta .ant-avatar-image,.addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius:50% !important;}
+.profile-card .ant-avatar,.post-card .ant-avatar,.post-comment .ant-comment-avatar img,.custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image,.user-statistic .user-banner .ant-card-meta .ant-avatar-image,.coverpage .editpost,.img-camera,.main-header .ant-menu-item a,.notification-list .notification-image .ant-avatar-image,.messenger-drawer .ant-card-meta .ant-avatar-image,.profile-dropdown .ant-card-meta .ant-avatar-image,.addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius:50% !important;border: 1px solid var(--line);}
 .validateerror{color:red;text-align:right;display:block !important;}
 .profile-tabs .ant-tabs-extra-content .profile-download{border:1px solid var(--primary);margin-right:12px;font-size:14px !important;color:var(--primary);}
 .left-menu.private-icon{background-position:-434px -256px;}
