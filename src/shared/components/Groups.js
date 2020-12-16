@@ -21,7 +21,8 @@ class Groups extends Component {
         data: [],
         loading: true,
         page: 1,
-        pageNo: 5
+        pageSize: 5,
+        size:0
     };
     handleCancel = e => {
         this.setState({
@@ -69,10 +70,19 @@ class Groups extends Component {
     componentDidMount() {
         this.getAllGroups();
     }
+    loadGroups = (take) => {
+        let { page, pageSize } = this.state;
+        page = page + 1;
+        pageSize = take;
+        this.setState({ ...this.state, page, pageSize }, () => {
+            this.getAllGroups();
+        })
+    }
     getAllGroups = async () => {
-        const response = await fetchGroupSuggestions((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageNo);
+        const response = await fetchGroupSuggestions((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageSize);
         if (response.ok) {
-            this.setState({ loading: false, data: response.data });
+            let { data,size} = this.state;
+            this.setState({ loading: false, data: data.concat(response.data), size: response.data?.length });
         }
     }
     async cancelGroupRequest(item) {
@@ -88,7 +98,7 @@ class Groups extends Component {
         this.creategroup.handleSave();
     }
     render() {
-        const { visible } = this.state;
+        const { visible, size } = this.state;
         return (
             <div className="custom-card sub-text card-scroll">
                 <Card title="Groups" bordered={true} extra={<Link to="/commingsoon">View all</Link>} actions={[
@@ -118,6 +128,7 @@ class Groups extends Component {
                             </List.Item>
                         )}
                     />
+                    {size >= 5 && <a className="more-comments" onClick={() => this.loadGroups(5)}>View more groups</a>}
                 </Card>
                 <CommonModal
                     className="creategroup-popup"
