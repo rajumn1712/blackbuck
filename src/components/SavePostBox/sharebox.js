@@ -392,6 +392,9 @@ class ShareBox extends Component {
         this.setState({ ...this.state, errors })
         return errors;
     }
+    disablePostBtn = () => {
+        return !this.postObject?.ImageUrl && !this.postObject?.Message
+    }
     render() {
         const { tags, inputVisible, inputValue, visible, modal, isEdit } = this.state;
         const tagChild = tags?.map(this.forMap);
@@ -435,7 +438,7 @@ class ShareBox extends Component {
                         {/* <Button key="back" onClick={this.handleCancel} className="btn-cancel">
                             Close
                         </Button> */}
-                        <Button disabled={!this.state.post.Message} type="primary" onClick={() => this.popupOk()}>
+                        <Button disabled={this.disablePostBtn()} type="primary" onClick={() => this.popupOk()}>
                             Post
                         </Button></div>
                     ]}
