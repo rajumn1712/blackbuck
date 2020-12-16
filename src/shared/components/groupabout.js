@@ -69,7 +69,7 @@ class GroupAbout extends Component {
 
                     </div>
                 </Card>
-                <Card title="Recommended by the Admins" bordered={false} actions={[
+                {/* <Card title="Recommended by the Admins" bordered={false} actions={[
                     <Button type="primary" >See All Groups</Button>
                 ]}>
                        
@@ -98,7 +98,7 @@ class GroupAbout extends Component {
                         )}
                     />
                         </div>
-                </Card>
+                </Card>  Please don't delete*/}
                 <Card title="Members" bordered={false} actions={[
                     <Button type="primary" >See All</Button>
                 ]}>

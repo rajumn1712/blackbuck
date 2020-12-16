@@ -153,26 +153,26 @@ class Group extends Component {
         );
         const menu1 = (
             <Menu className="dropdown-align">
-                <Menu.Item key="0">
+                {/* <Menu.Item key="0">
                     <a><span className="post-icons settings-icon"></span> Update your settings</a>
-                </Menu.Item>
+                </Menu.Item> please don't delete */}
                 <Menu.Item key="1">
                     <a><span className="post-icons Leavegroup-icon"></span> Leave this group</a>
                 </Menu.Item>
-                <Menu.Item key="2">
+                {/* <Menu.Item key="2">
                     <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
-                </Menu.Item>
+                </Menu.Item> please don't delete*/ }
             </Menu>
         );
         function onChange(e) {
             console.log(`checked = ${e.target.checked}`);
         }
         const operations = <div className="mb-8 mr-12 share-option">
-            <button type="primary" className=""><Dropdown overlay={menu} trigger={['click']}>
+            {/* <button type="primary" className=""><Dropdown overlay={menu} trigger={['click']}>
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                     <span className="post-icons groupshare-icon m-0"></span>
                 </a>
-            </Dropdown></button>
+            </Dropdown></button>  please don't delete*/}
             <button className=""><Dropdown overlay={menu1} trigger={['click']}>
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                     <span className="post-icons h-more-icon m-0"></span>
@@ -263,9 +263,6 @@ class Group extends Component {
                         <Tabs defaultActiveKey="1" className="profile-tabs" tabBarExtraContent={operations}>
                             <TabPane tab="About" key="3">
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         <GroupAbout />
                                     </Col>
@@ -283,9 +280,6 @@ class Group extends Component {
                             </TabPane>
                             <TabPane tab="Media" key="2">
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         <Media />
                                     </Col>
