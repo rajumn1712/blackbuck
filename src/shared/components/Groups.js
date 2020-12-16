@@ -14,15 +14,15 @@ class Groups extends Component {
     showModal = (e) => {
         e.preventDefault();
         this.setState({
-          visible: true,
+            visible: true,
         });
-      };
+    };
     state = {
         data: [],
         loading: true,
         page: 1,
         pageSize: 5,
-        size:0
+        size: 0
     };
     handleCancel = e => {
         this.setState({
@@ -81,7 +81,7 @@ class Groups extends Component {
     getAllGroups = async () => {
         const response = await fetchGroupSuggestions((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageSize);
         if (response.ok) {
-            let { data,size} = this.state;
+            let { data, size } = this.state;
             this.setState({ loading: false, data: data.concat(response.data), size: response.data?.length });
         }
     }
@@ -128,7 +128,10 @@ class Groups extends Component {
                             </List.Item>
                         )}
                     />
-                    {size >= 5 && <a className="more-comments" onClick={() => this.loadGroups(5)}>View more groups</a>}
+                    <div className="text-center"> 
+                        {size >= 5 && <a className="more-comments" onClick={() => this.loadGroups(5)}>View more groups</a>}
+                    </div>
+
                 </Card>
                 <CommonModal
                     className="creategroup-popup"
@@ -136,10 +139,10 @@ class Groups extends Component {
                     title="Create group"
                     cancel={this.handleCancel}
                     saved={this.saveGroup}
-                   // isHideFooter={true}
+                // isHideFooter={true}
 
                 >
-                    {visible && <CreateGroup Type={"Add"} handleCancel={this.handleCancel} onRef={creategroup => this.creategroup = creategroup}/>}
+                    {visible && <CreateGroup Type={"Add"} handleCancel={this.handleCancel} onRef={creategroup => this.creategroup = creategroup} />}
 
                 </CommonModal>
             </div>
