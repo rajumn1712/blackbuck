@@ -254,7 +254,7 @@ class Group extends Component {
                                 </div>
                             </CommonModal>
                             <div className="right-statistic mt-8">
-                               {groupData.Members?.length>0 &&  <span className="text-center mt-8 mr-16">
+                               {groupData.Members?.length>0 &&  <span className="text-center mt-8">
                                     <span className="f-20 fw-400">{groupData.Members.length}</span> Members</span>}
                                 <Button type="primary" onClick={this.showModal}><span className="icons add-white"></span> Invite</Button>
                             </div>

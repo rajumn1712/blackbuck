@@ -90,7 +90,7 @@ class Groups extends Component {
     render() {
         const { visible } = this.state;
         return (
-            <div className="custom-card sub-text">
+            <div className="custom-card sub-text card-scroll">
                 <Card title="Groups" bordered={true} extra={<Link to="/commingsoon">View all</Link>} actions={[
                     <Button type="primary" onClick={this.showModal}>Create a Group</Button>
                 ]} >
