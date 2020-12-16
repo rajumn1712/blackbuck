@@ -275,7 +275,7 @@ class Group extends Component {
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                    <Postings sharebox={true} friendsSuggestions={false} postingsType="all" groupData={groupData}/>
+                                   {groupData?.GroupId &&  <Postings sharebox={true} friendsSuggestions={false} postingsType="group" groupData={groupData}/>}
                                     </Col>
                                 </Row>
                             </TabPane>

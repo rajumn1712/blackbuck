@@ -72,7 +72,7 @@ class Postings extends Component {
    }
    async loadPosts(isFromSave) {
       this.setState({ ...this.state, loading: true });
-      const posts = await getPosts((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageSize, this.props.postingsType);
+      const posts = await getPosts((this.props.userId ? this.props.userId : (this.props?.profile?.Id)), this.state.page, this.state.pageSize, this.props.postingsType,this.props.groupData?.GroupId);
       let { allPosts } = this.state;
       if (!isFromSave) {
          allPosts = allPosts.concat(posts.data);
