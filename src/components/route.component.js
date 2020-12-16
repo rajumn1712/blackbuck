@@ -40,7 +40,7 @@ const Router = () => {
       <ProtectedRoute path="/profile/:tabkey" component={Profile} />
       <ProtectedRoute path="/profileview/:userId" component={ProfileView} />
       <Route path="/group" component={Group} />
-      <Route path="/groupview" component={GroupView} />
+      <ProtectedRoute path="/groupview/:id" component={GroupView} />
       {/* <Route path="/creategroup" component={CreateGroup} /> */}
       <Route path="/commingsoon" component={CommingSoon} />
       <ProtectedRoute path="/newgroup/:id" component={CreateGroup} />
