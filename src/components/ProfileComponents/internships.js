@@ -25,6 +25,7 @@ import * as Yup from "yup";
 import { hasChanged, uuidv4 } from "../../utils";
 import notify from "../../shared/components/notification";
 import SideAction from "../../shared/components/postings/Actions/SideActions";
+import Avatar from "antd/lib/avatar/avatar";
 
 const docs = [
   {
@@ -124,7 +125,7 @@ class Intership extends Component {
   };
   uploadfileProps = {
     name: "file",
-    accept: ".doc,.docx",
+    accept: ".png,.jpeg,.pdf",
     multiple: false,
     showUploadList: false,
     action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
@@ -136,7 +137,7 @@ class Intership extends Component {
       }
       if (status === "done") {
         const { internshipsObj, certificates } = this.state;
-        certificates.Avatar = info.file.name.split(".")[1];
+        certificates.Avatar = info.file.name.split(".").pop();
         certificates.File = info.file.response[0];
         certificates.Size = parseFloat(info.file.size * 0.0009765625).toFixed(
           3
@@ -334,7 +335,13 @@ class Intership extends Component {
                   </div>
                   <div className="intern-cardbody">
                     <div className="internlogo">
-                      <img src={item.CompanyLogo} />
+                      {item.CompanyLogo ? (
+                        <img src={item.CompanyLogo} />
+                      ) : (
+                        <Avatar style={{ backgroundColor: "#f56a00" }}>
+                          {item.CompanyName}
+                        </Avatar>
+                      )}
                     </div>
                     <h4 className="title">{item.CompanyName}</h4>
                     <p className="description">
@@ -531,7 +538,7 @@ class Intership extends Component {
                                 title={item.File}
                                 description={
                                   <div className="file-size f-14">
-                                    {item.Size}
+                                    {item.Size} {"KB"}
                                   </div>
                                 }
                               />

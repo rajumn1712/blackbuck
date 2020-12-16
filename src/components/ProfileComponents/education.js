@@ -168,7 +168,7 @@ class Education extends Component {
   };
   uploadProps = {
     name: "file",
-    accept: ".doc,.docx",
+    accept: ".png,.jpeg,.pdf",
     multiple: false,
     action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
     showUploadList: false,
@@ -442,7 +442,9 @@ class Education extends Component {
                       ]}
                       title={item.File}
                       description={
-                        <div className="file-size f-14">{item.Size}</div>
+                        <div className="file-size f-14">
+                          {item.Size} {"KB"}
+                        </div>
                       }
                     />
                     <span
