@@ -258,13 +258,13 @@
 .ant-form-vertical .ant-form-item-label{padding-bottom:0px !important;}
 .custom-fields .ant-form-item-label > label{color:var(--textsecondary) !important;font-size:var(--f-14);font-weight:500;margin-bottom:3px !important;}
 .custom-fields{margin-bottom:16px !important;}
-.custom-fields .ant-input,.custom-fields .ant-select{min-height:48px;}
+.custom-fields .ant-input,.custom-fields .ant-select,.custom-fields .ant-picker{min-height:48px;}
 .custom-fields .ant-select-selector,.custom-fields .ant-picker.ant-picker-range{min-height:48px;height:48px !important;border-radius:8px !important;}
 .custom-fields .ant-select-selector .ant-select-selection-item{line-height:48px !important;}
 .ant-form-item-control-input-content select{min-height:48px;width:100%;border-radius:8px !important;}
 .custom-fields textarea.ant-input{min-height:90px !important;}
 .ant-input,.ant-select-selector,.ant-form-item-control-input-content select,.ant-form-item-control-input-content select:focus{border:1px solid #dfe3eb !important;}
-.ant-input,.ant-select{border-radius:8px !important;}
+.ant-input,.ant-select,.ant-picker {border-radius: 8px !important;width: 100%;}
 .ant-modal-content{border-radius:0.8rem !important;}
 .ant-btn:hover,.ant-btn:focus,.ant-picker:hover,.ant-picker-focused{color:var(--primary) !important;border-color:var(--primary) !important;}
 .ant-btn-primary:hover,.ant-btn-primary:focus{color:var(--white) !important;}
