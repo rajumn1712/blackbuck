@@ -247,4 +247,7 @@
 .ant-select-dropdown .ant-list-item .ant-list-item-meta-content{margin: auto;}
 .multi-select .ant-select-selector{overflow: overlay;}
 .ant-select-dropdown .ant-select-item-option-state{margin: auto;}
-.edit-groupbtn{width: 28px !important;height: 28px;display: inline-block;right: 8px;left: auto;background:#f8f8f8 url(/static/media/icons.267a4b3e.svg) no-repeat;background-position: -60px -198px;}
+.edit-groupbtn, .ant-dropdown-link .post-icons{width: 28px !important;height: 28px;display: inline-block;right: 8px;left: auto;position: absolute;
+    top: 8px;
+    padding: 10px;
+    border-radius: 50%;}
