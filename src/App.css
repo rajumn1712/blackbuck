@@ -1235,7 +1235,7 @@
   margin-bottom: 16px !important;
 }
 .custom-fields .ant-input,
-.custom-fields .ant-select {
+.custom-fields .ant-select,.custom-fields .ant-picker {
   min-height: 48px;
 }
 .custom-fields .ant-select-selector,
@@ -1262,8 +1262,9 @@
   border: 1px solid #dfe3eb !important;
 }
 .ant-input,
-.ant-select {
+.ant-select,.ant-picker {
   border-radius: 8px !important;
+  width: 100%;
 }
 .ant-modal-content {
   border-radius: 0.8rem !important;
