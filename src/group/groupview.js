@@ -271,10 +271,8 @@ class Group extends Component {
                         <Tabs defaultActiveKey="1" className="profile-tabs" tabBarExtraContent={operations}>
                             <TabPane tab="About" key="3">
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                    
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <GroupAbout />
                                     </Col>
                                 </Row>
@@ -291,10 +289,8 @@ class Group extends Component {
                             </TabPane>
                             <TabPane tab="Media" key="2">
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
-                                    </Col>
-                                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                                   
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Media />
                                     </Col>
                                 </Row>

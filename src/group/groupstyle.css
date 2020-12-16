@@ -247,7 +247,5 @@
 .ant-select-dropdown .ant-list-item .ant-list-item-meta-content{margin: auto;}
 .multi-select .ant-select-selector{overflow: overlay;}
 .ant-select-dropdown .ant-select-item-option-state{margin: auto;}
-.edit-groupbtn, .ant-dropdown-link .post-icons{width: 28px !important;height: 28px;display: inline-block;right: 8px;left: auto;position: absolute;
-    top: 8px;
-    padding: 10px;
-    border-radius: 50%;}
+.edit-groupbtn, .ant-dropdown-link .post-icons{width: 28px !important;height: 28px;display: inline-block;right: 8px;left: auto;position: absolute;top: 8px;padding: 10px;border-radius: 50%;}
+.sub-text .ant-card-body .ant-list-items{overflow: scroll;height: 234px;}
