@@ -86,7 +86,7 @@ class Courses extends Component {
     const { courses } = this.state;
     return (
       <div className="custom-card">
-        {this.state.loading && <Loader className="loader-top-middle" />}
+        {/* {this.state.loading && <Loader className="loader-top-middle" />} */}
         <Card
           title="Courses"
           bordered={false}

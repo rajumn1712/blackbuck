@@ -64,10 +64,10 @@ class Intership extends Component {
       Size: "",
     },
     initialValues: {
-      CompanyName: internshipsObj.CompanyName,
-      ShortName: internshipsObj.ShortName,
-      Location: internshipsObj.Location,
-      Duration: internshipsObj.Duration,
+      CompanyName: "",
+      ShortName: "",
+      Location: "",
+      Duration: "",
     },
     duration: ["30 days", "45 days", "2 months", "3 months", "6 months"],
     visible: false,
@@ -274,6 +274,12 @@ class Intership extends Component {
       ...this.state,
       visible: false,
       internshipsObj: internshipsObj,
+      initialValues: {
+        CompanyName: "",
+        ShortName: "",
+        Location: "",
+        Duration: "",
+      },
     });
   };
   render() {

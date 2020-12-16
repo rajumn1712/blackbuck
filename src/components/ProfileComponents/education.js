@@ -56,6 +56,10 @@ class Education extends Component {
     loading: false,
     fileUploading: false,
   };
+  disabledDate = (current) => {
+    // Can not select days after today and today
+    return current && current > moment().endOf("day");
+  };
   showModal = (e, isedit, education) => {
     e.preventDefault();
     let { initialValues, educationObj } = { ...this.state };
@@ -89,6 +93,7 @@ class Education extends Component {
       };
     }
     this.setState({
+      ...this.state,
       visible: true,
       isEdit: isedit ? true : false,
       initialValues: initialValues,
@@ -141,6 +146,13 @@ class Education extends Component {
       ...this.state,
       educationObj: educationObj,
       visible: false,
+      initialValues: {
+        EducationType: "",
+        Name: "",
+        AcademicYear: "",
+        Location: "",
+        MarksGrade: "",
+      },
     });
   };
 
@@ -355,6 +367,7 @@ class Education extends Component {
                         >
                           <Input.Group compact>
                             <RangePicker
+                              disabledDate={this.disabledDate}
                               name="AcademicYear"
                               value={values.AcademicYear}
                               onChange={(value) =>
