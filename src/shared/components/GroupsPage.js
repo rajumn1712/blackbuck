@@ -79,12 +79,23 @@ class GroupsPage extends Component {
             visible: false,
         });
     }
-    editPost = (group) => {
+    editGroup = (group) => {
         GroupEditObj = group;
         this.setState({
             visible: true,
         });
     }
+    handleEvent = async (e, name, item) => {
+        switch (name) {
+            case "Edit":
+                this.editGroup(item);
+                break;
+            case "Delete":
+                break;
+            default:
+                break;
+        }
+    };
     render() {
         const { user } = store.getState().oidc;
         const { Groups, visible } = this.state;
