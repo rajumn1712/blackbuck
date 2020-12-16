@@ -253,18 +253,21 @@
 .modal-search .header-searchbar .ant-input-group{box-shadow:none;border:1px solid var(--bordergrey);border-radius:0.8rem;}
 .modal-search .header-searchbar,.invite-search .header-searchbar{max-width:100%;display:block;}
 .modal-interest .ant-modal-body{background-color:#f9f9f9;padding:0 !important;}
+.modal-interest .modal-search .ant-select-selector .ant-select-selection-item{line-height: 24px !important;}
+.modal-interest .modal-search .ant-select-selector {height: auto !important;padding: 4px 11px;}
+.modal-interest .modal-search{padding: 16px 30px;margin-bottom: 0 !important;}
 .text-red,.text-red:hover{color:var(--red) !important;}
 .bg-white{background-color:var(--white);}
 .ant-form-vertical .ant-form-item-label{padding-bottom:0px !important;}
 .custom-fields .ant-form-item-label > label{color:var(--textsecondary) !important;font-size:var(--f-14);font-weight:500;margin-bottom:3px !important;}
 .custom-fields{margin-bottom:16px !important;}
-.custom-fields .ant-input,.custom-fields .ant-select{min-height:48px;}
+.custom-fields .ant-input,.custom-fields .ant-select,.custom-fields .ant-picker{min-height:48px;}
 .custom-fields .ant-select-selector,.custom-fields .ant-picker.ant-picker-range{min-height:48px;height:48px !important;border-radius:8px !important;}
 .custom-fields .ant-select-selector .ant-select-selection-item{line-height:48px !important;}
 .ant-form-item-control-input-content select{min-height:48px;width:100%;border-radius:8px !important;}
 .custom-fields textarea.ant-input{min-height:90px !important;}
 .ant-input,.ant-select-selector,.ant-form-item-control-input-content select,.ant-form-item-control-input-content select:focus{border:1px solid #dfe3eb !important;}
-.ant-input,.ant-select{border-radius:8px !important;}
+.ant-input,.ant-select,.ant-picker {border-radius: 8px !important;width: 100%;}
 .ant-modal-content{border-radius:0.8rem !important;}
 .ant-btn:hover,.ant-btn:focus,.ant-picker:hover,.ant-picker-focused{color:var(--primary) !important;border-color:var(--primary) !important;}
 .ant-btn-primary:hover,.ant-btn-primary:focus{color:var(--white) !important;}
@@ -317,7 +320,7 @@ textarea{resize:unset !important;}
 .see-more:hover{color:var(--textsecondary) !important;text-decoration:underline;}
 .tag-card .ant-list-split{padding:8px 0;}
 .profile-tabs .group-page{background:var(--white);padding:16px;border-radius:0.8rem;border-color:var(--line);border:1px solid var(--line);}
-.profile-card .ant-avatar,.post-card .ant-avatar,.post-comment .ant-comment-avatar img,.custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image,.user-statistic .user-banner .ant-card-meta .ant-avatar-image,.coverpage .editpost,.img-camera,.main-header .ant-menu-item a,.notification-list .notification-image .ant-avatar-image,.messenger-drawer .ant-card-meta .ant-avatar-image,.profile-dropdown .ant-card-meta .ant-avatar-image,.addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius:50% !important;}
+.profile-card .ant-avatar,.post-card .ant-avatar,.post-comment .ant-comment-avatar img,.custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image,.user-statistic .user-banner .ant-card-meta .ant-avatar-image,.coverpage .editpost,.img-camera,.main-header .ant-menu-item a,.notification-list .notification-image .ant-avatar-image,.messenger-drawer .ant-card-meta .ant-avatar-image,.profile-dropdown .ant-card-meta .ant-avatar-image,.addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius:50% !important;border: 1px solid var(--line);}
 .validateerror{color:red;text-align:right;display:block !important;}
 .profile-tabs .ant-tabs-extra-content .profile-download{border:1px solid var(--primary);margin-right:12px;font-size:14px !important;color:var(--primary);}
 .left-menu.private-icon{background-position:-434px -256px;}
@@ -381,3 +384,8 @@ textarea{resize:unset !important;}
 .sharebox-icons .png-icon{background-position: -482px -469px;}
 .sharebox-icons .jpg-icon{background-position: -526px -469px;}
 .sharebox-icons .docpdf{background-position: -571px -469px;}
+.carousel-card .ant-card-cover{height: 200px;}
+.carousel-card .ant-card-cover img{width: 100%;height: 100%;object-fit: cover;object-position: center center;border-radius: 0.8rem 0.8rem 0 0;}
+.carousel-card .ant-card-body{padding: 16px !important;}
+.carousel-card .carousel-card-title{overflow: hidden;color:var(--textprimary);font-weight: 500;font-size: 16px;white-space: nowrap;text-overflow: ellipsis;text-transform: capitalize;margin-bottom: 0;}
+.carousel-card .carousel-card-descp{font-size: 14px;color: var(--textsecondary);}

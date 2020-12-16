@@ -9,6 +9,7 @@ import Computer from '../styles/images/computer.svg';
 import { fetchInerests, getBranchSubjects, getCollegeBranches, getColleges, saveOnboard } from '../shared/api/apiServer';
 import notify from '../shared/components/notification';
 import connectStateProps from '../shared/stateConnect';
+import OwlCarousel from 'react-owl-carousel2';
 const { Option } = Select;
 function onChange(checkedValues) {
     console.log('checked = ', checkedValues);
@@ -253,7 +254,19 @@ const OnBoard = ({ profile }) => {
                             <h2>Want to join in Groups?</h2>
                         </div>
                         <div className="intro3">
-                            <GroupsPage />
+                            <OwlCarousel items={3} autoWidth={true}>
+                                <Card className="carousel-card"
+                                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                                >
+                                   <div>
+                                        <h5 className="carousel-card-title text-overflow">Civil Engineering</h5>
+                                        <p className="carousel-card-descp text-overflow">Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment,</p>
+                                        <div className="text-center">
+                                            <Button type="default" className="addfrnd semibold">Join Group</Button>
+                                        </div>
+                                    </div>
+                                </Card>
+                            </OwlCarousel>
                         </div>
 
                     </Col>

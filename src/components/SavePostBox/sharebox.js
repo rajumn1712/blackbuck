@@ -71,19 +71,23 @@ class ShareBox extends Component {
         fileUploading: false,
         isEdit: false,
     }
-    componentWillReceiveProps(newProps) {
-        if ((this.props.postEditData !== newProps.postEditData) && Object.keys(newProps.postEditData).length > 0) {
-            let { post } = this.state;
-            post.Message = newProps.postEditData.meassage;
-            post.Title = newProps.postEditData.title;
-            post.IsAnonymous = newProps.postEditData.IsAnonymous;
-            this.setState({ ...this.state, uploadSources: newProps.postEditData.image ? (Array.isArray(newProps.postEditData.image) ? newProps.postEditData.image : [newProps.postEditData.image]) : [], isEdit: true, tags: newProps.postEditData.tags, post }, () => {
-                const object = { "Text": "Text", "Video": "Video", "Gif": "Gif", "Audio": "Audio", "Image": "Images" }
-                this.openpopup(object[newProps.postEditData.type], newProps.postEditData);
-            })
-
-        }
+    componentDidMount() {
+        if (this.props.onRef)
+            this.props.onRef(this)
     }
+    // componentWillReceiveProps(newProps) {
+    //     if ((this.props.postEditData !== newProps.postEditData) && Object.keys(newProps.postEditData).length > 0) {
+    //         let { post } = this.state;
+    //         post.Message = newProps.postEditData.meassage;
+    //         post.Title = newProps.postEditData.title;
+    //         post.IsAnonymous = newProps.postEditData.IsAnonymous;
+    //         this.setState({ ...this.state, uploadSources: newProps.postEditData.image ? (Array.isArray(newProps.postEditData.image) ? newProps.postEditData.image : [newProps.postEditData.image]) : [], isEdit: true, tags: newProps.postEditData.tags, post }, () => {
+    //             const object = { "Text": "Text", "Video": "Video", "Gif": "Gif", "Audio": "Audio", "Image": "Images" }
+    //             this.openpopup(object[newProps.postEditData.type], newProps.postEditData);
+    //         })
+
+    //     }
+    // }
     createObject = (object) => {
         return {
             "PostId": object ? object.id : uuidv4(),
@@ -107,12 +111,23 @@ class ShareBox extends Component {
             "Comments": [],
             "Loves": [],
             "Group": {
-                "GroupId": null,
-                "GroupName": null,
-                "GroupImage": null
+                "GroupId": this.props?.groupData ? this.props.groupData.GroupId : null,
+                "GroupName": this.props?.groupData ? this.props.groupData.GroupName : null,
+                "GroupImage": this.props?.groupData ? this.props.groupData.GroupImage : null
             },
             "Shares": []
         }
+    }
+
+    editPost = (postObj) => {
+        let { post } = this.state;
+        post.Message = postObj.meassage;
+        post.Title = postObj.title;
+        post.IsAnonymous = postObj.IsAnonymous;
+        this.setState({ ...this.state, uploadSources: postObj.image ? (Array.isArray(postObj.image) ? postObj.image : [postObj.image]) : [], isEdit: true, tags: postObj.tags, post }, () => {
+            const object = { "Text": "Text", "Video": "Video", "Gif": "Gif", "Audio": "Audio", "Image": "Images" }
+            this.openpopup(object[postObj.type], postObj);
+        })
     }
     uploadProps = {
         name: 'file',
