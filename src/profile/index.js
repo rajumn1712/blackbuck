@@ -116,7 +116,6 @@ class Profile extends Component {
         }
         this.props.updateProfile(this.props.profile);
         this.imageObject = {};
-        this.profielDetails();
       }
     );
   };
