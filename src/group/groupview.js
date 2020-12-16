@@ -254,7 +254,7 @@ class Group extends Component {
                                 </div>
                             </CommonModal>
                             <div className="right-statistic mt-8">
-                               {groupData.Members?.length>0 &&  <span className="text-center mt-8 mr-16">
+                               {groupData.Members?.length>0 &&  <span className="text-center mt-8">
                                     <span className="f-20 fw-400">{groupData.Members.length}</span> Members</span>}
                                 <Button type="primary" onClick={this.showModal}><span className="icons add-white"></span> Invite</Button>
                             </div>
@@ -275,7 +275,7 @@ class Group extends Component {
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                    <Postings sharebox={true} friendsSuggestions={false} postingsType="all" groupData={groupData}/>
+                                   {groupData?.GroupId &&  <Postings sharebox={true} friendsSuggestions={false} postingsType="group" groupData={groupData}/>}
                                     </Col>
                                 </Row>
                             </TabPane>

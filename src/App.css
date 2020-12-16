@@ -337,12 +337,12 @@ textarea{resize:unset !important;}
 .interests-popup .ant-list-grid .ant-col > .ant-list-item{padding:6px;margin:12px;display:flex;}
 .hobbies-card .ant-card-body, .group-member .ant-card-body{padding:12px;}
 .hobbies-card .tags{min-height:auto;}
-.onboard-process .steps-content{color:var(--white);position:relative;background-color:var(--primary);}
+.onboard-process .steps-content{color:var(--white);position:relative;background-color:var(--primary);border-radius: 0.8rem;}
 .intro1{padding:12px;text-align:center;margin:auto;min-height:500px;display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;}
-.onboard-process .steps-content .right{background-color:#ffffff;}
+.onboard-process .steps-content .right{background-color:var(--white); border-radius: 0 0.8rem 0.8rem 0;}
 .intro1 h1{color:var(--white) !important;}
 .intro1 p{color:var(--white) !important;}
 .intro-title{text-align:left;color:var(--textprimary);margin-top:30px;}

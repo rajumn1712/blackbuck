@@ -145,7 +145,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
     const steps = [
         {
             content:
-                <Row gutter={8}>
+                <Row>
                     <Col xs={24} md={8}>
                         <div className="intro1">
                             <img src={Logo} alt="blackbuck" width="250px" />

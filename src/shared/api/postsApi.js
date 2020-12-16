@@ -1,14 +1,16 @@
 import { apiClient } from './clients';
 const POSTS_END_POINT = "service/api/posts/";
 const PROFILE_END_POINT = "service/api/profile/"
-const getPosts = (userid, pageNo, pageSize, postingsType) => {
+const getPosts = (userid, pageNo, pageSize, postingsType,groupid) => {
     const method = {
         "all": "getAllPosts",
         "user": "getUsersPosts",
-        "saved": "getUserSavedPosts"
+        "saved": "getUserSavedPosts",
+        "group": "getGroupPosts"
     }
-    const endPoint = postingsType === "saved" ? PROFILE_END_POINT : POSTS_END_POINT;
-    return apiClient.get(endPoint + `${method[postingsType]}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`);
+    const endPoint = postingsType === "saved"||postingsType === "group" ? PROFILE_END_POINT : POSTS_END_POINT;
+    const params = postingsType === "group" ? (`${method[postingsType]}/${groupid}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`) : (`${method[postingsType]}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`)
+    return apiClient.get(endPoint + params);
 }
 const savePost = (post,isEdit) => {
     return apiClient.post(POSTS_END_POINT + (isEdit?"updatePosts":"savePosts"), post)
