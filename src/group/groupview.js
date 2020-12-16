@@ -108,8 +108,9 @@ class Group extends Component {
 
     componentDidMount() {
         let { groupData } = this.state;
-        editGroup(this.props?.match?.params.id).then(res => {
-            groupData = res.data[0];
+        editGroup(this.props?.match?.params.id,this.props?.profile.Id).then(res => {
+            groupData = res.data[0].Group;
+            groupData.IsAdmin = res.data[0].IsGroupAdmin;
             this.setState({ ...this.state, groupData });
         });
     }

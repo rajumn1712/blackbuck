@@ -32,10 +32,10 @@ class CreateGroup extends Component {
 
     imageObject = {};
     getGroupObject = (id) => {
-        editGroup(id).then(res => {
-            this.setInitialvalues(res.data[0]);
+        editGroup(id,this.props?.profile.Id).then(res => {
+            this.setInitialvalues(res.data[0].Group);
             let { groupObject } = this.state;
-            groupObject = res.data[0]
+            groupObject = res.data[0].Group;
             this.setState({ ...this.state, groupObject });
         });
     }
