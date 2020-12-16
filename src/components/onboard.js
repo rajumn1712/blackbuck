@@ -1,27 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Steps, Button, message, Card, List, Avatar, Row, Col, Select, Input, Checkbox, Form, DatePicker } from 'antd';
+import { Steps, Button, message, Card, Avatar, Row, Col, Select, Checkbox, Form, DatePicker } from 'antd';
 import Logo from '../styles/images/blackbugs-logo.png';
 import Onboard1 from '../styles/images/onboard1.svg';
 import Onboard2 from '../styles/images/onboard2.svg';
-import { ErrorMessage, Field, Formik } from 'formik';
-import GroupsPage from '../shared/components/GroupsPage';
-import Computer from '../styles/images/computer.svg';
-import { fetchInerests, getBranchSubjects, getCollegeBranches, getColleges, saveOnboard } from '../shared/api/apiServer';
+import { fetchCourseSuggestions, fetchInerests, getBranchSubjects, getCollegeBranches, getColleges, joinGroup as JoinGroup, saveOnboard } from '../shared/api/apiServer';
 import notify from '../shared/components/notification';
 import connectStateProps from '../shared/stateConnect';
 import OwlCarousel from 'react-owl-carousel2';
+import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 const { Option } = Select;
-function onChange(checkedValues) {
-    console.log('checked = ', checkedValues);
-}
-
-
-
-const OnBoard = ({ profile }) => {
+const OnBoard = ({ profile, history, updateProfile }) => {
     const [current, setCurrent] = React.useState(0);
     const [colleges, setColleges] = useState([]);
     const [branches, setBranches] = useState([]);
     const [subjects, setSubjects] = useState([]);
+    const [groupSuggestions, setGroupSuggetions] = useState([])
     const [initialValues, setInitialValues] = useState({
         "UserDetails": {
             "UserId": profile?.Id,
@@ -40,15 +33,18 @@ const OnBoard = ({ profile }) => {
         "Interests": []
     })
     const [interests, setInterests] = useState([]);
-    const next = async () => {
+    const next = async (values) => {
         if (current === 0) {
+            console.log(values)
             await saveOnboard({ UserDetails: { ...initialValues.UserDetails }, College: { ...initialValues.College }, OnBoardStep: "1" });
             fetchInterests();
         } else if (current == 1) {
-            await saveOnboard({ UserDetails: { ...initialValues.UserDetails }, Interests: [...initialValues.Interests], OnBoardStep: "2" });
+            if (interests.length > 0) {
+                await saveOnboard({ UserDetails: { ...initialValues.UserDetails }, Interests: [...initialValues.Interests], OnBoardStep: "2" });
+            }
+            fetchGroupSuggestions();
         }
         setCurrent(current + 1);
-
     };
 
     const prev = () => {
@@ -86,26 +82,16 @@ const OnBoard = ({ profile }) => {
         let object = { ...initialValues };
         object.College[prop] = val;
         setInitialValues(object);
-        prop === "CollegeId" ? fetchBranches() : fetchSubjects();
+        const result = prop === "CollegeId" ? fetchBranches() : (prop === "BranchId" ? fetchSubjects() : "");
     }
     const onSubjectsSelection = (subject) => {
         let object = { ...initialValues };
-        const idx = object.College.Subjects.indexOf(subject[0]);
-        if (idx > -1) {
-            object.College.Subjects.splice(idx, 1);
-        } else {
-            object.College.Subjects.push(subject[0])
-        }
+        object.College.Subjects = subject;
         setInitialValues(object);
     }
     const onInterestSelection = (subject) => {
         let object = { ...initialValues };
-        const idx = object.Interests.indexOf(subject[0]);
-        if (idx > -1) {
-            object.Interests.splice(idx, 1);
-        } else {
-            object.Interests.push(subject[0])
-        }
+        object.Interests = subject
         setInitialValues(object);
     }
     const fetchInterests = async () => {
@@ -116,10 +102,46 @@ const OnBoard = ({ profile }) => {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
     }
+    const fetchGroupSuggestions = async () => {
+        const grpSuggetions = await fetchCourseSuggestions(profile?.Id, 5, 0);
+        if (grpSuggetions.ok) {
+            setGroupSuggetions(grpSuggetions.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
+    }
+    const joinGroup = async (item) => {
+        const obj = {
+            "UserId": profile?.Id,
+            "Firstname": profile?.FirstName,
+            "Lastname": profile?.LastName,
+            "Image": profile?.ProfilePic,
+            "Email": profile?.Email
+        }
+        if (item.type == "Private") { obj.Type = "request" }
+        const joinResponse = await JoinGroup(item.id, obj);
+        if (joinResponse.ok) {
+            notify({ message: "Group join", description: item.type === "Private" ? "Request sent" : "Joined to group" });
+            let groups = { ...groupSuggestions };
+            groups = groups.filter(it => it.id !== item.id);
+            setGroupSuggetions(groups);
+        } else {
+            notify({ message: "Error", description: "Something went wrong :)", type: "error" });
+        }
+
+    }
     useEffect(() => {
         fetchColleges();
     }, []);
+    const onFinishFailed = (error) => {
 
+    }
+    const finishSetup = () => {
+        let prop = { ...profile };
+        prop.IsOnBoardProcess = true;
+        updateProfile(prop);
+        history.push("/")
+    }
     const steps = [
         {
             content:
@@ -142,7 +164,7 @@ const OnBoard = ({ profile }) => {
                             </h2>
                         </div>
                         <div className="intro2 pb-0">
-                            <Form layout="vertical" initialValues={initialValues} onFinishFailed={(err) => console.log(err)}>
+                            <Form layout="vertical" initialValues={initialValues.College} onFinishFailed={onFinishFailed} onFinish={(values) => next(values)}>
                                 <Row gutter={16}>
 
                                     <Col xs={24} className="custom-fields">
@@ -153,19 +175,19 @@ const OnBoard = ({ profile }) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={12} className="custom-fields">
-                                        <Form.Item label="Branch name" name="course" rules={[{ required: true, message: "Course name required" }]}>
+                                        <Form.Item label="Branch name" name="BranchId" rules={[{ required: true, message: "Branch is required" }]}>
                                             <Select defaultValue={initialValues.College.BranchId} placeholder="Select a branch" onChange={(val) => handleChange("BranchId", val)}>
                                                 {branches?.map((branch, indx) => <Option value={branch?.BranchId}>{branch?.BranchName}</Option>)}
                                             </Select>
                                         </Form.Item>
                                     </Col>
                                     <Col xs={12} className="custom-fields">
-                                        <Form.Item label="Date of joining" name="JoiningDate" rules={[{ required: true, message: "Date of joining required" }]}>
-                                            <DatePicker defaultValue={initialValues.College.JoiningDate} onChange={(val) => { handleChange("DateOfJoining", val) }} format="DD/MM/YYYY" />
+                                        <Form.Item label="Date of joining" name="DateOfJoining" rules={[{ required: true, message: "Date of joining required" }]}>
+                                            <DatePicker defaultValue={initialValues.College.DateOfJoining} onChange={(val) => { handleChange("DateOfJoining", val) }} format="DD/MM/YYYY" />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={12} className="custom-fields">
-                                        <Form.Item label="Passing out year" name="PassOutYear" rules={[{ required: true, message: "Passing out year required" }]}>
+                                        <Form.Item label="Passing out year" name="PassingOutYear" rules={[{ required: true, message: "Passing out year required" }]}>
                                             <DatePicker defaultValue={initialValues.College.PassOutYear} onChange={(val) => { handleChange("PassingOutYear", val) }} picker="year" />
                                         </Form.Item>
                                     </Col>
@@ -181,6 +203,13 @@ const OnBoard = ({ profile }) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
+                                <div className="steps-action">
+                                    <Form.Item>
+                                        <Button type="primary" htmlType="submit">
+                                            Next
+                                        </Button>
+                                    </Form.Item>
+                                </div>
                             </Form>
                         </div >
                         {subjects.length > 0 && <><div className="intro-subtitle">
@@ -203,75 +232,96 @@ const OnBoard = ({ profile }) => {
         },
         {
             content:
-                <Row gutter={8}>
-                    <Col xs={24} md={8}>
-                        <div className="intro1">
-                            <img src={Logo} alt="blackbuck" width="250px" />
-                            <h1> Welcome to Blackbuck</h1>
-                            <p>To bring premier and practical formal education closer to students and professionals.</p>
-                            <div className="intro-image text-center">
-                                <img src={Onboard2} alt="blackbuck" width="200px" />
+                <>
+                    <Row gutter={8}>
+                        <Col xs={24} md={8}>
+                            <div className="intro1">
+                                <img src={Logo} alt="blackbuck" width="250px" />
+                                <h1> Welcome to Blackbuck</h1>
+                                <p>To bring premier and practical formal education closer to students and professionals.</p>
+                                <div className="intro-image text-center">
+                                    <img src={Onboard2} alt="blackbuck" width="200px" />
+                                </div>
                             </div>
-                        </div>
 
-                    </Col>
-                    <Col xs={24} md={16} className="right">
-                        <div className="intro-title">
-                            <h2>Tell us what you are Interested in?</h2>
-                            <p>You can select few</p>
-                        </div>
+                        </Col>
+                        <Col xs={24} md={16} className="right">
+                            <div className="intro-title">
+                                <h2>Tell us what you are Interested in?</h2>
+                                <p>You can select few</p>
+                            </div>
 
-                        <div className="intro4">
-                            <Checkbox.Group style={{ width: '100%' }} onChange={onInterestSelection}>
-                                <Row gutter={8}>
-                                    {interests.map((subject, indx) => <Col span={12}>
-                                        <Checkbox key={indx} className="intro-check" value={subject}><span>{subject?.Name}</span></Checkbox>
-                                    </Col>)}
-                                </Row>
-                            </Checkbox.Group>
-                        </div>
-                    </Col>
-                </Row>
-
+                            <div className="intro4">
+                                <Checkbox.Group style={{ width: '100%' }} onChange={onInterestSelection}>
+                                    <Row gutter={8}>
+                                        {interests.map((subject, indx) => <Col span={12}>
+                                            <Checkbox key={indx} className="intro-check" value={subject}><span>{subject?.Name}</span></Checkbox>
+                                        </Col>)}
+                                    </Row>
+                                </Checkbox.Group>
+                            </div>
+                        </Col>
+                    </Row>
+                    <div className="steps-action">
+                        <Button className="backbtn" onClick={() => prev()}>
+                            Back
+                        </Button>
+                        <Button type="primary" onClick={() => { finishSetup() }}>
+                            Finish
+                        </Button>
+                        <Button type="primary" onClick={() => next()}>
+                            Next
+                        </Button>
+                    </div>
+                </>
             ,
         },
         {
             content:
-                <Row gutter={8}>
-                    <Col xs={24} md={8}>
-                        <div className="intro1">
-                            <img src={Logo} alt="blackbuck" width="250px" />
-                            <h1>Welcome to Blackbuck</h1>
-                            <p>To bring premier and practical formal education closer to students and professionals.</p>
-                            <div className="intro-image text-center">
-                                <img src={Onboard2} alt="blackbuck" width="200px" />
+                <>
+                    <Row gutter={8}>
+                        <Col xs={24} md={8}>
+                            <div className="intro1">
+                                <img src={Logo} alt="blackbuck" width="250px" />
+                                <h1>Welcome to Blackbuck</h1>
+                                <p>To bring premier and practical formal education closer to students and professionals.</p>
+                                <div className="intro-image text-center">
+                                    <img src={Onboard2} alt="blackbuck" width="200px" />
+                                </div>
                             </div>
-                        </div>
 
-                    </Col>
-                    <Col xs={24} md={16} className="right">
-                        <div className="intro-title">
-                            <h2>Want to join in Groups?</h2>
-                        </div>
-                        <div className="intro3">
-                            <OwlCarousel items={3} autoWidth={true}>
-                                <Card className="carousel-card"
-                                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                                >
-                                   <div>
-                                        <h5 className="carousel-card-title text-overflow">Civil Engineering</h5>
-                                        <p className="carousel-card-descp text-overflow">Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment,</p>
-                                        <div className="text-center">
-                                            <Button type="default" className="addfrnd semibold">Join Group</Button>
+                        </Col>
+                        <Col xs={24} md={16} className="right">
+                            <div className="intro-title">
+                                <h2>Want to join in Groups?</h2>
+                            </div>
+                            <div className="intro3">
+                                <OwlCarousel autoWidth={true} >
+                                    {groupSuggestions.map((grpItem, idx) => <Card key={idx} className="carousel-card"
+                                        cover={<img alt="example" src={grpItem.image} />}
+                                    >
+                                        <div>
+                                            <h5 className="carousel-card-title text-overflow">{grpItem.name}</h5>
+                                            <p className="carousel-card-descp text-overflow">{grpItem.deescription}</p>
+                                            <div className="text-center">
+                                                <Button type="default" className="addfrnd semibold" onClick={() => { joinGroup(grpItem) }}>Join Group</Button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Card>
-                            </OwlCarousel>
-                        </div>
+                                    </Card>)}
+                                </OwlCarousel>
+                            </div>
 
-                    </Col>
-                </Row>
-            ,
+                        </Col>
+                    </Row>
+                    <div className="steps-action">
+                        <Button className="backbtn" onClick={() => prev()}>
+                            Back
+                        </Button>
+                        <Button type="primary" onClick={() => { finishSetup() }}>
+                            Finish
+                        </Button>
+                    </div>
+                </>,
         },
 
     ];
@@ -282,7 +332,7 @@ const OnBoard = ({ profile }) => {
                 <div className="steps-content">
                     {steps[current].content}
 
-                    <div className="steps-action">
+                    {/* <div className="steps-action">
                         {current > 0 && (
                             <Button className="backbtn" onClick={() => prev()}>
                                 Back
@@ -294,11 +344,11 @@ const OnBoard = ({ profile }) => {
                             </Button>
                         )}
                         {current < steps.length - 1 && (
-                            <Button type="primary" onClick={() => next()}>
+                            <Button type="primary" htmlType="submit" onClick={() => next()}>
                                 Next
                             </Button>
                         )}
-                    </div>
+                    </div> */}
 
                 </div>
                 {/* <Row gutter={8}>
@@ -317,4 +367,4 @@ const OnBoard = ({ profile }) => {
     );
 };
 
-export default connectStateProps(OnBoard); 
+export default connectStateProps(withRouter(OnBoard)); 
