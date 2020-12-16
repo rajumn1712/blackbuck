@@ -262,7 +262,7 @@ class Interests extends Component {
         >
           <List
             className="p-12"
-            grid={{ gutter: 16, column: 2 }}
+            grid={{ gutter: 16, column: 3 }}
             itemLayout="horizontal"
             dataSource={interests}
             renderItem={(item) => (
@@ -294,7 +294,7 @@ class Interests extends Component {
           destroyOnClose
         >
           <div>
-            <div className="modal-search p-16 custom-fields">
+            <div className="modal-search custom-fields">
 
               <Form layout="vertical" >
                 <Select
