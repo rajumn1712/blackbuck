@@ -33,6 +33,12 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         "Interests": []
     })
     const [interests, setInterests] = useState([]);
+    useEffect(() => {
+        if(profile?.IsOnBoardProcess){
+            history.push("/")
+        }
+        else{fetchColleges();}
+    }, []);
     const next = async (values) => {
         if (current === 0) {
             console.log(values)
@@ -122,7 +128,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         const joinResponse = await JoinGroup(item.id, obj);
         if (joinResponse.ok) {
             notify({ message: "Group join", description: item.type === "Private" ? "Request sent" : "Joined to group" });
-            let groups = { ...groupSuggestions };
+            let groups = [...groupSuggestions];
             groups = groups.filter(it => it.id !== item.id);
             setGroupSuggetions(groups);
         } else {
@@ -130,9 +136,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         }
 
     }
-    useEffect(() => {
-        fetchColleges();
-    }, []);
+  
     const onFinishFailed = (error) => {
 
     }
