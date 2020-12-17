@@ -132,11 +132,9 @@ class Intership extends Component {
     onChange: (info) => {
       this.setState({ ...this.state, fileUpload: true });
       const { status } = info.file;
-      if (status !== "uploading") {
-        this.setState({ ...this.state, fileUpload: false });
-      }
+      let { internshipsObj, certificates } = { ...this.state };
+
       if (status === "done") {
-        const { internshipsObj, certificates } = this.state;
         certificates.Avatar = info.file.name.split(".").pop();
         certificates.File = info.file.name;
         certificates.Size = parseFloat(info.file.size * 0.0009765625).toFixed(
@@ -144,9 +142,8 @@ class Intership extends Component {
         );
         this.setState({ certificates: certificates });
         internshipsObj.uploadsources.push(this.state.certificates);
-        this.setState({ internshipsObj: internshipsObj });
+        this.setState({ internshipsObj: internshipsObj, fileUpload: false });
         message.success(`${info.file.name} file uploaded successfully.`);
-        this.setState({ ...this.state, fileUpload: false });
       } else if (status === "error") {
         message.error(`${info.file.name} file upload failed.`);
         this.setState({ ...this.state, fileUpload: false });
