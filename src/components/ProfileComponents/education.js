@@ -258,7 +258,7 @@ class Education extends Component {
                     </div>
                   }
                 />
-                <Meta
+                {/* <Meta
                   className="edu-certificate"
                   avatar={
                     <div className="about-icons">
@@ -280,7 +280,7 @@ class Education extends Component {
                       )}
                     </div>
                   }
-                />
+                /> */}
                 {!this.props.IsHideAction ? (
                   <Link
                     className="f-12 list-link"
@@ -419,7 +419,7 @@ class Education extends Component {
                 );
               }}
             </Formik>
-            <Dragger
+            {/* <Dragger
               {...this.uploadProps}
               onChange={(info) => this.onChange(info)}
               className="upload mb-24"
@@ -429,8 +429,8 @@ class Education extends Component {
               )}
               <span className="sharebox-icons photo-upload"></span>
               <p className="ant-upload-text mt-8 mb-0">Upload Certificate</p>
-            </Dragger>
-            <div className="docs about-icons mb-16 education">
+            </Dragger> */}
+            {/* <div className="docs about-icons mb-16 education">
               <List
                 itemLayout="horizontal"
                 dataSource={educationObj.uploadsources}
@@ -454,7 +454,7 @@ class Education extends Component {
                   </List.Item>
                 )}
               />
-            </div>
+            </div> */}
           </div>
         </CommonModal>
       </div>

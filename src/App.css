@@ -398,6 +398,6 @@ textarea{resize:unset !important;}
 .notifications .ant-list-item:first-child{border-radius: 0.8rem 0.8rem 0 0;}
 .notifications .ant-list-item.unread{background-color: #f9f9f9;}
 .notifications .ant-list-item.read{background-color: var(--white);}
-.ant-avatar-image{border-radius: 50% !important;}
+.notifications .ant-avatar-image{border-radius: 50% !important;}
 .anticon{color: #9b9b9b !important;}
 
