@@ -39,6 +39,7 @@ class ProfileDetail extends Component {
       let profiledata = res.data[0].User;
       this.props.profile.Interests = profiledata.Interest;
       this.props.profile.Internships = profiledata.Internships.length;
+      this.props.profile.Groups=profiledata.Groups;
       this.props.updateProfile(this.props.profile);
       this.setState({
         ...this.state,
