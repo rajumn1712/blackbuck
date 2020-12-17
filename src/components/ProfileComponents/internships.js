@@ -138,7 +138,7 @@ class Intership extends Component {
       if (status === "done") {
         const { internshipsObj, certificates } = this.state;
         certificates.Avatar = info.file.name.split(".").pop();
-        certificates.File = info.file.response[0];
+        certificates.File = info.file.name;
         certificates.Size = parseFloat(info.file.size * 0.0009765625).toFixed(
           3
         );
@@ -334,13 +334,15 @@ class Intership extends Component {
                     )}
                   </div>
                   <div className="intern-cardbody">
-                    <div className="internlogo">
+                    <div
+                      className={
+                        item.CompanyLogo ? "internlogo" : "defaultlogo"
+                      }
+                    >
                       {item.CompanyLogo ? (
                         <img src={item.CompanyLogo} />
                       ) : (
-                        <Avatar style={{ backgroundColor: "#f56a00" }}>
-                          {item.CompanyName}
-                        </Avatar>
+                        item.CompanyName
                       )}
                     </div>
                     <h4 className="title">{item.CompanyName}</h4>

@@ -246,7 +246,7 @@ class Profile extends Component {
                 <Statistic
                   title="Interests"
                   className="afterline"
-                  value={profile?.Interests}
+                  value={profile?.Interests ? profile?.Interests : 0}
                 />
                 <Statistic title="Internships" value={profile?.Internships} />
               </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Tag, Input, Tooltip, Select } from "antd";
+import { Card, Tag, Input, Tooltip, Select, Empty } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { TweenOneGroup } from "rc-tween-one";
 import { Link } from "react-router-dom";
@@ -136,14 +136,17 @@ class Hobbies extends Component {
             ) : null
           }
         >
-          {hobbies &&
+          {hobbies.length > 0 ? (
             hobbies.map((hobby, index) => {
               return (
                 <Tag className="tags" key={index}>
                   {hobby}
                 </Tag>
               );
-            })}
+            })
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </Card>
         <CommonModal
           className="custom-popup"
