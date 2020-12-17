@@ -238,7 +238,7 @@ class CreateGroup extends Component {
         return <div>
             <List.Item>
                 <List.Item.Meta
-                    avatar={<Avatar className="select-image" src={item.Image || defaultUser} />}
+                    avatar={<Avatar className="select-image left-rail" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
                     description={item.Description ? <div className="f-12">{item.Description}</div> : ''}
                 />

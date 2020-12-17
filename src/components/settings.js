@@ -66,7 +66,7 @@ class Settings extends React.Component {
                 <div className="main">
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
-                            <Card title="Settings" className="settings-left" >
+                            <Card title="Settings" className="settings-left left-rail" >
                                 <Menu
                                     className="menu-items profile-menu"
                                     mode="vertical"
