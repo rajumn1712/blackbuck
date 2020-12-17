@@ -131,8 +131,9 @@ const getUserInvitations = (user_id, take, skip) => {
 const acceptDeclineInvitations = (obj) => {
   return apiClient.post(FRIENDS_API + `invitationAcceptandDecline`, obj);
 };
-const editGroup = (group_id, userid) => {
-  return apiClient.get(FRIENDS_API + `getGroupDetails/${group_id}/${userid}`);
+const editGroup = (group_id, userid, type) => {
+  let method = type ? 'getGroupViewDetails' : 'getGroupDetails'
+  return apiClient.get((type ? PROFILE_API : FRIENDS_API) + `${method}/${group_id}/${userid}`);
 };
 const fetchInerests = () => {
   return apiClient.get(FRIENDS_API + "getInterests");

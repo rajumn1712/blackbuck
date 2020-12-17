@@ -153,8 +153,8 @@ class Group extends Component {
     }
     getGroupData = () => {
         let { groupData } = this.state;
-        editGroup(this.props?.match?.params.id, this.props?.profile.Id).then(res => {
-            groupData = res.data[0].Group;
+        editGroup(this.props?.match?.params.id, this.props?.profile.Id, 'GroupView').then(res => {
+            groupData = res.data[0];
             groupData.IsAdmin = res.data[0].IsGroupAdmin;
             this.setState({ ...this.state, groupData });
         });
@@ -367,8 +367,8 @@ class Group extends Component {
                                 {visibleEditgroup && <CreateGroup Type={"Edit"} GroupId={GroupEditObj.GroupId} handleCancel={this.handleCancel} onRef={creategroup => this.creategroup = creategroup} refreshSave={() => this.refreshSave()} />}
                             </CommonModal>
                             <div className="right-statistic group-right mt-12 mx-12">
-                                {groupData.Members?.length > 0 && <span className="text-center mt-4 mr-16">
-                                    <span className="f-20 mt-4 fw-400">{groupData.Members.length}</span> Members</span>}
+                                {groupData.Members > 0 && <span className="text-center mt-4 mr-16">
+                                    <span className="f-20 mt-4 fw-400">{groupData.Members}</span> Members</span>}
                                 <Button type="primary" onClick={this.showModal}><span className="icons add-white"></span> Invite</Button>
                             </div>
                         </div>
