@@ -159,7 +159,7 @@ class CreateGroup extends Component {
             if (status === 'done') {
                 this.imageObject.ImageUrl = file.response[0];
                 this.handleImageOk();
-                message.success(`${this.state.isProfilePic ? 'Profil picture' : 'Cover picture'} uploaded successfully.`);
+                message.success(`${this.state.isProfilePic ? 'Profile picture' : 'Cover picture'} uploaded successfully.`);
             } else if (status === 'error') {
                 message.error(`File upload failed.`);
             }
