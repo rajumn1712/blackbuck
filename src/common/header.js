@@ -14,6 +14,8 @@ import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
 import { connect } from 'react-redux';
+import { fetchUserFriends } from '../shared/api/apiServer';
+import ChatSystem from '../utils/chat-system';
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
@@ -26,7 +28,7 @@ const notifications = (
     <div className="notification-dropdown">
         <div className="noti-dropdown-header">
             <h3>Notifications</h3>
-            <Link to="/" >View all</Link>
+            <Link to="/notifications" >View all</Link>
         </div>
         <Divider className="my-0" />
         <div className="notification-list unread">
@@ -84,25 +86,34 @@ class HeaderComponent extends React.Component {
     state = {
         visible: false, placement: 'left', FirstName: "",
         Email: "",
-        ProfilePic: ""
+        ProfilePic: "",
+        friends: [],
+        showMessenger: false,
+        agentProfile: {
+            imageUrl: null,
+            teamName: null
+        }
     };
 
-    showDrawer = () => {
+    showDrawer = async () => {
+        const friendsRes = await fetchUserFriends(this.props.profile?.Id)
         this.setState({
             visible: true,
+            friends: friendsRes.data
         });
     };
     componentDidMount() {
         const storeState = store.getState();
         const { FirstName, LastName, Email, ProfilePic } = storeState.oidc?.profile || {};
         this.setState({ FirstName, LastName, Email, ProfilePic });
-        store.subscribe(() => {
+        store.subscribe(async () => {
             const state = store.getState();
             if (state.oidc?.profile) {
                 const { FirstName, LastName, Email, ProfilePic } = state.oidc.profile;
                 this.setState({ FirstName, LastName, Email, ProfilePic })
             }
         })
+
     }
     onClose = () => {
         this.setState({
@@ -139,6 +150,10 @@ class HeaderComponent extends React.Component {
                 <a onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
             </Menu.Item>
         </Menu >)
+    }
+    showChatWindow = (user) => {
+        debugger
+        this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image, teamName: user.Firstname } })
     }
     render() {
         const { visible } = this.state;
@@ -181,7 +196,7 @@ class HeaderComponent extends React.Component {
                         <Menu className="menu-items text-right right-menu" mode="horizontal">
                             <Menu.Item key="">
                                 <Tooltip title="Messages">
-                                    <Link to="/" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
+                                    <Link onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="">
@@ -219,19 +234,6 @@ class HeaderComponent extends React.Component {
                     </Col>
                     <Col xs={8} span={8} >
                         <Menu className="menu-items text-right right-menu" mode="horizontal" title="Blackbuck">
-                            {/* <Menu.Item key="">
-                                <Link to="/" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
-                            </Menu.Item>
-                            <Menu.Item key="">
-                                <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
-                                    <Link to="/about">
-                                        <Badge className="notification-count" count={5} showZero>
-                                            <i className="icons notification-icon">
-                                            </i>
-                                        </Badge>
-                                    </Link>
-                                </Dropdown>
-                            </Menu.Item> */}
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
@@ -239,59 +241,23 @@ class HeaderComponent extends React.Component {
                                     </Link>
                                 </Dropdown>
                             </Menu.Item>
-                            {/* {user && <Menu.Item key="logout"> <Button onClick={() => { store.dispatch(userLogout()); userManager.signoutRedirect() }}>Logout</Button></Menu.Item>} */}
                         </Menu>
                     </Col>
-                    {/* <Col xs={24} span={8} justify="center">
-                        <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']} title="Blackbuck">
-                            <Menu.Item key="home"><Link to="/"><span className="icons home-icon"></span></Link></Menu.Item>
-                            <Menu.Item key="about"><Link to="/about"><span className="icons social-icon"></span></Link></Menu.Item>
-                            <Menu.Item key="contact"><Link to="/contact"><i className="icons suitcase-icon"></i></Link></Menu.Item>
-                            <Menu.Item key="posts"><Link to="/"><i className="icons lms-icon"></i></Link></Menu.Item>
-                        </Menu>
-                    </Col> */}
+
                 </Row>
                 {/* Mobile Naviagtion */}
                 <div className="">
                     <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true" footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
                         <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
                         <div className="messenger-drawer">
-
-                            <Link to="/">
+                            {this.state.friends?.map((friend, indx) => <Link key={indx} onClick={() => this.showChatWindow(friend)}>
                                 <Meta
-                                    avatar={<Avatar src={avatar} />}
-                                    title="Benjamin"
-                                    description={<p className="chat-description">great!</p>}
+                                    avatar={<Avatar src={friend.Image} />}
+                                    title={friend.Firstname}
+                                    description={<p className="chat-description">{friend.Email}</p>}
                                 />
-                            </Link>
-                            <Link to="/">
-                                <Meta
-                                    avatar={<Avatar src={avatar2} />}
-                                    title="Dylan Eugene"
-                                    description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
-                                />
-                            </Link>
-                            <Link to="/">
-                                <Meta
-                                    avatar={<Avatar src={userImage} />}
-                                    title="Gordon"
-                                    description={<p className="chat-description"> consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim Lorem ipsum dolor sit amet,</p>}
-                                />
-                            </Link>
-                            <Link to="/">
-                                <Meta
-                                    avatar={<Avatar src={user_Image} />}
-                                    title="Ivan Jason"
-                                    description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
-                                />
-                            </Link>
-                            <Link to="/">
-                                <Meta
-                                    avatar={<Avatar src={sherlyn} />}
-                                    title="Ethan"
-                                    description={<p className="chat-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia neque nec nisi condimentum ultricies. Pellentesque aliquam suscipit velit, in dignissim</p>}
-                                />
-                            </Link>
+                            </Link>)}
+                            <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, isOpen: false }) }} />
                         </div>
                     </Drawer>
                 </div>

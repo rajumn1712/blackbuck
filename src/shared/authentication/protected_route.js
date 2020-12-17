@@ -16,7 +16,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
         }
 
     }, [])
-    if (!rest.profile.IsOnBoardProcess) {
+    if (!rest.profile?.IsOnBoardProcess&&user) {
         return <Route {...rest} render={
             (props) => <Onboard {...rest} {...props} />
         } />

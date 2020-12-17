@@ -1,0 +1,19 @@
+.sc-chat-window{
+    height: 500px !important;
+}
+.sc-header,.sc-closed-icon,.sc-open-icon,.sc-message--content.sent .sc-message--text{
+    background: #07A3B2 !important;
+}
+.sc-header--close-button:hover{
+    background: #07A3B2 !important;
+}
+.sc-chat-window{
+right: 366px;
+bottom: 0px;
+}
+.sc-open-icon,.sc-closed-icon,.sc-launcher{
+    display:none;
+}
+.sc-header--img{
+    height: 55px;
+}
