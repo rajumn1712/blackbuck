@@ -92,7 +92,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
     }
     const onSubjectsSelection = (subject) => {
         let object = { ...initialValues };
-        object.College.Subjects = subject;
+        object.College.Subjects = subjects.filter(item => subject.indexOf(item.SubjectId) > -1);
         setInitialValues(object);
     }
     const onInterestSelection = (subject) => {
@@ -145,6 +145,9 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         prop.IsOnBoardProcess = true;
         updateProfile(prop);
         history.push("/")
+    }
+    const fetchSelectedSubjects = () => {
+        return initialValues.College.Subjects.map(item => item.SubjectId);
     }
     const steps = [
         {
@@ -206,6 +209,15 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                             </Select>
                                         </Form.Item>
                                     </Col>
+                                    <Col xs={24} className="custom-fields">
+                                        <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one subject" }]}>
+                                            <Select mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" filterOption={(input, option) =>
+                                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                            }>
+                                                {subjects?.map((subject, indx) => <Option key={indx} value={subject.SubjectId}>{subject?.SubjectName}</Option>)}
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
                                 </Row>
                                 <div className="steps-action">
                                     <Button type="primary" htmlType="submit">
@@ -214,21 +226,6 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 </div>
                             </Form>
                         </div >
-                        {subjects.length > 0 && <><div className="intro-subtitle">
-                            <h2>
-                                Choose you're subjects
-                            </h2>
-                        </div>
-                            <div className="intro4">
-                                <Checkbox.Group style={{ width: '100%' }} onChange={onSubjectsSelection}>
-                                    <Row gutter={8}>
-                                        {subjects.map((subject, indx) => <Col span={12}>
-                                            <Checkbox key={indx} className="intro-check" value={subject}><span>{subject?.SubjectName}</span></Checkbox>
-                                        </Col>)}
-
-                                    </Row>
-                                </Checkbox.Group>
-                            </div></>}
                     </Col>
                 </Row>,
         },
@@ -298,7 +295,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <h2>Want to join in Groups?</h2>
                             </div>
                             <div className="intro3">
-                            <Link className="more-frnd-btn left"><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" ><span className="icon right-arrow mr-0"></span></Link>
+                                <Link className="more-frnd-btn left"><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" ><span className="icon right-arrow mr-0"></span></Link>
                                 <OwlCarousel autoWidth={true} dots={false} animateOut={true} animateIn={true}>
                                     {groupSuggestions.map((grpItem, idx) => <Card key={idx} className="carousel-card"
                                         cover={<img alt="example" src={grpItem.image} />}

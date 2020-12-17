@@ -257,7 +257,7 @@ class HeaderComponent extends React.Component {
                                     description={<p className="chat-description">{friend.Email}</p>}
                                 />
                             </Link>)}
-                            <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, isOpen: false }) }} />
+                            {/* <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, isOpen: false }) }} /> */}
                         </div>
                     </Drawer>
                 </div>
