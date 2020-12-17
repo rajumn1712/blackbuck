@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Input, Upload, Form, message, Tooltip } from "antd";
+import { Card, Input, Upload, Form, message, Tooltip, Empty } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -105,15 +105,19 @@ class VideoProfile extends Component {
           title="Video as Profile"
           className="pfvideocard"
           cover={
-            video ? <video width="100%" controls src={video}></video> : null
+            video ? (
+              <video width="100%" controls src={video}></video>
+            ) : (
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            )
           }
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
               <Tooltip title="Edit">
-              <Link onClick={this.showModal}>
-                <span className={`icons ${video ? "edit" : "add"}`} />
-              </Link>
+                <Link onClick={this.showModal}>
+                  <span className={`icons ${video ? "edit" : "add"}`} />
+                </Link>
               </Tooltip>
             ) : null
           }
@@ -121,7 +125,7 @@ class VideoProfile extends Component {
         <CommonModal
           visible={visible}
           disable={!inputValue}
-          title="Internships"
+          title="Video as Profile"
           cancel={this.handleCancel}
           saved={() => this.handleOk()}
         >

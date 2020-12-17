@@ -7,15 +7,17 @@ const TAGS_API = "service/api/posts/";
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     FRIENDS_API +
-    `friendsSuggestions/${userid}/${pageSize || 10}/${page * pageSize - pageSize
-    }`
+      `friendsSuggestions/${userid}/${pageSize || 10}/${
+        page * pageSize - pageSize
+      }`
   );
 };
 const fetchGroupSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     GROUPS_API +
-    `userGroupSuggestions/${userid}/${pageSize || 10}/${page * pageSize - pageSize
-    }`
+      `userGroupSuggestions/${userid}/${pageSize || 10}/${
+        page * pageSize - pageSize
+      }`
   );
 };
 const fetchProfile = (email) => {
@@ -96,36 +98,51 @@ const getUserCourses = (user_id, take, skip) => {
     PROFILE_API + `getUserCourses/${user_id}/${take}/${skip}`
   );
 };
+const getAdminInvites = (userid, page, pageSize) => {
+  return apiClient.get(
+    PROFILE_API +
+      `getAdminInvitations/${userid}/${pageSize || 1}/${
+        page * pageSize - pageSize
+      }`
+  );
+};
+const acceptDeclinePrivateInvites = (groupid, memberid, requesttype) => {
+  return apiClient.get(
+    PROFILE_API + `adminAcceptInvitation/${groupid}/${memberid}/${requesttype}`
+  );
+};
 const getColleges = () => {
   return apiClient.get(FRIENDS_API + "getAllColleges/1000/0");
-}
+};
 const getCollegeBranches = (college_id) => {
   return apiClient.get(FRIENDS_API + `getBranches`);
-}
+};
 const getBranchSubjects = (college_id, branch_id) => {
   return apiClient.get(FRIENDS_API + `getSubjectsByBranchId/${branch_id}`);
-}
+};
 const saveGroup = (obj) => {
   return apiClient.post(GROUPS_API + `saveGroup`, obj);
-}
+};
 const getUserInvitations = (user_id, take, skip) => {
-  return apiClient.get(FRIENDS_API + `userInvitations/${user_id}/${take}/${skip}`);
-}
+  return apiClient.get(
+    FRIENDS_API + `userInvitations/${user_id}/${take}/${skip}`
+  );
+};
 const acceptDeclineInvitations = (obj) => {
   return apiClient.post(FRIENDS_API + `invitationAcceptandDecline`, obj);
-}
+};
 const editGroup = (group_id, userid) => {
   return apiClient.get(FRIENDS_API + `getGroupDetails/${group_id}/${userid}`);
-}
+};
 const fetchInerests = () => {
   return apiClient.get(FRIENDS_API + "getInterests");
-}
+};
 const saveOnboard = (object) => {
   return apiClient.post(FRIENDS_API + "saveUserInfo", object);
-}
+};
 const getAdminFriends = (user_id, groupid) => {
   return apiClient.get(PROFILE_API + `getAdminFriends/${groupid}/${user_id}`);
-}
+};
 const saveInvitations = (object) => {
   return apiClient.post(PROFILE_API + "adminInvitationsRequests", object);
 };
@@ -155,6 +172,8 @@ export {
   saveInterest,
   deleteInterest,
   getUserCourses,
+  getAdminInvites,
+  acceptDeclinePrivateInvites,
   getColleges,
   getCollegeBranches,
   getBranchSubjects,
@@ -165,5 +184,5 @@ export {
   fetchInerests,
   saveOnboard,
   getAdminFriends,
-  saveInvitations
+  saveInvitations,
 };
