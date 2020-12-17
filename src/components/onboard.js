@@ -34,10 +34,10 @@ const OnBoard = ({ profile, history, updateProfile }) => {
     })
     const [interests, setInterests] = useState([]);
     useEffect(() => {
-        if(profile?.IsOnBoardProcess){
+        if (profile?.IsOnBoardProcess) {
             history.push("/")
         }
-        else{fetchColleges();}
+        else { fetchColleges(); }
     }, []);
     const next = async (values) => {
         if (current === 0) {
@@ -136,7 +136,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         }
 
     }
-  
+
     const onFinishFailed = (error) => {
 
     }
@@ -149,89 +149,87 @@ const OnBoard = ({ profile, history, updateProfile }) => {
     const steps = [
         {
             content:
-                <Row>
-                    <Col xs={24} md={8}>
-                        <div className="intro1">
-                            <img src={Logo} alt="blackbuck" width="250px" />
-                            <h1> Welcome to Blackbuck</h1>
-                            <p>To bring premier and practical formal education closer to students and professionals.</p>
-                            <div className="intro-image text-center">
-                                <img src={Onboard1} alt="blackbuck" width="200px" />
+                    <Row>
+                        <Col xs={24} md={8}>
+                            <div className="intro1">
+                                <img src={Logo} alt="blackbuck" width="250px" />
+                                <h1> Welcome to Blackbuck</h1>
+                                <p>To bring premier and practical formal education closer to students and professionals.</p>
+                                <div className="intro-image text-center">
+                                    <img src={Onboard1} alt="blackbuck" width="200px" />
+                                </div>
                             </div>
-                        </div>
 
-                    </Col>
-                    <Col xs={24} md={16} className="right">
-                        <div className="intro-title">
-                            <h2>
-                                A bit about you
+                        </Col>
+                        <Col xs={24} md={16} className="right">
+                            <div className="intro-title">
+                                <h2>
+                                    A bit about you
                             </h2>
-                        </div>
-                        <div className="intro2 pb-0">
-                            <Form layout="vertical" initialValues={initialValues.College} onFinishFailed={onFinishFailed} onFinish={(values) => next(values)}>
-                                <Row gutter={16}>
+                            </div>
+                            <div className="intro2 pb-0">
+                                <Form layout="vertical" initialValues={initialValues.College} onFinishFailed={onFinishFailed} onFinish={(values) => next(values)}>
+                                    <Row gutter={16}>
 
-                                    <Col xs={24} className="custom-fields">
-                                        <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }]}>
-                                            <Select defaultValue={initialValues.College.CollegeId} showSearch placeholder="Select a college" onChange={(val) => handleChange("CollegeId", val)}>
-                                                {colleges?.map((college, indx) => <Option value={college?.CollegeId}><Avatar src={college.Image} />{college?.CollegeName}</Option>)}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} className="custom-fields">
-                                        <Form.Item label="Branch name" name="BranchId" rules={[{ required: true, message: "Branch is required" }]}>
-                                            <Select defaultValue={initialValues.College.BranchId} placeholder="Select a branch" onChange={(val) => handleChange("BranchId", val)}>
-                                                {branches?.map((branch, indx) => <Option value={branch?.BranchId}>{branch?.BranchName}</Option>)}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} className="custom-fields">
-                                        <Form.Item label="Date of joining" name="DateOfJoining" rules={[{ required: true, message: "Date of joining required" }]}>
-                                            <DatePicker defaultValue={initialValues.College.DateOfJoining} onChange={(val) => { handleChange("DateOfJoining", val) }} format="DD/MM/YYYY" />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} className="custom-fields">
-                                        <Form.Item label="Passing out year" name="PassingOutYear" rules={[{ required: true, message: "Passing out year required" }]}>
-                                            <DatePicker defaultValue={initialValues.College.PassOutYear} onChange={(val) => { handleChange("PassingOutYear", val) }} picker="year" />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} className="custom-fields">
-                                        <Form.Item label="Current year" name="CurrentYear" rules={[{ required: true, message: "Current year required" }]}>
-                                            <Select defaultValue={initialValues.College.CurrentYear} placeholder="Select an option" onChange={(val) => { handleChange("CurrentYear", val) }}>
-                                                <Option value="1">1</Option>
-                                                <Option value="2">2</Option>
-                                                <Option value="3">3</Option>
-                                                <Option value="4">4</Option>
-                                                <Option value="5">5</Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <div className="steps-action">
-                                    <Form.Item>
+                                        <Col xs={24} className="custom-fields">
+                                            <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }]}>
+                                                <Select defaultValue={initialValues.College.CollegeId} showSearch placeholder="Select a college" onChange={(val) => handleChange("CollegeId", val)}>
+                                                    {colleges?.map((college, indx) => <Option value={college?.CollegeId}><Avatar src={college.Image} />{college?.CollegeName}</Option>)}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={12} className="custom-fields">
+                                            <Form.Item label="Branch name" name="BranchId" rules={[{ required: true, message: "Branch is required" }]}>
+                                                <Select defaultValue={initialValues.College.BranchId} placeholder="Select a branch" onChange={(val) => handleChange("BranchId", val)}>
+                                                    {branches?.map((branch, indx) => <Option value={branch?.BranchId}>{branch?.BranchName}</Option>)}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={12} className="custom-fields">
+                                            <Form.Item label="Date of joining" name="DateOfJoining" rules={[{ required: true, message: "Date of joining required" }]}>
+                                                <DatePicker defaultValue={initialValues.College.DateOfJoining} onChange={(val) => { handleChange("DateOfJoining", val) }} format="DD/MM/YYYY" />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={12} className="custom-fields">
+                                            <Form.Item label="Passing out year" name="PassingOutYear" rules={[{ required: true, message: "Passing out year required" }]}>
+                                                <DatePicker defaultValue={initialValues.College.PassOutYear} onChange={(val) => { handleChange("PassingOutYear", val) }} picker="year" />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={12} className="custom-fields">
+                                            <Form.Item label="Current year" name="CurrentYear" rules={[{ required: true, message: "Current year required" }]}>
+                                                <Select defaultValue={initialValues.College.CurrentYear} placeholder="Select an option" onChange={(val) => { handleChange("CurrentYear", val) }}>
+                                                    <Option value="1">1</Option>
+                                                    <Option value="2">2</Option>
+                                                    <Option value="3">3</Option>
+                                                    <Option value="4">4</Option>
+                                                    <Option value="5">5</Option>
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <div className="steps-action">
                                         <Button type="primary" htmlType="submit">
                                             Next
                                         </Button>
-                                    </Form.Item>
-                                </div>
-                            </Form>
-                        </div >
-                        {subjects.length > 0 && <><div className="intro-subtitle">
-                            <h2>
-                                Choose you're subjects
+                                    </div>
+                                </Form>
+                            </div >
+                            {subjects.length > 0 && <><div className="intro-subtitle">
+                                <h2>
+                                    Choose you're subjects
                             </h2>
-                        </div>
-                            <div className="intro4">
-                                <Checkbox.Group style={{ width: '100%' }} onChange={onSubjectsSelection}>
-                                    <Row gutter={8}>
-                                        {subjects.map((subject, indx) => <Col span={12}>
-                                            <Checkbox key={indx} className="intro-check" value={subject}><span>{subject?.SubjectName}</span></Checkbox>
-                                        </Col>)}
+                            </div>
+                                <div className="intro4">
+                                    <Checkbox.Group style={{ width: '100%' }} onChange={onSubjectsSelection}>
+                                        <Row gutter={8}>
+                                            {subjects.map((subject, indx) => <Col span={12}>
+                                                <Checkbox key={indx} className="intro-check" value={subject}><span>{subject?.SubjectName}</span></Checkbox>
+                                            </Col>)}
 
-                                    </Row>
-                                </Checkbox.Group>
-                            </div></>}
-                    </Col>
+                                        </Row>
+                                    </Checkbox.Group>
+                                </div></>}
+                        </Col>
                 </Row>,
         },
         {
@@ -270,9 +268,9 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                         <Button className="backbtn" onClick={() => prev()}>
                             Back
                         </Button>
-                        <Button type="primary" onClick={() => { finishSetup() }}>
+                        {/* <Button type="primary" onClick={() => { finishSetup() }}>
                             Finish
-                        </Button>
+                        </Button> */}
                         <Button type="primary" onClick={() => next()}>
                             Next
                         </Button>
@@ -300,7 +298,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <h2>Want to join in Groups?</h2>
                             </div>
                             <div className="intro3">
-                                <OwlCarousel autoWidth={true} >
+                                <OwlCarousel autoWidth={true} margin="15px">
                                     {groupSuggestions.map((grpItem, idx) => <Card key={idx} className="carousel-card"
                                         cover={<img alt="example" src={grpItem.image} />}
                                     >
@@ -331,12 +329,12 @@ const OnBoard = ({ profile, history, updateProfile }) => {
     ];
     return (
         <>
+            <div className="main">
+                <Card className="mb-16 custom-card onboard-process" bordered={true} >
+                    <div className="steps-content">
+                        {steps[current].content}
 
-            <Card className="mb-16 custom-card onboard-process" bordered={true} >
-                <div className="steps-content">
-                    {steps[current].content}
-
-                    {/* <div className="steps-action">
+                        {/* <div className="steps-action">
                         {current > 0 && (
                             <Button className="backbtn" onClick={() => prev()}>
                                 Back
@@ -354,8 +352,8 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                         )}
                     </div> */}
 
-                </div>
-                {/* <Row gutter={8}>
+                    </div>
+                    {/* <Row gutter={8}>
                     <Col xs={24} md={8}>
                         <div style={{ height: '100%', backgroundColor: 'var(--grey)' }}></div>
                     </Col>
@@ -366,7 +364,9 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                 </Row> */}
 
 
-            </Card>
+                </Card>
+            </div>
+
         </>
     );
 };

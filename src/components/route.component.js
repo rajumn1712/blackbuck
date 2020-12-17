@@ -16,6 +16,8 @@ import OnBoard from "../components/onboard";
 import Help from '../components/help';
 import { Col, Row } from "antd";
 import Settings from "./settings";
+import Notifications from "./notification";
+
 
 const onBoard = () => {
   return (
@@ -31,6 +33,7 @@ const onBoard = () => {
 const Router = () => {
   return (
     <Switch>
+      <Route path="/notifications" component={Notifications} />
       <Route path="/support" component={Help} />
       <Route path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />

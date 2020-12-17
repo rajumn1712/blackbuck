@@ -87,7 +87,7 @@ class Identity extends Component {
             </Link>
           </Menu.Item>
           <Menu.Item key="notification">
-            <Link to="/commingsoon">
+            <Link to="/notifications">
               <span className="left-menu noti-icon"></span>
               <span>Notifications</span>
             </Link>
