@@ -178,7 +178,7 @@
 .custom-card .ant-card-extra{padding:12px 0;}
 .custom-card .ant-card-actions,.group-page .ant-card-actions{border-bottom-left-radius:0.8rem;border-bottom-right-radius:0.8rem;}
 .custom-card .ant-card-actions{padding-bottom:0 !important;}
-.custom-card .ant-card-cover,.group-page .ant-card-cover{border:1px solid var(--line) !important;border-bottom:0;border-radius:10px;}
+.custom-card .ant-card-cover,.group-page .ant-card-cover{border:1px solid var(--line) !important;border-bottom:0;border-radius:0.8rem;}
 .icons.add{background-position:-505px -198px;}
 .icons.add-white{background-position:-528px -224px;}
 .icons.add:hover{background-position:-505px -224px;}
@@ -206,8 +206,8 @@
 .requests .ant-list-item{margin-bottom:0 !important;}
 .group-page .ant-card-meta-detail .ant-card-meta-title{margin-bottom:0;}
 .group-page .list-link{color:var(--primary) !important;font-weight:500;}
-.group-page .ant-card,.group-page .ant-card-actions{border-radius:10px;}
-.group-page .ant-card-cover img{border-top-left-radius:10px;border-top-right-radius:10px;}
+.group-page .ant-card,.group-page .ant-card-actions{border-radius:0.8rem;}
+.group-page .ant-card-cover img{border-top-left-radius:0.8rem;border-top-right-radius:0.8rem;}
 .group-page .ant-card-body{padding:16px !important;}
 .group-page .ant-card-actions{color:#f9f9f9;}
 .list-request{display:inherit;margin-right:4px;}
@@ -306,6 +306,7 @@
 textarea{resize:unset !important;}
 .ant-divider-horizontal.ant-divider-with-text-left::after{width:80%;}
 .ant-btn.ant-btn-primary{padding-left:16px;padding-right:16px;}
+.group-right .ant-btn.ant-btn-primary{padding-left:8px;padding-right:14px;}
 .antd-img-crop-modal .ant-modal-footer .ant-btn:first-child{display:none;}
 .ant-modal-footer button + button{margin:0 !important;}
 .like-tabs .ant-tooltip-content{width:120px;}
@@ -322,7 +323,7 @@ textarea{resize:unset !important;}
 .profile-tabs .group-page{background:var(--white);padding:16px;border-radius:0.8rem;border-color:var(--line);border:1px solid var(--line);}
 .profile-card .ant-avatar,.post-card .ant-avatar,.post-comment .ant-comment-avatar img,.custom-card .ant-list-item .ant-list-item-meta .ant-avatar-image,.user-statistic .user-banner .ant-card-meta .ant-avatar-image,.coverpage .editpost,.img-camera,.main-header .ant-menu-item a,.notification-list .notification-image .ant-avatar-image,.messenger-drawer .ant-card-meta .ant-avatar-image,.profile-dropdown .ant-card-meta .ant-avatar-image,.addpost-user .ant-card-meta-avatar .ant-avatar-image{border-radius:50% !important;border: 1px solid var(--line);}
 .validateerror{color:red;text-align:right;display:block !important;}
-.profile-tabs .ant-tabs-extra-content .profile-download{border:1px solid var(--primary);margin-right:12px;font-size:14px !important;color:var(--primary);}
+.profile-tabs .ant-tabs-extra-content .profile-download{border:none;margin-right:12px;font-size:12px !important;color:var(--primary);}
 .left-menu.private-icon{background-position:-434px -256px;}
 .left-menu.preview-icon{background-position:-464px -256px;}
 .left-menu.group-icon{background-position:-527px -258px;}
