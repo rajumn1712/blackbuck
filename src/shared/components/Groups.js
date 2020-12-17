@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 import { profileSuccess } from '../../reducers/auth'
 import CommonModal from "../../components/ProfileComponents/CommonModal";
 import creategroup from '../../group/creategroup';
-import CreateGroup from '../../group/creategroup'
+import CreateGroup from '../../group/creategroup';
+import Loader from '../../common/loader'
 
 class Groups extends Component {
     showModal = (e) => {
@@ -74,7 +75,7 @@ class Groups extends Component {
         let { page, pageSize } = this.state;
         page = page + 1;
         pageSize = take;
-        this.setState({ ...this.state, page, pageSize }, () => {
+        this.setState({ ...this.state, page, pageSize,loading:true }, () => {
             this.getAllGroups();
         })
     }
@@ -98,12 +99,13 @@ class Groups extends Component {
         this.creategroup.handleSave();
     }
     render() {
-        const { visible, size } = this.state;
+        const { visible, size,loading } = this.state;
         return (
             <div className="custom-card sub-text card-scroll">
                 <Card title="Groups" bordered={true} extra={<Link to="/commingsoon">View all</Link>} actions={[
                     <Button type="primary" onClick={this.showModal}>Create a Group</Button>
                 ]} >
+                     {/* {loading && <Loader className="loader-top-middle" />} */}
                     <List
                         itemLayout="horizontal"
                         split={false}
