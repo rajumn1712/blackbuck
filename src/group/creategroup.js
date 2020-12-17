@@ -33,7 +33,7 @@ class CreateGroup extends Component {
 
     imageObject = {};
     getGroupObject = (id) => {
-        editGroup(id,this.props?.profile.Id).then(res => {
+        editGroup(id, this.props?.profile.Id).then(res => {
             this.setInitialvalues(res.data[0].Group);
             let { groupObject } = this.state;
             groupObject = res.data[0].Group;
@@ -209,6 +209,8 @@ class CreateGroup extends Component {
             if (response.ok) {
                 this.setState({ ...this.state, loading: false });
                 this.props.handleCancel();
+                if (this.props.refreshSave)
+                    this.props.refreshSave();
                 notify({
                     description: "Group saved successfully",
                     message: "Group",

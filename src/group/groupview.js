@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Tabs, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Input, Typography, Checkbox, Descriptions, Divider, Menu, Dropdown } from 'antd';
-import Invite from '../shared/components/Invite';
+import PrivateInvite from './PrivateInvite';
 import Ads from '../components/ads';
 import Postings from '../shared/postings/index';
 import './groupstyle.css'
@@ -16,6 +16,8 @@ import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import Loader from "../common/loader";
 import defaultCover from "../styles/images/defaultcover.png";
+import CreateGroup from "./creategroup";
+let GroupEditObj = {};
 const { Search } = Input;
 const { TabPane } = Tabs;
 const data = [
@@ -28,6 +30,7 @@ class Group extends Component {
         groupData: {},
         disabled: false,
         visible: false,
+        visibleEditgroup: false,
         loading: true,
         search: null,
         friendsLu: [],
@@ -96,7 +99,12 @@ class Group extends Component {
         },
 
     };
-
+    editGroup = (group) => {
+        GroupEditObj = group;
+        this.setState({
+            visibleEditgroup: true,
+        });
+    }
     leaveGroup = async (group) => {
         const joinResponse = await cancelGroupRequest(group.GroupId, this.props?.profile?.Id);
         if (joinResponse.ok) {
@@ -141,12 +149,18 @@ class Group extends Component {
     }
 
     componentDidMount() {
+        this.getGroupData();
+    }
+    getGroupData = () => {
         let { groupData } = this.state;
         editGroup(this.props?.match?.params.id, this.props?.profile.Id).then(res => {
             groupData = res.data[0].Group;
             groupData.IsAdmin = res.data[0].IsGroupAdmin;
             this.setState({ ...this.state, groupData });
         });
+    }
+    refreshSave = () => {
+        this.getGroupData();
     }
     showModal = () => {
         this.setState({
@@ -199,10 +213,14 @@ class Group extends Component {
         }
     };
     handleCancel = e => {
-        console.log(e);
+        GroupEditObj = {};
         this.setState({
             visible: false,
+            visibleEditgroup: false,
         });
+    }
+    saveGroup = () => {
+        this.creategroup.handleSave();
     }
     handleDomNavigate = (navigate) => {
         navigate.current.scrollIntoView({
@@ -232,7 +250,7 @@ class Group extends Component {
                 </Menu.Item> please don't delete */}
                 <Menu.Item key="1">
                     {!this.state.groupData?.IsAdmin && <a onClick={() => this.leaveGroup(this.state.groupData)}><span className="post-icons Leavegroup-icon"></span> Leave this group</a>}
-                    {this.state.groupData?.IsAdmin && <a><span className="post-icons edit-icon"></span> Edit group</a>}
+                    {this.state.groupData?.IsAdmin && <a onClick={() => this.editGroup(this.state.groupData)}><span className="post-icons edit-icon"></span> Edit group</a>}
                 </Menu.Item>
                 {/* <Menu.Item key="2">
                     <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
@@ -255,7 +273,7 @@ class Group extends Component {
             </Dropdown></button>
 
         </div>;
-        const { groupData, disabled, visible, friendsLu, loading } = this.state;
+        const { groupData, disabled, visible, friendsLu, loading, visibleEditgroup } = this.state;
         const friendsData = friendsLu
             .filter((item) => {
                 if (this.state.search == null) {
@@ -339,6 +357,15 @@ class Group extends Component {
 
                                 </div>
                             </CommonModal>
+                            <CommonModal
+                                className="creategroup-popup"
+                                visible={visibleEditgroup}
+                                title="Edit group"
+                                cancel={this.handleCancel}
+                                saved={this.saveGroup}
+                            >
+                                {visibleEditgroup && <CreateGroup Type={"Edit"} GroupId={GroupEditObj.GroupId} handleCancel={this.handleCancel} onRef={creategroup => this.creategroup = creategroup} refreshSave={() => this.refreshSave()} />}
+                            </CommonModal>
                             <div className="right-statistic group-right mt-12 mx-12">
                                 {groupData.Members?.length > 0 && <span className="text-center mt-4 mr-16">
                                     <span className="f-20 mt-4 fw-400">{groupData.Members.length}</span> Members</span>}
@@ -358,7 +385,7 @@ class Group extends Component {
                             <TabPane tab="Posts" key="1">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Invite />
+                                        <PrivateInvite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                                         {groupData?.GroupId && <Postings sharebox={true} friendsSuggestions={false} postingsType="group" groupData={groupData} />}
