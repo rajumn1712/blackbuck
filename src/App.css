@@ -198,7 +198,7 @@
 .icons.email{background-position:-122px -252px;}
 .icons.phone{background-position:-174px -252px;}
 .about-details{display:flex;align-items:center;margin-bottom:10px;color:var(--textprimary);}
-.about-details .about-icons,.edu-card .about-icons{min-width:40px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid var(--secondary);margin-right:10px;}
+.about-details .about-icons,.edu-card .about-icons{min-width:40px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--secondary);margin-right:10px;}
 .about-details p{margin-bottom:0;font-size:var(--f-14);}
 .ant-avatar.request-image{width:60px !important;height:60px !important;border-radius:12px;}
 .ant-avatar.select-image{width:40px !important;height:40px !important;border-radius:50%;}
@@ -239,11 +239,13 @@
 .tag-name:hover{background:var(--bghover);}
 .tag-name a{color:var(--textsecondary) !important;display:block;}
 .tag-name a:hover{color:var(--textprimary) !important;}
-.edu-card{display:flex;align-items:center;margin-bottom: 8px;}
+.edu-card{display:flex;align-items:flex-start;margin-bottom: 8px;}
+.edu-card .list-link{visibility: hidden;}
+.edu-card:hover .list-link{visibility: visible;}
 .edu-card .ant-list-item-meta-avatar{margin-right:0px !important;}
 .edu-card .edu-study .ant-list-item-meta-content .ant-list-item-meta-title{font-size:var(--f-16);margin-bottom: 0;}
 .edu-card .edu-certificate{background:var(--grey);padding:5px;border-radius:5px;border:1px solid var(--secondary);margin-left:10px;margin-right:10px;display:flex;align-items:center;}
-.edu-card .edu-study{display:flex;align-items:center;flex-grow: 2;}
+.edu-card .edu-study{display:flex;align-items:flex-start;}
 .edu-card .edu-certificate .about-icons{background:var(--white);}
 .edu-card .edu-certificate .ant-list-item-meta-title{color:var(--primary);}
 .ant-input-affix-wrapper:hover,.ant-input-affix-wrapper:focus,.ant-input-affix-wrapper-focused{border-color:var(--primary) !important;}

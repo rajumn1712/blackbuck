@@ -252,9 +252,9 @@ class Education extends Component {
                     <div>
                       <span style={{ color: "var(--textprimary)" }}></span>{" "}
                       <Moment format="YYYY/MM/DD">{item.StartDate}</Moment> -{" "}
-                      <Moment format="YYYY/MM/DD">{item.EndDate}</Moment> |{" "}
-                      <span style={{ color: "var(--textprimary)" }}></span>
-                      {item.Location}
+                      <Moment format="YYYY/MM/DD">{item.EndDate}</Moment> {" "}
+                      <div style={{ color: "var(--textprimary)",textTransform: "capitalize"}}>{item.Location}</div>
+                      
                     </div>
                   }
                 />
