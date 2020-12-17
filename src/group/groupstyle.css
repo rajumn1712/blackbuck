@@ -201,7 +201,7 @@
     .user-statistic .left-statistic,.user-statistic .right-statistic, .user-statistic .group-right{
         display: flex;
         width: 100%;
-        justify-content: flex-end !important; 
+        /* justify-content: flex-end !important;  */
     }
     /* .group-banner.w-btn{
         min-width: 760px;

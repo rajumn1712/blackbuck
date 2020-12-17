@@ -28,7 +28,7 @@ const notifications = (
     <div className="notification-dropdown">
         <div className="noti-dropdown-header">
             <h3>Notifications</h3>
-            <Link to="/" >View all</Link>
+            <Link to="/notifications" >View all</Link>
         </div>
         <Divider className="my-0" />
         <div className="notification-list unread">

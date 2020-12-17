@@ -384,8 +384,18 @@ textarea{resize:unset !important;}
 .sharebox-icons .png-icon{background-position: -482px -469px;}
 .sharebox-icons .jpg-icon{background-position: -526px -469px;}
 .sharebox-icons .docpdf{background-position: -571px -469px;}
+.carousel-card{margin: 0 5px !important}
 .carousel-card .ant-card-cover{height: 200px;}
 .carousel-card .ant-card-cover img{width: 100%;height: 100%;object-fit: cover;object-position: center center;border-radius: 0.8rem 0.8rem 0 0;}
 .carousel-card .ant-card-body{padding: 16px !important;}
 .carousel-card .carousel-card-title{overflow: hidden;color:var(--textprimary);font-weight: 500;font-size: 16px;white-space: nowrap;text-overflow: ellipsis;text-transform: capitalize;margin-bottom: 0;}
 .carousel-card .carousel-card-descp{font-size: 14px;color: var(--textsecondary);}
+
+.notifications{background-color: var(--white);border: 1px solid var(--border) !important;border-radius: 0.8rem !important;margin-bottom: 6px;}
+.notifications .ant-list-item .ant-avatar-image{ width: 60px;  height: 60px;  border-radius: 50% !important;border: 1px solid var(--line);}
+.notifications ul li .ant-list-item-meta-title{margin-top:6px;color: var(--textprimary);line-height: 20px;font-size: 16px;margin-bottom: 2px !important;}
+.notifications .ant-list-item-action li{padding-right: 0 !important;}
+.notifications .ant-list-item-action .post-icons{margin-right: 0;}
+.notifications .ant-list-item:first-child{border-radius: 0.8rem 0.8rem 0 0;}
+.notifications .ant-list-item.unread{background-color: #f9f9f9;}
+.notifications .ant-list-item.read{background-color: var(--white);}
