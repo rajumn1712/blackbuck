@@ -8,13 +8,14 @@ import PadLock from '../styles/images/padlock.svg'
 import GroupAbout from '../shared/components/groupabout';
 import Media from '../shared/components/media';
 import CommonModal from '../components/ProfileComponents/CommonModal';
-import { profileDetail, joinGroup, saveProfileImage, editGroup, getAdminFriends, saveInvitations } from '../shared/api/apiServer';
+import { profileDetail, joinGroup, saveProfileImage, editGroup, getAdminFriends, saveInvitations, cancelGroupRequest } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
 import { profileSuccess } from '../reducers/auth';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import Loader from "../common/loader";
+import defaultCover from "../styles/images/defaultcover.png";
 const { Search } = Input;
 const { TabPane } = Tabs;
 const data = [
@@ -24,20 +25,10 @@ const { Title } = Typography;
 class Group extends Component {
     imageObject = {};
     state = {
-        groupData: {
-            lstDetails: [
-                {
-                    title: "Programmers",
-                    Type: "Private Group",
-                    CreatedDate: '2020-10-11',
-                    Members: '2.5k'
-                }
-            ],
-            isProfilePic: false,
-        },
+        groupData: {},
         disabled: false,
         visible: false,
-        loading: false,
+        loading: true,
         search: null,
         friendsLu: [],
         saveObj: {
@@ -106,6 +97,28 @@ class Group extends Component {
 
     };
 
+    leaveGroup = async (group) => {
+        const joinResponse = await cancelGroupRequest(group.GroupId, this.props?.profile?.Id);
+        if (joinResponse.ok) {
+            notify({ message: "Leave group", description: "Group left done successfully" });
+            this.props.profile.Groups = (this.props.profile.Groups >= 1 ? this.props.profile.Groups - 1 : 0);
+            this.props.upadateProfile(this.props.profile)
+            this.props.history.push("/group");
+        } else {
+            notify({ message: "Error", description: "Something went wrong :)", type: "error" });
+        }
+    }
+    deleteGroup = async (group) => {
+        const joinResponse = await cancelGroupRequest(group.GroupId, this.props?.profile?.Id);
+        if (joinResponse.ok) {
+            notify({ message: "Delete group", description: "Group deleted successfully" });
+            this.props.profile.Groups = (this.props.profile.Groups >= 1 ? this.props.profile.Groups - 1 : 0);
+            this.props.upadateProfile(this.props.profile)
+            this.props.history.push("/group");
+        } else {
+            notify({ message: "Error", description: "Something went wrong :)", type: "error" });
+        }
+    }
     joinGroup = async (item) => {
         const obj = {
             "UserId": this.props?.profile?.Id,
@@ -218,8 +231,8 @@ class Group extends Component {
                     <a><span className="post-icons settings-icon"></span> Update your settings</a>
                 </Menu.Item> please don't delete */}
                 <Menu.Item key="1">
-                    <a><span className="post-icons Leavegroup-icon"></span> Leave this group</a>
-                    <a><span className="post-icons edit-icon"></span> Edit group</a>
+                    {!this.state.groupData?.IsAdmin && <a onClick={() => this.leaveGroup(this.state.groupData)}><span className="post-icons Leavegroup-icon"></span> Leave this group</a>}
+                    {this.state.groupData?.IsAdmin && <a><span className="post-icons edit-icon"></span> Edit group</a>}
                 </Menu.Item>
                 {/* <Menu.Item key="2">
                     <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
@@ -269,7 +282,7 @@ class Group extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <img className="center-focus" src={groupData.GroupCoverPic || defaultUser} alt="profilecover" />
+                            <img className="center-focus" src={groupData.GroupCoverPic || defaultCover} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
                             <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
                                 <Upload {...this.uploadProps}>
