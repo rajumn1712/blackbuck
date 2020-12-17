@@ -10,6 +10,7 @@ import defaultUser from '../styles/images/defaultuser.jpg';
 import { ErrorMessage, Field, Formik } from "formik";
 import { hasChanged, uuidv4 } from "../utils";
 import Loader from "../common/loader";
+import defaultCover from '../styles/images/defaultcover.png'
 const { Option } = Select;
 
 class CreateGroup extends Component {
@@ -237,7 +238,7 @@ class CreateGroup extends Component {
     renderSelectItem = (item) => {
         return <div>
             <List.Item>
-                <List.Item.Meta
+                <List.Item.Meta className="privacy-dropdown"
                     avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="select-image" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
                     description={item.Description ? <div className="f-12">{item.Description}</div> : ''}
@@ -266,7 +267,7 @@ class CreateGroup extends Component {
                         <Row gutter={24}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <div className="coverpage">
-                                    <img className="center-focus" src={groupObject.GroupCoverPic || defaultUser} alt="profilecover" />
+                                    <img className="center-focus" src={groupObject.GroupCoverPic || defaultCover} alt="profilecover" />
 
                                     <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
                                         <Upload {...this.uploadProps}>

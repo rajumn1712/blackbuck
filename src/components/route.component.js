@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../shared/authentication/protected_route";
 import CommingSoon from "./comingsoon";
-// import About from "../about-us";
+ import Friends from "../components/friends";
 // import Contact from "../contact-us";
 import Home from "../home";
 import Callback from "../shared/authentication/callback";
@@ -37,7 +37,7 @@ const Router = () => {
       <Route path="/support" component={Help} />
       <Route path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
-      {/* <ProtectedRoute path="/friends" component={About} /> */}
+      <ProtectedRoute path="/friends" component={Friends} /> 
       {/* <Route path="/contact" component={Contact} /> */}
       <Route path="/callback" component={Callback} />
       <ProtectedRoute path="/profile/:tabkey" component={Profile} />

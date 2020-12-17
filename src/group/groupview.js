@@ -8,14 +8,14 @@ import PadLock from '../styles/images/padlock.svg'
 import GroupAbout from '../shared/components/groupabout';
 import Media from '../shared/components/media';
 import CommonModal from '../components/ProfileComponents/CommonModal';
-import { profileDetail, joinGroup, saveProfileImage, editGroup } from '../shared/api/apiServer';
+import { profileDetail, joinGroup, saveProfileImage, editGroup, getAdminFriends, saveInvitations } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
 import { profileSuccess } from '../reducers/auth';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
 import defaultUser from '../styles/images/defaultuser.jpg';
+import Loader from "../common/loader";
 const { Search } = Input;
-const onSearch = value => console.log(value);
 const { TabPane } = Tabs;
 const data = [
     { title: 'Jhon Se' }
@@ -36,9 +36,30 @@ class Group extends Component {
             isProfilePic: false,
         },
         disabled: false,
-        visible: false
+        visible: false,
+        loading: false,
+        search: null,
+        friendsLu: [],
+        saveObj: {
+            GroupId: this.props?.match?.params.id,
+            Invitations: []
+        }
     };
+    onSearch = (e) => {
+        let keyword = e.target.value;
+        this.setState({ search: keyword });
+    }
 
+    onChange = (e, item, index) => {
+        let Obj = { UserName: this.props?.profile.FirstName, FriendId: item.UserId, Image: this.props?.profile.ProfilePic };
+        let { saveObj } = this.state;
+        item.IsChecked = e.target.checked;
+        if (item.IsChecked)
+            saveObj.Invitations.push(Obj);
+        else
+            saveObj.Invitations.splice(saveObj.Invitations.indexOf(Obj), 1)
+
+    }
     handleDisabledChange = disabled => {
         this.setState({ disabled });
     };
@@ -108,7 +129,7 @@ class Group extends Component {
 
     componentDidMount() {
         let { groupData } = this.state;
-        editGroup(this.props?.match?.params.id,this.props?.profile.Id).then(res => {
+        editGroup(this.props?.match?.params.id, this.props?.profile.Id).then(res => {
             groupData = res.data[0].Group;
             groupData.IsAdmin = res.data[0].IsGroupAdmin;
             this.setState({ ...this.state, groupData });
@@ -117,13 +138,52 @@ class Group extends Component {
     showModal = () => {
         this.setState({
             visible: true,
+            friendsLu: [],
+            loading: true,
+        }, () => {
+            this.getAdminFriends();
         });
     };
-    handleOk = e => {
-        console.log(e);
-        this.setState({
-            visible: false,
+    getAdminFriends = () => {
+        let { friendsLu, groupData } = this.state;
+        getAdminFriends(this.props?.profile?.Id, groupData?.GroupId).then(res => {
+            this.setState({
+                ...this.state,
+                friendsLu: res.data,
+                loading: false
+            });
         });
+    }
+    handleOk = async (e) => {
+        this.setState({ ...this.state, loading: true });
+        const response = await saveInvitations(this.state.saveObj);
+        if (response.ok) {
+            this.setState(
+                {
+                    visible: false,
+                    loading: false,
+                },
+                () => {
+                    notify({
+                        description: "Invitations added successfully",
+                        message: "Invitations",
+                    });
+                }
+            );
+        } else {
+            this.setState(
+                {
+                    ...this.state,
+                    loading: false,
+                }
+            );
+
+            notify({
+                description: "Something went wrong :)",
+                message: "Error",
+                type: "error",
+            });
+        }
     };
     handleCancel = e => {
         console.log(e);
@@ -182,13 +242,34 @@ class Group extends Component {
             </Dropdown></button>
 
         </div>;
-        const { groupData, disabled, visible } = this.state;
+        const { groupData, disabled, visible, friendsLu, loading } = this.state;
+        const friendsData = friendsLu
+            .filter((item) => {
+                if (this.state.search == null) {
+                    return item;
+                } else if (
+                    item.Firstname.toLowerCase().includes(this.state.search.toLowerCase())
+                ) {
+                    return item;
+                }
+            })
+            .map((item, index) => {
+                return (
+                    <List.Item key={index}>
+                        <List.Item.Meta
+                            avatar={<Avatar src={item.Image || defaultUser} />}
+                            title={item.Firstname}
+
+                        /><Checkbox value={item.IsChecked} onChange={(e) => this.onChange(e, item, index)}></Checkbox>
+                    </List.Item>
+                );
+            });
         return (
             groupData ? <div className="main">
                 <Row gutter={16}>
                     <Col xs={24} sm={16} md={16} lg={18} xl={18}>
                         <div className="coverpage">
-                            <img className="center-focus" src={groupData.GroupCoverPic|| defaultUser} alt="profilecover" />
+                            <img className="center-focus" src={groupData.GroupCoverPic || defaultUser} alt="profilecover" />
                             <span className="padlock"><img src={PadLock} /></span>
                             <ImgCrop aspect={6 / 2} grid={true} beforeCrop={this.handleBeforUpload} cropperProps={{ cropSize: { width: 1000, height: 400 }, cropShape: "round" }}>
                                 <Upload {...this.uploadProps}>
@@ -236,28 +317,18 @@ class Group extends Component {
 
                             </Card>
                             <CommonModal visible={visible} title="Invite Friends to This Group" cancel={this.handleCancel} saved={this.handleOk} className="invite-search">
-                                <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
+                                {loading && <Loader className="loader-middle" />}
+                                <Search className="header-searchbar mb-16" placeholder="Search" onChange={(e) => this.onSearch(e)} onSearch={(event) => this.onSearch(event)} />
                                 <div className="">
                                     <div className="f-16 fw-400">Suggested</div>
-                                    <List
-                                        itemLayout="horizontal"
-                                        dataSource={data}
-                                        renderItem={item => (
-                                            <List.Item>
-                                                <List.Item.Meta
-                                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                                    title={<a href="https://ant.design">{item.title}</a>}
-
-                                                /><Checkbox onChange={onChange}></Checkbox>
-                                            </List.Item>
-                                        )}
-                                    />
+                                    <List itemLayout="horizontal"
+                                    >{friendsData}</List>
 
                                 </div>
                             </CommonModal>
                             <div className="right-statistic group-right mt-12 mx-12">
-                               {groupData.Members?.length>0 &&  <span className="text-center mt-4 mr-16">
-                                    <span className="f-20 fw-400">{groupData.Members.length}</span> Members</span>}
+                                {groupData.Members?.length > 0 && <span className="text-center mt-4 mr-16">
+                                    <span className="f-20 mt-4 fw-400">{groupData.Members.length}</span> Members</span>}
                                 <Button type="primary" onClick={this.showModal}><span className="icons add-white"></span> Invite</Button>
                             </div>
                         </div>
@@ -265,7 +336,7 @@ class Group extends Component {
                         <Tabs defaultActiveKey="1" className="profile-tabs" tabBarExtraContent={operations}>
                             <TabPane tab="About" key="3">
                                 <Row gutter={16}>
-                                    
+
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <GroupAbout />
                                     </Col>
@@ -277,13 +348,13 @@ class Group extends Component {
                                         <Invite />
                                     </Col>
                                     <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                                   {groupData?.GroupId &&  <Postings sharebox={true} friendsSuggestions={false} postingsType="group" groupData={groupData}/>}
+                                        {groupData?.GroupId && <Postings sharebox={true} friendsSuggestions={false} postingsType="group" groupData={groupData} />}
                                     </Col>
                                 </Row>
                             </TabPane>
                             <TabPane tab="Media" key="2">
                                 <Row gutter={16}>
-                                   
+
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Media />
                                     </Col>

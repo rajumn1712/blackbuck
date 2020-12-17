@@ -14,14 +14,14 @@ class Aboutus extends Component {
         return (
             <div className="main">
                 <Row gutter={16}>
-                    <Col xs={24} sm={24} md={16} lg={18} xl={18}>
+                    <Col xs={24} sm={24} md={16} lg={17} xl={17}>
                         <div className="custom-card">
                             <Card title="Groups" bordered={false}>
                                 <GroupsPage />
                             </Card>
                         </div>
                     </Col>
-                    <Col xs={24} sm={12} md={8} lg={6} xl={6}>
+                    <Col xs={24} sm={12} md={8} lg={7} xl={7}>
                         <Courses />
                         <Ads />
                     </Col>

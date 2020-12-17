@@ -36,7 +36,7 @@ class Friends extends Component {
     return (
       <div className="custom-card requests">
         {loading && <Loader className="loader-top-middle" />}
-        <Card title="Friends" bordered={true}>
+        <Card title={`Friend (${FriendsList.length})`} bordered={true}>
           <List
             grid={{
               column: 2,
