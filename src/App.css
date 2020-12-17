@@ -15,6 +15,7 @@
 .sharebox-icons,.doc-icons{width:45px;height:40px;vertical-align:initial;display:inline-block;vertical-align:middle;background:url(styles/images/icons.svg) no-repeat;}
 .left-rail .profile-card{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-radius:0.8rem;color:var(--white);border:0;position:relative;}
 .profile-card .ant-card-cover{position:absolute;left:0;top:0;right:0;height:68px;border-radius:0.8rem 0.8rem 0 0;overflow:hidden;border:1px solid transparent;}
+.profile-card .ant-card-cover img{border-radius: 0.8rem 0.8rem 0 0 !important;}
 .left-rail{border:1px solid var(--line);}
 .profile-card .ant-avatar{width:84px;height:84px;padding-right:0;border:2px solid var(--white);}
 .profile-card .ant-card-meta-avatar:after{content:"";position:absolute;width:12px;height:12px;display:inline-block;border:1px solid var(--white);border-radius:50%;right:5px;bottom:7px;background:#33df00;}
@@ -266,7 +267,7 @@
 .custom-fields .ant-select-selector .ant-select-selection-item{line-height:48px !important;}
 .ant-form-item-control-input-content select{min-height:48px;width:100%;border-radius:8px !important;}
 .custom-fields textarea.ant-input{min-height:90px !important;}
-.ant-input,.ant-select-selector,.ant-form-item-control-input-content select,.ant-form-item-control-input-content select:focus{border:1px solid #dfe3eb !important;}
+.ant-input,.ant-select-selector,.ant-form-item-control-input-content select,.ant-form-item-control-input-content select:focus,.ant-picker{border:1px solid #dfe3eb !important;}
 .ant-input,.ant-select,.ant-picker {border-radius: 8px !important;width: 100%;}
 .ant-modal-content{border-radius:0.8rem !important;}
 .ant-btn:hover,.ant-btn:focus,.ant-picker:hover,.ant-picker-focused{color:var(--primary) !important;border-color:var(--primary) !important;}
@@ -338,15 +339,12 @@ textarea{resize:unset !important;}
 .hobbies-card .ant-card-body, .group-member .ant-card-body{padding:12px;}
 .hobbies-card .tags{min-height:auto;}
 .onboard-process .steps-content{color:var(--white);position:relative;background-color:var(--primary);border-radius: 0.8rem;}
-.intro1{padding:12px;text-align:center;margin:auto;min-height:500px;display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;}
-.onboard-process .steps-content .right{background-color:var(--white); border-radius: 0 0.8rem 0.8rem 0;}
+.intro1{padding:24px;text-align:center;margin:auto;min-height:500px;display: flex;align-items: center;justify-content: center;flex-direction: column;}
+.onboard-process .steps-content .right{background-color:var(--white); border-radius: 0 0.8rem 0.8rem 0;padding: 24px !important;}
 .intro1 h1{color:var(--white) !important;}
 .intro1 p{color:var(--white) !important;}
-.intro-title{text-align:left;color:var(--textprimary);margin-top:30px;}
-.intro-subtitle{text-align:left;color:var(--textprimary);padding:8px 12px;}
+.intro-title{text-align:left;color:var(--textprimary);}
+.intro-subtitle{text-align:left;color:var(--textprimary);font-size: 12px;}
 .intro-title h2,.intro-subtitle h2{margin-bottom:0 !important;}
 .intro-title p{color:var(--textsecondary);margin:0;}
 .intro4 .intro-check{display:flex;flex-direction:row-reverse;align-items:center;justify-content:space-between;padding:12px 12px 12px 8px;border:1px solid #d9d9d9;border-radius:4px;margin-bottom:8px;}
@@ -355,9 +353,9 @@ textarea{resize:unset !important;}
 .onboard-process .intro2 .custom-fields{margin-bottom:0 !important;}
 .onboard-process{border-radius:0.8rem !important;border-color:var(--line);}
 .onboard-process .steps-action{padding:12px;text-align:right;position:absolute;right:0;bottom:0;}
-.onboard-process .intro-title{padding:8px 12px;}
+/* .onboard-process .intro-title{padding:8px 12px;} */
 .onboard-process .ant-btn.ant-btn-primary {padding-left: 30px;padding-right: 30px;}
-.onboard-process .steps-content .intro2,.onboard-process .steps-content .intro3,.onboard-process .steps-content .intro4{padding:8px 12px 60px;}
+.onboard-process .steps-content .intro2,.onboard-process .steps-content .intro3,.onboard-process .steps-content .intro4{padding:10px 0px 60px;}
 .onboard-process .steps-action .backbtn{margin:0px 8px;padding-left:30px;padding-right:30px;min-height:40px !important;font-weight:500 !important;color:var(--primary) !important;font-size:var(--f-16) !important;border-color:var(--primary) !important;border-radius:4px !important;float:left;}
 .onboard-process .steps-action .backbtn:hover{box-shadow:inset 0 0 0 1px var(--primary-10);background:var(--primary-10) !important;transition-property:background-color,box-shadow,color;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:167ms;}
 .interests-popup .ant-list-grid .ant-col > .ant-list-item{padding:6px;margin:12px;display:flex;align-items:center;border-radius:4px;}
@@ -399,3 +397,6 @@ textarea{resize:unset !important;}
 .notifications .ant-list-item:first-child{border-radius: 0.8rem 0.8rem 0 0;}
 .notifications .ant-list-item.unread{background-color: #f9f9f9;}
 .notifications .ant-list-item.read{background-color: var(--white);}
+.ant-avatar-image{border-radius: 50% !important;}
+.anticon{color: #9b9b9b !important;}
+
