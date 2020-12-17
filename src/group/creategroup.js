@@ -237,7 +237,7 @@ class CreateGroup extends Component {
     renderSelectItem = (item) => {
         return <div>
             <List.Item>
-                <List.Item.Meta
+                <List.Item.Meta className="privacy-dropdown"
                     avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="select-image" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
                     description={item.Description ? <div className="f-12">{item.Description}</div> : ''}
