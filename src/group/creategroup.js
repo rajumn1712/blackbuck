@@ -54,28 +54,28 @@ class CreateGroup extends Component {
         TypeLu: [
             {
                 Name: "Public",
-                Image: "../styles/images/defaultuser.jpg",
+                Icon: "icons public-icon",
                 Description: "Anyone can see who's in the group and what they post."
 
             },
             {
 
                 Name: "Private",
-                Image: "../styles/images/defaultuser.jpg",
+                Icon: "icons private-icon",
                 Description: "Only members can see who's in the group and what they post."
             }
         ],
         HiddenLu: [
             {
                 Name: "Visible",
-                Image: "../styles/images/defaultuser.jpg",
+                Icon: "icons visible-icon",
                 Description: "Anyone can find this group."
 
             },
             {
 
                 Name: "Hidden",
-                Image: "../styles/images/defaultuser.jpg",
+                Icon: "icons hidden-icon",
                 Description: "Only members can find this group."
             }
         ],
@@ -238,7 +238,7 @@ class CreateGroup extends Component {
         return <div>
             <List.Item>
                 <List.Item.Meta
-                    avatar={<Avatar className="select-image" src={item.Image || defaultUser} />}
+                    avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="select-image" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
                     description={item.Description ? <div className="f-12">{item.Description}</div> : ''}
                 />
