@@ -24,9 +24,9 @@ const OnBoard = ({ profile, history, updateProfile }) => {
             "Email": profile?.Email
         },
         "College": {
-            "CollegeId": "",
+            "CollegeId": null,
             "CollegeName": "",
-            "BranchId": "",
+            "BranchId": null,
             "BranchName": "",
             "Subjects": []
         },
@@ -211,7 +211,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                     </Col>
                                     <Col xs={24} className="custom-fields">
                                         <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one subject" }]}>
-                                            <Select mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" filterOption={(input, option) =>
+                                            <Select mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" onChange={onSubjectsSelection} filterOption={(input, option) =>
                                                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                             }>
                                                 {subjects?.map((subject, indx) => <Option key={indx} value={subject.SubjectId}>{subject?.SubjectName}</Option>)}
