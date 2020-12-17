@@ -226,6 +226,7 @@
 .intern-cards .intern-cardbody{background-color:var(--grey);padding:24px 8px;}
 .intern-cards .intern-cardbody img{width:auto;margin-bottom:8px;height:auto;max-width:75%;max-height: 100%;}
 .intern-cards .intern-cardbody .internlogo{height:100px;display:flex;align-items:center;justify-content:center;}
+.intern-cards .intern-cardbody .defaultlogo{width: 100px;height:100px;border-radius: 50%;color: var(--primary); background-color: var(--secondary);font-size: 24px;font-weight: bold;display: flex;justify-content: center;align-items: center; margin: auto;}
 .intern-cards .intern-cardbody .title{font-size:18px;font-weight:500;line-height:22px;color:var(--textprimary);margin-bottom:8px;}
 .intern-cards .intern-cardbody .description{font-size:var(--f-16);font-weight:500;line-height:20px;color:var(--textsecondary);margin-bottom:2px;text-transform:capitalize;}
 .intern-cards .intern-cardfooter{background-color:var(--white);text-align:left;padding:10px 8px;color:var(--textprimary);}
