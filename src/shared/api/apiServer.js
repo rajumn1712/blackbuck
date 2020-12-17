@@ -123,6 +123,12 @@ const fetchInerests = () => {
 const saveOnboard = (object) => {
   return apiClient.post(FRIENDS_API + "saveUserInfo", object);
 }
+const getAdminFriends = (user_id, groupid) => {
+  return apiClient.get(PROFILE_API + `getAdminFriends/${groupid}/${user_id}`);
+}
+const saveInvitations = (object) => {
+  return apiClient.post(PROFILE_API + "adminInvitationsRequests", object);
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -157,5 +163,7 @@ export {
   acceptDeclineInvitations,
   editGroup,
   fetchInerests,
-  saveOnboard
+  saveOnboard,
+  getAdminFriends,
+  saveInvitations
 };
