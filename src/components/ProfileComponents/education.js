@@ -42,6 +42,7 @@ class Education extends Component {
     initialValues: {
       EducationType: "",
       Name: "",
+      Degree: "",
       AcademicYear: "",
       Location: "",
       MarksGrade: "",
@@ -66,6 +67,7 @@ class Education extends Component {
     if (isedit) {
       let {
         Name,
+        Degree,
         Location,
         EducationType,
         AcademicYear,
@@ -78,6 +80,7 @@ class Education extends Component {
       });
       Object.assign(initialValues, {
         Name,
+        Degree,
         Location,
         EducationType,
         AcademicYear,
@@ -87,6 +90,7 @@ class Education extends Component {
       initialValues = {
         EducationType: "",
         Name: "",
+        Degree: "",
         AcademicYear: "",
         Location: "",
         MarksGrade: "",
@@ -149,6 +153,7 @@ class Education extends Component {
       initialValues: {
         EducationType: "",
         Name: "",
+        Degree: "",
         AcademicYear: "",
         Location: "",
         MarksGrade: "",
@@ -250,11 +255,19 @@ class Education extends Component {
                   }
                   description={
                     <div>
-                      <span style={{ color: "var(--textprimary)" }}></span>{" "}
+                      <span style={{ color: "var(--textprimary)" }}>
+                        {item.Degree}
+                      </span>{" "}
                       <Moment format="YYYY/MM/DD">{item.StartDate}</Moment> -{" "}
-                      <Moment format="YYYY/MM/DD">{item.EndDate}</Moment> {" "}
-                      <div style={{ color: "var(--textprimary)",textTransform: "capitalize"}}>{item.Location}</div>
-                      
+                      <Moment format="YYYY/MM/DD">{item.EndDate}</Moment>{" "}
+                      <div
+                        style={{
+                          color: "var(--textprimary)",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        {item.Location}
+                      </div>
                     </div>
                   }
                 />
@@ -355,6 +368,23 @@ class Education extends Component {
                           />
                           <span className="validateerror">
                             <ErrorMessage name="Name" />
+                          </span>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} sm={24}>
+                        <Form.Item
+                          label="Degree"
+                          name="Degree"
+                          rules={[{ required: true }]}
+                          className="custom-fields"
+                        >
+                          <Field
+                            className="ant-input"
+                            value={values.Degree}
+                            name="Degree"
+                          />
+                          <span className="validateerror">
+                            <ErrorMessage name="Degree" />
                           </span>
                         </Form.Item>
                       </Col>
