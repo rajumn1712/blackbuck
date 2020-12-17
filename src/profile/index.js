@@ -57,7 +57,8 @@ class Profile extends Component {
     showDownload: false,
   };
   isDataRefreshed = (refresh) => {
-    this.setState({ ...this.state, isDataRefresh: refresh });
+    if (refresh)
+      this.friends.getFriends();
   };
   uploadProps = {
     name: "file",
@@ -305,7 +306,7 @@ class Profile extends Component {
                               this.isDataRefreshed(refresh)
                             }
                           />
-                          <Friends isDataRefreshed={isDataRefresh} />
+                          <Friends onRef={friends=>this.friends=friends} />
                         </Col>
                       </Row>
                     );
