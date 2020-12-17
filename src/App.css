@@ -76,7 +76,7 @@
 .post-icons.groupshare-icon{background-position:-557px -255px;}
 .invite-card .ant-card-head{border-bottom:1px solid #e9e5df;color:var(--textprimary);font-size:var(--f-16);}
 .invite-card .ant-card-body{text-align:center;}
-.invite-card .ant-avatar-group .ant-avatar{width:60px;height:60px;line-height:60px;border-radius:18px;border:0;font-size:24px;color:var(--primary);font-weight:600;}
+.invite-card .ant-avatar-group .ant-avatar{width:60px;height:60px;line-height:60px;border-radius:18px;border:0;font-size:24px;color:var(--primary);font-weight:600;border-radius: 50% !important;border: 1px solid var(--line);}
 .invite-card p{color:var(--textsecondary);font-size:var(--f-16);}
 .invite-grp-name{font-weight:500;}
 .invite-card .ant-avatar-group{margin-bottom:30px;position:relative;}
