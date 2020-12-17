@@ -7,6 +7,7 @@ import { fetchUserGroups } from '../api/apiServer'
 import CommonModal from '../../components/ProfileComponents/CommonModal'
 import CreateGroup from '../../group/creategroup'
 import SideAction from "../../shared/components/postings/Actions/SideActions";
+import defaultUser from '../../styles/images/defaultuser.jpg';
 const { Meta } = Card;
 let GroupEditObj = {};
 const ownerActions = [
@@ -100,12 +101,12 @@ class GroupsPage extends Component {
         const { user } = store.getState().oidc;
         const { Groups, visible } = this.state;
         return (
-            <div className="group-page" >
+            <div className="group-page p-12" >
                 <Row gutter={16} className="">
                     {Groups.length > 0 && Groups?.map((group, index) => {
                         return <Col className="mb-16" md={12} lg={8} xl={8} xxl={6}>
                             <Card key={index}
-                                cover={<img className="obj-fit" src={group.image} />} actions={[
+                                cover={<img className="obj-fit" src={group.image|| defaultUser} />} actions={[
                                     <Link className="list-link f-14" to="/commingsoon">Leave Group</Link>
                                 ]}
                             >
