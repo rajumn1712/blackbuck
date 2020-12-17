@@ -539,10 +539,37 @@
   background-position: -559px -469px;
 }
 .doc-icons.pdf {
-  background-position: -365px -159px;
+  background-position: -666px -469px;
 }
-.doc-icons .pdf {
-  background-position: -571px -469px;
+.doc-icons.doc {
+  background-position: -666px -469px;
+}
+.doc-icons.docx {
+  background-position: -666px -469px;
+}
+.doc-icons.ott {
+  background-position: -666px -469px;
+}
+.doc-icons.rtf {
+  background-position: -666px -469px;
+}
+.doc-icons.odt {
+  background-position: -666px -469px;
+}
+.doc-icons.xls {
+  background-position: -666px -469px;
+}
+.doc-icons.md {
+  background-position: -666px -469px;
+}
+.doc-icons.txt {
+  background-position: -666px -469px;
+}
+.doc-icons.slxs {
+  background-position: -666px -469px;
+}
+.doc-icons.csv {
+  background-position: -666px -469px;
 }
 .docs .ant-list-items {
   display: flex;
@@ -1792,15 +1819,6 @@ textarea {
 }
 .settings-card .ant-list-item-meta-content {
   display: flex;
-}
-.sharebox-icons .png-icon {
-  background-position: -482px -469px;
-}
-.sharebox-icons .jpg-icon {
-  background-position: -526px -469px;
-}
-.sharebox-icons .docpdf {
-  background-position: -571px -469px;
 }
 .carousel-card {
   margin: 0 5px !important;
