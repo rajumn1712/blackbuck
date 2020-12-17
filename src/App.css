@@ -1910,3 +1910,13 @@ textarea {
 .anticon {
   color: #9b9b9b !important;
 }
+.settings-card .ant-list-item-meta-description{width: 100%;}
+.settings-card .ant-list-item{align-items: unset;padding: 12px 12px 0;}
+.settings-card .ant-card-body{padding: 0;}
+.settings-card{border-radius: 0.8rem !important;}
+.icons.securitylogin-icon{background-position: -700px -254px;}
+.icons.publicposts-icon{background-position: -612px -254px;}
+.icons.blocking-icon{background-position: -728px -254px;}
+.icons.location-icon{background-position: -758px -254px;}
+.icons.notification-icon{background-position: -32px -252px;}
+
