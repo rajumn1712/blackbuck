@@ -94,7 +94,7 @@ class FriendRequests extends Component {
     return (
       <div className="custom-card requests">
         {this.state.loading && <Loader className="loader-top-middle" />}
-        <Card title="Friend Requests" bordered={false}>
+        <Card title={`Friend Requests (${data.length})`} bordered={false}>
           <List
             itemLayout="horizontal"
             dataSource={data}
