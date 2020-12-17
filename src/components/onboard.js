@@ -7,7 +7,7 @@ import { fetchCourseSuggestions, fetchInerests, getBranchSubjects, getCollegeBra
 import notify from '../shared/components/notification';
 import connectStateProps from '../shared/stateConnect';
 import OwlCarousel from 'react-owl-carousel2';
-import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 const { Option } = Select;
 const OnBoard = ({ profile, history, updateProfile }) => {
     const [current, setCurrent] = React.useState(0);
@@ -298,7 +298,8 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <h2>Want to join in Groups?</h2>
                             </div>
                             <div className="intro3">
-                                <OwlCarousel autoWidth={true} margin="15px">
+                            <Link className="more-frnd-btn left"><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" ><span className="icon right-arrow mr-0"></span></Link>
+                                <OwlCarousel autoWidth={true} dots={false} animateOut={true} animateIn={true}>
                                     {groupSuggestions.map((grpItem, idx) => <Card key={idx} className="carousel-card"
                                         cover={<img alt="example" src={grpItem.image} />}
                                     >

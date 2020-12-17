@@ -113,3 +113,4 @@
 *::-webkit-scrollbar { width: 8px;}
 *::-webkit-scrollbar-thumb {background-color: var(--primary);border-radius: 20px;}
 body{background-color: #f3f2ef !important;}
+html {--antd-wave-shadow-color:var(--primary) !important;}
