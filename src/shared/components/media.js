@@ -56,12 +56,29 @@ class Media extends Component {
                         </TabPane>
                         <TabPane tab="Videos" key="2">
                             <Row gutter={16}>
-                                <Col xs={24} sm={8} md={8} lg={8} xl={8} className="m-8">
-                                    <Card
-                                        hoverable
-                                        cover={<img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                                    >
-                                    </Card>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className="m-8">
+                                <Row gutter={24}>
+                                        <Col span={6}><Card
+                                            hoverable
+                                            cover={<img src={PremiumBadge} />}
+                                        >
+                                        </Card></Col>
+                                        <Col span={6}><Card
+                                            hoverable
+                                            cover={<img src={PremiumBadge} />}
+                                        >
+                                        </Card></Col>
+                                        <Col span={6}><Card
+                                            hoverable
+                                            cover={<img src={PremiumBadge} />}
+                                        >
+                                        </Card></Col>
+                                        <Col span={6}><Card
+                                            hoverable
+                                            cover={<img src={PremiumBadge} />}
+                                        >
+                                        </Card></Col>
+                                    </Row>
                                 </Col>
                             </Row>
                         </TabPane>
