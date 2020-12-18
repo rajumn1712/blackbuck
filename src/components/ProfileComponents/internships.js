@@ -280,7 +280,11 @@ class Intership extends Component {
     this.setState({
       ...this.state,
       visible: false,
-      internshipsObj: internshipsObj,
+      internshipsObj: {
+        InternshipId: "",
+        CompanyLogo: "",
+        uploadsources: [],
+      },
       initialValues: {
         CompanyName: "",
         ShortName: "",
