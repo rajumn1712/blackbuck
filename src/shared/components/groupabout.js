@@ -80,7 +80,7 @@ class GroupAbout extends Component {
                     <div>
                         {aboutData.Description && <p>{aboutData.Description}</p>}
                         <div>
-                            <List
+                           {(aboutData.Type=='Private'||aboutData.Type=='Public') &&  <List
                                 itemLayout="horizontal"
                                 dataSource={[data[aboutData.Type]]}
                                 renderItem={item => (
@@ -93,6 +93,7 @@ class GroupAbout extends Component {
                                     </List.Item>
                                 )}
                             />
+                                }
                             {aboutData.Hide && <List
                                 itemLayout="horizontal"
                                 dataSource={[data[aboutData.Hide]]}

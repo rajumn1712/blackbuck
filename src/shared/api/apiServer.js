@@ -147,6 +147,9 @@ const saveInvitations = (object) => {
 const getMedia = (groupId, type, take, skip) => {
   return apiClient.get(PROFILE_API + `getGroupPhotos/${groupId}/${take}/${skip}/${type}`);
 };
+const getMembers=(groupId,take,skip)=>{
+  return apiClient.get(PROFILE_API + `getGroupMembers/${groupId}/${take}/${skip}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -187,4 +190,5 @@ export {
   getAdminFriends,
   saveInvitations,
   getMedia,
+  getMembers
 };
