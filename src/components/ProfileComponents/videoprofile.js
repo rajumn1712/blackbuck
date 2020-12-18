@@ -29,7 +29,7 @@ class VideoProfile extends Component {
     name: "file",
     accept: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
     multiple: false,
-    action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
+    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
     onChange: (info) => {
       this.setState({ ...this.state, fileUploading: true });
       const { status } = info.file;
@@ -114,7 +114,7 @@ class VideoProfile extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Tooltip title="Edit">
+              <Tooltip title={video ? "Edit" : "Add"}>
                 <Link onClick={this.showModal}>
                   <span className={`icons ${video ? "edit" : "add"}`} />
                 </Link>
@@ -145,7 +145,25 @@ class VideoProfile extends Component {
               <span className="sharebox-icons video-upload"></span>
               <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
             </Dragger>
-            <Form layout="vertical" className="mt-16">
+            {inputValue && (
+              <div className="mb-16 upload-preview">
+                <video width="100%" controls>
+                  <source src={inputValue} />
+                </video>
+                <a
+                  class="item-close"
+                  onClick={() =>
+                    this.setState({ ...this.state, inputValue: "" })
+                  }
+                >
+                  <Tooltip title="Remove">
+                    <span className="close-icon"></span>
+                  </Tooltip>
+                </a>
+              </div>
+            )}
+
+            {/* <Form layout="vertical" className="mt-16">
               <Form.Item label="URL" className="custom-fields">
                 <Input
                   value={this.state.inputValue}
@@ -153,7 +171,7 @@ class VideoProfile extends Component {
                   onChange={this.handleVideoCHange}
                 />
               </Form.Item>
-            </Form>
+            </Form> */}
           </div>
         </CommonModal>
       </div>
