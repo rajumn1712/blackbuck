@@ -181,7 +181,7 @@ class Postings extends Component {
                            <img src={image.Name || image} />
                         </div> : null}</>
                      })}
-                     {imageObj.length > 4 ? <span class="more-images">+2</span> : null}
+                     {imageObj.length > 4 ? <span class="more-images">+{imageObj.length-4}</span> : null}
                   </div>
                </div>
             } else {

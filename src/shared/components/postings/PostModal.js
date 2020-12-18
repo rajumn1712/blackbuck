@@ -23,6 +23,7 @@ class PostCardModal extends Component {
     slider = createRef(null);
     componentDidMount() { }
     componentWillReceiveProps(props) {
+        props.postData.image = props.postData.image ? (Array.isArray(props.postData.image) ? props.postData.image : [props.postData.image]) : props.postData.image;
         this.setState({ ...this.state, post: props.postData, visible: props.visible}, () => {
             if (this.state.post.commentsCount > 0 && this.state.commentselection.length == 0) {
                 this.showComment(this.state.post)
