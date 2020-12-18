@@ -175,7 +175,6 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                         <div className="intro2 pb-0">
                             <Form layout="vertical" initialValues={initialValues.College} onFinishFailed={onFinishFailed} onFinish={(values) => next(values)}>
                                 <Row gutter={16}>
-
                                     <Col xs={24} className="custom-fields">
                                         <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }]}>
                                             <Select defaultValue={initialValues.College.CollegeId} showSearch placeholder="Select a college" onChange={(val) => handleChange("CollegeId", val)}>
@@ -211,7 +210,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                             </Select>
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} className="custom-fields">
+                                    <Col xs={24} className="custom-fields multi-select">
                                         <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one subject" }]}>
                                             <Select mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" onChange={onSubjectsSelection} filterOption={(input, option) =>
                                                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -224,7 +223,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <div className="steps-action">
                                     <Button type="primary" htmlType="submit">
                                         Next
-                                        </Button>
+                                    </Button>
                                 </div>
                             </Form>
                         </div >
@@ -234,7 +233,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         {
             content:
                 <>
-                    <Row gutter={8}>
+                    <Row>
                         <Col xs={24} md={8}>
                             <div className="intro1">
                                 <img src={Logo} alt="blackbuck" width="250px" />
@@ -280,7 +279,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         {
             content:
                 <>
-                    <Row gutter={8}>
+                    <Row>
                         <Col xs={24} md={8}>
                             <div className="intro1">
                                 <img src={Logo} alt="blackbuck" width="250px" />
