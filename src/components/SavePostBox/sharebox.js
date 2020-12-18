@@ -142,7 +142,7 @@ class ShareBox extends Component {
             }
             if (status === 'done') {
                 if (this.postObject.Type == "Docs") {
-                    const avatar = info.file?.name ? info.file.name.substr(info.file.name.lastIndexOf(".")+1) : "word";
+                    const avatar = info.file?.name ? info.file.name.substr(info.file.name.lastIndexOf(".") + 1) : "word";
                     let response = { title: info.file.name, avatar, url: info.file.response[0], fileSize: info.file.size }
                     this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(response) : [response];
                     this.setState({ ...this.state, uploadSources: this.state.uploadSources ? this.state.uploadSources.concat(response) : [response] })
@@ -298,13 +298,19 @@ class ShareBox extends Component {
                 {this.state.fileUploading && <Loader className="loader-top-middle" />}
                 {this.state.uploadSources?.map((image, indx) => <div key={indx} className="mb-16 upload-preview">
                     <Image src={image} />
-                    <a class="item-close" onClick={() => this.setState({ ...this.state, uploadSources: [] })}>
+                    <a class="item-close" onClick={() => {
+                        let { uploadSources } = this.state;
+                        uploadSources.splice(indx, 1);
+                        this.postObject.ImageUrl.splice(indx, 1);
+                        this.setState({ ...this.state, uploadSources })
+                    }}>
                         <Tooltip title="Remove">
                             <span className="close-icon"></span>
                         </Tooltip>
                     </a>
-                </div>)}
-            </div>,
+                </div>)
+                }
+            </div >,
             Video: <div>
                 <Dragger className="upload" {...this.uploadProps} onRemove={() => this.setState({ ...this.state, uploadSources: [] })} showUploadList={false}>
                     <span className="sharebox-icons video-upload"></span>
@@ -355,7 +361,7 @@ class ShareBox extends Component {
                         renderItem={(item, indx) => (
                             <List.Item className="upload-preview">
                                 <List.Item.Meta
-                                avatar={[<span className={`doc-icons ${item.avatar}`}></span>]}
+                                    avatar={[<span className={`doc-icons ${item.avatar}`}></span>]}
                                     // avatar={item.avatar}
                                     title={item.title}
                                     description={<div className="file-size f-12">{item.fileSize}</div>}
@@ -426,7 +432,7 @@ class ShareBox extends Component {
         );
         const title = <div className="d-flex justify-content-between addpost-user">
             <Meta
-                avatar={<Avatar src={this.props.profile?.ProfilePic || defaultUser } />}
+                avatar={<Avatar src={this.props.profile?.ProfilePic || defaultUser} />}
                 title={<h4 className="mb-0">{this.props.profile?.FirstName}</h4>}
                 description={<div className="mb-0 text-capitalize"><Dropdown overlay={menu} trigger={['click']}>
                     <div className="post-privacy" style={{ color: '#9B9B9B', fontSize: 12 }} onClick={e => e.preventDefault()}>
