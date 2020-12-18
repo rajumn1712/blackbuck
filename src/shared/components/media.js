@@ -21,14 +21,15 @@ class Media extends Component {
                 >
                     <Tabs defaultActiveKey="1" className=" media-tabs">
                         <TabPane tab="Photos" key="1">
-                            <Row gutter={16}>
+                            <div className="">
+                            <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className="m-8">
                                     {/* <Card
                                         hoverable
                                         cover={<img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
                                     >
                                     </Card> */}
-                                    <Row gutter={24}>
+                                    <Row >
                                         <Col span={6}><Card
                                             hoverable
                                             cover={<img src={PremiumBadge} />}
@@ -52,7 +53,7 @@ class Media extends Component {
                                     </Row>
                                 </Col>
 
-                            </Row>
+                            </Row></div>
                         </TabPane>
                         <TabPane tab="Videos" key="2">
                             <Row gutter={16}>

@@ -24,6 +24,10 @@ const data = [
         img:'left-menu group-icon',
     },
     {
+        title: 'Location',
+        img:'left-menu location-icon',
+    },
+    {
         title: 'History',
         description: 'Group created on March 17, 2012  ',
         img:'left-menu history-icon',
