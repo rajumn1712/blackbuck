@@ -11,8 +11,10 @@ import { savePost } from '../../shared/api/postsApi';
 import Loader from '../../common/loader';
 import { uuidv4 } from '../../utils';
 import notify from '../../shared/components/notification';
+import defaultUser from '../../styles/images/defaultuser.jpg';
 const { Dragger } = Upload;
 const { TextArea } = Input;
+
 const { Meta } = Card;
 const postsmenu =
     [
@@ -424,7 +426,7 @@ class ShareBox extends Component {
         );
         const title = <div className="d-flex justify-content-between addpost-user">
             <Meta
-                avatar={<Avatar src={this.props.profile?.ProfilePic} />}
+                avatar={<Avatar src={this.props.profile?.ProfilePic || defaultUser} />}
                 title={<h4 className="mb-0">{this.props.profile?.FirstName}</h4>}
                 description={<div className="mb-0"><Dropdown overlay={menu} trigger={['click']}>
                     <div className="post-privacy" style={{ color: '#9B9B9B', fontSize: 12 }} onClick={e => e.preventDefault()}>
