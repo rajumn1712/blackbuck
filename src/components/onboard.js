@@ -155,7 +155,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         {
             content:
                 <Row>
-                    <Col xs={24} md={8}>
+                    <Col xs={24} md={7}>
                         <div className="intro1">
                             <img src={Logo} alt="blackbuck" width="250px" />
                             <h1> Welcome to Blackbuck</h1>
@@ -166,7 +166,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                         </div>
 
                     </Col>
-                    <Col xs={24} md={16} className="right">
+                    <Col xs={24} md={17} className="right">
                         <div className="intro-title">
                             <h2>
                                 A bit about you
@@ -182,24 +182,24 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                             </Select>
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={12} className="custom-fields">
+                                    <Col xs={24} md={12} className="custom-fields">
                                         <Form.Item label="Branch name" name="BranchId" rules={[{ required: true, message: "Branch is required" }]}>
                                             <Select defaultValue={initialValues.College.BranchId} placeholder="Select a branch" onChange={(val) => handleChange("BranchId", val)}>
                                                 {branches?.map((branch, indx) => <Option value={branch?.BranchId}>{branch?.BranchName}</Option>)}
                                             </Select>
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={12} className="custom-fields">
+                                    <Col xs={24} md={12} className="custom-fields">
                                         <Form.Item label="Date of joining" name="DateOfJoining" rules={[{ required: true, message: "Date of joining required" }]}>
                                             <DatePicker defaultValue={initialValues.College.DateOfJoining} onChange={(val) => { handleChange("DateOfJoining", val) }} format="DD/MM/YYYY" />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={12} className="custom-fields">
+                                    <Col xs={24} md={12} className="custom-fields">
                                         <Form.Item label="Passing out year" name="PassingOutYear" rules={[{ required: true, message: "Passing out year required" }]}>
                                             <DatePicker defaultValue={initialValues.College.PassOutYear} onChange={(val) => { handleChange("PassingOutYear", val) }} picker="year" />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={12} className="custom-fields">
+                                    <Col xs={24} md={12} className="custom-fields">
                                         <Form.Item label="Current year" name="CurrentYear" rules={[{ required: true, message: "Current year required" }]}>
                                             <Select defaultValue={initialValues.College.CurrentYear} placeholder="Select an option" onChange={(val) => { handleChange("CurrentYear", val) }}>
                                                 <Option value="1">1</Option>
@@ -234,7 +234,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
             content:
                 <>
                     <Row>
-                        <Col xs={24} md={8}>
+                        <Col xs={24} md={7}>
                             <div className="intro1">
                                 <img src={Logo} alt="blackbuck" width="250px" />
                                 <h1> Welcome to Blackbuck</h1>
@@ -245,10 +245,10 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                             </div>
 
                         </Col>
-                        <Col xs={24} md={16} className="right">
+                        <Col xs={24} md={17} className="right">
                             <div className="intro-title">
                                 <h2>Tell us what you are Interested in?</h2>
-                                <p>You can select few</p>
+                                {/* <p>You can select few</p> */}
                             </div>
 
                             <div className="intro4">
@@ -280,7 +280,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
             content:
                 <>
                     <Row>
-                        <Col xs={24} md={8}>
+                        <Col xs={24} md={7}>
                             <div className="intro1">
                                 <img src={Logo} alt="blackbuck" width="250px" />
                                 <h1>Welcome to Blackbuck</h1>
@@ -291,7 +291,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                             </div>
 
                         </Col>
-                        <Col xs={24} md={16} className="right">
+                        <Col xs={24} md={17} className="right">
                             <div className="intro-title">
                                 <h2>Want to join in Groups?</h2>
                             </div>
