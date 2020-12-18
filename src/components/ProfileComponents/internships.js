@@ -296,7 +296,7 @@ class Intership extends Component {
   render() {
     const { user } = store.getState().oidc;
     const data = [...this.state.internships];
-    const { internshipsObj, duration, initialValues } = this.state;
+    const { internshipsObj, duration, initialValues ,visible} = this.state;
     return (
       <div className="custom-card internship-card">
         <Card
@@ -384,7 +384,7 @@ class Intership extends Component {
           saved={this.handleOk}
         >
           {this.state.loading && <Loader className="loader-top-middle" />}
-          <Formik
+         {visible && <Formik
             enableReinitialize
             initialValues={initialValues}
             innerRef={this.formRef}
@@ -567,7 +567,7 @@ class Intership extends Component {
                 </Form>
               );
             }}
-          </Formik>
+          </Formik>}
         </CommonModal>
       </div>
     );
