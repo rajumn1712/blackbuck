@@ -14,14 +14,14 @@ const data = {
     "Public": {
         title: 'Public',
         description: "Anyone can see who's in the group and what they post.",
-        img: 'icons public-icon',
+        img: 'left-menu public-icon',
     },
 
 
     "College": {
         title: 'Public',
         description: "Anyone can see who's in the group and what they post.",
-        img: 'icons public-icon',
+        img: 'left-menu public-icon',
     },
 
 
@@ -35,7 +35,7 @@ const data = {
     "Visible": {
         title: 'Visible',
         description: 'Anyone can find this group.',
-        img: 'icons visible-icon',
+        img: 'left-menu visible-icon',
     },
 
 
@@ -170,7 +170,7 @@ class GroupAbout extends Component {
                         </div>
                 </Card>  Please don't delete*/}
                 <Card title="Members" bordered={false} actions={[
-                    <Button type="primary" >See All</Button>
+                    <Button type="primary" >See More</Button>
                 ]}>
                     <div>
 

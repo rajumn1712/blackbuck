@@ -8,6 +8,7 @@ import CommonModal from '../../components/ProfileComponents/CommonModal'
 import CreateGroup from '../../group/creategroup'
 import SideAction from "../../shared/components/postings/Actions/SideActions";
 import defaultUser from '../../styles/images/defaultuser.jpg';
+import defaultguser from '../../styles/images/default-cover.png';
 const { Meta } = Card;
 let GroupEditObj = {};
 const ownerActions = [
@@ -106,7 +107,7 @@ class GroupsPage extends Component {
                     {Groups.length > 0 && Groups?.map((group, index) => {
                         return <Col className="mb-12" md={12} lg={8} xl={8} xxl={6} >
                             <Card key={index}
-                                cover={<img className="obj-fit" src={group.image || defaultUser} />} actions={[
+                                cover={<img className="obj-fit" src={group.image || defaultguser} />} actions={[
                                     <Link className="list-link f-14" to="/commingsoon">Leave Group</Link>
                                 ]}
                             >

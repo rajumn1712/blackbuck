@@ -149,7 +149,7 @@ class Hobbies extends Component {
           )}
         </Card>
         <CommonModal
-          className="custom-popup"
+          className="custom-popup custom-fields multi-select"
           visible={visible}
           title="Hobbies"
           disable={tags.length == 0}
@@ -194,6 +194,7 @@ class Hobbies extends Component {
             )}
           </div> */}
           <Select
+         
             mode="tags"
             style={{ width: "100%" }}
             placeholder="Enter Hobbies"

@@ -1590,7 +1590,7 @@ textarea {
   color: var(--primary);
 }
 .left-menu.private-icon {
-  background-position: -434px -256px;
+  background-position: -29px -309px;
 }
 .left-menu.preview-icon {
   background-position: -464px -256px;
@@ -1927,5 +1927,5 @@ textarea {
 .icons.blocking-icon{background-position: -728px -254px;}
 .icons.location-icon{background-position: -758px -254px;}
 .icons.notification-icon{background-position: -2px -305px;}
-.left-menu.location-icon{background-position:-761px -258px}
+.left-menu.location-icon{background-position:-762px -258px;}
 .text-capiatlize{text-transform: capitalize;}
