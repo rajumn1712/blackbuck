@@ -57,13 +57,13 @@ class Profile extends Component {
     showDownload: false,
   };
   isDataRefreshed = (refresh) => {
-    this.setState({ ...this.state, isDataRefresh: refresh });
+    if (refresh) this.friends.getFriends();
   };
   uploadProps = {
     name: "file",
     multiple: false,
     fileList: [],
-    action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
+    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
     onChange: ({ file }) => {
       const { status } = file;
       if (status !== "uploading") {
@@ -305,7 +305,9 @@ class Profile extends Component {
                               this.isDataRefreshed(refresh)
                             }
                           />
-                          <Friends isDataRefreshed={isDataRefresh} />
+                          <Friends
+                            onRef={(friends) => (this.friends = friends)}
+                          />
                         </Col>
                       </Row>
                     );

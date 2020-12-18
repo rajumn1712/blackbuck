@@ -150,7 +150,7 @@ class CreateGroup extends Component {
         name: 'file',
         multiple: false,
         fileList: [],
-        action: 'http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile',
+        action: process.env.REACT_APP_AUTHORITY +'/Home/UploadFile',
         onChange: ({ file }) => {
             const { status } = file;
             if (status !== 'uploading') {

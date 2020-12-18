@@ -44,7 +44,7 @@ class Identity extends Component {
           ]}
           cover={<img src={homeInfo?.CoverPic || coverphoto} />}
         >
-          <Link to="/profile">
+          <Link to="/profile/1">
             <Meta
               avatar={<Avatar src={homeInfo?.ProfilePic || defaultUser} />}
               title={

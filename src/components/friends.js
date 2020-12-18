@@ -10,12 +10,9 @@ import { Link } from "react-router-dom";
 import Loader from "../common/loader";
 class Friends extends Component {
   componentDidMount() {
+    if (this.props.onRef)
+      this.props.onRef(this);
     this.getFriends();
-  }
-  componentDidUpdate() {
-    if (this.props.isDataRefreshed) {
-      this.getFriends();
-    }
   }
   getFriends() {
     this.setState({ ...this.state, loading: true });

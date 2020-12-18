@@ -117,7 +117,7 @@ class Postings extends Component {
       videoVisibilityMonitor.start();
    }
    titleAvatar = (user, date) => {
-      return <Link to={(this.props?.profile.Id == user.UserId ? "/profile" : ("/profileview/" + user.UserId))}>
+      return <Link to={(this.props?.profile.Id == user.UserId ? ("/profile/"+"1") : ("/profileview/" + user.UserId))}>
          <Meta
             avatar={<Avatar src={user.Image || defaultUser} />}
             title={<span className="overflow-text post-title">{user.Firstname}</span>}

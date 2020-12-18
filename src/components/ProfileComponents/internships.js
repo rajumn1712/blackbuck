@@ -99,7 +99,7 @@ class Intership extends Component {
     accept: ".jpg,.jpeg,.png",
     multiple: false,
     showUploadList: false,
-    action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
+    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
     onChange: (info) => {
       this.setState({ ...this.state, fileUploading: true });
       const { status } = info.file;
@@ -123,7 +123,7 @@ class Intership extends Component {
     accept: ".png,.jpeg,.pdf",
     multiple: false,
     showUploadList: false,
-    action: "http://138.91.35.185/tst.blackbuck.identity/Home/UploadFile",
+    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
     onChange: (info) => {
       this.setState({ ...this.state, fileUpload: true });
       const { status } = info.file;
