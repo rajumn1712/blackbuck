@@ -104,33 +104,33 @@ class GroupsPage extends Component {
             <div className="group-page p-12 pb-0" >
                 <Row gutter={16} className="">
                     {Groups.length > 0 && Groups?.map((group, index) => {
-                        return <Col className="mb-12" md={12} lg={8} xl={8} xxl={6}>
+                        return <Col className="mb-12" md={12} lg={8} xl={8} xxl={6} >
                             <Card key={index}
-                                cover={<img className="obj-fit" src={group.image|| defaultUser} />} actions={[
+                                cover={<img className="obj-fit" src={group.image || defaultUser} />} actions={[
                                     <Link className="list-link f-14" to="/commingsoon">Leave Group</Link>
                                 ]}
                             >
-                                <Meta title={<Link to={"/groupview/"+group.id} className="post-title">{group.name}</Link>}
+                                <Meta title={<Link to={"/groupview/" + group.id} className="post-title">{group.name}</Link>}
                                     description={<div>
                                         <div className="mb-4 f-12 text-overflow">{group.description}</div>
-                                        <div className="d-flex align-items-center">
+                                        <div className="d-flex align-items-center" style={{ position: 'relative' }}>
 
                                             {group.members > 0 && <span><span>{group.members ? group.members : ""}</span> Members</span>}
-                                            {group.IsGroupAdmin && <span className="card-options-right">
-                                                <SideAction
-                                                    horclass="icons more"
-                                                    clickedEvent={(event, name) =>
-                                                        this.handleEvent(event, name, group)
-                                                    }
-                                                    actionsList={ownerActions}
-                                                />
-                                                {/* <span className="icons more"/> */}
-                                            </span>
-                                            }
+
                                         </div>
                                     </div>}
                                 />
                             </Card>
+                            {group.IsGroupAdmin && <span className="card-options-right">
+                                <SideAction
+                                    horclass="icons more"
+                                    clickedEvent={(event, name) =>
+                                        this.handleEvent(event, name, group)
+                                    }
+                                    actionsList={ownerActions}
+                                />
+                            </span>
+                            }
                         </Col>
                     })
                     }
