@@ -243,7 +243,7 @@
         bottom: -8px;
     }
 }
-.multi-select.custom-fields .ant-select-selector .ant-select-selection-item{line-height: 23px !important;}
+.multi-select.custom-fields .ant-select-selector .ant-select-selection-item{line-height: 24px !important;border-radius: 0.25rem;}
 .ant-select-dropdown .ant-list-item .ant-list-item-meta-content{margin: auto;}
 .multi-select .ant-select-selector{overflow: overlay;}
 .ant-select-dropdown .ant-select-item-option-state{margin: auto;}

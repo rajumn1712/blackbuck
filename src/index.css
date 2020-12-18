@@ -113,3 +113,5 @@ transition-duration: 167ms;}
 .ant-empty-description{color: rgba(0, 0, 0, 0.25) !important;}
 .profilename .ant-card-meta-title,.user-banner ,.post-title{text-transform: capitalize;}
 .ant-picker-decade-panel .ant-picker-content, .ant-picker-year-panel .ant-picker-content, .ant-picker-quarter-panel .ant-picker-content, .ant-picker-month-panel .ant-picker-content{height: 150px !important;}
+.custom-fields.multi-select .ant-select-selector{padding: 4px 11px;}
+.custom-fields.multi-select .ant-select-selection-item-content{text-transform: capitalize;}
