@@ -10,13 +10,15 @@ import notify from '../shared/components/notification';
 import connectStateProps from '../shared/stateConnect';
 import OwlCarousel from 'react-owl-carousel2';
 import { Link, withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import Loader from '../common/loader'
 const { Option } = Select;
 const OnBoard = ({ profile, history, updateProfile }) => {
     const [current, setCurrent] = React.useState(0);
     const [colleges, setColleges] = useState([]);
     const [branches, setBranches] = useState([]);
     const [subjects, setSubjects] = useState([]);
-    const [groupSuggestions, setGroupSuggetions] = useState([])
+    const [groupSuggestions, setGroupSuggetions] = useState([]);
+    const [loaders, setLoaders] = useState({ colleges: false, branches: false, subjects: false, mainLoader: true });
     const [initialValues, setInitialValues] = useState({
         "UserDetails": {
             "UserId": profile?.Id,
@@ -63,32 +65,43 @@ const OnBoard = ({ profile, history, updateProfile }) => {
 
     };
     const fetchColleges = async () => {
+        setLoaders({ ...loaders, colleges: true });
         const collegeResponse = await getColleges();
         if (collegeResponse.ok) {
             setColleges(collegeResponse.data);
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
+        setLoaders({ ...loaders, colleges: false });
     }
     const fetchBranches = async () => {
+        setLoaders({ ...loaders, branches: true });
         const branchesResponse = await getCollegeBranches(initialValues.College.CollegeId);
         if (branchesResponse.ok) {
             setBranches(branchesResponse.data);
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
+        setLoaders({ ...loaders, branches: false });
     }
     const fetchSubjects = async () => {
+        setLoaders({ ...loaders, subjects: true });
         const subjectsResponse = await getBranchSubjects(initialValues.College.CollegeId, initialValues.College.BranchId);
         if (subjectsResponse.ok) {
             setSubjects(subjectsResponse.data);
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
+        setLoaders({ ...loaders, subjects: false });
     }
     const handleChange = (prop, val) => {
         let object = { ...initialValues };
         object.College[prop] = val;
+        if (prop === "CollegeId") {
+            object.College.CollegeName = colleges.filter(item => item.CollegeId === val)[0].CollegeName;
+        } else if (prop === "BranchId") {
+            object.College.BranchName = branches.filter(item => item.BranchId === val)[0].BranchName;
+        }
         setInitialValues(object);
         const result = prop === "CollegeId" ? fetchBranches() : (prop === "BranchId" ? fetchSubjects() : "");
     }
@@ -103,12 +116,14 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         setInitialValues(object);
     }
     const fetchInterests = async () => {
+        setLoaders({ ...loaders, mainLoader: true })
         const intResponse = await fetchInerests();
         if (intResponse.ok) {
             setInterests(intResponse.data);
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
-        }
+        } setLoaders({ ...loaders, mainLoader: false })
+
     }
     const fetchGroupSuggestions = async () => {
         const grpSuggetions = await fetchCourseSuggestions(profile?.Id, 5, 0);
@@ -177,14 +192,14 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <Row gutter={16}>
                                     <Col xs={24} className="custom-fields">
                                         <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }]}>
-                                            <Select defaultValue={initialValues.College.CollegeId} showSearch placeholder="Select a college" onChange={(val) => handleChange("CollegeId", val)}>
+                                            <Select loading={loaders.colleges} defaultValue={initialValues.College.CollegeId} showSearch placeholder="Select a college" onChange={(val) => handleChange("CollegeId", val)}>
                                                 {colleges?.map((college, indx) => <Option value={college?.CollegeId}><Avatar src={college.Image} />{college?.CollegeName}</Option>)}
                                             </Select>
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} md={12} className="custom-fields">
                                         <Form.Item label="Branch name" name="BranchId" rules={[{ required: true, message: "Branch is required" }]}>
-                                            <Select defaultValue={initialValues.College.BranchId} placeholder="Select a branch" onChange={(val) => handleChange("BranchId", val)}>
+                                            <Select loading={loaders.branches} defaultValue={initialValues.College.BranchId} placeholder="Select a branch" onChange={(val) => handleChange("BranchId", val)}>
                                                 {branches?.map((branch, indx) => <Option value={branch?.BranchId}>{branch?.BranchName}</Option>)}
                                             </Select>
                                         </Form.Item>
@@ -212,7 +227,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                     </Col>
                                     <Col xs={24} className="custom-fields multi-select">
                                         <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one subject" }]}>
-                                            <Select mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" onChange={onSubjectsSelection} filterOption={(input, option) =>
+                                            <Select loading={loaders.subjects} mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" onChange={onSubjectsSelection} filterOption={(input, option) =>
                                                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                             }>
                                                 {subjects?.map((subject, indx) => <Option key={indx} value={subject.SubjectId}>{subject?.SubjectName}</Option>)}
@@ -250,12 +265,12 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <h2>Tell us what you are Interested in?</h2>
                                 {/* <p>You can select few</p> */}
                             </div>
-
+                            {loaders.mainLoader && <Loader className="loader-middle" />}
                             <div className="intro4">
                                 <Checkbox.Group style={{ width: '100%' }} onChange={onInterestSelection}>
                                     <Row gutter={8}>
                                         {interests.map((subject, indx) => <Col xs={12} md={8} lg={8}>
-                                            <Checkbox key={indx} className="intro-check" value={subject}><span className="intcard"><img src={Onboard1} width='50px'/><span className="overflow-text ">{subject?.Name}</span></span></Checkbox>
+                                            <Checkbox key={indx} className="intro-check"><span className="intcard"><img src={Onboard1} width='50px' /><span className="overflow-text ">{subject?.Name}</span></span></Checkbox>
                                         </Col>)}
                                     </Row>
                                 </Checkbox.Group>
