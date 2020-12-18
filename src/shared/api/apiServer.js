@@ -7,17 +7,15 @@ const TAGS_API = "service/api/posts/";
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     FRIENDS_API +
-      `friendsSuggestions/${userid}/${pageSize || 10}/${
-        page * pageSize - pageSize
-      }`
+    `friendsSuggestions/${userid}/${pageSize || 10}/${page * pageSize - pageSize
+    }`
   );
 };
 const fetchGroupSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     GROUPS_API +
-      `userGroupSuggestions/${userid}/${pageSize || 10}/${
-        page * pageSize - pageSize
-      }`
+    `userGroupSuggestions/${userid}/${pageSize || 10}/${page * pageSize - pageSize
+    }`
   );
 };
 const fetchProfile = (email) => {
@@ -101,9 +99,8 @@ const getUserCourses = (user_id, take, skip) => {
 const getAdminInvites = (userid, page, pageSize) => {
   return apiClient.get(
     PROFILE_API +
-      `getAdminInvitations/${userid}/${pageSize || 1}/${
-        page * pageSize - pageSize
-      }`
+    `getAdminInvitations/${userid}/${pageSize || 1}/${page * pageSize - pageSize
+    }`
   );
 };
 const acceptDeclinePrivateInvites = (groupid, memberid, requesttype) => {
@@ -147,6 +144,9 @@ const getAdminFriends = (user_id, groupid) => {
 const saveInvitations = (object) => {
   return apiClient.post(PROFILE_API + "adminInvitationsRequests", object);
 };
+const getMedia = (groupId, type, take, skip) => {
+  return apiClient.get(PROFILE_API + `getGroupPhotos/${groupId}/${take}/${skip}/${type}`);
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -186,4 +186,5 @@ export {
   saveOnboard,
   getAdminFriends,
   saveInvitations,
+  getMedia,
 };

@@ -1291,6 +1291,7 @@
   font-size: var(--f-14);
   font-weight: 500;
   margin-bottom: 3px !important;
+  text-transform: capitalize;
 }
 .custom-fields {
   margin-bottom: 16px !important;
@@ -1637,12 +1638,13 @@ textarea {
   padding: 24px;
   text-align: center;
   margin: auto;
-  min-height: 550px;
+  min-height: 530px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
+.intro1>img{max-width: 250px;}
 .onboard-process .steps-content .right {
   background-color: var(--white);
   border-radius: 0 0.8rem 0.8rem 0;
