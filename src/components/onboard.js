@@ -3,6 +3,8 @@ import { Steps, Button, message, Card, Avatar, Row, Col, Select, Checkbox, Form,
 import Logo from '../styles/images/blackbugs-logo.png';
 import Onboard1 from '../styles/images/onboard1.svg';
 import Onboard2 from '../styles/images/onboard2.svg';
+import Onboard3 from '../styles/images/onboard3.svg';
+
 import { fetchCourseSuggestions, fetchInerests, getBranchSubjects, getCollegeBranches, getColleges, joinGroup as JoinGroup, saveOnboard } from '../shared/api/apiServer';
 import notify from '../shared/components/notification';
 import connectStateProps from '../shared/stateConnect';
@@ -242,7 +244,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <h1> Welcome to Blackbuck</h1>
                                 <p>To bring premier and practical formal education closer to students and professionals.</p>
                                 <div className="intro-image text-center">
-                                    <img src={Onboard2} alt="blackbuck" width="200px" />
+                                    <img src={Onboard3} alt="blackbuck" width="200px" />
                                 </div>
                             </div>
 
@@ -256,8 +258,8 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                             <div className="intro4">
                                 <Checkbox.Group style={{ width: '100%' }} onChange={onInterestSelection}>
                                     <Row gutter={8}>
-                                        {interests.map((subject, indx) => <Col span={12}>
-                                            <Checkbox key={indx} className="intro-check" value={subject}><span>{subject?.Name}</span></Checkbox>
+                                        {interests.map((subject, indx) => <Col xs={12} md={8} lg={8}>
+                                            <Checkbox key={indx} className="intro-check" value={subject}><span className="intcard"><img src={Onboard1} width='50px'/><span className="overflow-text ">{subject?.Name}</span></span></Checkbox>
                                         </Col>)}
                                     </Row>
                                 </Checkbox.Group>
