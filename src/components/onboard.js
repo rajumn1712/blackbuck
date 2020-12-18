@@ -19,6 +19,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
     const [subjects, setSubjects] = useState([]);
     const [groupSuggestions, setGroupSuggetions] = useState([]);
     const [loaders, setLoaders] = useState({ colleges: false, branches: false, subjects: false, mainLoader: true });
+    const [eleRef, setEleRef] = useState(null);
     const [initialValues, setInitialValues] = useState({
         "UserDetails": {
             "UserId": profile?.Id,
@@ -267,10 +268,10 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                             </div>
                             {loaders.mainLoader && <Loader className="loader-middle" />}
                             <div className="intro4">
-                                <Checkbox.Group style={{ width: '100%' }} onChange={onInterestSelection}>
+                                <Checkbox.Group style={{ width: '100%' }} onChange={onInterestSelection} >
                                     <Row gutter={8}>
                                         {interests.map((subject, indx) => <Col xs={12} md={8} lg={8}>
-                                            <Checkbox key={indx} className="intro-check"><span className="intcard"><img src={Onboard1} width='50px' /><span className="overflow-text ">{subject?.Name}</span></span></Checkbox>
+                                            <Checkbox value={subject} key={indx} className="intro-check"><span className="intcard"><img src={subject.Image} width='50px' /><span className="overflow-text ">{subject?.Name}</span></span></Checkbox>
                                         </Col>)}
                                     </Row>
                                 </Checkbox.Group>
@@ -278,9 +279,9 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                         </Col>
                     </Row>
                     <div className="steps-action">
-                        <Button className="backbtn" onClick={() => prev()}>
+                        {/* <Button className="backbtn" onClick={() => prev()}>
                             Back
-                        </Button>
+                        </Button> */}
                         {/* <Button type="primary" onClick={() => { finishSetup() }}>
                             Finish
                         </Button> */}
@@ -311,8 +312,8 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <h2>Want to join in Groups?</h2>
                             </div>
                             <div className="intro3">
-                                <Link className="more-frnd-btn left"><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" ><span className="icon right-arrow mr-0"></span></Link>
-                                <OwlCarousel autoWidth={true} dots={false} animateOut={true} animateIn={true}>
+                                <Link onClick={()=>eleRef.prev()} className="more-frnd-btn left"><span className="icon left-arrow mr-0"></span></Link><Link onClick={()=>eleRef.next()} className="more-frnd-btn" ><span className="icon right-arrow mr-0"></span></Link>
+                                <OwlCarousel ref={(ref)=>setEleRef(ref)} autoWidth={true} items={3} key={`groupcarousel_${groupSuggestions.length}`}>
                                     {groupSuggestions.map((grpItem, idx) => <Card key={idx} className="carousel-card"
                                         cover={<img alt="example" src={grpItem.image} />}
                                     >
@@ -330,9 +331,9 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                         </Col>
                     </Row>
                     <div className="steps-action">
-                        <Button className="backbtn" onClick={() => prev()}>
+                        {/* <Button className="backbtn" onClick={() => prev()}>
                             Back
-                        </Button>
+                        </Button> */}
                         <Button type="primary" onClick={() => { finishSetup() }}>
                             Finish
                         </Button>
