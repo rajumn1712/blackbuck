@@ -159,6 +159,7 @@
 .profile-card .ant-card-meta-description {
   color: var(--textsecondary);
   font-size: 12px;
+
 }
 .profile-card .ant-card-actions {
   width: 100%;
@@ -425,6 +426,7 @@
 }
 .profile-card .ant-card-body {
   padding: 16px 12px !important;
+  max-width: 100%;
 }
 .custom-popup .ant-modal-close {
   display: none !important;
