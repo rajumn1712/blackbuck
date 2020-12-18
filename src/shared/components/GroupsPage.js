@@ -18,11 +18,11 @@ const ownerActions = [
     icons: "post-icons edit-icon",
     subTitle: "Edit Group",
   },
-  {
-    action: "Delete",
-    icons: "post-icons delete-icon",
-    subTitle: "Delete Group",
-  },
+//   {
+//     action: "Delete",
+//     icons: "post-icons delete-icon",
+//     subTitle: "Delete Group",
+//   },
 ];
 class GroupsPage extends Component {
   state = {
