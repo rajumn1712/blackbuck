@@ -159,7 +159,9 @@
 .profile-card .ant-card-meta-description {
   color: var(--textsecondary);
   font-size: 12px;
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .profile-card .ant-card-actions {
   width: 100%;

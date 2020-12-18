@@ -53,7 +53,7 @@ class Identity extends Component {
                   <span className="premium-icon c-default"></span>
                 </div>
               }
-              description={<span className="overflow-text"><Tooltip title={homeInfo?.BranchName} placement={'bottom'}>{homeInfo?.BranchName}</Tooltip></span>}
+              description={<Tooltip title={homeInfo?.BranchName} placement={'bottom'}>{homeInfo?.BranchName}</Tooltip>}
             />
           </Link>
         </Card>
