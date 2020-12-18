@@ -46,7 +46,7 @@ class FriendRequests extends Component {
       UserId: this.props?.profile?.Id,
       Firstname: this.props?.profile?.FirstName,
       Lastname: this.props?.profile?.LastName,
-      Image: this.props?.profile?.Image,
+      Image: this.props?.profile?.ProfilePic,
       Email: this.props?.profile?.Email,
       Type: "accept",
     };
