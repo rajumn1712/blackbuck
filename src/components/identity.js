@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Avatar, Menu } from "antd";
+import { Card, Avatar, Menu, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { profileSuccess } from "../reducers/auth";
 import defaultUser from "../styles/images/defaultuser.jpg";
@@ -53,7 +53,7 @@ class Identity extends Component {
                   <span className="premium-icon c-default"></span>
                 </div>
               }
-              description="Groups"
+              description={<span className="overflow-text"><Tooltip title={homeInfo?.BranchName} placement={'bottom'}>{homeInfo?.BranchName}</Tooltip></span>}
             />
           </Link>
         </Card>
