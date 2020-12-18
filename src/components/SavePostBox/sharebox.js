@@ -354,6 +354,7 @@ class ShareBox extends Component {
                     <span className="sharebox-icons docs-upload"></span>
                     <p className="ant-upload-text mt-8 mb-0">Upload Documents</p>
                 </Dragger>
+                {this.state.fileUploading && <Loader className="loader-top-middle" />}
                 <div className="docs mb-16">
                     <List
                         itemLayout="horizontal"
