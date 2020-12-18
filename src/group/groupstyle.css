@@ -243,6 +243,7 @@
         bottom: -8px;
     }
 }
+.left-menu.visible-icon{background-position: -464px -254px;}
 .multi-select.custom-fields .ant-select-selector .ant-select-selection-item{line-height: 24px !important;border-radius: 0.25rem;}
 .ant-select-dropdown .ant-list-item .ant-list-item-meta-content{margin: auto;}
 .multi-select .ant-select-selector{overflow: overlay;}
