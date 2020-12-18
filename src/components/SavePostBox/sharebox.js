@@ -11,10 +11,8 @@ import { savePost } from '../../shared/api/postsApi';
 import Loader from '../../common/loader';
 import { uuidv4 } from '../../utils';
 import notify from '../../shared/components/notification';
-import defaultUser from '../../styles/images/defaultuser.jpg';
 const { Dragger } = Upload;
 const { TextArea } = Input;
-
 const { Meta } = Card;
 const postsmenu =
     [
@@ -143,7 +141,7 @@ class ShareBox extends Component {
             }
             if (status === 'done') {
                 if (this.postObject.Type == "Docs") {
-                    const avatar = info.file?.name ? info.file.name.substr(info.file.name.lastIndexOf(".")) : "word";
+                    const avatar = info.file?.name ? info.file.name.substr(info.file.name.lastIndexOf(".")+1) : "word";
                     let response = { title: info.file.name, avatar, url: info.file.response[0], fileSize: info.file.size }
                     this.postObject.ImageUrl = this.postObject.ImageUrl ? this.postObject.ImageUrl.concat(response) : [response];
                     this.setState({ ...this.state, uploadSources: this.state.uploadSources ? this.state.uploadSources.concat(response) : [response] })
@@ -356,7 +354,8 @@ class ShareBox extends Component {
                         renderItem={(item, indx) => (
                             <List.Item className="upload-preview">
                                 <List.Item.Meta
-                                    avatar={item.avatar}
+                                avatar={[<span className={`doc-icons ${item.avatar}`}></span>]}
+                                    // avatar={item.avatar}
                                     title={item.title}
                                     description={<div className="file-size f-12">{item.fileSize}</div>}
                                 />
@@ -426,7 +425,7 @@ class ShareBox extends Component {
         );
         const title = <div className="d-flex justify-content-between addpost-user">
             <Meta
-                avatar={<Avatar src={this.props.profile?.ProfilePic || defaultUser} />}
+                avatar={<Avatar src={this.props.profile?.ProfilePic} />}
                 title={<h4 className="mb-0">{this.props.profile?.FirstName}</h4>}
                 description={<div className="mb-0"><Dropdown overlay={menu} trigger={['click']}>
                     <div className="post-privacy" style={{ color: '#9B9B9B', fontSize: 12 }} onClick={e => e.preventDefault()}>
@@ -535,4 +534,4 @@ class ShareBox extends Component {
 const mapStateToProps = ({ oidc }) => {
     return { profile: oidc.profile, user: oidc.user }
 }
-export default connect(mapStateToProps)(ShareBox);
+export default connect(mapStateToProps)(ShareBox);  

@@ -17,6 +17,7 @@ import Help from '../components/help';
 import { Col, Row } from "antd";
 import Settings from "./settings";
 import Notifications from "./notification";
+import Connection from '../connections';
 
 
 const onBoard = () => {
@@ -37,7 +38,7 @@ const Router = () => {
       <Route path="/support" component={Help} />
       <Route path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
-      <ProtectedRoute path="/friends" component={Friends} /> 
+      <ProtectedRoute path="/friends" component={Connection} /> 
       {/* <Route path="/contact" component={Contact} /> */}
       <Route path="/callback" component={Callback} />
       <ProtectedRoute path="/profile/:tabkey" component={Profile} />
