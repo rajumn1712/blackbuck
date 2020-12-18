@@ -14,7 +14,7 @@ const data = {
     "Public": {
         title: 'Public',
         description: "Anyone can see who's in the group and what they post.",
-        img: 'left-menu public-icon',
+        img: 'icons public-icon m-0',
     },
 
 
