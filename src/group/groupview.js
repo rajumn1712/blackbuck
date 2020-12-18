@@ -378,7 +378,7 @@ class Group extends Component {
                                 <Row gutter={16}>
 
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <GroupAbout />
+                                        <GroupAbout  aboutData={groupData}/>
                                     </Col>
                                 </Row>
                             </TabPane>
