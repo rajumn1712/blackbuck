@@ -7,6 +7,8 @@ import '../../App.css';
 import moment from "moment";
 import TextArea from 'antd/lib/input/TextArea';
 import user from '../../styles/images/user.jpg';
+import { getMembers } from '../api/apiServer';
+import defaultUser from '../../styles/images/defaultuser.jpg';
 const { Option } = Select;
 const joingroup = <div className="join-grp-title">John Doe <span className="join-grp-txt">has Created a group name is</span> Mech Mantra</div>
 const data = {
@@ -50,19 +52,22 @@ const data = {
 class GroupAbout extends Component {
     state = {
         aboutData: this.props.aboutData,
-        users: [
-            { image: user, id: 1, initial: '', colorbc: '' },
-            { image: user, id: 2, initial: '', colorbc: '' },
-            { image: user, id: 3, initial: '', colorbc: '' },
-            { image: '', id: 4, initial: 'NM', colorbc: '#f56a00' },
-            { image: '', id: 5, initial: 'NM', colorbc: '#f56a00' },
-            { image: '', id: 6, initial: 'NM', colorbc: '#f56a00' },
-            { image: '', id: 7, initial: 'NM', colorbc: '#f56a00' }
-        ]
+        AdminUsers: this.props.aboutData.AdminUsers,
+        Members: [],
+        users: [],
+        size: 5
 
     }
-    componetDidMount() {
+    componentDidMount() {
+        getMembers(this.props.aboutData.GroupId, this.props.aboutData.Members, 0).then(res => {
+            this.setState({ ...this.state, Members: res.data })
 
+        });
+    }
+    showMore = () => {
+        let { size } = this.state;
+        size = size + 5;
+        this.setState({ ...this.state, size })
     }
     location = (location, type) => {
         return {
@@ -73,14 +78,14 @@ class GroupAbout extends Component {
     render() {
         const { user } = store.getState().oidc;
         const grouppost = { ...this.state };
-        const { aboutData } = this.state;
+        const { aboutData, Members, AdminUsers, size } = this.state;
         return (
             <div className="custom-card group-member ">
                 <Card title="About This Group" bordered={false}>
                     <div>
                         {aboutData.Description && <p>{aboutData.Description}</p>}
                         <div>
-                           {(aboutData.Type=='Private'||aboutData.Type=='Public') &&  <List
+                            <List
                                 itemLayout="horizontal"
                                 dataSource={[data[aboutData.Type]]}
                                 renderItem={item => (
@@ -93,7 +98,6 @@ class GroupAbout extends Component {
                                     </List.Item>
                                 )}
                             />
-                                }
                             {aboutData.Hide && <List
                                 itemLayout="horizontal"
                                 dataSource={[data[aboutData.Hide]]}
@@ -170,39 +174,39 @@ class GroupAbout extends Component {
                     />
                         </div>
                 </Card>  Please don't delete*/}
-                <Card title="Members" bordered={false} actions={[
-                    <Button type="primary" >See More</Button>
-                ]}>
+                <Card title="Members" bordered={false} actions={(size > 4 && size < Members?.length) ? [
+                    <Button type="primary" onClick={() => this.showMore()}>See More</Button>
+                ] : []}>
                     <div>
 
-                        <div className=" pb-16">
+                        {Members.length > 0 && <div className=" pb-16">
                             <Avatar.Group
                                 maxCount={4}
                                 size="large"
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
-                                {grouppost.users.map(user => {
-                                    return <Avatar src={user.image} key={user.id} style={{ backgroundColor: user.colorbc }}>
-                                        {user.image ? null : user.initial}
+                                {Members.slice(0, size).map((user, index) => {
+                                    return <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
                                     </Avatar>
                                 })}
                             </Avatar.Group>
-                            <p>Gunji, Poojanil and 13 other friends are members.</p>
+                            {Members?.length > 2 && <p>Gunji, Poojanil and 13 other friends are members.</p>}
                         </div>
-                        <div className="">
+                        }
+                        {AdminUsers?.length > 0 && <div className="">
                             <Avatar.Group
-                                maxCount={4}
+                                maxCount={size - 1}
                                 size="large"
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
-                                {grouppost.users.map(user => {
-                                    return <Avatar src={user.image} key={user.id} style={{ backgroundColor: user.colorbc }}>
+                                {AdminUsers?.map((user, index) => {
+                                    return <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
                                         {user.image ? null : user.initial}
                                     </Avatar>
                                 })}
                             </Avatar.Group>
                             <p>Admins</p>
-                        </div>
+                        </div>}
 
                     </div>
                 </Card>
