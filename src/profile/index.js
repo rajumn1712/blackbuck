@@ -34,6 +34,7 @@ import html2canvas from "html2canvas";
 import { store } from "../store";
 import ProfileDetail from "./profileDetail";
 import Loader from "../common/loader";
+import notify from "../shared/components/notification";
 const { Meta } = Card;
 const { TabPane } = Tabs;
 
@@ -71,11 +72,12 @@ class Profile extends Component {
         this.handleImageOk();
       }
       if (status === "done") {
-        message.success(
-          `${
+        notify({
+          description: `${
             this.state.isProfilePic ? "Profil picture" : "Cover picture"
-          } uploaded successfully.`
-        );
+          } uploaded successfully.`,
+          message: "Upload",
+        });
       } else if (status === "error") {
         message.error(`File upload failed.`);
       }

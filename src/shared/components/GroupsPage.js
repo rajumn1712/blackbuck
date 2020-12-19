@@ -18,11 +18,11 @@ const ownerActions = [
     icons: "post-icons edit-icon",
     subTitle: "Edit Group",
   },
-//   {
-//     action: "Delete",
-//     icons: "post-icons delete-icon",
-//     subTitle: "Delete Group",
-//   },
+  //   {
+  //     action: "Delete",
+  //     icons: "post-icons delete-icon",
+  //     subTitle: "Delete Group",
+  //   },
 ];
 class GroupsPage extends Component {
   state = {
@@ -53,7 +53,7 @@ class GroupsPage extends Component {
     ).then((res) => {
       if (res.ok) {
         let { Groups } = this.state;
-        Groups = Groups.concat(res.data);
+        Groups = res.data;
         this.setState({
           ...this.state,
           loading: false,
