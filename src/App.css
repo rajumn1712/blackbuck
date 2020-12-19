@@ -1822,10 +1822,10 @@ textarea {
 .settings-left .ant-card-body {
   padding: 6px 0;
 }
-.settings-card .ant-list-item-meta-title {
+.set-flex .ant-list-item-meta-title {
   width: 220px;
 }
-.settings-card .ant-list-item-meta-content {
+.set-flex .ant-list-item-meta-content {
   display: flex;
 }
 .carousel-card {
@@ -1919,7 +1919,8 @@ textarea {
   color: #9b9b9b !important;
 }
 .settings-card .ant-list-item-meta-description{width: 100%;}
-.settings-card .ant-list-item{align-items: unset;padding: 12px 12px 0;}
+.settings-card .ant-list-item{align-items: unset;padding: 12px;}
+.settings-card .ant-list-item-meta-title{margin-bottom: 0;}
 .settings-card .ant-card-body{padding: 0;}
 .settings-card{border-radius: 0.8rem !important;}
 .icons.securitylogin-icon{background-position: -700px -254px;}

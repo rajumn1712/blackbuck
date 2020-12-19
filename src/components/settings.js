@@ -35,6 +35,43 @@ const data = [
         description: '8834567896'
     },
 ];
+const data1 = [
+    {
+        title: 'Change password',
+        description: "It's a good idea to use a strong password that you're not using elsewhere"
+    },
+   
+];
+const Advanced = [
+    {
+        title: 'Encrypted notification emails',
+        description: ' Add extra security to notification emails from Facebook (only you can decrypt these emails)'
+    },
+    {
+        title: 'Recover external accounts',
+        description: 'Recover access to other sites with your Facebook account'
+    },
+    {
+        title: 'See recent emails from Facebook',
+        description: 'See a list of emails we sent you recently, including emails about security'
+    },
+   
+];
+const Posts = [
+    {
+        title: 'Who Can Follow Me',
+        description: 'Followers see your posts in News Feed'
+    },
+    {
+        title: 'Public Post Comments',
+        description: 'Recover access to other sites with your Facebook account'
+    },
+    {
+        title: 'Public Post Notifications',
+        description: 'See a list of emails we sent you recently, including emails about security'
+    },
+   
+];
 const tailLayout = {
     wrapperCol: { span: 16 },
 };
@@ -91,12 +128,12 @@ class Settings extends React.Component {
                                             <span>Public Posts</span>
                                         </Link>
                                     </Menu.Item>
-                                    <Menu.Item key="profile">
+                                    {/* <Menu.Item key="profile">
                                         <Link to="/profile/1">
                                             <span className="icons blocking-icon"></span>
                                             <span>Blocking</span>
                                         </Link>
-                                    </Menu.Item>
+                                    </Menu.Item> */}
                                     <Menu.Item key="profile ">
                                         <Link to="/profile/1">
                                             <span className="icons location-icon"></span>
@@ -114,20 +151,20 @@ class Settings extends React.Component {
                             </Card>
                         </Col>
                         <Col xs={24} sm={12} md={16} lg={18} xl={18} xxl={18}>
-                            <Card title="General Account Settings" className="settings-card mb-12">
+                            <Card title="General Account Settings" className="settings-card set-flex mb-12">
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={data}
                                     renderItem={item => (
                                         <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
                                             <List.Item.Meta
-                                                title={<h3>{item.title}</h3>}
+                                                title={<h3 className="mb-0">{item.title}</h3>}
                                                 description={<div><div>{item.description}</div>
-                                                    {/* <span className="d-flex pb-12">
+                                                     {/* <span className="d-flex pb-12">
                                                         <Input placeholder={item.description} />
                                                         <Button className="mx-8" htmlType="submit" >Cancel</Button>
                                                         <Button type="primary" htmlType="close">Save</Button>
-                                                        </span>   */}
+                                                        </span>    */}
                                                 </div>
                                                 }
                                             />
@@ -135,23 +172,102 @@ class Settings extends React.Component {
                                     )}
                                 />
                             </Card>
-                            <div><Title level={5}>Security and Login</Title></div>
-                            <Card title="Recommended" className="" >
+                             <Title className="ml-4" level={5}>Security and Login</Title>
+                            <Card title="Login" className="settings-card mb-12" >
                                 <List
                                     itemLayout="horizontal"
-                                    dataSource=""
+                                    dataSource={data1}
                                     renderItem={item => (
                                         <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
                                             <List.Item.Meta
-                                             avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                                title="Get alerts about unrecognized logins"
-                                                description="Improve the security of your account by getting alerts when someone tries logging in to your account from an unknown device or browser."
+                                                title={<h3 className="mb-0">{item.title}</h3>}
+                                                description={<div><div>{item.description}</div>
+                                                     {/* <span className="d-flex pb-12">
+                                                        <Input className="mr-8"/>
+                                                        <Input />
+                                                        <Button className="mx-8" htmlType="submit" >Cancel</Button>
+                                                        <Button type="primary" htmlType="close">Save</Button>
+                                                        </span>    */}
+                                                </div>
+                                                }
                                             />
                                         </List.Item>
                                     )}
                                 />
                             </Card>
-
+                            <Card title="Advanced" className="settings-card mb-12" >
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={Advanced}
+                                    renderItem={item => (
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                            <List.Item.Meta
+                                                title={<h3 className="mb-0">{item.title}</h3>}
+                                                description={<div><div>{item.description}</div>
+                                                     {/* <span className="d-flex pb-12">
+                                                        <Input />
+                                                        <Button className="mx-8" htmlType="submit" >Cancel</Button>
+                                                        <Button type="primary" htmlType="close">Save</Button>
+                                                        </span>    */}
+                                                </div>
+                                                }
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                            </Card>
+                            <Title className="ml-4" level={5}>Public Posts</Title>
+                            <Card title="Public Post Filters and Tools" className="settings-card set-flex mb-12" >
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={Posts}
+                                    renderItem={item => (
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                            <List.Item.Meta
+                                                title={<h3 className="mb-0">{item.title}</h3>}
+                                                description={<div><div>{item.description}</div>
+                                                        
+                                                </div>
+                                                }
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                            </Card>
+                            <Title className="ml-4" level={5}>Location</Title>
+                            <Card title="Location Settings" className="settings-card set-flex mb-12" >
+                                <List
+                                    itemLayout="horizontal"
+                                    renderItem={ 
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                            <List.Item.Meta
+                                                title={<h3 className="mb-0">Location History</h3>}
+                                                description={<div><div>Turn on Location History for your mobile devices?</div>
+                                                        
+                                                </div>
+                                                }
+                                            />
+                                        </List.Item>
+                                    }
+                                />
+                            </Card>
+                            <Title className="ml-4" level={5}>Notifications</Title>
+                            <Card title="Notifications Settings" className="settings-card set-flex mb-12" >
+                                <List
+                                    itemLayout="horizontal"
+                                    renderItem={ 
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                            <List.Item.Meta
+                                                title={<h3 className="mb-0">Location History</h3>}
+                                                description={<div><div>Turn on Location History for your mobile devices?</div>
+                                                        
+                                                </div>
+                                                }
+                                            />
+                                        </List.Item>
+                                    }
+                                />
+                            </Card>
 
                         </Col>
                     </Row>
