@@ -150,8 +150,8 @@ const saveInvitations = (object) => {
 const getMedia = (groupId, type, take, skip) => {
   return apiClient.get(PROFILE_API + `getGroupPhotos/${groupId}/${take}/${skip}/${type}`);
 };
-const getMembers = (groupId, take, skip) => {
-  return apiClient.get(PROFILE_API + `getGroupMembers/${groupId}/${take}/${skip}`);
+const getMembers = (groupId,userId, take, skip) => {
+  return apiClient.get(PROFILE_API + `getGroupMembers/${groupId}/${userId}/${take}/${skip}`);
 }
 export {
   getFriendSuggestions,

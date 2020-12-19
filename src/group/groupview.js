@@ -566,7 +566,7 @@ class Group extends Component {
               <TabPane tab="Media" key="2">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Media />
+                  <Media  groupData={groupData}/>
                   </Col>
                 </Row>
               </TabPane>

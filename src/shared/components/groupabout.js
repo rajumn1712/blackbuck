@@ -9,6 +9,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import user from '../../styles/images/user.jpg';
 import { getMembers } from '../api/apiServer';
 import defaultUser from '../../styles/images/defaultuser.jpg';
+import { connect } from 'react-redux';
 const { Option } = Select;
 const joingroup = <div className="join-grp-title">John Doe <span className="join-grp-txt">has Created a group name is</span> Mech Mantra</div>
 const data = {
@@ -55,12 +56,14 @@ class GroupAbout extends Component {
         AdminUsers: this.props.aboutData.AdminUsers,
         Members: [],
         users: [],
-        size: 5
+        size: 5,
+        MutualFriendsCount: 0,
+        mutualFriends: []
 
     }
     componentDidMount() {
-        getMembers(this.props.aboutData.GroupId, this.props.aboutData.Members, 0).then(res => {
-            this.setState({ ...this.state, Members: res.data })
+        getMembers(this.props.aboutData.GroupId, this.props.profile?.Id, this.props.aboutData.Members, 0).then(res => {
+            this.setState({ ...this.state, Members: res.data[0].Members, MutualFriendsCount: res.data[0].MutualFriendsCount, MutualFriends: res.data[0].MutualFriends })
 
         });
     }
@@ -78,14 +81,14 @@ class GroupAbout extends Component {
     render() {
         const { user } = store.getState().oidc;
         const grouppost = { ...this.state };
-        const { aboutData, Members, AdminUsers, size } = this.state;
+        const { aboutData, Members, AdminUsers, size, MutualFriendsCount, MutualFriends } = this.state;
         return (
             <div className="custom-card group-member ">
                 <Card title="About This Group" bordered={false}>
                     <div>
                         {aboutData.Description && <p>{aboutData.Description}</p>}
                         <div>
-                            <List
+                            {(aboutData.Type == 'Private' || aboutData.Type == 'Public') && <List
                                 itemLayout="horizontal"
                                 dataSource={[data[aboutData.Type]]}
                                 renderItem={item => (
@@ -97,7 +100,7 @@ class GroupAbout extends Component {
                                         />
                                     </List.Item>
                                 )}
-                            />
+                            />}
                             {aboutData.Hide && <List
                                 itemLayout="horizontal"
                                 dataSource={[data[aboutData.Hide]]}
@@ -174,7 +177,7 @@ class GroupAbout extends Component {
                     />
                         </div>
                 </Card>  Please don't delete*/}
-                <Card title="Members" bordered={false} actions={(size > 4 && size < Members?.length) ? [
+                {Members.length > 0 && <Card title="Members" bordered={false} actions={(size > 4 && size < Members?.length) ? [
                     <Button type="primary" onClick={() => this.showMore()}>See More</Button>
                 ] : []}>
                     <div>
@@ -190,7 +193,7 @@ class GroupAbout extends Component {
                                     </Avatar>
                                 })}
                             </Avatar.Group>
-                            {Members?.length > 2 && <p>Gunji, Poojanil and 13 other friends are members.</p>}
+                            {MutualFriends?.length > 1 && <p>{MutualFriends[0].FirstName}, {MutualFriends[1].FirstName} {MutualFriends?.length > 2 && `and other ${MutualFriendsCount - 2} friends`} are members.</p>}
                         </div>
                         }
                         {AdminUsers?.length > 0 && <div className="">
@@ -210,9 +213,13 @@ class GroupAbout extends Component {
 
                     </div>
                 </Card>
+                }
 
             </div>
         )
     }
 }
-export default GroupAbout;
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile }
+}
+export default connect(mapStateToProps)(GroupAbout);
