@@ -9,9 +9,11 @@ import { userManager } from "./auth";
 class CallbackPage extends React.Component {
     handleSuccess = async (user) => {
         const profileResponse = await fetchProfile(user.profile.email);
+        debugger
         if (profileResponse.ok) {
+            debugger
             this.props.updateProfile(profileResponse.data[0])
-            if (!profileResponse.data[0].IsOnBoardProcess) {
+            if (!profileResponse.data[0]?.IsOnBoardProcess) {
                 this.props.history.push("/student_onboard")
             } else { this.props.history.push("/") }
         } else {
