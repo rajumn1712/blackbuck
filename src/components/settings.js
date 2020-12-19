@@ -217,7 +217,7 @@ class Settings extends React.Component {
                                 />
                             </Card>
                             <Title className="ml-4" level={5}>Public Posts</Title>
-                            <Card title="Public Post Filters and Tools" className="settings-card set-flex mb-12" >
+                            <Card title="Public Post Filters and Tools" className="settings-card set-width set-flex mb-12" >
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={Posts}

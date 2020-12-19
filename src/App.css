@@ -1829,6 +1829,7 @@ textarea {
 .set-flex .ant-list-item-meta-title {
   width: 220px;
 }
+.set-width .ant-list-item-meta-title{width: 300px;}
 .set-flex .ant-list-item-meta-content {
   display: flex;
 }
