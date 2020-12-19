@@ -138,8 +138,8 @@ const editGroup = (group_id, userid, type) => {
 const fetchInerests = () => {
   return apiClient.get(FRIENDS_API + "getInterests");
 };
-const saveOnboard = (object) => {
-  return apiClient.post(FRIENDS_API + "saveUserInfo", object);
+const saveOnboard = (object, method) => {
+  return apiClient.post(FRIENDS_API + method || "saveUserInfo", object);
 };
 const getAdminFriends = (user_id, groupid) => {
   return apiClient.get(PROFILE_API + `getAdminFriends/${groupid}/${user_id}`);
@@ -150,7 +150,7 @@ const saveInvitations = (object) => {
 const getMedia = (groupId, type, take, skip) => {
   return apiClient.get(PROFILE_API + `getGroupPhotos/${groupId}/${take}/${skip}/${type}`);
 };
-const getMembers=(groupId,take,skip)=>{
+const getMembers = (groupId, take, skip) => {
   return apiClient.get(PROFILE_API + `getGroupMembers/${groupId}/${take}/${skip}`);
 }
 export {

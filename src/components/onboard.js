@@ -51,7 +51,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
             fetchInterests();
         } else if (current == 1) {
             if (interests.length > 0) {
-                await saveOnboard({ UserDetails: { ...initialValues.UserDetails }, Interests: [...initialValues.Interests], OnBoardStep: "2" });
+                await saveOnboard({ UserDetails: { ...initialValues.UserDetails }, Interests: [...initialValues.Interests], OnBoardStep: "2" }, "saveOnBoardInterests");
             }
             fetchGroupSuggestions();
         }
