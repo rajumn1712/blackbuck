@@ -42,6 +42,9 @@ const fetchFriendRequests = (user_id) => {
 const saveProfileImage = (user_id, type, obj) => {
   return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}/${type}`, obj);
 };
+const saveGroupImage = (group_id, type, obj) => {
+  return apiClient.post(PROFILE_API + `updateGroupPics/${group_id}/${type}`, obj);
+};
 const saveAboutMe = (obj) => {
   return apiClient.post(PROFILE_API + `saveAboutMe`, obj);
 };
@@ -160,6 +163,7 @@ export {
   acceptFrienRequest,
   fetchFriendRequests,
   saveProfileImage,
+  saveGroupImage,
   saveAboutMe,
   saveInternships,
   deleteinternship,
