@@ -3,9 +3,6 @@ import { Menu, Popover } from 'antd';
 import { FacebookIcon, LinkedinIcon, TwitterIcon, WhatsappIcon, FacebookShareButton, WhatsappShareButton, LinkedinShareButton, TwitterShareButton } from 'react-share';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 class ShareAction extends Component {
-    sharepost = (
-       
-    );
     render() {
         return (
             <Popover content={<Menu className="share-pop">
