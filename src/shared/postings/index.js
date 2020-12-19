@@ -345,7 +345,7 @@ class Postings extends Component {
          }
             actions={[<EmojiAction IsUserLikes={post.IsUserLikes} key="emoji" mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
             <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
-            <ShareAction key="share" />
+            <ShareAction key="share" url={`http://blackbuck.me/blackbuck.uat/post_view/${post.id}`} imgUrl={post.image} />
             ]}
          // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
          >
