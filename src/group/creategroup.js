@@ -11,6 +11,7 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { hasChanged, uuidv4 } from "../utils";
 import Loader from "../common/loader";
 import defaultCover from '../styles/images/defaultcover.png'
+import defaultguser from '../styles/images/default-cover.png';
 const { Option } = Select;
 
 class CreateGroup extends Component {
@@ -292,7 +293,7 @@ class CreateGroup extends Component {
                                                     <List.Item.Meta
                                                         avatar={<div className="img-container">          <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                             <Upload {...this.uploadProps}>
-                                                                <Avatar src={groupObject?.GroupImage || defaultUser} onClick={() => this.setState({ isProfilePic: true })} />
+                                                                <Avatar src={groupObject?.GroupImage || defaultguser} onClick={() => this.setState({ isProfilePic: true })} />
                                                                 <Tooltip placement="top" title="Change Photo">
                                                                     <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                                 </Tooltip>

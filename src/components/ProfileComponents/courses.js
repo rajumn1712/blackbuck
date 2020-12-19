@@ -22,7 +22,7 @@ class Courses extends Component {
   componentDidMount() {
     this.getCourseSuggestions();
   }
-  async getCourseSuggestions() {
+  async getCourseSuggestions(isDataRefreshed) {
     this.setState({ ...this.state, loading: true });
     const getcourses = await (this.props?.loadUserCourse
       ? getUserCourses
@@ -31,6 +31,10 @@ class Courses extends Component {
     courses = getcourses.data;
     if (getcourses.ok) {
       this.setState({ courses, loading: false });
+      if (isDataRefreshed) {
+        this.props.isDataRefreshed(isDataRefreshed);
+        this.props.isDataRefreshed(false);
+      }
     }
   }
 
@@ -76,7 +80,7 @@ class Courses extends Component {
       }
       this.setState({ ...this.state, data });
     } else {
-      this.getCourseSuggestions();
+      this.getCourseSuggestions(true);
     }
   }
 

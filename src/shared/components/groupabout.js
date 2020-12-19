@@ -14,14 +14,14 @@ const data = {
     "Public": {
         title: 'Public',
         description: "Anyone can see who's in the group and what they post.",
-        img: 'left-menu public-icon',
+        img: 'icons public-icon m-0',
     },
 
 
     "College": {
         title: 'Public',
         description: "Anyone can see who's in the group and what they post.",
-        img: 'left-menu public-icon',
+        img: 'icons public-icon m-0',
     },
 
 
@@ -80,7 +80,7 @@ class GroupAbout extends Component {
                     <div>
                         {aboutData.Description && <p>{aboutData.Description}</p>}
                         <div>
-                            <List
+                           {(aboutData.Type=='Private'||aboutData.Type=='Public') &&  <List
                                 itemLayout="horizontal"
                                 dataSource={[data[aboutData.Type]]}
                                 renderItem={item => (
@@ -93,6 +93,7 @@ class GroupAbout extends Component {
                                     </List.Item>
                                 )}
                             />
+                                }
                             {aboutData.Hide && <List
                                 itemLayout="horizontal"
                                 dataSource={[data[aboutData.Hide]]}

@@ -106,7 +106,7 @@ class Groups extends Component {
                     <Button type="primary" onClick={this.showModal}>Create a Group</Button>
                 ]} >
                      {/* {loading && <Loader className="loader-top-middle" />} */}
-                    <List
+                    <List loading={loading}
                         itemLayout="horizontal"
                         split={false}
                         dataSource={this.state.data}

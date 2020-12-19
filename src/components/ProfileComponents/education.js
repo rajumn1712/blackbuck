@@ -112,6 +112,7 @@ class Education extends Component {
           ? this.state.educationObj.EducationId
           : uuidv4(),
         Name: values.Name,
+        Degree: values.Degree,
         AcademicYear: values.AcademicYear,
         StartDate: values.AcademicYear[0]._d,
         EndDate: values.AcademicYear[1]._d,
@@ -315,140 +316,142 @@ class Education extends Component {
         >
           <div className="">
             {this.state.loading && <Loader className="loader-top-middle" />}
-            <Formik
-              enableReinitialize={true}
-              initialValues={initialValues}
-              innerRef={this.formRef}
-              validate={(values) => this.handleValidate(values)}
-            >
-              {({ values, setFieldValue }) => {
-                return (
-                  <Form layout="vertical">
-                    <Row gutter={16}>
-                      <Col xs={24} sm={24}>
-                        <Form.Item
-                          label="Education Type"
-                          name="Education Type"
-                          rules={[{ required: true }]}
-                          className="custom-fields custom-select"
-                        >
-                          <Select
-                            defaultValue=""
-                            name="EducationType"
-                            value={values.EducationType}
-                            onChange={(value) =>
-                              setFieldValue("EducationType", value)
-                            }
+            {visible && (
+              <Formik
+                enableReinitialize={true}
+                initialValues={initialValues}
+                innerRef={this.formRef}
+                validate={(values) => this.handleValidate(values)}
+              >
+                {({ values, setFieldValue }) => {
+                  return (
+                    <Form layout="vertical">
+                      <Row gutter={16}>
+                        <Col xs={24} sm={24}>
+                          <Form.Item
+                            label="Education Type"
+                            name="Education Type"
+                            rules={[{ required: true }]}
+                            className="custom-fields custom-select"
                           >
-                            <Option value="">Select Type</Option>
-                            {EducationTypeLu.map((item, index) => {
-                              return (
-                                <Option key={index} value={item}>
-                                  {item}
-                                </Option>
-                              );
-                            })}
-                          </Select>
-                          <span className="validateerror">
-                            <ErrorMessage name="EducationType" />
-                          </span>
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} sm={24}>
-                        <Form.Item
-                          label="College/University Name"
-                          name="College/University Name"
-                          rules={[{ required: true }]}
-                          className="custom-fields"
-                        >
-                          <Field
-                            className="ant-input"
-                            value={values.Name}
-                            name="Name"
-                          />
-                          <span className="validateerror">
-                            <ErrorMessage name="Name" />
-                          </span>
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} sm={24}>
-                        <Form.Item
-                          label="Degree"
-                          name="Degree"
-                          rules={[{ required: true }]}
-                          className="custom-fields"
-                        >
-                          <Field
-                            className="ant-input"
-                            value={values.Degree}
-                            name="Degree"
-                          />
-                          <span className="validateerror">
-                            <ErrorMessage name="Degree" />
-                          </span>
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} sm={24}>
-                        <Form.Item
-                          label="Academic Year"
-                          name="Academic Year"
-                          rules={[{ required: true }]}
-                          className="custom-fields education-date"
-                        >
-                          <Input.Group compact>
-                            <RangePicker
-                              disabledDate={this.disabledDate}
-                              name="AcademicYear"
-                              value={values.AcademicYear}
+                            <Select
+                              defaultValue=""
+                              name="EducationType"
+                              value={values.EducationType}
                               onChange={(value) =>
-                                setFieldValue("AcademicYear", value)
+                                setFieldValue("EducationType", value)
                               }
+                            >
+                              <Option value="">Select Type</Option>
+                              {EducationTypeLu.map((item, index) => {
+                                return (
+                                  <Option key={index} value={item}>
+                                    {item}
+                                  </Option>
+                                );
+                              })}
+                            </Select>
+                            <span className="validateerror">
+                              <ErrorMessage name="EducationType" />
+                            </span>
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24}>
+                          <Form.Item
+                            label="College/University Name"
+                            name="College/University Name"
+                            rules={[{ required: true }]}
+                            className="custom-fields"
+                          >
+                            <Field
+                              className="ant-input"
+                              value={values.Name}
+                              name="Name"
                             />
                             <span className="validateerror">
-                              <ErrorMessage name="AcademicYear" />
+                              <ErrorMessage name="Name" />
                             </span>
-                          </Input.Group>
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} sm={12}>
-                        <Form.Item
-                          label="Place of College/University"
-                          name="Place of COllege/University"
-                          rules={[{ required: true }]}
-                          className="custom-fields"
-                        >
-                          <Field
-                            className="ant-input"
-                            value={values.Location}
-                            name="Location"
-                          />
-                          <span className="validateerror">
-                            <ErrorMessage name="Location" />
-                          </span>
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} sm={12}>
-                        <Form.Item
-                          label="Marks Grade"
-                          name="Marks Grade"
-                          rules={[{ required: true }]}
-                          className="custom-fields"
-                        >
-                          <Field
-                            className="ant-input"
-                            value={values.MarksGrade}
-                            name="MarksGrade"
-                          />
-                          <span className="validateerror">
-                            <ErrorMessage name="MarksGrade" />
-                          </span>
-                        </Form.Item>
-                      </Col>
-                    </Row>
-                  </Form>
-                );
-              }}
-            </Formik>
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24}>
+                          <Form.Item
+                            label="Degree"
+                            name="Degree"
+                            rules={[{ required: true }]}
+                            className="custom-fields"
+                          >
+                            <Field
+                              className="ant-input"
+                              value={values.Degree}
+                              name="Degree"
+                            />
+                            <span className="validateerror">
+                              <ErrorMessage name="Degree" />
+                            </span>
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24}>
+                          <Form.Item
+                            label="Academic Year"
+                            name="Academic Year"
+                            rules={[{ required: true }]}
+                            className="custom-fields education-date"
+                          >
+                            <Input.Group compact>
+                              <RangePicker
+                                disabledDate={this.disabledDate}
+                                name="AcademicYear"
+                                value={values.AcademicYear}
+                                onChange={(value) =>
+                                  setFieldValue("AcademicYear", value)
+                                }
+                              />
+                              <span className="validateerror">
+                                <ErrorMessage name="AcademicYear" />
+                              </span>
+                            </Input.Group>
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12}>
+                          <Form.Item
+                            label="Place of College/University"
+                            name="Place of COllege/University"
+                            rules={[{ required: true }]}
+                            className="custom-fields"
+                          >
+                            <Field
+                              className="ant-input"
+                              value={values.Location}
+                              name="Location"
+                            />
+                            <span className="validateerror">
+                              <ErrorMessage name="Location" />
+                            </span>
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12}>
+                          <Form.Item
+                            label="Marks Grade"
+                            name="Marks Grade"
+                            rules={[{ required: true }]}
+                            className="custom-fields"
+                          >
+                            <Field
+                              className="ant-input"
+                              value={values.MarksGrade}
+                              name="MarksGrade"
+                            />
+                            <span className="validateerror">
+                              <ErrorMessage name="MarksGrade" />
+                            </span>
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                    </Form>
+                  );
+                }}
+              </Formik>
+            )}
             {/* <Dragger
               {...this.uploadProps}
               onChange={(info) => this.onChange(info)}

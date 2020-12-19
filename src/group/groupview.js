@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { profileSuccess } from '../reducers/auth';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
+import defaultguser from '../styles/images/default-cover.png';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import Loader from "../common/loader";
 import defaultCover from "../styles/images/defaultcover.png";
@@ -328,7 +329,7 @@ class Group extends Component {
                                             <List.Item.Meta
                                                 avatar={<div className="img-container"> <ImgCrop shape="round" beforeCrop={this.handleBeforUpload}>
                                                     <Upload {...this.uploadProps}>
-                                                        <Avatar src={groupData?.GroupImage || defaultUser} />
+                                                        <Avatar src={groupData?.GroupImage || defaultguser} />
                                                         <Tooltip placement="top" title="Change Photo">
                                                             <a className="img-camera" onClick={() => this.setState({ isProfilePic: true })}><span className="left-menu camera-icon" /> </a>
                                                         </Tooltip>
