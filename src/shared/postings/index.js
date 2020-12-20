@@ -103,7 +103,8 @@ class Postings extends Component {
       this.state.page,
       this.state.pageSize,
       this.props.postingsType,
-      this.props.groupData?.GroupId
+      this.props.groupData?.GroupId,
+      this.props.id
     );
     let { allPosts } = this.state;
     if (!isFromSave) {

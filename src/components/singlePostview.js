@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { Row, Col, Affix } from 'antd';
-import ShareBox from '../components/SavePostBox/sharebox';
 import Identity from '../components/identity';
-import Invite from '../shared/components/Invite';
-import Tags from '../components/ProfileComponents/tags';
 import Ads from '../components/ads';
-import FriendSuggestions from '../shared/components/friendSuggestion';
-import Groups from '../shared/components/Groups';
 import Postings from '../shared/postings';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import SavedPostsComponent from '../shared/postings/savedPosts';
-
 class SinglePostView extends Component {
     componentDidMount() {
     }
@@ -30,11 +21,13 @@ class SinglePostView extends Component {
                     </Col>
                     <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
                         <Postings
-                            postingsType="user"
+                            postingsType="single"
                             sharebox={false}
                             userId={this.props.match.params.userId}
                             key={this.props.match.params.userId}
                             postActions={false}
+                            id={this.props.match.params.id}
+                            
                         />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
