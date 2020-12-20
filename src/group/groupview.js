@@ -36,6 +36,7 @@ import {
   getAdminFriends,
   saveInvitations,
   cancelGroupRequest,
+  deleteUserGroup
 } from "../shared/api/apiServer";
 import { connect } from "react-redux";
 import { profileSuccess } from "../reducers/auth";
@@ -157,9 +158,8 @@ class Group extends Component {
     }
   };
   deleteGroup = async (group) => {
-    const joinResponse = await cancelGroupRequest(
+    const joinResponse = await deleteUserGroup(
       group.GroupId,
-      this.props?.profile?.Id
     );
     if (joinResponse.ok) {
       notify({
