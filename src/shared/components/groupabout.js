@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Divider, Row, Col, Form, Input, Select, List, Avatar } from 'antd'
+import { Button, Card, Divider, Row, Col, Form, Input, Select, List, Avatar, Tooltip } from 'antd'
 import { Link } from 'react-router-dom';
 import { store } from '../../store'
 import '../../index.css';
@@ -63,7 +63,7 @@ class GroupAbout extends Component {
     }
     componentDidMount() {
         getMembers(this.props.aboutData.GroupId, this.props.profile?.Id, this.props.aboutData.Members, 0).then(res => {
-            this.setState({ ...this.state, Members: res.data[0].Members, MutualFriendsCount: res.data[0].MutualFriendsCount, MutualFriends: res.data[0].MutualFriends })
+            this.setState({ ...this.state, Members: (res.data[0].Members.concat(this.props.aboutData.AdminUsers)), MutualFriendsCount: res.data[0].MutualFriendsCount, MutualFriends: res.data[0].MutualFriends })
 
         });
     }
@@ -189,8 +189,10 @@ class GroupAbout extends Component {
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
                                 {Members.slice(0, size).map((user, index) => {
-                                    return <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
-                                    </Avatar>
+                                    return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
+                                        <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
+                                        </Avatar>
+                                    </Tooltip>
                                 })}
                             </Avatar.Group>
                             {MutualFriends?.length > 1 && <p>{MutualFriends[0].FirstName}, {MutualFriends[1].FirstName} {MutualFriends?.length > 2 && `and other ${MutualFriendsCount - 2} friends`} are members.</p>}
@@ -203,9 +205,10 @@ class GroupAbout extends Component {
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
                                 {AdminUsers?.map((user, index) => {
-                                    return <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
-                                        {user.image ? null : user.initial}
-                                    </Avatar>
+                                    return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
+                                        <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
+                                        </Avatar>
+                                    </Tooltip>
                                 })}
                             </Avatar.Group>
                             <p>Admins</p>

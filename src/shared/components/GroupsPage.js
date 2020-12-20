@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import { Card, Avatar, Col, Row, Typography, Empty } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
+import { connect } from "react-redux";
 import connectStateProps from "../stateConnect";
-import { fetchUserGroups } from "../api/apiServer";
+import { fetchUserGroups, deleteUserGroup, cancelGroupRequest } from "../api/apiServer";
+import notify from '../../shared/components/notification';
 import CommonModal from "../../components/ProfileComponents/CommonModal";
 import CreateGroup from "../../group/creategroup";
 import SideAction from "../../shared/components/postings/Actions/SideActions";
 import defaultUser from "../../styles/images/defaultuser.jpg";
 import defaultguser from "../../styles/images/default-cover.png";
 import Loader from "../../common/loader";
+import { profileSuccess } from "../../reducers/auth";
 const { Meta } = Card;
 let GroupEditObj = {};
 const ownerActions = [
@@ -18,11 +21,11 @@ const ownerActions = [
     icons: "post-icons edit-icon",
     subTitle: "Edit Group",
   },
-  //   {
-  //     action: "Delete",
-  //     icons: "post-icons delete-icon",
-  //     subTitle: "Delete Group",
-  //   },
+  {
+    action: "Delete",
+    icons: "post-icons delete-icon",
+    subTitle: "Delete Group",
+  },
 ];
 class GroupsPage extends Component {
   state = {
@@ -104,12 +107,76 @@ class GroupsPage extends Component {
       visible: true,
     });
   };
+  deleteGroup = async (group) => {
+    const joinResponse = await deleteUserGroup(
+      group.id,
+    );
+    if (joinResponse.ok) {
+      notify({
+        message: "Delete group",
+        description: "Group deleted successfully",
+      });
+      this.props.profile.Groups =
+        this.props.profile.Groups >= 1 ? this.props.profile.Groups - 1 : 0;
+      this.props.upadateProfile(this.props.profile);
+      this.setState({
+        Groups: [],
+        page: 1,
+        pageSize: 20,
+        loading: false,
+        loadMore: true,
+        visible: false,
+      }, () => {
+        window.scroll(0, 0);
+        this.getGroups()
+      });
+    } else {
+      notify({
+        message: "Error",
+        description: "Something went wrong :)",
+        type: "error",
+      });
+    }
+  };
+  leaveGroup = async (group) => {
+    const joinResponse = await cancelGroupRequest(
+      group.id,
+      this.props?.profile?.Id
+    );
+    if (joinResponse.ok) {
+      notify({
+        message: "Leave group",
+        description: "Group left done successfully",
+      });
+      this.props.profile.Groups =
+        this.props.profile.Groups >= 1 ? this.props.profile.Groups - 1 : 0;
+      this.props.upadateProfile(this.props.profile);
+      this.setState({
+        Groups: [],
+        page: 1,
+        pageSize: 20,
+        loading: false,
+        loadMore: true,
+        visible: false,
+      }, () => {
+        window.scroll(0, 0);
+        this.getGroups()
+      });
+    } else {
+      notify({
+        message: "Error",
+        description: "Something went wrong :)",
+        type: "error",
+      });
+    }
+  };
   handleEvent = async (e, name, item) => {
     switch (name) {
       case "Edit":
         this.editGroup(item);
         break;
       case "Delete":
+        this.deleteGroup(item);
         break;
       default:
         break;
@@ -134,11 +201,11 @@ class GroupsPage extends Component {
                         src={group.image || defaultguser}
                       />
                     }
-                    actions={[
-                      <Link className="list-link f-14" to="/commingsoon">
+                    actions={!group.IsGroupAdmin ? [
+                      <Link className="list-link f-14" onClick={() => this.leaveGroup(group)}>
                         Leave Group
                       </Link>,
-                    ]}
+                    ] : ""}
                   >
                     <Meta
                       title={
@@ -193,7 +260,7 @@ class GroupsPage extends Component {
           title="Edit group"
           cancel={this.handleCancel}
           saved={this.saveGroup}
-          // isHideFooter={true}
+        // isHideFooter={true}
         >
           {visible && (
             <CreateGroup
@@ -208,4 +275,14 @@ class GroupsPage extends Component {
     );
   }
 }
-export default connectStateProps(GroupsPage);
+const mapStateToProps = ({ oidc }) => {
+  return { user: oidc.user, profile: oidc.profile };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    upadateProfile: (info) => {
+      dispatch(profileSuccess(info));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(GroupsPage);

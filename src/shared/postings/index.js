@@ -225,7 +225,8 @@ class Postings extends Component {
     }
   };
   editPost = (post) => {
-    this.sharebox.editPost(post);
+    this.sharebox.editPost(JSON.parse(JSON.stringify(post)));
+    //json added for deep copy
   };
   handleCancel = () => {
     this.setState({ postEditData: {} });
@@ -355,7 +356,7 @@ class Postings extends Component {
   };
   handleActions = async (event, type, post) => {
     event.stopPropagation();
-    type = type === "Whistles" ? "Whistles" : type;
+    type = type === "Whistles" ? "Whistiles" : type;
     type = type === "Love" ? "Loves" : type;
     const { Id, ProfilePic, FirstName, Email, LastName } = this.props.profile;
     const saveObj = {
@@ -856,7 +857,7 @@ class Postings extends Component {
                         <Spin />
                       ) : (
                           <div className="likes-counters">
-                            <h4>Whistiles</h4>{" "}
+                            <h4>Whistles</h4>{" "}
                             {this.state.postReactions?.Whistiles?.map(
                               (item, indx) => (
                                 <p key={indx}>{item.Firstname}</p>
