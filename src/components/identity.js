@@ -56,6 +56,9 @@ class Identity extends Component {
               description={<Tooltip title={homeInfo?.BranchName} placement={'bottom'}>{homeInfo?.BranchName}</Tooltip>}
             />
           </Link>
+          <Link to="/profile/1" className="fullprofilelink">
+              View Full Profile
+          </Link>
         </Card>
         <Menu
           className="menu-items profile-menu"

@@ -18,6 +18,7 @@ import { Col, Row } from "antd";
 import Settings from "./settings";
 import Notifications from "./notification";
 import Connection from '../connections';
+import SinglePostView from "./singlePostview";
 
 
 const onBoard = () => {
@@ -34,6 +35,7 @@ const onBoard = () => {
 const Router = () => {
   return (
     <Switch>
+      <Route path="/singlepostview" component={SinglePostView} />
       <Route path="/notifications" component={Notifications} />
       <Route path="/support" component={Help} />
       <Route path="/settings" component={Settings} />
