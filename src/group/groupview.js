@@ -66,6 +66,7 @@ class Group extends Component {
       GroupId: this.props?.match?.params.id,
       Invitations: [],
     },
+    tabkey: "1"
   };
   onSearch = (e) => {
     let keyword = e.target.value;
@@ -119,8 +120,7 @@ class Group extends Component {
       }
       if (status === "done") {
         message.success(
-          `${
-            this.state.isProfilePic ? "Profil picture" : "Cover picture"
+          `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
           } uploaded successfully.`
         );
       } else if (status === "error") {
@@ -369,6 +369,7 @@ class Group extends Component {
       friendsLu,
       loading,
       visibleEditgroup,
+      tabkey
     } = this.state;
     const friendsData = friendsLu
       .filter((item) => {
@@ -472,9 +473,9 @@ class Group extends Component {
                             </ImgCrop>{" "}
                           </div>
                         }
-                        // title={<a href="https://ant.design">{item.title}</a>}
+                      // title={<a href="https://ant.design">{item.title}</a>}
 
-                        // description={<div className="f-12">{item.Type}</div>}
+                      // description={<div className="f-12">{item.Type}</div>}
                       />
                       {/* {!groupData.IsMember && <div className="btn-position"><span className="text-center mt-8 mr-16"><span className="f-20 fw-400">{item.Members}</span> Members</span>
                                                 <Button type="primary" onClick={() => this.joinGroup(item)}>Invite</Button>
@@ -538,6 +539,7 @@ class Group extends Component {
               defaultActiveKey="1"
               className="profile-tabs"
               tabBarExtraContent={operations}
+              onChange={(e) => this.setState({ ...this.state, tabkey: e })}
             >
               <TabPane tab="About" key="3">
                 <Row gutter={16}>
@@ -552,7 +554,7 @@ class Group extends Component {
                     <PrivateInvite />
                   </Col>
                   <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                    {groupData?.GroupId && (
+                    {groupData?.GroupId && tabkey == "1" && (
                       <Postings
                         sharebox={true}
                         friendsSuggestions={false}
@@ -566,7 +568,7 @@ class Group extends Component {
               <TabPane tab="Media" key="2">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <Media  groupData={groupData}/>
+                    <Media groupData={groupData} />
                   </Col>
                 </Row>
               </TabPane>

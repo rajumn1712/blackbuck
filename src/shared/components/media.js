@@ -74,7 +74,7 @@ class Media extends Component {
                                             return <Col span={6}><Card key={indx}
                                                 hoverable
                                                 cover={<div className="video-post" >
-                                                    <video width="100%" onClick={() => this.openFullview(item, 'Video')} >
+                                                    <video width="100%" onClick={() => this.openFullview(item, 'Video')} controls>
                                                         <source src={item.ImageUrl} />
                                                     </video>
                                                 </div>}
