@@ -636,7 +636,7 @@ class Postings extends Component {
                           <Spin />
                         ) : (
                             <div className="likes-counters">
-                              <h4>Whistiles</h4>{" "}
+                              <h4>Whistles</h4>{" "}
                               {this.state.postReactions?.Whistiles?.map(
                                 (item, indx) => (
                                   <p key={indx}>{item.Firstname}</p>

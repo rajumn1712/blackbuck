@@ -237,7 +237,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} className="custom-fields multi-select">
-                                        <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one subject" }]}>
+                                        <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one course" }]}>
                                             <Select loading={loaders.subjects} mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" onChange={onSubjectsSelection} filterOption={(input, option) =>
                                                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                             }>

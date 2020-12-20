@@ -49,7 +49,7 @@ class Invite extends Component {
                                 <Avatar src={this.props?.profile?.ProfilePic}></Avatar>
                                 <Avatar src={invitations[0]?.Image} />
                             </Avatar.Group>
-                            <p><span>{invitations[0]?.InviterName}</span> was invited you to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
+                            <p><span>{invitations[0]?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
                             <div className="invite-btn">
                                 <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitations[0])}>Accept</Button>
                                 <Button type="danger" onClick={() => this.acceptInvite('decline', invitations[0])}>Decline</Button>

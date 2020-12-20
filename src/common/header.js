@@ -165,11 +165,11 @@ class HeaderComponent extends React.Component {
                             <Link to="/" className="logo-brand">
                                 <img src={Logo} alt="Blackbuck" width="55px" />
                             </Link>
-                            <Search className="header-searchbar" placeholder="Search" onSearch={onSearch} />
+                            {this.props?.profile?.IsOnBoardProcess && <Search className="header-searchbar" placeholder="Search" onSearch={onSearch} />}
                         </div>
                     </Col>
                     <Col span={8} justify="center">
-                        <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
+                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
                             <Menu.Item key="home">
                                 <Tooltip title="Home" placement="bottom">
                                     <Link to="/"><span className="icons home-icon"></span></Link>
@@ -190,16 +190,16 @@ class HeaderComponent extends React.Component {
                                     <Link to="/commingsoon"><span className="icons lms-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
-                        </Menu>
+                        </Menu>}
                     </Col>
                     <Col span={8} >
                         <Menu className="menu-items text-right right-menu" mode="horizontal">
-                            <Menu.Item key="">
+                            {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                                 <Tooltip title="Messages">
                                     <Link onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
                                 </Tooltip>
-                            </Menu.Item>
-                            <Menu.Item key="">
+                            </Menu.Item>}
+                            {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                                 <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
                                     <Tooltip title="Notifications">
                                         <Link to="/about">
@@ -209,7 +209,7 @@ class HeaderComponent extends React.Component {
                                         </Link>
                                     </Tooltip>
                                 </Dropdown>
-                            </Menu.Item>
+                            </Menu.Item>}
                             <Menu.Item key="" >
                                 <Dropdown overlay={this.menu} trigger={['click']} >
                                     <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
