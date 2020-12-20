@@ -35,10 +35,10 @@ const onBoard = () => {
 const Router = () => {
   return (
     <Switch>
-      <Route path="/singlepostview" component={SinglePostView} />
-      <Route path="/notifications" component={Notifications} />
-      <Route path="/support" component={Help} />
-      <Route path="/settings" component={Settings} />
+      <ProtectedRoute path="/post/:id" component={SinglePostView} />
+      <ProtectedRoute path="/notifications" component={Notifications} />
+      <ProtectedRoute path="/support" component={Help} />
+      <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
       <ProtectedRoute path="/friends" component={Connection} /> 
       <Route path="/callback" component={Callback} />
