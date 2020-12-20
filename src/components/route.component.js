@@ -18,8 +18,6 @@ import { Col, Row } from "antd";
 import Settings from "./settings";
 import Notifications from "./notification";
 import Connection from '../connections';
-
-
 const onBoard = () => {
   return (
     <div className="main">
@@ -34,18 +32,16 @@ const onBoard = () => {
 const Router = () => {
   return (
     <Switch>
-      <Route path="/notifications" component={Notifications} />
-      <Route path="/support" component={Help} />
-      <Route path="/settings" component={Settings} />
+      <ProtectedRoute path="/notifications" component={Notifications} />
+      <ProtectedRoute path="/support" component={Help} />
+      <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
       <ProtectedRoute path="/friends" component={Connection} /> 
-      {/* <Route path="/contact" component={Contact} /> */}
       <Route path="/callback" component={Callback} />
       <ProtectedRoute path="/profile/:tabkey" component={Profile} />
       <ProtectedRoute path="/profileview/:userId" component={ProfileView} />
       <Route path="/group" component={Group} />
       <ProtectedRoute path="/groupview/:id" component={GroupView} />
-      {/* <Route path="/creategroup" component={CreateGroup} /> */}
       <Route path="/commingsoon" component={CommingSoon} />
       <ProtectedRoute path="/newgroup/:id" component={CreateGroup} />
       <ProtectedRoute path="" component={Home} />
