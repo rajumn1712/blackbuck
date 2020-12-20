@@ -1,5 +1,5 @@
 import { Card, Carousel, Col, Modal, Row, Tag, Typography, Avatar, Tooltip, Spin } from 'antd';
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import CommentAction from '../shared/components/postings/Actions/CommentAction';
 import EmojiAction from '../shared/components/postings/Actions/EmojiActions';
 import ShareAction from '../shared/components/postings/Actions/ShareActions';
@@ -17,6 +17,7 @@ import notify from '../shared/components/notification';
 import { uuidv4 } from "../utils";
 const { Meta } = Card;
 class MediaPreview extends Component {
+    slider = createRef(null);
     state = {
         post: {},
         visible: false,
@@ -27,6 +28,7 @@ class MediaPreview extends Component {
         commentsection: false,
         reactionsLoading: false,
         postReactions: [],
+        index: 0
     }
     componentDidMount() {
         this.props.onRef(this);
@@ -36,7 +38,7 @@ class MediaPreview extends Component {
             let { post } = this.state;
             post = res.data[0];
             post.image = post.image ? (Array.isArray(post.image) ? post.image : [post.image]) : post.image;
-            this.setState({ post, visible: true }, () => {
+            this.setState({ post, visible: true, index: 0 }, () => {
                 if (this.state.post.commentsCount > 0 && this.state.commentselection.length == 0) {
                     this.showComment(this.state.post)
                 }
@@ -53,7 +55,8 @@ class MediaPreview extends Component {
             comments: [],
             commentsection: false,
             reactionsLoading: false,
-            postReactions: []
+            postReactions: [],
+            index: 0
         });
     }
     fetchPostReactions = async (id) => {
@@ -201,10 +204,22 @@ class MediaPreview extends Component {
             notify({ message: "Error", description: "Something went wrong :)", type: "error" });
         }
     }
+    goToPrevSlide = () => {
+        let { index } = this.state;
+        this.setState({ ...this.state, index: index - 1 }, () => {
+            this.slider.current.prev();
+        });
+    }
+    goToNextSlide = () => {
+        let { index } = this.state;
+        this.setState({ ...this.state, index: index + 1 }, () => {
+            this.slider.current.next();
+        });
+    }
 
     render() {
 
-        const { post, visible } = this.state;
+        const { post, visible, index } = this.state;
 
         const { Paragraph } = Typography;
 
@@ -216,6 +231,19 @@ class MediaPreview extends Component {
                     </div>
                 </Carousel>
                 }
+            </div>
+        )
+        const carouselData = (
+            <div className="preview-image">
+                {index !== 0 && <a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>}
+                <Carousel ref={this.slider}>
+                    {(post.type == 'Image' || post.type == 'Gif') && post.image?.map((image, index) => {
+                        return <div key={index}>
+                            <img src={image} />
+                        </div>
+                    })}
+                </Carousel>
+                { index !== post.image?.length - 1 && <a className="more-frnd-btn next" onClick={() => this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>}
             </div>
         )
 
@@ -232,7 +260,7 @@ class MediaPreview extends Component {
                 { visible && <div className="post-preview-box post-card comment-show">
                     <Row align="middle">
                         <Col xs={24} sm={16} md={16} lg={17} >
-                            {(post.type == 'Image' || post.type == 'Gif') && noCarousel}
+                            {(post.type == 'Image' || post.type == 'Gif') && post.image?.length > 1 ? carouselData : noCarousel}
                             {(post.type !== 'Image' && post.type !== 'Gif') && <div>{this.renderPostImages(post.image, post.type)}</div>}
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={7}>
@@ -243,7 +271,7 @@ class MediaPreview extends Component {
                                     }
                                     actions={[<EmojiAction key="emoji" IsUserLikes={post.IsUserLikes} mystate={post} clickedEvent={(event, name) => this.handleActions(event, name, post)} />,
                                     <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
-                                    <ShareAction key="share" />
+                                    <ShareAction post={post} key="share" url={`http://blackbuck.me/blackbuck.uat/post_view/${post.id}`} imgUrl={post.image} />
                                     ]}
                                 >
                                     <div className="">

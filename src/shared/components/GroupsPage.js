@@ -56,7 +56,7 @@ class GroupsPage extends Component {
     ).then((res) => {
       if (res.ok) {
         let { Groups } = this.state;
-        Groups = res.data;
+        Groups = Groups.concat(res.data);
         this.setState({
           ...this.state,
           loading: false,
