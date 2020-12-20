@@ -139,7 +139,7 @@ const fetchInerests = () => {
   return apiClient.get(FRIENDS_API + "getInterests");
 };
 const saveOnboard = (object, method) => {
-  return apiClient.post(FRIENDS_API + method || "saveUserInfo", object);
+  return apiClient.post(FRIENDS_API + (method ? method : "saveUserInfo"), object);
 };
 const getAdminFriends = (user_id, groupid) => {
   return apiClient.get(PROFILE_API + `getAdminFriends/${groupid}/${user_id}`);
