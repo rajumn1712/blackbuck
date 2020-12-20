@@ -225,7 +225,8 @@ class Postings extends Component {
     }
   };
   editPost = (post) => {
-    this.sharebox.editPost(post);
+    this.sharebox.editPost(JSON.parse(JSON.stringify(post)));
+    //json added for deep copy
   };
   handleCancel = () => {
     this.setState({ postEditData: {} });

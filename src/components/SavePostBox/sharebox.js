@@ -267,7 +267,6 @@ class ShareBox extends Component {
     }
     const response = await savePost(this.postObject, this.state.isEdit);
     if (response.ok) {
-      this.props.handleCancel();
       this.setState(
         {
           visible: false,
@@ -306,9 +305,6 @@ class ShareBox extends Component {
   };
   handleCancel = (e) => {
     this.clearUploaddata();
-    if (this.state.isEdit) {
-      this.props.handleCancel();
-    }
     this.setState({
       visible: false,
       isEdit: false,

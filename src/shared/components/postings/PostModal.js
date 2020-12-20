@@ -24,7 +24,7 @@ class PostCardModal extends Component {
     componentDidMount() { }
     componentWillReceiveProps(props) {
         props.postData.image = props.postData.image ? (Array.isArray(props.postData.image) ? props.postData.image : [props.postData.image]) : props.postData.image;
-        this.setState({ ...this.state, post: props.postData, visible: props.visible}, () => {
+        this.setState({ ...this.state, post: props.postData, visible: props.visible,index:0}, () => {
             if (this.state.post.commentsCount > 0 && this.state.commentselection.length == 0) {
                 this.showComment(this.state.post)
             }
@@ -40,7 +40,8 @@ class PostCardModal extends Component {
         commentsection: false,
         reactionsLoading: false,
         postReactions: [],
-        descriptionSelection: []
+        descriptionSelection: [],
+        index: 0
     }
     fetchPostReactions = async (id) => {
         this.setState({ ...this.state, reactionsLoading: true });
@@ -90,10 +91,14 @@ class PostCardModal extends Component {
         return result;
     }
     goToPrevSlide = () => {
+        let { index } = this.state;
+        this.setState({ ...this.state, index: index - 1 });
         this.slider.current.prev();
     }
 
     goToNextSlide = () => {
+        let { index } = this.state;
+        this.setState({ ...this.state, index: index + 1 });
         this.slider.current.next();
     }
     renderPostImages = (imageObj, type) => {
@@ -137,13 +142,13 @@ class PostCardModal extends Component {
 
     render() {
 
-        const { post } = this.state;
+        const { post,index } = this.state;
 
         const { Title, Paragraph } = Typography;
 
         const carouselData = (
             <div className="preview-image">
-                <a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>
+               {index!==0 && <a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>}
                 <Carousel ref={this.slider}>
                     {(post.type == 'Image' || post.type == 'Gif') && post.image?.map((image, index) => {
                         return <div key={index}>
@@ -151,7 +156,7 @@ class PostCardModal extends Component {
                         </div>
                     })}
                 </Carousel>
-                <a className="more-frnd-btn next" onClick={() => this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>
+              { index!==post.image?.length-1 &&  <a className="more-frnd-btn next" onClick={() => this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>}
             </div>
         )
 
