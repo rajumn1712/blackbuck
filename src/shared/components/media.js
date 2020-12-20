@@ -47,7 +47,7 @@ class Media extends Component {
             let { page, index } = this.state;
             page += 1;
             this.setState({ ...this.state, page, loading: true }, () => {
-                this.getMedia(this.props.groupData.GroupId, index == 1 ? 'Photos' : 'Video', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize);
+                this.getMedia(this.props.groupData.GroupId, index == 1 ? 'photos' : 'Video', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize);
             });
         }
     }
@@ -55,14 +55,23 @@ class Media extends Component {
         this.mediaPreview.openFullview(item, type)
     }
     componentDidMount() {
+        window.addEventListener("scroll", this.handleScroll);
         this.getMedia(this.props.groupData.GroupId, 'photos', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize);
     }
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+      }
     getMedia = (groupid, type, take, skip, index) => {
         this.setState({ ...this.state, loading: true });
         getMedia(groupid, type, take, skip).then(res => {
             let { Photos, Videos } = this.state;
             if (type == 'photos') {
-                Photos = res.data;
+                Photos = Photos.concat(res.data);
+                Photos.forEach(item => {
+                    if (Array.isArray(item.ImageUrl)) {
+                        item.ImageUrl = item.ImageUrl.slice(0, 1);
+                    }
+                });
                 this.setState({
                     ...this.state, Photos, tabkey: index,
                     loading: false,
@@ -70,7 +79,7 @@ class Media extends Component {
                 });
             }
             else {
-                Videos = res.data;
+                Videos = Videos.concat(res.data);
                 this.setState({
                     ...this.state, Videos, tabkey: index,
                     loading: false,
@@ -86,7 +95,7 @@ class Media extends Component {
                 <Card title="Media" bordered={false}
                 // extra={<div><a className="f-14 px-16" href="#">Create Album</a><a className="pl-8 f-14" href="#">Add Photos/Video</a></div>}
                 >
-                    <Tabs defaultActiveKey={tabkey} className=" media-tabs" onChange={(index) => this.getMedia(this.props.groupData.GroupId, index == 1 ? 'Photos' : 'Video', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize)}>
+                    <Tabs defaultActiveKey={tabkey} className=" media-tabs" onTabClick={(index) => index == tabkey ? this.setState({ ...this.state, Photos: [], Videos: [] }, () => { this.getMedia(this.props.groupData.GroupId, index == 1 ? 'photos' : 'Video', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize) }) : ''}>
                         <TabPane tab="Photos" key="1">
                             <div className="">
                                 <Row>
