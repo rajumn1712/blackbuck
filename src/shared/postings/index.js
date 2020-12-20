@@ -521,7 +521,7 @@ class Postings extends Component {
               key="comment"
               clickedEvent={() => this.showComment(post)}
             />,
-            <ShareAction key="share" />,
+            <ShareAction key="share" url={`http://blackbuck.me/blackbuck.uat/post_view/${post.id}`} imgUrl={post.image} />
           ]}
           // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
         >
