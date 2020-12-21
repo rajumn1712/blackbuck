@@ -28,6 +28,7 @@ class Interests extends Component {
     loadMore: true,
     loading: true,
     count: 0,
+    isEdit:false,
     saveObject: {
       UserId: this.props?.profile?.Id,
       Interests: [],
@@ -94,6 +95,7 @@ class Interests extends Component {
     this.setState(
       {
         visible: true,
+        isEdit:this.state.interests.length > 0 ?true:false,
         interestsLu: [],
         lstInterests: [],
         saveObject: {
@@ -123,7 +125,7 @@ class Interests extends Component {
         },
         () => {
           notify({
-            description: "Interests added successfully",
+            description: `Interests ${this.state.isEdit ? 'edited' : 'saved'} successfully`,
             message: "Interests",
           });
           this.props.callback(true);
@@ -191,7 +193,7 @@ class Interests extends Component {
         },
         () => {
           notify({
-            description: "Interest Deleted successfully",
+            description: "Interest deleted successfully",
             message: "Interests",
           });
         }
@@ -252,9 +254,9 @@ class Interests extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Tooltip title="Add">
+              <Tooltip title={interests.length > 0 ? 'Edit' : 'Add'}>
                 <Link onClick={this.showModal}>
-                  <span className="icons add" />
+                  <span className={`icons ${interests.length > 0 ? "edit" : "add"}`} />
                 </Link>
               </Tooltip>
             ) : null
@@ -288,10 +290,10 @@ class Interests extends Component {
         <CommonModal
           className="custom-popup modal-interest"
           visible={visible}
+          disable={lstInterests.length == 0}
           title="Interests"
           cancel={this.handleCancel}
           saved={this.handleOk}
-          destroyOnClose
         >
           <div>
             <div className="modal-search custom-fields">

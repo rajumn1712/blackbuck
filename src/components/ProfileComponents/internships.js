@@ -49,16 +49,15 @@ const ownerActions = [
 ];
 
 const { Option } = Select;
-const internshipsObj = {
-  InternshipId: "",
-  CompanyLogo: "",
-  uploadsources: [],
-};
 class Intership extends Component {
   formRef = createRef();
   state = {
     internships: this.props.internships,
-    internshipsObj: internshipsObj,
+    internshipsObj: {
+      InternshipId: "",
+      CompanyLogo: "",
+      uploadsources: [],
+    },
     initialValues: {
       CompanyName: "",
       ShortName: "",
@@ -107,13 +106,19 @@ class Intership extends Component {
         this.setState({ ...this.state, fileUploading: false });
       }
       if (status === "done") {
-        const { internshipsObj } = this.state;
+        let { internshipsObj } = this.state;
         internshipsObj.CompanyLogo = info.file.response[0];
-        this.setState({ internshipsObj: internshipsObj });
-        message.success(`${info.file.name} file uploaded successfully.`);
+        this.setState({ ...this.state,internshipsObj });
+        notify({
+          description: `Logo uploaded successfully.`,
+          message: "Upload",
+        });
         this.setState({ ...this.state, fileUploading: false });
       } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        notify({
+          description: `Logo upload failed.`,
+          message: "Upload",
+        });
         this.setState({ ...this.state, fileUploading: false });
       }
     },
@@ -132,9 +137,8 @@ class Intership extends Component {
         File: "",
         Size: "",
       };
-      let { internshipsObj } = {
-        ...this.state,
-      };
+      let { internshipsObj } = this.state
+      
       if (status === "done") {
         certificates.Avatar = info.file.name.split(".")[1];
         certificates.File = info.file.name;
@@ -147,12 +151,12 @@ class Intership extends Component {
           fileUpload: false,
         });
         notify({
-          description: `${info.file.name} file uploaded successfully.`,
+          description: `Certificate uploaded successfully.`,
           message: "Upload",
         });
       } else if (status === "error") {
         notify({
-          description: `${info.file.name} file upload failed.`,
+          description: `File upload failed.`,
           type: "error",
           message: "Upload",
         });
@@ -160,9 +164,9 @@ class Intership extends Component {
     },
   };
   deleteLogo = () => {
-    const internshipsObj = { ...this.state };
+    const internshipsObj = { ...this.state.internshipsObj };
     internshipsObj.CompanyLogo = "";
-    this.setState({ internshipsObj: internshipsObj });
+    this.setState({...this.state, internshipsObj: internshipsObj });
   };
   deleteFile = (key) => {
     const internship = { ...this.state.internshipsObj };
@@ -208,7 +212,9 @@ class Intership extends Component {
       const { CompanyName, ShortName, Location, Duration } = internship;
       internshipsObj.InternshipId = internship.InternshipId;
       internshipsObj.CompanyLogo = internship.CompanyLogo;
-      internshipsObj.uploadsources = [...internship.Certificate];
+      internshipsObj.uploadsources = internship.Certificate
+        ? [...internship.Certificate]
+        : [];
       Object.assign(initialValues, {
         CompanyName,
         ShortName,
@@ -261,12 +267,20 @@ class Intership extends Component {
       saveInternships(saveObj).then((res) => {
         this.setState(
           {
+            ...this.state,
             loading: false,
             visible: false,
+            internshipsObj: {
+              InternshipId: "",
+              CompanyLogo: "",
+              uploadsources: [],
+            },
           },
           () => {
             notify({
-              description: "Internship saved successfully",
+              description: `Internship ${
+                this.state.isEdit ? "edited" : "saved"
+              } successfully`,
               message: "Internship",
             });
             this.props.callback(true);

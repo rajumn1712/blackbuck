@@ -541,6 +541,7 @@ class ShareBox extends Component {
             {...this.uploadProps}
             onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
             showUploadList={false}
+            disabled={this.state.fileUploading || this.state.uploadSources.length > 0}
           >
             <span className="sharebox-icons gif-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Gif</p>
@@ -551,8 +552,10 @@ class ShareBox extends Component {
               <Image src={image} />
               <a
                 class="item-close"
-                onClick={() =>
+                onClick={() => {
+                  this.postObject.ImageUrl = [];
                   this.setState({ ...this.state, uploadSources: [] })
+                }
                 }
               >
                 <Tooltip title="Remove">
@@ -749,6 +752,7 @@ class ShareBox extends Component {
                 ref={this.saveInputRef}
                 type="text"
                 size="small"
+                maxLength="50"
                 style={{ width: 78 }}
                 value={inputValue}
                 onChange={this.handleInputChange}

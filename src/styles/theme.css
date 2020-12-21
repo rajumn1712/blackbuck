@@ -110,6 +110,9 @@
 .my-8{margin-top: 8px; margin-bottom: 8px;}
 .my-16{margin-top: 16px; margin-bottom: 16px;}
 
+/*--Color--*/
+.text-secondary{color: var(--textsecondary)}
+
 *{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 * { scrollbar-width: thin; scrollbar-color: var(--primary) var(--secondary);}
 *::-webkit-scrollbar { width: 8px;}

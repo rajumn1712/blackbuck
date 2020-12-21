@@ -195,7 +195,7 @@ class GroupAbout extends Component {
                                     </Tooltip>
                                 })}
                             </Avatar.Group>
-                            {MutualFriends?.length > 1 && <p>{MutualFriends[0].FirstName}, {MutualFriends[1].FirstName} {MutualFriends?.length > 2 && `and other ${MutualFriendsCount - 2} friends`} are members.</p>}
+                            {MutualFriends?.length > 1 && <p>{MutualFriends?.length <= 2 && 'Your friends'} {MutualFriends[0].Firstname}, {MutualFriends[1].Firstname} {MutualFriends?.length > 2 && `and other ${MutualFriendsCount - 2} friends `}  are members.</p>}
                         </div>
                         }
                         {AdminUsers?.length > 0 && <div className="">

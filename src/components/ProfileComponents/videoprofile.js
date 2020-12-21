@@ -37,6 +37,7 @@ class VideoProfile extends Component {
         this.setState({ ...this.state, fileUploading: false });
       }
       if (status === "done") {
+        this.setState({...this.state,inputValue:''})
         let { inputValue } = this.state;
         inputValue = info.file.response[0];
         notify({
@@ -86,8 +87,9 @@ class VideoProfile extends Component {
     if (response.ok) {
       this.setState(
         {
+          ...this.state,
           loading: false,
-          visible: false,
+          visible: false,inputValue:''
         },
         () => {
           notify({
@@ -107,7 +109,9 @@ class VideoProfile extends Component {
   };
   handleCancel = (e) => {
     this.setState({
+      ...this.state,
       visible: false,
+      inputValue:''
     });
   };
   render() {
