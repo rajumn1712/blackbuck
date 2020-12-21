@@ -158,31 +158,40 @@ class Postings extends Component {
     var videoVisibilityMonitor = monitorBuilder.build();
     videoVisibilityMonitor.start();
   }
-  titleAvatar = (user, date, isShareCard, mainUser) => {
+  titleAvatar = (user, date, isShareCard, mainUser, isGroup) => {
+    const _key = isShareCard ? "share" : (isGroup ? "group" : "normal")
+    const elements = {
+      share: <span className="overflow-text text-secondary"> <Link
+        to={
+          this.props?.profile.Id == user.UserId
+            ? "/profile/" + "1"
+            : "/profileview/" + user.UserId
+        }
+      ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> Shared <Link
+        to={"/profileview/" + mainUser.UserId}
+      ><span className="post-title">{mainUser.Firstname}</span></Link> Post </>} </span>,
+      group: <span className="overflow-text text-secondary"><Link
+        to={
+          this.props?.profile.Id == user?.UserId
+            ? "/profile/" + "1"
+            : "/profileview/" + user?.UserId
+        }
+      ><span className="post-title">{user?.Firstname}</span></Link>{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
+        to={"/groupview/" + mainUser?.GroupId}
+      ><span className="post-title">{mainUser?.Firstname}</span></Link></>}</span>,
+      normal: <span className="overflow-text text-secondary"> <Link
+        to={
+          this.props?.profile.Id == user.UserId
+            ? "/profile/" + "1"
+            : "/profileview/" + user.UserId
+        }
+      ><span className="post-title">{user.Firstname}</span></Link> </span>
+    }
     return (
-
       <Meta
         avatar={<Avatar src={user.Image || defaultUser} />}
         title={
-          // <span className="overflow-text text-secondary"> <Link
-          //   to={
-          //     this.props?.profile.Id == user.UserId
-          //       ? "/profile/" + "1"
-          //       : "/profileview/" + user.UserId
-          //   }
-          // ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> Shared <Link
-          //   to={"/profileview/" + mainUser.UserId}
-          // ><span className="post-title">{mainUser.Firstname}</span></Link> Post </>} </span>
-
-          <span className="overflow-text text-secondary"> <Link
-            to={
-              this.props?.profile.Id == user.UserId
-                ? "/profile/" + "1"
-                : "/profileview/" + user.UserId
-            }
-          ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> <span className="icon repost-icon"></span> <Link
-            to={"/profileview/" + mainUser.UserId}
-          ><span className="post-title">{mainUser.Firstname}</span></Link>  </>} </span>
+          elements[_key]
         }
         description={<Moment fromNow>{date}</Moment>}
       />
@@ -308,7 +317,7 @@ class Postings extends Component {
       },
       Docs: () => {
         return (
-          <div className="docs mb-16">
+          <div className="docs">
             <List
               itemLayout="horizontal"
               dataSource={imageObj}
@@ -444,11 +453,11 @@ class Postings extends Component {
         icons: "post-icons savepost-icon",
         subTitle: "Save this item for later",
       },
-      {
-        action: "Turn on Notifications",
-        icons: "post-icons notify-icon",
-        subTitle: "Keep notify from this user",
-      },
+      // {
+      //   action: "Turn on Notifications",
+      //   icons: "post-icons notify-icon",
+      //   subTitle: "Keep notify from this user",
+      // },
     ];
     if (this.props.postingsType === "saved") {
       return [
@@ -529,7 +538,7 @@ class Postings extends Component {
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
       <Card
-        className="m-12 mt-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
+        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">
@@ -724,8 +733,9 @@ class Postings extends Component {
     </Card>
   }
   renderCommonCard = (post) => {
+    debugger
     return <Card
-      title={this.titleAvatar(post.userdetails, post.date)}
+      title={this.titleAvatar(post.userdetails, post.date, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false))}
       bordered={true}
       extra={
         <SideAction
@@ -748,7 +758,7 @@ class Postings extends Component {
           key="comment"
           clickedEvent={() => this.showComment(post)}
         />,
-        <ShareAction post={post} key="share" url={`http://blackbuck.me/blackbuck.uat/post_view/${post.id}`} imgUrl={post.image} />
+        <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}
     // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
     >
