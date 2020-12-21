@@ -576,6 +576,9 @@
 .doc-icons.csv {
   background-position: -666px -469px;
 }
+.icon.repost-icon{
+  background-position: -193px -394px;
+}
 .docs .ant-list-items {
   display: flex;
   flex-wrap: wrap;

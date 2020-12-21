@@ -164,15 +164,25 @@ class Postings extends Component {
       <Meta
         avatar={<Avatar src={user.Image || defaultUser} />}
         title={
+          // <span className="overflow-text text-secondary"> <Link
+          //   to={
+          //     this.props?.profile.Id == user.UserId
+          //       ? "/profile/" + "1"
+          //       : "/profileview/" + user.UserId
+          //   }
+          // ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> Shared <Link
+          //   to={"/profileview/" + mainUser.UserId}
+          // ><span className="post-title">{mainUser.Firstname}</span></Link> Post </>} </span>
+
           <span className="overflow-text text-secondary"> <Link
             to={
               this.props?.profile.Id == user.UserId
                 ? "/profile/" + "1"
                 : "/profileview/" + user.UserId
             }
-          ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> Shared <Link
+          ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> <span className="icon repost-icon"></span> <Link
             to={"/profileview/" + mainUser.UserId}
-          ><span className="post-title">{mainUser.Firstname}</span></Link> Post </>} </span>
+          ><span className="post-title">{mainUser.Firstname}</span></Link>  </>} </span>
         }
         description={<Moment fromNow>{date}</Moment>}
       />
