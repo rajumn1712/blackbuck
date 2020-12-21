@@ -58,7 +58,7 @@ class ShareAction extends Component {
             IsAnonymous: object ? object.IsAnonymous : false,
             ImageUrl: object ? (object.image ? object.image : null) : null,
             CreatedDate: object ? new Date(object.date) : null,
-            UserDetails: {
+            UserDetails:object ?object.userdetails:{
                 UserId: this.props.profile?.Id,
                 Firstname: this.props.profile?.FirstName,
                 Lastname: "",
