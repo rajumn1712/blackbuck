@@ -47,7 +47,7 @@ class GroupsPage extends Component {
   saveGroup = () => {
     this.creategroup.handleSave();
   };
-  getGroups() {
+  getGroups(type) {
     this.setState({ ...this.state, loading: true });
     fetchUserGroups(
       this.props.userId ? this.props.userId : this.props?.profile?.Id,
@@ -56,7 +56,16 @@ class GroupsPage extends Component {
     ).then((res) => {
       if (res.ok) {
         let { Groups } = this.state;
-        Groups = Groups.concat(res.data);
+        if (type !== 'Update')
+          Groups = Groups.concat(res.data);
+        else
+          for (var i in res.data) {
+            for (var j in Groups) {
+              if (Groups[j].id == res.data[i].id) {
+                Groups[j] = res.data[i];
+              }
+            }
+          }
         this.setState({
           ...this.state,
           loading: false,
@@ -269,6 +278,7 @@ class GroupsPage extends Component {
               GroupId={GroupEditObj.id}
               handleCancel={this.handleCancel}
               onRef={(creategroup) => (this.creategroup = creategroup)}
+              refreshSave={() => this.getGroups('Update')}
             />
           )}
         </CommonModal>
