@@ -17,9 +17,7 @@ class CommonModal extends React.Component {
         }
         visible={modal.visible}
         closable={false}
-        onOk={modal.saved}
         className={modal.className}
-        onCancel={modal.cancel}
         footer={!modal.isHideFooter?[
           <div className="">
             {/* <Button key="back" onClick={modal.cancel} className="btn-cancel">

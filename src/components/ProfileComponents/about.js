@@ -223,6 +223,25 @@ class About extends Component {
                     {/* <Col xs={24}>
                                     <h3>Contact</h3>
                                 </Col> */}
+                                <Col xs={24}>
+                      <Form.Item
+                        label="About Me"
+                        name="About Me"
+                        rules={[{ required: true }]}
+                        className="custom-fields mb-24"
+                      >
+                        <Field
+                          component="textarea"
+                          className="ant-input"
+                          autoSize={{ minRows: 2, maxRows: 6 }}
+                          value={values?.AboutMe}
+                          name="AboutMe"
+                        />
+                        <span className="validateerror">
+                          <ErrorMessage name="AboutMe" />
+                        </span>
+                      </Form.Item>
+                    </Col>
                     <Col xs={24} sm={12}>
                       <Form.Item
                         label="Plot No"
@@ -352,6 +371,14 @@ class About extends Component {
                           className="ant-input"
                           value={values?.PinCode}
                           name="PinCode"
+                          maxlength="6"
+                          onChange={(e)=>{
+                            if(/^[0-9\b]+$/.test(e.target.value)){
+                              setFieldValue("PinCode",e.target.value)
+                            }else{
+                              setFieldValue("PinCode","")
+                            }
+                          }}
                         />
                         <span className="validateerror">
                           <ErrorMessage name="PinCode" />
@@ -369,6 +396,14 @@ class About extends Component {
                           className="ant-input"
                           value={values?.PhoneNumber}
                           name="PhoneNumber"
+                          maxlength="15"
+                          onChange={(e)=>{
+                            if(/^[0-9\b]+$/.test(e.target.value)){
+                              setFieldValue("PhoneNumber",e.target.value)
+                            }else{
+                              setFieldValue("PhoneNumber","")
+                            }
+                          }}
                         />
                         <span className="validateerror">
                           <ErrorMessage name="PhoneNumber" />
@@ -378,25 +413,6 @@ class About extends Component {
                     <Col xs={24} sm={24}>
                       <Form.Item label="Email" className="custom-fields">
                         <Input value={Email} name="Email" disabled />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24}>
-                      <Form.Item
-                        label="About Me"
-                        name="About Me"
-                        rules={[{ required: true }]}
-                        className="custom-fields mb-24"
-                      >
-                        <Field
-                          component="textarea"
-                          className="ant-input"
-                          autoSize={{ minRows: 2, maxRows: 6 }}
-                          value={values?.AboutMe}
-                          name="AboutMe"
-                        />
-                        <span className="validateerror">
-                          <ErrorMessage name="AboutMe" />
-                        </span>
                       </Form.Item>
                     </Col>
                   </Row>

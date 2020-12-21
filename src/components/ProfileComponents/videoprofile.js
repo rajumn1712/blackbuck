@@ -40,14 +40,29 @@ class VideoProfile extends Component {
         let { inputValue } = this.state;
         inputValue = info.file.response[0];
         notify({
-          description: `${info.file.name} file uploaded successfully.`,
+          description: `Video uploaded successfully.`,
           message: "Upload",
         });
         this.setState({ ...this.state, fileUploading: false, inputValue });
       } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        notify({
+          message:"Upload",
+          description:'Something went wrong',
+          type:'error'
+        })
         this.setState({ ...this.state, fileUploading: false });
       }
+    },
+    beforeUpload: (file) => {
+      const fileMaxSize = 25 * 1000000;
+      if (file.size > fileMaxSize) {
+        notify({
+          message: "Upload",
+          description: `Video size should not be greater than 25 MB`,
+          type: "warning",
+        });
+      }
+      return file.size <= fileMaxSize;
     },
   };
   showModal = (e) => {
