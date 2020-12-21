@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../shared/authentication/protected_route";
 import CommingSoon from "./comingsoon";
- import Friends from "../components/friends";
+import Friends from "../components/friends";
 // import Contact from "../contact-us";
 import Home from "../home";
 import Callback from "../shared/authentication/callback";
@@ -19,6 +19,7 @@ import Settings from "./settings";
 import Notifications from "./notification";
 import Connection from '../connections';
 import SinglePostView from "./singlePostview";
+import Admin from "../admin";
 
 
 const onBoard = () => {
@@ -35,12 +36,13 @@ const onBoard = () => {
 const Router = () => {
   return (
     <Switch>
+      <ProtectedRoute path="/admin" component={Admin} />
       <ProtectedRoute path="/post/:id" component={SinglePostView} />
       <ProtectedRoute path="/notifications" component={Notifications} />
       <ProtectedRoute path="/support" component={Help} />
       <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
-      <ProtectedRoute path="/friends" component={Connection} /> 
+      <ProtectedRoute path="/friends" component={Connection} />
       <Route path="/callback" component={Callback} />
       <ProtectedRoute path="/profile/:tabkey" component={Profile} />
       <ProtectedRoute path="/profileview/:userId" component={ProfileView} />
