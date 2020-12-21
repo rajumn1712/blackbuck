@@ -13,9 +13,11 @@ class Admin extends Component {
                 <Link to="/admin/members">Members</Link>
                 <Link to="/admin/groups">Groups</Link>
             </div>
-            <Route path="/admin/courses" component={AdminCourses} />
-            <Route path="/admin/members" component={Members} />
-            <Route path="/admin/groups" component={Groups} />
+            <Switch>
+                <Route path="/admin/courses" component={AdminCourses} />
+                <Route path="/admin/members" component={Members} />
+                <Route path="/admin/groups" component={Groups} />
+            </Switch>
         </div>
     }
 }
