@@ -43,21 +43,7 @@ const data1 = [
     },
 
 ];
-const Advanced = [
-    {
-        title: 'Encrypted notification emails',
-        description: ' Add extra security to notification emails from Facebook (only you can decrypt these emails)'
-    },
-    {
-        title: 'Recover external accounts',
-        description: 'Recover access to other sites with your Facebook account'
-    },
-    {
-        title: 'See recent emails from Facebook',
-        description: 'See a list of emails we sent you recently, including emails about security'
-    },
 
-];
 const Posts = [
     {
         title: 'Public Post Comments',
@@ -151,7 +137,7 @@ class Settings extends React.Component {
         const { visible, loading } = this.state;
         return (
             <div>
-                <div className="main">
+                <div className="main custom-fields">
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
                             <Card title="Settings" className="settings-left left-rail" >
@@ -184,12 +170,12 @@ class Settings extends React.Component {
                                             <span>Blocking</span>
                                         </Link>
                                     </Menu.Item> */}
-                                    <Menu.Item key="profile ">
+                                    {/* <Menu.Item key="profile ">
                                         <Link to="/profile/1">
                                             <span className="icons location-icon"></span>
                                             <span>Location</span>
                                         </Link>
-                                    </Menu.Item>
+                                    </Menu.Item> */}
                                     <Menu.Item key="profile">
                                         <Link to="/profile/1">
                                             <span className="icons settings-icon"></span>
@@ -212,8 +198,8 @@ class Settings extends React.Component {
                                                 description={<div><div>{item.description}</div>
                                                     <span className="d-flex pb-12">
                                                         <Input placeholder={item.description} />
-                                                        <Button className="mx-8" htmlType="submit" >Cancel</Button>
-                                                        <Button type="primary" htmlType="close">Save</Button>
+                                                        <Button className="mx-8" type="primary" htmlType="submit">Save</Button>
+                                                            <Button htmlType="close" >Cancel</Button>
                                                     </span>
                                                 </div>
                                                 }
@@ -222,13 +208,12 @@ class Settings extends React.Component {
                                     )}
                                 />
                             </Card>
-                            <Title className="ml-4" level={5}>Security and Login</Title>
-                            <Card title="Login" className="settings-card mb-12" >
+                            <Card title="Security and Login" className="settings-card mb-12" >
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={data1}
                                     renderItem={item => (
-                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit" className="ml-0">Edit</a>]}>
+                                         <List.Item > 
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">{item.title}</h3>}
                                                 description={<div><div>{item.description}</div>
@@ -243,9 +228,9 @@ class Settings extends React.Component {
                                                         <div className="d-flex my-8"><span className="change-text">Re-enter new </span>
                                                             <Input className="w-300" />
                                                         </div>
-                                                        <div className="text-right">
-                                                            <Button className="mx-8" htmlType="submit" >Cancel</Button>
-                                                            <Button type="primary" htmlType="close">Save</Button>
+                                                        <div className="text-center">
+                                                            <Button className="mx-8" type="primary" htmlType="submit">Save</Button>
+                                                            <Button htmlType="close" >Cancel</Button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -253,25 +238,6 @@ class Settings extends React.Component {
                                             />
                                         </List.Item>
 
-                                    )}
-                                />
-                                <List
-                                    itemLayout="horizontal"
-                                    dataSource={Advanced}
-                                    renderItem={item => (
-                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
-                                            <List.Item.Meta
-                                                title={<h3 className="mb-0">{item.title}</h3>}
-                                                description={<div><div>{item.description}</div>
-                                                    <span className="d-flex pb-12">
-                                                        <Input />
-                                                        <Button className="mx-8" htmlType="submit" >Cancel</Button>
-                                                        <Button type="primary" htmlType="close">Save</Button>
-                                                    </span>
-                                                </div>
-                                                }
-                                            />
-                                        </List.Item>
                                     )}
                                 />
                             </Card>
@@ -296,12 +262,11 @@ class Settings extends React.Component {
                                     )}
                                 />
                             </Card> */}
-                            <Title className="ml-4" level={5}>Public Posts</Title>
-                            <Card title="Public Post Filters and Tools" className="settings-card set-width set-flex mb-12" >
+                            <Card title="Public Posts" className="settings-card set-width set-flex mb-12" >
                                 <List
                                     itemLayout="horizontal"
                                     renderItem={item => (
-                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit ml-0">Edit</a>]}>
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">Who Can Follow Me</h3>}
                                                 description={<div><div>
@@ -331,8 +296,7 @@ class Settings extends React.Component {
                                     )}
                                 />
                             </Card>
-                            <Title className="ml-4" level={5}>Location</Title>
-                            <Card title="Location Settings" className="settings-card set-flex mb-12" >
+                            {/* <Card title="Location" className="settings-card set-flex mb-12" >
                                 <List
                                     itemLayout="horizontal"
                                     renderItem={
@@ -350,8 +314,7 @@ class Settings extends React.Component {
                                         </List.Item>
                                     }
                                 />
-                            </Card>
-                            <Title className="ml-4" level={5}>Notifications</Title>
+                            </Card> */}
                             {/* <Card title="Notifications Settings" className="settings-card set-flex mb-12" >
                                 <List
                                     itemLayout="horizontal"
@@ -369,35 +332,15 @@ class Settings extends React.Component {
                                     }
                                 />
                             </Card> */}
-                            <Card title="Notifications Settings" className="settings-card mb-12">
+                            <Card title="Notifications" className="settings-card mb-12">
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={data2}
                                     renderItem={item => (
-                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit ml-0">Edit</a>]}>
+                                        <List.Item className="m-auto" actions={[<a onClick={this.showModal} key="list-loadmore-edit"><Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked /></a>]}>
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">{item.title}</h3>}
                                                 description={<div><div>{item.description}</div>
-                                                    <div>
-                                                        <Paragraph className="my-16">These are notifications for comments on your posts and replies to your comments.</Paragraph>
-                                                        <Paragraph className="fw-600 f-16">Where you receive these notifications</Paragraph>
-                                                    </div>
-                                                    <div className="">
-                                                        <div className="d-flex justify-content-between">
-                                                            <span>Push</span>
-                                                            <span><Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked /></span>
-                                                        </div>
-                                                        <Divider />
-                                                        <div className="d-flex justify-content-between">
-                                                            <span>Email</span>
-                                                            <span><Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked /></span>
-                                                        </div>
-                                                        <Divider />
-                                                        <div className="d-flex justify-content-between">
-                                                            <span>SMS</span>
-                                                            <span><Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked /></span>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 }
                                             />
