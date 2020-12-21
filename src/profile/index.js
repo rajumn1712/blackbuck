@@ -16,6 +16,7 @@ import Invite from "../shared/components/Invite";
 import Ads from "../components/ads";
 import "./profilestyle.css";
 import PremiumBadge from "../styles/images/premiumbadge.svg";
+import defaultCover from "../styles/images/default-cover.png";
 import { Route, withRouter } from "react-router-dom";
 import Courses from "../components/ProfileComponents/courses";
 import FriendRequests from "../components/ProfileComponents/friendrequests";
@@ -26,7 +27,7 @@ import Postings from "../shared/postings";
 import { connect } from "react-redux";
 import { saveProfileImage } from "../shared/api/apiServer";
 import defaultUser from "../styles/images/defaultuser.jpg";
-import defaultCover from "../styles/images/defaultcover.png";
+// import defaultCover from "../styles/images/defaultcover.png";
 import ImgCrop from "antd-img-crop";
 import { profileSuccess } from "../reducers/auth";
 import jsPDF from "jspdf";
@@ -53,6 +54,7 @@ class Profile extends Component {
     isProfilePic: false,
     isDataRefresh: false,
     loading: false,
+    imageLoader:false,
     profile: this.props?.profile,
     tabkey: this.props?.match.params.tabkey,
     showDownload: false,
@@ -72,11 +74,11 @@ class Profile extends Component {
         this.handleImageOk();
       }
       if (status === "done") {
-        notify({
-          description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
-            } uploaded successfully.`,
-          message: "Upload",
-        });
+        // notify({
+        //   description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
+        //     } uploaded successfully.`,
+        //   message: "Upload",
+        // });
       } else if (status === "error") {
         message.error(`File upload failed.`);
       }
@@ -107,6 +109,7 @@ class Profile extends Component {
     }
   };
   handleImageOk = () => {
+    this.setState({...this.state,imageLoader:true})
     const imageType = this.state.isProfilePic ? "ProfilePic" : "CoverPic";
     saveProfileImage(this.props?.profile?.Id, imageType, this.imageObject).then(
       (res) => {
@@ -117,6 +120,13 @@ class Profile extends Component {
         }
         this.props.updateProfile(this.props.profile);
         this.imageObject = {};
+        this.setState({...this.state,imageLoader:false},()=>{
+          notify({
+            description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
+              } uploaded successfully.`,
+            message: "Upload",
+          });
+        })
       }
     );
   };
@@ -150,7 +160,7 @@ class Profile extends Component {
     function callback(key) {
       console.log(key);
     }
-    const { isDataRefresh, profile, tabkey } = this.state;
+    const { isDataRefresh, profile, tabkey,imageLoader } = this.state;
     // if (this.state.loading) {
     //   return <Loader className="loader-top-middle" />;
     // }
@@ -168,9 +178,9 @@ class Profile extends Component {
                 className="center-focus"
                 src={profile?.CoverPic || defaultCover}
               />
-              <span className="premium-badge">
+              {this.props?.profile?.IsScholar && <span className="premium-badge">
                 <img src={PremiumBadge} />
-              </span>
+              </span>}
               <ImgCrop
                 aspect={6 / 2}
                 grid={true}
@@ -181,6 +191,7 @@ class Profile extends Component {
                 }}
               >
                 <Upload {...this.uploadProps}>
+                {imageLoader && <Loader className="loader-top-middle" />}
                   <Tooltip title="Change Coverphoto">
                     <a
                       className="editpost"
@@ -218,6 +229,7 @@ class Profile extends Component {
                         beforeCrop={this.handleBeforUpload}
                       >
                         <Upload {...this.uploadProps}>
+                        {imageLoader && <Loader className="loader-top-middle" />}
                           <Avatar src={profile?.ProfilePic || defaultUser} />
                           <Tooltip placement="top" title="Change Photo">
                             <a
@@ -245,14 +257,14 @@ class Profile extends Component {
                 <Statistic
                   title="Shares"
                   className="afterline"
-                  value={profile?.Shares}
+                  value={profile?.Shares ? profile?.Shares : 0}
                 />
                 <Statistic
                   title="Interests"
                   className="afterline"
                   value={profile?.Interests ? profile?.Interests : 0}
                 />
-                <Statistic title="Internships" value={profile?.Internships} />
+                <Statistic title="Internships" value={profile?.Internships?profile?.Internships:0} />
               </div>
             </div>
             <Tabs
