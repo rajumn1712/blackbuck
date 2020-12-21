@@ -100,7 +100,7 @@ class ProfileDetail extends Component {
                   <div className="hobbies-info">
                     <h3>Hobbies</h3>
                     <ul>
-                      {profileData?.Hobbies?.split(",").map((hobbie, index) => {
+                      {profileData?.Hobbies?.map((hobbie, index) => {
                         return <li key={index}>{hobbie}</li>;
                       })}
                     </ul>

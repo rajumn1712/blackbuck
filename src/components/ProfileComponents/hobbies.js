@@ -12,19 +12,19 @@ import Loader from "../../common/loader";
 
 class Hobbies extends Component {
   state = {
-    hobbies: this.props.hobbies ? this.props.hobbies.split(",") : [],
+    hobbies: this.props.hobbies,
     tags: [],
     inputVisible: false,
     inputValue: "",
     visible: false,
-    saveObj: { Name: "" },
+    saveObj: { Name: [] },
     loading: false,
   };
 
   showModal = (e) => {
     e.preventDefault();
     let { tags } = this.state;
-    tags = this.props.hobbies ? this.props.hobbies.split(",") : [];
+    tags = this.props.hobbies ;
     this.setState({
       visible: true,
       tags,
@@ -33,7 +33,7 @@ class Hobbies extends Component {
   handleOk = async (e) => {
     this.setState({ ...this.state, loading: true });
     let { saveObj, tags,hobbies } = this.state;
-    saveObj.Name = tags.toString();
+    saveObj.Name = tags;
     this.setState({ saveObj: saveObj });
     const savehobbies = await saveHobbies(this.props.userid, this.state.saveObj)
     if(savehobbies.ok){
