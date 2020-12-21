@@ -30,12 +30,13 @@ class Hobbies extends Component {
       tags,
     });
   };
-  handleOk = (e) => {
+  handleOk = async (e) => {
     this.setState({ ...this.state, loading: true });
-    let { saveObj, tags } = this.state;
+    let { saveObj, tags,hobbies } = this.state;
     saveObj.Name = tags.toString();
     this.setState({ saveObj: saveObj });
-    saveHobbies(this.props.userid, this.state.saveObj).then((res) => {
+    const savehobbies = await saveHobbies(this.props.userid, this.state.saveObj)
+    if(savehobbies.ok){
       this.setState(
         {
           loading: false,
@@ -43,13 +44,27 @@ class Hobbies extends Component {
         },
         () => {
           notify({
-            description: "Hobbies saved successfully",
+            description: `Hobbies ${hobbies.length > 0 ? 'edited' : 'saved'} successfully`,
             message: "Hobbies",
           });
           this.props.callback(true);
         }
       );
-    });
+    }else{
+      this.setState(
+        {
+          ...this.state,
+          loading: false,
+        },
+        () => {
+          notify({
+            description: 'Something went wrong',
+            message: "Error",
+            type:'error'
+          });
+        }
+      );
+    }
   };
   handleCancel = (e) => {
     this.setState({
@@ -128,11 +143,13 @@ class Hobbies extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Link onClick={this.showModal}>
+              <Tooltip title={hobbies.length > 0 ? 'Edit' : 'Add'}>
+                <Link onClick={this.showModal}>
                 <span
                   className={`icons ${hobbies.length > 0 ? "edit" : "add"}`}
                 />
               </Link>
+              </Tooltip>
             ) : null
           }
         >

@@ -741,6 +741,7 @@ class ShareBox extends Component {
                 ref={this.saveInputRef}
                 type="text"
                 size="small"
+                maxLength="50"
                 style={{ width: 78 }}
                 value={inputValue}
                 onChange={this.handleInputChange}

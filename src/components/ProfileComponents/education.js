@@ -136,7 +136,7 @@ class Education extends Component {
           },
           () => {
             notify({
-              description: "Education saved successfully",
+              description: `Education ${this.state.isEdit ? 'Edited' : 'saved'} successfully`,
               message: "Education",
             });
             this.props.callback(true);
@@ -414,8 +414,8 @@ class Education extends Component {
                         </Col>
                         <Col xs={24} sm={12}>
                           <Form.Item
-                            label="Place of College/University"
-                            name="Place of COllege/University"
+                            label={`Place of ${values.EducationType === 'School' ? 'School' : 'College/University'}`}
+                            name={`Place of ${values.EducationType === 'School' ? 'School' : 'College/University'}`}
                             rules={[{ required: true }]}
                             className="custom-fields"
                           >
