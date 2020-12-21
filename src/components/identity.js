@@ -3,7 +3,7 @@ import { Card, Avatar, Menu, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { profileSuccess } from "../reducers/auth";
 import defaultUser from "../styles/images/defaultuser.jpg";
-import coverphoto from "../styles/images/post-image.jpg";
+import coverphoto from "../styles/images/default-cover.png";
 import { connect } from "react-redux";
 import { store } from "../store";
 const { Meta } = Card;
@@ -50,7 +50,7 @@ class Identity extends Component {
               title={
                 <div>
                   {homeInfo?.FirstName} {homeInfo?.LastName}
-                  <span className="premium-icon c-default"></span>
+                  {homeInfo?.IsScholar && <span className="premium-icon c-default"></span>}
                 </div>
               }
               description={<Tooltip title={homeInfo?.BranchName} placement={'bottom'}>{homeInfo?.BranchName}</Tooltip>}

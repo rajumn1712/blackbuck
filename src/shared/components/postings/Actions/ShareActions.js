@@ -41,7 +41,7 @@ class ShareAction extends Component {
         }
         const res = await savePost(_saveObject);
         if (res.ok) {
-            notify({ message: "Share", description: "Post shared on you're timmeline" });
+            notify({ message: "Share", description: "Post shared on you're timeline" });
         }
         const user = {
             UserId: this.props.profile?.Id,
