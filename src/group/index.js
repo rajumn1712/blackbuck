@@ -28,21 +28,21 @@ class Aboutus extends Component {
               <TabPane tab="Groups" key="1">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <GroupsPage />
+                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
                   </Col>
                 </Row>
               </TabPane>
               <TabPane tab="Invite Groups" key="3">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <GroupsPage />
+                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
                   </Col>
                 </Row>
               </TabPane>
               <TabPane tab="Suggested Groups" key="2">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <GroupsPage />
+                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
                   </Col>
                 </Row>
               </TabPane>
