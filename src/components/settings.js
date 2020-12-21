@@ -1,18 +1,19 @@
 import React, { Component, useState } from 'react';
-import { Collapse, Menu, Row, Col, Input, Checkbox, Button, Card, List, Form, Modal, Typography,Avatar } from 'antd';
+import { Collapse, Menu, Row, Col, Input, Checkbox, Button, Card, List, Form, Modal, Typography, Avatar, Divider, Select, Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import { store } from '../store'
 import '../index.css';
 import '../App.css';
 import { connect } from 'react-redux';
 import Search from 'antd/lib/input/Search';
-import { CaretRightOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import AccSettings from '../styles/images/acc-settings.svg';
 import Password from '../styles/images/password.svg';
 import Privacy from '../styles/images/privacy.svg';
 import Item from 'antd/lib/list/Item';
 import { ErrorMessage, Field, Formik } from "formik";
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
+const { Option } = Select;
 const data = [
     {
         title: 'Name',
@@ -38,9 +39,9 @@ const data = [
 const data1 = [
     {
         title: 'Change password',
-        description: "It's a good idea to use a strong password that you're not using elsewhere"
+
     },
-   
+
 ];
 const Advanced = [
     {
@@ -55,13 +56,9 @@ const Advanced = [
         title: 'See recent emails from Facebook',
         description: 'See a list of emails we sent you recently, including emails about security'
     },
-   
+
 ];
 const Posts = [
-    {
-        title: 'Who Can Follow Me',
-        description: 'Followers see your posts in News Feed'
-    },
     {
         title: 'Public Post Comments',
         description: 'Recover access to other sites with your Facebook account'
@@ -70,7 +67,57 @@ const Posts = [
         title: 'Public Post Notifications',
         description: 'See a list of emails we sent you recently, including emails about security'
     },
-   
+
+];
+const data2 = [
+    {
+        title: 'Comments',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Tags',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Reminders',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'More Activity About You',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Updates From Friends',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Friend Requests',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'People You May Know',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Birthdays',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Groups',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Video',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Events',
+        description: 'Push, Email, SMS'
+    },
+    {
+        title: 'Pages You Follow',
+        description: 'Push, Email, SMS'
+    },
 ];
 const tailLayout = {
     wrapperCol: { span: 16 },
@@ -98,6 +145,9 @@ class Settings extends React.Component {
         this.setState({ visible: false });
     };
     render() {
+        function handleChange(value) {
+            console.log(`selected ${value}`);
+        }
         const { visible, loading } = this.state;
         return (
             <div>
@@ -160,11 +210,11 @@ class Settings extends React.Component {
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">{item.title}</h3>}
                                                 description={<div><div>{item.description}</div>
-                                                     {/* <span className="d-flex pb-12">
+                                                    <span className="d-flex pb-12">
                                                         <Input placeholder={item.description} />
                                                         <Button className="mx-8" htmlType="submit" >Cancel</Button>
                                                         <Button type="primary" htmlType="close">Save</Button>
-                                                        </span>    */}
+                                                    </span>
                                                 </div>
                                                 }
                                             />
@@ -172,30 +222,39 @@ class Settings extends React.Component {
                                     )}
                                 />
                             </Card>
-                             <Title className="ml-4" level={5}>Security and Login</Title>
+                            <Title className="ml-4" level={5}>Security and Login</Title>
                             <Card title="Login" className="settings-card mb-12" >
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={data1}
                                     renderItem={item => (
-                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit" className="ml-0">Edit</a>]}>
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">{item.title}</h3>}
                                                 description={<div><div>{item.description}</div>
-                                                     {/* <span className="d-flex pb-12">
-                                                        <Input className="mr-8"/>
-                                                        <Input />
-                                                        <Button className="mx-8" htmlType="submit" >Cancel</Button>
-                                                        <Button type="primary" htmlType="close">Save</Button>
-                                                        </span>    */}
+                                                    <Divider />
+                                                    <div className=" pb-12">
+                                                        <div className="d-flex my-8"><span className="change-text">Current</span>
+                                                            <Input className="w-300" />
+                                                        </div>
+                                                        <div className="d-flex my-8"><span className="change-text">New </span>
+                                                            <Input className="w-300" />
+                                                        </div>
+                                                        <div className="d-flex my-8"><span className="change-text">Re-enter new </span>
+                                                            <Input className="w-300" />
+                                                        </div>
+                                                        <div className="text-right">
+                                                            <Button className="mx-8" htmlType="submit" >Cancel</Button>
+                                                            <Button type="primary" htmlType="close">Save</Button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 }
                                             />
                                         </List.Item>
+
                                     )}
                                 />
-                            </Card>
-                            <Card title="Advanced" className="settings-card mb-12" >
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={Advanced}
@@ -204,11 +263,11 @@ class Settings extends React.Component {
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">{item.title}</h3>}
                                                 description={<div><div>{item.description}</div>
-                                                     {/* <span className="d-flex pb-12">
+                                                    <span className="d-flex pb-12">
                                                         <Input />
                                                         <Button className="mx-8" htmlType="submit" >Cancel</Button>
                                                         <Button type="primary" htmlType="close">Save</Button>
-                                                        </span>    */}
+                                                    </span>
                                                 </div>
                                                 }
                                             />
@@ -216,8 +275,46 @@ class Settings extends React.Component {
                                     )}
                                 />
                             </Card>
+                            {/* <Card title="Advanced" className="settings-card mb-12" >
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={Advanced}
+                                    renderItem={item => (
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                            <List.Item.Meta
+                                                title={<h3 className="mb-0">{item.title}</h3>}
+                                                description={<div><div>{item.description}</div>
+                                                      <span className="d-flex pb-12">
+                                                        <Input />
+                                                        <Button className="mx-8" htmlType="submit" >Cancel</Button>
+                                                        <Button type="primary" htmlType="close">Save</Button>
+                                                        </span>    
+                                                </div>
+                                                }
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                            </Card> */}
                             <Title className="ml-4" level={5}>Public Posts</Title>
                             <Card title="Public Post Filters and Tools" className="settings-card set-width set-flex mb-12" >
+                                <List
+                                    itemLayout="horizontal"
+                                    renderItem={item => (
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                                            <List.Item.Meta
+                                                title={<h3 className="mb-0">Who Can Follow Me</h3>}
+                                                description={<div><div>
+                                                    Followers see your posts in News Feed. Friends follow your posts by default, but you can also allow people who are not your friends to follow your public posts. Use this setting to choose who can follow you.
+                                                    Each time you post, you choose which audience you want to share with.
+                                                    This setting doesn't apply to people who follow you on Marketplace and in buy and sell groups. You can manage those settings on Marketplace.</div>
+
+                                                </div>
+                                                }
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={Posts}
@@ -226,7 +323,7 @@ class Settings extends React.Component {
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">{item.title}</h3>}
                                                 description={<div><div>{item.description}</div>
-                                                        
+
                                                 </div>
                                                 }
                                             />
@@ -238,12 +335,15 @@ class Settings extends React.Component {
                             <Card title="Location Settings" className="settings-card set-flex mb-12" >
                                 <List
                                     itemLayout="horizontal"
-                                    renderItem={ 
+                                    renderItem={
                                         <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">Location History</h3>}
                                                 description={<div><div>Turn on Location History for your mobile devices?</div>
-                                                        
+                                                    <Select defaultValue="lucy" style={{ width: 80 }} onChange={handleChange}>
+                                                        <Option value="jack">On</Option>
+                                                        <Option value="lucy">Off</Option>
+                                                    </Select>
                                                 </div>
                                                 }
                                             />
@@ -252,20 +352,57 @@ class Settings extends React.Component {
                                 />
                             </Card>
                             <Title className="ml-4" level={5}>Notifications</Title>
-                            <Card title="Notifications Settings" className="settings-card set-flex mb-12" >
+                            {/* <Card title="Notifications Settings" className="settings-card set-flex mb-12" >
                                 <List
                                     itemLayout="horizontal"
-                                    renderItem={ 
+                                    dataSource={data2}
+                                    renderItem={
                                         <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
                                             <List.Item.Meta
                                                 title={<h3 className="mb-0">Location History</h3>}
                                                 description={<div><div>Turn on Location History for your mobile devices?</div>
-                                                        
+
                                                 </div>
                                                 }
                                             />
                                         </List.Item>
                                     }
+                                />
+                            </Card> */}
+                            <Card title="Notifications Settings" className="settings-card mb-12">
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={data2}
+                                    renderItem={item => (
+                                        <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit ml-0">Edit</a>]}>
+                                            <List.Item.Meta
+                                                title={<h3 className="mb-0">{item.title}</h3>}
+                                                description={<div><div>{item.description}</div>
+                                                    <div>
+                                                        <Paragraph className="my-16">These are notifications for comments on your posts and replies to your comments.</Paragraph>
+                                                        <Paragraph className="fw-600 f-16">Where you receive these notifications</Paragraph>
+                                                    </div>
+                                                    <div className="">
+                                                        <div className="d-flex justify-content-between">
+                                                            <span>Push</span>
+                                                            <span><Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked /></span>
+                                                        </div>
+                                                        <Divider />
+                                                        <div className="d-flex justify-content-between">
+                                                            <span>Email</span>
+                                                            <span><Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked /></span>
+                                                        </div>
+                                                        <Divider />
+                                                        <div className="d-flex justify-content-between">
+                                                            <span>SMS</span>
+                                                            <span><Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked /></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                }
+                                            />
+                                        </List.Item>
+                                    )}
                                 />
                             </Card>
 

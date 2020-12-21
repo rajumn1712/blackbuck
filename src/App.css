@@ -812,6 +812,10 @@
   font-weight: 400 !important;
   color: var(--black);
 }
+.fw-600 {
+  font-weight: 600 !important;
+  color: var(--black);
+}
 .justify-content-around .ant-list-item-meta {
   background: #f9f9f9;
   border-radius: 5px;
@@ -907,6 +911,10 @@
 .w-150 {
   width: 150px;
 }
+.w-300 {
+  width: 300px !important;
+}
+.change-text{width: 200px;text-align: right;margin-right: 8px;font-weight: 400;font-weight: 600;font-size: 16px;}
 .custom-card .list-link {
   color: var(--primary);
   margin-left: 3px;
@@ -1945,3 +1953,5 @@ textarea {
 }
 .singlepostid .fullprofilelink{display: block;}
 .singlepostid .ant-card-actions, .singlepostid .profile-menu{display: none;}
+.sub-tab .ant-tabs-nav{margin: 0 !important;border-radius: 0.8rem 0.8rem 0 0 !important;border: 1px solid var(--line);}
+.sub-tab .group-page{border-radius: 0 0 0.8rem 0.8rem; border-top: 0;}

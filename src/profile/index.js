@@ -73,9 +73,8 @@ class Profile extends Component {
       }
       if (status === "done") {
         notify({
-          description: `${
-            this.state.isProfilePic ? "Profil picture" : "Cover picture"
-          } uploaded successfully.`,
+          description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
+            } uploaded successfully.`,
           message: "Upload",
         });
       } else if (status === "error") {
@@ -148,6 +147,9 @@ class Profile extends Component {
   };
 
   render() {
+    function callback(key) {
+      console.log(key);
+    }
     const { isDataRefresh, profile, tabkey } = this.state;
     // if (this.state.loading) {
     //   return <Loader className="loader-top-middle" />;
@@ -326,7 +328,32 @@ class Profile extends Component {
                                         <Invite />
                                     </Col> */}
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                          <GroupsPage />
+                          <Tabs defaultActiveKey="1"
+                            className="group-tabs sub-tab"
+                            onChange={(e) => this.setState({ ...this.state, tabkey: e })}>
+                            <TabPane tab="Groups" key="1">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <GroupsPage />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                            <TabPane tab="Suggested Groups" key="2">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <GroupsPage />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                            <TabPane tab="Requested Groups" key="3">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <GroupsPage />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                          </Tabs>
+
                         </Col>
                       </Row>
                     );
