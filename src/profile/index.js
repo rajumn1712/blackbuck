@@ -157,9 +157,6 @@ class Profile extends Component {
   };
 
   render() {
-    function callback(key) {
-      console.log(key);
-    }
     const { isDataRefresh, profile, tabkey,imageLoader } = this.state;
     // if (this.state.loading) {
     //   return <Loader className="loader-top-middle" />;
@@ -340,32 +337,7 @@ class Profile extends Component {
                                         <Invite />
                                     </Col> */}
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                          <Tabs defaultActiveKey="1"
-                            className="group-tabs sub-tab"
-                            onChange={(e) => this.setState({ ...this.state, tabkey: e })}>
-                            <TabPane tab="Groups" key="1">
-                              <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                  <GroupsPage />
-                                </Col>
-                              </Row>
-                            </TabPane>
-                            <TabPane tab="Suggested Groups" key="2">
-                              <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                  <GroupsPage />
-                                </Col>
-                              </Row>
-                            </TabPane>
-                            <TabPane tab="Requested Groups" key="3">
-                              <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                  <GroupsPage />
-                                </Col>
-                              </Row>
-                            </TabPane>
-                          </Tabs>
-
+                        <GroupsPage />                         
                         </Col>
                       </Row>
                     );
