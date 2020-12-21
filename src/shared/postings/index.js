@@ -129,11 +129,11 @@ class Postings extends Component {
               this.enableVideoAutoPlay(videoElements[i]);
             }
           }
-           for (const k in allPosts) {
-             if (allPosts[k].commentsCount > 0) {
-               this.showComment(allPosts[k]);
-             }
-           }
+          for (const k in allPosts) {
+            if (allPosts[k].commentsCount > 0) {
+              this.showComment(allPosts[k]);
+            }
+          }
         }
       );
     }
@@ -158,23 +158,25 @@ class Postings extends Component {
     var videoVisibilityMonitor = monitorBuilder.build();
     videoVisibilityMonitor.start();
   }
-  titleAvatar = (user, date) => {
+  titleAvatar = (user, date, isShareCard, mainUser) => {
     return (
-      <Link
-        to={
-          this.props?.profile.Id == user.UserId
-            ? "/profile/" + "1"
-            : "/profileview/" + user.UserId
+
+      <Meta
+        avatar={<Avatar src={user.Image || defaultUser} />}
+        title={
+          <span className="overflow-text text-secondary"> <Link
+            to={
+              this.props?.profile.Id == user.UserId
+                ? "/profile/" + "1"
+                : "/profileview/" + user.UserId
+            }
+          ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> Shared <Link
+            to={"/profileview/" + mainUser.UserId}
+          ><span className="post-title">{mainUser.Firstname}</span></Link> Post </>} </span>
         }
-      >
-        <Meta
-          avatar={<Avatar src={user.Image || defaultUser} />}
-          title={
-            <span className="overflow-text text-secondary"><span className="post-title">{user.Firstname}</span> Shared <span className="post-title">{user.Firstname}</span> Post</span>
-          }
-          description={<Moment fromNow>{date}</Moment>}
-        />
-      </Link>
+        description={<Moment fromNow>{date}</Moment>}
+      />
+
     );
   };
   closed = () => {
@@ -491,7 +493,7 @@ class Postings extends Component {
     }
   };
   renderShareCard = (post) => {
-    return <Card title={this.titleAvatar(post.userdetails, post.date)}
+    return <Card title={this.titleAvatar(post.userdetails, post.date, true, post.Shares[0])}
       bordered={true}
       extra={
         <SideAction
@@ -517,7 +519,7 @@ class Postings extends Component {
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
       <Card
-       className="m-12 mt-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
+        className="m-12 mt-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">
@@ -550,164 +552,165 @@ class Postings extends Component {
             </div>
           }
         ></Card.Meta>
-        <div className="d-flex justify-content-between mx-16 py-16">
-          {
-            <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
-              <ul className="card-actions-count pl-0">
-                {post.likes > 0 && (
-                  <Tooltip
-                    overlayClassName="like-tabs"
-                    title={
-                      <div>
-                        {this.state.reactionsLoading ? (
-                          <Spin />
-                        ) : (
-                            <div className="likes-counters">
-                              <h4>Likes</h4>
-                              {this.state.postReactions?.Likes?.map(
-                                (item, indx) => (
-                                  <p key={indx}>{item.Firstname}</p>
-                                )
-                              )}{" "}
-                            </div>
-                          )}{" "}
-                      </div>
-                    }
-                  >
-                    <li>
-                      <span className="counter-icon likes cursor-pointer"></span>
-                    </li>
-                  </Tooltip>
-                )}
-                {post.loves > 0 && (
-                  <Tooltip
-                    overlayClassName="like-tabs"
-                    title={
-                      <div>
-                        {this.state.reactionsLoading ? (
-                          <Spin />
-                        ) : (
-                            <div className="likes-counters">
-                              <h4>Loves</h4>{" "}
-                              {this.state.postReactions?.Loves?.map(
-                                (item, indx) => (
-                                  <p key={indx}>{item.Firstname}</p>
-                                )
-                              )}{" "}
-                            </div>
-                          )}{" "}
-                      </div>
-                    }
-                  >
-                    <li>
-                      <span className="counter-icon loves cursor-pointer"></span>
-                    </li>
-                  </Tooltip>
-                )}
-                {post.claps > 0 && (
-                  <Tooltip
-                    overlayClassName="like-tabs"
-                    title={
-                      <div>
-                        {this.state.reactionsLoading ? (
-                          <Spin />
-                        ) : (
-                            <div className="likes-counters">
-                              <h4>Claps</h4>
-                              {this.state.postReactions?.Claps?.map(
-                                (item, indx) => (
-                                  <p key={indx}>{item.Firstname}</p>
-                                )
-                              )}{" "}
-                            </div>
-                          )}
-                      </div>
-                    }
-                  >
-                    <li>
-                      <span className="counter-icon claps cursor-pointer"></span>
-                    </li>
-                  </Tooltip>
-                )}
-                {post.whistiles > 0 && (
-                  <Tooltip
-                    overlayClassName="like-tabs"
-                    title={
-                      <div>
-                        {this.state.reactionsLoading ? (
-                          <Spin />
-                        ) : (
-                            <div className="likes-counters">
-                              <h4>Whistles</h4>{" "}
-                              {this.state.postReactions?.Whistiles?.map(
-                                (item, indx) => (
-                                  <p key={indx}>{item.Firstname}</p>
-                                )
-                              )}{" "}
-                            </div>
-                          )}
-                      </div>
-                    }
-                  >
-                    <li>
-                      <span className="counter-icon whistles cursor-pointer"></span>
-                    </li>
-                  </Tooltip>
-                )}
-                {(post.loves || 0) +
-                  (post.claps || 0) +
-                  (post.whistiles || 0) +
-                  (post.likes || 0) >
-                  0 && (
-                    <Tooltip
-                      overlayClassName="like-tabs"
-                      title={
-                        <div className="likes-counters">
-                          {this.state.reactionsLoading ? (
-                            <Spin />
-                          ) : (
-                              <div>
-                                {" "}
-                                {this.state.postReactions?.PostActions?.map(
-                                  (item, indx) => (
-                                    <p key={indx}>{item.Firstname}</p>
-                                  )
-                                )}{" "}
-                              </div>
-                            )}
-                        </div>
-                      }
-                    >
-                      {" "}
-                      <li>
-                        <a>
-                          {" "}
-                          {(post.loves || 0) +
-                            (post.claps || 0) +
-                            (post.whistiles || 0) +
-                            (post.likes || 0)}
-                        </a>
-                      </li>
-                    </Tooltip>
-                  )}
-              </ul>
-            </span>
-          }
-          <ul className="card-actions-count">
-            {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-            {post.commentsCount != null && (
-              <li
-                className="mr-0 cursor-pointer"
-                onClick={() => this.showComment(post)}
-              >
-                <span></span>
-                {post.commentsCount} <span> Comments</span>
-              </li>
-            )}
-            {/* <li><span></span>2 <span> Shares</span></li> */}
-          </ul>
-        </div>
+
       </Card>
+      <div className="d-flex justify-content-between mx-16 py-16">
+        {
+          <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
+            <ul className="card-actions-count pl-0">
+              {post.likes > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Likes</h4>
+                            {this.state.postReactions?.Likes?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}{" "}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon likes cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.loves > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Loves</h4>{" "}
+                            {this.state.postReactions?.Loves?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}{" "}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon loves cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.claps > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Claps</h4>
+                            {this.state.postReactions?.Claps?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon claps cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.whistiles > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Whistles</h4>{" "}
+                            {this.state.postReactions?.Whistiles?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon whistles cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {(post.loves || 0) +
+                (post.claps || 0) +
+                (post.whistiles || 0) +
+                (post.likes || 0) >
+                0 && (
+                  <Tooltip
+                    overlayClassName="like-tabs"
+                    title={
+                      <div className="likes-counters">
+                        {this.state.reactionsLoading ? (
+                          <Spin />
+                        ) : (
+                            <div>
+                              {" "}
+                              {this.state.postReactions?.PostActions?.map(
+                                (item, indx) => (
+                                  <p key={indx}>{item.Firstname}</p>
+                                )
+                              )}{" "}
+                            </div>
+                          )}
+                      </div>
+                    }
+                  >
+                    {" "}
+                    <li>
+                      <a>
+                        {" "}
+                        {(post.loves || 0) +
+                          (post.claps || 0) +
+                          (post.whistiles || 0) +
+                          (post.likes || 0)}
+                      </a>
+                    </li>
+                  </Tooltip>
+                )}
+            </ul>
+          </span>
+        }
+        <ul className="card-actions-count">
+          {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
+          {post.commentsCount != null && (
+            <li
+              className="mr-0 cursor-pointer"
+              onClick={() => this.showComment(post)}
+            >
+              <span></span>
+              {post.commentsCount} <span> Comments</span>
+            </li>
+          )}
+          {/* <li><span></span>2 <span> Shares</span></li> */}
+        </ul>
+      </div>
     </Card>
   }
   renderCommonCard = (post) => {
