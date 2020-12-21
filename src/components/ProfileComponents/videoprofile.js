@@ -58,7 +58,7 @@ class VideoProfile extends Component {
       if (file.size > fileMaxSize) {
         notify({
           message: "Upload",
-          description: `Video size should not be greater than 25 MB`,
+          description: `Video size does not exceed 25 MB`,
           type: "warning",
         });
       }

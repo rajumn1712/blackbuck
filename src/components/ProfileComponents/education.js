@@ -358,8 +358,8 @@ class Education extends Component {
                         </Col>
                         <Col xs={24} sm={24}>
                           <Form.Item
-                            label="College/University Name"
-                            name="College/University Name"
+                            label={values.EducationType === 'School' ? 'School Name' : 'College/University Name'}
+                            name={values.EducationType === 'School' ? 'School Name' : 'College/University Name'}
                             rules={[{ required: true }]}
                             className="custom-fields"
                           >

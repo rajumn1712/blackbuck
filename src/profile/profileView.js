@@ -303,7 +303,7 @@ class ProfileView extends Component {
               <TabPane tab="Groups" className="m-0" key="4">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <GroupsPage />
+                    <GroupsPage userId={this.props.match.params.userId} IsHideAction={true}/>
                   </Col>
                 </Row>
               </TabPane>

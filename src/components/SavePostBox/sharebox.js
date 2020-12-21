@@ -164,6 +164,7 @@ class ShareBox extends Component {
           Gif: "Gif",
           Audio: "Audio",
           Image: "Images",
+          Docs:"Docs"
         };
         this.openpopup(object[postObj.type], postObj);
       }
@@ -231,7 +232,7 @@ class ShareBox extends Component {
       if (file.size > fileMaxSize) {
         notify({
           message: "Upload",
-          description: `${this.postObject.Type} size should not be greater than 25 MB`,
+          description: `${this.postObject.Type} size does not exceed 25 MB`,
           type: "warning",
         });
       }
@@ -372,7 +373,7 @@ class ShareBox extends Component {
       Audio: ".mp3,.aac,.wma,.wav,.flac,.m4a",
       Gif: ".gif",
       Docs:
-        ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.txt,.xls,.xlsx.,.csv",
+        ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
     };
     this.uploadProps = {
       ...this.uploadProps,

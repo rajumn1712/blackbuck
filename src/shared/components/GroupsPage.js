@@ -185,6 +185,7 @@ class GroupsPage extends Component {
   render() {
     const { user } = store.getState().oidc;
     const { Groups, visible, loading } = this.state;
+    const {IsHideAction}=this.props;
     return (
       <div className="group-page p-12 pb-0">
         {loading && <Loader className="loader-top-middle" />}
@@ -201,7 +202,7 @@ class GroupsPage extends Component {
                         src={group.image || defaultguser}
                       />
                     }
-                    actions={!group.IsGroupAdmin && !group.isSystem ? [
+                    actions={!group.IsGroupAdmin && !group.isSystem && !IsHideAction? [
                       <Link className="list-link f-14" onClick={() => this.leaveGroup(group)}>
                         Leave Group
                       </Link>,
@@ -209,12 +210,12 @@ class GroupsPage extends Component {
                   >
                     <Meta
                       title={
-                        <Link
+                        !IsHideAction?  <Link
                           to={"/groupview/" + group.id}
                           className="post-title"
                         >
                           {group.name}
-                        </Link>
+                        </Link>:<span>{group.name}</span>
                       }
                       description={
                         <div>
@@ -238,7 +239,7 @@ class GroupsPage extends Component {
                       }
                     />
                   </Card>
-                  {group.IsGroupAdmin && (
+                  {group.IsGroupAdmin && !IsHideAction&& (
                     <span className="card-options-right">
                       <SideAction
                         horclass="icons more"
