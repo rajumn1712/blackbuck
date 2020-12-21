@@ -129,11 +129,11 @@ class Postings extends Component {
               this.enableVideoAutoPlay(videoElements[i]);
             }
           }
-          //  for (const k in allPosts) {
-          //    if (allPosts[k].commentsCount > 0) {
-          //      this.showComment(allPosts[k]);
-          //    }
-          //  }
+           for (const k in allPosts) {
+             if (allPosts[k].commentsCount > 0) {
+               this.showComment(allPosts[k]);
+             }
+           }
         }
       );
     }
