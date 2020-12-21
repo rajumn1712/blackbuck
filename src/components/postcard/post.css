@@ -120,6 +120,8 @@ to{transform: translateY(0px);}
 
 .reply-comment .ant-form-item{margin-bottom: 5px !important;}
 .share-pop{margin: -8px -8px 0; border-right: none; width: 230px;}
+.share-pop .ant-menu-item .react-share__ShareButton{display: flex;justify-content: flex-start;align-items: center;width: 100%;}
+.share-pop .ant-menu-item .react-share__ShareButton:focus{outline: none;}
 .share-pop .ant-menu-item{padding: 8px; display: flex; align-items: center; font-size: var(--f-14); font-weight: 500; margin-bottom: 0 !important;}
 .share-pop .ant-menu-item:hover, .share-pop .ant-menu-item-selected{background: var(--bghover); border-radius: 4px; color: var(--primary)}
 .share-pop .ant-menu-item svg, .share-pop .ant-menu-item span{margin-right: 12px;}
