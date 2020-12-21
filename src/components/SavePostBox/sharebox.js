@@ -232,7 +232,7 @@ class ShareBox extends Component {
       if (file.size > fileMaxSize) {
         notify({
           message: "Upload",
-          description: `${this.postObject.Type} size should not be greater than 25 MB`,
+          description: `${this.postObject.Type} size does not exceed 25 MB`,
           type: "warning",
         });
       }

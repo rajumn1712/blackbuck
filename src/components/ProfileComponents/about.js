@@ -172,7 +172,7 @@ class About extends Component {
                             .map((k) => {
                               return displayaddress[k];
                             })
-                            .join(",")}
+                            .join(", ")}
                         </p>
                       );
                     })}
