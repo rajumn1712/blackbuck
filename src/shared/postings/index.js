@@ -170,15 +170,15 @@ class Postings extends Component {
       ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> Shared <Link
         to={"/profileview/" + mainUser.UserId}
       ><span className="post-title">{mainUser.Firstname}</span></Link> Post </>} </span>,
-      group: <span className="overflow-text text-secondary"> <Link
+      group: <span className="overflow-text text-secondary"><Link
         to={
           this.props?.profile.Id == user?.UserId
             ? "/profile/" + "1"
             : "/profileview/" + user?.UserId
         }
-      ><span className="post-title">{user?.Firstname}</span></Link> {<> <span className="icon repost-icon"></span> <Link
+      ><span className="post-title">{user?.Firstname}</span></Link>{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
         to={"/groupview/" + mainUser?.GroupId}
-      ><span className="post-title">{mainUser?.Firstname}</span></Link>  </>} </span>,
+      ><span className="post-title">{mainUser?.Firstname}</span></Link></>}</span>,
       normal: <span className="overflow-text text-secondary"> <Link
         to={
           this.props?.profile.Id == user.UserId
@@ -317,7 +317,7 @@ class Postings extends Component {
       },
       Docs: () => {
         return (
-          <div className="docs mb-16">
+          <div className="docs">
             <List
               itemLayout="horizontal"
               dataSource={imageObj}
@@ -538,7 +538,7 @@ class Postings extends Component {
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
       <Card
-        className="m-12 mt-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
+        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">

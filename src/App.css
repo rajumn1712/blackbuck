@@ -577,8 +577,12 @@
   background-position: -666px -469px;
 }
 .icon.repost-icon{
-  background-position: -193px -394px;
+  background-position: -194px -397px;
 }
+.repost-arrow{
+  width: 18px !important; height: 16px !important;
+}
+.docs{padding-left: 12px; padding-right: 12px;}
 .docs .ant-list-items {
   display: flex;
   flex-wrap: wrap;
@@ -1961,3 +1965,8 @@ textarea {
 .singlepostid .ant-card-actions, .singlepostid .profile-menu{display: none;}
 .sub-tab .ant-tabs-nav{margin: 0 !important;border-radius: 0.8rem 0.8rem 0 0 !important;border: 1px solid var(--line);}
 .sub-tab .group-page{border-radius: 0 0 0.8rem 0.8rem; border-top: 0;}
+
+/*--LMS--*/
+.course-step{ padding: 60px 12px;}
+.lmspostTitle{font-size: 38px; font-weight: 400 !important; color: var(--textprimary);}
+.lmstitleinput{margin: 60px auto !important;}
