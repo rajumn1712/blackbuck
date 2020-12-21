@@ -323,7 +323,7 @@ class Group extends Component {
                     <a><span className="post-icons settings-icon"></span> Update your settings</a>
                 </Menu.Item> please don't delete */}
         <Menu.Item key="1">
-          {!this.state.groupData?.IsAdmin && (
+          {!this.state.groupData?.IsAdmin && !this.state.groupData?.IsSystem && (
             <a onClick={() => this.leaveGroup(this.state.groupData)}>
               <span className="post-icons Leavegroup-icon"></span> Leave this
               group
@@ -356,7 +356,7 @@ class Group extends Component {
               className="ant-dropdown-link"
               onClick={(e) => e.preventDefault()}
             >
-              <span className="icons h-more-icon m-0"></span>
+              {(this.state.groupData?.IsAdmin || (!this.state.groupData?.IsAdmin && !this.state.groupData?.IsSystem)) && <span className="icons h-more-icon m-0"></span>}
             </a>
           </Dropdown>
         </button>
