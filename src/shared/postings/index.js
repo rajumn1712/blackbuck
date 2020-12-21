@@ -177,7 +177,7 @@ class Postings extends Component {
             : "/profileview/" + user?.UserId
         }
       ><span className="post-title">{user?.Firstname}</span></Link> {<> <span className="icon repost-icon"></span> <Link
-        to={"/profileview/" + mainUser?.UserId}
+        to={"/groupview/" + mainUser?.GroupId}
       ><span className="post-title">{mainUser?.Firstname}</span></Link>  </>} </span>,
       normal: <span className="overflow-text text-secondary"> <Link
         to={
@@ -735,7 +735,7 @@ class Postings extends Component {
   renderCommonCard = (post) => {
     debugger
     return <Card
-      title={this.titleAvatar(post.userdetails, post.date, false, { ...post.userdetails, Firstname: post.Group, }, (post.Group ? true : false))}
+      title={this.titleAvatar(post.userdetails, post.date, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false))}
       bordered={true}
       extra={
         <SideAction
