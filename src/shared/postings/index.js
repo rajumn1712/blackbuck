@@ -170,7 +170,7 @@ class Postings extends Component {
         <Meta
           avatar={<Avatar src={user.Image || defaultUser} />}
           title={
-            <span className="overflow-text post-title">{user.Firstname}</span>
+            <span className="overflow-text text-secondary"><span className="post-title">{user.Firstname}</span> Shared <span className="post-title">{user.Firstname}</span> Post</span>
           }
           description={<Moment fromNow>{date}</Moment>}
         />
@@ -517,7 +517,7 @@ class Postings extends Component {
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
       <Card
-        title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
+       className="m-12 mt-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">
