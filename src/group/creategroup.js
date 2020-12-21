@@ -213,7 +213,7 @@ class CreateGroup extends Component {
                 if (this.props.refreshSave)
                     this.props.refreshSave();
                 notify({
-                    description: "Group saved successfully",
+                    description: this.props.Type == "Edit" ? "Group edited successfully" : "Group saved successfully",
                     message: "Group",
                 });
             } else {
