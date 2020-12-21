@@ -421,6 +421,7 @@ class ShareBox extends Component {
             {...this.uploadProps}
             onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
             showUploadList={false}
+            disabled={this.state.fileUploading || this.state.uploadSources.length > 0}
           >
             <span className="sharebox-icons video-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
@@ -434,7 +435,10 @@ class ShareBox extends Component {
               <a
                 class="item-close"
                 onClick={() =>
+                {
+                  this.postObject.ImageUrl = [];
                   this.setState({ ...this.state, uploadSources: [] })
+                }
                 }
               >
                 <Tooltip title="Remove">
@@ -452,6 +456,7 @@ class ShareBox extends Component {
             {...this.uploadProps}
             onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
             showUploadList={false}
+            disabled={this.state.fileUploading || this.state.uploadSources.length > 0}
           >
             <span className="sharebox-icons audio-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Audio</p>
@@ -467,7 +472,10 @@ class ShareBox extends Component {
               <a
                 class="item-close"
                 onClick={() =>
+                {
+                  this.postObject.ImageUrl = [];
                   this.setState({ ...this.state, uploadSources: [] })
+                }
                 }
                 showUploadList={false}
               >
