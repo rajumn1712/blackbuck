@@ -343,6 +343,9 @@ class About extends Component {
                         className="custom-fields custom-select"
                       >
                         <RegionDropdown
+                        showDefaultOption={true}
+                        defaultOptionLabel="Select State"
+                        blankOptionLabel="Select State"
                           onChange={(value) => setFieldValue("State", value)}
                           country={values?.Country}
                           value={values?.State}
