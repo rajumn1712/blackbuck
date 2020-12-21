@@ -17,14 +17,14 @@ const data = {
     "Public": {
         title: 'Public',
         description: "Anyone can see who's in the group and what they post.",
-        img: 'icons public-icon m-0',
+        img: 'left-menu public-icon',
     },
 
 
     "College": {
         title: 'Public',
         description: "Anyone can see who's in the group and what they post.",
-        img: 'icons public-icon m-0',
+        img: 'left-menu public-icon',
     },
 
 

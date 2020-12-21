@@ -252,6 +252,7 @@
 .group-page .card-options-right{position: absolute;right: 8px;top: 8px;}
 .card-scroll .ant-card-body .ant-list-items{overflow: auto;height: 280px;}
 .icons.public-icon{background-position: -615px -256px;margin-top: 5px;margin-left: 5px;}
+.left-menu.public-icon{background-position: -616px -257px;margin-top: 5px;}
 .icons.private-icon{background-position: -643px -256px;margin-top: 5px;margin-left: 5px;}
 .icons.visible-icon{background-position: -463px -254px;margin-top: 5px;margin-left: 5px;}
 .icons.hidden-icon{background-position: -674px -257px;margin-top: 5px;margin-left: 5px;}

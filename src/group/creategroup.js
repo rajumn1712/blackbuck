@@ -308,13 +308,13 @@ class CreateGroup extends Component {
                                             <Form layout="vertical" >
                                                 <Row gutter={24}>
                                                     <Col xs={24}>
-                                                        <Form.Item label="Group Name" className="custom-fields">
+                                                        <Form.Item label="Group Name" className="custom-fields" name="Group Name" rules={[{ required: true }]}>
                                                             <Field
                                                                 className="ant-input"
                                                                 name="GroupName"
                                                                 value={values.GroupName}
                                                                 placeholder="Enter group name here"
-                                                                maxlength={150}
+                                                                maxlength={150} 
                                                                 autocomplete="off"
                                                             />
                                                             <span className="validateerror">
@@ -326,7 +326,7 @@ class CreateGroup extends Component {
                                                     <Col xs={24}>
                                                         <Form.Item
                                                             label="Group Type"
-                                                            className="custom-fields custom-select"
+                                                            className="custom-fields custom-select" name="Group Type" rules={[{ required: true }]}
                                                         >
                                                             <Select
                                                                 defaultValue=""
@@ -355,7 +355,7 @@ class CreateGroup extends Component {
                                                     <Col xs={12}>
                                                         <Form.Item
                                                             label="Choose Privacy"
-                                                            className="custom-fields custom-select"
+                                                            className="custom-fields custom-select" name="Choose Privacy" rules={[{ required: true }]}
                                                         >
                                                             <Select
                                                                 defaultValue=""
@@ -412,7 +412,7 @@ class CreateGroup extends Component {
                                                     {values.Type == 'Private' && <Col xs={12}>
                                                         <Form.Item
                                                             label="Hide Group"
-                                                            className="custom-fields custom-select"
+                                                            className="custom-fields custom-select" name="Hide Group" rules={[{ required: true }]}
                                                         >
                                                             <Select
                                                                 defaultValue="Visible"
@@ -438,7 +438,7 @@ class CreateGroup extends Component {
                                                     </Col>
                                                     }
                                                     <Col xs={24}>
-                                                        <Form.Item label="Location" className="custom-fields">
+                                                        <Form.Item label="Location" className="custom-fields" name="Location" rules={[{ required: true }]}>
                                                             <Field
                                                                 className="ant-input"
                                                                 name="Location"
@@ -455,7 +455,7 @@ class CreateGroup extends Component {
                                                 </Row>
                                                 <Row gutter={24}>
                                                     <Col xs={24}>
-                                                        <Form.Item label="Description" className="custom-fields">
+                                                        <Form.Item label="Description" className="custom-fields" name="Description" rules={[{ required: true }]}>
                                                             <Field
                                                                 className="ant-input"
                                                                 name="Description"

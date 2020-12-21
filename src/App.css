@@ -1341,6 +1341,7 @@
 .ant-picker {
   border: 1px solid #dfe3eb;
 }
+.custom-fields .ant-input[disabled]{color: rgba(0, 0, 0, 0.85);}
 .ant-input,
 .ant-select,
 .ant-picker {
