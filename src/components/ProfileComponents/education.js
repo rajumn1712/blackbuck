@@ -399,7 +399,7 @@ class Education extends Component {
                           >
                             <Input.Group compact>
                               <RangePicker
-                                disabledDate={this.disabledDate}
+                                // disabledDate={this.disabledDate}
                                 name="AcademicYear"
                                 value={values.AcademicYear}
                                 onChange={(value) =>
