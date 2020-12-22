@@ -44,6 +44,7 @@ class ShareAction extends Component {
         const res = await savePost(_saveObject);
         if (res.ok) {
             notify({ message: "Share", description: "Post shared on you're timeline" });
+            this.setState({ visible: false })
         }
         const user = {
             UserId: this.props.profile?.Id,
@@ -102,13 +103,15 @@ class ShareAction extends Component {
                 <Menu.Item key="5" onClick={() => this.handleShare()}>
                     <span className="post-icons sharenow-icon"></span>&nbsp;Share Now
                 </Menu.Item>
-                <Menu.Item key="6" onClick={() => this.setState({ visible: false })}>
-                    <CopyToClipboard text={this.props.url}>
+                <CopyToClipboard text={this.props.url} onCopy={() => notify({ message: "Copied to clipboard" })}>
+                    <Menu.Item key="6" onClick={() => this.setState({ visible: false })}>
+
                         <>
                             <span className="post-icons copylink-icon"></span>&nbsp;Copy Link
                         </>
-                    </CopyToClipboard>
-                </Menu.Item>
+
+                    </Menu.Item>
+                </CopyToClipboard>
             </Menu>} trigger="click">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons share-icon"></span>Share</a>
             </Popover>
