@@ -24,7 +24,7 @@ class Hobbies extends Component {
   showModal = (e) => {
     e.preventDefault();
     let { tags } = this.state;
-    tags = this.props.hobbies ;
+    tags = this.props.hobbies;
     this.setState({
       visible: true,
       tags,
@@ -32,11 +32,11 @@ class Hobbies extends Component {
   };
   handleOk = async (e) => {
     this.setState({ ...this.state, loading: true });
-    let { saveObj, tags,hobbies } = this.state;
+    let { saveObj, tags, hobbies } = this.state;
     saveObj.Name = tags;
     this.setState({ saveObj: saveObj });
     const savehobbies = await saveHobbies(this.props.userid, this.state.saveObj)
-    if(savehobbies.ok){
+    if (savehobbies.ok) {
       this.setState(
         {
           loading: false,
@@ -44,13 +44,13 @@ class Hobbies extends Component {
         },
         () => {
           notify({
-            description: `Hobbies ${hobbies.length > 0 ? 'edited' : 'saved'} successfully`,
+            description: `Hobbies ${hobbies?.length > 0 ? 'edited' : 'saved'} successfully`,
             message: "Hobbies",
           });
           this.props.callback(true);
         }
       );
-    }else{
+    } else {
       this.setState(
         {
           ...this.state,
@@ -60,7 +60,7 @@ class Hobbies extends Component {
           notify({
             description: 'Something went wrong',
             message: "Error",
-            type:'error'
+            type: 'error'
           });
         }
       );
@@ -143,17 +143,17 @@ class Hobbies extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Tooltip title={hobbies.length > 0 ? 'Edit' : 'Add'}>
+              <Tooltip title={hobbies?.length > 0 ? 'Edit' : 'Add'}>
                 <Link onClick={this.showModal}>
-                <span
-                  className={`icons ${hobbies.length > 0 ? "edit" : "add"}`}
-                />
-              </Link>
+                  <span
+                    className={`icons ${hobbies?.length > 0 ? "edit" : "add"}`}
+                  />
+                </Link>
               </Tooltip>
             ) : null
           }
         >
-          {hobbies.length > 0 ? (
+          {hobbies?.length > 0 ? (
             hobbies.map((hobby, index) => {
               return (
                 <Tag className="tags" key={index}>
@@ -162,14 +162,14 @@ class Hobbies extends Component {
               );
             })
           ) : (
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-          )}
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            )}
         </Card>
         <CommonModal
           className="custom-popup custom-fields multi-select"
           visible={visible}
           title="Hobbies"
-          disable={tags.length == 0}
+          disable={tags?.length == 0}
           cancel={this.handleCancel}
           saved={this.handleOk}
         >
@@ -211,7 +211,7 @@ class Hobbies extends Component {
             )}
           </div> */}
           <Select
-         
+
             mode="tags"
             style={{ width: "100%" }}
             placeholder="Enter Hobbies"
