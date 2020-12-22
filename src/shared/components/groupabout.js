@@ -188,7 +188,7 @@ class GroupAbout extends Component {
                                 size="large"
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
-                                {Members.slice(0, size).map((user, index) => {
+                                {Members.map((user, index) => {
                                     return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
                                         <Link to={this.props?.profile.Id == user.UserId ? "/profile/1" : ("/profileview/" + user.UserId)}><Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
                                         </Avatar></Link> 
@@ -204,7 +204,7 @@ class GroupAbout extends Component {
                                 size="large"
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
-                                {AdminUsers.slice(0, size)?.map((user, index) => {
+                                {AdminUsers?.map((user, index) => {
                                     return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
                                         <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
                                         </Avatar>
