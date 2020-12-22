@@ -733,7 +733,6 @@ class Postings extends Component {
     </Card>
   }
   renderCommonCard = (post) => {
-    debugger
     return <Card
       title={this.titleAvatar(post.userdetails, post.date, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false))}
       bordered={true}
