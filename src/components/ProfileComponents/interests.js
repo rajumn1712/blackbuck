@@ -310,6 +310,7 @@ class Interests extends Component {
                   onChange={(value) =>
                     this.setFieldValue(value)
                   }
+                  key={lstInterests}
                 >
                   {interestsLu.map((item, index) => {
                     return (
