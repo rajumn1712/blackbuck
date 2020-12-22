@@ -142,116 +142,63 @@ class Profile extends Component {
   };
   ExportPdf = () => {
     const doc = new jsPDF();
-    const html = `<!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">     
-        <link href="http://fonts.cdnfonts.com/css/neue-haas-grotesk-text-pro" rel="stylesheet">       
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Download Profile</title>
-        <style>
-             @import url('http://fonts.cdnfonts.com/css/neue-haas-grotesk-text-pro');
-            * {
-                font-family: 'Neue Haas Grotesk Text Pro', sans-serif;
-            }
-           
-        </style>
-    </head>
-    
-    <body style="margin: 0">
-        <table style="background-color: #07A3B2;margin: auto;border-collapse: collapse;width:600px">
-            <tr>
-                <td style="padding: 60px 24px 24px;vertical-align: top;">
-                    <table style="border-collapse: collapse;">
-                        <tr style="margin-bottom: 24px;">
-                            <td>
-                                <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-top: 0;margin-bottom: 0.5em;">Contact</h3>
-                                <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">7799036981</p>
-                                <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">vishnutrimurthulu@yopmail.com</p>
-                                <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">30-95-73,Street line1,Street Line2,Hyderabad,Andhra Pradesh,India,530046</p>
-                                <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;word-break: break-all;">http://localhost:3000/profile/vishnutrimurthulu</p> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td >
-                                <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Certifications</h3>
-                                <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">Company 1-30 days</p>
-                                <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">Company 2-45 days</p>
-                                <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">Company 3-30 days</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td >
-                                <h3  style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Hobbies</h3>
-                                <ul style="list-style-type: none;padding-left: 0;">
-                                    <li style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">Playing Cricket</li>
-                                    <li style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">Musics</li>
-                                    <li style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">movies</li>
-                                    <li style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">web surffing</li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </table>
-    
-                </td>
-                <td style="background-color: #ffffff;padding: 60px 24px 24px;vertical-align: top;">
-                    <table style="border-collapse: collapse;">
-                        <tr>
-                            <td >
-                                <h1 style="margin-top:0;font-weight: 400;font-size: 36px;color:#000000b3;margin-bottom: 5px;line-height: 40px;text-transform: capitalize;">vishnu trimurthulu</h1>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#000000b3;margin-bottom: 0.5em;">About me</h3>
-                                <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;text-align: justify;">Madison Blackstone is a director of brand marketing, with experience managing global
-                                    teams and multi-million-dollar campaigns. Her background in brand strategy, visual
-                                    design, and account management inform her mindful but competitive approach.
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#000000b3;margin-bottom: 0.5em;">Education</h3>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <h4 style="font-size: 18px;font-weight: 400;line-height: 22px;margin-top: 0; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85);">Sri Rama Krishna Public School</h4>
-                                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">SSC</p>
-                                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">2009-2010</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 style="font-size: 18px;font-weight: 400;line-height: 22px;margin-top: 0; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85);">Miracle Educational Society Group of Institutions</h4>
-                                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">InterMediate</p>
-                                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">2016-2020</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 style="font-size: 18px;font-weight: 400;line-height: 22px;margin-top: 0; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85);">Miracle Educational Society Group of Institutions</h4>
-                                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">B.Tech</p>
-                                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">2016-2020</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </body>
-    
-    </html>`
+    const html = `
+          <table style={{borderWidth: 1;borderColor: '#f9f9f9'}}>
+            <thead>
+              <tr>
+                <th style={{backgroundColor: '#f9f9f9', padding: 8}}>SERVICE</th>
+                <th style={{backgroundColor: '#f9f9f9', padding: 8}}>DESCRIPTION</th>
+                <th style={{backgroundColor: '#f9f9f9', padding: 8}}>PRICE</th>
+                <th style={{backgroundColor: '#f9f9f9', padding: 8}}>QTY</th>
+                <th style={{backgroundColor: '#f9f9f9', padding: 8}}>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Design</td>
+                <td>Creating a recognizable design solution based on the company's existing visual identity</td>
+                <td>$40.00</td>
+                <td>26</td>
+                <td>$1,040.00</td>
+              </tr>
+              <tr>
+                <td>Development</td>
+                <td>Developing a Content Management System-based Website</td>
+                <td>$40.00</td>
+                <td>80</td>
+                <td>$3,200.00</td>
+              </tr>
+              <tr>
+                <td>SEO</td>
+                <td>Optimize the site for search engines (SEO)</td>
+                <td>$40.00</td>
+                <td>20</td>
+                <td>$800.00</td>
+              </tr>
+              <tr>
+                <td>Training</td>
+                <td>Initial training sessions for staff responsible for uploading web content</td>
+                <td>$40.00</td>
+                <td>4</td>
+                <td>$160.00</td>
+              </tr>
+              <tr>
+                <td>SUBTOTAL</td>
+                <td>$5,200.00</td>
+              </tr>
+              <tr>
+                <td>TAX 25%</td>
+                <td>$1,300.00</td>
+              </tr>
+              <tr>
+                <td colspan="4">GRAND TOTAL</td>
+                <td>$6,500.00</td>
+              </tr>
+            </tbody>
+          </table>
+        `
     doc.html(html).then(() => {
-      doc.save("test.pdf", {
-        orientation: "landscape",
-        unit: "px",
-        format: [4, 2]
-      })
+      doc.save("test.pdf")
     });
 
     // this.setState({ ...this.state, loading: true });
