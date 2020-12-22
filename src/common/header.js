@@ -14,7 +14,7 @@ import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
 import { connect } from 'react-redux';
-import { fetchUserFriends } from '../shared/api/apiServer';
+import { fetchFriendRequests, fetchUserFriends } from '../shared/api/apiServer';
 import ChatSystem from '../utils/chat-system';
 const { Meta } = Card;
 const { Search } = Input;
@@ -24,63 +24,6 @@ const logout = () => {
     userLogout();
     userManager.signoutRedirect()
 }
-const notifications = (
-    <div className="notification-dropdown">
-        <div className="noti-dropdown-header">
-            <h3>Notifications</h3>
-            <Link to="/notifications" >View all</Link>
-        </div>
-        <Divider className="my-0" />
-        <div className="notification-list unread">
-            <div className="notification-image">
-                <Avatar src={avatar} />
-            </div>
-            <div className="notification-description ">
-                <p>Vin Diesel commented on your post.</p>
-                <span>3 minutes ago</span>
-            </div>
-        </div>
-        <div className="notification-list read">
-            <div className="notification-image">
-                <Avatar src={sherlyn} />
-            </div>
-            <div className="notification-description ">
-                <p>Shrelyn mentioned you in the timeline.</p>
-                <span>18 hours ago</span>
-            </div>
-        </div>
-        <div className="notification-list read">
-            <div className="notification-image">
-                <Avatar src={avatar2} />
-            </div>
-            <div className="notification-description ">
-                <p>Andrew sent you a friend request.</p>
-                <span>1 day ago</span>
-            </div>
-        </div>
-        <div className="notification-list  read">
-            <div className="notification-image">
-                <Avatar src={user_Image} />
-            </div>
-            <div className="notification-description">
-                <p>Simon added a new photo.</p>
-                <span>2 days ago</span>
-            </div>
-        </div>
-        <div className="notification-list read">
-            <div className="notification-image">
-                <Avatar src={userImage} />
-            </div>
-            <div className="notification-description">
-                <p>Vin Diesel shared his story.</p>
-                <span>3 days ago</span>
-            </div>
-        </div>
-    </div>
-);
-
-
-
 class HeaderComponent extends React.Component {
 
     state = {
@@ -92,7 +35,9 @@ class HeaderComponent extends React.Component {
         agentProfile: {
             imageUrl: null,
             teamName: null
-        }
+        },
+        notifications: null,
+        notificationsCount: 0
     };
 
     showDrawer = async () => {
@@ -104,16 +49,46 @@ class HeaderComponent extends React.Component {
     };
     componentDidMount() {
         const storeState = store.getState();
-        const { FirstName, LastName, Email, ProfilePic } = storeState.oidc?.profile || {};
+        const { FirstName, LastName, Email, ProfilePic, Id } = storeState.oidc?.profile || {};
+        this.handleNotifications(Id);
         this.setState({ FirstName, LastName, Email, ProfilePic });
         store.subscribe(async () => {
             const state = store.getState();
             if (state.oidc?.profile) {
-                const { FirstName, LastName, Email, ProfilePic } = state.oidc.profile;
+                const { FirstName, LastName, Email, ProfilePic, Id } = state.oidc.profile;
+                this.handleNotifications(Id);
                 this.setState({ FirstName, LastName, Email, ProfilePic })
             }
-        })
+        });
 
+
+    }
+    async handleNotifications(id) {
+        if (id) {
+            const friendRequests = await fetchFriendRequests(id);
+            if (friendRequests.ok) {
+                const notifications = <div className="notification-dropdown">
+                    <div className="noti-dropdown-header">
+                        <h3>Notifications</h3>
+                        {/* <Link to="/notifications" >View all</Link> */}
+                    </div>
+                    <Divider className="my-0" />
+                    {friendRequests.data?.map((friend, indx) => <div key={indx} className="notification-list read">
+                        <div className="notification-image">
+                            <Avatar src={friend.Image} />
+                        </div>
+                        <div className="notification-description ">
+                            <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
+                            <span><Link to="/profile/3">Respond</Link></span>
+                        </div>
+                    </div>)}
+                    {friendRequests.data.length===0&&<p style={{alignItems:"center",fontWeight:"bold"}}>You're all set</p>}
+                </div>;
+                this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })
+
+            }
+
+        }
     }
     onClose = () => {
         this.setState({
@@ -200,10 +175,10 @@ class HeaderComponent extends React.Component {
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
+                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter">
                                     <Tooltip title="Notifications">
                                         <Link to="/about">
-                                            <Badge className="notification-count" count={5} showZero>
+                                            <Badge className="notification-count" count={this.state.notificationsCount} showZero>
                                                 <span className="icons notification-icon" />
                                             </Badge>
                                         </Link>
