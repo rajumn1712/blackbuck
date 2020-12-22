@@ -921,7 +921,7 @@
 .w-300 {
   width: 300px !important;
 }
-.change-text{width: 200px;text-align: right;margin-right: 8px;font-weight: 400;font-weight: 600;font-size: 16px;}
+.change-text{width: 200px;text-align: right;margin: 10px;}
 .custom-card .list-link {
   color: var(--primary);
   margin-left: 3px;
@@ -1306,7 +1306,7 @@
 .ant-form-vertical .ant-form-item-label {
   padding-bottom: 0px !important;
 }
-.custom-fields .ant-form-item-label > label {
+.change-text, .custom-fields .ant-form-item-label > label {
   color: var(--textsecondary) !important;
   font-size: var(--f-14);
   font-weight: 500;
@@ -1560,7 +1560,7 @@ textarea {
   height: 100%;
   object-fit: cover;
 }
-.group-page .ant-card-cover {
+.group-page .ant-card-cover, .media-tabs .ant-card-cover {
   height: 180px;
 }
 .see-more {
@@ -1846,6 +1846,7 @@ textarea {
 .settings-left .ant-card-body {
   padding: 6px 0;
 }
+.settings-left{position: fixed !important;width: 233.156px;}
 .set-flex .ant-list-item-meta-title {
   width: 220px;
 }
