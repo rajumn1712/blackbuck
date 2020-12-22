@@ -66,8 +66,9 @@ class Groups extends Component {
       });
     }
   };
-  newGroup = () => {};
+  newGroup = () => { };
   updateGroup(item) {
+    debugger
     let { data } = this.state;
     if (item.type === "Private") {
       for (const i in data) {
@@ -78,7 +79,9 @@ class Groups extends Component {
       }
       this.setState({ ...this.state, data });
     } else {
-      this.getAllGroups();
+      let { data } = this.state;
+      data = data.filter(ite => item.id !== ite.id);
+      this.setState({ ...this.state, data });
     }
   }
   componentDidMount() {
@@ -185,13 +188,13 @@ class Groups extends Component {
                     Cancel request
                   </Link>
                 ) : (
-                  <Link
-                    className="ml-8 f-12 list-link ml-16"
-                    onClick={() => this.joinGroup(item)}
-                  >
-                    Join
-                  </Link>
-                )}
+                    <Link
+                      className="ml-8 f-12 list-link ml-16"
+                      onClick={() => this.joinGroup(item)}
+                    >
+                      Join
+                    </Link>
+                  )}
               </List.Item>
             )}
           />
@@ -209,7 +212,7 @@ class Groups extends Component {
           title="Create group"
           cancel={this.handleCancel}
           saved={this.saveGroup}
-          // isHideFooter={true}
+        // isHideFooter={true}
         >
           {visible && (
             <CreateGroup
