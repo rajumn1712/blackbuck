@@ -162,7 +162,7 @@ class Profile extends Component {
     //   return <Loader className="loader-top-middle" />;
     // }
     const operations = (
-      <Button className="profile-download" onClick={this.ExportPdf}>
+      <Button className="profile-download">
         <span className="post-icons download-icon"></span>Download Profile
       </Button>
     );

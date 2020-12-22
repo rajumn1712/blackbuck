@@ -78,6 +78,7 @@
 .m-4{margin: 4px;}
 .m-8{margin: 8px;}
 .m-16{margin: 16px !important;}
+.m-auto, .m-auto ul{margin: auto;}
 .ml-0{margin-left: 0px;}
 .ml-4{margin-left: 4px;}
 .ml-8{margin-left: 8px;}
@@ -109,6 +110,9 @@
 .my-4{margin-top: 4px; margin-bottom: 4px;}
 .my-8{margin-top: 8px; margin-bottom: 8px;}
 .my-16{margin-top: 16px; margin-bottom: 16px;}
+
+/*--Color--*/
+.text-secondary{color: var(--textsecondary)}
 
 *{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 * { scrollbar-width: thin; scrollbar-color: var(--primary) var(--secondary);}

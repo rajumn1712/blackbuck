@@ -577,8 +577,12 @@
   background-position: -666px -469px;
 }
 .icon.repost-icon{
-  background-position: -193px -394px;
+  background-position: -194px -397px;
 }
+.repost-arrow{
+  width: 18px !important; height: 16px !important;
+}
+.docs{padding-left: 12px; padding-right: 12px;}
 .docs .ant-list-items {
   display: flex;
   flex-wrap: wrap;
@@ -917,7 +921,7 @@
 .w-300 {
   width: 300px !important;
 }
-.change-text{width: 200px;text-align: right;margin-right: 8px;font-weight: 400;font-weight: 600;font-size: 16px;}
+.change-text{width: 200px;text-align: right;margin: 10px;}
 .custom-card .list-link {
   color: var(--primary);
   margin-left: 3px;
@@ -1302,7 +1306,7 @@
 .ant-form-vertical .ant-form-item-label {
   padding-bottom: 0px !important;
 }
-.custom-fields .ant-form-item-label > label {
+.change-text, .custom-fields .ant-form-item-label > label {
   color: var(--textsecondary) !important;
   font-size: var(--f-14);
   font-weight: 500;
@@ -1341,6 +1345,7 @@
 .ant-picker {
   border: 1px solid #dfe3eb;
 }
+.custom-fields .ant-input[disabled]{color: rgba(0, 0, 0, 0.85);}
 .ant-input,
 .ant-select,
 .ant-picker {
@@ -1555,7 +1560,7 @@ textarea {
   height: 100%;
   object-fit: cover;
 }
-.group-page .ant-card-cover {
+.group-page .ant-card-cover, .media-tabs .ant-card-cover {
   height: 180px;
 }
 .see-more {
@@ -1841,6 +1846,7 @@ textarea {
 .settings-left .ant-card-body {
   padding: 6px 0;
 }
+.settings-left{position: fixed !important;width: 233.156px;}
 .set-flex .ant-list-item-meta-title {
   width: 220px;
 }
@@ -1961,3 +1967,8 @@ textarea {
 .singlepostid .ant-card-actions, .singlepostid .profile-menu{display: none;}
 .sub-tab .ant-tabs-nav{margin: 0 !important;border-radius: 0.8rem 0.8rem 0 0 !important;border: 1px solid var(--line);}
 .sub-tab .group-page{border-radius: 0 0 0.8rem 0.8rem; border-top: 0;}
+
+/*--LMS--*/
+.course-step{ padding: 60px 12px;}
+.lmspostTitle{font-size: 38px; font-weight: 400 !important; color: var(--textprimary);}
+.lmstitleinput{margin: 60px auto !important;}

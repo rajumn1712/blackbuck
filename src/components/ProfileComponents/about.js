@@ -85,7 +85,7 @@ class About extends Component {
           },
           () => {
             notify({
-              description: "Profile saved successfully",
+              description: "Profile edited successfully",
               message: "Abou Me",
             });
             this.props.callback(true);
@@ -379,7 +379,7 @@ class About extends Component {
                             if(/^[0-9\b]+$/.test(e.target.value)){
                               setFieldValue("PinCode",e.target.value)
                             }else{
-                              setFieldValue("PinCode","")
+                              e.preventDefault()
                             }
                           }}
                         />
@@ -404,7 +404,7 @@ class About extends Component {
                             if(/^[0-9\b]+$/.test(e.target.value)){
                               setFieldValue("PhoneNumber",e.target.value)
                             }else{
-                              setFieldValue("PhoneNumber","")
+                              e.preventDefault()
                             }
                           }}
                         />
