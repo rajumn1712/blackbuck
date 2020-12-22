@@ -9,10 +9,15 @@ class LayoutComponent extends Component {
         className: 'container'
     }
     componentDidUpdate(prevProps) {
-        if (this.props.locaction != prevProps.locaction) {
+        debugger
+        if (this.props.location != prevProps.location) {
             const className = window.location.href.indexOf('admin') > -1 ? 'admin-panel' : 'container';
             this.setState({ className })
         }
+    }
+    componentDidMount() {
+        const className = window.location.href.indexOf('admin') > -1 ? 'admin-panel' : 'container';
+        this.setState({ className });
     }
     render() {
 
