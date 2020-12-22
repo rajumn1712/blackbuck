@@ -117,4 +117,12 @@ transition-duration: 167ms;}
 .ant-picker-decade-panel .ant-picker-content, .ant-picker-year-panel .ant-picker-content, .ant-picker-quarter-panel .ant-picker-content, .ant-picker-month-panel .ant-picker-content{height: 150px !important;}
 .custom-fields.multi-select .ant-select-selector{padding: 4px 11px;}
 .custom-fields.multi-select .ant-select-selection-item-content{text-transform: capitalize;}
-.ant-spin-dot-item{background-color: var(--primary);}
+.ant-spin-dot-item{background-color: var(--primary) !important;}
+.coursesbanner{border-radius: 0.8rem;height: 275px;}
+.coursesbanner .owl-dots{position: absolute;right: 0;bottom: 0;}
+.coursesbanner .owl-carousel{height: 275px;}
+.coursesbanner .coursebanneritem{position: relative;border-radius: 0.8rem;height: 275px;overflow: hidden;}
+.coursesbanner .coursebanneritem img{border-radius: 0.8rem;    object-fit: cover;object-position: center center;height: 275px;}
+.coursesbanner .coursebanneritem .coursebannertext{position: absolute;height: 100%;top: 0;left: 0; right: 0;left: 0;background: #0000003d;display: flex;flex-direction: column;align-items: flex-start;justify-content: center;padding: 24px;}
+.coursesbanner .coursebanneritem .coursebannerdescp{max-width: 60%;color: var(--white);}
+.coursesbanner .coursebanneritem .coursebannertitle{color :var(--white);font-size: 24px;text-transform: uppercase;margin-bottom: 8px;line-height: 26px;}

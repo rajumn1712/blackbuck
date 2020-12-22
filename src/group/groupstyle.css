@@ -2,15 +2,15 @@
 .coverpage {
     position: relative;
     background-color: var(--white);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
 }
 
 .coverpage img {
     width: 100%;
     overflow: hidden;
-    background-size: cover;
-    background-position: top center;
+    object-fit: cover;
+    object-position: center center;
 }
 
 .coverpage:after {
@@ -21,7 +21,7 @@
     height: 100%;
     width: 100%;
     background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0));
-    border-radius: 10px;
+    border-radius: 0.8rem;
 }
 
 .coverpage .padlock img {
