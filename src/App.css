@@ -1560,7 +1560,7 @@ textarea {
   height: 100%;
   object-fit: cover;
 }
-.group-page .ant-card-cover {
+.group-page .ant-card-cover, .media-tabs .ant-card-cover {
   height: 180px;
 }
 .see-more {

@@ -104,7 +104,7 @@ class Media extends Component {
                                             {Photos.length > 0 && Photos?.map((item, indx) => {
                                                 return <Col span={6}><Card key={indx}
                                                     hoverable
-                                                    cover={<img src={item.ImageUrl} onClick={() => this.openFullview(item, 'Photo')} />}
+                                                    cover={<img className="obj-fit" src={item.ImageUrl} onClick={() => this.openFullview(item, 'Photo')} />}
                                                 >
                                                 </Card></Col>
                                             })
