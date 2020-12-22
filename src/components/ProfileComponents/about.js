@@ -318,7 +318,10 @@ class About extends Component {
                         className="custom-fields custom-select"
                       >
                         <CountryDropdown
-                          onChange={(value) => setFieldValue("Country", value)}
+                          onChange={(value) => {
+                            setFieldValue("Country", value);
+                            setFieldValue("State", "")
+                          }}
                           value={values?.Country}
                           name="Country"
                         />

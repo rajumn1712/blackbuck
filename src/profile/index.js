@@ -66,23 +66,49 @@ class Profile extends Component {
     name: "file",
     multiple: false,
     fileList: [],
-    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
-    onChange: ({ file }) => {
-      const { status } = file;
-      if (status !== "uploading") {
-        this.imageObject.ImageUrl = file.response[0];
-        this.handleImageOk();
-      }
-      if (status === "done") {
-        // notify({
-        //   description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
-        //     } uploaded successfully.`,
-        //   message: "Upload",
-        // });
-      } else if (status === "error") {
-        message.error(`File upload failed.`);
-      }
+    customRequest: ({ file }) => {
+      let formData = new FormData();
+      formData.append(
+        "file",
+        file,
+        file.name +
+          `${this.state.isProfilePic ? "profile_" : "cover_"}${
+            this.props?.profile?.Id
+          }`
+      );
+      apiClient
+        .post(process.env.REACT_APP_AUTHORITY + "/Home/UploadFil", formData)
+        .then((res) => {
+          if(res.ok){
+            this.imageObject.ImageUrl = res.data[0];
+            this.handleImageOk();
+          }
+          else{
+            notify({
+              message:"Error",
+              description:'Something went wrong',
+              type:'error'
+            })
+          }
+        });
     },
+    // action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+    // onChange: ({ file }) => {
+    //   const { status } = file;
+    //   if (status !== "uploading") {
+    //     this.imageObject.ImageUrl = file.response[0];
+    //     this.handleImageOk();
+    //   }
+    //   if (status === "done") {
+    //     // notify({
+    //     //   description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
+    //     //     } uploaded successfully.`,
+    //     //   message: "Upload",
+    //     // });
+    //   } else if (status === "error") {
+    //     message.error(`File upload failed.`);
+    //   }
+    // },
   };
 
   handleDisabledChange = (disabled) => {

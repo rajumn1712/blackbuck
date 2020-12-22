@@ -366,7 +366,7 @@ class Intership extends Component {
                       {item.CompanyLogo ? (
                         <img src={item.CompanyLogo} />
                       ) : (
-                        item.CompanyName
+                        item.ShortName.substring(0,2)
                       )}
                     </div>
                     <h4 className="title">{item.CompanyName}</h4>
