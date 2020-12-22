@@ -184,14 +184,14 @@ class GroupAbout extends Component {
 
                         {Members.length > 0 && <div className=" pb-16">
                             <Avatar.Group
-                                maxCount={4}
+                                maxCount={size-1}
                                 size="large"
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
                                 {Members.slice(0, size).map((user, index) => {
                                     return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
-                                        <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
-                                        </Avatar>
+                                        <Link to={this.props?.profile.Id == user.UserId ? "/profile/1" : ("/profileview/" + user.UserId)}><Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
+                                        </Avatar></Link> 
                                     </Tooltip>
                                 })}
                             </Avatar.Group>
@@ -200,11 +200,11 @@ class GroupAbout extends Component {
                         }
                         {AdminUsers?.length > 0 && <div className="">
                             <Avatar.Group
-                                maxCount={size - 1}
+                                maxCount={size-1}
                                 size="large"
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
-                                {AdminUsers?.map((user, index) => {
+                                {AdminUsers.slice(0, size)?.map((user, index) => {
                                     return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
                                         <Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
                                         </Avatar>

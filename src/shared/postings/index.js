@@ -566,7 +566,7 @@ class Postings extends Component {
         <Card.Meta
           className="post-image"
           avatar={
-            <div onClick={() => this.showModal(post)}>
+            <div  onClick={post.type!=='text'&& post.type!=='Docs' ?() => this.showModal(post):''}>
               {this.renderPostImages(post.image, post.type, post)}
             </div>
           }
@@ -787,7 +787,7 @@ class Postings extends Component {
       <Card.Meta
         className="post-image"
         avatar={
-          <div onClick={() => this.showModal(post)}>
+          <div onClick={post.type!=='text'&& post.type!=='Docs' ?() => this.showModal(post):''}>
             {this.renderPostImages(post.image, post.type, post)}
           </div>
         }

@@ -36,6 +36,7 @@ import { store } from "../store";
 import ProfileDetail from "./profileDetail";
 import Loader from "../common/loader";
 import notify from "../shared/components/notification";
+import { apiClient } from '../shared/api/clients';
 const { Meta } = Card;
 const { TabPane } = Tabs;
 
