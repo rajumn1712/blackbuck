@@ -147,7 +147,7 @@ const steps = [
         title: ' Curriculam',
         content: <>
                     <div className="create-course">
-                        <div className="lecture-collapse">
+                        <div className="lecture-collapse mb-12">
                             <Collapse
                                 expandIconPosition="right"
                             >
@@ -185,7 +185,7 @@ const steps = [
                                 </Panel>
                             </Collapse>
                         </div>
-                        <div className="lecture-collapse">
+                        <div className="lecture-collapse mb-12">
                             <Collapse
                                 expandIconPosition="right"
                             >
@@ -195,12 +195,12 @@ const steps = [
                             </Collapse>
                             <div className="add-lecture p-4"><span className="icons add"></span></div>
                         </div>
-                        <div className="lecture-collapse">
-                        <div className="custom-fields entr-course-title">
+                        <div className="lecture-collapse mb-12">
+                        <div className="custom-fields entr-course-title p-12 mb-12">
                             <Input placeholder="Enter Lecture Title" className="f-16 mb-16" />
                             <div className="text-right">
-                            <Button type="primary" className="addContent" size="small">Add Lecture</Button>
-                            <Button type="default" className="addContent" size="small" style={{marginLeft: 8}}>Cancel</Button>
+                            <Button type="primary" className="addContent px-16" size="small" style={{marginRight: 8}}>Add Lecture</Button>
+                            <Button type="default" className="addContent px-16" size="small">Cancel</Button>
                             </div>
                         </div>
                         <div className="add-lecture p-4"><span className="icons close"></span></div>
