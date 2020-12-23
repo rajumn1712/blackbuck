@@ -462,8 +462,10 @@ class Group extends Component {
                               shape="round"
                               beforeCrop={this.handleBeforUpload}
                             >
-                              <Upload {...this.uploadProps}>
-                                <Avatar
+                              <Upload {...this.uploadProps} disabled={!groupData?.IsGroupAdmin}>
+                                <Avatar onClick={() =>
+                                        this.setState({ isProfilePic: true })
+                                      }
                                   src={groupData?.GroupImage || defaultguser}
                                 />
                                 {groupData?.IsGroupAdmin && (
