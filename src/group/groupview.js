@@ -135,6 +135,11 @@ class Group extends Component {
       visibleEditgroup: true,
     });
   };
+  addAdmin = (group) => {
+    this.setState({
+      visibleAddAdmin: true,
+    });
+  }
   leaveGroup = async (group) => {
     const joinResponse = await cancelGroupRequest(
       group.GroupId,
@@ -334,7 +339,7 @@ class Group extends Component {
               <span className="post-icons edit-icon"></span> Edit group
             </a>
           )}
-          <a onClick={() => this.editGroup(this.state.groupData)}>
+          <a onClick={() => this.addAdmin(this.state.groupData)}>
               <span className="post-icons add-admin"></span> Add admin
             </a>
         </Menu.Item>
@@ -372,7 +377,8 @@ class Group extends Component {
       friendsLu,
       loading,
       visibleEditgroup,
-      tabkey
+      tabkey,
+      visibleAddAdmin
     } = this.state;
     const friendsData = friendsLu
       .filter((item) => {
@@ -522,6 +528,23 @@ class Group extends Component {
                     refreshSave={() => this.refreshSave()}
                   />
                 )}
+              </CommonModal>
+              <CommonModal
+                className="creategroup-popup"
+                visible={visibleAddAdmin}
+                title="Add Admin"
+                cancel={this.handleCancel}
+                saved={this.saveGroup}
+              >
+                {/* {visibleAddAdmin && (
+                  <CreateGroup
+                    Type={"Edit"}
+                    GroupId={GroupEditObj.GroupId}
+                    handleCancel={this.handleCancel}
+                    onRef={(creategroup) => (this.creategroup = creategroup)}
+                    refreshSave={() => this.refreshSave()}
+                  />
+                )} */}
               </CommonModal>
               <div className="right-statistic group-right mt-12 mx-12">
                 {groupData.Members > 0 && (
