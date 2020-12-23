@@ -1989,3 +1989,5 @@ textarea {
 .custom_tabs .ant-tabs-tab-btn{ font-weight: 500;}
 .custom_tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--primary);}
 .custom_tabs .ant-tabs-ink-bar, .start-course{background: var(--primary) !important;}
+.ant-input-group-wrapper.header-searchbar {
+  display: initial;}

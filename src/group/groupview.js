@@ -340,7 +340,7 @@ class Group extends Component {
             </a>
           )}
           <a onClick={() => this.addAdmin(this.state.groupData)}>
-              <span className="post-icons add-admin"></span> Add admin
+            <span className="post-icons add-admin"></span> Add admin
             </a>
         </Menu.Item>
         {/* <Menu.Item key="2">
@@ -545,6 +545,16 @@ class Group extends Component {
                     refreshSave={() => this.refreshSave()}
                   />
                 )} */}
+                <Search
+                  className="header-searchbar mb-16"
+                  placeholder="Search"
+                  onChange={(e) => this.onSearch(e)}
+                  onSearch={(event) => this.onSearch(event)}
+                />
+                <div className="">
+                  <div className="f-16 fw-400 my-16">Suggested</div>
+                  <List itemLayout="horizontal">{friendsData}</List>
+                </div>
               </CommonModal>
               <div className="right-statistic group-right mt-12 mx-12">
                 {groupData.Members > 0 && (
