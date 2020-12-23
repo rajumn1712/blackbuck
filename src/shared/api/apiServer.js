@@ -156,6 +156,9 @@ const getMembers = (groupId, userId, take, skip) => {
 const deleteUserGroup = (group_id) => {
   return apiClient.get(PROFILE_API + `groupDelete/${group_id}`);
 };
+const saveAdminUsers = (object) => {
+  return apiClient.post(PROFILE_API + "saveGroupAdminUsers", object);
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -198,5 +201,6 @@ export {
   saveInvitations,
   getMedia,
   getMembers,
-  deleteUserGroup
+  deleteUserGroup,
+  saveAdminUsers
 };

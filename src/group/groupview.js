@@ -36,7 +36,9 @@ import {
   getAdminFriends,
   saveInvitations,
   cancelGroupRequest,
-  deleteUserGroup
+  deleteUserGroup,
+  saveAdminUsers,
+  fetchUserFriends
 } from "../shared/api/apiServer";
 import { connect } from "react-redux";
 import { profileSuccess } from "../reducers/auth";
@@ -64,15 +66,20 @@ class Group extends Component {
     loading: true,
     search: null,
     friendsLu: [],
+    userFndsLu: [],
     saveObj: {
       GroupId: this.props?.match?.params.id,
       Invitations: [],
+    },
+    saveAdminObj: {
+      GroupId: this.props?.match?.params.id,
+      AdminUsers: [],
     },
     tabkey: "1",
     imageLoader:false
   };
   onSearch = (e) => {
-    let keyword = e.target.value;
+    let keyword = e.target ? e.target.value : e;
     this.setState({ search: keyword });
   };
 
@@ -86,6 +93,19 @@ class Group extends Component {
     item.IsChecked = e.target.checked;
     if (item.IsChecked) saveObj.Invitations.push(Obj);
     else saveObj.Invitations.splice(saveObj.Invitations.indexOf(Obj), 1);
+  };
+  onAdminChange = (e, item, index) => {
+    let Obj = {
+      UserId: item.UserId,
+      Firstname: item.Firstname,
+      Lastname: item.Lastname,
+      Image: item.Image,
+      Email: item.Email
+    };
+    let { saveAdminObj } = this.state;
+    item.IsChecked = e.target.checked;
+    if (item.IsChecked) saveAdminObj.AdminUsers.push(Obj);
+    else saveAdminObj.AdminUsers.splice(saveAdminObj.AdminUsers.indexOf(Obj), 1);
   };
   handleDisabledChange = (disabled) => {
     this.setState({ disabled });
@@ -173,9 +193,17 @@ class Group extends Component {
     });
   };
   addAdmin = (group) => {
-    this.setState({
-      visibleAddAdmin: true,
-    });
+    this.setState(
+      {
+        visibleAddAdmin: true,
+        userFndsLu: [],
+        loading: true,
+        search: null
+      },
+      () => {
+        this.getUserFriends();
+      }
+    );
   }
   leaveGroup = async (group) => {
     const joinResponse = await cancelGroupRequest(
@@ -292,6 +320,16 @@ class Group extends Component {
       });
     });
   };
+  getUserFriends = () => {
+    let { userFndsLu, groupData } = this.state;
+    fetchUserFriends(this.props?.profile?.Id, groupData?.GroupId).then((res) => {
+      this.setState({
+        ...this.state,
+        userFndsLu: res.data,
+        loading: false,
+      });
+    });
+  };
   handleOk = async (e) => {
     this.setState({ ...this.state, loading: true });
     const response = await saveInvitations(this.state.saveObj);
@@ -321,11 +359,43 @@ class Group extends Component {
       });
     }
   };
+  saveAdmin = async (e) => {
+    this.setState({ ...this.state, loading: true });
+    const response = await saveAdminUsers(this.state.saveAdminObj);
+    if (response.ok) {
+      this.setState(
+        {
+          visibleAddAdmin: false,
+          loading: false,
+          search: null,
+        },
+        () => {
+          notify({
+            description: "Admins added successfully",
+            message: "Admins",
+          });
+        }
+      );
+    } else {
+      this.setState({
+        ...this.state,
+        loading: false,
+      });
+
+      notify({
+        description: "Something went wrong :)",
+        message: "Error",
+        type: "error",
+      });
+    }
+  };
   handleCancel = (e) => {
     GroupEditObj = {};
     this.setState({
       visible: false,
       visibleEditgroup: false,
+      visibleAddAdmin: false,
+      search:null
     });
   };
   saveGroup = () => {
@@ -376,9 +446,9 @@ class Group extends Component {
               <span className="post-icons edit-icon"></span> Edit group
             </a>
           )}
-          <a onClick={() => this.addAdmin(this.state.groupData)}>
-            <span className="post-icons add-admin"></span> Add admin
-            </a>
+          {this.state.groupData?.IsAdmin && (<a onClick={() => this.addAdmin(this.state.groupData)}>
+            <span className="post-icons add-admin"></span> Add admins
+          </a>)}
         </Menu.Item>
         {/* <Menu.Item key="2">
                     <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
@@ -416,6 +486,7 @@ class Group extends Component {
       visibleEditgroup,
       tabkey,
       visibleAddAdmin,
+      userFndsLu,
       imageLoader
     } = this.state;
     const friendsData = friendsLu
@@ -438,6 +509,30 @@ class Group extends Component {
             <Checkbox
               value={item.IsChecked}
               onChange={(e) => this.onChange(e, item, index)}
+            ></Checkbox>
+          </List.Item>
+        );
+      });
+    const adminsData = userFndsLu
+      .filter((item) => {
+        if (this.state.search == null) {
+          return item;
+        } else if (
+          item.Firstname.toLowerCase().includes(this.state.search.toLowerCase())
+        ) {
+          return item;
+        }
+      })
+      .map((item, index) => {
+        return (
+          <List.Item key={index}>
+            <List.Item.Meta
+              avatar={<Avatar src={item.Image || defaultUser} />}
+              title={item.Firstname}
+            />
+            <Checkbox
+              value={item.IsChecked}
+              onChange={(e) => this.onAdminChange(e, item, index)}
             ></Checkbox>
           </List.Item>
         );
@@ -542,12 +637,12 @@ class Group extends Component {
                 className="invite-search"
               >
                 {loading && <Loader className="loader-middle" />}
-                <Search
+                {visible && <Search
                   className="header-searchbar mb-16"
                   placeholder="Search"
                   onChange={(e) => this.onSearch(e)}
                   onSearch={(event) => this.onSearch(event)}
-                />
+                />}
                 <div className="">
                   <div className="f-16 fw-400">Suggested</div>
                   <List itemLayout="horizontal">{friendsData}</List>
@@ -575,26 +670,18 @@ class Group extends Component {
                 visible={visibleAddAdmin}
                 title="Add Admin"
                 cancel={this.handleCancel}
-                saved={this.saveGroup}
+                saved={this.saveAdmin}
               >
-                {/* {visibleAddAdmin && (
-                  <CreateGroup
-                    Type={"Edit"}
-                    GroupId={GroupEditObj.GroupId}
-                    handleCancel={this.handleCancel}
-                    onRef={(creategroup) => (this.creategroup = creategroup)}
-                    refreshSave={() => this.refreshSave()}
-                  />
-                )} */}
-                <Search
+                {loading && <Loader className="loader-middle" />}
+               {visibleAddAdmin && <Search
                   className="header-searchbar mb-16"
                   placeholder="Search"
                   onChange={(e) => this.onSearch(e)}
                   onSearch={(event) => this.onSearch(event)}
-                />
+                />}
                 <div className="">
                   <div className="f-16 fw-400 my-16">Suggested</div>
-                  <List itemLayout="horizontal">{friendsData}</List>
+                  <List itemLayout="horizontal">{adminsData}</List>
                 </div>
               </CommonModal>
               <div className="right-statistic group-right mt-12 mx-12">
