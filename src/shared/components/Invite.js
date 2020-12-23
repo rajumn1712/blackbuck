@@ -41,7 +41,7 @@ class Invite extends Component {
     }
     render() {
         let { invitations } = this.state;
-        return (
+        return this.props.displayas?("Hi"): (
             <div className="invite-card">
                 <Card title="Invite" bordered={true}>
                     {

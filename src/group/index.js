@@ -41,7 +41,7 @@ class Aboutus extends Component {
               <TabPane tab="Invite Groups" key="3">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <Invite />
+                  <Invite displayas={"Card"}/>
                   </Col>
                 </Row>
               </TabPane>
