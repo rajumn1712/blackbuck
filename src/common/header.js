@@ -176,7 +176,7 @@ class HeaderComponent extends React.Component {
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                                 <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter">
-                                    <Tooltip title="Notifications" etPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                         <Link to="/about">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
                                                 <span className="icons notification-icon" />
@@ -185,8 +185,8 @@ class HeaderComponent extends React.Component {
                                     </Tooltip>
                                 </Dropdown>
                             </Menu.Item>}
-                            <Menu.Item key="" >
-                                <Dropdown overlay={this.menu} trigger={['click']} >
+                            <Menu.Item key="">
+                                <Dropdown overlay={this.menu} trigger={['click']} getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
                                         <img src={this.props?.profile?.ProfilePic || defaultUser} />
                                     </Link>
