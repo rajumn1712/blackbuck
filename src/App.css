@@ -1799,6 +1799,8 @@ textarea {
   border: none;
   background: transparent;
   outline: none;
+  width: 35px;
+  height: 35px;
 }
 .share-option button:hover {
   background: #ccc;
@@ -1809,9 +1811,8 @@ textarea {
 .ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder {
   padding: 8px 18px 8px 8px !important;
 }
-.onboard-process .ant-select-selection-search {
-  padding: 8px !important;
-}
+.onboard-process .ant-picker-suffix{cursor: pointer;pointer-events:visible;}
+.onboard-process .ant-select-multiple .ant-select-selection-search:first-child .ant-select-selection-search-input{margin-left: 0 !important;}
 .ant-select-item-option-content .ant-avatar-image,
 .ant-select-selection-item .ant-avatar-image {
   margin-right: 8px;
