@@ -55,6 +55,15 @@ class VideoProfile extends Component {
       }
     },
     beforeUpload: (file) => {
+      const isMp4 = file.type === "video/mp4" || file.type === "video/mpeg4";
+    if (!isMp4) {
+      notify({
+        message:"Error",
+        description:'Video format not supported',
+        type:'error'
+      })
+      return false;
+    } else {
       const fileMaxSize = 25 * 1000000;
       if (file.size > fileMaxSize) {
         notify({
@@ -64,7 +73,8 @@ class VideoProfile extends Component {
         });
       }
       return file.size <= fileMaxSize;
-    },
+    }
+    }  
   };
   showModal = (e) => {
     e.preventDefault();

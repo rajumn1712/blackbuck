@@ -145,23 +145,23 @@ class HeaderComponent extends React.Component {
                     </Col>
                     <Col span={8} justify="center">
                         {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
-                            <Menu.Item key="home">
-                                <Tooltip title="Home" placement="bottom">
+                            <Menu.Item key="home" id="headerIcon">
+                                <Tooltip title="Home" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/"><span className="icons home-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="about">
-                                <Tooltip title="Connections" placement="bottom">
+                                <Tooltip title="Connections" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/friends"><span className="icons social-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="contact">
-                                <Tooltip title="Careers" placement="bottom">
+                                <Tooltip title="Careers" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/cms"><span className="icons suitcase-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="lms">
-                                <Tooltip title="LMS" placement="bottom">
+                                <Tooltip title="LMS" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/lms"><span className="icons lms-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
@@ -170,13 +170,13 @@ class HeaderComponent extends React.Component {
                     <Col span={8} >
                         <Menu className="menu-items text-right right-menu" mode="horizontal">
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Tooltip title="Messages">
+                                <Tooltip title="Messages" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                                 <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter">
-                                    <Tooltip title="Notifications">
+                                    <Tooltip title="Notifications" etPopupContainer={() => document.querySelector('#headerIcon')}>
                                         <Link to="/about">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
                                                 <span className="icons notification-icon" />

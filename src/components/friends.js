@@ -130,7 +130,7 @@ class Friends extends Component {
         </Row>
       </div>  /// FRIENDS TABS /// */}
 
-        <Card title={`Friend (${FriendsList.length})`} bordered={true}>
+        <Card title={`Friends (${FriendsList.length})`} bordered={true}>
           <List
             grid={{
               column: 2,
