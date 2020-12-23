@@ -275,7 +275,6 @@ class Profile extends Component {
                 }}
               >
                 <Upload {...this.uploadProps}>
-                  {imageLoader && <Loader className="loader-top-middle" />}
                   <Tooltip title="Change Coverphoto">
                     <a
                       className="editpost"
