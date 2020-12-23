@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Button, Empty } from 'antd'
+import { Card, Avatar, Button, Empty,Row,Col } from 'antd'
 import notify from './notification';
 import { getUserInvitations, acceptDeclineInvitations } from '../api/apiServer';
 import { profileSuccess } from '../../reducers/auth';
@@ -14,7 +14,7 @@ class Invite extends Component {
         this.getUserInvites();
     }
     getUserInvites = () => {
-        getUserInvitations(this.props.profile?.Id,1,0).then(res => {
+        getUserInvitations(this.props.profile?.Id, 1, 0).then(res => {
             this.setState({ invitations: res.data?.length > 0 ? res.data : [] })
         });
     }
@@ -41,28 +41,51 @@ class Invite extends Component {
     }
     render() {
         let { invitations } = this.state;
-        return this.props.displayas?("Hi"): (
-            <div className="invite-card">
-                <Card title="Invite" bordered={true}>
-                    {
-                        invitations.length > 0 && <div>
-                            <Avatar.Group>
-                                <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>
-                                <Avatar src={invitations[0]?.Image || defaultUser} />
-                            </Avatar.Group>
-                            <p><span>{invitations[0]?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
-                            <div className="invite-btn">
-                                <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitations[0])}>Accept</Button>
-                                <Button type="danger" onClick={() => this.acceptInvite('decline', invitations[0])}>Decline</Button>
+        return this.props.displayas ? (<Row gutter={16} className="group-page pb-0 m-0">
+            <Col className="mb-12 p-0" md={12} lg={8} xl={8} xxl={6}>
+                <div className="invite-card">
+                    <Card>
+                        {
+                            invitations.length > 0 && <div>
+                                <Avatar.Group>
+                                    <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>
+                                    <Avatar src={invitations[0]?.Image || defaultUser} />
+                                </Avatar.Group>
+                                <p><span>{invitations[0]?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
+                                <div className="invite-btn">
+                                    <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitations[0])}>Accept</Button>
+                                    <Button type="danger" onClick={() => this.acceptInvite('decline', invitations[0])}>Decline</Button>
+                                </div>
                             </div>
-                        </div>
-                    }
-                    {
-                        invitations.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                    }
-                </Card>
-            </div>
-        )
+                        }
+                        {
+                            invitations.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                        }
+                    </Card>
+                </div>
+            </Col>
+        </Row>) : (
+                <div className="invite-card">
+                    <Card title="Invite" bordered={true}>
+                        {
+                            invitations.length > 0 && <div>
+                                <Avatar.Group>
+                                    <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>
+                                    <Avatar src={invitations[0]?.Image || defaultUser} />
+                                </Avatar.Group>
+                                <p><span>{invitations[0]?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
+                                <div className="invite-btn">
+                                    <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitations[0])}>Accept</Button>
+                                    <Button type="danger" onClick={() => this.acceptInvite('decline', invitations[0])}>Decline</Button>
+                                </div>
+                            </div>
+                        }
+                        {
+                            invitations.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                        }
+                    </Card>
+                </div>
+            )
     }
 }
 
