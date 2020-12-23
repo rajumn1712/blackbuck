@@ -78,7 +78,7 @@ class Profile extends Component {
           }`
       );
       apiClient
-        .post(process.env.REACT_APP_AUTHORITY + "/Home/UploadFil", formData)
+        .post(process.env.REACT_APP_AUTHORITY + "/Home/UploadFile", formData)
         .then((res) => {
           if(res.ok){
             this.imageObject.ImageUrl = res.data[0];
