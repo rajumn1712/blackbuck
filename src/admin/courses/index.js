@@ -76,41 +76,32 @@ const columns = [
       }
   ];
 
-const genExtra = () => (
-    <>
-        <Button type="default" className="addContent" size="small" onClick={event => {
-            // If you don't want click extra trigger collapse, you can prevent this:
-            event.stopPropagation();
-        }}>
-            Add Content
-        </Button>
-    </>
-);
 const { Step } = Steps;
 
 const steps = [
     {
-        title: ' of 4',
+        title: 'Content',
         content: <>
-                <Row className="course-step text-center">
-                    <Col offset={3} xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
-                        <Title className="lmspostTitle">How about a course title</Title>
-                        <p className="f-16 text-secondary">It's ok if you can't think of a good title now. You can change it later.</p>
-                        <div className="custom-fields lmstitleinput">
-                            <Input placeholder="e.g. Learn how to code from scratch" />
-                        </div>
-                    </Col>
-                </Row>
-        </>,
-    },
-    {
-        title: ' of 4',
-        content: <>
-            <Row className="course-step text-center">
-                <Col offset={3} xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
-                    <Title className="lmspostTitle">What Category best fits the knowledge you'll share?</Title>
-                    <p className="f-16 text-secondary">If you're not sure about the right category, you can change it later.</p>
-                    <div className="custom-fields lmstitleinput">
+            <div className="create-course">
+            <div className="custom-fields">
+                <label className="text-secondary d-block mb-4">Course Title</label>
+                <Input placeholder="e.g. Learn how to code from scratch" />
+            </div>
+            <div className="custom-fields">
+                <label className="text-secondary d-block mb-4">Course Category</label>
+                <Select defaultValue="Computer Science Engineering" allowClear placeholder="Choose a Category" className="text-left">
+                    <Option value="Mechanical Engineering">Mechanical Engineering</Option>
+                    <Option value="Chemical Engineering">Chemical Engineering</Option>
+                    <Option value="Information Technology">Information Technology</Option>
+                    <Option value="Civil Engineering">Civil Engineering</Option>
+                    <Option value="Aeronautical Engineering">Aeronautical Engineering</Option>
+                    <Option value="Artificial Intelligence">Artificial Intelligence</Option>
+                </Select>
+            </div>
+            <Row gutter={16}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <div className="custom-fields">
+                        <label className="text-secondary d-block mb-4">Selet College</label>
                         <Select defaultValue="Computer Science Engineering" allowClear placeholder="Choose a Category" className="text-left">
                             <Option value="Mechanical Engineering">Mechanical Engineering</Option>
                             <Option value="Chemical Engineering">Chemical Engineering</Option>
@@ -121,27 +112,52 @@ const steps = [
                         </Select>
                     </div>
                 </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                <div className="custom-fields">
+                <label className="text-secondary d-block mb-4">Select Group</label>
+                <Select defaultValue="Computer Science Engineering" allowClear placeholder="Choose a Category" className="text-left">
+                    <Option value="Mechanical Engineering">Mechanical Engineering</Option>
+                    <Option value="Chemical Engineering">Chemical Engineering</Option>
+                    <Option value="Information Technology">Information Technology</Option>
+                    <Option value="Civil Engineering">Civil Engineering</Option>
+                    <Option value="Aeronautical Engineering">Aeronautical Engineering</Option>
+                    <Option value="Artificial Intelligence">Artificial Intelligence</Option>
+                </Select>
+            </div>
+                </Col>
             </Row>
+            <div className="custom-fields">
+                <label className="text-secondary d-block mb-4">Lecture Description</label>
+                <TextArea onResize />
+            </div>
+            <Row gutter={16}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                    <label className="text-secondary">Author Name</label>
+                    <Input />
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                    <label className="text-secondary">Designation</label>
+                    <Input />
+                </Col>
+            </Row>
+            </div>
         </>,
     },
     {
-        title: ' of 4',
+        title: ' Curriculam',
         content: <>
-            <Row className="course-step">
-                <Col offset={3} xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
-                    <Title className="lmspostTitle text-center">Learn how to code from scratch</Title>
                     <div className="create-course">
-                        <div className="lecture-collapse">
+                        <div className="lecture-collapse mb-12">
                             <Collapse
                                 expandIconPosition="right"
                             >
-                                <Panel header="Lecture 1" className="f-18 semibold text-primary" extra={genExtra()}>
+                                <Panel header="Lecture 1" className="f-18 semibold text-primary">
                                     <div className="f-14 text-secondary normalbold">
                                         <div className="custom-fields mb-0">
                                             <label className="text-secondary d-block mb-4">Enter Lecture Description</label>
                                             <TextArea autoSize />
                                         </div>
-                                        <Tabs defaultActiveKey="1">
+                                        <Tabs defaultActiveKey="1" className="custom_tabs" size="middle">
                                             <TabPane tab="Upload Video" key="1">
                                                 <div>
                                                     <Dragger {...props}>
@@ -169,52 +185,29 @@ const steps = [
                                 </Panel>
                             </Collapse>
                         </div>
-                        <div className="lecture-collapse">
+                        <div className="lecture-collapse mb-12">
                             <Collapse
                                 expandIconPosition="right"
                             >
-                                <Panel header="Lecture 2" className="f-18 semibold text-primary" extra={genExtra()}>
+                                <Panel header="Lecture 2" className="f-18 semibold text-primary">
                                     <div className="f-14 text-secondary normalbold"></div>
                                 </Panel>
                             </Collapse>
                             <div className="add-lecture p-4"><span className="icons add"></span></div>
                         </div>
-                        <div className="lecture-collapse">
-                        <div className="custom-fields entr-course-title">
+                        <div className="lecture-collapse mb-12">
+                        <div className="custom-fields entr-course-title p-12 mb-12">
                             <Input placeholder="Enter Lecture Title" className="f-16 mb-16" />
                             <div className="text-right">
-                            <Button type="default" className="addContent" size="small">Cancel</Button>
-                            <Button type="primary" className="addContent" size="small" style={{marginLeft: 8}}>Add Lecture</Button>
+                            <Button type="primary" className="addContent px-16" size="small" style={{marginRight: 8}}>Add Lecture</Button>
+                            <Button type="default" className="addContent px-16" size="small">Cancel</Button>
                             </div>
                         </div>
                         <div className="add-lecture p-4"><span className="icons close"></span></div>
                         </div>
                     </div>
-                </Col>
-            </Row>
         </>
     },
-    {
-        title: ' of 4',
-        content: <>
-            <Row className="course-step">
-                <Col offset={3} xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
-                    <div className="custom-fields">
-                        <label className="text-secondary d-block mb-4">Lecture Description</label>
-                        <TextArea onResize />
-                    </div>
-                    <div className="custom-fields d-block mb-4">
-                        <label className="text-secondary">Author Name</label>
-                        <Input />
-                    </div>
-                    <div className="custom-fields d-block mb-4">
-                        <label className="text-secondary">Designation</label>
-                        <Input />
-                    </div>
-                </Col>
-            </Row>
-        </>
-    }
 ];
 const AdminCourses = () => {
     const [current, setCurrent] = React.useState(0);
@@ -228,56 +221,69 @@ const AdminCourses = () => {
     };
     return (<>
         <Row>
-            <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <div className="custom-card">
-                    <Card>
-                        <Row align="middle">
-                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                <img src={createCourse} width="100%" className="p-16" />
+                    <Card className="start-course">
+                        <Row align="middle" className="p-16">
+                            <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
+                                <Title level={3} className="normalbold text-white">Get Started with the course</Title>
+                                <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
                             </Col>
-                            <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14} className="pr-16">
-                                <Title level={3} className="normalbold text-secondary">Get Started with the course</Title>
-                                <p className="f-16 text-secondary">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
-                                <Button type="primary" className="mt-8">Create Course</Button>
+                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
+                                <Button type="dashed">Create Course</Button>
                             </Col>
                         </Row>
                     </Card>
                 </div>
-                <div className="custom-card">
-                    <Card>
-                        <div className="p-16">
-                            <Steps current={current}>
-                                {steps.map(item => (
-                                    <Step key={item.title} title={item.title} />
-                                ))}
-                            </Steps>
-                            <div className="steps-content">{steps[current].content}</div>
-                            <div className="steps-action" style={{paddingBottom: 30}}>
-                                <Row>
-                                    <Col offset={3} xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
+                <Row>
+                    <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
+                        <div className="text-center my-16 pb-16">
+                            <Title level={1} className="normalbold text-primary">Get Started with the course</Title>
+                            <p className="f-14 text-secondary">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
+                        </div>
+                        <Row>
+                            <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                                <Steps current={current}>
+                                    {steps.map(item => (
+                                        <Step key={item.title} title={item.title} />
+                                    ))}
+                                </Steps>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
+                        <div className="custom-card mt-16">
+                            <Card>
+                                <div className="course-step">
+                                    <div className="steps-content">
+                                        {steps[current].content}
+                                    </div>
+                                    <div className="steps-action" style={{ marginTop: 30 }}>
                                         <div className="d-flex justify-between">
                                             {current > 0 && (
-                                                <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                                                <Button onClick={() => prev()}>
                                                     Previous
                                     </Button>
                                             )}
                                             {current === steps.length - 1 && (
-                                                <Button style={{ margin: '0 8px' }} type="primary" onClick={() => message.success('Processing complete!')}>
+                                                <Button type="primary" onClick={() => message.success('Processing complete!')}>
                                                     Publish
                                     </Button>
                                             )}
                                             {current < steps.length - 1 && (
-                                                <Button style={{ margin: '0 8px 0 auto' }} type="primary" onClick={() => next()}>
+                                                <Button style={{ marginLeft: 'auto' }} type="primary" onClick={() => next()}>
                                                     Next
                                     </Button>
                                             )}
                                         </div>
-                                    </Col>
-                                </Row>
-                            </div>
+                                    </div>
+                                </div>
+                            </Card>
                         </div>
-                    </Card>
-                </div>
+                        </Col>
+                        </Row>
+                    </Col>
+                </Row>
                 <div className="custom-card">
                     <Card>
                         <div className="p-12">
@@ -285,9 +291,6 @@ const AdminCourses = () => {
                         </div>
                     </Card>
                 </div>
-            </Col>
-            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-
             </Col>
         </Row>
     </>)
