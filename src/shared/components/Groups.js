@@ -135,7 +135,7 @@ class Groups extends Component {
   };
   render() {
     const { visible, size, loading } = this.state;
-    return this.props.displayas?(<Row gutter={16} className="">
+    return this.props.displayas?(<Row gutter={16} className="group-page m-0">
     {this.state.data.length > 0 &&
       this.state.data?.map((group, index) => {
         return (

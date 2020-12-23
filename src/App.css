@@ -530,6 +530,7 @@
   display: inline-block;
   background: url(../src/styles/images/icons.svg) no-repeat;
   background-position: -401px -196px;
+  cursor: pointer;
 }
 .doc-icons.docx {
   background-position: -469px -104px;
@@ -740,6 +741,7 @@
   display: inline-block;
   background: url(../src/styles/images/icons.svg) no-repeat;
   background-position: -402px -199px;
+  cursor: pointer;
 }
 .doc-icons.docx {
   background-position: -469px -104px;
@@ -1563,7 +1565,7 @@ textarea {
   height: 100%;
   object-fit: cover;
 }
-.group-page .ant-card-cover, .media-tabs .ant-card-cover {
+.group-page .ant-card-cover, .media-tabs .ant-card-cover, .group-tabs .ant-card-cover {
   height: 180px;
 }
 .see-more {
