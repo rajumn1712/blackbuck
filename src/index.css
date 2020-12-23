@@ -132,3 +132,4 @@ transition-duration: 167ms;}
 .coursesbanner .coursebanneritem .coursebannertitle{color :var(--white);font-size: 24px;text-transform: uppercase;margin-bottom: 8px;line-height: 26px;}
 .coursepage .bannercard-title{font-size: 22px;margin-bottom: 0;margin-top: 10px;min-width: 150px; max-width: 280px;white-space: normal;text-align: center;}
 .coursepage .user-statistic .afterline:after{right: -40px;}
+.coursepage .user-statistic{margin-top: -0.8rem;padding-top: 0.8rem;align-items: center;border-radius: 0 0 0.8rem 0.8rem;}

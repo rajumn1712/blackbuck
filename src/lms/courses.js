@@ -70,7 +70,6 @@ class Courses extends Component {
                                 />
                                 <Statistic
                                     title="Favorites"
-                                    
                                     value='0'
                                 />
                             </div>
