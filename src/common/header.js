@@ -82,7 +82,7 @@ class HeaderComponent extends React.Component {
                             <span><Link to="/profile/3">Respond</Link></span>
                         </div>
                     </div>)}
-                    {friendRequests.data.length===0&&<p style={{alignItems:"center",fontWeight:"bold"}}>You're all set</p>}
+                    {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
                 </div>;
                 this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })
 
@@ -121,8 +121,8 @@ class HeaderComponent extends React.Component {
                 </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key="4">
-                <a onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
+            <Menu.Item key="4" onClick={logout}>
+                <a ><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
             </Menu.Item>
         </Menu >)
     }
