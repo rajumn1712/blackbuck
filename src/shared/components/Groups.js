@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, Avatar, List } from "antd";
+import { Button, Card, Avatar, List,Empty ,Row,Col} from "antd";
 import notify from "./notification";
 import { apiClient } from "../api/clients";
 import { Link } from "react-router-dom";
@@ -15,6 +15,9 @@ import defaultUser from "../../styles/images/defaultuser.jpg";
 import creategroup from "../../group/creategroup";
 import CreateGroup from "../../group/creategroup";
 import Loader from "../../common/loader";
+import defaultguser from "../../styles/images/default-cover.png";
+import SideAction from '../components/postings/Actions/SideActions';
+const { Meta }=Card;
 
 class Groups extends Component {
   showModal = (e) => {
@@ -132,7 +135,72 @@ class Groups extends Component {
   };
   render() {
     const { visible, size, loading } = this.state;
-    return (
+    return this.props.displayas?(<Row gutter={16} className="">
+    {this.state.data.length > 0 &&
+      this.state.data?.map((group, index) => {
+        return (
+          <Col className="mb-12" md={12} lg={8} xl={8} xxl={6}>
+            <Card
+              key={index}
+              cover={
+                <img
+                  className="obj-fit"
+                  src={group.image || defaultguser}
+                />
+              }
+              actions={[
+                <Link className="list-link f-14" onClick={() => this.joinGroup(group)}>
+                 Join
+                </Link>,
+              ]}
+            >
+              <Meta
+                title={
+                    <Link
+                    to={"/groupview/" + group.id}
+                    className="post-title"
+                  >
+                    {group.name}
+                  </Link>
+                }
+                description={
+                  <div>
+                    <div className="mb-4 f-12 text-overflow">
+                      {group.description}
+                    </div>
+                    <div
+                      className="d-flex align-items-center"
+                      style={{ position: "relative" }}
+                    >
+                      {group.members > 0 && (
+                        <span>
+                          <span>
+                            {group.members ? group.members : ""}
+                          </span>{" "}
+                          Members
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                }
+              />
+            </Card>
+            {group.IsGroupAdmin && (
+              <span className="card-options-right">
+                <SideAction
+                  horclass="icons more"
+                  clickedEvent={(event, name) =>
+                    this.handleEvent(event, name, group)
+                  }
+                  // actionsList={ownerActions}
+                />
+              </span>
+            )}
+          </Col>
+        );
+      })}
+    {this.state.data.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+  </Row>):(
       <div className="custom-card sub-text card-scroll">
         <Card
           title="Groups"
@@ -174,7 +242,7 @@ class Groups extends Component {
                         </span>{" "}
                         |{" "}
                         <span>
-                          <span className="mr-4">0</span>
+                          <span className="mr-4">{item.postsCount ? item.postsCount : 0}</span>
                           Posts
                         </span>
                       </div>

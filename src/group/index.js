@@ -3,14 +3,20 @@ import React, { Component } from "react";
 import Ads from "../components/ads";
 import Courses from "../components/ProfileComponents/courses";
 import GroupsPage from "../shared/components/GroupsPage";
+import Invite from '../shared/components/Invite';
+import Groups from '../shared/components/Groups';
 const { TabPane } = Tabs;
 class Aboutus extends Component {
+  state={
+    tabkey:"1",
+  }
   componentDidMount() { }
   isDataRefreshed = (refresh) => {
     if (refresh) this.courses.getGroups();
   };
 
   render() {
+    const {tabkey}=this.state;
     return (
       <div className="main">
         <Row gutter={16}>
@@ -28,21 +34,21 @@ class Aboutus extends Component {
               <TabPane tab="Groups" key="1">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
+                  <GroupsPage onRef={(courses) => (this.courses = courses)}/>
                   </Col>
                 </Row>
               </TabPane>
               <TabPane tab="Invite Groups" key="3">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
+                  <Invite />
                   </Col>
                 </Row>
               </TabPane>
               <TabPane tab="Suggested Groups" key="2">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
+                  <Groups displayas={"Card"} />
                   </Col>
                 </Row>
               </TabPane>
