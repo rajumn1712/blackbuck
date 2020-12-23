@@ -4,6 +4,7 @@ import notify from './notification';
 import { getUserInvitations, acceptDeclineInvitations } from '../api/apiServer';
 import { profileSuccess } from '../../reducers/auth';
 import { connect } from 'react-redux';
+import defaultUser from "../../styles/images/defaultuser.jpg";
 
 class Invite extends Component {
     state = {
@@ -46,8 +47,8 @@ class Invite extends Component {
                     {
                         invitations.length > 0 && <div>
                             <Avatar.Group>
-                                <Avatar src={this.props?.profile?.ProfilePic}></Avatar>
-                                <Avatar src={invitations[0]?.Image} />
+                                <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>
+                                <Avatar src={invitations[0]?.Image || defaultUser} />
                             </Avatar.Group>
                             <p><span>{invitations[0]?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
                             <div className="invite-btn">
