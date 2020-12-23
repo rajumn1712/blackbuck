@@ -1989,3 +1989,4 @@ textarea {
 .custom_tabs .ant-tabs-tab-btn{ font-weight: 500;}
 .custom_tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--primary);}
 .custom_tabs .ant-tabs-ink-bar, .start-course{background: var(--primary) !important;}
+.admin-kpi-card{border: 1px solid var(--line) !important; border-radius: 0.8rem !important;}

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Tag, Form, Tabs, DatePicker } from 'antd';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Statistic, Tabs, DatePicker } from 'antd';
 import { Link } from "react-router-dom";
-import { ErrorMessage, Field, Formik } from "formik";
-import CreateCourse from './CreateCourse';
 import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
-import createCourse from "../../styles/images/create-course.svg";
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -221,6 +219,68 @@ const AdminCourses = () => {
         setCurrent(current - 1);
     };
     return (<>
+        <Row gutter={12} className="mb-12">
+            <Col span={4}>
+                <Card className="admin-kpi-card">
+                    <Statistic
+                        title="Members"
+                        value={600}
+                        valueStyle={{ color: 'var(--textprimary)' }}
+                        prefix={<ArrowUpOutlined />}
+                    />
+                </Card>
+            </Col>
+            <Col span={4}>
+                <Card className="admin-kpi-card">
+                    <Statistic
+                        title="Posts"
+                        value={254}
+                        valueStyle={{ color: 'var(--textprimary)' }}
+                        prefix={<ArrowUpOutlined />}
+                    />
+                </Card>
+            </Col>
+            <Col span={4}>
+                <Card className="admin-kpi-card">
+                    <Statistic
+                        title="Courses"
+                        value={21}
+                        valueStyle={{ color: 'var(--textprimary)' }}
+                        prefix={<ArrowUpOutlined />}
+                    />
+                </Card>
+            </Col>
+            <Col span={4}>
+                <Card className="admin-kpi-card">
+                    <Statistic
+                        title="Groups"
+                        value={50}
+                        valueStyle={{ color: 'var(--textprimary)' }}
+                        prefix={<ArrowUpOutlined />}
+                    />
+                </Card>
+            </Col>
+            <Col span={4}>
+                <Card className="admin-kpi-card">
+                    <Statistic
+                        title="Shares"
+                        value={45}
+                        valueStyle={{ color: 'var(--textprimary)' }}
+                        prefix={<ArrowUpOutlined />}
+                    />
+                </Card>
+            </Col>
+            <Col span={4}>
+                <Card className="admin-kpi-card">
+                    <Statistic
+                        title="Interships"
+                        value={14}
+                        valueStyle={{ color: 'var(--textprimary)' }}
+                        prefix={<ArrowUpOutlined />}
+                    />
+                </Card>
+            </Col>
+        </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <div className="custom-card mb-16">
