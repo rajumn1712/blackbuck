@@ -749,6 +749,7 @@ class ShareBox extends Component {
             </div>
             {inputVisible && (
               <Input
+              placeholder="Add hashtag"
                 ref={this.saveInputRef}
                 type="text"
                 size="small"
