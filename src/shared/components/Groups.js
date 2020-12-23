@@ -180,6 +180,12 @@ class Groups extends Component {
                           Members
                         </span>
                       )}
+                      {" "}
+                        |{" "}
+                        <span>
+                          <span className="mr-4">{group.postsCount ? group.postsCount : 0}</span>
+                          Posts
+                        </span>
                     </div>
                   </div>
                 }
