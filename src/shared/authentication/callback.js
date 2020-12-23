@@ -14,9 +14,10 @@ class CallbackPage extends React.Component {
             if (!profileResponse.data[0]?.IsOnBoardProcess) {
                 this.props.history.push("/student_onboard")
             } else {
+                debugger
                 const url = localStorage.getItem("__url");
                 localStorage.removeItem("__url");
-                this.props.history.push(url ? url : "/")
+                this.props.history.push(url && url !== "/callback" ? url : "/")
             }
         } else {
             message.error("Something went wrong:)")
