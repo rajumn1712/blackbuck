@@ -110,10 +110,16 @@
     border: 0;
 }
 
-.main-header .ant-menu-item a:hover, .main-header .ant-menu-item-selected a {
+.main-header .center-menu .ant-menu-item a:hover, .main-header .center-menu .ant-menu-item-selected a {
     background: var(--primary);
     border-color: var(--primary);
 
+}
+.profile-dropdown .ant-dropdown-menu-item a:hover,.profile-dropdown .ant-dropdown-menu-item a {
+    background: transparent !important;
+    border-color: transparent !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .main-header .right-menu .avatar-menu, .main-header .right-menu .avatar-menu:hover {

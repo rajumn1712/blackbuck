@@ -144,7 +144,7 @@ class HeaderComponent extends React.Component {
                         </div>
                     </Col>
                     <Col span={8} justify="center">
-                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
+                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal" defaultSelectedKeys={['home']}>
                             <Menu.Item key="home" id="headerIcon">
                                 <Tooltip title="Home" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/"><span className="icons home-icon"></span></Link>

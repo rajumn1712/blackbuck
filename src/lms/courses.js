@@ -16,7 +16,7 @@ const options = {
 class Courses extends Component {
     render() {
         return (
-            <div className="coursepage">
+            <div className="coursepage mb-6">
                 <Row gutter={16}>
                     <Col xs={24}>
                         <div className="coverpage coursesbanner">

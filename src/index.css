@@ -133,3 +133,10 @@ transition-duration: 167ms;}
 .coursepage .bannercard-title{font-size: 22px;margin-bottom: 0;margin-top: 10px;min-width: 150px; max-width: 280px;white-space: normal;text-align: center;}
 .coursepage .user-statistic .afterline:after{right: -40px;}
 .coursepage .user-statistic{margin-top: -0.8rem;padding-top: 0.8rem;align-items: center;border-radius: 0 0 0.8rem 0.8rem;}
+/* card item */
+.card-item .ant-card-cover img{height: 180px;object-fit: cover;object-position: center; border-radius: 0.8rem 0.8rem 0 0;}
+.card-item .ant-card-body{padding:16px;display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  justify-content: space-between;}
+.card-item .ant-card-meta-title {overflow: hidden;color: rgba(0, 0, 0, 0.85);font-weight: 500;font-size: 16px;white-space: nowrap;text-overflow: ellipsis;}
