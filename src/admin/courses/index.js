@@ -89,7 +89,7 @@ const steps = [
                     <Input placeholder="e.g. Learn how to code from scratch" />
                 </div>
                 <div className="custom-fields">
-                    <label className="text-secondary d-block mb-4">Course Category</label>
+                    <label className="text-secondary d-block mb-4">Choose Category</label>
                     <Select defaultValue="Computer Science Engineering" allowClear placeholder="Choose a Category" className="text-left">
                         <Option value="Mechanical Engineering">Mechanical Engineering</Option>
                         <Option value="Chemical Engineering">Chemical Engineering</Option>
@@ -102,7 +102,7 @@ const steps = [
                 <Row gutter={16}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <div className="custom-fields">
-                            <label className="text-secondary d-block mb-4">Selet College</label>
+                            <label className="text-secondary d-block mb-4">Select College</label>
                             <Select defaultValue="Computer Science Engineering" allowClear placeholder="Choose a Category" className="text-left">
                                 <Option value="Mechanical Engineering">Mechanical Engineering</Option>
                                 <Option value="Chemical Engineering">Chemical Engineering</Option>
@@ -128,7 +128,7 @@ const steps = [
                     </Col>
                 </Row>
                 <div className="custom-fields">
-                    <label className="text-secondary d-block mb-4">Lecture Description</label>
+                    <label className="text-secondary d-block mb-4">Course Description</label>
                     <TextArea onResize />
                 </div>
                 <Row gutter={16}>
