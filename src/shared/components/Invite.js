@@ -14,7 +14,7 @@ class Invite extends Component {
         this.getUserInvites();
     }
     getUserInvites = () => {
-        getUserInvitations(this.props.profile?.Id, 1, 0).then(res => {
+        getUserInvitations(this.props.profile?.Id, this.props.displayas?100:1, 0).then(res => {
             this.setState({ invitations: res.data?.length > 0 ? res.data : [] })
         });
     }
@@ -44,24 +44,29 @@ class Invite extends Component {
         return this.props.displayas ? (<Row gutter={16} className="group-page pb-0 m-0">
             <Col className="mb-12 p-0" md={12} lg={8} xl={8} xxl={6}>
                 <div className="invite-card">
-                    <Card>
-                        {
-                            invitations.length > 0 && <div>
+                    {invitations.map((invitation, index) => {
+                        return <Card key={index}>
+                            <div>
                                 <Avatar.Group>
                                     <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>
-                                    <Avatar src={invitations[0]?.Image || defaultUser} />
+                                    <Avatar src={invitation?.Image || defaultUser} />
                                 </Avatar.Group>
-                                <p><span>{invitations[0]?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitations[0]?.GroupName}</span> group</p>
+                                <p><span>{invitation?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitation?.GroupName}</span> group</p>
                                 <div className="invite-btn">
-                                    <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitations[0])}>Accept</Button>
-                                    <Button type="danger" onClick={() => this.acceptInvite('decline', invitations[0])}>Decline</Button>
+                                    <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitation)}>Accept</Button>
+                                    <Button type="danger" onClick={() => this.acceptInvite('decline', invitation)}>Decline</Button>
                                 </div>
                             </div>
-                        }
-                        {
-                            invitations.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                        }
-                    </Card>
+
+
+                        </Card>
+                    })}
+                    {
+                        <Card>
+                            {
+                            invitations.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+                        </Card>
+                    }
                 </div>
             </Col>
         </Row>) : (
