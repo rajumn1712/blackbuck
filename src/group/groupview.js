@@ -334,6 +334,9 @@ class Group extends Component {
               <span className="post-icons edit-icon"></span> Edit group
             </a>
           )}
+          <a onClick={() => this.editGroup(this.state.groupData)}>
+              <span className="post-icons add-admin"></span> Add admin
+            </a>
         </Menu.Item>
         {/* <Menu.Item key="2">
                     <a><span className="post-icons groupshare-icon"></span> Unfollow Group</a>
