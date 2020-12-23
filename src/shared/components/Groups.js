@@ -11,6 +11,7 @@ import {
 import { connect } from "react-redux";
 import { profileSuccess } from "../../reducers/auth";
 import CommonModal from "../../components/ProfileComponents/CommonModal";
+import defaultUser from "../../styles/images/defaultuser.jpg";
 import creategroup from "../../group/creategroup";
 import CreateGroup from "../../group/creategroup";
 import Loader from "../../common/loader";
@@ -152,7 +153,7 @@ class Groups extends Component {
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
-                  avatar={<Avatar src={item.image} />}
+                  avatar={<Avatar src={item.image || defaultUser} />}
                   title={
                     <div className="d-flex align-items-center">
                       <span className="overflow-text" title={item.name}>
