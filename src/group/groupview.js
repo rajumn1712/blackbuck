@@ -47,6 +47,7 @@ import defaultUser from "../styles/images/defaultuser.jpg";
 import Loader from "../common/loader";
 import defaultCover from "../styles/images/defaultcover.png";
 import CreateGroup from "./creategroup";
+import { apiClient } from "../shared/api/clients";
 let GroupEditObj = {};
 const { Search } = Input;
 const { TabPane } = Tabs;
@@ -67,7 +68,8 @@ class Group extends Component {
       GroupId: this.props?.match?.params.id,
       Invitations: [],
     },
-    tabkey: "1"
+    tabkey: "1",
+    imageLoader:false
   };
   onSearch = (e) => {
     let keyword = e.target.value;
@@ -98,6 +100,7 @@ class Group extends Component {
     }
   };
   handleImageOk = () => {
+    this.setState({ ...this.state, imageLoader: true })
     const imageType = this.state.isProfilePic ? "ProfilePic" : "CoverPic";
     saveGroupImage(
       this.props?.match?.params.id,
@@ -106,28 +109,62 @@ class Group extends Component {
     ).then((res) => {
       this.imageObject = {};
       this.getGroupData();
+      this.setState({ ...this.state, imageLoader: false }, () => {
+        notify({
+          description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
+            } uploaded successfully.`,
+          message: "Upload",
+        });
+      })
     });
   };
   uploadProps = {
     name: "file",
     multiple: false,
     fileList: [],
-    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
-    onChange: ({ file }) => {
-      const { status } = file;
-      if (status !== "uploading") {
-        this.imageObject.ImageUrl = file.response[0];
-        this.handleImageOk();
-      }
-      if (status === "done") {
-        message.success(
-          `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
-          } uploaded successfully.`
-        );
-      } else if (status === "error") {
-        message.error(`File upload failed.`);
-      }
+    customRequest: ({ file }) => {
+      let formData = new FormData();
+      formData.append(
+        "file",
+        file,
+        file.name +
+          `${this.state.isProfilePic ? "groupprofile_" : "groupcover_"}${
+            this.props?.profile?.Id
+          }`
+      );
+      apiClient
+        .post(process.env.REACT_APP_AUTHORITY + "/Home/UploadFile", formData)
+        .then((res) => {
+          if(res.ok){
+            this.imageObject.ImageUrl = res.data[0];
+            this.handleImageOk();
+          }
+          else{
+            notify({
+              message:"Error",
+              description:'Something went wrong',
+              type:'error'
+            })
+          }
+        });
     },
+
+    // action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+    // onChange: ({ file }) => {
+    //   const { status } = file;
+    //   if (status !== "uploading") {
+    //     this.imageObject.ImageUrl = file.response[0];
+    //     this.handleImageOk();
+    //   }
+    //   if (status === "done") {
+    //     message.success(
+    //       `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
+    //       } uploaded successfully.`
+    //     );
+    //   } else if (status === "error") {
+    //     message.error(`File upload failed.`);
+    //   }
+    // },
   };
   editGroup = (group) => {
     GroupEditObj = group;
@@ -378,7 +415,8 @@ class Group extends Component {
       loading,
       visibleEditgroup,
       tabkey,
-      visibleAddAdmin
+      visibleAddAdmin,
+      imageLoader
     } = this.state;
     const friendsData = friendsLu
       .filter((item) => {
@@ -463,6 +501,7 @@ class Group extends Component {
                               beforeCrop={this.handleBeforUpload}
                             >
                               <Upload {...this.uploadProps} disabled={!groupData?.IsGroupAdmin}>
+                              {imageLoader && <Loader className="loader-top-middle" />}
                                 <Avatar onClick={() =>
                                         this.setState({ isProfilePic: true })
                                       }
