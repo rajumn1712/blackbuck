@@ -30,7 +30,7 @@ class Groups extends Component {
     data: [],
     loading: true,
     page: 1,
-    pageSize: 5,
+    pageSize: this.props.displayas?200:5,
     size: 0,
   };
   handleCancel = (e) => {
