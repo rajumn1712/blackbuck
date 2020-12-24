@@ -30,14 +30,47 @@ class Groups extends Component {
     data: [],
     loading: true,
     page: 1,
-    pageSize: this.props.displayas?200:5,
+    pageSize: this.props.displayas ? 20 : 5,
     size: 0,
+    loadMore: true,
   };
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
   handleCancel = (e) => {
     this.setState({
       visible: false,
     });
   };
+  handleScroll = () => {
+    const windowHeight =
+      "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+    if (windowBottom >= docHeight) {
+      this.loadMore();
+    } else {
+    }
+  };
+  loadMore(e) {
+    if (this.state.loadMore) {
+      let { page } = this.state;
+      page += 1;
+      this.setState({ ...this.state, page, loading: true }, () => {
+        this.getAllGroups();
+      });
+    }
+  }
   joinGroup = async (item) => {
     const obj = {
       UserId: this.props?.profile?.Id,
@@ -89,6 +122,7 @@ class Groups extends Component {
     }
   }
   componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
     this.getAllGroups();
   }
   loadGroups = (take) => {
@@ -111,6 +145,7 @@ class Groups extends Component {
         loading: false,
         data: data.concat(response.data),
         size: response.data?.length,
+        loadMore: response.data.length === this.state.pageSize,
       });
     }
   };
@@ -152,9 +187,21 @@ class Groups extends Component {
                 />
               }
               actions={[
-                <Link className="list-link f-14" onClick={() => this.joinGroup(group)}>
-                 Join Group
-                </Link>,
+                group.requestJoin === "request" ? (
+                  <Link
+                    className="ml-8 f-12 list-link ml-16"
+                    onClick={() => this.cancelGroupRequest(group)}
+                  >
+                    Cancel request
+                  </Link>
+                ) : (
+                    <Link
+                      className="ml-8 f-12 list-link ml-16"
+                      onClick={() => this.joinGroup(group)}
+                    >
+                      Join
+                    </Link>
+                  )
               ]}
             >
               <Meta
