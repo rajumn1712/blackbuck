@@ -489,7 +489,30 @@ class Profile extends Component {
                                         <Invite />
                                     </Col> */}
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                          <GroupsPage />
+                          <Tabs defaultActiveKey="1"
+                            className="group-tabs sub-tab profile-tabs">
+                            <TabPane tab="My Groups" key="1">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                            <TabPane tab="Invite Groups" key="2">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <Invite displayas={"Card"} />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                            <TabPane tab="Suggested Groups" key="3">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <Groups displayas={"Card"} />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                          </Tabs>
                         </Col>
                       </Row>
                     );
