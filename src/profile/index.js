@@ -172,20 +172,6 @@ class Profile extends Component {
   ExportPdf = () => {
     // const doc = new jsPDF();
     const profileData = this.getDetails.state.profileData;
-    const address = (profileData)=>{
-      return (profileData.Address.map((displayaddress, index) => {
-        delete displayaddress.AddressId;
-        return (
-          <p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
-            {Object.keys(displayaddress)
-              .map((k) => {
-                return displayaddress[k];
-              })
-              .join(",")}
-          </p>
-        );
-      }))
-    }
     const html = `
     <!DOCTYPE html>
 <html lang="en">
@@ -214,7 +200,18 @@ class Profile extends Component {
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-top: 0;margin-bottom: 0.5em;">Contact</h3>
                             <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.PhoneNumber}</p>
                             <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.Email}</p>
-                            ${address(profileData)}
+                            ${profileData.Address.map((displayaddress, index) => {
+                              delete displayaddress.AddressId;
+                              return (
+                                JSON.stringify(<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                  {Object.keys(displayaddress)
+                                    .map((k) => {
+                                      return displayaddress[k];
+                                    })
+                                    .join(",")}
+                                </p>)
+                              );
+                            })}
                             
                             <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;word-break: break-all;">http://localhost:3000/profile/vishnutrimurthulu</p> 
                         </td>
@@ -224,9 +221,9 @@ class Profile extends Component {
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Certifications</h3>
                             ${profileData.Internships.map((internship, index) => {
                               return (
-                                <p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                JSON.stringify(<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
                                   {internship.CompanyName}-{internship.Duration}
-                                </p>
+                                </p>)
                               )})};
                         </td>
                     </tr>
@@ -235,7 +232,7 @@ class Profile extends Component {
                             <h3  style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Hobbies</h3>
                             <ul style="list-style-type: none;padding-left: 0;">
                             ${profileData.Hobbies.map((hobbie, index) => {
-                              return <li key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">{hobbie}</li>;
+                              return JSON.stringify(<li key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">{hobbie}</li>);
                             })}
                             </ul>
                         </td>
@@ -261,7 +258,7 @@ class Profile extends Component {
                             <table>
                             ${profileData.Education.map((education, index) => {
                               return (
-                                <tr key={index}>
+                                JSON.stringify(<tr key={index}>
                                     <td>
                                         <h4 style="font-size: 18px;font-weight: 400;line-height: 22px;margin-top: 0; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85);">{education.Name}</h4>
                                         <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">{education.Degree}</p>
@@ -269,7 +266,7 @@ class Profile extends Component {
                                         {"-"}
                                         <Moment format="YYYY">{education.EndDate}</Moment></p>
                                     </td>
-                                </tr>
+                                </tr>)
                               );
                             })}
                             </table>
@@ -286,7 +283,7 @@ class Profile extends Component {
     // doc.html(html).then(() => {
     //   doc.save("test.pdf")
     // });
-
+console.log(html)
     apiClient.post(process.env.REACT_APP_AUTHORITY + '/Account/DownLoadProfile',{
       FileName:this.props?.profile?.FirstName,
       TemplateContent:html
