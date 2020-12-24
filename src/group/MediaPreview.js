@@ -261,7 +261,7 @@ class MediaPreview extends Component {
                     <Row align="middle">
                         <Col xs={24} sm={16} md={16} lg={17} >
                             {(post.type == 'Image' || post.type == 'Gif') && post.image?.length > 1 ? carouselData : noCarousel}
-                            {(post.type !== 'Image' && post.type !== 'Gif') && <div style={{height:'calc(100vh - 125px)'}}>{this.renderPostImages(post.image, post.type)}</div>}
+                            {(post.type !== 'Image' && post.type !== 'Gif') && <div >{this.renderPostImages(post.image, post.type)}</div>}
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={7}>
                             <div className="preview-content">
