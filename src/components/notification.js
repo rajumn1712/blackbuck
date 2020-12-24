@@ -82,11 +82,11 @@ class Notifications extends Component {
                         )}
                     />
                 </Col>
-                <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
+                {/* <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
                     <Affix offsetTop={86} >
                         <Ads />
                     </Affix>
-                </Col>
+                </Col> */}
             </Row>
         </div>
     }

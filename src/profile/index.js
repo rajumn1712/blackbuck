@@ -37,6 +37,7 @@ import ProfileDetail from "./profileDetail";
 import Loader from "../common/loader";
 import notify from "../shared/components/notification";
 import { apiClient } from '../shared/api/clients';
+import Notifications from '../components/notification'
 const { Meta } = Card;
 const { TabPane } = Tabs;
 
@@ -356,9 +357,24 @@ class Profile extends Component {
               tabBarExtraContent={operations}
               onChange={this.handleTabChange}
             >
-              <TabPane tab="Posts" key="1">
+                        <TabPane tab="Profile" key="1">
                 <Route
                   path="/profile/1"
+                  render={() => {
+                    return (
+                      <div>
+                        {this.state.loading && (
+                          <Loader className="loader-top-middle" />
+                        )}
+                        <ProfileDetail id={this.props?.profile?.Id} />
+                      </div>
+                    );
+                  }}
+                />
+              </TabPane>
+              <TabPane tab="Posts" key="2">
+                <Route
+                  path="/profile/2"
                   render={() => {
                     return (
                       <Row gutter={16}>
@@ -370,21 +386,6 @@ class Profile extends Component {
                           <Postings postingsType="user" sharebox={true} />
                         </Col>
                       </Row>
-                    );
-                  }}
-                />
-              </TabPane>
-              <TabPane tab="Profile" key="2">
-                <Route
-                  path="/profile/2"
-                  render={() => {
-                    return (
-                      <div>
-                        {this.state.loading && (
-                          <Loader className="loader-top-middle" />
-                        )}
-                        <ProfileDetail id={this.props?.profile?.Id} />
-                      </div>
                     );
                   }}
                 />
@@ -429,6 +430,13 @@ class Profile extends Component {
                     );
                   }}
                 />
+              </TabPane>
+              <TabPane tab="Notifications" className="m-0" key="5">
+                <Row gutter={16}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Notifications />
+                  </Col>
+                </Row>
               </TabPane>
             </Tabs>
           </Col>

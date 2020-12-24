@@ -204,23 +204,7 @@ class ProfileView extends Component {
               </div>
             </div>
             <Tabs defaultActiveKey="1" centered className="profile-tabs">
-              <TabPane tab="Posts" key="1">
-                <Row gutter={16}>
-                  <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Courses />
-                  </Col>
-                  <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                    <Postings
-                      postingsType="user"
-                      sharebox={false}
-                      userId={this.props.match.params.userId}
-                      key={this.props.match.params.userId}
-                      postActions={false}
-                    />
-                  </Col>
-                </Row>
-              </TabPane>
-              <TabPane tab="Profile" key="2">
+            <TabPane tab="Profile" key="1">
                 <Row gutter={16}>
                   {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
                                         <div className="left-rail">
@@ -287,6 +271,22 @@ class ProfileView extends Component {
                         />
                       )}
                     </div>
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tab="Posts" key="2">
+                <Row gutter={16}>
+                  <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                    <Courses />
+                  </Col>
+                  <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                    <Postings
+                      postingsType="user"
+                      sharebox={false}
+                      userId={this.props.match.params.userId}
+                      key={this.props.match.params.userId}
+                      postActions={false}
+                    />
                   </Col>
                 </Row>
               </TabPane>

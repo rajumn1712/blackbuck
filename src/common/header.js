@@ -150,11 +150,11 @@ class HeaderComponent extends React.Component {
                                     <Link to="/"><span className="icons home-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item>
-                            <Menu.Item key="about">
+                            {/* <Menu.Item key="about">
                                 <Tooltip title="Connections" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/friends"><span className="icons social-icon"></span></Link>
                                 </Tooltip>
-                            </Menu.Item>
+                            </Menu.Item> */}
                             <Menu.Item key="contact">
                                 <Tooltip title="Careers" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/cms"><span className="icons suitcase-icon" /></Link>
