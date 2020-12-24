@@ -68,21 +68,23 @@ class HeaderComponent extends React.Component {
             const friendRequests = await fetchFriendRequests(id);
             if (friendRequests.ok) {
                 const notifications = <div className="notification-dropdown">
-                    <div className="noti-dropdown-header">
+                    <div className="noti-dropdown-header p-12">
                         <h3>Notifications</h3>
                         {/* <Link to="/notifications" >View all</Link> */}
                     </div>
                     <Divider className="my-0" />
-                    {friendRequests.data?.map((friend, indx) => <div key={indx} className="notification-list read">
+                    <div className="notification-container">
+                    {friendRequests.data?.map((friend, indx) => <div key={indx} className="notification-list read p-12">
                         <div className="notification-image">
-                            <Avatar src={friend.Image} />
+                            <Avatar src={friend.Image||defaultUser} />
                         </div>
-                        <div className="notification-description ">
+                        <div className="notification-description text-left">
                             <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
                             <span><Link to="/profile/3">Respond</Link></span>
                         </div>
                     </div>)}
                     {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
+                    </div>
                 </div>;
                 this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })
 
@@ -147,22 +149,22 @@ class HeaderComponent extends React.Component {
                         {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal" defaultSelectedKeys={['home']}>
                             <Menu.Item key="home" id="headerIcon">
                                 <Tooltip title="Home" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Link to="/"><span className="icons home-icon"></span></Link>
+                                    <Link to="/" className="header-link"><span className="icons home-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item>
                             {/* <Menu.Item key="about">
                                 <Tooltip title="Connections" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Link to="/friends"><span className="icons social-icon"></span></Link>
+                                    <Link to="/friends" className="header-link"><span className="icons social-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item> */}
                             <Menu.Item key="contact">
                                 <Tooltip title="Careers" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Link to="/cms"><span className="icons suitcase-icon" /></Link>
+                                    <Link to="/cms" className="header-link"><span className="icons suitcase-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
                             <Menu.Item key="lms">
                                 <Tooltip title="LMS" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Link to="/lms"><span className="icons lms-icon" /></Link>
+                                    <Link to="/lms" className="header-link"><span className="icons lms-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
                         </Menu>}
@@ -171,13 +173,13 @@ class HeaderComponent extends React.Component {
                         <Menu className="menu-items text-right right-menu" mode="horizontal">
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                                 <Tooltip title="Messages" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Link onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
+                                    <Link className="header-link" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter">
+                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                        <Link to="/about">
+                                        <Link className="header-link" to="/about">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
                                                 <span className="icons notification-icon" />
                                             </Badge>
@@ -187,7 +189,7 @@ class HeaderComponent extends React.Component {
                             </Menu.Item>}
                             <Menu.Item key="">
                                 <Dropdown overlay={this.menu} trigger={['click']} getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
+                                    <Link className="header-link" to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
                                         <img src={this.props?.profile?.ProfilePic || defaultUser} />
                                     </Link>
                                 </Dropdown>
