@@ -232,7 +232,7 @@ class GroupsPage extends Component {
                             {group.description}
                           </div>
                           <div
-                            className="d-flex align-items-center"
+                            className="d-flex align-items-center f-12 mt-8"
                             style={{ position: "relative" }}
                           >
                             {group.members > 0 && (
