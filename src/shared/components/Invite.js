@@ -41,25 +41,27 @@ class Invite extends Component {
     }
     render() {
         let { invitations } = this.state;
-        return this.props.displayas ? (<Row gutter={16} className="group-page pb-0 m-0">
-            <Col className="mb-12 p-0" md={12} lg={8} xl={8} xxl={6}>
-                <div className="invite-card">
+        return this.props.displayas ? (<div className="group-page p-12">
+            <Row gutter={16}>
                     {invitations.map((invitation, index) => {
-                        return <Card key={index}>
+                        return <Col md={24} lg={8} xl={8} xxl={6} key={index} className="mb-8">
+                        <div className="invite-card"><Card >
                             <div>
                                 <Avatar.Group>
                                     <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>
                                     <Avatar src={invitation?.Image || defaultUser} />
                                 </Avatar.Group>
-                                <p><span>{invitation?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitation?.GroupName}</span> group</p>
+                                <p className="f-14"><span className="text-primary semibold">{invitation?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name text-primary">{invitation?.GroupName}</span> group</p>
                                 <div className="invite-btn">
-                                    <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitation)}>Accept</Button>
+                                    <Button className="mr-8" type="primary" onClick={() => this.acceptInvite('accept', invitation)}>Accept</Button>
                                     <Button type="danger" onClick={() => this.acceptInvite('decline', invitation)}>Decline</Button>
                                 </div>
                             </div>
 
 
                         </Card>
+                        </div>
+            </Col>
                     })}
                     {
                         <Card>
@@ -67,9 +69,8 @@ class Invite extends Component {
                             invitations.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
                         </Card>
                     }
-                </div>
-            </Col>
-        </Row>) : (
+               </Row>
+        </div>) : (
                 <div className="invite-card">
                     <Card title="Invite" bordered={true}>
                         {

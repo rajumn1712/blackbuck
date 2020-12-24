@@ -140,6 +140,9 @@ class Groups extends Component {
       this.state.data?.map((group, index) => {
         return (
           <Col className="mb-12" md={12} lg={8} xl={8} xxl={6}>
+            <div style={{position: "absolute", right: 8, top: 140, width: 30, height: 30, backgroundColor: 'var(--white)', zIndex: 9, borderTopLeftRadius: '0.4rem', borderBottomLeftRadius: '0.4rem', textAlign: 'center', paddingLeft: 3, paddingTop: 3}}>
+            <span class="icons-small lock-icon" style={{transform: 'scale(1.6)'}}></span>
+            </div>
             <Card
               key={index}
               cover={
@@ -150,7 +153,7 @@ class Groups extends Component {
               }
               actions={[
                 <Link className="list-link f-14" onClick={() => this.joinGroup(group)}>
-                 Join
+                 Join Group
                 </Link>,
               ]}
             >
@@ -169,20 +172,19 @@ class Groups extends Component {
                       {group.description}
                     </div>
                     <div
-                      className="d-flex align-items-center"
+                      className="d-flex align-items-center f-12"
                       style={{ position: "relative" }}
                     >
                       {group.members > 0 && (
-                        <span>
+                        <span className="pr-4">
                           <span>
                             {group.members ? group.members : ""}
                           </span>{" "}
                           Members
                         </span>
                       )}
-                      {" "}
-                        |{" "}
-                        <span>
+                      {" "}|{" "}
+                        <span className="pl-4">
                           <span className="mr-4">{group.postsCount ? group.postsCount : 0}</span>
                           Posts
                         </span>
