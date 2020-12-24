@@ -102,10 +102,10 @@ class FriendRequests extends Component {
               <List.Item>
                 <List.Item.Meta
                   avatar={
-                    <Avatar
+                    <Link to={"/profileview/" + item.UserId}><Avatar
                       className="request-image"
                       src={item.Image || defaultUser}
-                    />
+                    /></Link>
                   }
                   title={
                     <div className="d-flex align-items-center">
@@ -127,7 +127,7 @@ class FriendRequests extends Component {
                         >
                           {item?.mutualFriends?.map((member, index) => {
                             return (
-                              <Avatar
+                              <Link to={"/profileview/" + member.UserId}><Avatar
                                 src={member.Image}
                                 key={index}
                                 style={{
@@ -143,6 +143,7 @@ class FriendRequests extends Component {
                                       member.Lastname.charAt(0),
                                     ].join("")}
                               </Avatar>
+                              </Link>
                             );
                           })}
                         </Avatar.Group>

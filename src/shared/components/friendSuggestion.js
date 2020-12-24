@@ -92,7 +92,7 @@ class FriendSuggestions extends Component {
                         <OwlCarousel items={3} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${this.state.friends.length}`}>
                             {this.state.friends.map((friend, index) => <div className="frnds-list-item" key={index}>
                                 <div className="frnds-img">
-                                    <img src={friend.Image || defaultUser} width="100%" height="100%" />
+                                    <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
                                     <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                                 </div>
                                 <div style={{ padding: 16 }}>

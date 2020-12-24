@@ -177,15 +177,13 @@ class HeaderComponent extends React.Component {
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                        <Link className="header-link" to="/about">
+                            <Tooltip title="Notifications">
+                                        <Link className="header-link" to="/profile/5">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
                                                 <span className="icons notification-icon" />
                                             </Badge>
                                         </Link>
                                     </Tooltip>
-                                </Dropdown>
                             </Menu.Item>}
                             <Menu.Item key="">
                                 <Dropdown overlay={this.menu} trigger={['click']} getPopupContainer={() => document.querySelector('#headerIcon')}>

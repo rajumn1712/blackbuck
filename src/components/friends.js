@@ -143,7 +143,7 @@ class Friends extends Component {
               <List.Item>
                 <List.Item.Meta
                   avatar={
-                    <Link to="/commingsoon">
+                    <Link to={"/profileview/" + item.UserId}>
                       <Avatar
                         className="request-image"
                         src={item.Image || defaultUser}
@@ -172,10 +172,11 @@ class Friends extends Component {
                         >
                           {item.MutualFriends?.map((friend, index) => {
                             return (
-                              <Avatar
+                              <Link to={"/profileview/" + friend.UserId}>   <Avatar
                                 key={index}
                                 src={friend.Image || defaultUser}
                               />
+                              </Link>
                             );
                           })}
                         </Avatar.Group>
