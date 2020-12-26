@@ -203,13 +203,13 @@ class Profile extends Component {
                             ${profileData.Address.map((displayaddress, index) => {
                               delete displayaddress.AddressId;
                               return (
-                                JSON.stringify(<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                <p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
                                   {Object.keys(displayaddress)
                                     .map((k) => {
                                       return displayaddress[k];
                                     })
                                     .join(",")}
-                                </p>)
+                                </p>
                               );
                             })}
                             
@@ -221,9 +221,9 @@ class Profile extends Component {
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Certifications</h3>
                             ${profileData.Internships.map((internship, index) => {
                               return (
-                                JSON.stringify(<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                <p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
                                   {internship.CompanyName}-{internship.Duration}
-                                </p>)
+                                </p>
                               )})};
                         </td>
                     </tr>
@@ -232,7 +232,7 @@ class Profile extends Component {
                             <h3  style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Hobbies</h3>
                             <ul style="list-style-type: none;padding-left: 0;">
                             ${profileData.Hobbies.map((hobbie, index) => {
-                              return JSON.stringify(<li key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">{hobbie}</li>);
+                              return <li key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">{hobbie}</li>;
                             })}
                             </ul>
                         </td>
@@ -249,7 +249,7 @@ class Profile extends Component {
                     <tr>
                         <td>
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#000000b3;margin-bottom: 0.5em;">About me</h3>
-                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;text-align: justify;">${profileData?.AboutMe}</p>
+                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;text-align: justify;">${profileData?.Aboutme}</p>
                         </td>
                     </tr>
                     <tr>
@@ -258,7 +258,7 @@ class Profile extends Component {
                             <table>
                             ${profileData.Education.map((education, index) => {
                               return (
-                                JSON.stringify(<tr key={index}>
+                                <tr key={index}>
                                     <td>
                                         <h4 style="font-size: 18px;font-weight: 400;line-height: 22px;margin-top: 0; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85);">{education.Name}</h4>
                                         <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">{education.Degree}</p>
@@ -266,7 +266,7 @@ class Profile extends Component {
                                         {"-"}
                                         <Moment format="YYYY">{education.EndDate}</Moment></p>
                                     </td>
-                                </tr>)
+                                </tr>
                               );
                             })}
                             </table>
