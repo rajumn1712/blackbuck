@@ -17,7 +17,7 @@ class FriendRequests extends Component {
             const { tags } = this.state;
             res.data.forEach(item => {
                 if (Array.isArray(item)) {
-                    item?.forEach(index => {
+                    item.forEach(index => {
                         if (typeof (index) !== 'object')
                             tags.push(index);
                     })

@@ -38,7 +38,8 @@ import {
   cancelGroupRequest,
   deleteUserGroup,
   saveAdminUsers,
-  fetchUserFriends
+  fetchUserFriends,
+  getMembers
 } from "../shared/api/apiServer";
 import { connect } from "react-redux";
 import { profileSuccess } from "../reducers/auth";
@@ -322,10 +323,10 @@ class Group extends Component {
   };
   getUserFriends = () => {
     let { userFndsLu, groupData } = this.state;
-    fetchUserFriends(this.props?.profile?.Id, groupData?.GroupId).then((res) => {
+    getMembers(groupData.GroupId, this.props.profile?.Id, groupData.Members, 0).then(res => {
       this.setState({
         ...this.state,
-        userFndsLu: res.data,
+        userFndsLu: res.data[0].Members,
         loading: false,
       });
     });
