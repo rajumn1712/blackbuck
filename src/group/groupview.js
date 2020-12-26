@@ -644,8 +644,9 @@ class Group extends Component {
                   onChange={(e) => this.onSearch(e)}
                   onSearch={(event) => this.onSearch(event)}
                 />}
-                <div className="">
-                  <div className="f-16 fw-400">Suggested</div>
+                 <div className="f-16 fw-400 my-8">Suggested</div>
+                <div className="frnds-scroll">
+                 
                   <List itemLayout="horizontal">{friendsData}</List>
                 </div>
               </CommonModal>

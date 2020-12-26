@@ -1578,9 +1578,7 @@ textarea {
   color: var(--textsecondary) !important;
   text-decoration: underline;
 }
-.tag-card .ant-list-split {
-  padding: 8px 0;
-}
+.tag-card .ant-list-split {padding: 8px 0;}
 .profile-tabs .group-page {
   background: var(--white);
   padding: 12px;
@@ -1927,6 +1925,7 @@ textarea {
 .rc-virtual-list .ant-avatar-image ,.onboard-process .ant-avatar-image{
   border-radius: 50% !important;
 }
+.frnds-scroll .ant-avatar{width: 40px !important;height: 40px !important;;}
 .anticon {
   color: #9b9b9b !important;
 }
@@ -1992,3 +1991,4 @@ textarea {
 .custom_tabs .ant-tabs-ink-bar, .start-course{background: var(--primary) !important;}
 .admin-kpi-card{border: 1px solid var(--line) !important; border-radius: 0.8rem !important;}
 .ant-input-group-wrapper.header-searchbar {display: initial;}
+.frnds-scroll{height: 280px;overflow: scroll;padding-right: 8px;}
