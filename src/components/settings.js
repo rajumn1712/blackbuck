@@ -147,7 +147,7 @@ class Settings extends React.Component {
                                     title="Blackbuck"
                                 >
                                     <Menu.Item key="profile">
-                                        <Link to="/profile/1">
+                                        <Link to="/profile/IsProfileTab">
                                             <span className="icons settings-icon "></span>
                                             <span>General</span>
                                         </Link>
@@ -159,7 +159,7 @@ class Settings extends React.Component {
                                         </Link>
                                     </Menu.Item>
                                     <Menu.Item key="profile ">
-                                        <Link to="/profile/1">
+                                        <Link to="/profile/IsProfileTab">
                                             <span className="icons publicposts-icon"></span>
                                             <span>Public Posts</span>
                                         </Link>
@@ -177,7 +177,7 @@ class Settings extends React.Component {
                                         </Link>
                                     </Menu.Item> */}
                                     <Menu.Item key="profile">
-                                        <Link to="/profile/1">
+                                        <Link to="/profile/IsProfileTab">
                                             <span className="icons settings-icon"></span>
                                             <span>Notifications</span>
                                         </Link>

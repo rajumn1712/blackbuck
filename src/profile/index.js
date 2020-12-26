@@ -419,9 +419,9 @@ console.log(html)
               tabBarExtraContent={operations}
               onChange={this.handleTabChange}
             >
-                        <TabPane tab="Profile" key="1">
+                        <TabPane tab="Profile" key="IsProfileTab">
                 <Route
-                  path="/profile/1"
+                  path="/profile/IsProfileTab"
                   render={() => {
                     return (
                       <div>
@@ -434,9 +434,9 @@ console.log(html)
                   }}
                 />
               </TabPane>
-              <TabPane tab="Posts" key="2">
+              <TabPane tab="Posts" key="IsProfilePostsTab">
                 <Route
-                  path="/profile/2"
+                  path="/profile/IsProfilePostsTab"
                   render={() => {
                     return (
                       <Row gutter={16}>
@@ -452,9 +452,9 @@ console.log(html)
                   }}
                 />
               </TabPane>
-              <TabPane tab="Friends" key="3">
+              <TabPane tab="Friends" key="IsProfileFriendsTab">
                 <Route
-                  path="/profile/3"
+                  path="/profile/IsProfileFriendsTab"
                   render={() => {
                     return (
                       <Row gutter={16}>
@@ -476,9 +476,9 @@ console.log(html)
                   }}
                 />
               </TabPane>
-              <TabPane tab="Groups" className="m-0" key="4">
+              <TabPane tab="Groups" className="m-0" key="IsProfileGroupsTab">
                 <Route
-                  path="/profile/4"
+                  path="/profile/IsProfileGroupsTab"
                   render={() => {
                     return (
                       <Row gutter={16}>
@@ -516,7 +516,7 @@ console.log(html)
                   }}
                 />
               </TabPane>
-              <TabPane tab="Notifications" className="m-0" key="5">
+              <TabPane tab="Notifications" className="m-0" key="IsProfileNotificationsTab">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Notifications />

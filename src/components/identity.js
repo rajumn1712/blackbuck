@@ -44,7 +44,7 @@ class Identity extends Component {
           ]}
           cover={<img src={homeInfo?.CoverPic || coverphoto} />}
         >
-          <Link to="/profile/1">
+          <Link to="/profile/IsProfileTab">
             <Meta
               avatar={<Avatar src={homeInfo?.ProfilePic || defaultUser} />}
               title={
@@ -56,7 +56,7 @@ class Identity extends Component {
               description={<Tooltip title={homeInfo?.BranchName} placement={'bottom'}>{homeInfo?.BranchName}</Tooltip>}
             />
           </Link>
-          <Link to="/profile/1" className="fullprofilelink">
+          <Link to="/profile/IsProfileTab" className="fullprofilelink">
               View Full Profile
           </Link>
         </Card>
@@ -66,13 +66,13 @@ class Identity extends Component {
           title="Blackbuck"
         >
           <Menu.Item key="profile">
-            <Link to="/profile/1">
+            <Link to="/profile/IsProfileTab">
               <span className="left-menu profile-icon"></span>
               <span>Profile</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="friends">
-            <Link to="/profile/3">
+            <Link to="/profile/IsProfileFriendsTab">
               <span className="left-menu friends-icon"></span>
               <span>Friends</span>
             </Link>
@@ -84,13 +84,13 @@ class Identity extends Component {
             </Link>
           </Menu.Item> */}
           <Menu.Item key="groups">
-            <Link to="/profile/4">
+            <Link to="/profile/IsProfileGroupsTab">
               <span className="left-menu group-icon"></span>
               <span>Groups</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="notification">
-            <Link to="/profile/5">
+            <Link to="/profile/IsProfileNotificationsTab">
               <span className="left-menu noti-icon"></span>
               <span>Notifications</span>
             </Link>

@@ -164,7 +164,7 @@ class Postings extends Component {
       share: <span className="overflow-text text-secondary"> <Link
         to={
           this.props?.profile.Id == user.UserId
-            ? "/profile/" + "1"
+            ? "/profile/IsProfileTab"
             : "/profileview/" + user.UserId
         }
       ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> Shared <Link
@@ -173,7 +173,7 @@ class Postings extends Component {
       group: <span className="overflow-text text-secondary"><Link
         to={
           this.props?.profile.Id == user?.UserId
-            ? "/profile/" + "1"
+            ? "/profile/IsProfileTab"
             : "/profileview/" + user?.UserId
         }
       ><span className="post-title">{user?.Firstname}</span></Link>{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
@@ -182,7 +182,7 @@ class Postings extends Component {
       normal: <span className="overflow-text text-secondary"> <Link
         to={
           this.props?.profile.Id == user.UserId
-            ? "/profile/" + "1"
+            ? "/profile/IsProfileTab"
             : "/profileview/" + user.UserId
         }
       ><span className="post-title">{user.Firstname}</span></Link> </span>

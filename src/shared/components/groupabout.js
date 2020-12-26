@@ -190,7 +190,7 @@ class GroupAbout extends Component {
                             >
                                 {Members.map((user, index) => {
                                     return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
-                                        <Link to={this.props?.profile.Id == user.UserId ? "/profile/1" : ("/profileview/" + user.UserId)}><Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
+                                        <Link to={this.props?.profile.Id == user.UserId ? "/profile/IsProfileTab" : ("/profileview/" + user.UserId)}><Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
                                         </Avatar></Link> 
                                     </Tooltip>
                                 })}

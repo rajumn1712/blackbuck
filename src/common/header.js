@@ -80,7 +80,7 @@ class HeaderComponent extends React.Component {
                         </div>
                         <div className="notification-description text-left">
                             <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
-                            <span><Link to="/profile/3">Respond</Link></span>
+                            <span><Link to="/profile/IsProfileFriendsTab">Respond</Link></span>
                         </div>
                     </div>)}
                     {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
@@ -178,7 +178,7 @@ class HeaderComponent extends React.Component {
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                             <Tooltip title="Notifications">
-                                        <Link className="header-link" to="/profile/5">
+                                        <Link className="header-link" to="/profile/IsProfileNotificationsTab">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
                                                 <span className="icons notification-icon" />
                                             </Badge>
