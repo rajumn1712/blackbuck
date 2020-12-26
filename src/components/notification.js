@@ -54,13 +54,9 @@ const data = [
 class Notifications extends Component {
 
     render() {
-        return <div className="main">
-            <Row gutter={16}>
-                <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
-                    
-
-                </Col>
-                <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
+        return <>
+            <Row gutter={16} className="mb-8">
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <List
                         className="notifications"
                         itemLayout="horizontal"
@@ -75,20 +71,20 @@ class Notifications extends Component {
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.avatar} />}
-                                    title={<a href="https://ant.design">{item.title}</a>}
+                                    title={<a href="">{item.title}</a>}
                                     description={item.timestamp}
                                 />
                             </List.Item>
                         )}
                     />
                 </Col>
-                <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
+                {/* <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
                     <Affix offsetTop={86} >
                         <Ads />
                     </Affix>
-                </Col>
+                </Col> */}
             </Row>
-        </div>
+        </>
     }
 }
 

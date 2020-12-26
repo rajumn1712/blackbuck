@@ -24,6 +24,8 @@ class ProfileDetail extends Component {
   };
 
   componentDidMount() {
+    if (this.props.onRef)
+      this.props.onRef(this);
     this.profielDetails();
     this.storeSubscription = store.subscribe(() => {
       const { profile } = store.getState().oidc;

@@ -30,14 +30,47 @@ class Groups extends Component {
     data: [],
     loading: true,
     page: 1,
-    pageSize: 5,
+    pageSize: this.props.displayas ? 20 : 5,
     size: 0,
+    loadMore: true,
   };
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
   handleCancel = (e) => {
     this.setState({
       visible: false,
     });
   };
+  handleScroll = () => {
+    const windowHeight =
+      "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+    if (windowBottom >= docHeight) {
+      this.loadMore();
+    } else {
+    }
+  };
+  loadMore(e) {
+    if (this.state.loadMore) {
+      let { page } = this.state;
+      page += 1;
+      this.setState({ ...this.state, page, loading: true }, () => {
+        this.getAllGroups();
+      });
+    }
+  }
   joinGroup = async (item) => {
     const obj = {
       UserId: this.props?.profile?.Id,
@@ -89,6 +122,7 @@ class Groups extends Component {
     }
   }
   componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
     this.getAllGroups();
   }
   loadGroups = (take) => {
@@ -111,6 +145,7 @@ class Groups extends Component {
         loading: false,
         data: data.concat(response.data),
         size: response.data?.length,
+        loadMore: response.data.length === this.state.pageSize,
       });
     }
   };
@@ -140,6 +175,9 @@ class Groups extends Component {
       this.state.data?.map((group, index) => {
         return (
           <Col className="mb-12" md={12} lg={8} xl={8} xxl={6}>
+            <div style={{position: "absolute", right: 8, top: 140, width: 30, height: 30, backgroundColor: 'var(--white)', zIndex: 9, borderTopLeftRadius: '0.4rem', borderBottomLeftRadius: '0.4rem', textAlign: 'center', paddingLeft: 3, paddingTop: 3}}>
+            <span class="icons-small lock-icon" style={{transform: 'scale(1.6)'}}></span>
+            </div>
             <Card
               key={index}
               cover={
@@ -149,9 +187,21 @@ class Groups extends Component {
                 />
               }
               actions={[
-                <Link className="list-link f-14" onClick={() => this.joinGroup(group)}>
-                 Join
-                </Link>,
+                group.requestJoin === "request" ? (
+                  <Link
+                    className="ml-8 f-12 list-link ml-16"
+                    onClick={() => this.cancelGroupRequest(group)}
+                  >
+                    Cancel request
+                  </Link>
+                ) : (
+                    <Link
+                      className="ml-8 f-12 list-link ml-16"
+                      onClick={() => this.joinGroup(group)}
+                    >
+                      Join
+                    </Link>
+                  )
               ]}
             >
               <Meta
@@ -169,20 +219,19 @@ class Groups extends Component {
                       {group.description}
                     </div>
                     <div
-                      className="d-flex align-items-center"
+                      className="d-flex align-items-center f-12"
                       style={{ position: "relative" }}
                     >
                       {group.members > 0 && (
-                        <span>
+                        <span className="pr-4">
                           <span>
                             {group.members ? group.members : ""}
                           </span>{" "}
                           Members
                         </span>
                       )}
-                      {" "}
-                        |{" "}
-                        <span>
+                      {" "}|{" "}
+                        <span className="pl-4">
                           <span className="mr-4">{group.postsCount ? group.postsCount : 0}</span>
                           Posts
                         </span>

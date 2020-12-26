@@ -72,7 +72,7 @@ class Identity extends Component {
             </Link>
           </Menu.Item>
           <Menu.Item key="friends">
-            <Link to="/friends">
+            <Link to="/profile/3">
               <span className="left-menu friends-icon"></span>
               <span>Friends</span>
             </Link>
@@ -84,13 +84,13 @@ class Identity extends Component {
             </Link>
           </Menu.Item> */}
           <Menu.Item key="groups">
-            <Link to="/group">
+            <Link to="/profile/4">
               <span className="left-menu group-icon"></span>
               <span>Groups</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="notification">
-            <Link to="/notifications">
+            <Link to="/profile/5">
               <span className="left-menu noti-icon"></span>
               <span>Notifications</span>
             </Link>

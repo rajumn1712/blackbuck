@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Avatar, Button, Empty,Row,Col } from 'antd'
+import { Card, Avatar, Button, Empty, Row, Col } from 'antd'
 import notify from './notification';
 import { getUserInvitations, acceptDeclineInvitations } from '../api/apiServer';
 import { profileSuccess } from '../../reducers/auth';
@@ -9,13 +9,28 @@ import defaultUser from "../../styles/images/defaultuser.jpg";
 class Invite extends Component {
     state = {
         invitations: [],
+        loadMore: true,
+        pageSize: 20,
+        page: 1
     }
     componentDidMount() {
+        if (this.props.displayas)
+            window.addEventListener("scroll", this.handleScroll);
         this.getUserInvites();
     }
+    componentWillUnmount() {
+        if (this.props.displayas)
+            window.removeEventListener("scroll", this.handleScroll);
+    }
     getUserInvites = () => {
-        getUserInvitations(this.props.profile?.Id, this.props.displayas?100:1, 0).then(res => {
-            this.setState({ invitations: res.data?.length > 0 ? res.data : [] })
+        getUserInvitations(this.props.profile?.Id, this.props.displayas ? this.state.pageSize : 1, this.props.displayas ? (this.state.page * this.state.pageSize - this.state.pageSize) : 0).then(res => {
+            if (!this.props.displayas)
+                this.setState({ invitations: res.data?.length > 0 ? res.data : [] })
+            else {
+                let { invitations } = this.state;
+                invitations = invitations.concat(res.data?.length > 0 ? res.data : []);
+                this.setState({ invitations: invitations, loadMore: res.data.length === this.state.pageSize, })
+            }
         });
     }
     acceptInvite = (type, obj) => {
@@ -35,41 +50,79 @@ class Invite extends Component {
                 this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
                 this.props.upadateProfile(this.props.profile)
             }
-            this.getUserInvites();
+            if (!this.props.displayas)
+                this.getUserInvites();
+            else
+                this.updateInvitations(object);
             notify({ placement: 'bottomLeft', message: 'Invite', description: `Request ${type} successfully.` });
         });
     }
+    updateInvitations = (item) => {
+        let { invitations } = this.state;
+        invitations = invitations.filter(ite => item.GroupId !== ite.GroupId);
+        this.setState({ ...this.state, invitations });
+    }
+
+    handleScroll = () => {
+        const windowHeight =
+            "innerHeight" in window
+                ? window.innerHeight
+                : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+        );
+        const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+        if (windowBottom >= docHeight) {
+            this.loadMore();
+        } else {
+        }
+    };
+    loadMore(e) {
+        if (this.state.loadMore) {
+            let { page } = this.state;
+            page += 1;
+            this.setState({ ...this.state, page, loading: true }, () => {
+                this.getUserInvites();
+            });
+        }
+    }
     render() {
         let { invitations } = this.state;
-        return this.props.displayas ? (<Row gutter={16} className="group-page pb-0 m-0">
-            <Col className="mb-12 p-0" md={12} lg={8} xl={8} xxl={6}>
-                <div className="invite-card">
-                    {invitations.map((invitation, index) => {
-                        return <Card key={index}>
+        return this.props.displayas ? (<div className="group-page p-12">
+            <Row gutter={16}>
+                {invitations.map((invitation, index) => {
+                    return <Col md={24} lg={8} xl={8} xxl={6} key={index} className="mb-8">
+                        <div className="invite-card"><Card bordered={true}>
                             <div>
                                 <Avatar.Group>
                                     <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>
                                     <Avatar src={invitation?.Image || defaultUser} />
                                 </Avatar.Group>
-                                <p><span>{invitation?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name">{invitation?.GroupName}</span> group</p>
+                                <p className="f-14"><span className="text-primary semibold">{invitation?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name text-primary">{invitation?.GroupName}</span> group</p>
                                 <div className="invite-btn">
-                                    <Button className="mr-16" type="primary" onClick={() => this.acceptInvite('accept', invitation)}>Accept</Button>
+                                    <Button className="mr-8" type="primary" onClick={() => this.acceptInvite('accept', invitation)}>Accept</Button>
                                     <Button type="danger" onClick={() => this.acceptInvite('decline', invitation)}>Decline</Button>
                                 </div>
                             </div>
 
 
                         </Card>
-                    })}
-                    {
-                        <Card>
-                            {
-                            invitations.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-                        </Card>
-                    }
-                </div>
-            </Col>
-        </Row>) : (
+                        </div>
+                    </Col>
+                })}
+                {invitations.length == 0 &&
+                    <Card>
+                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                    </Card>
+                }
+            </Row>
+        </div>) : (
                 <div className="invite-card">
                     <Card title="Invite" bordered={true}>
                         {
