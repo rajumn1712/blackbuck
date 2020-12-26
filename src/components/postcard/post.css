@@ -136,6 +136,8 @@ to{transform: translateY(0px);}
 .grp-type, .grp-type:hover{color: var(--primary);}
 .grp-type-icon,.custom-select .anticon.anticon-down{width: 14px;height: 14px;display: inline-block;vertical-align: text-top;}
 .grp-type-icon.public{background-position: -26px -397px;}
+.grp-type-icon.groups{background-position: -218px -396px;}
+.grp-type-icon.friends{background-position: -26px -397px;}
 .grp-type-icon.private{background-position: -48px -397px;}
 .grp-type-icon.down,.custom-select .anticon.anticon-down{background-position: -175px -397px;}
 .grp-type-icon.friend{background-position: -87px -396px;}

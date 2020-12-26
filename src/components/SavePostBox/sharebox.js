@@ -609,10 +609,10 @@ class ShareBox extends Component {
     const tagChild = tags?.map(this.forMap);
     const menu = (
       <Menu className="custom-dropdown more-opt">
-        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e)}>Public</Menu.Item>
-        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e)}>Friends</Menu.Item>
-        <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}>College</Menu.Item>
-        <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}>Groups</Menu.Item>
+        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon public"></span>Public</Menu.Item>
+        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon friends"></span>Friends</Menu.Item>
+        <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon college"></span>College</Menu.Item>
+        <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon groups"></span>Groups</Menu.Item>
       </Menu>
     );
     const title = (
