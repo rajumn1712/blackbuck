@@ -88,6 +88,7 @@ class ShareBox extends Component {
     errors: null,
     fileUploading: false,
     isEdit: false,
+    ddlValue:"Public"
   };
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
@@ -592,6 +593,9 @@ class ShareBox extends Component {
   disablePostBtn = () => {
     return !this.postObject?.ImageUrl && !this.postObject?.Message;
   };
+  setDdlValue = (e) => {
+    this.setState({ ...this.state, ddlValue: e.item.node.innerText?e.item.node.innerText:'' })
+  }
   render() {
     const {
       tags,
@@ -600,15 +604,15 @@ class ShareBox extends Component {
       visible,
       modal,
       isEdit,
+      ddlValue
     } = this.state;
     const tagChild = tags?.map(this.forMap);
     const menu = (
       <Menu className="custom-dropdown more-opt">
-        <Menu.Item key="0">Public</Menu.Item>
-        <Menu.Item key="1">Private</Menu.Item>
-        <Menu.Item key="2">Friends</Menu.Item>
-        <Menu.Item key="3">College</Menu.Item>
-        <Menu.Item key="4">Groups</Menu.Item>
+        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e)}>Public</Menu.Item>
+        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e)}>Friends</Menu.Item>
+        <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}>College</Menu.Item>
+        <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}>Groups</Menu.Item>
       </Menu>
     );
     const title = (
@@ -624,9 +628,9 @@ class ShareBox extends Component {
                 <div
                   className="post-privacy"
                   style={{ color: "#9B9B9B", fontSize: 12 }}
-                  onClick={(e) => e.preventDefault()}
+                  
                 >
-                  <span className="grp-type-icon public mr-4"></span>Public
+                  <span className="grp-type-icon public mr-4"></span>{ddlValue}
                   <span className="grp-type-icon down ml-4"></span>
                 </div>
               </Dropdown>
@@ -688,7 +692,7 @@ class ShareBox extends Component {
                             Close
                         </Button> */}
               <Button
-                disabled={this.disablePostBtn()}
+                disabled={this.disablePostBtn() || (ddlValue !== 'Public' && ddlValue !== 'Groups')}
                 type="primary"
                 onClick={() => this.popupOk()}
               >
