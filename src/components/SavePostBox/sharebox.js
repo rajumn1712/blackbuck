@@ -15,6 +15,7 @@ import {
   Upload,
   List,
   Alert,
+  Select
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { TweenOneGroup } from "rc-tween-one";
@@ -24,13 +25,16 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { Formik } from "formik";
 import { savePost } from "../../shared/api/postsApi";
+import { fetchUserGroups } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { uuidv4 } from "../../utils";
 import notify from "../../shared/components/notification";
 import defaultUser from "../../styles/images/defaultuser.jpg";
+import defaultguser from '../../styles/images/default-cover.png';
 const { Dragger } = Upload;
 const { TextArea } = Input;
 const { Meta } = Card;
+const {Option}=Select;
 const postsmenu = [
   {
     Heading: "Text",
@@ -88,7 +92,8 @@ class ShareBox extends Component {
     errors: null,
     fileUploading: false,
     isEdit: false,
-    ddlValue:"Public"
+    ddlValue: "Public",
+    groupLu: [],
   };
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
@@ -594,7 +599,36 @@ class ShareBox extends Component {
     return !this.postObject?.ImageUrl && !this.postObject?.Message;
   };
   setDdlValue = (e) => {
-    this.setState({ ...this.state, ddlValue: e.item.node.innerText?e.item.node.innerText:'' })
+    let { groupLu } = this.state;
+    this.setState({ ...this.state, ddlValue: e.item.node.innerText ? e.item.node.innerText : '' });
+    if (e.item.node.innerText == 'Groups') {
+      if (groupLu.length === 0)
+        fetchUserGroups(
+          this.props.userId ? this.props.userId : this.props?.profile?.Id,
+          5000,
+          0
+        ).then((res) => {
+          if (res.ok) {
+            groupLu = res.data;
+            this.setState({ ...this.state, groupLu });
+          }
+        })
+    }
+  }
+
+  setFieldValue = (value) => {
+
+  }
+  renderSelectItem = (item) => {
+    return <div>
+      <List.Item>
+        <List.Item.Meta className="privacy-dropdown"
+          avatar={<Avatar className="select-image" src={item.image || defaultguser} />}
+          title={<span>{item.name ? item.name : item.Name}</span>}
+          description={item.description ? <div className="f-12">{item.description}</div> : ''}
+        />
+      </List.Item>
+    </div>
   }
   render() {
     const {
@@ -604,7 +638,8 @@ class ShareBox extends Component {
       visible,
       modal,
       isEdit,
-      ddlValue
+      ddlValue,
+      groupLu
     } = this.state;
     const tagChild = tags?.map(this.forMap);
     const menu = (
@@ -612,7 +647,7 @@ class ShareBox extends Component {
         <Menu.Item key="0" onClick={(e) => this.setDdlValue(e)}>Public</Menu.Item>
         <Menu.Item key="2" onClick={(e) => this.setDdlValue(e)}>Friends</Menu.Item>
         <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}>College</Menu.Item>
-        <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}>Groups</Menu.Item>
+        {!this.props.groupData && <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}>Groups</Menu.Item>}
       </Menu>
     );
     const title = (
@@ -703,6 +738,25 @@ class ShareBox extends Component {
           destroyOnClose
         >
           <div className="mb-24">{title}</div>
+          {!this.props.groupData && ddlValue == "Groups" && <div className="mb-24">
+            <Select
+              defaultValue=""
+              name="EducationType"
+              value={this.state.GroupName}
+              onChange={(value) =>
+                this.setFieldValue(value)
+              }
+              optionLabelProp="label"
+            >
+              <Option value="">Select Group</Option>
+              {groupLu.map((item, index) => {
+                return (
+                  <Option key={index} value={item.name} label={item.name}>
+                    {this.renderSelectItem(item)}
+                  </Option>
+                );
+              })}
+            </Select></div>}
           <div className="upload-image">
             {this.renderUploadType(modal)}
             <form>
