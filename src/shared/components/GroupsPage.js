@@ -206,10 +206,19 @@ class GroupsPage extends Component {
                   <Card
                     key={index}
                     cover={
-                      <img
-                        className="obj-fit"
-                        src={group.image || defaultguser}
-                      />
+                      // <Link
+                      //     to={"/groupview/" + group.id}
+                      //     className="post-title"
+                      //   >
+                      // <img
+                      //   className="obj-fit"
+                      //   src={group.image || defaultguser}
+                      // />
+                      // </Link>
+                       <img
+                       className="obj-fit"
+                       src={group.image || defaultguser}
+                     />
                     }
                     actions={!group.IsGroupAdmin && !group.isSystem && !IsHideAction? [
                       <Link className="list-link f-14" onClick={() => this.leaveGroup(group)}>
