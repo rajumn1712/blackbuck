@@ -11,8 +11,8 @@ import Groups from '../shared/components/Groups';
 import Postings from '../shared/postings';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import SavedPostsComponent from '../shared/postings/savedPosts';
-const PostingsComponent = () => {
-    return <Postings sharebox={true} friendsSuggestions={true} postingsType="all" />
+const PostingsComponent = ({ sharebox, friendsSuggestions, postingsType, ...rest }) => {
+    return <Postings sharebox={sharebox} friendsSuggestions={friendsSuggestions} postingsType={postingsType} {...rest} />
 }
 class Home extends Component {
     componentDidMount() {
@@ -33,8 +33,11 @@ class Home extends Component {
                     </Col>
                     <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
                         <Switch >
-                            <Route path="/newsfeed" component={PostingsComponent} />
+                            <Route path="/newsfeed" component={(props) => <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} />} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
+                            <Route path="/search/:key/:type" component={(props) => {
+                                return <PostingsComponent sharebox={false} friendsSuggestions={false} postingsType={"search"} {...props} />
+                            }} />
                             {/* <Route path="/notifications" component={()=><CommingSoon />}/> */}
                             <Redirect path="" to="/newsfeed" />
                         </Switch>

@@ -9,7 +9,6 @@ class LayoutComponent extends Component {
         className: 'container'
     }
     componentDidUpdate(prevProps) {
-        debugger
         if (this.props.location != prevProps.location) {
             const className = window.location.href.indexOf('admin') > -1 ? 'admin-panel' : 'container';
             this.setState({ className })
