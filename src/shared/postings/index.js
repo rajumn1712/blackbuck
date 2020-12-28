@@ -108,8 +108,8 @@ class Postings extends Component {
       this.props.postingsType,
       this.props.groupData?.GroupId,
       this.props.id,
-      this.props.match.params?.key,
-      this.props.match.params?.type,
+      this.props.match?.params?.key,
+      this.props.match?.params?.type,
     );
     let { allPosts } = this.state;
     if (!isFromSave) {
