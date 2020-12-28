@@ -154,7 +154,7 @@ class Friends extends Component {
                     <div className="d-flex align-items-center">
                       <Link to={"/profileview/" + item.UserId}>
                         <span className="overflow-text post-title">
-                          {item.Firstname}
+                         <Link className="overflow-text post-title" to={"/profileview/" + item.UserId}> {item.Firstname}</Link>
                         </span>
                       </Link>
                     </div>

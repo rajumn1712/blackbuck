@@ -25,7 +25,7 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { Formik } from "formik";
 import { savePost } from "../../shared/api/postsApi";
-import { fetchUserGroups } from "../../shared/api/apiServer";
+import { fetchUserGroups,fetchUserColleges } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { uuidv4 } from "../../utils";
 import notify from "../../shared/components/notification";
@@ -94,6 +94,9 @@ class ShareBox extends Component {
     isEdit: false,
     ddlValue: "Public",
     groupLu: [],
+    collegeLu:[],
+    CollgeName:" ",
+    GroupName:" "
   };
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
@@ -115,6 +118,7 @@ class ShareBox extends Component {
     return {
       PostId: object ? object.id : uuidv4(),
       Type: "Text",
+      PostType: object ? object.PostType : uuidv4(),
       Message: object ? object.meassage : "",
       Title: object ? object.title : "",
       IsAnonymous: object ? object.IsAnonymous : false,
@@ -143,6 +147,8 @@ class ShareBox extends Component {
           : null,
       },
       Shares: [],
+      CollegeId: object ? object.CollegeId : null,
+      CollegeName: object ? object.CollegeName : null,
     };
   };
 
@@ -278,6 +284,8 @@ class ShareBox extends Component {
         {
           visible: false,
           isEdit: false,
+          groupLu: [],
+          collegeLu: []
         },
         () => {
           this.props.dataRefreshed(isEdit ? "Edit" : "Add");
@@ -316,6 +324,8 @@ class ShareBox extends Component {
       visible: false,
       isEdit: false,
       inputVisible: false,
+      groupLu: [],
+      collegeLu: []
     });
   };
 
@@ -596,11 +606,12 @@ class ShareBox extends Component {
     return errors;
   };
   disablePostBtn = () => {
-    return !this.postObject?.ImageUrl && !this.postObject?.Message;
+    return (!this.postObject?.ImageUrl && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
   };
   setDdlValue = (e) => {
-    let { groupLu } = this.state;
-    this.setState({ ...this.state, ddlValue: e.item.node.innerText ? e.item.node.innerText : '' });
+    let { groupLu,collegeLu } = this.state;
+    this.postObject.PostType = e.item.node.innerText ? e.item.node.innerText : '';
+    this.setState({ ...this.state, ddlValue: e.item.node.innerText ? e.item.node.innerText : '' },()=>{
     if (e.item.node.innerText == 'Groups') {
       if (groupLu.length === 0)
         fetchUserGroups(
@@ -614,10 +625,50 @@ class ShareBox extends Component {
           }
         })
     }
+    if (e.item.node.innerText == 'College') {
+      if (collegeLu.length === 0)
+        fetchUserColleges(
+        ).then((res) => {
+          if (res.ok) {
+            collegeLu = res.data;
+            this.setState({ ...this.state, collegeLu });
+          }
+        })
+    }}
+    );
   }
 
-  setFieldValue = (value) => {
-
+  setFieldValue = (value, type) => {
+    let { collegeLu, groupLu, CollgeName, GroupName } = this.state;
+    let Object;
+    let GroupObject;
+    if (type) {
+      Object = collegeLu.filter(item => item.CollegeId == value)
+      this.postObject.CollegeId = Object[0]?.CollegeId;
+      this.postObject.CollegeName = Object[0]?.CollegeName;
+      CollgeName = Object[0]?.CollegeId;
+      this.setState({ ...this.state, CollgeName });
+    }
+    else {
+      GroupObject = groupLu.filter(item => item.id == value)
+      this.postObject.Group.GroupImage =  GroupObject[0]?.GroupImage;
+      this.postObject.Group.GroupName =  GroupObject[0]?.GroupName;
+      this.postObject.Group.GroupId =  GroupObject[0]?.id;
+      GroupName = GroupObject[0]?.id;
+      this.setState({ ...this.state, GroupName });
+    }
+    
+  }
+  renderSelectCollegeItem = (item) => {
+    return <div>
+      <List.Item>
+        <List.Item.Meta className="privacy-dropdown"
+          avatar={<Avatar className="select-image" src={item.Image || defaultguser} />}
+          title={<span>{item.name ? item.name : item.CollegeName}</span>}
+          description={item.description ? <div className="f-12">{item.description}</div> : ''}
+        />
+      </List.Item>
+    </div>
   }
   renderSelectItem = (item) => {
     return <div>
@@ -639,7 +690,8 @@ class ShareBox extends Component {
       modal,
       isEdit,
       ddlValue,
-      groupLu
+      groupLu,
+      collegeLu
     } = this.state;
     const tagChild = tags?.map(this.forMap);
     const menu = (
@@ -727,7 +779,7 @@ class ShareBox extends Component {
                             Close
                         </Button> */}
               <Button
-                disabled={this.disablePostBtn() || (ddlValue !== 'Public' && ddlValue !== 'Groups')}
+                disabled={this.disablePostBtn()}
                 type="primary"
                 onClick={() => this.popupOk()}
               >
@@ -740,19 +792,38 @@ class ShareBox extends Component {
           <div className="mb-24">{title}</div>
           {!this.props.groupData && ddlValue == "Groups" && <div className="mb-24">
             <Select
-              defaultValue=""
-              name="EducationType"
+              defaultValue=" "
+              name="Group"
               value={this.state.GroupName}
               onChange={(value) =>
                 this.setFieldValue(value)
               }
               optionLabelProp="label"
             >
-              <Option value="">Select Group</Option>
+              <Option value=" " label="Select Group">Select Group</Option>
               {groupLu.map((item, index) => {
                 return (
-                  <Option key={index} value={item.name} label={item.name}>
+                  <Option key={index} value={item.id} label={item.name}>
                     {this.renderSelectItem(item)}
+                  </Option>
+                );
+              })}
+            </Select></div>}
+          {ddlValue == "College" && <div className="mb-24">
+            <Select
+              defaultValue=" "
+              name="College"
+              value={this.state.CollgeName}
+              onChange={(value) =>
+                this.setFieldValue(value, 'College')
+              }
+              optionLabelProp="label"
+            >
+              <Option value=" " label="Select College">Select College</Option>
+              {collegeLu.map((item, index) => {
+                return (
+                  <Option key={index} value={item.CollegeId} label={item.CollegeName}>
+                    {this.renderSelectCollegeItem(item)}
                   </Option>
                 );
               })}
