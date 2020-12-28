@@ -167,6 +167,8 @@ class ShareBox extends Component {
           : [],
         isEdit: true,
         tags: postObj.tags,
+        CollgeName:postObj.CollegeId,
+        GroupName:postObj.Group?.Gif,
         post,
         ddlValue: postObj.PostType ? postObj.PostType : 'Public',
       },
