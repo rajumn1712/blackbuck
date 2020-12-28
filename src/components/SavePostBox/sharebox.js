@@ -168,6 +168,7 @@ class ShareBox extends Component {
         isEdit: true,
         tags: postObj.tags,
         post,
+        ddlValue: postObj.PostType ? postObj.PostType : 'Public',
       },
       () => {
         const object = {
@@ -257,7 +258,11 @@ class ShareBox extends Component {
     this.postObject = this.createObject(postObject);
     this.postObject.Type = modal === "Images" ? "Image" : modal;
     this.postObject.dupType = modal === "Images" ? "Image" : modal;
-    this.setState({ visible: true, modal: modal });
+    this.setState({ visible: true, modal: modal },()=>{
+      if (postObject) {
+        this.setDdlValue(this.state.ddlValue);
+      }
+    });
   };
   popupOk = async (e) => {
     this.postObject.CreatedDate = this.postObject.CreatedDate
@@ -609,10 +614,11 @@ class ShareBox extends Component {
     return (!this.postObject?.ImageUrl && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
   };
   setDdlValue = (e) => {
+    let text = e.item ? (e.item.node.innerText ? e.item.node.innerText : '') : e;
     let { groupLu,collegeLu } = this.state;
-    this.postObject.PostType = e.item.node.innerText ? e.item.node.innerText : '';
-    this.setState({ ...this.state, ddlValue: e.item.node.innerText ? e.item.node.innerText : '' },()=>{
-    if (e.item.node.innerText == 'Groups') {
+    this.postObject.PostType = text
+    this.setState({ ...this.state, ddlValue:text},()=>{
+    if (text == 'Groups') {
       if (groupLu.length === 0)
         fetchUserGroups(
           this.props.userId ? this.props.userId : this.props?.profile?.Id,
@@ -625,7 +631,7 @@ class ShareBox extends Component {
           }
         })
     }
-    if (e.item.node.innerText == 'College') {
+    if (text == 'College') {
       if (collegeLu.length === 0)
         fetchUserColleges(
         ).then((res) => {
@@ -651,8 +657,8 @@ class ShareBox extends Component {
     }
     else {
       GroupObject = groupLu.filter(item => item.id == value)
-      this.postObject.Group.GroupImage =  GroupObject[0]?.GroupImage;
-      this.postObject.Group.GroupName =  GroupObject[0]?.GroupName;
+      this.postObject.Group.GroupImage =  GroupObject[0]?.image;
+      this.postObject.Group.GroupName =  GroupObject[0]?.name;
       this.postObject.Group.GroupId =  GroupObject[0]?.id;
       GroupName = GroupObject[0]?.id;
       this.setState({ ...this.state, GroupName });
