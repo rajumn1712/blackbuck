@@ -91,9 +91,10 @@ class Group extends Component {
       Image: this.props?.profile.ProfilePic,
     };
     let { saveObj } = this.state;
-    item.IsChecked = e.target.checked;
+    item.IsChecked = e.target ? e.target.checked : e;
     if (item.IsChecked) saveObj.Invitations.push(Obj);
     else saveObj.Invitations.splice(saveObj.Invitations.indexOf(Obj), 1);
+    this.setState({ ...this.state, saveObj })
   };
   onAdminChange = (e, item, index) => {
     let Obj = {
@@ -104,9 +105,10 @@ class Group extends Component {
       Email: item.Email
     };
     let { saveAdminObj } = this.state;
-    item.IsChecked = e.target.checked;
+    item.IsChecked = e.target ? e.target.checked : e;
     if (item.IsChecked) saveAdminObj.AdminUsers.push(Obj);
     else saveAdminObj.AdminUsers.splice(saveAdminObj.AdminUsers.indexOf(Obj), 1);
+    this.setState({ ...this.state, saveAdminObj })
   };
   handleDisabledChange = (disabled) => {
     this.setState({ disabled });
@@ -502,14 +504,14 @@ class Group extends Component {
       })
       .map((item, index) => {
         return (
-          <List.Item key={index}>
+          <List.Item key={index} onClick={(e) => this.onChange(item.IsChecked?false:true, item, index)}>
             <List.Item.Meta
               avatar={<Avatar src={item.Image || defaultUser} />}
               title={item.Firstname}
             />
             <Checkbox
               value={item.IsChecked}
-              onChange={(e) => this.onChange(e, item, index)}
+              checked={item.IsChecked}
             ></Checkbox>
           </List.Item>
         );
@@ -526,14 +528,14 @@ class Group extends Component {
       })
       .map((item, index) => {
         return (
-          <List.Item key={index}>
+          <List.Item key={index} onClick={(e) => this.onAdminChange(item.IsChecked?false:true, item, index)}>
             <List.Item.Meta
               avatar={<Avatar src={item.Image || defaultUser} />}
               title={item.Firstname}
             />
             <Checkbox
               value={item.IsChecked}
-              onChange={(e) => this.onAdminChange(e, item, index)}
+              checked={item.IsChecked}
             ></Checkbox>
           </List.Item>
         );
