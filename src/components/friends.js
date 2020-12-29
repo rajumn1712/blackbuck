@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Avatar, List, Row, Col,Tabs } from "antd";
+import { Card, Avatar, List, Row, Col, Tabs, Dropdown, Menu } from "antd";
 import { store } from "../store";
 import "../index.css";
 import "../App.css";
@@ -8,7 +8,15 @@ import defaultUser from "../styles/images/defaultuser.jpg";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../common/loader";
-const { TabPane } = Tabs;
+const { TabPane } = Tabs; 
+const frndActions = (
+  <Menu className="custom-dropdown">
+    <Menu.Item key="0">
+      <a href="">Un-friend</a>
+    </Menu.Item>
+  </Menu>
+);
+
 class Friends extends Component {
   componentDidMount() {
     if (this.props.onRef)
@@ -187,6 +195,11 @@ class Friends extends Component {
                           <span> Mutual Friends</span>
                         </span>
                       )}
+                      <Dropdown overlay={frndActions} trigger={['click']} placement="bottomRight">
+                        <a className="ant-dropdown-link ml-auto" onClick={e => e.preventDefault()}>
+                          <span className="icons more mr-0"></span>
+                        </a>
+                      </Dropdown>
                     </div>
                   }
                 />
