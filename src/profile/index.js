@@ -234,7 +234,7 @@ class Profile extends Component {
                             <h3  style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Hobbies</h3>
                             <ul style="list-style-type: none;padding-left: 0;">
                             ${profileData.Hobbies.map((hobbie, index) => {
-                              return `<li key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${hobbie}</li>`
+                              return `<li key={index} style="color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;padding:0">${hobbie}</li>`
                             })}
                             </ul>
                         </td>
