@@ -351,6 +351,7 @@ class Group extends Component {
   };
   handleOk = async (e) => {
     this.setState({ ...this.state, loading: true });
+    this.state.saveObj.CreatdDate = new Date();
     const response = await saveInvitations(this.state.saveObj);
     if (response.ok) {
       this.setState(

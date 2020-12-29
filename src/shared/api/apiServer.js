@@ -163,6 +163,9 @@ const fetchUserColleges = () => {
   return apiClient.get(FRIENDS_API + "getColleges");
 };
 
+const getNotifications = (userId) => {
+  return apiClient.get(PROFILE_API + `getNotifications/${userId}`);
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -207,5 +210,6 @@ export {
   getMembers,
   deleteUserGroup,
   saveAdminUsers,
-  fetchUserColleges
+  fetchUserColleges,
+  getNotifications
 };

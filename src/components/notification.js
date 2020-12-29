@@ -1,4 +1,4 @@
-import { Affix, Col, Row, List } from 'antd';
+import { Affix, Col, Row, List, Tabs } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { Component } from 'react';
 import Ads from './ads';
@@ -7,6 +7,12 @@ import avatar2 from '../styles/images/user.jpg';
 import userImage from '../styles/images/user_image.jpg';
 import user_Image from '../styles/images/user-image.jpg';
 import defaultUser from '../styles/images/defaultuser.jpg';
+import { connect } from "react-redux";
+import Moment from "react-moment";
+import {
+    getNotifications
+} from "../shared/api/apiServer";
+const { TabPane } = Tabs;
 
 const data = [
     {
@@ -52,27 +58,68 @@ const data = [
 ];
 
 class Notifications extends Component {
+    state = {
+        data: [],
+        typeData: []
+    };
+    componentDidMount() {
+        getNotifications(this.props?.profile.Id).then(res => {
+            this.setState({ ...this.state, data: res.data });
+        });
+    }
+    changeTab = (index) => {
+        let type = index == "1" ? "Invitations" : (index == "2" ? "Friends" : "Comment");
+        let { data, typeData } = this.state;
+        typeData = data?.filter(item => item.Type == type);
 
+    }
+    getTitle = (item) => {
+        item.title = item.Type == "Invitations" ? (`${item.Firstname} sent you a Group Invite.`) : (item.Type == "Friends" ? (`${item.Firstname} sent you a friend request`) : (`${item.Firstname} commented on your post`))
+    }
     render() {
+        const { typeData } = this.state;
         return <>
+            <Tabs defaultActiveKey="1" onChange={(index) => this.changeTab(index)}>
+                <TabPane tab="Invitations" className="m-0" key="1">
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+
+                        </Col>
+                    </Row>
+                </TabPane>
+                <TabPane tab="Requests" className="m-0" key="2">
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+
+                        </Col>
+                    </Row>
+                </TabPane>
+                <TabPane tab="Comments" className="m-0" key="3">
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+
+                        </Col>
+                    </Row>
+                </TabPane>
+            </Tabs>
             <Row gutter={16} className="mb-8">
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <List
                         className="notifications"
                         itemLayout="horizontal"
-                        dataSource={data}
+                        dataSource={typeData}
                         bordered={true}
                         split={true}
 
                         renderItem={item => (
                             <List.Item
-                            className="unread"
-                            actions={[<a key="list-loadmore-edit"><span className="post-icons h-more-icon"></span></a>]}
+                                className="unread"
+                                actions={[<a key="list-loadmore-edit"><span className="post-icons h-more-icon"></span></a>]}
                             >
                                 <List.Item.Meta
-                                    avatar={<Avatar src={item.avatar} />}
-                                    title={<a href="">{item.title}</a>}
-                                    description={item.timestamp}
+                                    avatar={<Avatar src={item.Image} />}
+                                    title={() => this.getTitle(item)}
+                                    description={item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''}
                                 />
                             </List.Item>
                         )}
@@ -87,5 +134,8 @@ class Notifications extends Component {
         </>
     }
 }
+const mapStateToProps = ({ oidc }) => {
+    return { user: oidc.user, profile: oidc.profile };
+};
 
-export default Notifications;
+export default connect(mapStateToProps)(Notifications);

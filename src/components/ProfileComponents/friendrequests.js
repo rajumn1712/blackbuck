@@ -49,6 +49,7 @@ class FriendRequests extends Component {
       Image: this.props?.profile?.ProfilePic,
       Email: this.props?.profile?.Email,
       Type: "accept",
+      CreatedDate:new Date(),
     };
     acceptFrienRequest(
       this.props.profile?.Id,
