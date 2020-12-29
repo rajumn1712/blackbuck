@@ -8,17 +8,11 @@ import defaultUser from "../styles/images/defaultuser.jpg";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../common/loader";
-const { TabPane } = Tabs; 
-const frndActions = (
-  <Menu className="custom-dropdown">
-    <Menu.Item key="0">
-      <a href="">Un-friend</a>
-    </Menu.Item>
-  </Menu>
-);
-
+import { unFriend } from '../shared/api/apiServer'
+import notify from "../shared/components/notification";
 class Friends extends Component {
   componentDidMount() {
+
     if (this.props.onRef)
       this.props.onRef(this);
     this.getFriends();
@@ -162,7 +156,7 @@ class Friends extends Component {
                     <div className="d-flex align-items-center">
                       <Link to={"/profileview/" + item.UserId}>
                         <span className="overflow-text post-title">
-                         <Link className="overflow-text post-title" to={"/profileview/" + item.UserId}> {item.Firstname}</Link>
+                          <Link className="overflow-text post-title" to={"/profileview/" + item.UserId}> {item.Firstname}</Link>
                         </span>
                       </Link>
                     </div>
@@ -195,7 +189,20 @@ class Friends extends Component {
                           <span> Mutual Friends</span>
                         </span>
                       )}
-                      <Dropdown overlay={frndActions} trigger={['click']} placement="bottomRight">
+                      <Dropdown overlay={<Menu className="custom-dropdown">
+                        <Menu.Item key="0" onClick={async () => {
+                          const unRes = await unFriend(this.props.profile?.Id, item.UserId);
+                          if (unRes.ok) {
+                            let frnds = [...this.state.FriendsList];
+                            frnds = frnds.filter(frnd => frnd.UserId !== item.UserId);
+                            this.setState({ ...this.state, FriendsList: frnds })
+                          } else {
+                            notify({ type: "error", message: "Error", description: "Somethings went wrong. Please try again later" })
+                          }
+                        }}>
+                          <a style={{ cursor: "pointer" }}>Un-friend</a>
+                        </Menu.Item>
+                      </Menu>} trigger={['click']} placement="bottomRight">
                         <a className="ant-dropdown-link ml-auto" onClick={e => e.preventDefault()}>
                           <span className="icons more mr-0"></span>
                         </a>

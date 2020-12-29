@@ -5,6 +5,7 @@ import { getUserInvitations, acceptDeclineInvitations } from '../api/apiServer';
 import { profileSuccess } from '../../reducers/auth';
 import { connect } from 'react-redux';
 import defaultUser from "../../styles/images/defaultuser.jpg";
+import { Link } from 'react-router-dom';
 
 class Invite extends Component {
     state = {
@@ -104,7 +105,7 @@ class Invite extends Component {
                                     <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>
                                     <Avatar src={invitation?.Image || defaultUser} />
                                 </Avatar.Group>
-                                <p className="f-14"><span className="text-primary semibold">{invitation?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name text-primary">{invitation?.GroupName}</span> group</p>
+                                <p className="f-14"><span className="text-primary semibold">{invitation?.InviterName}</span> invited you to join in <span className="text-color invite-grp-name text-primary"><Link to={"/groupview/" + invitation.GroupId}>{invitation?.GroupName}</Link></span> group</p>
                                 <div className="invite-btn">
                                     <Button className="mr-8" type="primary" onClick={() => this.acceptInvite('accept', invitation)}>Accept</Button>
                                     <Button type="danger" onClick={() => this.acceptInvite('decline', invitation)}>Decline</Button>

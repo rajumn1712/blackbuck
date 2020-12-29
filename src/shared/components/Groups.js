@@ -260,7 +260,7 @@ class Groups extends Component {
           <Card
             title="Groups"
             bordered={true}
-            extra={<Link to="/commingsoon">View all</Link>}
+            extra={<Link to="/profile/IsProfileGroupsTab">View all</Link>}
             actions={[
               <Button type="primary" onClick={this.showModal}>
                 Create a Group
