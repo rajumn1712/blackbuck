@@ -713,7 +713,7 @@ class Group extends Component {
                     Members
                   </span>
                 )}
-                <Button type="primary" onClick={this.showModal}>
+                <Button className="mr-8" type="primary" onClick={this.showModal}>
                   <span className="icons add-white"></span> Invite
                 </Button>
                 {!groupData.IsGroupMember && <Button type="primary" onClick={() => this.joinGroup(groupData)}>
