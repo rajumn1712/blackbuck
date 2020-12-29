@@ -1,12 +1,6 @@
 import { Affix, Col, Row, List, Tabs } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { Component } from 'react';
-import Ads from './ads';
-import avatar from '../styles/images/avatar.png';
-import avatar2 from '../styles/images/user.jpg';
-import userImage from '../styles/images/user_image.jpg';
-import user_Image from '../styles/images/user-image.jpg';
-import defaultUser from '../styles/images/defaultuser.jpg';
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import {
