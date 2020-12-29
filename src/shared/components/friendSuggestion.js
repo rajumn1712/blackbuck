@@ -9,13 +9,15 @@ import defaultUser from '../../styles/images/defaultuser.jpg';
 import OwlCarousel from 'react-owl-carousel2';
 import 'react-owl-carousel2/src/owl.carousel.css';
 import 'react-owl-carousel2/src/owl.theme.default.css'
+import Loader from '../../common/loader';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     carouselRef;
     className = ["one", "two", "three"]
     state = {
         friends: [],
-        isViewAllPage: window.location.href.indexOf("friendsuggestions") > -1
+        isViewAllPage: window.location.href.indexOf("friendsuggestions") > -1,
+        loading: true
     }
     addFriend = async (friend) => {
         const obj = {
@@ -37,7 +39,7 @@ class FriendSuggestions extends Component {
     async loadSuggestions() {
         const response = await getFriendSuggestions(this.props?.profile?.Id, 1, 100);
         if (response.ok) {
-            this.setState({ ...this.state, friends: response.data });
+            this.setState({ ...this.state, friends: response.data, loading: false });
         }
     }
     removeSuggestion = (friend) => {
@@ -66,7 +68,8 @@ class FriendSuggestions extends Component {
         });
     }
     render() {
-        if (!this.state.friends || this.state.friends.length === 0) { return null; }
+        if (this.state.loading && this.state.isViewAllPage) { return <Loader className="loader-top-middle" /> }
+        else if (!this.state.friends || this.state.friends.length === 0) { return null; }
         return (
             <>
                 {this.state.isViewAllPage ? this.state.friends.map((friend, index) => <div className="frnds-list-item" key={index}>
