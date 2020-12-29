@@ -96,7 +96,7 @@ class FriendSuggestions extends Component {
                                     <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                                 </div>
                                 <div style={{ padding: 16 }}>
-                                    <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
+                                    <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
                                     <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
                                     <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                                     <div className="text-center">

@@ -1,16 +1,20 @@
 import { apiClient } from './clients';
 const POSTS_END_POINT = "service/api/posts/";
 const PROFILE_END_POINT = "service/api/profile/"
-const getPosts = (userid, pageNo, pageSize, postingsType, groupid, post_id) => {
+const getPosts = (userid, pageNo, pageSize, postingsType, groupid, post_id, search_value, search_type) => {
     const method = {
         "all": "getAllPosts",
         "user": "getUsersPosts",
         "saved": "getUserSavedPosts",
-        "group": "getGroupPosts"
+        "group": "getGroupPosts",
+        "search": "searchPosts"
     }
     if (postingsType === "single") {
         return getPostDetails(post_id, userid)
-    } else {
+    } else if (postingsType == "search") {
+        return apiClient.get(POSTS_END_POINT + `searchPosts/${userid}/${search_value}/${search_type}/${pageSize}/${pageNo * pageSize - pageSize}`);
+    }
+    else {
         const endPoint = postingsType === "saved" || postingsType === "group" ? PROFILE_END_POINT : POSTS_END_POINT;
         const params = postingsType === "group" ? (`${method[postingsType]}/${groupid}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`) : (`${method[postingsType]}/${userid}/${pageSize}/${pageNo * pageSize - pageSize}`)
         return apiClient.get(endPoint + params);

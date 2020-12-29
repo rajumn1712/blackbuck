@@ -39,6 +39,7 @@ import notify from "../shared/components/notification";
 import { apiClient } from '../shared/api/clients';
 import Notifications from '../components/notification';
 import Moment from "react-moment";
+import moment from 'moment';
 const { Meta } = Card;
 const { TabPane } = Tabs;
 
@@ -170,8 +171,9 @@ class Profile extends Component {
     this.setState({ tabkey: index });
   };
   ExportPdf = () => {
+    this.setState({...this.state,loading:true})
     // const doc = new jsPDF();
-    const profileData = this.getDetails.state.profileData;
+    const profileData = this.getDetails?.state?.profileData;
     const html = `
     <!DOCTYPE html>
 <html lang="en">
@@ -203,17 +205,17 @@ class Profile extends Component {
                             ${profileData.Address.map((displayaddress, index) => {
                               delete displayaddress.AddressId;
                               return (
-                                <p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
-                                  {Object.keys(displayaddress)
+                                `<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                  ${Object.keys(displayaddress)
                                     .map((k) => {
                                       return displayaddress[k];
                                     })
                                     .join(",")}
-                                </p>
+                                </p>`
                               );
                             })}
                             
-                            <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;word-break: break-all;">http://localhost:3000/profile/vishnutrimurthulu</p> 
+                            <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;word-break: break-all;">${process.env.REACT_APP_HOSTURL + 'profileview/' + profileData.UserId}</p> 
                         </td>
                     </tr>
                     <tr>
@@ -221,18 +223,18 @@ class Profile extends Component {
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Certifications</h3>
                             ${profileData.Internships.map((internship, index) => {
                               return (
-                                <p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
-                                  {internship.CompanyName}-{internship.Duration}
-                                </p>
-                              )})};
+                                `<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                  ${internship.CompanyName}-${internship.Duration}
+                                </p>`
+                              )})}
                         </td>
                     </tr>
                     <tr>
-                        <td >
+                        <td>
                             <h3  style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Hobbies</h3>
                             <ul style="list-style-type: none;padding-left: 0;">
                             ${profileData.Hobbies.map((hobbie, index) => {
-                              return <li key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">{hobbie}</li>;
+                              return `<li key={index} style="color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;padding:0">${hobbie}</li>`
                             })}
                             </ul>
                         </td>
@@ -249,7 +251,7 @@ class Profile extends Component {
                     <tr>
                         <td>
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#000000b3;margin-bottom: 0.5em;">About me</h3>
-                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;text-align: justify;">${profileData?.Aboutme}</p>
+                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;text-align: justify;">${profileData.Aboutme}</p>
                         </td>
                     </tr>
                     <tr>
@@ -258,15 +260,15 @@ class Profile extends Component {
                             <table>
                             ${profileData.Education.map((education, index) => {
                               return (
-                                <tr key={index}>
+                                `<tr key={index}>
                                     <td>
-                                        <h4 style="font-size: 18px;font-weight: 400;line-height: 22px;margin-top: 0; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85);">{education.Name}</h4>
-                                        <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">{education.Degree}</p>
-                                        <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;"><Moment format="YYYY">{education.StartDate}</Moment>
-                                        {"-"}
-                                        <Moment format="YYYY">{education.EndDate}</Moment></p>
+                                        <h4 style="font-size: 18px;font-weight: 400;line-height: 22px;margin-top: 0; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85);">${education.Name}</h4>
+                                        <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">${education.Degree}</p>
+                                        <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">${moment(education.StartDate).format('YYYY')}
+                                        -
+                                        ${moment(education.EndDate).format('YYYY')}</p>
                                     </td>
-                                </tr>
+                                </tr>`
                               );
                             })}
                             </table>
@@ -288,7 +290,22 @@ console.log(html)
       FileName:this.props?.profile?.FirstName,
       TemplateContent:html
     }).then(res=>{
-      window.open(res.data);
+      if(res.ok){
+        window.open(res.data);
+        this.setState({...this.state,loading:false},()=>{
+          notify({
+            message:"Download",
+            description:'Profile downloaded successfully'
+            
+          })
+        })
+      }else{
+        notify({
+          message:"Error",
+          description:'Something went wrong',
+          type:'error'
+        })
+      }
     })
 
     // this.setState({ ...this.state, loading: true });

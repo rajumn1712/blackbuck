@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip } from 'antd'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
@@ -37,7 +37,8 @@ class HeaderComponent extends React.Component {
             teamName: null
         },
         notifications: null,
-        notificationsCount: 0
+        notificationsCount: 0,
+        search_value: this.props.search_value
     };
 
     showDrawer = async () => {
@@ -63,6 +64,9 @@ class HeaderComponent extends React.Component {
 
 
     }
+    componentDidUpdate(prevProps) {
+        if (prevProps.search_value != this.props.search_value) { this.setState({ ...this.state, search_value: this.props.search_value }); }
+    }
     async handleNotifications(id) {
         if (id) {
             const friendRequests = await fetchFriendRequests(id);
@@ -74,16 +78,16 @@ class HeaderComponent extends React.Component {
                     </div>
                     <Divider className="my-0" />
                     <div className="notification-container">
-                    {friendRequests.data?.map((friend, indx) => <div key={indx} className="notification-list read p-12">
-                        <div className="notification-image">
-                            <Avatar src={friend.Image||defaultUser} />
-                        </div>
-                        <div className="notification-description text-left">
-                            <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
-                            <span><Link to="/profile/IsProfileFriendsTab">Respond</Link></span>
-                        </div>
-                    </div>)}
-                    {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
+                        {friendRequests.data?.map((friend, indx) => <div key={indx} className="notification-list read p-12">
+                            <div className="notification-image">
+                                <Avatar src={friend.Image || defaultUser} />
+                            </div>
+                            <div className="notification-description text-left">
+                                <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
+                                <span><Link to="/profile/IsProfileFriendsTab">Respond</Link></span>
+                            </div>
+                        </div>)}
+                        {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
                     </div>
                 </div>;
                 this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })
@@ -129,7 +133,6 @@ class HeaderComponent extends React.Component {
         </Menu >)
     }
     showChatWindow = (user) => {
-        debugger
         this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image, teamName: user.Firstname } })
     }
     render() {
@@ -142,7 +145,13 @@ class HeaderComponent extends React.Component {
                             <Link to="/" className="logo-brand">
                                 <img src={Logo} alt="Blackbuck" width="55px" />
                             </Link>
-                            {this.props?.profile?.IsOnBoardProcess && <Search className="header-searchbar" placeholder="Search" onSearch={onSearch} />}
+                            {this.props?.profile?.IsOnBoardProcess && <Search onChange={(event) => {
+                                const val = document.querySelector(".ant-input-search").querySelector(".ant-input").value;
+                                this.setState({ ...this.state, search_value: val });
+                            }} value={this.state.search_value} className="header-searchbar" placeholder="Search" onSearch={(value) => {
+                                this.setState({ ...this.state, search_value: value });
+                                this.props.history.push("/search/" + value + "/Search")
+                            }} />}
                         </div>
                     </Col>
                     <Col span={8} justify="center">
@@ -177,13 +186,13 @@ class HeaderComponent extends React.Component {
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                            <Tooltip title="Notifications">
-                                        <Link className="header-link" to="/profile/IsProfileNotificationsTab">
-                                            <Badge className="notification-count" count={this.state.notificationsCount} showZero>
-                                                <span className="icons notification-icon" />
-                                            </Badge>
-                                        </Link>
-                                    </Tooltip>
+                                <Tooltip title="Notifications">
+                                    <Link className="header-link" to="/profile/IsProfileNotificationsTab">
+                                        <Badge className="notification-count" count={this.state.notificationsCount} showZero>
+                                            <span className="icons notification-icon" />
+                                        </Badge>
+                                    </Link>
+                                </Tooltip>
                             </Menu.Item>}
                             <Menu.Item key="">
                                 <Dropdown overlay={this.menu} trigger={['click']} getPopupContainer={() => document.querySelector('#headerIcon')}>
@@ -241,7 +250,7 @@ class HeaderComponent extends React.Component {
     }
 }
 const mapStateToProps = ({ oidc }) => {
-    const { user, profile } = oidc;
-    return { profile, user }
+    const { user, profile, search_value } = oidc;
+    return { profile, user, search_value }
 }
-export default connect(mapStateToProps)(HeaderComponent);
+export default withRouter(connect(mapStateToProps)(HeaderComponent));

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Ads from "../components/ads";
 import CourseCards from "./coursecards";
 import Courses from './courses'
+import CourseList from './courselist'
 import Invite from '../shared/components/Invite'
 
 class LMSComponent extends Component {
@@ -14,8 +15,8 @@ class LMSComponent extends Component {
                         <Courses />
                         <CourseCards />
                     </Col>
-                    <Col xs={24} sm={12} md={8} lg={7} xl={7}>
-                        <Invite />
+                    <Col xs={24} sm={12} md={8} lg={7} xl={7}> 
+                        <CourseList />
                         <Ads />
                     </Col>
                 </Row>

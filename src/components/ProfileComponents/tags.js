@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { fetchTags } from '../../shared/api/apiServer';
 import '../../index.css';
 import '../../App.css';
+import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import connectStateProps from '../../shared/stateConnect';
 const data = [
     { title: '#IPL' },
     { title: '#COVID-19' },
@@ -41,7 +43,10 @@ class FriendRequests extends Component {
                         itemLayout="vertical"
                         dataSource={tags?.slice(0, 5)}
                         renderItem={item => (
-                            <div className="tag-name"><Link to="/commingsoon">{item}</Link></div>
+                            <div className="tag-name"><Link onClick={() => {
+                                this.props.updateSearchValue(item.replace("#", ""));
+                                this.props.history.push(`/search/${item.replace("#", "")}/Tags`)
+                            }}>{item}</Link></div>
 
                         )}
                     />
@@ -51,4 +56,4 @@ class FriendRequests extends Component {
         )
     }
 }
-export default FriendRequests;
+export default withRouter(connectStateProps(FriendRequests));

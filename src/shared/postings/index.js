@@ -67,6 +67,13 @@ class Postings extends Component {
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.match?.params.key !== this.props.match?.params.key) {
+      this.setState({ ...this.state, page: 1, allPosts: [] }, () => {
+        this.loadPosts();
+      })
+    }
+  }
   handleScroll = () => {
     const windowHeight =
       "innerHeight" in window
@@ -88,7 +95,7 @@ class Postings extends Component {
     }
   };
   loadMore(e) {
-    if (this.state.loadMore) {
+    if (this.state.loadMore && !this.state.loading) {
       let { page } = this.state;
       page += 1;
       this.setState({ ...this.state, page, loading: true }, () => {
@@ -104,7 +111,9 @@ class Postings extends Component {
       this.state.pageSize,
       this.props.postingsType,
       this.props.groupData?.GroupId,
-      this.props.id
+      this.props.id,
+      this.props.match?.params?.key,
+      this.props.match?.params?.type,
     );
     let { allPosts } = this.state;
     if (!isFromSave) {
@@ -146,6 +155,7 @@ class Postings extends Component {
       }
     }
   };
+
   enableVideoAutoPlay(myVideo) {
     var videoElementArea = VisSense(myVideo);
     var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
@@ -566,7 +576,7 @@ class Postings extends Component {
         <Card.Meta
           className="post-image"
           avatar={
-            <div  onClick={post.type!=='text'&& post.type!=='Docs' ?() => this.showModal(post):''}>
+            <div onClick={post.type !== 'text' && post.type !== 'Docs' ? () => this.showModal(post) : ''}>
               {this.renderPostImages(post.image, post.type, post)}
             </div>
           }
@@ -787,7 +797,7 @@ class Postings extends Component {
       <Card.Meta
         className="post-image"
         avatar={
-          <div onClick={post.type!=='text'&& post.type!=='Docs' ?() => this.showModal(post):''}>
+          <div onClick={post.type !== 'text' && post.type !== 'Docs' ? () => this.showModal(post) : ''}>
             {this.renderPostImages(post.image, post.type, post)}
           </div>
         }

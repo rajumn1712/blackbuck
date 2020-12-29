@@ -77,7 +77,7 @@ class Group extends Component {
       AdminUsers: [],
     },
     tabkey: "1",
-    imageLoader:false
+    imageLoader: false
   };
   onSearch = (e) => {
     let keyword = e.target ? e.target.value : e;
@@ -91,9 +91,10 @@ class Group extends Component {
       Image: this.props?.profile.ProfilePic,
     };
     let { saveObj } = this.state;
-    item.IsChecked = e.target.checked;
+    item.IsChecked = e.target ? e.target.checked : e;
     if (item.IsChecked) saveObj.Invitations.push(Obj);
     else saveObj.Invitations.splice(saveObj.Invitations.indexOf(Obj), 1);
+    this.setState({ ...this.state, saveObj })
   };
   onAdminChange = (e, item, index) => {
     let Obj = {
@@ -104,9 +105,10 @@ class Group extends Component {
       Email: item.Email
     };
     let { saveAdminObj } = this.state;
-    item.IsChecked = e.target.checked;
+    item.IsChecked = e.target ? e.target.checked : e;
     if (item.IsChecked) saveAdminObj.AdminUsers.push(Obj);
     else saveAdminObj.AdminUsers.splice(saveAdminObj.AdminUsers.indexOf(Obj), 1);
+    this.setState({ ...this.state, saveAdminObj })
   };
   handleDisabledChange = (disabled) => {
     this.setState({ disabled });
@@ -149,22 +151,21 @@ class Group extends Component {
         "file",
         file,
         file.name +
-          `${this.state.isProfilePic ? "groupprofile_" : "groupcover_"}${
-            this.props?.profile?.Id
-          }`
+        `${this.state.isProfilePic ? "groupprofile_" : "groupcover_"}${this.props?.profile?.Id
+        }`
       );
       apiClient
         .post(process.env.REACT_APP_AUTHORITY + "/Home/UploadFile", formData)
         .then((res) => {
-          if(res.ok){
+          if (res.ok) {
             this.imageObject.ImageUrl = res.data[0];
             this.handleImageOk();
           }
-          else{
+          else {
             notify({
-              message:"Error",
-              description:'Something went wrong',
-              type:'error'
+              message: "Error",
+              description: 'Something went wrong',
+              type: 'error'
             })
           }
         });
@@ -268,6 +269,7 @@ class Group extends Component {
           item.type === "Private" ? "Request sent" : "Joined to group",
       });
       if (item.type !== "Private") {
+        this.props.history.push("/profile/IsProfileGroupsTab");
         this.props.profile.Groups =
           (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
         this.props.updateProfile(this.props.profile);
@@ -280,6 +282,21 @@ class Group extends Component {
       });
     }
   };
+  async cancelGroupRequest(item) {
+    const joinResponse = await cancelGroupRequest(
+      item.id,
+      this.props?.profile?.Id
+    );
+    if (joinResponse.ok) {
+      notify({ message: "Group Request", description: "Request cancelled" });
+    } else {
+      notify({
+        message: "Error",
+        description: "Something went wrong :)",
+        type: "error",
+      });
+    }
+  }
 
   componentDidMount() {
     this.getGroupData();
@@ -333,6 +350,7 @@ class Group extends Component {
   };
   handleOk = async (e) => {
     this.setState({ ...this.state, loading: true });
+    this.state.saveObj.CreatdDate = new Date();
     const response = await saveInvitations(this.state.saveObj);
     if (response.ok) {
       this.setState(
@@ -396,7 +414,7 @@ class Group extends Component {
       visible: false,
       visibleEditgroup: false,
       visibleAddAdmin: false,
-      search:null
+      search: null
     });
   };
   saveGroup = () => {
@@ -502,14 +520,14 @@ class Group extends Component {
       })
       .map((item, index) => {
         return (
-          <List.Item key={index}>
+          <List.Item key={index} onClick={(e) => this.onChange(item.IsChecked ? false : true, item, index)}>
             <List.Item.Meta
               avatar={<Avatar src={item.Image || defaultUser} />}
               title={item.Firstname}
             />
             <Checkbox
               value={item.IsChecked}
-              onChange={(e) => this.onChange(e, item, index)}
+              checked={item.IsChecked}
             ></Checkbox>
           </List.Item>
         );
@@ -526,14 +544,14 @@ class Group extends Component {
       })
       .map((item, index) => {
         return (
-          <List.Item key={index}>
+          <List.Item key={index} onClick={(e) => this.onAdminChange(item.IsChecked ? false : true, item, index)}>
             <List.Item.Meta
               avatar={<Avatar src={item.Image || defaultUser} />}
               title={item.Firstname}
             />
             <Checkbox
               value={item.IsChecked}
-              onChange={(e) => this.onAdminChange(e, item, index)}
+              checked={item.IsChecked}
             ></Checkbox>
           </List.Item>
         );
@@ -597,10 +615,10 @@ class Group extends Component {
                               beforeCrop={this.handleBeforUpload}
                             >
                               <Upload {...this.uploadProps} disabled={!groupData?.IsGroupAdmin}>
-                              {imageLoader && <Loader className="loader-top-middle" />}
+                                {imageLoader && <Loader className="loader-top-middle" />}
                                 <Avatar onClick={() =>
-                                        this.setState({ isProfilePic: true })
-                                      }
+                                  this.setState({ isProfilePic: true })
+                                }
                                   src={groupData?.GroupImage || defaultguser}
                                 />
                                 {groupData?.IsGroupAdmin && (
@@ -644,9 +662,9 @@ class Group extends Component {
                   onChange={(e) => this.onSearch(e)}
                   onSearch={(event) => this.onSearch(event)}
                 />}
-                 <div className="f-16 fw-400 my-8">Suggested</div>
+                <div className="f-16 fw-400 my-8">Suggested</div>
                 <div className="frnds-scroll">
-                 
+
                   <List itemLayout="horizontal">{friendsData}</List>
                 </div>
               </CommonModal>
@@ -675,7 +693,7 @@ class Group extends Component {
                 saved={this.saveAdmin}
               >
                 {loading && <Loader className="loader-middle" />}
-               {visibleAddAdmin && <Search
+                {visibleAddAdmin && <Search
                   className="header-searchbar mb-16"
                   placeholder="Search"
                   onChange={(e) => this.onSearch(e)}
@@ -695,9 +713,16 @@ class Group extends Component {
                     Members
                   </span>
                 )}
-                <Button type="primary" onClick={this.showModal}>
+                <Button className="mr-8" type="primary" onClick={this.showModal}>
                   <span className="icons add-white"></span> Invite
                 </Button>
+                {!groupData.IsGroupMember && <Button type="primary" onClick={() => this.joinGroup(groupData)}>
+                  Join
+                </Button>}
+                {!groupData.IsGroupMember && groupData.requestJoin === "request" && <Button type="primary" onClick={() => this.cancelGroupRequest(groupData)}>
+                  Cancel Request
+                </Button>
+                }
               </div>
             </div>
             {/* <div className=""><Divider className="m-0" /></div> */}
@@ -716,11 +741,11 @@ class Group extends Component {
               </TabPane>
               <TabPane tab="Posts" key="1">
                 <Row gutter={16}>
-                 {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                  {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                     <PrivateInvite />
                   </Col>
-  }
-                  <Col xs={24} sm={groupData?.IsGroupAdmin?16:24} md={groupData?.IsGroupAdmin?16:24} lg={groupData?.IsGroupAdmin?16:24} xl={groupData?.IsGroupAdmin?16:24}>
+                  }
+                  <Col xs={24} sm={groupData?.IsGroupAdmin ? 16 : 24} md={groupData?.IsGroupAdmin ? 16 : 24} lg={groupData?.IsGroupAdmin ? 16 : 24} xl={groupData?.IsGroupAdmin ? 16 : 24}>
                     {groupData?.GroupId && tabkey == "1" && (
                       <Postings
                         sharebox={true}
