@@ -259,21 +259,24 @@ class Group extends Component {
       Image: this.props?.profile?.ProfilePic,
       Email: this.props?.profile?.Email,
     };
-    if (item.type == "Private") {
+    if (item.Type == "Private") {
       obj.Type = "request";
     }
-    const joinResponse = await joinGroup(item.id, obj);
+    const joinResponse = await joinGroup(item.GroupId, obj);
     if (joinResponse.ok) {
       notify({
         message: "Group join",
         description:
-          item.type === "Private" ? "Request sent" : "Joined to group",
+          item.Type === "Private" ? "Request sent" : "Joined to group",
       });
-      if (item.type !== "Private") {
+      if (item.Type !== "Private") {
         this.props.history.push("/profile/IsProfileGroupsTab");
         this.props.profile.Groups =
           (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
         this.props.updateProfile(this.props.profile);
+      }
+      else{
+        this.getGroupData();
       }
     } else {
       notify({
@@ -285,7 +288,7 @@ class Group extends Component {
   };
   async cancelGroupRequest(item) {
     const joinResponse = await cancelGroupRequest(
-      item.id,
+      item.GroupId,
       this.props?.profile?.Id
     );
     if (joinResponse.ok) {
@@ -721,7 +724,7 @@ class Group extends Component {
                 {(!groupData.IsGroupMember && !groupData.IsGroupAdmin) && <Button type="primary" onClick={() => this.joinGroup(groupData)}>
                   Join
                 </Button>}
-                {!groupData.IsGroupMember && groupData.requestJoin === "request" && <Button type="primary" onClick={() => this.cancelGroupRequest(groupData)}>
+                {(!groupData.IsGroupMember && groupData.requestJoin === "request") && <Button type="primary" onClick={() => this.cancelGroupRequest(groupData)}>
                   Cancel Request
                 </Button>
                 }
