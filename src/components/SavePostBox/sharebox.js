@@ -118,11 +118,11 @@ class ShareBox extends Component {
     return {
       PostId: object ? object.id : uuidv4(),
       Type: "Text",
-      PostType: object ? object.PostType : uuidv4(),
+      PostType: object ? object.PostType : this.state.ddlValue,
       Message: object ? object.meassage : "",
       Title: object ? object.title : "",
       IsAnonymous: object ? object.IsAnonymous : false,
-      ImageUrl: object ? (object.image ? object.image : null) : null,
+      ImageUrl: object ? (object.image ? object.image : []) : [],
       CreatedDate: object ? new Date(object.date) : null,
       UserDetails: {
         UserId: this.props.profile?.Id,
@@ -611,7 +611,7 @@ class ShareBox extends Component {
     return errors;
   };
   disablePostBtn = () => {
-    return (!this.postObject?.ImageUrl && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
+    return (!this.postObject?.ImageUrl.length > 0 && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
   };
   setDdlValue = (e) => {
     let text = e.item ? (e.item.node.innerText ? e.item.node.innerText : '') : e;
