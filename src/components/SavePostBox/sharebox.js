@@ -798,7 +798,7 @@ class ShareBox extends Component {
           destroyOnClose
         >
           <div className="mb-24">{title}</div>
-          {!this.props.groupData && ddlValue == "Groups" && <div className="mb-24">
+          {!this.props.groupData && ddlValue == "Groups" && <div className="mb-24 custom-fields">
             <Select
               defaultValue=" "
               name="Group"
@@ -817,7 +817,7 @@ class ShareBox extends Component {
                 );
               })}
             </Select></div>}
-          {ddlValue == "College" && <div className="mb-24">
+          {ddlValue == "College" && <div className="mb-24 custom-fields">
             <Select
               defaultValue=" "
               name="College"
