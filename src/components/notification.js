@@ -23,7 +23,7 @@ class Notifications extends Component {
 
     componentDidMount() {
         getNotifications(this.props?.profile.Id).then(res => {
-            this.setState({ ...this.state, data: res.data, loading: false });
+            this.setState({ ...this.state, data: res.data, loading: false }, () => { this.changeTab("1") });
         });
     }
     changeTab = (index) => {
@@ -34,9 +34,9 @@ class Notifications extends Component {
     }
     getTitle = (item) => {
         const messages = {
-            Invitations: `${item.Firstname} sent you a invitaion to join <b>${item.GroupName}</b>.`,
-            Friends: `${item.Firstname} sent you a friend request`,
-            Comment: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post </>
+            Invitations: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> sent you a invitation to join in {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</>,
+            Friends: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> sent you a friend request </>,
+            Comment: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </>
         }
         return messages[item.Type]
     }
