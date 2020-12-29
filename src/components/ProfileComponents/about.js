@@ -155,7 +155,7 @@ class About extends Component {
                     <tr style="margin-bottom: 24px;">
                         <td>
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-top: 0;margin-bottom: 0.5em;">Contact</h3>
-                            <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.PhoneNumber}</p>
+                            <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.PhoneNumber ? profileData.PhoneNumber : ''}</p>
                             <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.Email}</p>
                             ${profileData.Address.map((displayaddress, index) => {
                               delete displayaddress.AddressId;
@@ -206,7 +206,7 @@ class About extends Component {
                     <tr>
                         <td>
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#000000b3;margin-bottom: 0.5em;">About me</h3>
-                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;text-align: justify;">${profileData.Aboutme}</p>
+                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;text-align: justify;">${profileData.Aboutme ? profileData.Aboutme : ''}</p>
                         </td>
                     </tr>
                     <tr>
