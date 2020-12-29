@@ -718,7 +718,7 @@ class Group extends Component {
                 <Button className="mr-8" type="primary" onClick={this.showModal}>
                   <span className="icons add-white"></span> Invite
                 </Button>
-                {!groupData.IsGroupMember && <Button type="primary" onClick={() => this.joinGroup(groupData)}>
+                {(!groupData.IsGroupMember && !groupData.IsGroupAdmin) && <Button type="primary" onClick={() => this.joinGroup(groupData)}>
                   Join
                 </Button>}
                 {!groupData.IsGroupMember && groupData.requestJoin === "request" && <Button type="primary" onClick={() => this.cancelGroupRequest(groupData)}>

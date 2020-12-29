@@ -93,22 +93,9 @@ class Profile extends Component {
         });
     },
     // action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
-    // onChange: ({ file }) => {
-    //   const { status } = file;
-    //   if (status !== "uploading") {
-    //     this.imageObject.ImageUrl = file.response[0];
-    //     this.handleImageOk();
-    //   }
-    //   if (status === "done") {
-    //     // notify({
-    //     //   description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
-    //     //     } uploaded successfully.`,
-    //     //   message: "Upload",
-    //     // });
-    //   } else if (status === "error") {
-    //     message.error(`File upload failed.`);
-    //   }
-    // },
+    onChange: ({ file }) => {
+      
+    },
   };
 
   handleDisabledChange = (disabled) => {

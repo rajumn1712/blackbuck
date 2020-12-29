@@ -149,7 +149,7 @@ class HeaderComponent extends React.Component {
                                 const val = document.querySelector(".ant-input-search").querySelector(".ant-input").value;
                                 this.setState({ ...this.state, search_value: val });
                             }} value={this.state.search_value} className="header-searchbar" placeholder="Search" onSearch={(value) => {
-                                this.setState({ ...this.state, search_value: value });
+                                this.setState({ ...this.state, search_value: '' });
                                 this.props.history.push("/search/" + value + "/Search")
                             }} />}
                         </div>
