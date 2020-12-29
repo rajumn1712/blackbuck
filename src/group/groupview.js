@@ -743,8 +743,8 @@ class Group extends Component {
               <TabPane tab="Posts" key="1">
                 <Row gutter={16}>
                   {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <PrivateInvite />
                     <Tags />
+                    <PrivateInvite />
                   </Col>
                   }
                   <Col xs={24} sm={groupData?.IsGroupAdmin ? 16 : 24} md={groupData?.IsGroupAdmin ? 16 : 24} lg={groupData?.IsGroupAdmin ? 16 : 24} xl={groupData?.IsGroupAdmin ? 16 : 24}>
