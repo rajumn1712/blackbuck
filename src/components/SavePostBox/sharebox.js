@@ -105,7 +105,7 @@ class ShareBox extends Component {
     return {
       PostId: object ? object.id : uuidv4(),
       Type: "Text",
-      PostType: object ? object.PostType : uuidv4(),
+      PostType: object ? object.PostType : this.state.ddlValue,
       Message: object ? object.meassage : "",
       Title: object ? object.title : "",
       IsAnonymous: object ? object.IsAnonymous : false,

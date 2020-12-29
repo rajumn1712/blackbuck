@@ -651,6 +651,7 @@ class Group extends Component {
               </Card>
               <CommonModal
                 visible={visible}
+                disable={this.state.saveObj.Invitations.length == 0}
                 title="Invite Friends to This Group"
                 cancel={this.handleCancel}
                 saved={this.handleOk}
