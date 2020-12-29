@@ -246,7 +246,7 @@ class Education extends Component {
                   className="edu-study"
                   avatar={
                     <div className="about-icons">
-                      <span className="icons location" />
+                      <span className="icons education-icon" />
                     </div>
                   }
                   title={
