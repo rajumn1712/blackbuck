@@ -91,7 +91,7 @@ class Postings extends Component {
     }
   };
   loadMore(e) {
-    if (this.state.loadMore) {
+    if (this.state.loadMore && !this.state.loading) {
       let { page } = this.state;
       page += 1;
       this.setState({ ...this.state, page, loading: true }, () => {
