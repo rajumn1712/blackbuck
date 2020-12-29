@@ -33,9 +33,9 @@ class Home extends Component {
                     </Col>
                     <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
                         <Switch >
-                            <Route path="/newsfeed" component={(props) => <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} />} />
+                            <Route path="/newsfeed" render={(props) => { return <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
-                            <Route path="/search/:key/:type" component={(props) => {
+                            <Route path="/search/:key/:type" render={(props) => {
                                 return <PostingsComponent sharebox={false} friendsSuggestions={false} postingsType={"search"} {...props} />
                             }} />
                             {/* <Route path="/notifications" component={()=><CommingSoon />}/> */}
