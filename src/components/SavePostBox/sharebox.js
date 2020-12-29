@@ -101,19 +101,6 @@ class ShareBox extends Component {
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
   }
-  // componentWillReceiveProps(newProps) {
-  //     if ((this.props.postEditData !== newProps.postEditData) && Object.keys(newProps.postEditData).length > 0) {
-  //         let { post } = this.state;
-  //         post.Message = newProps.postEditData.meassage;
-  //         post.Title = newProps.postEditData.title;
-  //         post.IsAnonymous = newProps.postEditData.IsAnonymous;
-  //         this.setState({ ...this.state, uploadSources: newProps.postEditData.image ? (Array.isArray(newProps.postEditData.image) ? newProps.postEditData.image : [newProps.postEditData.image]) : [], isEdit: true, tags: newProps.postEditData.tags, post }, () => {
-  //             const object = { "Text": "Text", "Video": "Video", "Gif": "Gif", "Audio": "Audio", "Image": "Images" }
-  //             this.openpopup(object[newProps.postEditData.type], newProps.postEditData);
-  //         })
-
-  //     }
-  // }
   createObject = (object) => {
     return {
       PostId: object ? object.id : uuidv4(),
@@ -611,7 +598,7 @@ class ShareBox extends Component {
     return errors;
   };
   disablePostBtn = () => {
-    return (!this.postObject?.ImageUrl && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
+    return ((!this.postObject?.ImageUrl || (this.state.uploadSources.length == 0)) && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
   };
   setDdlValue = (e) => {
     let text = e.item ? (e.item.node.innerText ? e.item.node.innerText : '') : e;
