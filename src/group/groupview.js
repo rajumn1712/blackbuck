@@ -27,6 +27,7 @@ import "./groupstyle.css";
 import PadLock from "../styles/images/padlock.svg";
 import GroupAbout from "../shared/components/groupabout";
 import Media from "../shared/components/media";
+import Tags from "../components/ProfileComponents/tags";
 import CommonModal from "../components/ProfileComponents/CommonModal";
 import {
   profileDetail,
@@ -707,7 +708,7 @@ class Group extends Component {
               </CommonModal>
               <div className="right-statistic group-right mt-12 mx-12">
                 {groupData.Members > 0 && (
-                  <span className="text-center mt-4 mr-16">
+                  <span className="text-center mt-4 mr-8">
                     <span className="f-20 mt-4 fw-400">
                       {groupData.Members}
                     </span>{" "}
@@ -744,6 +745,7 @@ class Group extends Component {
                 <Row gutter={16}>
                  {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                     <PrivateInvite />
+                    <Tags />
                   </Col>
   }
                   <Col xs={24} sm={groupData?.IsGroupAdmin?16:24} md={groupData?.IsGroupAdmin?16:24} lg={groupData?.IsGroupAdmin?16:24} xl={groupData?.IsGroupAdmin?16:24}>

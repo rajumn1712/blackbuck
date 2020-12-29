@@ -22,6 +22,7 @@ import SinglePostView from "./singlePostview";
 import Admin from "../admin";
 import LMSComponent from "../lms";
 import CMSComponent from "../careers";
+import CourseContent from "../lms/coursecontent";
 
 
 const onBoard = () => {
@@ -40,6 +41,7 @@ const Router = () => {
     <Switch>
       <ProtectedRoute path="/lms" component={LMSComponent} />
       <ProtectedRoute path="/cms" component={CMSComponent} />
+      <ProtectedRoute path="/coursecontent" component={CourseContent} />
       <ProtectedRoute path="/admin" component={Admin} />
       <ProtectedRoute path="/post/:id" component={SinglePostView} />
       <ProtectedRoute path="/notifications" component={Notifications} />

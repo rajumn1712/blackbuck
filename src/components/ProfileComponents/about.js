@@ -1,5 +1,5 @@
 import React, { Component, createRef } from "react";
-import { Card, Divider, Row, Col, Form, Input, Tooltip } from "antd";
+import { Card, Divider, Row, Col, Form, Input, Tooltip, Button } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
@@ -53,14 +53,14 @@ class About extends Component {
       this.props.about.Address.length > 0
         ? { ...this.props.about.Address[0] }
         : {
-            PlatNo: "",
-            Street: "",
-            Address: "",
-            City: "",
-            State: "",
-            Country: "",
-            PinCode: "",
-          };
+          PlatNo: "",
+          Street: "",
+          Address: "",
+          City: "",
+          State: "",
+          Country: "",
+          PinCode: "",
+        };
     editObject.address = Object.assign(editObject.address, {
       PhoneNumber: editObject.PhoneNumber,
       AboutMe: editObject.AboutMe,
@@ -139,7 +139,11 @@ class About extends Component {
 
     return (
       <div className="custom-card profile-card">
-        <Card
+        <Card actions={[
+          <Button type="primary"  onClick={this.ExportPdf}>
+            <span className="post-icons download-icon"></span>Download Profile
+          </Button>
+        ]}
           title="About Me"
           bordered={false}
           extra={
@@ -223,7 +227,7 @@ class About extends Component {
                     {/* <Col xs={24}>
                                     <h3>Contact</h3>
                                 </Col> */}
-                                <Col xs={24}>
+                    <Col xs={24}>
                       <Form.Item
                         label="About Me"
                         name="About Me"
@@ -346,9 +350,9 @@ class About extends Component {
                         className="custom-fields custom-select"
                       >
                         <RegionDropdown
-                        showDefaultOption={true}
-                        defaultOptionLabel="Select State"
-                        blankOptionLabel="Select State"
+                          showDefaultOption={true}
+                          defaultOptionLabel="Select State"
+                          blankOptionLabel="Select State"
                           onChange={(value) => setFieldValue("State", value)}
                           country={values?.Country}
                           value={values?.State}
@@ -378,10 +382,10 @@ class About extends Component {
                           value={values?.PinCode}
                           name="PinCode"
                           maxlength="6"
-                          onChange={(e)=>{
-                            if(/^[0-9\b]+$/.test(e.target.value)){
-                              setFieldValue("PinCode",e.target.value)
-                            }else{
+                          onChange={(e) => {
+                            if (/^[0-9\b]+$/.test(e.target.value)) {
+                              setFieldValue("PinCode", e.target.value)
+                            } else {
                               e.preventDefault()
                             }
                           }}
@@ -403,10 +407,10 @@ class About extends Component {
                           value={values?.PhoneNumber}
                           name="PhoneNumber"
                           maxlength="15"
-                          onChange={(e)=>{
-                            if(/^[0-9\b]+$/.test(e.target.value)){
-                              setFieldValue("PhoneNumber",e.target.value)
-                            }else{
+                          onChange={(e) => {
+                            if (/^[0-9\b]+$/.test(e.target.value)) {
+                              setFieldValue("PhoneNumber", e.target.value)
+                            } else {
                               e.preventDefault()
                             }
                           }}

@@ -259,3 +259,4 @@
 .privacy-dropdown .ant-list-item-meta-avatar{background: #ccc;width: 30px;height: 30px;border-radius: 50%;margin-top: 5px;}
 .group-page .ant-card-bordered .ant-card-cover {margin-right: -2px;margin-left: -2px;}
 .group-member .ant-avatar-group{display: inline-block;}
+.group-member .ant-list-item:hover {background: transparent;}

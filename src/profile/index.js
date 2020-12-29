@@ -328,11 +328,7 @@ console.log(html)
     // if (this.state.loading) {
     //   return <Loader className="loader-top-middle" />;
     // }
-    const operations = (
-      <Button className="profile-download" onClick={this.ExportPdf}>
-        <span className="post-icons download-icon"></span>Download Profile
-      </Button>
-    );
+    
     return (
       <div className="main">
         <Row gutter={16}>
@@ -433,7 +429,6 @@ console.log(html)
             <Tabs
               defaultActiveKey={tabkey}
               className="profile-tabs"
-              tabBarExtraContent={operations}
               onChange={this.handleTabChange}
             >
                         <TabPane tab="Profile" key="IsProfileTab">
