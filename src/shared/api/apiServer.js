@@ -75,7 +75,7 @@ const cancelGroupRequest = (group_id, user_id) => {
 const fetchUserGroups = (user_id, take, skip) => {
   return apiClient.get(GROUPS_API + `getUserGroups/${user_id}/${take}/${skip}`);
 };
-const fetchTags = (user_id,take, skip) => {
+const fetchTags = (user_id, take, skip) => {
   return apiClient.get(TAGS_API + `getTags/${user_id}/${take}/${skip}`);
 };
 const fetchInterestsLu = (take, skip) => {
@@ -166,6 +166,9 @@ const fetchUserColleges = () => {
 const getNotifications = (userId) => {
   return apiClient.get(PROFILE_API + `getNotifications/${userId}`);
 };
+const unFriend = (user_id, friend_id) => {
+  return apiClient.get(PROFILE_API + `deleteFriend/${user_id}/${friend_id}`)
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -211,5 +214,6 @@ export {
   deleteUserGroup,
   saveAdminUsers,
   fetchUserColleges,
-  getNotifications
+  getNotifications,
+  unFriend
 };
