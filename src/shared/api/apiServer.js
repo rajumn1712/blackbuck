@@ -75,8 +75,8 @@ const cancelGroupRequest = (group_id, user_id) => {
 const fetchUserGroups = (user_id, take, skip) => {
   return apiClient.get(GROUPS_API + `getUserGroups/${user_id}/${take}/${skip}`);
 };
-const fetchTags = (take, skip) => {
-  return apiClient.get(TAGS_API + `getTags/${take}/${skip}`);
+const fetchTags = (user_id,take, skip) => {
+  return apiClient.get(TAGS_API + `getTags/${user_id}/${take}/${skip}`);
 };
 const fetchInterestsLu = (take, skip) => {
   return apiClient.get(PROFILE_API + `getAllInterests/${take}/${skip}`);

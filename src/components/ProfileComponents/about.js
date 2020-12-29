@@ -11,6 +11,8 @@ import { hasChanged, uuidv4 } from "../../utils";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import notify from "../../shared/components/notification";
 import Loader from "../../common/loader";
+import { apiClient } from "../../shared/api/clients";
+import moment from 'moment';
 
 class About extends Component {
   state = {
@@ -123,6 +125,157 @@ class About extends Component {
       address: {},
     });
   };
+  ExportPdf = () => {
+    this.setState({...this.state,loading:true})
+    // const doc = new jsPDF();
+    const profileData = this.props.about;
+    const html = `
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">     
+    <link href="http://fonts.cdnfonts.com/css/neue-haas-grotesk-text-pro" rel="stylesheet">       
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Profile</title>
+    <style>
+         @import url('http://fonts.cdnfonts.com/css/neue-haas-grotesk-text-pro');
+        * {
+            font-family: 'Neue Haas Grotesk Text Pro', sans-serif;
+        }
+       
+    </style>
+</head>
+
+<body style="margin: 0;width: 794px;">
+    <table style="width: 794px;background-color: #07A3B2;margin: auto;border-collapse: collapse;">
+        <tr>
+            <td style="width: 30%;padding: 60px 24px 24px;vertical-align: top;">
+                <table style="border-collapse: collapse;width: 100%;">
+                    <tr style="margin-bottom: 24px;">
+                        <td>
+                            <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-top: 0;margin-bottom: 0.5em;">Contact</h3>
+                            <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.PhoneNumber}</p>
+                            <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.Email}</p>
+                            ${profileData.Address.map((displayaddress, index) => {
+                              delete displayaddress.AddressId;
+                              return (
+                                `<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                  ${Object.keys(displayaddress)
+                                    .map((k) => {
+                                      return displayaddress[k];
+                                    })
+                                    .join(",")}
+                                </p>`
+                              );
+                            })}
+                            
+                            <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;word-break: break-all;">${process.env.REACT_APP_HOSTURL + 'profileview/' + profileData.UserId}</p> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Certifications</h3>
+                            ${profileData.Internships.map((internship, index) => {
+                              return (
+                                `<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                  ${internship.CompanyName}-${internship.Duration}
+                                </p>`
+                              )})}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3  style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Hobbies</h3>
+                            <ul style="list-style-type: none;padding-left: 0;">
+                            ${profileData.Hobbies.map((hobbie, index) => {
+                              return `<li key={index} style="color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;padding:0">${hobbie}</li>`
+                            })}
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="background-color: #ffffff;width: 70%;padding: 60px 24px 24px;vertical-align: top;">
+                <table style="border-collapse: collapse; width:100%;">
+                    <tr>
+                        <td >
+                            <h1 style="margin-top:0;font-weight: 400;font-size: 36px;color:#000000b3;margin-bottom: 5px;line-height: 40px;text-transform: capitalize;">${profileData.Firstname} ${profileData.Lastname}</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#000000b3;margin-bottom: 0.5em;">About me</h3>
+                            <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;text-align: justify;">${profileData.Aboutme}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#000000b3;margin-bottom: 0.5em;">Education</h3>
+                            <table>
+                            ${profileData.Education.map((education, index) => {
+                              return (
+                                `<tr key={index}>
+                                    <td>
+                                        <h4 style="font-size: 18px;font-weight: 400;line-height: 22px;margin-top: 0; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85);">${education.Name}</h4>
+                                        <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">${education.Degree}</p>
+                                        <p style="margin-bottom: 6px;margin-top: 0;line-height: 1.5715;font-size: 14px;margin-bottom: 6px !important;color: #00000080;">${moment(education.StartDate).format('YYYY')}
+                                        -
+                                        ${moment(education.EndDate).format('YYYY')}</p>
+                                    </td>
+                                </tr>`
+                              );
+                            })}
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
+        `;
+    // doc.html(html).then(() => {
+    //   doc.save("test.pdf")
+    // });
+    apiClient.post(process.env.REACT_APP_AUTHORITY + '/Account/DownLoadProfile',{
+      FileName:this.props?.about?.Firstname,
+      TemplateContent:html
+    }).then(res=>{
+      if(res.ok){
+        window.open(res.data);
+        this.setState({...this.state,loading:false},()=>{
+          notify({
+            message:"Download",
+            description:'Profile downloaded successfully'
+            
+          })
+        })
+      }else{
+        notify({
+          message:"Error",
+          description:'Something went wrong',
+          type:'error'
+        })
+      }
+    })
+
+    // this.setState({ ...this.state, loading: true });
+    // const input = document.getElementById("downloadpdf");
+    // html2canvas(input, {
+    //   onclone: function (clonedDoc) {
+    //     clonedDoc.getElementById("downloadpdf").style.visibility = "visible";
+    //   },
+    // }).then((canvas) => {
+    //   this.setState({ ...this.state, loading: false });
+    //   const imgData = canvas.toDataURL("image/png", "1.0");
+    //   const pdf = new jsPDF("p", "in", "a4");
+    //   pdf.addImage(imgData, "JPEG", 0, 0, 0, 0);
+    //   pdf.save("download.pdf");
+    // });
+  };
   formRef = createRef();
   render() {
     const { user } = store.getState().oidc;
@@ -156,6 +309,7 @@ class About extends Component {
             ) : null
           }
         >
+          {loading && <Loader className="loader-top-middle" />}
           <div>
             {AboutMe && <p>{AboutMe}</p>}
             <Divider className="text-left-line" orientation="left">

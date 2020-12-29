@@ -6,16 +6,11 @@ import '../../index.css';
 import '../../App.css';
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import connectStateProps from '../../shared/stateConnect';
-const data = [
-    { title: '#IPL' },
-    { title: '#COVID-19' },
-    { title: '#HBD@PK' },
-    { title: '#RRRMovie' },
-    { title: '#IPL 2020' }
-];
+import { connect } from 'react-redux';
+
 class FriendRequests extends Component {
     componentDidMount() {
-        fetchTags(10, 0).then(res => {
+        fetchTags(this.props?.profile?.Id,10, 0).then(res => {
             const { tags } = this.state;
             res.data.forEach(item => {
                 if (Array.isArray(item)) {
@@ -56,4 +51,7 @@ class FriendRequests extends Component {
         )
     }
 }
-export default withRouter(connectStateProps(FriendRequests));
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile };
+  };
+export default withRouter(connectStateProps(connect(mapStateToProps)(FriendRequests)));
