@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Loader from "../common/loader";
 import { unFriend } from '../shared/api/apiServer'
 import notify from "../shared/components/notification";
+import { profileSuccess } from "../reducers/auth";
 class Friends extends Component {
   componentDidMount() {
 
@@ -195,6 +196,8 @@ class Friends extends Component {
                           if (unRes.ok) {
                             let frnds = [...this.state.FriendsList];
                             frnds = frnds.filter(frnd => frnd.UserId !== item.UserId);
+                            this.props.profile.Friends = this.props.profile.Friends ? (this.props.profile.Friends > 0 ? (this.props.profile.Friends - 1) : 0) : 0;
+                            this.props.updateProfile(this.props.profile);
                             this.setState({ ...this.state, FriendsList: frnds })
                           } else {
                             notify({ type: "error", message: "Error", description: "Somethings went wrong. Please try again later" })
@@ -221,4 +224,11 @@ class Friends extends Component {
 const mapStateToProps = ({ oidc }) => {
   return { profile: oidc.profile };
 };
-export default connect(mapStateToProps)(Friends);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateProfile: (info) => {
+      dispatch(profileSuccess(info));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Friends);
