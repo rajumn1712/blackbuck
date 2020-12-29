@@ -68,7 +68,11 @@ class Postings extends Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
   componentDidUpdate(prevProps) {
-
+    if (prevProps.match?.params.key !== this.props.match?.params.key) {
+      this.setState({ ...this.state, page: 1, allPosts: [] }, () => {
+        this.loadPosts();
+      })
+    }
   }
   handleScroll = () => {
     const windowHeight =
@@ -151,6 +155,7 @@ class Postings extends Component {
       }
     }
   };
+
   enableVideoAutoPlay(myVideo) {
     var videoElementArea = VisSense(myVideo);
     var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);

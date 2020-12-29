@@ -78,7 +78,7 @@ class Group extends Component {
       AdminUsers: [],
     },
     tabkey: "1",
-    imageLoader:false
+    imageLoader: false
   };
   onSearch = (e) => {
     let keyword = e.target ? e.target.value : e;
@@ -152,22 +152,21 @@ class Group extends Component {
         "file",
         file,
         file.name +
-          `${this.state.isProfilePic ? "groupprofile_" : "groupcover_"}${
-            this.props?.profile?.Id
-          }`
+        `${this.state.isProfilePic ? "groupprofile_" : "groupcover_"}${this.props?.profile?.Id
+        }`
       );
       apiClient
         .post(process.env.REACT_APP_AUTHORITY + "/Home/UploadFile", formData)
         .then((res) => {
-          if(res.ok){
+          if (res.ok) {
             this.imageObject.ImageUrl = res.data[0];
             this.handleImageOk();
           }
-          else{
+          else {
             notify({
-              message:"Error",
-              description:'Something went wrong',
-              type:'error'
+              message: "Error",
+              description: 'Something went wrong',
+              type: 'error'
             })
           }
         });
@@ -416,7 +415,7 @@ class Group extends Component {
       visible: false,
       visibleEditgroup: false,
       visibleAddAdmin: false,
-      search:null
+      search: null
     });
   };
   saveGroup = () => {
@@ -522,7 +521,7 @@ class Group extends Component {
       })
       .map((item, index) => {
         return (
-          <List.Item key={index} onClick={(e) => this.onChange(item.IsChecked?false:true, item, index)}>
+          <List.Item key={index} onClick={(e) => this.onChange(item.IsChecked ? false : true, item, index)}>
             <List.Item.Meta
               avatar={<Avatar src={item.Image || defaultUser} />}
               title={item.Firstname}
@@ -546,7 +545,7 @@ class Group extends Component {
       })
       .map((item, index) => {
         return (
-          <List.Item key={index} onClick={(e) => this.onAdminChange(item.IsChecked?false:true, item, index)}>
+          <List.Item key={index} onClick={(e) => this.onAdminChange(item.IsChecked ? false : true, item, index)}>
             <List.Item.Meta
               avatar={<Avatar src={item.Image || defaultUser} />}
               title={item.Firstname}
@@ -617,10 +616,10 @@ class Group extends Component {
                               beforeCrop={this.handleBeforUpload}
                             >
                               <Upload {...this.uploadProps} disabled={!groupData?.IsGroupAdmin}>
-                              {imageLoader && <Loader className="loader-top-middle" />}
+                                {imageLoader && <Loader className="loader-top-middle" />}
                                 <Avatar onClick={() =>
-                                        this.setState({ isProfilePic: true })
-                                      }
+                                  this.setState({ isProfilePic: true })
+                                }
                                   src={groupData?.GroupImage || defaultguser}
                                 />
                                 {groupData?.IsGroupAdmin && (
@@ -664,9 +663,9 @@ class Group extends Component {
                   onChange={(e) => this.onSearch(e)}
                   onSearch={(event) => this.onSearch(event)}
                 />}
-                 <div className="f-16 fw-400 my-8">Suggested</div>
+                <div className="f-16 fw-400 my-8">Suggested</div>
                 <div className="frnds-scroll">
-                 
+
                   <List itemLayout="horizontal">{friendsData}</List>
                 </div>
               </CommonModal>
@@ -695,7 +694,7 @@ class Group extends Component {
                 saved={this.saveAdmin}
               >
                 {loading && <Loader className="loader-middle" />}
-               {visibleAddAdmin && <Search
+                {visibleAddAdmin && <Search
                   className="header-searchbar mb-16"
                   placeholder="Search"
                   onChange={(e) => this.onSearch(e)}
@@ -743,12 +742,12 @@ class Group extends Component {
               </TabPane>
               <TabPane tab="Posts" key="1">
                 <Row gutter={16}>
-                 {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                  {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                     <PrivateInvite />
                     <Tags />
                   </Col>
-  }
-                  <Col xs={24} sm={groupData?.IsGroupAdmin?16:24} md={groupData?.IsGroupAdmin?16:24} lg={groupData?.IsGroupAdmin?16:24} xl={groupData?.IsGroupAdmin?16:24}>
+                  }
+                  <Col xs={24} sm={groupData?.IsGroupAdmin ? 16 : 24} md={groupData?.IsGroupAdmin ? 16 : 24} lg={groupData?.IsGroupAdmin ? 16 : 24} xl={groupData?.IsGroupAdmin ? 16 : 24}>
                     {groupData?.GroupId && tabkey == "1" && (
                       <Postings
                         sharebox={true}

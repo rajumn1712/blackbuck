@@ -25,7 +25,7 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { Formik } from "formik";
 import { savePost } from "../../shared/api/postsApi";
-import { fetchUserGroups,fetchUserColleges } from "../../shared/api/apiServer";
+import { fetchUserGroups, fetchUserColleges } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { uuidv4 } from "../../utils";
 import notify from "../../shared/components/notification";
@@ -34,7 +34,7 @@ import defaultguser from '../../styles/images/default-cover.png';
 const { Dragger } = Upload;
 const { TextArea } = Input;
 const { Meta } = Card;
-const {Option}=Select;
+const { Option } = Select;
 const postsmenu = [
   {
     Heading: "Text",
@@ -94,9 +94,9 @@ class ShareBox extends Component {
     isEdit: false,
     ddlValue: "Public",
     groupLu: [],
-    collegeLu:[],
-    CollgeName:" ",
-    GroupName:" "
+    collegeLu: [],
+    CollgeName: " ",
+    GroupName: " "
   };
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
@@ -167,8 +167,8 @@ class ShareBox extends Component {
           : [],
         isEdit: true,
         tags: postObj.tags,
-        CollgeName:postObj.CollegeId,
-        GroupName:postObj.Group?.Gif,
+        CollgeName: postObj.CollegeId,
+        GroupName: postObj.Group?.Gif,
         post,
         ddlValue: postObj.PostType ? postObj.PostType : 'Public',
       },
@@ -179,7 +179,7 @@ class ShareBox extends Component {
           Gif: "Gif",
           Audio: "Audio",
           Image: "Images",
-          Docs:"Docs"
+          Docs: "Docs"
         };
         this.openpopup(object[postObj.type], postObj);
       }
@@ -260,7 +260,7 @@ class ShareBox extends Component {
     this.postObject = this.createObject(postObject);
     this.postObject.Type = modal === "Images" ? "Image" : modal;
     this.postObject.dupType = modal === "Images" ? "Image" : modal;
-    this.setState({ visible: true, modal: modal },()=>{
+    this.setState({ visible: true, modal: modal }, () => {
       if (postObject) {
         this.setDdlValue(this.state.ddlValue);
       }
@@ -457,8 +457,7 @@ class ShareBox extends Component {
               </video>
               <a
                 class="item-close"
-                onClick={() =>
-                {
+                onClick={() => {
                   this.postObject.ImageUrl = [];
                   this.setState({ ...this.state, uploadSources: [] })
                 }
@@ -494,8 +493,7 @@ class ShareBox extends Component {
               />
               <a
                 class="item-close"
-                onClick={() =>
-                {
+                onClick={() => {
                   this.postObject.ImageUrl = [];
                   this.setState({ ...this.state, uploadSources: [] })
                 }
@@ -617,32 +615,33 @@ class ShareBox extends Component {
   };
   setDdlValue = (e) => {
     let text = e.item ? (e.item.node.innerText ? e.item.node.innerText : '') : e;
-    let { groupLu,collegeLu } = this.state;
+    let { groupLu, collegeLu } = this.state;
     this.postObject.PostType = text
-    this.setState({ ...this.state, ddlValue:text},()=>{
-    if (text == 'Groups') {
-      if (groupLu.length === 0)
-        fetchUserGroups(
-          this.props.userId ? this.props.userId : this.props?.profile?.Id,
-          5000,
-          0
-        ).then((res) => {
-          if (res.ok) {
-            groupLu = res.data;
-            this.setState({ ...this.state, groupLu });
-          }
-        })
+    this.setState({ ...this.state, ddlValue: text }, () => {
+      if (text == 'Groups') {
+        if (groupLu.length === 0)
+          fetchUserGroups(
+            this.props.userId ? this.props.userId : this.props?.profile?.Id,
+            5000,
+            0
+          ).then((res) => {
+            if (res.ok) {
+              groupLu = res.data;
+              this.setState({ ...this.state, groupLu });
+            }
+          })
+      }
+      if (text == 'College') {
+        if (collegeLu.length === 0)
+          fetchUserColleges(
+          ).then((res) => {
+            if (res.ok) {
+              collegeLu = res.data;
+              this.setState({ ...this.state, collegeLu });
+            }
+          })
+      }
     }
-    if (text == 'College') {
-      if (collegeLu.length === 0)
-        fetchUserColleges(
-        ).then((res) => {
-          if (res.ok) {
-            collegeLu = res.data;
-            this.setState({ ...this.state, collegeLu });
-          }
-        })
-    }}
     );
   }
 
@@ -659,13 +658,13 @@ class ShareBox extends Component {
     }
     else {
       GroupObject = groupLu.filter(item => item.id == value)
-      this.postObject.Group.GroupImage =  GroupObject[0]?.image;
-      this.postObject.Group.GroupName =  GroupObject[0]?.name;
-      this.postObject.Group.GroupId =  GroupObject[0]?.id;
+      this.postObject.Group.GroupImage = GroupObject[0]?.image;
+      this.postObject.Group.GroupName = GroupObject[0]?.name;
+      this.postObject.Group.GroupId = GroupObject[0]?.id;
       GroupName = GroupObject[0]?.id;
       this.setState({ ...this.state, GroupName });
     }
-    
+
   }
   renderSelectCollegeItem = (item) => {
     return <div>
@@ -706,7 +705,7 @@ class ShareBox extends Component {
       <Menu className="custom-dropdown more-opt">
         <Menu.Item key="0" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon public"></span> Public</Menu.Item>
         <Menu.Item key="2" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon friends"></span> Friends</Menu.Item>
-        <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon college"></span> College</Menu.Item>
+        {/* <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon college"></span> College</Menu.Item> */}
         {!this.props.groupData && <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon groups"></span> Groups</Menu.Item>}
       </Menu>
     );
@@ -723,7 +722,7 @@ class ShareBox extends Component {
                 <div
                   className="post-privacy"
                   style={{ color: "#9B9B9B", fontSize: 12 }}
-                  
+
                 >
                   <span className="grp-type-icon public mr-4"></span>{ddlValue}
                   <span className="grp-type-icon down ml-4"></span>
@@ -886,7 +885,7 @@ class ShareBox extends Component {
             </div>
             {inputVisible && (
               <Input
-              placeholder="Add hashtag"
+                placeholder="Add hashtag"
                 ref={this.saveInputRef}
                 type="text"
                 size="small"

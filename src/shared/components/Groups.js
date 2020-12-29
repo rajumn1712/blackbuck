@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, Avatar, List,Empty ,Row,Col} from "antd";
+import { Button, Card, Avatar, List, Empty, Row, Col } from "antd";
 import notify from "./notification";
 import { apiClient } from "../api/clients";
 import { Link } from "react-router-dom";
@@ -17,7 +17,7 @@ import CreateGroup from "../../group/creategroup";
 import Loader from "../../common/loader";
 import defaultguser from "../../styles/images/default-cover.png";
 import SideAction from '../components/postings/Actions/SideActions';
-const { Meta }=Card;
+const { Meta } = Card;
 
 class Groups extends Component {
   showModal = (e) => {
@@ -170,184 +170,184 @@ class Groups extends Component {
   };
   render() {
     const { visible, size, loading } = this.state;
-    return this.props.displayas?(<Row gutter={16} className="group-page m-0">
-    {this.state.data.length > 0 &&
-      this.state.data?.map((group, index) => {
-        return (
-          <Col className="mb-12" md={12} lg={8} xl={8} xxl={6}>
-            <div style={{position: "absolute", right: 8, top: 140, width: 30, height: 30, backgroundColor: 'var(--white)', zIndex: 9, borderTopLeftRadius: '0.4rem', borderBottomLeftRadius: '0.4rem', textAlign: 'center', paddingLeft: 3, paddingTop: 3}}>
-            <span class="icons-small lock-icon" style={{transform: 'scale(1.6)'}}></span>
-            </div>
-            <Card
-              key={index}
-              cover={
-                <img
-                  className="obj-fit"
-                  src={group.image || defaultguser}
-                />
-              }
-              actions={[
-                group.requestJoin === "request" ? (
-                  <Link
-                    className="ml-8 f-12 list-link ml-16"
-                    onClick={() => this.cancelGroupRequest(group)}
-                  >
-                    Cancel request
-                  </Link>
-                ) : (
+    return this.props.displayas ? (<Row gutter={16} className="group-page m-0">
+      {this.state.data.length > 0 &&
+        this.state.data?.map((group, index) => {
+          return (
+            <Col className="mb-12" md={12} lg={8} xl={8} xxl={6}>
+              {group.type === "Private" && <div style={{ position: "absolute", right: 8, top: 140, width: 30, height: 30, backgroundColor: 'var(--white)', zIndex: 9, borderTopLeftRadius: '0.4rem', borderBottomLeftRadius: '0.4rem', textAlign: 'center', paddingLeft: 3, paddingTop: 3 }}>
+                <span class="icons-small lock-icon" style={{ transform: 'scale(1.6)' }}></span>
+              </div>}
+              <Card
+                key={index}
+                cover={
+                  <img
+                    className="obj-fit"
+                    src={group.image || defaultguser}
+                  />
+                }
+                actions={[
+                  group.requestJoin === "request" ? (
                     <Link
                       className="text-center f-12 list-link"
-                      onClick={() => this.joinGroup(group)}
+                      onClick={() => this.cancelGroupRequest(group)}
                     >
-                      Join
+                      Cancel request
                     </Link>
-                  )
-              ]}
-            >
-              <Meta
-                title={
-                    <Link
-                    to={"/groupview/" + group.id}
-                    className="post-title"
-                  >
-                    {group.name}
-                  </Link>
-                }
-                description={
-                  <div>
-                    <div className="mb-4 f-12 text-overflow">
-                      {group.description}
-                    </div>
-                    <div
-                      className="d-flex align-items-center f-12"
-                      style={{ position: "relative" }}
-                    >
-                      {group.members > 0 && (
-                        <span className="pr-4">
-                          <span>
-                            {group.members ? group.members : ""}
-                          </span>{" "}
-                          Members
-                        </span>
-                      )}
-                      {" "}|{" "}
-                        <span className="pl-4">
-                          <span className="mr-4">{group.postsCount ? group.postsCount : 0}</span>
-                          Posts
-                        </span>
-                    </div>
-                  </div>
-                }
-              />
-            </Card>
-            {group.IsGroupAdmin && (
-              <span className="card-options-right">
-                <SideAction
-                  horclass="icons more"
-                  clickedEvent={(event, name) =>
-                    this.handleEvent(event, name, group)
-                  }
-                  // actionsList={ownerActions}
-                />
-              </span>
-            )}
-          </Col>
-        );
-      })}
-    {this.state.data.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-  </Row>):(
-      <div className="custom-card sub-text card-scroll">
-        <Card
-          title="Groups"
-          bordered={true}
-          extra={<Link to="/commingsoon">View all</Link>}
-          actions={[
-            <Button type="primary" onClick={this.showModal}>
-              Create a Group
-            </Button>,
-          ]}
-        >
-          {/* {loading && <Loader className="loader-top-middle" />} */}
-          <List
-            loading={loading}
-            itemLayout="horizontal"
-            split={false}
-            dataSource={this.state.data}
-            renderItem={(item) => (
-              <List.Item>
-                <List.Item.Meta
-                  avatar={<Avatar src={item.image || defaultUser} />}
+                  ) : (
+                      <Link
+                        className="ml-8 f-12 list-link ml-16"
+                        onClick={() => this.joinGroup(group)}
+                      >
+                        Join
+                      </Link>
+                    )
+                ]}
+              >
+                <Meta
                   title={
-                    <div className="d-flex align-items-center">
-                      <span className="overflow-text" title={item.name}>
-                        {item.name}
-                        {item.type == "Private" && (
-                          <span className="icons-small lock-icon ml-4" />
-                        )}
-                      </span>
-                    </div>
+                    <Link
+                      to={"/groupview/" + group.id}
+                      className="post-title"
+                    >
+                      {group.name}
+                    </Link>
                   }
                   description={
                     <div>
-                      <div className="overflow-text">{item.description}</div>
-                      <div className="text-overflow">
-                        <span>
-                          <span className="mr-4">{item.members}</span>
+                      <div className="mb-4 f-12 text-overflow">
+                        {group.description}
+                      </div>
+                      <div
+                        className="d-flex align-items-center f-12"
+                        style={{ position: "relative" }}
+                      >
+                        {group.members > 0 && (
+                          <span className="pr-4">
+                            <span>
+                              {group.members ? group.members : ""}
+                            </span>{" "}
                           Members
-                        </span>{" "}
-                        |{" "}
-                        <span>
-                          <span className="mr-4">{item.postsCount ? item.postsCount : 0}</span>
+                          </span>
+                        )}
+                        {" "}|{" "}
+                        <span className="pl-4">
+                          <span className="mr-4">{group.postsCount ? group.postsCount : 0}</span>
                           Posts
                         </span>
                       </div>
                     </div>
                   }
                 />
-                {item.requestJoin === "request" ? (
-                  <Link
-                    className="ml-8 f-12 list-link ml-16"
-                    onClick={() => this.cancelGroupRequest(item)}
-                  >
-                    Cancel request
-                  </Link>
-                ) : (
+              </Card>
+              {group.IsGroupAdmin && (
+                <span className="card-options-right">
+                  <SideAction
+                    horclass="icons more"
+                    clickedEvent={(event, name) =>
+                      this.handleEvent(event, name, group)
+                    }
+                  // actionsList={ownerActions}
+                  />
+                </span>
+              )}
+            </Col>
+          );
+        })}
+      {this.state.data.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+    </Row>) : (
+        <div className="custom-card sub-text card-scroll">
+          <Card
+            title="Groups"
+            bordered={true}
+            extra={<Link to="/commingsoon">View all</Link>}
+            actions={[
+              <Button type="primary" onClick={this.showModal}>
+                Create a Group
+            </Button>,
+            ]}
+          >
+            {/* {loading && <Loader className="loader-top-middle" />} */}
+            <List
+              loading={loading}
+              itemLayout="horizontal"
+              split={false}
+              dataSource={this.state.data}
+              renderItem={(item) => (
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={<Avatar src={item.image || defaultUser} />}
+                    title={
+                      <div className="d-flex align-items-center">
+                        <span className="overflow-text" title={item.name}>
+                          {item.name}
+                          {item.type == "Private" && (
+                            <span className="icons-small lock-icon ml-4" />
+                          )}
+                        </span>
+                      </div>
+                    }
+                    description={
+                      <div>
+                        <div className="overflow-text">{item.description}</div>
+                        <div className="text-overflow">
+                          <span>
+                            <span className="mr-4">{item.members}</span>
+                          Members
+                        </span>{" "}
+                        |{" "}
+                          <span>
+                            <span className="mr-4">{item.postsCount ? item.postsCount : 0}</span>
+                          Posts
+                        </span>
+                        </div>
+                      </div>
+                    }
+                  />
+                  {item.requestJoin === "request" ? (
                     <Link
                       className="ml-8 f-12 list-link ml-16"
-                      onClick={() => this.joinGroup(item)}
+                      onClick={() => this.cancelGroupRequest(item)}
                     >
-                      Join
+                      Cancel request
                     </Link>
-                  )}
-              </List.Item>
-            )}
-          />
-          <div className="text-center">
-            {size >= 5 && (
-              <a className="more-comments" onClick={() => this.loadGroups(5)}>
-                View more groups
-              </a>
-            )}
-          </div>
-        </Card>
-        <CommonModal
-          className="creategroup-popup"
-          visible={visible}
-          title="Create group"
-          cancel={this.handleCancel}
-          saved={this.saveGroup}
-        // isHideFooter={true}
-        >
-          {visible && (
-            <CreateGroup
-              Type={"Add"}
-              handleCancel={this.handleCancel}
-              onRef={(creategroup) => (this.creategroup = creategroup)}
+                  ) : (
+                      <Link
+                        className="ml-8 f-12 list-link ml-16"
+                        onClick={() => this.joinGroup(item)}
+                      >
+                        Join
+                      </Link>
+                    )}
+                </List.Item>
+              )}
             />
-          )}
-        </CommonModal>
-      </div>
-    );
+            <div className="text-center">
+              {size >= 5 && (
+                <a className="more-comments" onClick={() => this.loadGroups(5)}>
+                  View more groups
+                </a>
+              )}
+            </div>
+          </Card>
+          <CommonModal
+            className="creategroup-popup"
+            visible={visible}
+            title="Create group"
+            cancel={this.handleCancel}
+            saved={this.saveGroup}
+          // isHideFooter={true}
+          >
+            {visible && (
+              <CreateGroup
+                Type={"Add"}
+                handleCancel={this.handleCancel}
+                onRef={(creategroup) => (this.creategroup = creategroup)}
+              />
+            )}
+          </CommonModal>
+        </div>
+      );
   }
 }
 
