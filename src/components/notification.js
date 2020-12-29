@@ -12,77 +12,62 @@ import Moment from "react-moment";
 import {
     getNotifications
 } from "../shared/api/apiServer";
+import { Link } from 'react-router-dom';
 const { TabPane } = Tabs;
-
-const data = [
-    {
-        avatar: avatar,
-        title: 'Vin Diesel commented on your post',
-        timestamp: 'a min ago',
-    },
-    {
-        avatar: avatar2,
-        title: 'Shrelyn mentioned you in the timeline.',
-        timestamp: '15 min ago'
-    },
-    {
-        avatar: userImage,
-        title: 'Andrew sent you a friend request.',
-        timestamp: '1 hour ago'
-    },
-    {
-        avatar: user_Image,
-        title: 'Simon added a new photo.',
-        timestamp: 'a day ago'
-    },
-    {
-        avatar: defaultUser,
-        title: 'Andrew sent you a Group Invite.',
-        timestamp: '2 days ago'
-    },
-    {
-        avatar: avatar,
-        title: 'Vin Diesel shared his story.',
-        timestamp: '1 week ago'
-    },
-    {
-        avatar: userImage,
-        title: 'Andrew sent you a friend request.',
-        timestamp: '1 month ago'
-    },
-    {
-        avatar: defaultUser,
-        title: 'Simon added a new photo.',
-        timestamp: 'last year'
-    },
-];
-
 class Notifications extends Component {
     state = {
         data: [],
-        typeData: []
+        typeData: [],
+        loading: true
     };
+
     componentDidMount() {
         getNotifications(this.props?.profile.Id).then(res => {
-            this.setState({ ...this.state, data: res.data });
+            this.setState({ ...this.state, data: res.data, loading: false });
         });
     }
     changeTab = (index) => {
         let type = index == "1" ? "Invitations" : (index == "2" ? "Friends" : "Comment");
         let { data, typeData } = this.state;
         typeData = data?.filter(item => item.Type == type);
-
+        this.setState({ ...this.state, typeData });
     }
     getTitle = (item) => {
-        item.title = item.Type == "Invitations" ? (`${item.Firstname} sent you a Group Invite.`) : (item.Type == "Friends" ? (`${item.Firstname} sent you a friend request`) : (`${item.Firstname} commented on your post`))
+        const messages = {
+            Invitations: `${item.Firstname} sent you a invitaion to join <b>${item.GroupName}</b>.`,
+            Friends: `${item.Firstname} sent you a friend request`,
+            Comment: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post </>
+        }
+        return messages[item.Type]
+    }
+    renderNotifications = () => {
+        return <List
+            className="notifications"
+            itemLayout="horizontal"
+            dataSource={this.state.typeData}
+            bordered={true}
+            split={true}
+            loading={this.state.loading}
+            renderItem={item => (
+                <List.Item
+                    className="read"
+                >
+                    <List.Item.Meta
+                        avatar={<Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}><Avatar src={item.Image} /></Link>}
+                        title={<>{this.getTitle(item)}</>}
+                        description={item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''}
+                    />
+                </List.Item>
+            )}
+        />
     }
     render() {
-        const { typeData } = this.state;
         return <>
             <Tabs defaultActiveKey="1" onChange={(index) => this.changeTab(index)}>
                 <TabPane tab="Invitations" className="m-0" key="1">
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            {this.renderNotifications()}
 
                         </Col>
                     </Row>
@@ -90,47 +75,19 @@ class Notifications extends Component {
                 <TabPane tab="Requests" className="m-0" key="2">
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-
+                            {this.renderNotifications()}
                         </Col>
                     </Row>
                 </TabPane>
                 <TabPane tab="Comments" className="m-0" key="3">
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            {this.renderNotifications()}
 
                         </Col>
                     </Row>
                 </TabPane>
             </Tabs>
-            <Row gutter={16} className="mb-8">
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <List
-                        className="notifications"
-                        itemLayout="horizontal"
-                        dataSource={typeData}
-                        bordered={true}
-                        split={true}
-
-                        renderItem={item => (
-                            <List.Item
-                                className="unread"
-                                actions={[<a key="list-loadmore-edit"><span className="post-icons h-more-icon"></span></a>]}
-                            >
-                                <List.Item.Meta
-                                    avatar={<Avatar src={item.Image} />}
-                                    title={() => this.getTitle(item)}
-                                    description={item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''}
-                                />
-                            </List.Item>
-                        )}
-                    />
-                </Col>
-                {/* <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
-                    <Affix offsetTop={86} >
-                        <Ads />
-                    </Affix>
-                </Col> */}
-            </Row>
         </>
     }
 }
