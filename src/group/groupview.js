@@ -270,6 +270,7 @@ class Group extends Component {
           item.type === "Private" ? "Request sent" : "Joined to group",
       });
       if (item.type !== "Private") {
+        this.props.history.push("/profile/IsProfileGroupsTab");
         this.props.profile.Groups =
           (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
         this.props.updateProfile(this.props.profile);
@@ -282,6 +283,21 @@ class Group extends Component {
       });
     }
   };
+  async cancelGroupRequest(item) {
+    const joinResponse = await cancelGroupRequest(
+      item.id,
+      this.props?.profile?.Id
+    );
+    if (joinResponse.ok) {
+      notify({ message: "Group Request", description: "Request cancelled" });
+    } else {
+      notify({
+        message: "Error",
+        description: "Something went wrong :)",
+        type: "error",
+      });
+    }
+  }
 
   componentDidMount() {
     this.getGroupData();
@@ -700,6 +716,13 @@ class Group extends Component {
                 <Button type="primary" onClick={this.showModal}>
                   <span className="icons add-white"></span> Invite
                 </Button>
+                {!groupData.IsGroupMember && <Button type="primary" onClick={() => this.joinGroup(groupData)}>
+                  Join
+                </Button>}
+                {!groupData.IsGroupMember && groupData.requestJoin === "request" && <Button type="primary" onClick={() => this.cancelGroupRequest(groupData)}>
+                  Cancel Request
+                </Button>
+                }
               </div>
             </div>
             {/* <div className=""><Divider className="m-0" /></div> */}

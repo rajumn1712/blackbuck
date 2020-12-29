@@ -272,8 +272,8 @@ class Interests extends Component {
                 <List.Item.Meta
                   avatar={<Avatar src={item.Image} />}
                   title={
-                    <div className="d-flex align-items-center">
-                      <span className="overflow-text">{item.Name}</span>
+                    <div className="d-flex align-items-center" style={{cursor:'default'}}>
+                      <span className="overflow-text" style={{cursor:'default'}}>{item.Name}</span>
                     </div>
                   }
                 />

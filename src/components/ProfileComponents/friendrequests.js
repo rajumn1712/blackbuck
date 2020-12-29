@@ -110,7 +110,9 @@ class FriendRequests extends Component {
                   title={
                     <div className="d-flex align-items-center">
                       <span className="overflow-text">
+                      <Link className="overflow-text post-title" to={"/profileview/" + item.UserId}>
                         {[item.Firstname, item.Lastname].join(" ")}
+                        </Link>
                       </span>
                     </div>
                   }
