@@ -125,13 +125,13 @@ class ShareBox extends Component {
       Comments: [],
       Loves: [],
       Group: {
-        GroupId: this.props?.groupData ? this.props.groupData.GroupId : null,
+        GroupId: this.props?.groupData ? this.props.groupData.GroupId : (object ? object.Group?.GroupId : null),
         GroupName: this.props?.groupData
           ? this.props.groupData.GroupName
-          : null,
+          : (object ? object.Group?.GroupName : null),
         GroupImage: this.props?.groupData
           ? this.props.groupData.GroupImage
-          : null,
+          : (object ? object.Group?.GroupImage : null),
       },
       Shares: [],
       CollegeId: object ? object.CollegeId : null,
@@ -155,7 +155,7 @@ class ShareBox extends Component {
         isEdit: true,
         tags: postObj.tags,
         CollgeName: postObj.CollegeId,
-        GroupName: postObj.Group?.Gif,
+        GroupName: postObj.Group?.GroupId,
         post,
         ddlValue: postObj.PostType ? postObj.PostType : 'Public',
       },
@@ -310,6 +310,8 @@ class ShareBox extends Component {
       errors: null,
       tags: [],
       uploadSources: [],
+      ddlValue: "Public",
+      GroupName: " "
     });
   };
   handleCancel = (e) => {
@@ -648,7 +650,7 @@ class ShareBox extends Component {
       this.postObject.Group.GroupImage = GroupObject[0]?.image;
       this.postObject.Group.GroupName = GroupObject[0]?.name;
       this.postObject.Group.GroupId = GroupObject[0]?.id;
-      GroupName = GroupObject[0]?.id;
+      GroupName = GroupObject?.length > 0 ? GroupObject[0]?.id : " ";
       this.setState({ ...this.state, GroupName });
     }
 
@@ -784,7 +786,7 @@ class ShareBox extends Component {
           destroyOnClose
         >
           <div className="mb-24">{title}</div>
-          {!this.props.groupData && ddlValue == "Groups" && <div className="mb-24 custom-fields">
+          {!this.props.groupData && ddlValue == "Groups" && (isEdit ?groupLu?.length>0:true) && <div className="mb-24 custom-fields">
             <Select
               defaultValue=" "
               name="Group"

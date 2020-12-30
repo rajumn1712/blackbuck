@@ -94,20 +94,8 @@ class Profile extends Component {
     },
     // action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
     // onChange: ({ file }) => {
-    //   const { status } = file;
-    //   if (status !== "uploading") {
-    //     this.imageObject.ImageUrl = file.response[0];
-    //     this.handleImageOk();
-    //   }
-    //   if (status === "done") {
-    //     // notify({
-    //     //   description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
-    //     //     } uploaded successfully.`,
-    //     //   message: "Upload",
-    //     // });
-    //   } else if (status === "error") {
-    //     message.error(`File upload failed.`);
-    //   }
+    //   console.log(this.state.isProfilePic)
+    //   this.setState({...this.state,isProfilePic:this.state.isProfilePic})
     // },
   };
 
@@ -148,7 +136,7 @@ class Profile extends Component {
         this.imageObject = {};
         this.setState({ ...this.state, imageLoader: false }, () => {
           notify({
-            description: `${this.state.isProfilePic ? "Profil picture" : "Cover picture"
+            description: `${this.state.isProfilePic ? "Profile picture" : "Cover picture"
               } uploaded successfully.`,
             message: "Upload",
           });
@@ -194,11 +182,10 @@ class Profile extends Component {
                   cropShape: "round",
                 }}
               >
-                <Upload {...this.uploadProps}>
+                <Upload {...this.uploadProps} onChange={() => this.setState({ isProfilePic: false })}>
                   <Tooltip title="Change Coverphoto">
                     <a
                       className="editpost"
-                      onClick={() => this.setState({ isProfilePic: false })}
                     >
                       <span className="left-menu camera-icon" />
                     </a>
@@ -231,15 +218,12 @@ class Profile extends Component {
                         shape="round"
                         beforeCrop={this.handleBeforUpload}
                       >
-                        <Upload {...this.uploadProps}>
+                        <Upload {...this.uploadProps} onChange={() => this.setState({ isProfilePic: true })}>
                           {imageLoader && <Loader className="loader-top-middle" />}
                           <Avatar src={profile?.ProfilePic || defaultUser} />
                           <Tooltip placement="top" title="Change Photo">
                             <a
                               className="img-camera"
-                              onClick={() =>
-                                this.setState({ isProfilePic: true })
-                              }
                             >
                               <span className="left-menu camera-icon" />{" "}
                             </a>

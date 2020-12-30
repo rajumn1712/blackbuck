@@ -10,6 +10,7 @@ import OwlCarousel from 'react-owl-carousel2';
 import 'react-owl-carousel2/src/owl.carousel.css';
 import 'react-owl-carousel2/src/owl.theme.default.css'
 import Loader from '../../common/loader';
+import Sharebox from '../../components/SavePostBox/sharebox';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     carouselRef;
@@ -68,30 +69,35 @@ class FriendSuggestions extends Component {
         });
     }
     render() {
-        if (!this.state.friends || this.state.friends.length === 0) { return null; }
+        if (this.state.isViewAllPage && this.state.loading) {
+            return <Loader className="loader-middle" />
+        }
+        else if (!this.state.friends || this.state.friends.length === 0) { return null; }
         if (this.state.isViewAllPage) {
             return (
-                <Row gutter={8} >
+                <>
+                    <Sharebox dataRefreshed={() => { }} />
+                    <Row gutter={8} >
 
-                    {this.state.friends.map((friend, index) => <Col lg={8}>
-                        <div className="frnds-list-item m-0 mb-8" key={index}>
-                            <div className="frnds-img ">
-                                <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
-                                <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
-                            </div>
-                            <div style={{ padding: 16 }}>
-                                <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
-                                <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
-                                <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
-                                <div className="text-center">
-                                    {friend.Type == null && <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>}
-                                    {friend.Type == "request" && <Button type="default" className="addfrnd semibold" onClick={() => this.cancelRequest(friend)}>Cancel Request</Button>}
+                        {this.state.friends.map((friend, index) => <Col lg={8}>
+                            <div className="frnds-list-item m-0 mb-8" key={index}>
+                                <div className="frnds-img ">
+                                    <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
+                                    <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
+                                </div>
+                                <div style={{ padding: 16 }}>
+                                    <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
+                                    <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
+                                    <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
+                                    <div className="text-center">
+                                        {friend.Type == null && <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>}
+                                        {friend.Type == "request" && <Button type="default" className="addfrnd semibold" onClick={() => this.cancelRequest(friend)}>Cancel Request</Button>}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                    </Col>)}
-                </Row>
+
+                        </Col>)}
+                    </Row></>
             )
         }
         return (

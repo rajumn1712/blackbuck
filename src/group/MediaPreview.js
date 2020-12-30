@@ -235,7 +235,7 @@ class MediaPreview extends Component {
         )
         const carouselData = (
             <div className="preview-image">
-                {index !== 0 && <a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>}
+                {<a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>}
                 <Carousel ref={this.slider}>
                     {(post.type == 'Image' || post.type == 'Gif') && post.image?.map((image, index) => {
                         return <div key={index}>
@@ -243,7 +243,7 @@ class MediaPreview extends Component {
                         </div>
                     })}
                 </Carousel>
-                { index !== post.image?.length - 1 && <a className="more-frnd-btn next" onClick={() => this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>}
+                {  <a className="more-frnd-btn next" onClick={() => this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>}
             </div>
         )
 

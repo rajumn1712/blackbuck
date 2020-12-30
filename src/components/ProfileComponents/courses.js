@@ -109,7 +109,7 @@ class Courses extends Component {
                   avatar={<Avatar src={item.image} />}
                   title={
                     <div className="d-flex align-items-center">
-                      {!this.props.IsHideAction ? <Link className="post-title">{item.name}</Link>: <span className="overflow-text">{item.name}</span>}
+                      {!this.props.IsHideAction ? <Link to="/commingsoon" className="post-title">{item.name}</Link>: <span className="overflow-text">{item.name}</span>}
                       
                     </div>
                   }
