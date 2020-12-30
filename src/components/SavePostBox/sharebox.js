@@ -96,7 +96,7 @@ class ShareBox extends Component {
     groupLu: [],
     collegeLu: [],
     CollgeName: " ",
-    GroupName: " "
+    GroupName: ""
   };
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
@@ -687,7 +687,8 @@ class ShareBox extends Component {
       isEdit,
       ddlValue,
       groupLu,
-      collegeLu
+      collegeLu,
+      GroupName
     } = this.state;
     const tagChild = tags?.map(this.forMap);
     const menu = (
@@ -791,7 +792,7 @@ class ShareBox extends Component {
             <Select
               defaultValue=""
               name="Group"
-              value={this.state.GroupName}
+              value={GroupName}
               onChange={(value) =>
                 this.setFieldValue(value)
               }
