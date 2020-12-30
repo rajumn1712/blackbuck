@@ -1,4 +1,4 @@
-import { Card, Col, Row, Statistic } from "antd";
+import { Card, Col, Row, Statistic,Progress } from "antd";
 import React, { Component } from "react";
 import photography from '../styles/images/photography.png'
 import SEO from '../styles/images/seo-marketing.png'
@@ -23,7 +23,7 @@ class CourseCards extends Component {
                                     className="card-item"
                                     cover={<img alt="photography" src={photography} />}
                                     actions={[
-                                        <Link className="card-item-button">Joined Course</Link>
+                                        <Link className="card-item-button">Join Course</Link>
                                     ]}
                                 >
                                     <Meta
@@ -32,8 +32,8 @@ class CourseCards extends Component {
                                             <div>
                                                 <p>Become a professional photographer with complete training.</p>
                                                 <div className="addon-info">
-                                                    <span className="mr-8"><span className="icons videos" />10 Videos</span>
-                                                    <span className="mr-8"><span className="icons lessons" />5 Lessons</span>
+                                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                                    <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
                                                 </div>
                                             </div>} />
                                 </Card>
@@ -43,17 +43,17 @@ class CourseCards extends Component {
                                     className="card-item"
                                     cover={<img alt="photography" src={Blogging} />}
                                     actions={[
-                                        <Link className="card-item-button">Joined Course</Link>
+                                        <Link className="card-item-button">Join Course</Link>
                                     ]}
                                 >
                                     <Meta
                                         title="Blogging, Content Marketing & Vlogging"
                                         description={
                                             <div>
-                                                <p>Become a content marketing professional blogging.</p>
+                                                <p>Become a content marketing pro and learn what's involved in professional blogging.</p>
                                                 <div className="addon-info">
-                                                    <span className="mr-8"><span className="icons videos" />10 Videos</span>
-                                                    <span className="mr-8"><span className="icons lessons" />5 Lessons</span>
+                                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                                    <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
                                                 </div>
                                             </div>} />
                                 </Card>
@@ -63,7 +63,7 @@ class CourseCards extends Component {
                                     className="card-item"
                                     cover={<img alt="photography" src={SEO} />}
                                     actions={[
-                                        <Link className="card-item-button">Joined Course</Link>
+                                        <Link className="card-item-button">Join Course</Link>
                                     ]}
                                 >
                                     <Meta
@@ -72,9 +72,28 @@ class CourseCards extends Component {
                                             <div>
                                                 <p>Unlock the secrets to growing your visibility on Google with professionals.</p>
                                                 <div className="addon-info">
-                                                    <span className="mr-8"><span className="icons videos" />10 Videos</span>
-                                                    <span className="mr-8"><span className="icons lessons" />5 Lessons</span>
+                                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                                    <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
                                                 </div>
+                                            </div>} />
+                                </Card>
+                            </Col>
+                            <Col xs={24} md={12} lg={8}>
+                                <Card
+                                    className="card-item"
+                                    cover={<img alt="photography" src={SEO} />}
+                                    
+                                >
+                                    <Meta
+                                        title="SEO & Digital Marketing"
+                                        description={
+                                            <div>
+                                                <p>Unlock the secrets to growing your visibility on Google with professionals.</p>
+                                                <div className="addon-info">
+                                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                                    <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
+                                                </div>
+                                                <div className="my-16 progres-bar"><Progress percent={30} /></div>
                                             </div>} />
                                 </Card>
                             </Col>

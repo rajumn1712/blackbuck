@@ -2000,7 +2000,8 @@ textarea {
 .course-content.ant-collapse-content-box{padding-top:0;}
 .course-content .ant-collapse-content-box{padding: 0 !important;background: var(--white);}
 .course-card .ant-card{border-radius: 0 !important;}
-/* .course-card .ant-list-item{padding: 8px 0;} */
+.progres-bar .ant-progress-text{font-size: 12px;margin-left: 3px;}
 .lms-video video{width: 853px !important;height: 482px;}
 .grp-type-icon.vedio-play{background-position:-240px -396px;}
+.grp-type-icon.lessons{background-position:-260px -397px;}
 .invite-card .ant-btn:hover{color: var(--white) !important ;}
