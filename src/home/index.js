@@ -36,7 +36,7 @@ class Home extends Component {
                         <Switch >
                             <Route path="/newsfeed" render={(props) => { return <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
-                            <Route path="/friendsuggestions" component={FriendSuggestion}/>
+                            <Route path="/friendsuggestions" component={FriendSuggestion} />
                             <Route path="/search/:key/:type" render={(props) => {
                                 return <PostingsComponent sharebox={false} friendsSuggestions={false} postingsType={"search"} {...props} />
                             }} />
