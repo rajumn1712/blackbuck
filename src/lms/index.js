@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Row,Affix } from "antd";
 import React, { Component } from "react";
 import Ads from "../components/ads";
 import CourseCards from "./coursecards";
@@ -15,9 +15,11 @@ class LMSComponent extends Component {
                         <Courses />
                         <CourseCards />
                     </Col>
-                    <Col xs={24} sm={12} md={8} lg={7} xl={7}> 
-                        <CourseList />
-                        <Ads />
+                    <Col xs={24} sm={12} md={8} lg={7} xl={7}>
+                        <Affix offsetTop={86} > 
+                            <CourseList />
+                            <Ads />
+                        </Affix>
                     </Col>
                 </Row>
             </div>

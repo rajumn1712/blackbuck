@@ -50,7 +50,7 @@ class CourseCards extends Component {
                                         title="Blogging, Content Marketing & Vlogging"
                                         description={
                                             <div>
-                                                <p>Become a content marketing pro and learn what's involved in professional blogging.</p>
+                                                <p>Become a content marketing professional blogging.</p>
                                                 <div className="addon-info">
                                                     <span className="mr-8"><span className="icons videos" />10 Videos</span>
                                                     <span className="mr-8"><span className="icons lessons" />5 Lessons</span>
