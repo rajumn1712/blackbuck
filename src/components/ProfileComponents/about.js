@@ -292,7 +292,7 @@ class About extends Component {
 
     return (
       <div className="custom-card profile-card">
-        <Card actions={[
+        <Card actions={!this.props.IsHideAction && [
           <Button type="primary"  onClick={this.ExportPdf}>
             <span className="post-icons download-icon"></span>Download Profile
           </Button>
