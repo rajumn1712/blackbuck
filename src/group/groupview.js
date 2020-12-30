@@ -759,7 +759,7 @@ class Group extends Component {
                     <Invite />
                   </Col>
                   }
-                  <Col xs={24} sm={groupData?.IsGroupAdmin ? 16 : 24} md={groupData?.IsGroupAdmin ? 16 : 24} lg={groupData?.IsGroupAdmin ? 16 : 24} xl={groupData?.IsGroupAdmin ? 16 : 24}>
+                  <Col xs={24} sm={groupData?.IsGroupAdmin ? 8 : 16} md={groupData?.IsGroupAdmin ? 8 : 16} lg={groupData?.IsGroupAdmin ? 8 : 16} xl={groupData?.IsGroupAdmin ? 8 : 16}>
                     {groupData?.GroupId && tabkey == "1" && (
                       <Postings
                         sharebox={groupData?.IsGroupMember || groupData?.IsGroupAdmin}
