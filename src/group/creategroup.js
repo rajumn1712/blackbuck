@@ -380,13 +380,13 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                    <Col xs={12} id="inviteFrnd">
+                                                    <Col xs={12} id="inviteFrnd1">
                                                         <Form.Item
                                                             label="Invite Friends (optional)"
                                                             className="custom-fields multi-select custom-select "
                                                             placeholder="Select Invitee"
                                                         >
-                                                            <Select
+                                                            <Select 
                                                                 defaultValue=""
                                                                 name="Invitations"
                                                                 value={values.Invitations}
@@ -395,7 +395,7 @@ class CreateGroup extends Component {
                                                                 }
                                                                 optionLabelProp="label"
                                                                 mode="multiple"
-                                                                // getPopupContainer={() => document.querySelector('#inviteFrnd')}
+                                                                getPopupContainer={() => document.querySelector('#inviteFrnd1')}
                                                             >
                                                                 {FriendsList.map((item, index) => {
                                                                     return (

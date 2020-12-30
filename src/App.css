@@ -1998,7 +1998,9 @@ textarea {
 .fnd-width{width: 196.667px;}
 .course-content .ant-collapse-header{font-weight: 500;}
 .course-content.ant-collapse-content-box{padding-top:0;}
+.course-content .ant-collapse-content-box{padding-bottom: 0;}
 .course-content .ant-collapse-content-box{background: var(--white);}
-.course-content .ant-card{border-radius: 0 0.8rem 0 0;}
+.course-card .ant-card{border-radius: 0 0.8rem 0 0 !important;}
+.lms-video video{width: 853px !important;height: 482px;}
 .grp-type-icon.vedio-play{background-position:-240px -396px;}
 .invite-card .ant-btn:hover{color: var(--white) !important ;}
