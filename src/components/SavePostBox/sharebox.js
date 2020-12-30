@@ -311,7 +311,7 @@ class ShareBox extends Component {
       tags: [],
       uploadSources: [],
       ddlValue: "Public",
-      GroupName: " "
+      GroupName: ""
     });
   };
   handleCancel = (e) => {
@@ -650,7 +650,7 @@ class ShareBox extends Component {
       this.postObject.Group.GroupImage = GroupObject[0]?.image;
       this.postObject.Group.GroupName = GroupObject[0]?.name;
       this.postObject.Group.GroupId = GroupObject[0]?.id;
-      GroupName = GroupObject?.length > 0 ? GroupObject[0]?.id : " ";
+      GroupName = GroupObject?.length > 0 ? GroupObject[0]?.id : "";
       this.setState({ ...this.state, GroupName });
     }
 
@@ -788,7 +788,7 @@ class ShareBox extends Component {
           <div className="mb-24">{title}</div>
           {!this.props.groupData && ddlValue == "Groups" && (isEdit ? groupLu?.length > 0 : true) && <div className="mb-24 custom-fields">
             <Select
-              defaultValue=" "
+              defaultValue=""
               name="Group"
               value={this.state.GroupName}
               onChange={(value) =>
@@ -796,7 +796,7 @@ class ShareBox extends Component {
               }
               optionLabelProp="label"
             >
-              <Option value=" " label="Select Group">Select Group</Option>
+              <Option value="" label="Select Group">Select Group</Option>
               {groupLu.map((item, index) => {
                 return (
                   <Option key={index} value={item.id} label={item.name}>
