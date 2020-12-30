@@ -706,8 +706,9 @@ class ShareBox extends Component {
           }
           title={<h4 className="mb-0">{this.props.profile?.FirstName}</h4>}
           description={
-            <div className="mb-0 text-capitalize">
-              <Dropdown overlay={menu} trigger={["click"]}>
+            <div className="mb-0 text-capitalize" id="typeLu">
+              <Dropdown overlay={menu} trigger={["click"]}
+              getPopupContainer={() => document.querySelector('#typeLu')}>
                 <div
                   className="post-privacy"
                   style={{ color: "#9B9B9B", fontSize: 12 }}
@@ -786,7 +787,7 @@ class ShareBox extends Component {
           destroyOnClose
         >
           <div className="mb-24">{title}</div>
-          {!this.props.groupData && ddlValue == "Groups" && (isEdit ? groupLu?.length > 0 : true) && <div className="mb-24 custom-fields">
+          {!this.props.groupData && ddlValue == "Groups" && (isEdit ? groupLu?.length > 0 : true) && <div className="mb-24 custom-fields" id="grouplu">
             <Select
               defaultValue=""
               name="Group"
@@ -795,6 +796,7 @@ class ShareBox extends Component {
                 this.setFieldValue(value)
               }
               optionLabelProp="label"
+              getPopupContainer={() => document.querySelector('#grouplu')}
             >
               <Option value="" label="Select Group">Select Group</Option>
               {groupLu.map((item, index) => {
