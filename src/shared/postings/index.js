@@ -567,7 +567,7 @@ class Postings extends Component {
                   <>
                     {tag != undefined && tag != null && (
                       <Tag key={index}>
-                        <Link to="/commingsoon">{`${(tag?.Name || tag).startsWith("#") ? "" : "#"
+                        <Link to={`search/${(tag?.Name || tag).replace("#", "")}/Tags`}>{`${(tag?.Name || tag).startsWith("#") ? "" : "#"
                           }${tag?.Name || tag || ""}`}</Link>
                       </Tag>
                     )}
@@ -788,7 +788,7 @@ class Postings extends Component {
                 <>
                   {tag != undefined && tag != null && (
                     <Tag key={index}>
-                      <Link to="/commingsoon">{`${(tag?.Name || tag).startsWith("#") ? "" : "#"
+                      <Link to={`search/${(tag?.Name || tag).replace("#", "")}/Tags`}>{`${(tag?.Name || tag).startsWith("#") ? "" : "#"
                         }${tag?.Name || tag || ""}`}</Link>
                     </Tag>
                   )}
