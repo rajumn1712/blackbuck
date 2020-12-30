@@ -634,7 +634,7 @@ class ShareBox extends Component {
     );
   }
 
-  setFieldValue = (value, type) => {
+  setFieldValue(value, type) {
     let { collegeLu, groupLu, CollgeName, GroupName } = this.state;
     let Object;
     let GroupObject;
@@ -786,7 +786,7 @@ class ShareBox extends Component {
           destroyOnClose
         >
           <div className="mb-24">{title}</div>
-          {!this.props.groupData && ddlValue == "Groups" && (isEdit ?groupLu?.length>0:true) && <div className="mb-24 custom-fields">
+          {!this.props.groupData && ddlValue == "Groups" && (isEdit ? groupLu?.length > 0 : true) && <div className="mb-24 custom-fields">
             <Select
               defaultValue=" "
               name="Group"
