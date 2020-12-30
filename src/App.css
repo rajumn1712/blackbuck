@@ -2001,3 +2001,4 @@ textarea {
 .course-content .ant-collapse-content-box{background: var(--white);}
 .course-content .ant-card{border-radius: 0 0.8rem 0 0;}
 .grp-type-icon.vedio-play{background-position:-240px -396px;}
+.invite-card .ant-btn:hover{color: var(--white) !important ;}

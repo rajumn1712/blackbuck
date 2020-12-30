@@ -395,7 +395,7 @@ class CreateGroup extends Component {
                                                                 }
                                                                 optionLabelProp="label"
                                                                 mode="multiple"
-                                                                getPopupContainer={() => document.querySelector('#inviteFrnd')}
+                                                                // getPopupContainer={() => document.querySelector('#inviteFrnd')}
                                                             >
                                                                 {FriendsList.map((item, index) => {
                                                                     return (
