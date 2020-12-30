@@ -10,6 +10,7 @@ import OwlCarousel from 'react-owl-carousel2';
 import 'react-owl-carousel2/src/owl.carousel.css';
 import 'react-owl-carousel2/src/owl.theme.default.css'
 import Loader from '../../common/loader';
+import Sharebox from '../../components/SavePostBox/sharebox';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     carouselRef;
@@ -17,7 +18,39 @@ class FriendSuggestions extends Component {
     state = {
         friends: [],
         isViewAllPage: window.location.href.indexOf("friendsuggestions") > -1,
-        loading: true
+        loading: true,
+        page: 1,
+        pageSize: window.location.href.indexOf("friendsuggestions") > -1 ? 9 : 10,
+        loadMore: true
+    }
+    handleScroll = () => {
+        const windowHeight =
+            "innerHeight" in window
+                ? window.innerHeight
+                : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+        );
+        const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+        if (windowBottom >= docHeight) {
+            this.loadMore();
+        } else {
+        }
+    };
+    loadMore(e) {
+        if (this.state.loadMore && !this.state.loading) {
+            let { page } = this.state;
+            page += 1;
+            this.setState({ ...this.state, page, loading: true }, () => {
+                this.loadSuggestions();
+            });
+        }
     }
     addFriend = async (friend) => {
         const obj = {
@@ -34,12 +67,16 @@ class FriendSuggestions extends Component {
         })
     }
     componentDidMount() {
+        window.addEventListener("scroll", this.handleScroll);
         this.loadSuggestions();
     }
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
     async loadSuggestions() {
-        const response = await getFriendSuggestions(this.props?.profile?.Id, 1, 100);
+        const response = await getFriendSuggestions(this.props?.profile?.Id, this.state.page, this.state.pageSize);
         if (response.ok) {
-            this.setState({ ...this.state, friends: response.data, loading: false });
+            this.setState({ ...this.state, friends: this.state.isViewAllPage ? this.state.friends.concat(response.data) : response.data, loading: false, loadMore: response.data.length === this.state.pageSize });
         }
     }
     removeSuggestion = (friend) => {
@@ -71,27 +108,31 @@ class FriendSuggestions extends Component {
         if (!this.state.friends || this.state.friends.length === 0) { return null; }
         if (this.state.isViewAllPage) {
             return (
-                <Row gutter={8} >
+                <>
+                    <Sharebox dataRefreshed={() => { }} />
+                    <Row gutter={8} >
 
-                    {this.state.friends.map((friend, index) => <Col lg={8}>
-                        <div className="frnds-list-item m-0 mb-8" key={index}>
-                            <div className="frnds-img ">
-                                <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
-                                <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
-                            </div>
-                            <div style={{ padding: 16 }}>
-                                <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
-                                <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
-                                <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
-                                <div className="text-center">
-                                    {friend.Type == null && <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>}
-                                    {friend.Type == "request" && <Button type="default" className="addfrnd semibold" onClick={() => this.cancelRequest(friend)}>Cancel Request</Button>}
+                        {this.state.friends.map((friend, index) => <Col lg={8}>
+                            <div className="frnds-list-item m-0 mb-8" key={index}>
+                                <div className="frnds-img ">
+                                    <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
+                                    <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
+                                </div>
+                                <div style={{ padding: 16 }}>
+                                    <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
+                                    <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
+                                    <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
+                                    <div className="text-center">
+                                        {friend.Type == null && <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>}
+                                        {friend.Type == "request" && <Button type="default" className="addfrnd semibold" onClick={() => this.cancelRequest(friend)}>Cancel Request</Button>}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                    </Col>)}
-                </Row>
+
+                        </Col>)}
+                    </Row>
+                    {this.state.isViewAllPage && this.state.loading && <Loader className="loader-top-middle" />}
+                </>
             )
         }
         return (

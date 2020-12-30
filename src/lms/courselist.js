@@ -21,7 +21,7 @@ class CourseList extends Component {
                         itemLayout="vertical"
                         dataSource={data}
                         renderItem={item => (
-                            <div className="tag-name"><Link to="/commingsoon">{item.title}</Link></div>
+                            <div className="tag-name"><Link to="/coursecontent">{item.title}</Link></div>
 
                         )}
                     />
