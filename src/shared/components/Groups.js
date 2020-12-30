@@ -196,7 +196,7 @@ class Groups extends Component {
                     </Link>
                   ) : (
                       <Link
-                        className="ml-8 f-12 list-link ml-16"
+                        className="text-center f-12 list-link"
                         onClick={() => this.joinGroup(group)}
                       >
                         Join
@@ -313,7 +313,7 @@ class Groups extends Component {
                     </Link>
                   ) : (
                       <Link
-                        className="ml-8 f-12 list-link ml-16"
+                        className="text-center f-12 list-link"
                         onClick={() => this.joinGroup(item)}
                       >
                         Join
