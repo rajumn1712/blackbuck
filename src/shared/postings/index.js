@@ -65,8 +65,11 @@ class Postings extends Component {
     this.loadPosts();
   }
   componentWillUnmount() {
+    debugger
     window.removeEventListener("scroll", this.handleScroll);
-    this.props.updateSearch()
+    if (window.location.href.indexOf('search') < 0) {
+      this.props.updateSearch()
+    }
 
   }
   componentDidUpdate(prevProps) {

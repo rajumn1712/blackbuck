@@ -12,7 +12,8 @@ class Invite extends Component {
         invitations: [],
         loadMore: true,
         pageSize: 20,
-        page: 1
+        page: 1,
+        loading: true
     }
     componentDidMount() {
         if (this.props.displayas)
@@ -26,11 +27,11 @@ class Invite extends Component {
     getUserInvites = () => {
         getUserInvitations(this.props.profile?.Id, this.props.displayas ? this.state.pageSize : 1, this.props.displayas ? (this.state.page * this.state.pageSize - this.state.pageSize) : 0).then(res => {
             if (!this.props.displayas)
-                this.setState({ invitations: res.data?.length > 0 ? res.data : [] })
+                this.setState({ invitations: res.data?.length > 0 ? res.data : [], loading: false })
             else {
                 let { invitations } = this.state;
                 invitations = invitations.concat(res.data?.length > 0 ? res.data : []);
-                this.setState({ invitations: invitations, loadMore: res.data.length === this.state.pageSize, })
+                this.setState({ invitations: invitations, loadMore: res.data.length === this.state.pageSize, loading: false })
             }
         });
     }
@@ -99,7 +100,7 @@ class Invite extends Component {
             <Row gutter={16}>
                 {invitations.map((invitation, index) => {
                     return <Col md={24} lg={8} xl={8} xxl={6} key={index} className="mb-8">
-                        <div className="invite-card"><Card bordered={true}>
+                        <div className="invite-card"><Card bordered={true} loading={this.state.loading}>
                             <div>
                                 <Avatar.Group>
                                     <Avatar src={this.props?.profile?.ProfilePic || defaultUser}></Avatar>

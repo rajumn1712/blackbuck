@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 class FriendRequests extends Component {
     componentDidMount() {
-        fetchTags(this.props?.profile?.Id,10, 0).then(res => {
+        fetchTags(this.props?.profile?.Id, 10, 0).then(res => {
             const { tags } = this.state;
             res.data.forEach(item => {
                 if (Array.isArray(item)) {
@@ -20,12 +20,13 @@ class FriendRequests extends Component {
                     })
                 }
             });
-            this.setState({ tags: tags })
+            this.setState({ tags: tags, loading: false })
         });
     }
 
     state = {
-        tags: []
+        tags: [],
+        loading: true
     }
 
     render() {
@@ -34,7 +35,7 @@ class FriendRequests extends Component {
         return (
             <div className="custom-card tag-card">
                 <Card title="#Tags" bordered={false} >
-                    <List
+                    <List loading={this.state.loading}
                         itemLayout="vertical"
                         dataSource={tags?.slice(0, 5)}
                         renderItem={item => (
@@ -53,5 +54,5 @@ class FriendRequests extends Component {
 }
 const mapStateToProps = ({ oidc }) => {
     return { profile: oidc.profile };
-  };
+};
 export default withRouter(connectStateProps(connect(mapStateToProps)(FriendRequests)));
