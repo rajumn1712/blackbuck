@@ -1996,3 +1996,8 @@ textarea {
 .ant-input-group-wrapper.header-searchbar {display: initial;}
 .frnds-scroll{height: 280px;overflow: scroll;padding-right: 8px;}
 .fnd-width{width: 196.667px;}
+.course-content .ant-collapse-header{font-weight: 500;}
+.course-content.ant-collapse-content-box{padding-top:0;}
+.course-content .ant-collapse-content-box{background: var(--white);}
+.course-content .ant-card{border-radius: 0 0.8rem 0 0;}
+.grp-type-icon.vedio-play{background-position:-240px -396px;}

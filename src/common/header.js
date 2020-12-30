@@ -186,7 +186,7 @@ class HeaderComponent extends React.Component {
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Tooltip title="Notifications">
+                                <Tooltip title="Notifications" placement="bottom">
                                     <Link className="header-link" to="/profile/IsProfileNotificationsTab">
                                         <Badge className="notification-count" count={this.state.notificationsCount} showZero>
                                             <span className="icons notification-icon" />
