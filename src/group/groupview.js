@@ -19,6 +19,7 @@ import {
   Divider,
   Menu,
   Dropdown,
+  Affix,
 } from "antd";
 import PrivateInvite from "./PrivateInvite";
 import Ads from "../components/ads";
@@ -28,6 +29,7 @@ import PadLock from "../styles/images/padlock.svg";
 import GroupAbout from "../shared/components/groupabout";
 import Media from "../shared/components/media";
 import Tags from "../components/ProfileComponents/tags";
+import Groups from "../shared/components/Groups";
 import CommonModal from "../components/ProfileComponents/CommonModal";
 import {
   profileDetail,
@@ -276,7 +278,7 @@ class Group extends Component {
           (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
         this.props.updateProfile(this.props.profile);
       }
-      else{
+      else {
         this.getGroupData();
       }
     } else {
@@ -749,20 +751,26 @@ class Group extends Component {
               <TabPane tab="Posts" key="1">
                 <Row gutter={16}>
                   {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Tags />
-                    <PrivateInvite />
+                    <Affix offsetTop={86}>
+                      <Tags />
+                      <PrivateInvite />
+                    </Affix>
                   </Col>
                   }
                   {
                     groupData?.IsGroupMember && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Tags />
-                    <Invite />
-                  </Col>
+                      <Affix offsetTop={86}>
+                      <Tags />
+                      <Invite />
+                      </Affix>
+                    </Col>
                   }
                   {
                     !groupData?.IsGroupMember && !groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                      <Affix offsetTop={86}>
                       <Tags />
                       <Invite />
+                      </Affix>
                     </Col>
                   }
                   <Col xs={24} sm={groupData?.IsGroupAdmin ? 16 : 16} md={groupData?.IsGroupAdmin ? 16 : 16} lg={groupData?.IsGroupAdmin ? 16 : 16} xl={groupData?.IsGroupAdmin ? 16 : 16}>
@@ -787,7 +795,10 @@ class Group extends Component {
             </Tabs>
           </Col>
           <Col xs={24} sm={8} md={8} lg={6} xl={6}>
+            <Groups />
+            <Affix offsetTop={86}>
             <Ads />
+            </Affix>
           </Col>
         </Row>
       </div>
