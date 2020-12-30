@@ -52,6 +52,7 @@ import Loader from "../common/loader";
 import defaultCover from "../styles/images/defaultcover.png";
 import CreateGroup from "./creategroup";
 import { apiClient } from "../shared/api/clients";
+import Invite from "../shared/components/Invite";
 let GroupEditObj = {};
 const { Search } = Input;
 const { TabPane } = Tabs;
@@ -750,6 +751,12 @@ class Group extends Component {
                   {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                     <Tags />
                     <PrivateInvite />
+                  </Col>
+                  }
+                  {
+                    groupData?.IsGroupMember && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                    <Tags />
+                    <Invite />
                   </Col>
                   }
                   <Col xs={24} sm={groupData?.IsGroupAdmin ? 16 : 24} md={groupData?.IsGroupAdmin ? 16 : 24} lg={groupData?.IsGroupAdmin ? 16 : 24} xl={groupData?.IsGroupAdmin ? 16 : 24}>
