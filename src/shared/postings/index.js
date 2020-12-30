@@ -37,7 +37,7 @@ import PostCardModal from "../components/postings/PostModal";
 import notify from "../components/notification";
 import { uuidv4 } from "../../utils";
 import VisSenseFactory from "vissense";
-import { postUpdation } from "../../reducers/auth";
+import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
@@ -66,6 +66,8 @@ class Postings extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
+    this.props.updateSearch()
+
   }
   componentDidUpdate(prevProps) {
     if (prevProps.match?.params.key !== this.props.match?.params.key) {
@@ -1062,6 +1064,9 @@ const mapDispatchToProps = (dispatch) => {
     upadateProfile: (info, type) => {
       dispatch(postUpdation(info, type));
     },
+    updateSearch: () => {
+      dispatch(updateSearchValue(null));
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Postings);
