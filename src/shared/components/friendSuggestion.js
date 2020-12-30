@@ -18,7 +18,39 @@ class FriendSuggestions extends Component {
     state = {
         friends: [],
         isViewAllPage: window.location.href.indexOf("friendsuggestions") > -1,
-        loading: true
+        loading: true,
+        page: 1,
+        pageSize: window.location.href.indexOf("friendsuggestions") > -1 ? 9 : 10,
+        loadMore: true
+    }
+    handleScroll = () => {
+        const windowHeight =
+            "innerHeight" in window
+                ? window.innerHeight
+                : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+        );
+        const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+        if (windowBottom >= docHeight) {
+            this.loadMore();
+        } else {
+        }
+    };
+    loadMore(e) {
+        if (this.state.loadMore && !this.state.loading) {
+            let { page } = this.state;
+            page += 1;
+            this.setState({ ...this.state, page, loading: true }, () => {
+                this.loadSuggestions();
+            });
+        }
     }
     addFriend = async (friend) => {
         const obj = {
@@ -35,12 +67,16 @@ class FriendSuggestions extends Component {
         })
     }
     componentDidMount() {
+        window.addEventListener("scroll", this.handleScroll);
         this.loadSuggestions();
     }
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
     async loadSuggestions() {
-        const response = await getFriendSuggestions(this.props?.profile?.Id, 1, 100);
+        const response = await getFriendSuggestions(this.props?.profile?.Id, this.state.page, this.state.pageSize);
         if (response.ok) {
-            this.setState({ ...this.state, friends: response.data, loading: false });
+            this.setState({ ...this.state, friends: this.state.isViewAllPage ? this.state.friends.concat(response.data) : response.data, loading: false, loadMore: response.data.length === this.state.pageSize });
         }
     }
     removeSuggestion = (friend) => {
@@ -69,10 +105,7 @@ class FriendSuggestions extends Component {
         });
     }
     render() {
-        if (this.state.isViewAllPage && this.state.loading) {
-            return <Loader className="loader-middle" />
-        }
-        else if (!this.state.friends || this.state.friends.length === 0) { return null; }
+        if (!this.state.friends || this.state.friends.length === 0) { return null; }
         if (this.state.isViewAllPage) {
             return (
                 <>
@@ -97,7 +130,9 @@ class FriendSuggestions extends Component {
                             </div>
 
                         </Col>)}
-                    </Row></>
+                    </Row>
+                    {this.state.isViewAllPage && this.state.loading && <Loader className="loader-top-middle" />}
+                </>
             )
         }
         return (
