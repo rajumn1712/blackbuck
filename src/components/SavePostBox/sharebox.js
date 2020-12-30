@@ -602,11 +602,11 @@ class ShareBox extends Component {
   disablePostBtn = () => {
     return ((!this.postObject?.ImageUrl || (this.state.uploadSources.length == 0)) && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
   };
-  setDdlValue = (e) => {
+  setDdlValue = (e,IsMenu) => {
     let text = e.item ? (e.item.node.innerText ? e.item.node.innerText : '') : e;
-    let { groupLu, collegeLu } = this.state;
+    let { groupLu, collegeLu ,GroupName} = this.state;
     this.postObject.PostType = text
-    this.setState({ ...this.state, ddlValue: text }, () => {
+    this.setState({ ...this.state, ddlValue: text ,GroupName:(IsMenu?"":GroupName)}, () => {
       if (text == 'Groups') {
         if (groupLu.length === 0)
           fetchUserGroups(
@@ -650,7 +650,7 @@ class ShareBox extends Component {
       this.postObject.Group.GroupImage = GroupObject[0]?.image;
       this.postObject.Group.GroupName = GroupObject[0]?.name;
       this.postObject.Group.GroupId = GroupObject[0]?.id;
-      GroupName = GroupObject?.length > 0 ? GroupObject[0]?.id : "";
+      GroupName = (GroupObject?.length > 0) ? (GroupObject[0]?.id) : "";
       this.setState({ ...this.state, GroupName });
     }
 
@@ -692,8 +692,8 @@ class ShareBox extends Component {
     const tagChild = tags?.map(this.forMap);
     const menu = (
       <Menu className="custom-dropdown more-opt">
-        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon public"></span> Public</Menu.Item>
-        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon friends"></span> Friends</Menu.Item>
+        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e,true)}><span className="grp-type-icon public"></span> Public</Menu.Item>
+        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e,true)}><span className="grp-type-icon friends"></span> Friends</Menu.Item>
         {/* <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon college"></span> College</Menu.Item> */}
         {!this.props.groupData && <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon groups"></span> Groups</Menu.Item>}
       </Menu>
