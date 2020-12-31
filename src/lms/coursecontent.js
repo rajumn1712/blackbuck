@@ -64,7 +64,7 @@ class CourseContent extends Component {
                                     </Col>
                                 </Row>
                             </TabPane>
-                            <TabPane tab="Notes" key="3">
+                            <TabPane tab="Comments" key="3">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
 
