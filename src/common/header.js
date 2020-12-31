@@ -89,15 +89,15 @@ class HeaderComponent extends React.Component {
                                 <p className="mb-4"><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
                                 <p className="textsecondary f-14 mb-8">2 weeksago</p>
                             <div>
-                                <a className="f-14 mr-16 semibold">Accept</a>
-                                <a className="f-14 semibold text-red">Remove</a>
+                                <a className="f-14 mr-16 semibold text-primary">Accept</a>
+                                <span className="f-14 semibold text-red">Remove</span>
                             </div>
                             </div>
                         </div>)}
                         {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
                     </div>
                     <Divider className="my-0" />
-                    <a className="f-16 semibold text-primary p-12 d-block">View all</a>
+                    <a className="f-16 semibold text-primary p-12 d-block button-hover">View all</a>
                     
                 </div>;
                 this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })

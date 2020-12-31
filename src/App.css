@@ -2010,3 +2010,4 @@ textarea {
 .flot-left .ant-collapse-extra{float: left !important;}
 .panel-subtext{font-size: 12px;color: rgba(0, 0, 0, 0.45);}
 .height-scroll{height: 550px;overflow: scroll;}
+.button-hover:hover{background: rgba(0, 0, 0, 0.05);;}

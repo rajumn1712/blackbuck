@@ -295,10 +295,10 @@
     margin-bottom: 0;
 }
 
-.notification-dropdown a{
+.text-primary{
     color: var(--primary);
 }
-.notification-dropdown a:hover{
+.text-primary:hover{
     color: var(--primaryhover);
 }
 
