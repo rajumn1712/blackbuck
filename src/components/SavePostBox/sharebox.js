@@ -650,7 +650,7 @@ class ShareBox extends Component {
       this.postObject.Group.GroupImage = GroupObject[0]?.image;
       this.postObject.Group.GroupName = GroupObject[0]?.name;
       this.postObject.Group.GroupId = GroupObject[0]?.id;
-      GroupName = (GroupObject?.length > 0) ? (GroupObject[0]?.id) : "";
+      GroupName = value;
       this.setState({ ...this.state, GroupName });
     }
 
