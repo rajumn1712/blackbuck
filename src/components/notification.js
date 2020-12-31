@@ -1,4 +1,4 @@
-import { Affix, Col, Row, List, Tabs } from 'antd';
+import { Affix, Col, Row, List, Tabs,Button } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { Component } from 'react';
 import { connect } from "react-redux";
@@ -8,6 +8,7 @@ import {
 } from "../shared/api/apiServer";
 import { Link } from 'react-router-dom';
 const { TabPane } = Tabs;
+
 class Notifications extends Component {
     state = {
         data: [],
@@ -49,12 +50,26 @@ class Notifications extends Component {
                     <List.Item.Meta
                         avatar={<Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}><Avatar src={item.Image} /></Link>}
                         title={<>{this.getTitle(item)}</>}
-                        description={item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''}
+                        description={<div> item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''
+                            <div className="count-link">2 weeksago</div>
+                            <div className="my-4">6 Mutual friends</div>
+                            <div>
+                                <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Confirm</Button>
+                                <Button type="default" className="addContent px-16" size="small">Delete</Button>
+                            </div>
+                        </div>}
+
+
                     />
+
                 </List.Item>
+
+
             )}
         />
+
     }
+
     render() {
         return <>
             <Tabs defaultActiveKey="1" onChange={(index) => this.changeTab(index)}>

@@ -1980,7 +1980,7 @@ textarea {
 .admin-left-pane{width: 260px; position: fixed; top: 70px; left: 0; bottom: 0;}
 .course-step .ant-collapse{background: var(--white);  border-radius: 0.4rem;}
 .create-course{background: var(--bghover); padding: 40px 40px 28px; border-radius: 0.8rem;}
-.addContent{height: 32px !important; font-size: var(--f-12) ;color: var(--textprimary); border-radius: 0.4rem;}
+.addContent{height: 32px; font-size: var(--f-12) ;color: var(--textprimary); border-radius: 0.4rem;}
 .lecture-collapse{position: relative;}
 .add-lecture{position: absolute; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); top: 10px;
   left: -58px;box-shadow: var(--boxshadow); box-sizing: content-box !important;}
