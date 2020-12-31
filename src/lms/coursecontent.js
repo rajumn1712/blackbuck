@@ -74,7 +74,7 @@ class CourseContent extends Component {
                         </Tabs>
                     </Col>
                     <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
-                        <div className="custom-card ">
+                        <div className="custom-card height-scroll">
                             <Card title="Course Content" bordered={false} >
 
                                 <Collapse
@@ -84,7 +84,7 @@ class CourseContent extends Component {
                                     className="site-collapse-custom-collapse"
                                     expandIconPosition="right"
                                 >
-                                    <Panel header="Section 1: Welcome, Welcome, Welcome!" key="1" className="pb-0 course-content">
+                                    <Panel header="Section 1: Welcome, Welcome, Welcome!" key="1" className="pb-0 course-content flot-left" extra={<div className="panel-subtext"><span>4/5</span> | <span>23min</span> </div>}>
                                         <div>
                                             <List
                                                 itemLayout="horizontal"
@@ -101,7 +101,22 @@ class CourseContent extends Component {
                                             />,
                                         </div>
                                     </Panel>
-                                    <Panel header="Section 2: Welcome, Welcome, Welcome!" key="2" className="pb-0 course-content">
+                                    <Panel header="Section 2: Welcome, Welcome, Welcome!" key="2" className="pb-0 course-content flot-left" extra={<div className="panel-subtext"><span>4/5</span> | <span>23min</span> </div>}>
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={data}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        avatar={<Checkbox onChange={onChange}></Checkbox>}
+                                                        title={<a href="https://ant.design">{item.title}</a>}
+                                                        description={<div className="f-12"><span className="grp-type-icon lessons"></span> {item.description}</div>}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />,
+                                    </Panel>
+                                    <Panel header="Section 3: Welcome, Welcome, Welcome!" key="3" className="pb-0 course-content flot-left" extra={<div className="panel-subtext"><span>4/5</span> | <span>23min</span> </div>}>
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={data}
@@ -116,22 +131,7 @@ class CourseContent extends Component {
                                             )}
                                         />,
                                     </Panel>
-                                    <Panel header="Section 3: Welcome, Welcome, Welcome!" key="3" className="pb-0 course-content">
-                                        <List
-                                            itemLayout="horizontal"
-                                            dataSource={data}
-                                            renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        avatar={<Checkbox onChange={onChange}></Checkbox>}
-                                                        title={<a href="https://ant.design">{item.title}</a>}
-                                                        description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />,
-                                    </Panel>
-                                    <Panel header="Section 4: Welcome, Welcome, Welcome!" key="4" className="pb-0 course-content">
+                                    <Panel header="Section 4: Welcome, Welcome, Welcome!" key="4" className="pb-0 course-content flot-left" extra={<div className="panel-subtext"><span>4/5</span> | <span>23min</span> </div>}>
                                         <List className=""
                                             itemLayout="horizontal"
                                             dataSource={data}
