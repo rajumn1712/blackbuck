@@ -588,7 +588,7 @@ class Postings extends Component {
         ></Card.Meta>
 
       </Card>
-      <div className="d-flex justify-content-between mx-16 py-16">
+      <div className="d-flex justify-content-between mx-16 pt-8 pb-16">
         {
           <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
             <ul className="card-actions-count pl-0">
@@ -807,7 +807,7 @@ class Postings extends Component {
           </div>
         }
       ></Card.Meta>
-      <div className="d-flex justify-content-between mx-16 py-16">
+      <div className="d-flex justify-content-between mx-16 pt-8 pb-12">
         {
           <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
             <ul className="card-actions-count pl-0">

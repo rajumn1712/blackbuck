@@ -131,7 +131,7 @@ class FriendRequests extends Component {
                           {item?.mutualFriends?.map((member, index) => {
                             return (
                               <Link to={"/profileview/" + member.UserId}><Avatar
-                                src={member.Image}
+                                src={member.Image || defaultUser}
                                 key={index}
                                 style={{
                                   backgroundColor: member.Image

@@ -86,7 +86,7 @@ to{transform: translateY(0px);}
 .post-comment .ant-comment-inner{padding-bottom: 0;}
 .comment-list .ant-list-header{font-weight: 500;padding-bottom: 8px;}
 .post-comment .ant-form-item{margin-bottom: 0;}
-.card-actions-count{list-style: none; display: flex; align-items: center; margin-bottom: 0;}
+.card-actions-count{list-style: none; display: flex; align-items: center; margin-bottom: 0; height: 18px}
 .card-actions-count li{font-weight: 500; margin-right: -5px;font-size: 12px;}
 .card-actions-count li span{font-size: var(--f-12);font-weight: normal;}
 .card-actions-count li a{font-size: var(--f-14);font-weight: normal; color: var(--textsecondary); line-height: normal;margin-left: 8px;}
@@ -127,10 +127,10 @@ to{transform: translateY(0px);}
 .share-pop li:hover .post-icons.sharenow-icon{background-position: -294px -226px;}
 .share-pop li:hover .post-icons.copylink-icon{background-position: -324px -226px;}
 .counter-icon{width: 20px;height: 20px;display: inline-block;vertical-align: bottom; background: url(../../styles/images/icons.svg) no-repeat; border-radius: 50%;}
-.counter-icon.likes {background-position: -594px -201px;}
-.counter-icon.loves {background-position: -621px -201px;}
-.counter-icon.claps {background-position: -649px -201px;}
-.counter-icon.whistles {background-position: -675px -201px;}
+.counter-icon.likes {background-position: -593px -200px;}
+.counter-icon.loves {background-position: -620px -200px;}
+.counter-icon.claps {background-position: -648px -200px;}
+.counter-icon.whistles {background-position: -676px -200px;}
 .join-grp-title{font-weight: 500; font-size: 16px; text-align: center;}
 .join-grp-txt{font-weight: normal; color: var(--textsecondary);}
 .grp-type, .grp-type:hover{color: var(--primary);}

@@ -1036,7 +1036,6 @@
 .ant-avatar.request-image {
   width: 60px !important;
   height: 60px !important;
-  border-radius: 12px;
 }
 .ant-avatar.select-image {
   width: 40px !important;
@@ -1081,6 +1080,7 @@
   height: 25px !important;
   line-height: 20px;
   border-radius: 50% !important;
+  margin-left: -5px;
 }
 .list-request .ant-avatar-string {
   font-size: var(--f-10);
