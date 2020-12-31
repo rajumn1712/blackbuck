@@ -50,15 +50,15 @@ class Notifications extends Component {
                     <List.Item.Meta
                         avatar={<Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}><Avatar src={item.Image} /></Link>}
                         title={<>{this.getTitle(item)}</>}
-                        description={<div> item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''
-                            <div className="count-link">2 weeksago</div>
-                            <div className="my-4">6 Mutual friends</div>
-                            <div>
-                                <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Confirm</Button>
-                                <Button type="default" className="addContent px-16" size="small">Delete</Button>
-                            </div>
-                        </div>}
-
+                        description={item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''
+                        //     <div><div className="count-link">2 weeksago</div>
+                        //     <div className="my-4">6 Mutual friends</div>
+                        //     <div>
+                        //         <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Confirm</Button>
+                        //         <Button type="default" className="addContent px-16" size="small">Delete</Button>
+                        //     </div>
+                        // </div>
+                        }
 
                     />
 

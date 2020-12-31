@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip } from 'antd'
+import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip,Button } from 'antd'
 import { Link, withRouter } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -82,12 +82,25 @@ class HeaderComponent extends React.Component {
                             <div className="notification-image">
                                 <Avatar src={friend.Image || defaultUser} />
                             </div>
-                            <div className="notification-description text-left">
+                            {/* <div className="notification-description text-left">
                                 <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
                                 <span><Link to="/profile/IsProfileFriendsTab">Respond</Link></span>
+                            </div> */}
+                            <div className="notification-description text-left">
+                                <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
+                                <div className="count-link">2 weeksago</div>
+                            <div className="mb-4">6 Mutual friends</div>
+                            <div>
+                                <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Confirm</Button>
+                                <Button type="default" className="addContent px-16" size="small">Delete</Button>
+                            </div>
                             </div>
                         </div>)}
                         {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
+                    </div>
+                    <Divider className="my-0" />
+                    <div className="pt-4 pb-8">
+                    <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>View all</Button>
                     </div>
                 </div>;
                 this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })
