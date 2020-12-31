@@ -1,8 +1,9 @@
-import { Card, Col, Row, Statistic } from "antd";
+import { Card, Col, Row, Statistic, Avatar } from "antd";
 import React, { Component } from "react";
 import Ads from "../components/ads";
 import OwlCarousel from 'react-owl-carousel2';
 import CourseBanner1 from '../styles/images/Coursebanner1.png'
+import defaultUser from '../styles/images/defaultuser.jpg';
 
 const { Meta } = Card;
 const options = {
@@ -14,7 +15,14 @@ const options = {
 };
 
 class Courses extends Component {
+    state = {
+        navigations: [],
+        profileData: {},
+        disabled: false,
+        visible: false,
+    };
     render() {
+        const { profileData } = this.state;
         return (
             <div className="coursepage mb-6">
                 <Row gutter={16}>
@@ -58,9 +66,21 @@ class Courses extends Component {
 
                             </div>
 
-                            <div className="bannercard-title">
-                                MY Courses
-                            </div>
+                            {/* <div className="bannercard-title">
+                                MY Courses 
+                            </div> */}
+                            <Card className="user-banner">
+                                <Meta
+                                    avatar={
+                                        <div className="img-container">
+                                            <Avatar src={profileData.ProfilePic || defaultUser} />
+                                            <a className="img-camera overlay"><span className="icons camera" /> </a>
+                                        </div>
+                                    }
+                                    title="MY Courses"
+                                //   description='sdfg'
+                                />
+                            </Card>
 
                             <div className="right-statistic">
                                 <Statistic
