@@ -143,7 +143,7 @@ class Friends extends Component {
             itemLayout="horizontal"
             dataSource={FriendsList}
             renderItem={(item) => (
-              <List.Item>
+              <List.Item style={{display: 'flex', alignItems: 'center'}}>
                 <List.Item.Meta
                   avatar={
                     <Link to={"/profileview/" + item.UserId}>
@@ -190,7 +190,11 @@ class Friends extends Component {
                           <span> Mutual Friends</span>
                         </span>
                       )}
-                      <Dropdown overlay={<Menu className="custom-dropdown">
+                     
+                    </div>
+                  }
+                />
+                 <Dropdown overlay={<Menu className="custom-dropdown">
                         <Menu.Item key="0" onClick={async () => {
                           const unRes = await unFriend(this.props.profile?.Id, item.UserId);
                           if (unRes.ok) {
@@ -210,9 +214,6 @@ class Friends extends Component {
                           <span className="icons more mr-0"></span>
                         </a>
                       </Dropdown>
-                    </div>
-                  }
-                />
               </List.Item>
             )}
           />

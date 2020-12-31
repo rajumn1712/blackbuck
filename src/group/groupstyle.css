@@ -32,15 +32,14 @@
     align-items: flex-start;
     background: var(--white);
 }
+.user-statistic .ant-list-item-meta-avatar{margin: auto;}
 .user-statistic .ant-list-item-meta-content{position: relative;top:80px;}
 .privacy-dropdown .ant-list-item-meta-content{top: 0 !important;}
 .privacy-dropdown .ant-list-item-meta-title{font-size: 12px !important;}
 .user-statistic .group-banner {
     border: 0;
     background: transparent;
-    margin-top: -120px;
     width: 100%;
-   
     margin: -120px 12px 0 12px;
 }
 
@@ -72,7 +71,7 @@
 .user-statistic .group-banner .ant-card-meta-detail, .text-center{
     text-align: center;
 }
-.group-leftext{display: block !important;position: relative;left: 30px;top: 8px;}
+.group-leftext{display: block !important;position: relative;left: 30px;top: 12px;}
 .user-statistic .group-banner .ant-card-meta-title {
     font-size: 22px;
     margin-bottom: 0;

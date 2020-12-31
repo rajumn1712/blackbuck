@@ -73,11 +73,11 @@ class Group extends Component {
     friendsLu: [],
     userFndsLu: [],
     saveObj: {
-      GroupId: this.props?.match?.params.id,
+      GroupId: this.props ?.match ?.params.id,
       Invitations: [],
     },
     saveAdminObj: {
-      GroupId: this.props?.match?.params.id,
+      GroupId: this.props ?.match ?.params.id,
       AdminUsers: [],
     },
     tabkey: "1",
@@ -90,9 +90,9 @@ class Group extends Component {
 
   onChange = (e, item, index) => {
     let Obj = {
-      UserName: this.props?.profile.FirstName,
+      UserName: this.props ?.profile.FirstName,
       FriendId: item.UserId,
-      Image: this.props?.profile.ProfilePic,
+      Image: this.props ?.profile.ProfilePic,
     };
     let { saveObj } = this.state;
     item.IsChecked = e.target ? e.target.checked : e;
@@ -130,7 +130,7 @@ class Group extends Component {
     this.setState({ ...this.state, imageLoader: true })
     const imageType = this.state.isProfilePic ? "ProfilePic" : "CoverPic";
     saveGroupImage(
-      this.props?.match?.params.id,
+      this.props ?.match ?.params.id,
       imageType,
       this.imageObject
     ).then((res) => {
@@ -155,7 +155,7 @@ class Group extends Component {
         "file",
         file,
         file.name +
-        `${this.state.isProfilePic ? "groupprofile_" : "groupcover_"}${this.props?.profile?.Id
+        `${this.state.isProfilePic ? "groupprofile_" : "groupcover_"}${this.props ?.profile ?.Id
         }`
       );
       apiClient
@@ -214,7 +214,7 @@ class Group extends Component {
   leaveGroup = async (group) => {
     const joinResponse = await cancelGroupRequest(
       group.GroupId,
-      this.props?.profile?.Id
+      this.props ?.profile ?.Id
     );
     if (joinResponse.ok) {
       notify({
@@ -256,11 +256,11 @@ class Group extends Component {
   };
   joinGroup = async (item) => {
     const obj = {
-      UserId: this.props?.profile?.Id,
-      Firstname: this.props?.profile?.FirstName,
-      Lastname: this.props?.profile?.LastName,
-      Image: this.props?.profile?.ProfilePic,
-      Email: this.props?.profile?.Email,
+      UserId: this.props ?.profile ?.Id,
+      Firstname: this.props ?.profile ?.FirstName,
+      Lastname: this.props ?.profile ?.LastName,
+      Image: this.props ?.profile ?.ProfilePic,
+      Email: this.props ?.profile ?.Email,
     };
     if (item.Type == "Private") {
       obj.Type = "request";
@@ -292,7 +292,7 @@ class Group extends Component {
   async cancelGroupRequest(item) {
     const joinResponse = await cancelGroupRequest(
       item.GroupId,
-      this.props?.profile?.Id
+      this.props ?.profile ?.Id
     );
     if (joinResponse.ok) {
       notify({ message: "Group Request", description: "Request cancelled" });
@@ -312,8 +312,8 @@ class Group extends Component {
   getGroupData = () => {
     let { groupData } = this.state;
     editGroup(
-      this.props?.match?.params.id,
-      this.props?.profile.Id,
+      this.props ?.match ?.params.id,
+      this.props ?.profile.Id,
       "GroupView"
     ).then((res) => {
       groupData = res.data[0];
@@ -338,7 +338,7 @@ class Group extends Component {
   };
   getAdminFriends = () => {
     let { friendsLu, groupData } = this.state;
-    getAdminFriends(this.props?.profile?.Id, groupData?.GroupId).then((res) => {
+    getAdminFriends(this.props ?.profile ?.Id, groupData ?.GroupId).then((res) => {
       this.setState({
         ...this.state,
         friendsLu: res.data,
@@ -348,7 +348,7 @@ class Group extends Component {
   };
   getUserFriends = () => {
     let { userFndsLu, groupData } = this.state;
-    getMembers(groupData.GroupId, this.props.profile?.Id, groupData.Members, 0).then(res => {
+    getMembers(groupData.GroupId, this.props.profile ?.Id, groupData.Members, 0).then(res => {
       this.setState({
         ...this.state,
         userFndsLu: res.data[0].Members,
@@ -462,18 +462,18 @@ class Group extends Component {
                     <a><span className="post-icons settings-icon"></span> Update your settings</a>
                 </Menu.Item> please don't delete */}
         <Menu.Item key="1">
-          {!this.state.groupData?.IsAdmin && !this.state.groupData?.IsSystem && (
+          {!this.state.groupData ?.IsAdmin && !this.state.groupData ?.IsSystem && (
             <a onClick={() => this.leaveGroup(this.state.groupData)}>
               <span className="post-icons Leavegroup-icon"></span> Leave this
               group
             </a>
           )}
-          {this.state.groupData?.IsAdmin && (
+          {this.state.groupData ?.IsAdmin && (
             <a onClick={() => this.editGroup(this.state.groupData)}>
               <span className="post-icons edit-icon"></span> Edit group
             </a>
           )}
-          {this.state.groupData?.IsAdmin && (<a onClick={() => this.addAdmin(this.state.groupData)}>
+          {this.state.groupData ?.IsAdmin && (<a onClick={() => this.addAdmin(this.state.groupData)}>
             <span className="post-icons add-admin"></span> Add admins
           </a>)}
         </Menu.Item>
@@ -498,7 +498,7 @@ class Group extends Component {
               className="ant-dropdown-link"
               onClick={(e) => e.preventDefault()}
             >
-              {(this.state.groupData?.IsAdmin || (!this.state.groupData?.IsAdmin && !this.state.groupData?.IsSystem)) && <span className="icons h-more-icon m-0"></span>}
+              {(this.state.groupData ?.IsAdmin || (!this.state.groupData ?.IsAdmin && !this.state.groupData ?.IsSystem)) && <span className="icons h-more-icon m-0"></span>}
             </a>
           </Dropdown>
         </button>
@@ -567,7 +567,7 @@ class Group extends Component {
     return groupData ? (
       <div className="main">
         <Row gutter={16}>
-          <Col xs={24} sm={16} md={16} lg={18} xl={18}>
+          <Col xs={24} sm={12} md={16} lg={18} xl={17} xxl={17}>
             <div className="coverpage">
               <img
                 className="center-focus"
@@ -603,10 +603,10 @@ class Group extends Component {
 
             <div className="user-statistic pb-0">
               <div className="left-statistic group-leftext">
-                <Title className="mb-0" level={5}>
+                <Title className="mb-4 f-16 text-primary" level={5}>
                   {groupData.GroupName}
                 </Title>
-                <div className="f-12">{groupData.Type} Group</div>
+                <div className="f-12 text-secondary">{groupData.Type} Group</div>
               </div>
               <Card className="group-banner w-btn">
                 <List
@@ -622,14 +622,14 @@ class Group extends Component {
                               shape="round"
                               beforeCrop={this.handleBeforUpload}
                             >
-                              <Upload {...this.uploadProps} disabled={!groupData?.IsGroupAdmin}>
+                              <Upload {...this.uploadProps} disabled={!groupData ?.IsGroupAdmin}>
                                 {imageLoader && <Loader className="loader-top-middle" />}
                                 <Avatar onClick={() =>
                                   this.setState({ isProfilePic: true })
                                 }
-                                  src={groupData?.GroupImage || defaultguser}
+                                  src={groupData ?.GroupImage || defaultguser}
                                 />
-                                {groupData?.IsGroupAdmin && (
+                                {groupData ?.IsGroupAdmin && (
                                   <Tooltip placement="top" title="Change Photo">
                                     <a
                                       className="img-camera"
@@ -713,9 +713,9 @@ class Group extends Component {
                   <List itemLayout="horizontal">{adminsData}</List>
                 </div>
               </CommonModal>
-              <div className="right-statistic group-right mt-12 mx-12">
+              <div className="right-statistic group-right mt-16 mr-12">
                 {groupData.Members > 0 && (
-                  <span className="text-center mt-4 mr-8">
+                  <span className="text-center mt-4 mr-16">
                     <span className="f-20 mt-4 fw-400">
                       {groupData.Members}
                     </span>{" "}
@@ -750,7 +750,7 @@ class Group extends Component {
               </TabPane>
               <TabPane tab="Posts" key="1">
                 <Row gutter={16}>
-                  {groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                  {groupData ?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                     <Affix offsetTop={86}>
                       <Tags />
                       <PrivateInvite />
@@ -758,25 +758,25 @@ class Group extends Component {
                   </Col>
                   }
                   {
-                    groupData?.IsGroupMember && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                    groupData ?.IsGroupMember && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                       <Affix offsetTop={86}>
-                      <Tags />
-                      <Invite />
+                        <Tags />
+                        <Invite />
                       </Affix>
                     </Col>
                   }
                   {
-                    !groupData?.IsGroupMember && !groupData?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                    !groupData ?.IsGroupMember && !groupData ?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                       <Affix offsetTop={86}>
-                      <Tags />
-                      <Invite />
+                        <Tags />
+                        <Invite />
                       </Affix>
                     </Col>
                   }
-                  <Col xs={24} sm={groupData?.IsGroupAdmin ? 16 : 16} md={groupData?.IsGroupAdmin ? 16 : 16} lg={groupData?.IsGroupAdmin ? 16 : 16} xl={groupData?.IsGroupAdmin ? 16 : 16}>
-                    {groupData?.GroupId && tabkey == "1" && (
+                  <Col xs={24} sm={groupData ?.IsGroupAdmin ? 16 : 16} md={groupData ?.IsGroupAdmin ? 16 : 16} lg={groupData ?.IsGroupAdmin ? 16 : 16} xl={groupData ?.IsGroupAdmin ? 16 : 16}>
+                    {groupData ?.GroupId && tabkey == "1" && (
                       <Postings
-                        sharebox={groupData?.IsGroupMember || groupData?.IsGroupAdmin}
+                        sharebox={groupData ?.IsGroupMember || groupData ?.IsGroupAdmin}
                         friendsSuggestions={false}
                         postingsType="group"
                         groupData={groupData}
@@ -794,10 +794,10 @@ class Group extends Component {
               </TabPane>
             </Tabs>
           </Col>
-          <Col xs={24} sm={8} md={8} lg={6} xl={6}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
             <Groups />
             <Affix offsetTop={86}>
-            <Ads />
+              <Ads />
             </Affix>
           </Col>
         </Row>
