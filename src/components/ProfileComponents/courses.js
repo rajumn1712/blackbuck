@@ -108,21 +108,21 @@ class Courses extends Component {
                 <List.Item.Meta
                   avatar={<Avatar src={item.image} />}
                   title={
-                    <div className="d-flex align-items-center">
-                      {!this.props.IsHideAction ? <Link to="/commingsoon" className="post-title">{item.name}</Link>: <span className="overflow-text">{item.name}</span>}
+                    <div className="d-flex align-items-center mr-16">
+                      {!this.props.IsHideAction ? <Link to="/commingsoon" title={item.name} className="text-primary text-overflow">{item.name}</Link>: <span className="overflow-text">{item.name}</span>}
                       
                     </div>
                   }
                   description={
-                    <div>
+                    <div className="f-12 text-secondary">
                       {item.members && (
-                        <span style={{ color: "var(--textprimary)" }}>
+                        <span>
                           {item.members}
                         </span>
                       )}{" "}
                       Members |{" "}
                       {item.posts && (
-                        <span style={{ color: "var(--textprimary)" }}>
+                        <span>
                           {item.posts}
                         </span>
                       )}{" "}

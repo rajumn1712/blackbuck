@@ -72,9 +72,8 @@ class HeaderComponent extends React.Component {
             const friendRequests = await fetchFriendRequests(id);
             if (friendRequests.ok) {
                 const notifications = <div className="notification-dropdown">
-                    <div className="noti-dropdown-header p-12">
+                    <div className="noti-dropdown-header p-12 text-left">
                         <h3>Notifications</h3>
-                        {/* <Link to="/notifications" >View all</Link> */}
                     </div>
                     <Divider className="my-0" />
                     <div className="notification-container">

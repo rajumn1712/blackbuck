@@ -278,7 +278,7 @@ class Groups extends Component {
                   <List.Item.Meta
                     avatar={<Avatar src={item.image || defaultUser} />}
                     title={
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center mr-16">
                         <span className="overflow-text" title={item.name}>
                           {item.name}
                           {item.type == "Private" && (
