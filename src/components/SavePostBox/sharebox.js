@@ -634,26 +634,14 @@ class ShareBox extends Component {
     );
   }
 
-  setFieldValue(value, type) {
-    let { collegeLu, groupLu, CollgeName, GroupName } = this.state;
-    let Object;
+  setFieldValue(value) {
+    let { groupLu } = this.state;
     let GroupObject;
-    if (type) {
-      Object = collegeLu.filter(item => item.CollegeId == value)
-      this.postObject.CollegeId = Object[0]?.CollegeId;
-      this.postObject.CollegeName = Object[0]?.CollegeName;
-      CollgeName = Object[0]?.CollegeId;
-      this.setState({ ...this.state, CollgeName });
-    }
-    else {
-      GroupObject = groupLu.filter(item => item.id == value)
-      this.postObject.Group.GroupImage = GroupObject[0]?.image;
-      this.postObject.Group.GroupName = GroupObject[0]?.name;
-      this.postObject.Group.GroupId = GroupObject[0]?.id;
-      GroupName = value;
-      this.setState({ ...this.state, GroupName });
-    }
-
+    GroupObject = groupLu.filter(item => item.id == value)
+    this.postObject.Group.GroupImage = GroupObject[0]?.image;
+    this.postObject.Group.GroupName = GroupObject[0]?.name;
+    this.postObject.Group.GroupId = GroupObject[0]?.id;
+    this.setState({ ...this.state, GroupName: value });
   }
   renderSelectCollegeItem = (item) => {
     return <div>
@@ -808,7 +796,7 @@ class ShareBox extends Component {
                 );
               })}
             </Select></div>}
-          {ddlValue == "College" && <div className="mb-24 custom-fields">
+          {/* {ddlValue == "College" && <div className="mb-24 custom-fields">
             <Select
               defaultValue=" "
               name="College"
@@ -826,7 +814,7 @@ class ShareBox extends Component {
                   </Option>
                 );
               })}
-            </Select></div>}
+            </Select></div>} */}
           <div className="upload-image">
             {this.renderUploadType(modal)}
             <form>
