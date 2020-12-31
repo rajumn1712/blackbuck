@@ -97,7 +97,9 @@ class HeaderComponent extends React.Component {
                         {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
                     </div>
                     <Divider className="my-0" />
-                    <a className="f-16 semibold text-primary p-12 d-block button-hover">View all</a>
+                    <div className="p-8 pt-4">
+                    <a className="f-16 semibold text-primary p-8 d-block button-hover">View all</a>
+                    </div>
                     
                 </div>;
                 this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })

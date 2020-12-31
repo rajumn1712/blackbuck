@@ -204,7 +204,7 @@
     border-radius: 0.8rem !important;
     background: var(--white);
     box-shadow: var(--boxshadow);
-    min-width: 360px !important;
+    min-width: 320px !important;
     margin-right: 12px;
     max-height: calc(100vh - 65px);
 }
@@ -306,7 +306,7 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    max-width: 360px;
+    max-width: 320px;
 }
 /* .notification-list .notification-image .ant-avatar-image{
     width: 45px;
