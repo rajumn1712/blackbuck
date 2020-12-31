@@ -87,21 +87,19 @@ class HeaderComponent extends React.Component {
                                 <span><Link to="/profile/IsProfileFriendsTab">Respond</Link></span>
                             </div> */}
                             <div className="notification-description text-left">
-                                <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
-                                <div className="count-link">2 weeksago</div>
-                            <div className="mb-4">6 Mutual friends</div>
+                                <p className="mb-4"><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
+                                <p className="textsecondary f-14 mb-8">2 weeksago</p>
                             <div>
-                                <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Confirm</Button>
-                                <Button type="default" className="addContent px-16" size="small">Delete</Button>
+                                <a className="f-14 mr-16 semibold">Accept</a>
+                                <a className="f-14 semibold text-red">Remove</a>
                             </div>
                             </div>
                         </div>)}
                         {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
                     </div>
                     <Divider className="my-0" />
-                    <div className="pt-4 pb-8">
-                    <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>View all</Button>
-                    </div>
+                    <a className="f-16 semibold text-primary p-12 d-block">View all</a>
+                    
                 </div>;
                 this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })
 

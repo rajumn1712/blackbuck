@@ -1604,7 +1604,7 @@ textarea {
   border-radius: 50% !important;
   border: 1px solid var(--line);
 }
-.notification-image .ant-avatar{width: 40px !important;height: 40px !important;margin-right: 12px;}
+.notification-image .ant-avatar{width: 50px !important;height: 50px !important;margin-right: 12px;}
 .validateerror {
   color: red;
   text-align: right;

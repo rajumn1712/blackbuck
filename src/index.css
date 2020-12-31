@@ -9,6 +9,7 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .semibold{font-weight: 500 !important;}
 .text-primary{color: var(--textprimary) !important;}
 .text-secondary{color: var(--textsecondary) !important;}
+.text-red{color: var(--red) !important;}
 .text-white{color: var(--white) !important;}
 .bold{font-weight: 600 !important;}
 .cursor-pointer{cursor: pointer !important;}
