@@ -16,6 +16,7 @@ import '../index.css';
 import { connect } from 'react-redux';
 import { fetchFriendRequests, fetchUserFriends } from '../shared/api/apiServer';
 import ChatSystem from '../utils/chat-system';
+import Notifications from '../components/notification';
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
@@ -68,45 +69,21 @@ class HeaderComponent extends React.Component {
         if (prevProps.search_value != this.props.search_value) { this.setState({ ...this.state, search_value: this.props.search_value }); }
     }
     async handleNotifications(id) {
-        if (id) {
-            const friendRequests = await fetchFriendRequests(id);
-            if (friendRequests.ok) {
                 const notifications = <div className="notification-dropdown">
                     <div className="noti-dropdown-header p-12 text-left">
                         <h3>Notifications</h3>
                     </div>
                     <Divider className="my-0" />
                     <div className="notification-container">
-                        {friendRequests.data?.map((friend, indx) => <div key={indx} className="notification-list read p-12">
-                            <div className="notification-image">
-                                <Avatar src={friend.Image || defaultUser} />
-                            </div>
-                            {/* <div className="notification-description text-left">
-                                <p><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
-                                <span><Link to="/profile/IsProfileFriendsTab">Respond</Link></span>
-                            </div> */}
-                            <div className="notification-description text-left">
-                                <p className="mb-4"><b>{friend.Firstname} {friend.Lastname}</b> Sent you a friend request</p>
-                                <p className="textsecondary f-14 mb-8">2 weeksago</p>
-                            <div>
-                                <a className="f-14 mr-16 semibold text-primary">Accept</a>
-                                <span className="f-14 semibold text-red">Remove</span>
-                            </div>
-                            </div>
-                        </div>)}
-                        {friendRequests.data.length === 0 && <p style={{ alignItems: "center", fontWeight: "bold" }}>You're all set</p>}
+                    <Notifications onRef={notification=>this.notification=notification}/>
                     </div>
                     <Divider className="my-0" />
-                    <div className="p-8 pt-4">
+                   {(this.notification?.state?.data?.length>0) && <div className="p-8 pt-4">
                     <a className="f-16 semibold text-primary p-8 d-block button-hover">View all</a>
-                    </div>
+                    </div>}
                     
                 </div>;
-                this.setState({ ...this.state, notifications, notificationsCount: friendRequests.data?.length })
-
-            }
-
-        }
+                this.setState({ ...this.state, notifications, notificationsCount: this.notification?.state?.data?.length })
     }
     onClose = () => {
         this.setState({
