@@ -94,9 +94,8 @@ class CourseContent extends Component {
                                                 itemLayout="horizontal"
                                                 dataSource={data}
                                                 renderItem={item => (
-                                                    <List.Item>
-                                                        <List.Item.Meta
-                                                            avatar={<Checkbox onChange={onChange}></Checkbox>}
+                                                    <List.Item extra={<span className="left-menu camera-icon"></span>}>
+                                                        <List.Item.Meta 
                                                             title={<a href="https://ant.design">{item.title}</a>}
                                                             description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
                                                         />

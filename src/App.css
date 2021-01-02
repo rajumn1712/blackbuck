@@ -1928,6 +1928,7 @@ textarea {
 .notifications .ant-list-item.read {
   background-color: var(--white);
 }
+.noti-dropdown .ant-list-item.read{display: block;}
 .rc-virtual-list .ant-avatar-image ,.onboard-process .ant-avatar-image{
   border-radius: 50% !important;
 }

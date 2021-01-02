@@ -150,7 +150,7 @@ class Notifications extends Component {
                     />
                     <div>
                         {(item.Type == "Invitations" || item.Type == "Friends") && <a className="f-14 mr-16 semibold text-primary" onClick={() => this.handleAccept(item)}>Accept</a>}
-                        {item.Type == "Invitations" && item.Type == "Friends" && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
+                        {item.Type == "Invitations" || item.Type == "Friends" && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
                     </div>
                 </List.Item>
 
@@ -162,7 +162,7 @@ class Notifications extends Component {
 
     render() {
         return <>
-            <Row gutter={16}>
+            <Row className="noti-dropdown" gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {this.renderNotifications()}
 
