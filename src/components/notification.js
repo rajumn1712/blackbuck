@@ -162,12 +162,20 @@ class Notifications extends Component {
 
     render() {
         return <>
-            <Row className="noti-dropdown" gutter={16}>
+           {this.props.type && <Row className="noti-dropdown" gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {this.renderNotifications()}
 
                 </Col>
             </Row>
+    }
+            {!this.props.type && <Row  gutter={16}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    {this.renderNotifications()}
+
+                </Col>
+            </Row>
+    }
         </>
     }
 }

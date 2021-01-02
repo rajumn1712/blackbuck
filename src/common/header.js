@@ -75,7 +75,7 @@ class HeaderComponent extends React.Component {
                     </div>
                     <Divider className="my-0" />
                     <div className="notification-container">
-                    <Notifications onRef={notification=>this.notification=notification}/>
+                    <Notifications onRef={notification=>this.notification=notification} type="ddl"/>
                     </div>
                     <Divider className="my-0" />
                    {(this.notification?.state?.data?.length>10) && <div className="p-8 pt-4">
@@ -115,8 +115,14 @@ class HeaderComponent extends React.Component {
                 <Link to="/support"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
                 </Link>
             </Menu.Item>
+            { this.props?.profile?.Role?.is &&
+                <Menu.Item key="4">
+                    <Link to="/lms"><span className="icons globe-icon" /><span className="pl-16">My Dashboard</span>
+                    </Link>
+                </Menu.Item>
+            }
             <Menu.Divider />
-            <Menu.Item key="4" onClick={logout}>
+            <Menu.Item key="5" onClick={logout}>
                 <a ><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
             </Menu.Item>
         </Menu >)
