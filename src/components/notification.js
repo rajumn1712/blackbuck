@@ -149,7 +149,7 @@ class Notifications extends Component {
 
                     />
                     <div className="noti-button">
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <a className="f-14 mr-16 semibold text-primary" onClick={() => this.handleAccept(item)}>Accept</a>}
+                        {(item.Type == "Invitations" || item.Type == "Friends") && <a className="f-14 mr-16 semibold text-primarygreen" onClick={() => this.handleAccept(item)}>Accept</a>}
                         {item.Type == "Invitations" || item.Type == "Friends" && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
                     </div>
                 </List.Item>
