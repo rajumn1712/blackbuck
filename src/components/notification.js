@@ -124,8 +124,8 @@ class Notifications extends Component {
     getTitle = (item) => {
         const messages = {
             Invitations: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> sent you a invitation to join in {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</>,
-            Friends: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> sent you a friend request </>,
-            Comment: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </>
+            Friends: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span> </>,
+            Comment: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post  <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </>
         }
         return messages[item.Type]
     }
@@ -148,7 +148,7 @@ class Notifications extends Component {
                         }
 
                     />
-                    <div>
+                    <div className="noti-button">
                         {(item.Type == "Invitations" || item.Type == "Friends") && <a className="f-14 mr-16 semibold text-primary" onClick={() => this.handleAccept(item)}>Accept</a>}
                         {item.Type == "Invitations" || item.Type == "Friends" && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
                     </div>
