@@ -123,9 +123,9 @@ class Notifications extends Component {
     }
     getTitle = (item) => {
         const messages = {
-            Invitations: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> sent you a invitation to join in {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</>,
-            Friends: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span> </>,
-            Comment: <><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post  <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </>
+            Invitations: <div><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> sent you a invitation to join in {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
+            Friends: <div><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span> </div>,
+            Comment: <div><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post  <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </div>
         }
         return messages[item.Type]
     }
@@ -162,8 +162,8 @@ class Notifications extends Component {
 
     render() {
         return <>
-           {this.props.type && <Row className="noti-dropdown" gutter={16}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+           {this.props.type && <Row className="noti-dropdown m-0" gutter={16}>
+                <Col className="noti-dropdown p-0" xs={24} sm={24} md={24} lg={24} xl={24}>
                     {this.renderNotifications()}
 
                 </Col>
