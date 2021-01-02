@@ -7,9 +7,11 @@ import '../App.css';
 const data = [
     {
       title: 'Ant Design Title 1',
+      description: 'df',
     },
     {
       title: 'Ant Design Title 2',
+      description: 'df',
     },
 ];
 class QandA extends Component {
@@ -21,13 +23,15 @@ class QandA extends Component {
             itemLayout="horizontal"
             dataSource={data}
             renderItem={item => (
-              <List.Item  actions={[ <a key="list-loadmore-more">more</a>]} >
+              <List.Item  actions={[ <a className="f-12" key="list-loadmore-more">12 <span className="grp-type-icon vedio-play"></span></a>]} >
                 <List.Item.Meta
                   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                   title={<a href="https://ant.design">{item.title}</a>}
-                  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  description={<div>{item.description}</div>}
                 />
+                
               </List.Item>
+              
             )}
           />
           </div>

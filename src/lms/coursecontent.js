@@ -40,7 +40,7 @@ class CourseContent extends Component {
         return (
             <div className="post-preview-box post-card course-card" >
                 <Row gutter={24} className="py-16">
-                    <Col className="p-0" xs={24} sm={16} md={16} lg={17} >
+                    <Col className="" xs={24} sm={16} md={16} lg={17} >
                         <div className="preview-image">
                             <Carousel>
                                 <div className="lms-video">
