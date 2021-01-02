@@ -124,7 +124,7 @@ class Notifications extends Component {
     getTitle = (item) => {
         const messages = {
             Invitations: <div><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> sent you a invitation to join in {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
-            Friends: <div><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span> </div>,
+            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span> </div>,
             Comment: <div><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post  <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </div>
         }
         return messages[item.Type]
