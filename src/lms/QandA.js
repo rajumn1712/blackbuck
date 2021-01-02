@@ -33,11 +33,12 @@ class QandA extends Component {
                   title={<a>{item.title}</a>}
                   description={<div>{item.description}</div>}
                 />
-                
+               
               </List.Item>
               
             )}
           />
+           
           </div>
             )
             }
