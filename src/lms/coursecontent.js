@@ -7,6 +7,8 @@ import '../index.css';
 import '../App.css';
 import { Checkbox } from 'antd';
 import video from '../styles/images/video.mp4';
+import QandA from './QandA';
+import OverView from './overview';
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
 const data = [
@@ -53,14 +55,16 @@ class CourseContent extends Component {
                             <TabPane tab="Overview" key="1">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-
+                                        <OverView />
                                     </Col>
                                 </Row>
                             </TabPane>
                             <TabPane tab="Q&A" key="2">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-
+                                    <div>
+                                        <QandA />
+                                    </div>
                                     </Col>
                                 </Row>
                             </TabPane>
