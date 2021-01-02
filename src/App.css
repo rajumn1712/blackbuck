@@ -2019,4 +2019,4 @@ textarea {
 .button-hover:hover{background: rgba(0, 0, 0, 0.05);}
 .lms-video video:focus{outline: none;}
 .noti-dropdown .notifications{border: 0 !important;}
-.noti-text{width: 248px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.noti-dropdown .noti-text{width: 248px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
