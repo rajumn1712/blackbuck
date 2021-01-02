@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Tabs } from 'antd'
+import { Card, List, Row, Col, Carousel, Collapse, Avatar, Tabs,Divider } from 'antd'
 import { Link } from 'react-router-dom';
 import { CaretRightOutlined } from '@ant-design/icons';
 import '../index.css';
@@ -18,15 +18,19 @@ class QandA extends Component {
 
     render(){
         return (
-            <div>
+            <div className="py-16 fw-500">
+                <div className="justify-content-between d-flex">
+                    <div className="f-16">344 questions in this course</div><div>Add a new Question</div>
+                </div>
+                <Divider />
             <List
             itemLayout="horizontal"
             dataSource={data}
             renderItem={item => (
-              <List.Item  actions={[ <a className="f-12" key="list-loadmore-more">12 <span className="grp-type-icon vedio-play"></span></a>]} >
+              <List.Item  actions={[ <a className="f-12" key="list-loadmore-more">12 <span className="grp-type-icon reply"></span></a>]} >
                 <List.Item.Meta
                   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title={<a href="https://ant.design">{item.title}</a>}
+                  title={<a>{item.title}</a>}
                   description={<div>{item.description}</div>}
                 />
                 

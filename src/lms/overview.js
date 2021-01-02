@@ -1,38 +1,45 @@
 import React, { Component } from 'react';
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Tabs } from 'antd'
+import { Card, List, Row, Col, Carousel, Collapse, Avatar, Tabs, Divider, Typography } from 'antd'
 import { Link } from 'react-router-dom';
 import { CaretRightOutlined } from '@ant-design/icons';
 import '../index.css';
 import '../App.css';
-const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-];
+const { Title } = Typography;
+// const data = [
+//     {
+//       title: 'About this Course',
+//     },
+// ];
 class OverView extends Component {
 
-    render(){
+    render() {
         return (
-            <div>
-           <List
+            <div className="py-16">
+                {/* <List
             itemLayout="horizontal"
             dataSource={data}
             renderItem={item => (
-              <List.Item  actions={[ <a key="list-loadmore-more">more</a>]} >
+              <List.Item>
                 <List.Item.Meta
                   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title={<a href="https://ant.design">{item.title}</a>}
+                  title={<a>{item.title}</a>}
                   description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                 />
+                
               </List.Item>
+              
             )}
-          />
-          </div>
-            )
-            }
+          /> */}
+                <Title level={4}>About this Course</Title>
+                <p>In the process of internal desktop applications development, many different design specs and implementations would be involved, which might cause designers and developers difficulties </p>
+
+                <Divider />
+                <div>
+
+                </div>
+            </div>
+        )
     }
-    export default OverView;
+}
+export default OverView;
 

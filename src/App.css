@@ -820,6 +820,8 @@
   font-weight: 400 !important;
   color: var(--black);
 }
+.fw-500 {
+  font-weight: 500 !important;}
 .fw-600 {
   font-weight: 600 !important;
   color: var(--black);
@@ -2005,6 +2007,8 @@ textarea {
 .lms-video video{width: 100%;height: 100%;border-radius: 0.8rem 0.8rem 0 0;display: block;}
 .grp-type-icon.vedio-play{background-position:-240px -396px;}
 .grp-type-icon.lessons{background-position:-260px -397px;}
+.grp-type-icon.reply{background-position:-278px -397px;}
+.grp-type-icon.reply-message{background-position:-297px -397px;}
 .invite-card .ant-btn:hover{color: var(--white) !important ;}
 .card-height{height: 384px;}
 .flot-left .ant-collapse-extra{float: left !important;}
