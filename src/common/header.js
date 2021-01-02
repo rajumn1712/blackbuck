@@ -79,7 +79,7 @@ class HeaderComponent extends React.Component {
                     </div>
                     <Divider className="my-0" />
                    {(this.notification?.state?.data?.length>0) && <div className="p-8 pt-4">
-                    <a className="f-16 semibold text-primary p-8 d-block button-hover">View all</a>
+                    <Link className="f-16 semibold text-primary p-8 d-block button-hover" to="/profile/IsProfileNotificationsTab">View all</Link>
                     </div>}
                     
                 </div>;
