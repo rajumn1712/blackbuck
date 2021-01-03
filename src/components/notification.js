@@ -8,9 +8,10 @@ import {
     acceptFrienRequest,
     acceptDeclineInvitations
 } from "../shared/api/apiServer";
-import notify from '../components/notification';
+import notify from '../shared/components/notification';
 import { Link, withRouter } from 'react-router-dom';
 import { profileSuccess } from "../reducers/auth";
+import defaultUser from '../styles/images/defaultuser.jpg';
 const { TabPane } = Tabs;
 
 class Notifications extends Component {
@@ -142,7 +143,7 @@ class Notifications extends Component {
                     className="read"
                 >
                     <List.Item.Meta
-                        avatar={<Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}><Avatar src={item.Image} /></Link>}
+                        avatar={<Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}><Avatar src={item.Image || defaultUser} /></Link>}
                         title={<>{this.getTitle(item)}</>}
                         description={item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''
                         }
@@ -150,7 +151,7 @@ class Notifications extends Component {
                     />
                     <div className="noti-button">
                         {(item.Type == "Invitations" || item.Type == "Friends") && <a className="f-14 mr-16 semibold text-primarygreen" onClick={() => this.handleAccept(item)}>Accept</a>}
-                        {item.Type == "Invitations" || item.Type == "Friends" && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
+                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
                     </div>
                 </List.Item>
 

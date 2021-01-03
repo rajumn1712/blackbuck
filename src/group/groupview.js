@@ -93,6 +93,7 @@ class Group extends Component {
       UserName: this.props ?.profile.FirstName,
       FriendId: item.UserId,
       Image: this.props ?.profile.ProfilePic,
+      CreatedDate:new Date(),
     };
     let { saveObj } = this.state;
     item.IsChecked = e.target ? e.target.checked : e;
@@ -224,7 +225,7 @@ class Group extends Component {
       this.props.profile.Groups =
         this.props.profile.Groups >= 1 ? this.props.profile.Groups - 1 : 0;
       this.props.upadateProfile(this.props.profile);
-      this.props.history.push("/group");
+      this.props.history.push("/profile/IsProfileGroupsTab");
     } else {
       notify({
         message: "Error",
@@ -245,7 +246,7 @@ class Group extends Component {
       this.props.profile.Groups =
         this.props.profile.Groups >= 1 ? this.props.profile.Groups - 1 : 0;
       this.props.upadateProfile(this.props.profile);
-      this.props.history.push("/group");
+      this.props.history.push("/profile/IsProfileGroupsTab");
     } else {
       notify({
         message: "Error",

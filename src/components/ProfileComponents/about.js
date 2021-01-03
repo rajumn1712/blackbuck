@@ -157,12 +157,12 @@ class About extends Component {
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-top: 0;margin-bottom: 0.5em;">Contact</h3>
                             <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.PhoneNumber || ''}</p>
                             <p style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">${profileData.Email}</p>
-                            ${profileData.Address.map((displayaddress, index) => {
+                            ${profileData.Address?.map((displayaddress, index) => {
                               delete displayaddress.AddressId;
                               return (
                                 `<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
                                   ${Object.keys(displayaddress)
-                                    .map((k) => {
+                                    ?.map((k) => {
                                       return displayaddress[k];
                                     })
                                     .join(",")}
@@ -176,7 +176,7 @@ class About extends Component {
                     <tr>
                         <td >
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Certifications</h3>
-                            ${profileData.Internships.map((internship, index) => {
+                            ${profileData.Internships?.map((internship, index) => {
                               return (
                                 `<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
                                   ${internship.CompanyName}-${internship.Duration}
@@ -188,7 +188,7 @@ class About extends Component {
                         <td>
                             <h3  style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Hobbies</h3>
                             <ul style="list-style-type: none;padding-left: 0;">
-                            ${profileData.Hobbies.map((hobbie, index) => {
+                            ${profileData.Hobbies?.map((hobbie, index) => {
                               return `<li key={index} style="color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;padding:0">${hobbie}</li>`
                             })}
                             </ul>
@@ -213,7 +213,7 @@ class About extends Component {
                         <td>
                             <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#000000b3;margin-bottom: 0.5em;">Education</h3>
                             <table>
-                            ${profileData.Education.map((education, index) => {
+                            ${profileData.Education?.map((education, index) => {
                               return (
                                 `<tr key={index}>
                                     <td>

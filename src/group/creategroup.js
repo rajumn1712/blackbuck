@@ -101,7 +101,7 @@ class CreateGroup extends Component {
         let { groupObject } = this.state;
         let InvitesArray = [];
         values.Invitations.forEach(item => {
-            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item, Image: this.props?.profile.ProfilePic, })
+            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item, Image: this.props?.profile.ProfilePic, CreatedDate:new Date()})
         });
         return {
             GroupName: values.GroupName,
