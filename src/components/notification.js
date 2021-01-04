@@ -168,9 +168,9 @@ class Notifications extends Component {
     }
     getTitle = (item) => {
         const messages = {
-            Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> sent you a invitation to join in {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
-            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span></div>,
-            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> commented on your post  <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </div>
+            Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
+            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">sent you a friend request</span></div>,
+            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">commented on your post</span>  <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </div>
         }
         return messages[item.Type]
     }
@@ -189,8 +189,13 @@ class Notifications extends Component {
                     <List.Item.Meta
                         avatar={<Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}><Avatar src={item.Image || defaultUser} /></Link>}
                         title={<>{this.getTitle(item)}</>}
-                        description={item.CreatedDate ? <Moment fromNow>{item.CreatedDate}</Moment> : ''
-                        }
+                        description={ <div>{item.CreatedDate && <div> <Moment fromNow>{item.CreatedDate}</Moment></div>}
+                       
+                        <div className="noti-button">
+                        {(item.Type == "Invitations" || item.Type == "Friends") && <a className="f-14 mr-16 semibold text-primarygreen" onClick={() => this.handleAccept(item)}>Accept</a>}
+                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
+                        </div>
+                    </div>}
 
                     />
                     <div className="noti-button">
@@ -215,7 +220,7 @@ class Notifications extends Component {
             </Row>
     }
             {!this.props.type && <Row  gutter={16}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col className="notification-full" xs={24} sm={24} md={24} lg={24} xl={24}>
                     {this.renderNotifications()}
 
                 </Col>

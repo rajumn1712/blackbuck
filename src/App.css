@@ -2021,4 +2021,6 @@ textarea {
 .button-hover:hover{background: rgba(0, 0, 0, 0.05);}
 .lms-video video:focus{outline: none;}
 .noti-dropdown .notifications{border: 0 !important;}
-.noti-dropdown .noti-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.noti-dropdown .noti-text{white-space: normal;overflow: break-word;text-align: left;}
+.noti-dropdown .ant-list-item-meta-description{text-align: left;}
+/* .notification-full .ant-list-item-meta-content{display: flex; justify-content: space-between;} */
