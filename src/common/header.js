@@ -88,7 +88,7 @@ class HeaderComponent extends React.Component {
 
     }
     getNotificationsCount = async (id) => {
-        const notificationCount = await fetchNotificationCount(id ? id : (this.props?.profile.Id));
+        const notificationCount = await fetchNotificationCount(id ? id : (this.props?.profile?.Id));
         if (notificationCount.ok) {
             this.setState({ ...this.state, notificationsCount: notificationCount.data[0].Count })
         }
