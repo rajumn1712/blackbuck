@@ -84,7 +84,7 @@ class Notifications extends Component {
             acceptDeclineInvitations(object).then(res => {
                 this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
                 this.props.updateProfile(this.props.profile);
-                this.getAllNotifications();
+                this.updateNotifications(friend);
                 notify({ placement: 'bottomLeft', message: 'Invite', description: `Request accepted successfully.` });
             });
         }
@@ -105,7 +105,7 @@ class Notifications extends Component {
                 obj
             ).then(() => {
                 message.success("Action Success");
-                this.getAllNotifications();
+                this.updateNotifications(friend);
                 this.props.profile.Friends = this.props.profile.Friends
                     ? this.props.profile.Friends + 1
                     : 1;
@@ -128,7 +128,8 @@ class Notifications extends Component {
                 }
             }
             acceptDeclineInvitations(object).then(res => {
-                this.getAllNotifications();
+                this.updateNotifications(friend);
+                this.props.updateProfile(this.props.profile);
                 notify({ placement: 'bottomLeft', message: 'Invite', description: `Request declined successfully.` });
             });
         }
@@ -147,11 +148,17 @@ class Notifications extends Component {
                 "decline",
                 obj
             ).then(() => {
-                this.getAllNotifications();
+                this.updateNotifications(friend);
+                this.props.updateProfile(this.props.profile);
                 message.success("Action Success");
             });
         }
     };
+    updateNotifications = (item) => {
+        let { typeData } = this.state;
+        typeData = typeData.filter(obj => obj != item);
+        this.setState({ ...this.state, typeData });
+    }
     changeTab = (index) => {
         let type = index == "1" ? "Invitations" : (index == "2" ? "Friends" : "Comment");
         let { data, typeData } = this.state;

@@ -169,6 +169,9 @@ const getNotifications = (userId,take,skip) => {
 const unFriend = (user_id, friend_id) => {
   return apiClient.get(PROFILE_API + `deleteFriend/${user_id}/${friend_id}`)
 }
+const fetchNotificationCount = (userId) => {
+  return apiClient.get(PROFILE_API + `getNotificationsCount/${userId}`);
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -215,5 +218,6 @@ export {
   saveAdminUsers,
   fetchUserColleges,
   getNotifications,
-  unFriend
+  unFriend,
+  fetchNotificationCount
 };

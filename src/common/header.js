@@ -14,7 +14,7 @@ import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
 import { connect } from 'react-redux';
-import { fetchFriendRequests, fetchUserFriends } from '../shared/api/apiServer';
+import { fetchFriendRequests, fetchUserFriends, fetchNotificationCount} from '../shared/api/apiServer';
 import ChatSystem from '../utils/chat-system';
 import Notifications from '../components/notification';
 const { Meta } = Card;
@@ -83,7 +83,15 @@ class HeaderComponent extends React.Component {
                     </div>}
                     
                 </div>;
-                this.setState({ ...this.state, notifications, notificationsCount: this.notification?.state?.data?.length })
+        this.setState({ ...this.state, notifications })
+        this.getNotificationsCount(id)
+
+    }
+    getNotificationsCount = async (id) => {
+        const notificationCount = await fetchNotificationCount(id ? id : (this.props?.profile.Id));
+        if (notificationCount.ok) {
+            this.setState({ ...this.state, notificationsCount: notificationCount.data[0].Count })
+        }
     }
     onClose = () => {
         this.setState({
