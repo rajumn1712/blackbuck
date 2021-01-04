@@ -18,17 +18,54 @@ class Notifications extends Component {
     state = {
         data: [],
         typeData: [],
-        loading: true
+        loading: true,
+        loadMore: true,
+        page: 1,
+        pageSize: 20,
     };
 
     componentDidMount() {
         if (this.props.onRef)
             this.props.onRef(this)
         this.getAllNotifications();
+        window.addEventListener("scroll", this.handleScroll);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
+    handleScroll = () => {
+        const windowHeight =
+            "innerHeight" in window
+                ? window.innerHeight
+                : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+        );
+        const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+        if (windowBottom >= docHeight) {
+            this.loadMore();
+        } else {
+        }
+    };
+    loadMore(e) {
+        if (this.state.loadMore && !this.state.loading) {
+            let { page } = this.state;
+            page += 1;
+            this.setState({ ...this.state, page, loading: true }, () => {
+                this.getAllNotifications();
+            });
+        }
     }
     getAllNotifications = () => {
         getNotifications(this.props?.profile.Id).then(res => {
-            this.setState({ ...this.state, data: res.data, loading: false }, () => { this.changeTab("1") });
+            let {data}=this.state;
+            this.setState({ ...this.state, data: data.concat(res.data), loading: false ,loadMore: res.data.length === this.state.pageSize}, () => { this.changeTab("1") });
         });
     }
     handleAccept = async (friend) => {
