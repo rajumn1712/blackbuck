@@ -1932,7 +1932,6 @@ textarea {
 .rc-virtual-list .ant-avatar-image ,.onboard-process .ant-avatar-image{
   border-radius: 50% !important;
 }
-.noti-button{text-align: left;margin-left: 49px;}
 .frnds-scroll .ant-avatar{width: 40px !important;height: 40px !important;;}
 .anticon {
   color: #9b9b9b !important;
@@ -2022,4 +2021,4 @@ textarea {
 .button-hover:hover{background: rgba(0, 0, 0, 0.05);}
 .lms-video video:focus{outline: none;}
 .noti-dropdown .notifications{border: 0 !important;}
-.noti-dropdown .noti-text{width: 248px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.noti-dropdown .noti-text{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
