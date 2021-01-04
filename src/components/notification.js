@@ -21,7 +21,7 @@ class Notifications extends Component {
         loading: true,
         loadMore: true,
         page: 1,
-        pageSize: 20,
+        pageSize: this.props.type?20:5,
     };
 
     componentDidMount() {
@@ -63,7 +63,7 @@ class Notifications extends Component {
         }
     }
     getAllNotifications = () => {
-        getNotifications(this.props?.profile.Id).then(res => {
+        getNotifications(this.props?.profile.Id,this.state.pageSize,(this.state.pageSize*this.state.page-this.state.pageSize)).then(res => {
             let {data}=this.state;
             this.setState({ ...this.state, data: data.concat(res.data), loading: false ,loadMore: res.data.length === this.state.pageSize}, () => { this.changeTab("1") });
         });

@@ -163,8 +163,8 @@ const fetchUserColleges = () => {
   return apiClient.get(FRIENDS_API + "getColleges");
 };
 
-const getNotifications = (userId) => {
-  return apiClient.get(PROFILE_API + `getNotifications/${userId}`);
+const getNotifications = (userId,take,skip) => {
+  return apiClient.get(PROFILE_API + `getNotifications/${userId}/${take}/${skip}`);
 };
 const unFriend = (user_id, friend_id) => {
   return apiClient.get(PROFILE_API + `deleteFriend/${user_id}/${friend_id}`)
