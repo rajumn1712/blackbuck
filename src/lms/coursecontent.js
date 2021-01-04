@@ -68,17 +68,17 @@ class CourseContent extends Component {
                                     </Col>
                                 </Row>
                             </TabPane>
-                            <TabPane tab="Comments" key="3">
+                            {/* <TabPane tab="Comments" key="3">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
 
                                     </Col>
                                 </Row>
-                            </TabPane>
+                            </TabPane> */}
                         </Tabs>
                     </Col>
                     <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
-                        <div className="custom-card height-scroll">
+                        <div className="custom-card">
                             <Card title="Course Content" bordered={false} >
 
                                 <Collapse
@@ -94,7 +94,7 @@ class CourseContent extends Component {
                                                 itemLayout="horizontal"
                                                 dataSource={data}
                                                 renderItem={item => (
-                                                    <List.Item extra={<span className="left-menu camera-icon"></span>}>
+                                                    <List.Item extra={<span className="icon playover-icon"></span>}>
                                                         <List.Item.Meta 
                                                             title={<a href="https://ant.design">{item.title}</a>}
                                                             description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
@@ -109,9 +109,8 @@ class CourseContent extends Component {
                                             itemLayout="horizontal"
                                             dataSource={data}
                                             renderItem={item => (
-                                                <List.Item>
+                                                <List.Item extra={<span className="icon play-icon"></span>}>
                                                     <List.Item.Meta
-                                                        avatar={<Checkbox onChange={onChange}></Checkbox>}
                                                         title={<a href="https://ant.design">{item.title}</a>}
                                                         description={<div className="f-12"><span className="grp-type-icon lessons"></span> {item.description}</div>}
                                                     />
@@ -124,9 +123,9 @@ class CourseContent extends Component {
                                             itemLayout="horizontal"
                                             dataSource={data}
                                             renderItem={item => (
-                                                <List.Item>
+                                                <List.Item extra={<span className="icon play-inprogress"></span>}>
                                                     <List.Item.Meta
-                                                        avatar={<Checkbox onChange={onChange}></Checkbox>}
+                                                        
                                                         title={<a href="https://ant.design">{item.title}</a>}
                                                         description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
                                                     />
@@ -139,9 +138,9 @@ class CourseContent extends Component {
                                             itemLayout="horizontal"
                                             dataSource={data}
                                             renderItem={item => (
-                                                <List.Item>
+                                                <List.Item extra={<span className="icon playover-icon"></span>}>
                                                     <List.Item.Meta
-                                                        avatar={<Checkbox onChange={onChange}></Checkbox>}
+                                                        
                                                         title={<a href="https://ant.design">{item.title}</a>}
                                                         description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
                                                     />

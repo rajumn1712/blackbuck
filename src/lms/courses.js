@@ -52,8 +52,8 @@ class Courses extends Component {
                                 </div>
                             </OwlCarousel>
                         </div>
-                        <div className="user-statistic">
-                            <div className="left-statistic">
+                        {/* <div className="user-statistic"> */}
+                            {/* <div className="left-statistic">
                                 <Statistic
                                     title="Total Courses"
                                     className="afterline"
@@ -64,12 +64,12 @@ class Courses extends Component {
                                     value='0'
                                 />
 
-                            </div>
+                            </div> */}
 
                             {/* <div className="bannercard-title">
                                 MY Courses 
                             </div> */}
-                            <Card className="user-banner">
+                            {/* <Card className="user-banner">
                                 <Meta
                                     avatar={
                                         <div className="img-container">
@@ -78,11 +78,11 @@ class Courses extends Component {
                                         </div>
                                     }
                                     title="MY Courses"
-                                //   description='sdfg'
+                                  description='sdfg'
                                 />
-                            </Card>
+                            </Card> */}
 
-                            <div className="right-statistic">
+                            {/* <div className="right-statistic">
                                 <Statistic
                                     title="Joined Courses"
                                     className="afterline"
@@ -92,8 +92,8 @@ class Courses extends Component {
                                     title="Favorites"
                                     value='0'
                                 />
-                            </div>
-                        </div>
+                            </div> */}
+                        {/* </div> */}
                     </Col>
                 </Row>
             </div>

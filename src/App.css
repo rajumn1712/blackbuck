@@ -2011,6 +2011,9 @@ textarea {
 .grp-type-icon.lessons{background-position:-260px -397px;}
 .grp-type-icon.reply{background-position:-278px -397px;}
 .grp-type-icon.reply-message{background-position:-297px -397px;}
+.icon.playover-icon{background-position:-592px -226px;}
+.icon.play-icon{background-position:-619px -226px;}
+.icon.play-inprogress{background-position:-647px -226px;}
 .invite-card .ant-btn:hover{color: var(--white) !important ;}
 .card-height{height: 384px;}
 .flot-left .ant-collapse-extra{float: left !important;}

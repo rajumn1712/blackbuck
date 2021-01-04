@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Card, List } from 'antd'
+import { Card, List, Row, Col, Progress } from 'antd'
 import { Link } from 'react-router-dom';
 import { fetchTags } from '../shared/api/apiServer';
 import CourseContent from '../lms/coursecontent'
+import SEO from '../styles/images/seo-marketing.png'
 import '../index.css';
 import '../App.css';
 const data = [
@@ -12,10 +13,28 @@ const data = [
     { title: 'This is panel header 4' },
     { title: 'This is panel header 5' }
 ];
+const { Meta } = Card;
 class CourseList extends Component {
     render() {
         return (
             <div className="custom-card tag-card">
+
+                <Card
+                    className="card-item card-height"
+                    cover={<img alt="photography" src={SEO} />}  >
+                    <Meta
+                        title="SEO & Digital Marketing"
+                        description={
+                            <div>
+                                <p>Unlock the secrets to growing your visibility on Google with professionals.</p>
+                                <div className="addon-info">
+                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                    <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
+                                </div>
+                                <div className="my-16 progres-bar"><Progress percent={30} /></div>
+                            </div>} />
+                </Card>
+
                 <Card title="Course List" bordered={false} >
                     <List
                         itemLayout="vertical"

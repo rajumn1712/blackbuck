@@ -144,8 +144,6 @@ transition-duration: 167ms;}
 .card-item .addon-info .icons{width: 20px;height: 20px;}
 .icons.videos {background-position: -85px -309px;}
 .icons.lessons {background-position:-116px -309px;}
-.card-item .card-item-button{width: 100%;color: var(--primary) !important;
-  font-weight: 500;font-size: var(--f-14) !important;
-  line-height: 1.42857 !important;}
-  .card-item .ant-card-actions li{margin: 0;}
-  .card-item .ant-card-actions .card-item-button{padding-top:12px;padding-bottom: 12px;}
+.card-item .card-item-button{width: 100%;color: var(--primary) !important;font-weight: 500;font-size: var(--f-14) !important;line-height: 1.42857 !important;}
+.card-item .ant-card-actions li{margin: 0;}
+.card-item .ant-card-actions .card-item-button{padding-top:12px;padding-bottom: 12px;}

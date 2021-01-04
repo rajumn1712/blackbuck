@@ -12,7 +12,7 @@ class CourseCards extends Component {
     render() {
         return (
             <div className="custom-card">
-                <Card
+                {/* <Card
                     title="My Courses"
                     bordered={false}
                 >
@@ -41,9 +41,9 @@ class CourseCards extends Component {
                         </Row>
                     </div>
 
-                </Card>
+                </Card> */}
                 <Card
-                    title="Suggested Courses"
+                    title="Recent Videos"
                     bordered={false}
                 >
                     <div className="p-12">
