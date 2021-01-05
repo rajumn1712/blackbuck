@@ -924,7 +924,7 @@
 .w-300 {
   width: 300px !important;
 }
-.change-text{width: 200px;text-align: right;margin: 10px;}
+.change-text{width: 300px;text-align: right;margin: 10px;}
 .custom-card .list-link {
   color: var(--primary);
   margin-left: 3px;

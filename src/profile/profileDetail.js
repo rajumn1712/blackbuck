@@ -4,6 +4,7 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 import Loader from "../common/loader";
 import About from "../components/ProfileComponents/about";
+import ChangePassword from "../components/ProfileComponents/changepassword";
 import Courses from "../components/ProfileComponents/courses";
 import Education from "../components/ProfileComponents/education";
 import Hobbies from "../components/ProfileComponents/hobbies";
@@ -82,6 +83,9 @@ class ProfileDetail extends Component {
                       }
                     />
                   )}
+                </div>
+                <div>
+                    <ChangePassword />
                 </div>
                 <div>
                   {isDataRefresh && (
