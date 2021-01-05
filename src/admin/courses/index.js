@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Statistic, Tabs, DatePicker } from 'antd';
+import React, { Component, useState } from 'react';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Statistic, Tabs, DatePicker, Modal, InputNumber } from 'antd';
 import { Link } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, ArrowDownOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -28,6 +28,21 @@ const props = {
         }
     },
 };
+
+const fileList = [
+    {
+        uid: '-1',
+        name: 'image.png',
+        status: 'done',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      }
+]
+const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
 
 const columns = [
     {
@@ -75,141 +90,22 @@ const data = [
     }
 ];
 
-const { Step } = Steps;
+const topicTitle = (
+    <span className="left-menu play mr-4"></span>
+)
+const videoDur = () => (
+    <div className="f-16 m-0 text-secondary video-dur">12m 35s</div>
+  );
 
-const steps = [
-    {
-        title: 'Content',
-        content: <>
-            <div className="create-course">
-                <div className="custom-fields">
-                    <label className="text-secondary d-block mb-4">Course Title</label>
-                    <Input placeholder="e.g. Learn how to code from scratch" />
-                </div>
-                <div className="custom-fields">
-                    <label className="text-secondary d-block mb-4">Choose Category</label>
-                    <Select defaultValue="Computer Science Engineering" allowClear placeholder="Choose a Category" className="text-left">
-                        <Option value="Mechanical Engineering">Mechanical Engineering</Option>
-                        <Option value="Chemical Engineering">Chemical Engineering</Option>
-                        <Option value="Information Technology">Information Technology</Option>
-                        <Option value="Civil Engineering">Civil Engineering</Option>
-                        <Option value="Aeronautical Engineering">Aeronautical Engineering</Option>
-                        <Option value="Artificial Intelligence">Artificial Intelligence</Option>
-                    </Select>
-                </div>
-                <Row gutter={16}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <div className="custom-fields">
-                            <label className="text-secondary d-block mb-4">Select College</label>
-                            <Select defaultValue="Computer Science Engineering" allowClear placeholder="Choose a Category" className="text-left">
-                                <Option value="Mechanical Engineering">Mechanical Engineering</Option>
-                                <Option value="Chemical Engineering">Chemical Engineering</Option>
-                                <Option value="Information Technology">Information Technology</Option>
-                                <Option value="Civil Engineering">Civil Engineering</Option>
-                                <Option value="Aeronautical Engineering">Aeronautical Engineering</Option>
-                                <Option value="Artificial Intelligence">Artificial Intelligence</Option>
-                            </Select>
-                        </div>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <div className="custom-fields">
-                            <label className="text-secondary d-block mb-4">Select Group</label>
-                            <Select defaultValue="Computer Science Engineering" allowClear placeholder="Choose a Category" className="text-left">
-                                <Option value="Mechanical Engineering">Mechanical Engineering</Option>
-                                <Option value="Chemical Engineering">Chemical Engineering</Option>
-                                <Option value="Information Technology">Information Technology</Option>
-                                <Option value="Civil Engineering">Civil Engineering</Option>
-                                <Option value="Aeronautical Engineering">Aeronautical Engineering</Option>
-                                <Option value="Artificial Intelligence">Artificial Intelligence</Option>
-                            </Select>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="custom-fields">
-                    <label className="text-secondary d-block mb-4">Course Description</label>
-                    <TextArea onResize />
-                </div>
-                <Row gutter={16}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                        <label className="text-secondary">Author Name</label>
-                        <Input />
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                        <label className="text-secondary">Designation</label>
-                        <Input />
-                    </Col>
-                </Row>
-            </div>
-        </>,
-    },
-    {
-        title: ' Curriculam',
-        content: <>
-            <div className="create-course">
-                <div className="lecture-collapse mb-12">
-                    <Collapse
-                        expandIconPosition="right"
-                    >
-                        <Panel header="Lecture 1" className="f-18 semibold text-primary">
-                            <div className="f-14 text-secondary normalbold">
-                                <div className="custom-fields mb-0">
-                                    <label className="text-secondary d-block mb-4">Enter Lecture Description</label>
-                                    <TextArea autoSize />
-                                </div>
-                                <Tabs defaultActiveKey="1" className="custom_tabs" size="middle">
-                                    <TabPane tab="Upload Video" key="1">
-                                        <div>
-                                            <Dragger {...props}>
-                                                <p className="ant-upload-drag-icon">
-                                                    <span className="sharebox-icons video-upload"></span>
-                                                </p>
-                                                <p className="ant-upload-text f-18, semibold">Click or drag file to this area to upload</p>
-                                            </Dragger>
-                                        </div>
-                                        <Table columns={columns} dataSource={data} size="small" className="mt-16" pagination={{ position: ["bottomCenter"] }} bordered={true} />
-                                    </TabPane>
-                                    <TabPane tab="Upload Thumbnail" key="2">
-                                        <div>
-                                            <Dragger {...props}>
-                                                <p className="ant-upload-drag-icon">
-                                                    <span className="sharebox-icons photo-upload"></span>
-                                                </p>
-                                                <p className="ant-upload-text f-18, semibold">Click or drag file to this area to upload</p>
-                                            </Dragger>
-                                        </div>
-                                        <Table columns={columns} dataSource={data} size="small" className="mt-16" pagination={{ position: ["bottomCenter"] }} bordered={true} />
-                                    </TabPane>
-                                </Tabs>
-                            </div>
-                        </Panel>
-                    </Collapse>
-                </div>
-                <div className="lecture-collapse mb-12">
-                    <Collapse
-                        expandIconPosition="right"
-                    >
-                        <Panel header="Lecture 2" className="f-18 semibold text-primary">
-                            <div className="f-14 text-secondary normalbold"></div>
-                        </Panel>
-                    </Collapse>
-                    <div className="add-lecture p-4"><span className="icons add"></span></div>
-                </div>
-                <div className="lecture-collapse mb-12">
-                    <div className="custom-fields entr-course-title p-12 mb-12">
-                        <Input placeholder="Enter Lecture Title" className="f-16 mb-16" />
-                        <div className="text-right">
-                            <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Lecture</Button>
-                            <Button type="default" className="addContent px-16" size="small">Cancel</Button>
-                        </div>
-                    </div>
-                    <div className="add-lecture p-4"><span className="icons close"></span></div>
-                </div>
-            </div>
-        </>
-    },
-];
 const AdminCourses = () => {
     const [current, setCurrent] = React.useState(0);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
 
     const next = () => {
         setCurrent(current + 1);
@@ -303,48 +199,182 @@ const AdminCourses = () => {
                             <p className="f-14 text-secondary">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
                         </div>
                         <Row>
-                            <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                                <Steps current={current}>
-                                    {steps.map(item => (
-                                        <Step key={item.title} title={item.title} />
-                                    ))}
-                                </Steps>
-                            </Col>
-                        </Row>
-                        <Row>
                             <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
-                                <div className="custom-card mt-16">
-                                    <Card>
-                                        <div className="course-step">
-                                            <div className="steps-content">
-                                                {steps[current].content}
-                                            </div>
-                                            <div className="steps-action" style={{ marginTop: 30 }}>
-                                                <div className="d-flex justify-between">
-                                                    {current > 0 && (
-                                                        <Button onClick={() => prev()}>
-                                                            Previous
-                                    </Button>
-                                                    )}
-                                                    {current === steps.length - 1 && (
-                                                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                                                            Publish
-                                    </Button>
-                                                    )}
-                                                    {current < steps.length - 1 && (
-                                                        <Button style={{ marginLeft: 'auto' }} type="primary" onClick={() => next()}>
-                                                            Next
-                                    </Button>
-                                                    )}
-                                                </div>
+                                <div className="create-course">
+                                    <div className="custom-fields">
+                                        <label className="text-secondary d-block mb-4">Course Title</label>
+                                        <Input placeholder="e.g. Learn how to code from scratch" />
+                                    </div>
+                                    <div className="custom-fields">
+                                        <label className="text-secondary d-block mb-4">Course Description</label>
+                                        <TextArea onResize 
+                                        autoSize={{ minRows: 3, maxRows: 30 }}
+                                        />
+                                    </div>
+                                    <Row gutter={16}>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            <label className="text-secondary d-block mb-4">Choose Category</label>
+                                            <Select defaultValue="Choose a Category" allowClear placeholder="Choose a Category" className="text-left">
+                                                <Option value="Chemistry">Chemistry</Option>
+                                                <Option value="Mat Lab">Mat Lab</Option>
+                                                <Option value="Accounting Finance">Accounting Finance</Option>
+                                                <Option value="Artificial Intelligence">Artificial Intelligence</Option>
+                                            </Select>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            <label className="text-secondary d-block mb-4">Author Name</label>
+                                            <Select defaultValue="Choose Author" allowClear placeholder="Choose Author" className="text-left">
+                                                <Option value="John Doe">John Doe</Option>
+                                                <Option value="Sherlyn">Sherlyn</Option>
+                                                <Option value="William Smith">William Smith</Option>
+                                                <Option value="Jonas">Jonas</Option>
+                                            </Select>
+                                        </Col>
+                                    </Row>
+                                </div>
+                                <div className="create-course mt-16">
+                                    <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white">Add Course Section</div>
+                                    <div className="lecture-collapse mb-16">
+                                        <Collapse
+                                            className="mb-16"
+                                            expandIconPosition="right"
+                                        >
+                                            <Panel header="1. Introduction" className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">12m 35s</div>}>
+                                                <Collapse
+                                                    className="mb-8"
+                                                    expandIconPosition="right"
+                                                >
+                                                    <Panel header={<>{topicTitle} Introduction</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">6m 15s</div>}>
+                                                        <div className="d-flex">
+                                                            <video width="280"><source src="/static/media/video.7286ccfa.mp4" /></video>
+                                                            <div className="ml-16">
+                                                                <p className="f-16 text-primary mb-4">Introduction.mp4</p>
+                                                                <p className="f-14 text-secondary mb-8">Introduction to Web Development is a one-stop course that covers all of the tools you’ll need to create websites. The course contains in-depth discussions of each of “The Big Three” tools used for Website development</p>
+                                                                <p className="f-12 text-primary">6m 15s | 40MB</p>
+                                                                <Button size="small" className="px-16">Edit Content</Button>
+                                                            </div>
+                                                        </div>
+                                                    </Panel>
+                                                </Collapse>
+                                                <Collapse
+                                                    className="mb-8"
+                                                    expandIconPosition="right"
+                                                >
+                                                    <Panel header={<>{topicTitle} What is Angular</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">3m 5s</div>}>
+                                                        <div className="d-flex">
+                                                            <video width="280"><source src="/static/media/video.7286ccfa.mp4" /></video>
+                                                            <div className="ml-16">
+                                                                <p className="f-16 text-primary mb-4">What is Angular.mp4</p>
+                                                                <p className="f-14 text-secondary mb-8">Introduction to Web Development is a one-stop course that covers all of the tools you’ll need to create websites. The course contains in-depth discussions of each of “The Big Three” tools used for Website development</p>
+                                                                <p className="f-12 text-primary">3m 5s | 22MB</p>
+                                                                <Button size="small" className="px-16">Edit Content</Button>
+                                                            </div>
+                                                        </div>
+                                                    </Panel>
+                                                </Collapse>
+                                                <Collapse
+                                                    className="mb-8"
+                                                    expandIconPosition="right"
+                                                >
+                                                    <Panel header={<>{topicTitle} Versions of Angular</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">3m 10s</div>}>
+                                                        <div className="d-flex">
+                                                            <video width="280"><source src="/static/media/video.7286ccfa.mp4" /></video>
+                                                            <div className="ml-16">
+                                                                <p className="f-16 text-primary mb-4">Versions of Angular.mp4</p>
+                                                                <p className="f-14 text-secondary mb-8">Introduction to Web Development is a one-stop course that covers all of the tools you’ll need to create websites. The course contains in-depth discussions of each of “The Big Three” tools used for Website development</p>
+                                                                <p className="f-12 text-primary">3m 10s | 22MB</p>
+                                                                <Button size="small" className="px-16">Edit Content</Button>
+                                                            </div>
+                                                        </div>
+                                                    </Panel>
+                                                </Collapse>
+                                                <div onClick={showModal} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                            </Panel>
+                                        </Collapse>
+                                        <div className="add-lecture p-4"><span className="icons add"></span></div>
+                                    </div>
+                                    <div className="lecture-collapse mb-16">
+                                        <div className="custom-fields entr-course-title p-12 mb-12">
+                                            <Input placeholder="Add section title here" className="f-16 mb-16" />
+                                            <div className="text-right">
+                                                <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
+                                                <Button type="default" className="addContent px-16" size="small">Cancel</Button>
                                             </div>
                                         </div>
-                                    </Card>
+                                        <div className="add-lecture p-4"><span className="icons close"></span></div>
+                                    </div>
                                 </div>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
+                <Modal title="Add Topic" visible={isModalVisible} onCancel={handleCancel} centered
+                    footer={<>
+                        <Button type="primary">Save</Button>
+                    </>}
+                    className="addTopicPop"
+                >
+                    <div className="custom-fields">
+                        <label className="text-secondary d-block mb-4">Topic Title</label>
+                        <Input />
+                    </div>
+                    <div className="custom-fields">
+                        <label className="text-secondary d-block mb-4">Topic Description</label>
+                        <TextArea onResize
+                            autoSize={{ minRows: 3, maxRows: 20 }}
+                        />
+                    </div>
+                    <div className="mb-8">
+                        <label className="text-secondary d-block mb-4">Feature Image</label>
+                        <Upload
+                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            listType="picture-card"
+                            fileList={fileList}
+                            //onPreview={this.handlePreview}
+                            //onChange={this.handleChange}
+                        >
+                            {fileList.length >= 8 ? null : uploadButton}
+                        </Upload>
+                    </div>
+                    <div className="custom-fields">
+                        <label className="text-secondary d-block mb-4">Video Source</label>
+                        <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source">
+                            <Option value="Upload">Upload</Option>
+                            <Option value="YouTube">YouTube</Option>
+                            <Option value="Vimeo">Vimeo</Option>
+                        </Select>
+                    </div>
+                    <Dragger {...props} className="mb-16">
+                        <p className="ant-upload-drag-icon">
+                            <span className="sharebox-icons video-upload"></span>
+                        </p>
+                        <p className="ant-upload-text f-18, semibold">Click or drag file to this area to upload</p>
+                    </Dragger>
+                    <div className="custom-fields">
+                        <Input placeholder="YouTube URL" />
+                    </div>
+                    <div className="custom-fields">
+                        <Input placeholder="Vimeo URL" />
+                    </div>
+                    <div className="custom-fields">
+                        <label className="text-secondary d-block mb-4">Video Playback Time</label>
+                        <Input.Group compact>
+                            <div className="videoplybacktime">
+                                <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
+                                <em className="text-secondary d-block f-12 mt-4">HH</em>
+                            </div>
+                            <div className="videoplybacktime">
+                                <InputNumber min={1} max={10} defaultValue={5} onChange={onChange} />
+                                <em className="text-secondary d-block f-12 mt-4">MM</em>
+                            </div>
+                            <div className="videoplybacktime">
+                                <InputNumber min={1} max={10} defaultValue={0} onChange={onChange} />
+                                <em className="text-secondary d-block f-12 mt-4">SS</em>
+                            </div>
+                        </Input.Group>
+                    </div>
+                </Modal>
+
                 <Title className="f-18 text-primary semibold">Courses</Title>
                 <div className="custom-card">
                     <Card className="p-12 custom-fields">
