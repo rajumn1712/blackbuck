@@ -8,12 +8,23 @@ const { Title } = Typography;
 
 const data = [
     {
-        title: 'Name',
-        description: 'saranya'
+        title: 'BY the Numbers',
+        description: 'Skill levels: All Levels'
     },
     {
-        title: 'Username',
-        description: ' https://www.blackbuck.com/saranya'
+        title: 'Certificates',
+        description: ' Get Blackbuck certificate by compleating entire course'
+        
+    },
+    {
+        title: 'Features',
+        description: ' Available on ios and Android'
+        
+    },
+    {
+        title: 'Description',
+        description: ' In publishing and graphic design, Lorem ipsum is a placeholder text.'
+        
     },
 ];
 class OverView extends Component {
@@ -46,7 +57,7 @@ class OverView extends Component {
                         itemLayout="horizontal"
                         dataSource={data}
                         renderItem={item => (
-                            <List.Item actions={[<a onClick={this.showModal} key="list-loadmore-edit">Edit</a>]}>
+                            <List.Item>
                                 <List.Item.Meta
                                     title={<h3 className="mb-0">{item.title}</h3>}
                                     description={<div><div>{item.description}</div>

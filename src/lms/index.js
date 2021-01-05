@@ -18,7 +18,7 @@ class LMSComponent extends Component {
                     <Col xs={24} sm={12} md={8} lg={7} xl={7}>
                         <Affix offsetTop={86} > 
                             <CourseList />
-                            <Ads />
+                           
                         </Affix>
                     </Col>
                 </Row>

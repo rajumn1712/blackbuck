@@ -20,13 +20,13 @@ class CourseList extends Component {
             <div className="custom-card tag-card">
 
                 <Card
-                    className="card-item card-height"
+                    className="card-item"
                     cover={<img alt="photography" src={SEO} />}  >
                     <Meta
                         title="SEO & Digital Marketing"
                         description={
                             <div>
-                                <p>Unlock the secrets to growing your visibility on Google with professionals.</p>
+                                
                                 <div className="addon-info">
                                     <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
                                     <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
