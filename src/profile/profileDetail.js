@@ -84,9 +84,7 @@ class ProfileDetail extends Component {
                     />
                   )}
                 </div>
-                <div>
-                    <ChangePassword />
-                </div>
+               
                 <div>
                   {isDataRefresh && (
                     <Interests
@@ -143,6 +141,9 @@ class ProfileDetail extends Component {
                 </div>
                 <div>
                   <Courses loadUserCourse={true} />
+                </div>
+                <div>
+                    <ChangePassword />
                 </div>
               </Col>
             </Row>
