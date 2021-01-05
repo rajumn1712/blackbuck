@@ -318,7 +318,7 @@
   background-position: -263px -254px;
 }
 .left-menu.play {
-  background-position: -292px -254px;
+  background-position: -293px -255px;
 }
 .left-menu.education {
   background-position: -325px -254px;
@@ -1324,8 +1324,17 @@
 }
 .custom-fields .ant-input,
 .custom-fields .ant-select,
-.custom-fields .ant-picker {
+.custom-fields .ant-picker, 
+.custom-fields .ant-input-number-input {
   min-height: 48px;
+}
+.custom-fields .ant-input-group .videoplybacktime:first-child .ant-input-number{
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+}
+.custom-fields .ant-input-group .videoplybacktime:last-child .ant-input-number{
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
 }
 .custom-fields .ant-select-selector,
 .custom-fields .ant-picker.ant-picker-range {
@@ -1983,9 +1992,19 @@ textarea {
 .course-step{ padding: 40px;}
 .admin-left-pane{width: 260px; position: fixed; top: 70px; left: 0; bottom: 0;}
 .course-step .ant-collapse{background: var(--white);  border-radius: 0.4rem;}
-.create-course{background: var(--bghover); padding: 40px 40px 28px; border-radius: 0.8rem;}
+.create-course{background: var(--white); padding: 40px 40px 28px; border-radius: 0.8rem; border: 1px solid var(--line)}
 .addContent{height: 32px; font-size: var(--f-12) ;color: var(--textprimary); border-radius: 0.4rem;}
 .lecture-collapse{position: relative;}
+.create-course .ant-collapse-content-box, .create-course .ant-collapse-header{padding: 12px !important;}
+.video-dur{margin-right: 42px}
+.subvideo-dur{margin-right: 30px}
+.addTopicPop .ant-modal-body{ max-height: calc(100vh - 200px); overflow-y: auto;}
+.add-course-section{
+  border: 1px dashed var(--line); border-radius: 8px; background: var(--primary);
+}
+@media (min-width: 768px){
+  .addTopicPop{width: 600px !important}
+}
 .add-lecture{position: absolute; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); top: 10px;
   left: -58px;box-shadow: var(--boxshadow); box-sizing: content-box !important;}
 .entr-course-title{background: var(--white); border-radius: 6px; border: 1px solid #d9d9d9;}
