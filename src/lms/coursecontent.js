@@ -88,7 +88,8 @@ class CourseContent extends Component {
                                     className="site-collapse-custom-collapse"
                                     expandIconPosition="right"
                                 >
-                                    <Panel header="Section 1: Welcome, Welcome, Welcome!" key="1" className="pb-0 course-content flot-left" extra={<div className="panel-subtext"><span>4/5</span> | <span>23min</span> </div>}>
+                                    <Panel header="What is JavaScript? How does JavaScript work?" key="1" className="pb-0 course-content flot-left" >
+                                        <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
                                         <div>
                                             <List
                                                 itemLayout="horizontal"
@@ -104,7 +105,8 @@ class CourseContent extends Component {
                                             />,
                                         </div>
                                     </Panel>
-                                    <Panel header="Section 2: Welcome, Welcome, Welcome!" key="2" className="pb-0 course-content flot-left" extra={<div className="panel-subtext"><span>4/5</span> | <span>23min</span> </div>}>
+                                    <Panel header="Chapter 1 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
+                                        <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={data}
@@ -118,7 +120,8 @@ class CourseContent extends Component {
                                             )}
                                         />,
                                     </Panel>
-                                    <Panel header="Section 3: Welcome, Welcome, Welcome!" key="3" className="pb-0 course-content flot-left" extra={<div className="panel-subtext"><span>4/5</span> | <span>23min</span> </div>}>
+                                    <Panel header="Chapter 2 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
+                                        <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={data}
@@ -133,7 +136,8 @@ class CourseContent extends Component {
                                             )}
                                         />,
                                     </Panel>
-                                    <Panel header="Section 4: Welcome, Welcome, Welcome!" key="4" className="pb-0 course-content flot-left" extra={<div className="panel-subtext"><span>4/5</span> | <span>23min</span> </div>}>
+                                    <Panel header="Chapter 3 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
+                                        <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
                                         <List className=""
                                             itemLayout="horizontal"
                                             dataSource={data}

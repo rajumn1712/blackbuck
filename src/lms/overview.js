@@ -8,22 +8,22 @@ const { Title } = Typography;
 
 const data = [
     {
-        title: 'BY the Numbers',
-        description: 'Skill levels: All Levels'
+        title: 'Skill levels',
+        description: ' All Levels'
     },
     {
-        title: 'Certificates',
-        description: ' Get Blackbuck certificate by compleating entire course'
+        title: 'Students',
+        description: ' 46865'
         
     },
     {
-        title: 'Features',
-        description: ' Available on ios and Android'
+        title: 'Languages',
+        description: ' English'
         
     },
     {
-        title: 'Description',
-        description: ' In publishing and graphic design, Lorem ipsum is a placeholder text.'
+        title: 'vedio',
+        description: ' 59 total hours'
         
     },
 ];
@@ -31,7 +31,7 @@ class OverView extends Component {
 
     render() {
         return (
-            <div className="py-16">
+            <div className="pt-8 pb-0 card-background">
                 {/* <List
             itemLayout="horizontal"
             dataSource={data}
@@ -47,10 +47,10 @@ class OverView extends Component {
               
             )}
           /> */}
-                <Title level={4}>About this Course</Title>
-                <p>In the process of internal desktop applications development, many different design specs and implementations would be involved, which might cause designers and developers difficulties </p>
-
-                <Divider />
+                <Title level={4}>What is JavaScript? How does JavaScript work?</Title>
+                <p>As a multi-paradigm language, JavaScript supports event-driven, functional, and imperative programming styles. It has application programming interfaces (APIs) for working with text, dates, regular expressions, standard data structures, and the Document Object Model (DOM). </p>
+                <p>Although there are similarities between JavaScript and Java, including language name, syntax, and respective standard libraries, the two languages are distinct and differ greatly in design.</p>
+                <Divider className="my-4" />
 
                 <div className="set-flex mb-12">
                     <List
@@ -68,7 +68,6 @@ class OverView extends Component {
                         )}
                     />
                 </div>
-                <Divider />
             </div>
         )
     }
