@@ -20,8 +20,9 @@ class CourseList extends Component {
             <div className="custom-card tag-card">
 
                 <Card
-                    className="card-item"
-                    cover={<img alt="photography" src={SEO} />}  >
+                    className="card-item"  actions={[
+                        <Link className="card-item-button">Continue</Link>
+                    ]}>
                     <Meta
                         title="SEO & Digital Marketing"
                         description={

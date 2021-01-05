@@ -1,4 +1,4 @@
-import { Card, Col, Row, Statistic, Avatar } from "antd";
+import { Card, Col, Row, Statistic, Avatar, Tabs } from "antd";
 import React, { Component } from "react";
 import Ads from "../components/ads";
 import OwlCarousel from 'react-owl-carousel2';
@@ -13,7 +13,7 @@ const options = {
     dots: true,
 
 };
-
+const { TabPane } = Tabs;
 class Courses extends Component {
     state = {
         navigations: [],
@@ -52,8 +52,16 @@ class Courses extends Component {
                                 </div>
                             </OwlCarousel>
                         </div>
+                        <Tabs defaultActiveKey="1" className="profile-tabs">
+                            <TabPane tab="Recent Videos" key="1">
+
+                            </TabPane>
+                            <TabPane tab="Profile" key="2">
+
+                            </TabPane>
+                        </Tabs>
                         {/* <div className="user-statistic"> */}
-                            {/* <div className="left-statistic">
+                        {/* <div className="left-statistic">
                                 <Statistic
                                     title="Total Courses"
                                     className="afterline"
@@ -66,10 +74,10 @@ class Courses extends Component {
 
                             </div> */}
 
-                            {/* <div className="bannercard-title">
+                        {/* <div className="bannercard-title">
                                 MY Courses 
                             </div> */}
-                            {/* <Card className="user-banner">
+                        {/* <Card className="user-banner">
                                 <Meta
                                     avatar={
                                         <div className="img-container">
@@ -82,7 +90,7 @@ class Courses extends Component {
                                 />
                             </Card> */}
 
-                            {/* <div className="right-statistic">
+                        {/* <div className="right-statistic">
                                 <Statistic
                                     title="Joined Courses"
                                     className="afterline"
