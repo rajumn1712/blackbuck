@@ -116,12 +116,12 @@ class HeaderComponent extends React.Component {
                 </Link>
             </Menu.Item> */}
             <Menu.Item key="2">
-                <a href="https://theblackbucks.com/contact-us.php" target="_blank"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
-                </a>
+                <Link to="/settings"><span className="icons settings-icon" /><span className="pl-16">Settings & Privacy</span>
+                </Link>
             </Menu.Item>
             <Menu.Item key="3">
-                <a href="https://theblackbucks.com/contact-us.php" target="_blank"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
-                </a>
+                <Link to="/support"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
+                </Link>
             </Menu.Item>
             { this.props?.profile?.Role?.is &&
                 <Menu.Item key="4">

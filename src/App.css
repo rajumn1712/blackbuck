@@ -2047,3 +2047,4 @@ textarea {
 .card-background .ant-list-item{padding: 12px 16px;}
 /* .notification-full .ant-list-item-meta-content{display: flex; justify-content: space-between;} */
 .video-card .ant-card-head{margin-bottom: 0 !important;}
+.input-height{min-height: 48px;border-radius: 8px !important;}
