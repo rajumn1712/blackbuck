@@ -1840,7 +1840,7 @@ textarea {
 }
 .helpcards {
   text-align: center;
-  padding: 24px;
+  padding: 12px;
   border: 1px solid var(--line);
   background-color: #ffffff;
   border-radius: 0.8rem;

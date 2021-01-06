@@ -26,16 +26,11 @@ class Help extends Component {
         return (
             <div className="helppage">
                 <Row justify="center">
-                    <Col xs={24} md={12} className="mb-16">
-                        <div className="help-search">
-                            <h2>How can we help you?</h2>
-                            <Search className="header-searchbar" placeholder="Write a question or problem" />
-                        </div>
-                    </Col>
-                    <Col xs={24} md={16} className="mb-16">
+                    <Col xs={24} md={16} className="my-16">
                         <h3 className="sub-title">
                             Popular Questions
                         </h3>
+                        <div className="card-background">
                         <Collapse
                             bordered={false}
                             defaultActiveKey={['1']}
@@ -56,6 +51,7 @@ class Help extends Component {
                                 <p>{text}</p>
                             </Panel>
                         </Collapse>
+                        </div>
                     </Col>
                     <Col xs={24} md={16} className="mb-16">
                         <h3 className="sub-title">
@@ -64,29 +60,28 @@ class Help extends Component {
                         <Row gutter={8}>
                             <Col xs={24} md={12} lg={8}>
                                 <div className="helpcards">
+                                <h3>Contact</h3>
                                     <img src={AccSettings}/>
-                                    <h3>Account Settings</h3>
-                                    <p>Adjust settings, manage notifications, learn about name changes and more.</p>
+                                    <p><span>Email:</span> welcome@gmail.com</p>
                                 </div>
                             </Col>
                             <Col xs={24} md={12} lg={8} >
                                 <div className="helpcards">
+                                <h3>Phone</h3>
                                     <img src={Password}/>
-                                    <h3>Login and Password</h3>
-                                    <p>Fix login issues and learn how to change or reset your password.</p>
+                                    <p><span>Phone:</span> 258963647</p>
                                 </div>
                             </Col>
                             <Col xs={24} md={12} lg={8} >
                                 <div className="helpcards">
+                                    <h3>Settings</h3>
                                     <img src={Privacy}/>
-                                    <h3>Privacy and Security</h3>
                                     <p>Control who can see what you share and add extra protection to your account.</p>
                                 </div>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
-
             </div>
 
 
