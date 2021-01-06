@@ -31,7 +31,7 @@ class OverView extends Component {
 
     render() {
         return (
-            <div className="pt-8 pb-0 card-background">
+            <div className="p-16 card-background">
                 {/* <List
             itemLayout="horizontal"
             dataSource={data}
@@ -49,8 +49,8 @@ class OverView extends Component {
           /> */}
                 <Title level={4}>What is JavaScript? How does JavaScript work?</Title>
                 <p>As a multi-paradigm language, JavaScript supports event-driven, functional, and imperative programming styles. It has application programming interfaces (APIs) for working with text, dates, regular expressions, standard data structures, and the Document Object Model (DOM). </p>
-                <p>Although there are similarities between JavaScript and Java, including language name, syntax, and respective standard libraries, the two languages are distinct and differ greatly in design.</p>
-                <Divider className="my-4" />
+                <p className="mb-0">Although there are similarities between JavaScript and Java, including language name, syntax, and respective standard libraries, the two languages are distinct and differ greatly in design.</p>
+                {/* <Divider className="my-4" />
 
                 <div className="set-flex mb-12">
                     <List
@@ -67,7 +67,7 @@ class OverView extends Component {
                             </List.Item>
                         )}
                     />
-                </div>
+                </div> */}
             </div>
         )
     }

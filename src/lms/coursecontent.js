@@ -43,14 +43,20 @@ class CourseContent extends Component {
                     <Col className="" xs={24} sm={16} md={16} lg={17} >
                         <div className="preview-image">
                             <Carousel>
-                                <div className="lms-video">
+                                <div className="lms-video mb-8">
                                     <video controls>
                                         <source src={video} />
                                     </video>
                                 </div>
                             </Carousel>
                         </div>
-                        <Tabs defaultActiveKey="1"
+                        <Row gutter={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <OverView />
+                            </Col>
+                        </Row>
+
+                        {/* <Tabs defaultActiveKey="1"
                             className="group-tabs profile-tabs">
                             <TabPane tab="Overview" key="1">
                                 <Row gutter={16}>
@@ -67,15 +73,15 @@ class CourseContent extends Component {
                                     </div>
                                     </Col>
                                 </Row>
-                            </TabPane>
-                            {/* <TabPane tab="Comments" key="3">
+                            </TabPane> */}
+                        {/* <TabPane tab="Comments" key="3">
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
 
                                     </Col>
                                 </Row>
                             </TabPane> */}
-                        </Tabs>
+                        {/* </Tabs>*/}
                     </Col>
                     <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
                         <div className="custom-card">
@@ -96,7 +102,7 @@ class CourseContent extends Component {
                                                 dataSource={data}
                                                 renderItem={item => (
                                                     <List.Item extra={<span className="icon playover-icon"></span>}>
-                                                        <List.Item.Meta 
+                                                        <List.Item.Meta
                                                             title={<a href="https://ant.design">{item.title}</a>}
                                                             description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
                                                         />
@@ -128,7 +134,7 @@ class CourseContent extends Component {
                                             renderItem={item => (
                                                 <List.Item extra={<span className="icon play-inprogress"></span>}>
                                                     <List.Item.Meta
-                                                        
+
                                                         title={<a href="https://ant.design">{item.title}</a>}
                                                         description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
                                                     />
@@ -144,7 +150,7 @@ class CourseContent extends Component {
                                             renderItem={item => (
                                                 <List.Item extra={<span className="icon playover-icon"></span>}>
                                                     <List.Item.Meta
-                                                        
+
                                                         title={<a href="https://ant.design">{item.title}</a>}
                                                         description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
                                                     />

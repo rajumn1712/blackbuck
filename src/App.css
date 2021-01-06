@@ -2026,7 +2026,7 @@ textarea {
 .course-content .ant-collapse-header{padding-bottom: 0 !important;}
 /* .course-card .ant-card{border-radius: 0 !important;} */
 .progres-bar .ant-progress-text{font-size: 12px;margin-left: 3px;}
-.lms-video video{width: 100%;height: 100%;border-radius: 0.8rem 0.8rem 0 0;display: block;}
+.lms-video video{width: 100%;height: 100%;border-radius: 0.8rem;display: block;}
 .grp-type-icon.vedio-play{background-position:-240px -396px;}
 .grp-type-icon.lessons{background-position:-260px -397px;}
 .grp-type-icon.reply{background-position:-278px -397px;}
