@@ -18,6 +18,7 @@ const CreateCourse = ({ profile }) => {
         "NewPassword": "",
         "Repassword": ""
     })
+    const [form] = Form.useForm();
     const onFinishFailed = (error) => {
 
     }
@@ -30,14 +31,7 @@ const CreateCourse = ({ profile }) => {
             const result = await saveUserPassword(initialValues);
             if (result.ok) {
                 notify({ message: "Change Password", description: "Password changed successfully" });
-                let object = { ...initialValues }
-                object.Id = profile?.Id;
-                object.Username = profile?.Email;
-                object.OldPassword = "";
-                object.NewPassword = "";
-                object.Repassword = "";
-
-                setInitialValues(object);
+                form.resetFields();
             }
             else {
                 notify({ message: "Error", type: "error", description: "Something went wrong :)" });
@@ -45,13 +39,7 @@ const CreateCourse = ({ profile }) => {
         }
     }
     const clearValues = () => {
-        let object = { ...initialValues }
-        object.Id = profile?.Id;
-        object.Username = profile?.Email;
-        object.OldPassword = "";
-        object.NewPassword = "";
-        object.Repassword = "";
-        setInitialValues(object);
+        form.resetFields();
 
     }
     const handleChange = (prop, val) => {
@@ -77,7 +65,13 @@ const CreateCourse = ({ profile }) => {
                     )}
                 />
                 <div className=" py-16">
-                    <Form initialValues={initialValues} onFinishFailed={onFinishFailed} onFinish={(values) => saveUserPass(values)} enableReinitialize>
+                    <Form form={form} initialValues={{
+                        "Id": profile?.Id,
+                        "Username": profile?.Email,
+                        "OldPassword": "",
+                        "NewPassword": "",
+                        "Repassword": ""
+                    }} onFinishFailed={onFinishFailed} onFinish={(values) => saveUserPass(values)} enableReinitialize>
                         <div className="d-flex my-8"><span className="change-text">Current</span>
                             <Form.Item name="OldPassword" rules={[{ required: true, message: "Current password  required" }]} >
                                 <Input.Password value={initialValues.OldPassword} className="w-300" maxLength="50" onChange={(e) => handleChange("OldPassword", e)} />
@@ -95,8 +89,10 @@ const CreateCourse = ({ profile }) => {
                             </Form.Item>
                         </div>
                         <div className="text-right pr-12">
-                            <Button className="mx-8" type="primary" htmlType="submit">Save</Button>
-                            <Button onClick={() => clearValues()}>Cancel</Button>
+                            <Form.Item>
+                                <Button className="mx-8" type="primary" htmlType="submit">Save</Button>
+                                <Button htmlType="button" onClick={() => clearValues()}>Cancel</Button>
+                            </Form.Item>
                         </div>
                     </Form>
                 </div>
