@@ -84,7 +84,7 @@ class CourseContent extends Component {
                         {/* </Tabs>*/}
                     </Col>
                     <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
-                        <div className="custom-card">
+                        <div className="custom-card video-card">
                             <Card title="Course Content" bordered={false} >
 
                                 <Collapse
@@ -108,7 +108,7 @@ class CourseContent extends Component {
                                                         />
                                                     </List.Item>
                                                 )}
-                                            />,
+                                            />
                                         </div>
                                     </Panel>
                                     <Panel header="Chapter 1 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
@@ -124,7 +124,7 @@ class CourseContent extends Component {
                                                     />
                                                 </List.Item>
                                             )}
-                                        />,
+                                        />
                                     </Panel>
                                     <Panel header="Chapter 2 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
                                         <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
@@ -140,7 +140,7 @@ class CourseContent extends Component {
                                                     />
                                                 </List.Item>
                                             )}
-                                        />,
+                                        />
                                     </Panel>
                                     <Panel header="Chapter 3 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
                                         <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
@@ -156,7 +156,7 @@ class CourseContent extends Component {
                                                     />
                                                 </List.Item>
                                             )}
-                                        />,
+                                        />
                                     </Panel>
                                 </Collapse>
                             </Card>

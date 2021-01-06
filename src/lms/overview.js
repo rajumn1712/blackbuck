@@ -25,7 +25,7 @@ const data = [
         title: 'vedio',
         description: ' 59 total hours'
         
-    },
+    }
 ];
 class OverView extends Component {
 
@@ -49,6 +49,8 @@ class OverView extends Component {
           /> */}
                 <Title level={4}>What is JavaScript? How does JavaScript work?</Title>
                 <p>As a multi-paradigm language, JavaScript supports event-driven, functional, and imperative programming styles. It has application programming interfaces (APIs) for working with text, dates, regular expressions, standard data structures, and the Document Object Model (DOM). </p>
+                <p>Although there are similarities between JavaScript and Java, including language name, syntax, and respective standard libraries, the two languages are distinct and differ greatly in design.</p>
+                <p>The choice of the JavaScript name has caused confusion, sometimes giving the impression that it is a spin-off of Java. Since Java was the hot new programming language at the time, this has been characterized as a marketing ploy by Netscape to give its own new language cachet.</p>
                 <p>Although there are similarities between JavaScript and Java, including language name, syntax, and respective standard libraries, the two languages are distinct and differ greatly in design.</p>
                 <p>The choice of the JavaScript name has caused confusion, sometimes giving the impression that it is a spin-off of Java. Since Java was the hot new programming language at the time, this has been characterized as a marketing ploy by Netscape to give its own new language cachet.</p>
                 <p className="mb-0">As a multi-paradigm language, JavaScript supports event-driven, functional, and imperative programming styles.</p>
