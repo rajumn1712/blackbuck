@@ -172,6 +172,9 @@ const unFriend = (user_id, friend_id) => {
 const fetchNotificationCount = (userId) => {
   return apiClient.get(PROFILE_API + `getNotificationsCount/${userId}`);
 };
+const saveUserPassword = (object) => {
+  return apiClient.post(process.env.REACT_APP_AUTHORITY + "/Account/ChangePassword", object);
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -219,5 +222,6 @@ export {
   fetchUserColleges,
   getNotifications,
   unFriend,
-  fetchNotificationCount
+  fetchNotificationCount,
+  saveUserPassword
 };
