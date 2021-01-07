@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import Search from 'antd/lib/input/Search';
 import { CaretRightOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import AccSettings from '../styles/images/acc-settings.svg';
+import TwoFactor from '../styles/images/twofactor.png';
 import Password from '../styles/images/password.svg';
 import Privacy from '../styles/images/privacy.svg';
 import Item from 'antd/lib/list/Item';
@@ -17,25 +18,9 @@ const { Title, Paragraph } = Typography;
 const { Option } = Select;
 const data = [
     {
-        title: 'Name',
-        description: 'saranya'
-    },
-    {
-        title: 'Username',
-        description: ' https://www.blackbuck.com/saranya'
-    },
-    {
-        title: 'Contact',
-        description: 'saranyamallampati1201@gmail.com'
-    },
-    {
-        title: 'Email id',
-        description: 'saranyamallampati1201@gmail.com'
-    },
-    {
-        title: 'Mobile No',
-        description: '8834567896'
-    },
+        title: 'Two Factor Authentication Set Up',
+    }
+
 ];
 const data1 = [
     {
@@ -167,7 +152,7 @@ class Settings extends React.Component {
                             <Card title="Change password" className="settings-card mb-12" >
                                 <Row gutter={12}>
                                     <Col xs={24} sm={24}>
-                                    <ChangePassword />
+                                        <ChangePassword />
                                     </Col>
                                 </Row>
                                 {/* <List
@@ -200,6 +185,30 @@ class Settings extends React.Component {
                                         </List.Item>
                                     )}
                                 /> */}
+                            </Card>
+                            <Card title="Twofactor Authentication" className="settings-card mb-12" >
+                                <Row gutter={12}>
+                                    <Col xs={24} sm={24}>
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={data}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                                        title={<a className="f-18 count-link" href="">{item.title}</a>}
+                                                        description="This extra step shows it’s really you trying to sign in."
+                                                    />
+                                                    <div id="radioBtn" class="btn-group">
+                                                        <Button size="small" className="radious-right notActive">Enable</Button>
+                                                        <Button size="small" type="primary" className="radious-left active">Disable </Button>
+                                                    </div>
+                                                </List.Item>
+                                            )}
+                                        />
+
+                                    </Col>
+                                </Row>
                             </Card>
                         </Col>
                     </Row>

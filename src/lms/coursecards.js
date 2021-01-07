@@ -30,7 +30,7 @@ class CourseCards extends Component {
                                             <div>
                                                 <p>Unlock the secrets to growing your visibility on Google with professionals.</p>
                                                 <div className="addon-info">
-                                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
                                                     <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
                                                 </div>
                                                 <div className="my-16 progres-bar"><Progress percent={30} /></div>
@@ -43,7 +43,7 @@ class CourseCards extends Component {
 
                 </Card> */}
                 <Card
-                    title="Recent Videos"
+                   
                     bordered={false}
                 >
                     <div className="p-12">
@@ -62,7 +62,7 @@ class CourseCards extends Component {
                                             <div>
                                                 <p>Become a professional photographer with complete training.</p>
                                                 <div className="addon-info">
-                                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
                                                     <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
                                                 </div>
                                             </div>} />
@@ -82,7 +82,7 @@ class CourseCards extends Component {
                                             <div>
                                                 <p>Become a content marketing pro and learn what's involved in professional blogging.</p>
                                                 <div className="addon-info">
-                                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
                                                     <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
                                                 </div>
                                             </div>} />
@@ -102,7 +102,7 @@ class CourseCards extends Component {
                                             <div>
                                                 <p>Unlock the secrets to growing your visibility on Google with professionals.</p>
                                                 <div className="addon-info">
-                                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
                                                     <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
                                                 </div>
                                             </div>} />

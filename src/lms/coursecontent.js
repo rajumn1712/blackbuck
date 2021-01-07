@@ -86,7 +86,7 @@ class CourseContent extends Component {
                     <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
                         <div className="custom-card video-card">
                             <Card title="Course Content" bordered={false} >
-
+                            <div className="height-scroll">
                                 <Collapse
                                     bordered={false}
                                     defaultActiveKey={['1']}
@@ -94,71 +94,73 @@ class CourseContent extends Component {
                                     className="site-collapse-custom-collapse"
                                     expandIconPosition="right"
                                 >
-                                    <Panel header="What is JavaScript? How does JavaScript work?" key="1" className="pb-0 course-content flot-left" >
-                                        <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
-                                        <div>
+                                    
+                                        <Panel header="What is JavaScript? How does JavaScript work?" key="1" className="pb-0 course-content flot-left" >
+                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
+                                            <div>
+                                                <List
+                                                    itemLayout="horizontal"
+                                                    dataSource={data}
+                                                    renderItem={item => (
+                                                        <List.Item extra={<span className="icon playover-icon"></span>}>
+                                                            <List.Item.Meta
+                                                                title={<a href="https://ant.design">{item.title}</a>}
+                                                                description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.description}</div>}
+                                                            />
+                                                        </List.Item>
+                                                    )}
+                                                />
+                                            </div>
+                                        </Panel>
+                                        <Panel header="Chapter 1 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
+                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
                                             <List
+                                                itemLayout="horizontal"
+                                                dataSource={data}
+                                                renderItem={item => (
+                                                    <List.Item extra={<span className="icon play-icon"></span>}>
+                                                        <List.Item.Meta
+                                                            title={<a href="https://ant.design">{item.title}</a>}
+                                                            description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.description}</div>}
+                                                        />
+                                                    </List.Item>
+                                                )}
+                                            />
+                                        </Panel>
+                                        <Panel header="Chapter 2 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
+                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
+                                            <List
+                                                itemLayout="horizontal"
+                                                dataSource={data}
+                                                renderItem={item => (
+                                                    <List.Item extra={<span className="icon play-inprogress"></span>}>
+                                                        <List.Item.Meta
+
+                                                            title={<a href="https://ant.design">{item.title}</a>}
+                                                            description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.description}</div>}
+                                                        />
+                                                    </List.Item>
+                                                )}
+                                            />
+                                        </Panel>
+                                        <Panel header="Chapter 3 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
+                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
+                                            <List className=""
                                                 itemLayout="horizontal"
                                                 dataSource={data}
                                                 renderItem={item => (
                                                     <List.Item extra={<span className="icon playover-icon"></span>}>
                                                         <List.Item.Meta
+
                                                             title={<a href="https://ant.design">{item.title}</a>}
-                                                            description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
+                                                            description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.description}</div>}
                                                         />
                                                     </List.Item>
                                                 )}
                                             />
-                                        </div>
-                                    </Panel>
-                                    <Panel header="Chapter 1 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
-                                        <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
-                                        <List
-                                            itemLayout="horizontal"
-                                            dataSource={data}
-                                            renderItem={item => (
-                                                <List.Item extra={<span className="icon play-icon"></span>}>
-                                                    <List.Item.Meta
-                                                        title={<a href="https://ant.design">{item.title}</a>}
-                                                        description={<div className="f-12"><span className="grp-type-icon lessons"></span> {item.description}</div>}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </Panel>
-                                    <Panel header="Chapter 2 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
-                                        <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
-                                        <List
-                                            itemLayout="horizontal"
-                                            dataSource={data}
-                                            renderItem={item => (
-                                                <List.Item extra={<span className="icon play-inprogress"></span>}>
-                                                    <List.Item.Meta
-
-                                                        title={<a href="https://ant.design">{item.title}</a>}
-                                                        description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </Panel>
-                                    <Panel header="Chapter 3 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
-                                        <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
-                                        <List className=""
-                                            itemLayout="horizontal"
-                                            dataSource={data}
-                                            renderItem={item => (
-                                                <List.Item extra={<span className="icon playover-icon"></span>}>
-                                                    <List.Item.Meta
-
-                                                        title={<a href="https://ant.design">{item.title}</a>}
-                                                        description={<div className="f-12"><span className="grp-type-icon vedio-play"></span> {item.description}</div>}
-                                                    />
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </Panel>
-                                </Collapse>
+                                        </Panel>
+                                    
+                                </Collapse></div>
                             </Card>
                         </div>
 

@@ -29,7 +29,7 @@ class CourseList extends Component {
                             <div>
                                 
                                 <div className="addon-info">
-                                    <span className="mr-8"><span className="grp-type-icon vedio-play" />10 Videos</span>
+                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
                                     <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
                                 </div>
                                 <div className="my-16 progres-bar"><Progress percent={30} /></div>

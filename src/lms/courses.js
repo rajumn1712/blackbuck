@@ -53,10 +53,10 @@ class Courses extends Component {
                             </OwlCarousel>
                         </div>
                         <Tabs defaultActiveKey="1" className="profile-tabs">
-                            <TabPane tab="Recent Videos" key="1">
+                            <TabPane tab="Recent Courses" key="1">
 
                             </TabPane>
-                            <TabPane tab="Profile" key="2">
+                            <TabPane tab="My Courses" key="2">
 
                             </TabPane>
                         </Tabs>

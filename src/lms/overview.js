@@ -22,7 +22,7 @@ const data = [
         
     },
     {
-        title: 'vedio',
+        title: 'video',
         description: ' 59 total hours'
         
     }
