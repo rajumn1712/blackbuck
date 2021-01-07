@@ -116,7 +116,11 @@ class Groups extends Component {
                 </Card>
             </div>
             <div className="custom-card">
-                <Card className="px-12 pt-12">
+                <Card className="px-12 pt-12" extra={<div>
+                    <span className="left-menu profile-icon mx-8"></span>
+                    <span className="left-menu profile-icon mx-8"></span>
+                    </div>} 
+                >
                     <Table columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"] }} bordered={true} />
                 </Card>
             </div>
