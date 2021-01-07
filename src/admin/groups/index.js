@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Tag, Form, Tabs } from 'antd';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Tag, Form, Tabs,Tooltip } from 'antd';
 import Title from 'antd/lib/typography/Title';
 
 const { Option } = Select;
@@ -117,9 +117,14 @@ class Groups extends Component {
             </div>
             <div className="custom-card">
                 <Card className="px-12 pt-12" extra={<div>
-                    <span className="left-menu profile-icon mx-8"></span>
-                    <span className="left-menu profile-icon mx-8"></span>
-                    </div>} 
+                    <Tooltip placement="top" title="Block">
+                       <span className="left-menu profile-icon mx-8"></span>
+                    </Tooltip>
+                    <Tooltip placement="top" title="Set Admin">
+                       <span className="left-menu profile-icon mx-8"></span>
+                    </Tooltip>
+
+                </div>}
                 >
                     <Table columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"] }} bordered={true} />
                 </Card>
