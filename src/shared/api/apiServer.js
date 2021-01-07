@@ -3,6 +3,7 @@ const FRIENDS_API = "service/api/home/";
 const GROUPS_API = "service/api/groups/";
 const PROFILE_API = "service/api/profile/";
 const TAGS_API = "service/api/posts/";
+const ADMIN_API = "service/api/admin/";
 
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
@@ -175,6 +176,9 @@ const fetchNotificationCount = (userId) => {
 const saveUserPassword = (object) => {
   return apiClient.post(process.env.REACT_APP_AUTHORITY + "/Account/ChangePassword", object);
 };
+const getAuthors = () => {
+  return apiClient.get(ADMIN_API + "getAuthors/1000/0");
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -223,5 +227,6 @@ export {
   getNotifications,
   unFriend,
   fetchNotificationCount,
-  saveUserPassword
+  saveUserPassword,
+  getAuthors,
 };

@@ -1,9 +1,13 @@
-import React, { Component, useState } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Statistic, Tabs, DatePicker, Modal, InputNumber } from 'antd';
-import { Link } from "react-router-dom";
+import React, { Component, useState, useEffect } from 'react';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Statistic, Tabs, DatePicker, Modal, InputNumber, Form } from 'antd';
+import { withRouter } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, ArrowDownOutlined, PlusOutlined } from '@ant-design/icons';
+import connectStateProps from '../../shared/stateConnect';
+import { getCollegeBranches, getAuthors } from '../../shared/api/apiServer';
+import notify from '../../shared/components/notification';
+import { values } from 'lodash';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -35,14 +39,14 @@ const fileList = [
         name: 'image.png',
         status: 'done',
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      }
+    }
 ]
 const uploadButton = (
     <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
+        <PlusOutlined />
+        <div style={{ marginTop: 8 }}>Upload</div>
     </div>
-  );
+);
 
 const columns = [
     {
@@ -95,12 +99,112 @@ const topicTitle = (
 )
 const videoDur = () => (
     <div className="f-16 m-0 text-secondary video-dur">12m 35s</div>
-  );
+);
 
 const AdminCourses = () => {
+    const obj={
+        "TopicId": "",
+        "Title": "",
+        "Description": "",
+        "ThumbNails": [],
+        "VideoSource": "",
+        "VideoName": "",
+        "VideoUrl": [],
+        "Duration": "",
+        "Size": ""
+    }
+    const [CategoriesLu, setCategoriesLu] = useState([]);
+    const [AuthorsLu, setAuthorsLu] = useState([]);
+    const [ShowForm, setShowForm] = useState(false);
     const [current, setCurrent] = React.useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const showModal = () => {
+    const [topicObj, setTopicObj] = useState(obj);
+    useEffect(() => {
+        fetchBranches();
+        fetchAuthors()
+    }, []);
+    const fetchBranches = async () => {
+        const branchResponse = await getCollegeBranches();
+        if (branchResponse.ok) {
+            setCategoriesLu(branchResponse.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+        }
+    }
+    const fetchAuthors = async () => {
+        const branchResponse = await getAuthors();
+        if (branchResponse.ok) {
+            setAuthorsLu(branchResponse.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+        }
+    }
+
+    const courseObject = {
+        "GroupId": "",
+        "GroupName": "",
+        "GroupImage": "",
+        "Description": "",
+        "Type": "Course",
+        "Author": {
+            "UserId": "",
+            "Firstname": "",
+            "Lastname": "",
+            "Image": "",
+            "Email": ""
+        },
+        "CreatedDate": "",
+        "CategoryType": "LMS",
+        "CourseVideo": "",
+        "AdminUsers": [
+            {
+                "UserId": "",
+                "Firstname": "",
+                "Lastname": "",
+                "Image": "",
+                "Email": ""
+            }
+        ],
+        "Categories": [
+            {
+                "BranchId": "",
+                "Name": "",
+                "Image": ""
+            }
+        ],
+        "Members": [],
+        "Invitations": [],
+        "IsPublish": false,
+        "CourseSections": [
+            {
+                "SectionId":"",
+                "SectionName": "",
+                "Topics": [
+                    {
+                        "TopicId":"",
+                        "Title": "",
+                        "Description": "",
+                        "ThumbNails": [],
+                        "VideoSource": "",
+                        "VideoName":"",
+                        "VideoUrl": [],
+                        "Duration": "",
+                        "Size":""
+                    }
+                ]
+            }
+        ]
+    }
+    const handleChange = (prop, val) => {
+        courseObject[prop] = val.currentTarget ? val.currentTarget.value : val;
+    }
+    const showModal = (type,topObj) => {
+        if (type == 'Edit') {
+            setTopicObj(topObj)
+        }
+        else {
+            setTopicObj(obj)
+        }
         setIsModalVisible(true);
     };
     const handleCancel = () => {
@@ -187,127 +291,117 @@ const AdminCourses = () => {
                                 <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
                             </Col>
                             <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                <Button type="dashed">Create Course</Button>
+                                <Button type="dashed" onClick={() => setShowForm(true)}>Create Course</Button>
                             </Col>
                         </Row>
                     </Card>
                 </div>
-                <Row>
-                    <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
-                        <div className="text-center my-16 pb-16">
-                            <Title level={1} className="normalbold text-primary">Get Started with the course</Title>
-                            <p className="f-14 text-secondary">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
-                        </div>
-                        <Row>
-                            <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
-                                <div className="create-course">
-                                    <div className="custom-fields">
-                                        <label className="text-secondary d-block mb-4">Course Title</label>
-                                        <Input placeholder="e.g. Learn how to code from scratch" />
-                                    </div>
-                                    <div className="custom-fields">
-                                        <label className="text-secondary d-block mb-4">Course Description</label>
-                                        <TextArea onResize 
-                                        autoSize={{ minRows: 3, maxRows: 30 }}
-                                        />
-                                    </div>
-                                    <Row gutter={16}>
-                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                            <label className="text-secondary d-block mb-4">Choose Category</label>
-                                            <Select defaultValue="Choose a Category" allowClear placeholder="Choose a Category" className="text-left">
-                                                <Option value="Chemistry">Chemistry</Option>
-                                                <Option value="Mat Lab">Mat Lab</Option>
-                                                <Option value="Accounting Finance">Accounting Finance</Option>
-                                                <Option value="Artificial Intelligence">Artificial Intelligence</Option>
-                                            </Select>
-                                        </Col>
-                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                            <label className="text-secondary d-block mb-4">Author Name</label>
-                                            <Select defaultValue="Choose Author" allowClear placeholder="Choose Author" className="text-left">
-                                                <Option value="John Doe">John Doe</Option>
-                                                <Option value="Sherlyn">Sherlyn</Option>
-                                                <Option value="William Smith">William Smith</Option>
-                                                <Option value="Jonas">Jonas</Option>
-                                            </Select>
-                                        </Col>
-                                    </Row>
-                                </div>
-                                <div className="create-course mt-16">
-                                    <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white">Add Course Section</div>
-                                    <div className="lecture-collapse mb-16">
-                                        <Collapse
-                                            className="mb-16"
-                                            expandIconPosition="right"
-                                        >
-                                            <Panel header="1. Introduction" className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">12m 35s</div>}>
-                                                <Collapse
-                                                    className="mb-8"
-                                                    expandIconPosition="right"
-                                                >
-                                                    <Panel header={<>{topicTitle} Introduction</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">6m 15s</div>}>
-                                                        <div className="d-flex">
-                                                            <video width="280"><source src="/static/media/video.7286ccfa.mp4" /></video>
-                                                            <div className="ml-16">
-                                                                <p className="f-16 text-primary mb-4">Introduction.mp4</p>
-                                                                <p className="f-14 text-secondary mb-8">Introduction to Web Development is a one-stop course that covers all of the tools you’ll need to create websites. The course contains in-depth discussions of each of “The Big Three” tools used for Website development</p>
-                                                                <p className="f-12 text-primary">6m 15s | 40MB</p>
-                                                                <Button size="small" className="px-16">Edit Content</Button>
-                                                            </div>
-                                                        </div>
-                                                    </Panel>
-                                                </Collapse>
-                                                <Collapse
-                                                    className="mb-8"
-                                                    expandIconPosition="right"
-                                                >
-                                                    <Panel header={<>{topicTitle} What is Angular</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">3m 5s</div>}>
-                                                        <div className="d-flex">
-                                                            <video width="280"><source src="/static/media/video.7286ccfa.mp4" /></video>
-                                                            <div className="ml-16">
-                                                                <p className="f-16 text-primary mb-4">What is Angular.mp4</p>
-                                                                <p className="f-14 text-secondary mb-8">Introduction to Web Development is a one-stop course that covers all of the tools you’ll need to create websites. The course contains in-depth discussions of each of “The Big Three” tools used for Website development</p>
-                                                                <p className="f-12 text-primary">3m 5s | 22MB</p>
-                                                                <Button size="small" className="px-16">Edit Content</Button>
-                                                            </div>
-                                                        </div>
-                                                    </Panel>
-                                                </Collapse>
-                                                <Collapse
-                                                    className="mb-8"
-                                                    expandIconPosition="right"
-                                                >
-                                                    <Panel header={<>{topicTitle} Versions of Angular</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">3m 10s</div>}>
-                                                        <div className="d-flex">
-                                                            <video width="280"><source src="/static/media/video.7286ccfa.mp4" /></video>
-                                                            <div className="ml-16">
-                                                                <p className="f-16 text-primary mb-4">Versions of Angular.mp4</p>
-                                                                <p className="f-14 text-secondary mb-8">Introduction to Web Development is a one-stop course that covers all of the tools you’ll need to create websites. The course contains in-depth discussions of each of “The Big Three” tools used for Website development</p>
-                                                                <p className="f-12 text-primary">3m 10s | 22MB</p>
-                                                                <Button size="small" className="px-16">Edit Content</Button>
-                                                            </div>
-                                                        </div>
-                                                    </Panel>
-                                                </Collapse>
-                                                <div onClick={showModal} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
-                                            </Panel>
-                                        </Collapse>
-                                        <div className="add-lecture p-4"><span className="icons add"></span></div>
-                                    </div>
-                                    <div className="lecture-collapse mb-16">
-                                        <div className="custom-fields entr-course-title p-12 mb-12">
-                                            <Input placeholder="Add section title here" className="f-16 mb-16" />
-                                            <div className="text-right">
-                                                <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                <Button type="default" className="addContent px-16" size="small">Cancel</Button>
-                                            </div>
+                {ShowForm && <Form initialValues={{ "GroupId": "", "GroupName": "", "GroupImage": "", "Description": "", "Type": "", "Author": [], "CreatedDate": "", "CategoryType": "LMS", "CourseVideo": "", "Categories": "", "CourseSections": [] }}>
+
+                    <Row>
+                        <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
+                            <div className="text-center my-16 pb-16">
+                                <Title level={1} className="normalbold text-primary">Get Started with the course</Title>
+                                <p className="f-14 text-secondary">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
+                            </div>
+                            <Row>
+                                <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
+                                    <div className="create-course">
+                                        <div className="custom-fields">
+                                            <label className="text-secondary d-block mb-4">Course Title</label>
+                                            <Form.Item name="GroupName" rules={[{ required: true, message: "Course Title  required" }]} onChange={(value) => handleChange('GroupName', value)}>
+                                                <Input placeholder="e.g. Learn how to code from scratch" value={values.GroupName} />
+                                            </Form.Item>
                                         </div>
-                                        <div className="add-lecture p-4"><span className="icons close"></span></div>
+                                        <div className="custom-fields">
+                                            <label className="text-secondary d-block mb-4">Course Description</label>
+                                            <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} onChange={(value) => handleChange('Description', value)}>
+                                                <TextArea onResize
+                                                    autoSize={{ minRows: 3, maxRows: 30 }}
+                                                />
+                                            </Form.Item>
+                                        </div>
+                                        <Row gutter={16}>
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Choose Category</label>
+                                                <Form.Item name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
+                                                    <Select
+                                                        defaultValue="Choose a Category" placeholder="Choose a Category" className="text-left"
+                                                        onChange={(value) => handleChange('Categories', value)}
+                                                        mode="multiple"
+                                                    >
+                                                        <Option value="">Choose a Category</Option>
+                                                        {CategoriesLu?.map((item, index) => {
+                                                            return <Option value={item.BranchId} key={index}>{item.BranchName}</Option>
+                                                        })}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Author Name</label>
+                                                <Form.Item name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
+                                                    <Select
+                                                        defaultValue="Choose Author" placeholder="Choose Author" className="text-left"
+                                                        onChange={(value) => handleChange('Author', value)}
+                                                    >
+                                                        <Option value="">Choose Author</Option>
+                                                        {AuthorsLu?.map((item, index) => {
+                                                            return <Option value={item.UserId} key={index}>{item.Firstname}</Option>
+                                                        })}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
                                     </div>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+                                    <div className="create-course mt-16">
+                                        <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white">Add Course Section</div>
+                                        {courseObject.CourseSections?.map((item) => {
+                                            return <div className="lecture-collapse mb-16">
+                                                <Collapse
+                                                    className="mb-16"
+                                                    expandIconPosition="right"
+                                                >
+                                                    <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">12m 35s</div>}>
+                                                       {item.Topics?.map((topic)=>{ return <Collapse
+                                                            className="mb-8"
+                                                            expandIconPosition="right"
+                                                        >
+                                                            <Panel header={<>{topicTitle} {item.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
+                                                                <div className="d-flex">
+                                                                    <video width="280"><source src={topic.VideoUrl}/></video>
+                                                                    <div className="ml-16">
+                                                                        <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
+                                                                        <p className="f-14 text-secondary mb-8">{topic.Description}</p>
+                                                                        <p className="f-12 text-primary">{topic.Duration} | {topic.Size}</p>
+                                                                        <Button size="small" className="px-16" onClick={()=>showModal('Edit',topic)}>Edit Content</Button>
+                                                                    </div>
+                                                                </div>
+                                                            </Panel>
+                                                        </Collapse>})
+                                        }
+                                                 
+                                                        <div onClick={()=>showModal('Add')} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                                    </Panel>
+                                                </Collapse>
+                                                <div className="add-lecture p-4"><span className="icons add"></span></div>
+                                            </div>
+                                        })}
+                                        <div className="lecture-collapse mb-16">
+                                            <div className="custom-fields entr-course-title p-12 mb-12">
+                                                <Input placeholder="Add section title here" className="f-16 mb-16" />
+                                                <div className="text-right">
+                                                    <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
+                                                    <Button type="default" className="addContent px-16" size="small">Cancel</Button>
+                                                </div>
+                                            </div>
+                                            <div className="add-lecture p-4"><span className="icons close"></span></div>
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Form>}
                 <Modal title="Add Topic" visible={isModalVisible} onCancel={handleCancel} centered
                     footer={<>
                         <Button type="primary">Save</Button>
@@ -330,8 +424,8 @@ const AdminCourses = () => {
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             listType="picture-card"
                             fileList={fileList}
-                            //onPreview={this.handlePreview}
-                            //onChange={this.handleChange}
+                        //onPreview={this.handlePreview}
+                        //onChange={this.handleChange}
                         >
                             {fileList.length >= 8 ? null : uploadButton}
                         </Upload>
@@ -478,4 +572,4 @@ const courseData = [
 function onChange(pagination, filters, sorter, extra) {
     console.log('params', pagination, filters, sorter, extra);
 }
-export default AdminCourses;
+export default connectStateProps(withRouter(AdminCourses)); 
