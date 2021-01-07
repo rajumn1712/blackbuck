@@ -11,9 +11,13 @@ class CallbackPage extends React.Component {
         const profileResponse = await fetchProfile(user.profile.email);
         if (profileResponse.ok) {
             this.props.updateProfile(profileResponse.data[0])
-            if (!profileResponse.data[0].IsOnBoardProcess) {
+            if (!profileResponse.data[0]?.IsOnBoardProcess) {
                 this.props.history.push("/student_onboard")
-            } else { this.props.history.push("/") }
+            } else {
+                const url = localStorage.getItem("__url");
+                localStorage.removeItem("__url");
+                this.props.history.push(url && url !== "/callback" ? url : "/")
+            }
         } else {
             message.error("Something went wrong:)")
         }

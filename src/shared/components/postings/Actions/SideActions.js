@@ -4,7 +4,7 @@ import React, { Component } from "react";
 const actionsList = [
   { action: "Save Post", icons: "post-icons savepost-icon" },
   { action: "Edit", icons: "post-icons edit-icon" },
-  { action: "Turn on Notifications", icons: "post-icons notify-icon" },
+  // { action: "Turn on Notifications", icons: "post-icons notify-icon" },
   { action: "Delete", icons: "post-icons delete-icon" },
 ];
 
@@ -38,9 +38,8 @@ class SideAction extends Component {
       <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
         <a className="ant-dropdown-link">
           <span
-            className={`post-icons ${
-              this.props.horclass ? this.props.horclass : "h-more-icon"
-            } mr-0`}
+            className={`post-icons ${this.props.horclass ? this.props.horclass : "h-more-icon"
+              } mr-0`}
           ></span>
         </a>
       </Dropdown>

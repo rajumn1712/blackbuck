@@ -4,6 +4,7 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 import Loader from "../common/loader";
 import About from "../components/ProfileComponents/about";
+import ChangePassword from "../components/ProfileComponents/changepassword";
 import Courses from "../components/ProfileComponents/courses";
 import Education from "../components/ProfileComponents/education";
 import Hobbies from "../components/ProfileComponents/hobbies";
@@ -24,6 +25,8 @@ class ProfileDetail extends Component {
   };
 
   componentDidMount() {
+    if (this.props.onRef)
+      this.props.onRef(this);
     this.profielDetails();
     this.storeSubscription = store.subscribe(() => {
       const { profile } = store.getState().oidc;
@@ -40,6 +43,7 @@ class ProfileDetail extends Component {
       this.props.profile.Interests = profiledata.Interest?profiledata.Interest:0;
       this.props.profile.Internships = profiledata.Internships.length;
       this.props.profile.Groups = profiledata.Groups ? profiledata.Groups : 0;
+      this.props.profile.Posts = profiledata.Posts ? profiledata.Posts : 0;
       this.props.profile.BranchName = profiledata.College ? (profiledata.College.BranchName ? profiledata.College.BranchName : "") : "";
       this.props.updateProfile(this.props.profile);
       this.setState({
@@ -57,83 +61,6 @@ class ProfileDetail extends Component {
         {loading && <Loader className="loader-top-middle" />}
         {Object.keys(profileData).length > 0 && (
           <>
-            <div
-              id="downloadpdf"
-              ref={(r) => (this.downloadpdf = r)}
-              style={{ visibility: "hidden", height: 0 }}
-            >
-              <Row className="downloadprofile">
-                <Col span={8} className="dwnpleft">
-                  <div className="contact-information">
-                    <h3>Contact</h3>
-                    <p>{profileData?.PhoneNumber}</p>
-                    <p>{profileData?.Email}</p>
-
-                    {profileData?.Address?.map((displayaddress, index) => {
-                      delete displayaddress.AddressId;
-                      return (
-                        <p key={index}>
-                          {Object.keys(displayaddress)
-                            .map((k) => {
-                              return displayaddress[k];
-                            })
-                            .join(",")}
-                        </p>
-                      );
-                    })}
-
-                    {/* <p style={{ wordBreak: "break-all" }}>
-                      http://localhost:3000/profile/vishnutrimurthulu
-                    </p> */}
-                  </div>
-                  <div className="certificate-info">
-                    <h3>Certifications</h3>
-                    {profileData.Internships?.map((internship, index) => {
-                      return (
-                        <p>
-                          {internship.CompanyName}-{internship.Duration}
-                        </p>
-                      );
-                    })}
-                  </div>
-                  <div className="hobbies-info">
-                    <h3>Hobbies</h3>
-                    <ul>
-                      {profileData?.Hobbies?.split(",").map((hobbie, index) => {
-                        return <li key={index}>{hobbie}</li>;
-                      })}
-                    </ul>
-                  </div>
-                </Col>
-                <Col span={16} className="dwnrleft">
-                  <div className="primary-info">
-                    <h1>
-                      {profileData?.Firstname} {profileData?.Lastname}
-                    </h1>
-                    {/* <p>profileData?.Location</p> */}
-                  </div>
-                  <div className="about-info">
-                    <h3>About me</h3>
-                    <p>{profileData?.AboutMe}</p>
-                  </div>
-                  <div className="academy-info">
-                    <h3>Education</h3>
-                    {profileData?.Education?.map((education, index) => {
-                      return (
-                        <div>
-                          <h4>{education.Name}</h4>
-                          <p>
-                            <Moment format="YYYY">{education.StartDate}</Moment>
-                            {"-"}
-                            <Moment format="YYYY">{education.EndDate}</Moment>
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </Col>
-              </Row>
-            </div>
             <Row gutter={16}>
               {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
                                         <div className="left-rail">
@@ -157,6 +84,7 @@ class ProfileDetail extends Component {
                     />
                   )}
                 </div>
+               
                 <div>
                   {isDataRefresh && (
                     <Interests
@@ -213,6 +141,9 @@ class ProfileDetail extends Component {
                 </div>
                 <div>
                   <Courses loadUserCourse={true} />
+                </div>
+                <div>
+                    <ChangePassword />
                 </div>
               </Col>
             </Row>

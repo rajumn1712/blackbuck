@@ -101,7 +101,7 @@ class CreateGroup extends Component {
         let { groupObject } = this.state;
         let InvitesArray = [];
         values.Invitations.forEach(item => {
-            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item, Image: this.props?.profile.ProfilePic, })
+            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item, Image: this.props?.profile.ProfilePic, CreatedDate:new Date()})
         });
         return {
             GroupName: values.GroupName,
@@ -213,7 +213,7 @@ class CreateGroup extends Component {
                 if (this.props.refreshSave)
                     this.props.refreshSave();
                 notify({
-                    description: "Group saved successfully",
+                    description: this.props.Type == "Edit" ? "Group edited successfully" : "Group saved successfully",
                     message: "Group",
                 });
             } else {
@@ -241,7 +241,7 @@ class CreateGroup extends Component {
     renderSelectItem = (item) => {
         return <div>
             <List.Item>
-                <List.Item.Meta className="privacy-dropdown"
+                <List.Item.Meta className="privacy-dropdown sample-check"
                     avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="select-image" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
                     description={item.Description ? <div className="f-12">{item.Description}</div> : ''}
@@ -308,13 +308,13 @@ class CreateGroup extends Component {
                                             <Form layout="vertical" >
                                                 <Row gutter={24}>
                                                     <Col xs={24}>
-                                                        <Form.Item label="Group Name" className="custom-fields">
+                                                        <Form.Item label="Group Name" className="custom-fields" name="Group Name" rules={[{ required: true }]}>
                                                             <Field
                                                                 className="ant-input"
                                                                 name="GroupName"
                                                                 value={values.GroupName}
                                                                 placeholder="Enter group name here"
-                                                                maxlength={150}
+                                                                maxlength={150} 
                                                                 autocomplete="off"
                                                             />
                                                             <span className="validateerror">
@@ -326,7 +326,7 @@ class CreateGroup extends Component {
                                                     <Col xs={24}>
                                                         <Form.Item
                                                             label="Group Type"
-                                                            className="custom-fields custom-select"
+                                                            className="custom-fields custom-select" name="Group Type" rules={[{ required: true }]}
                                                         >
                                                             <Select
                                                                 defaultValue=""
@@ -355,7 +355,7 @@ class CreateGroup extends Component {
                                                     <Col xs={12}>
                                                         <Form.Item
                                                             label="Choose Privacy"
-                                                            className="custom-fields custom-select"
+                                                            className="custom-fields custom-select" name="Choose Privacy" rules={[{ required: true }]}
                                                         >
                                                             <Select
                                                                 defaultValue=""
@@ -380,13 +380,13 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                    <Col xs={12}>
+                                                    <Col xs={12} id="inviteFrnd1">
                                                         <Form.Item
                                                             label="Invite Friends (optional)"
                                                             className="custom-fields multi-select custom-select "
                                                             placeholder="Select Invitee"
                                                         >
-                                                            <Select
+                                                            <Select 
                                                                 defaultValue=""
                                                                 name="Invitations"
                                                                 value={values.Invitations}
@@ -395,6 +395,7 @@ class CreateGroup extends Component {
                                                                 }
                                                                 optionLabelProp="label"
                                                                 mode="multiple"
+                                                                getPopupContainer={() => document.querySelector('#inviteFrnd1')}
                                                             >
                                                                 {FriendsList.map((item, index) => {
                                                                     return (
@@ -412,7 +413,7 @@ class CreateGroup extends Component {
                                                     {values.Type == 'Private' && <Col xs={12}>
                                                         <Form.Item
                                                             label="Hide Group"
-                                                            className="custom-fields custom-select"
+                                                            className="custom-fields custom-select" name="Hide Group" rules={[{ required: true }]}
                                                         >
                                                             <Select
                                                                 defaultValue="Visible"
@@ -438,7 +439,7 @@ class CreateGroup extends Component {
                                                     </Col>
                                                     }
                                                     <Col xs={24}>
-                                                        <Form.Item label="Location" className="custom-fields">
+                                                        <Form.Item label="Location" className="custom-fields" name="Location" rules={[{ required: true }]}>
                                                             <Field
                                                                 className="ant-input"
                                                                 name="Location"
@@ -455,7 +456,7 @@ class CreateGroup extends Component {
                                                 </Row>
                                                 <Row gutter={24}>
                                                     <Col xs={24}>
-                                                        <Form.Item label="Description" className="custom-fields">
+                                                        <Form.Item label="Description" className="custom-fields" name="Description" rules={[{ required: true }]}>
                                                             <Field
                                                                 className="ant-input"
                                                                 name="Description"

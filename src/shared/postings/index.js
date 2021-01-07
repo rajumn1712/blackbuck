@@ -37,7 +37,7 @@ import PostCardModal from "../components/postings/PostModal";
 import notify from "../components/notification";
 import { uuidv4 } from "../../utils";
 import VisSenseFactory from "vissense";
-import { postUpdation } from "../../reducers/auth";
+import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
@@ -65,7 +65,19 @@ class Postings extends Component {
     this.loadPosts();
   }
   componentWillUnmount() {
+    debugger
     window.removeEventListener("scroll", this.handleScroll);
+    if (window.location.href.indexOf('search') < 0) {
+      this.props.updateSearch()
+    }
+
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.match?.params.key !== this.props.match?.params.key) {
+      this.setState({ ...this.state, page: 1, allPosts: [] }, () => {
+        this.loadPosts();
+      })
+    }
   }
   handleScroll = () => {
     const windowHeight =
@@ -88,7 +100,7 @@ class Postings extends Component {
     }
   };
   loadMore(e) {
-    if (this.state.loadMore) {
+    if (this.state.loadMore && !this.state.loading) {
       let { page } = this.state;
       page += 1;
       this.setState({ ...this.state, page, loading: true }, () => {
@@ -103,7 +115,10 @@ class Postings extends Component {
       this.state.page,
       this.state.pageSize,
       this.props.postingsType,
-      this.props.groupData?.GroupId
+      this.props.groupData?.GroupId,
+      this.props.id,
+      this.props.match?.params?.key,
+      this.props.match?.params?.type,
     );
     let { allPosts } = this.state;
     if (!isFromSave) {
@@ -128,11 +143,11 @@ class Postings extends Component {
               this.enableVideoAutoPlay(videoElements[i]);
             }
           }
-          //  for (const k in allPosts) {
-          //    if (allPosts[k].commentsCount > 0) {
-          //      this.showComment(allPosts[k]);
-          //    }
-          //  }
+          for (const k in allPosts) {
+            if (allPosts[k].commentsCount > 0) {
+              this.showComment(allPosts[k]);
+            }
+          }
         }
       );
     }
@@ -145,6 +160,7 @@ class Postings extends Component {
       }
     }
   };
+
   enableVideoAutoPlay(myVideo) {
     var videoElementArea = VisSense(myVideo);
     var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
@@ -157,23 +173,44 @@ class Postings extends Component {
     var videoVisibilityMonitor = monitorBuilder.build();
     videoVisibilityMonitor.start();
   }
-  titleAvatar = (user, date) => {
-    return (
-      <Link
+  titleAvatar = (user, date, isShareCard, mainUser, isGroup) => {
+    const _key = isShareCard ? "share" : (isGroup ? "group" : "normal")
+    const elements = {
+      share: <span className="overflow-text text-secondary"> <Link
         to={
           this.props?.profile.Id == user.UserId
-            ? "/profile/" + "1"
+            ? "/profile/IsProfileTab"
             : "/profileview/" + user.UserId
         }
-      >
-        <Meta
-          avatar={<Avatar src={user.Image || defaultUser} />}
-          title={
-            <span className="overflow-text post-title">{user.Firstname}</span>
-          }
-          description={<Moment fromNow>{date}</Moment>}
-        />
-      </Link>
+      ><span className="post-title">{user.Firstname}</span></Link> {isShareCard && <> Shared <Link
+        to={"/profileview/" + mainUser.UserId}
+      ><span className="post-title">{mainUser.Firstname}</span></Link> Post </>} </span>,
+      group: <span className="overflow-text text-secondary"><Link
+        to={
+          this.props?.profile.Id == user?.UserId
+            ? "/profile/IsProfileTab"
+            : "/profileview/" + user?.UserId
+        }
+      ><span className="post-title">{user?.Firstname}</span></Link>{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
+        to={"/groupview/" + mainUser?.GroupId}
+      ><span className="post-title">{mainUser?.Firstname}</span></Link></>}</span>,
+      normal: <span className="overflow-text text-secondary"> <Link
+        to={
+          this.props?.profile.Id == user.UserId
+            ? "/profile/IsProfileTab"
+            : "/profileview/" + user.UserId
+        }
+      ><span className="post-title">{user.Firstname}</span></Link> </span>
+    }
+    return (
+      <Meta
+        avatar={<Avatar src={user.Image || defaultUser} />}
+        title={
+          elements[_key]
+        }
+        description={<Moment fromNow>{date}</Moment>}
+      />
+
     );
   };
   closed = () => {
@@ -225,7 +262,8 @@ class Postings extends Component {
     }
   };
   editPost = (post) => {
-    this.sharebox.editPost(post);
+    this.sharebox.editPost(JSON.parse(JSON.stringify(post)));
+    //json added for deep copy
   };
   handleCancel = () => {
     this.setState({ postEditData: {} });
@@ -252,7 +290,7 @@ class Postings extends Component {
                             index === 0
                               ? "image-box single"
                               : "image-box img-" +
-                                (imageObj.length <= 4 ? imageObj.length : 4)
+                              (imageObj.length <= 4 ? imageObj.length : 4)
                           }
                         >
                           <img src={image.Name || image} />
@@ -294,7 +332,7 @@ class Postings extends Component {
       },
       Docs: () => {
         return (
-          <div className="docs mb-16">
+          <div className="docs">
             <List
               itemLayout="horizontal"
               dataSource={imageObj}
@@ -355,7 +393,7 @@ class Postings extends Component {
   };
   handleActions = async (event, type, post) => {
     event.stopPropagation();
-    type = type === "Whistles" ? "Whistles" : type;
+    type = type === "Whistles" ? "Whistiles" : type;
     type = type === "Love" ? "Loves" : type;
     const { Id, ProfilePic, FirstName, Email, LastName } = this.props.profile;
     const saveObj = {
@@ -430,11 +468,11 @@ class Postings extends Component {
         icons: "post-icons savepost-icon",
         subTitle: "Save this item for later",
       },
-      {
-        action: "Turn on Notifications",
-        icons: "post-icons notify-icon",
-        subTitle: "Keep notify from this user",
-      },
+      // {
+      //   action: "Turn on Notifications",
+      //   icons: "post-icons notify-icon",
+      //   subTitle: "Keep notify from this user",
+      // },
     ];
     if (this.props.postingsType === "saved") {
       return [
@@ -449,8 +487,8 @@ class Postings extends Component {
       user.UserId === this.props.profile.Id
         ? ownerActions.concat(actionsList)
         : this.props.postingsType === "group" && this.props.groupData?.IsAdmin
-        ? groupActions.concat(actionsList)
-        : actionsList;
+          ? groupActions.concat(actionsList)
+          : actionsList;
     return result;
   };
   deletePost = (post) => {
@@ -488,191 +526,184 @@ class Postings extends Component {
       this.setState({ reactionsLoading: false, postReactions: actions });
     }
   };
-  renderPost = (post) => {
-    return (
-      <div
-        className={`post-card ${
-          this.state.commentselection.indexOf(post.id) > -1
-            ? "comment-show"
-            : ""
-        }`}
-      >
-        <Card
-          title={this.titleAvatar(post.userdetails, post.date)}
-          bordered={true}
-          extra={
-            <SideAction
-              clickedEvent={(event, name) =>
-                this.handleEvent(event, name, post)
-              }
-              actionsList={this.fetchCardActions(post.userdetails)}
-            />
+  renderShareCard = (post) => {
+    return <Card title={this.titleAvatar(post.userdetails, post.date, true, post.Shares[0])}
+      bordered={true}
+      extra={
+        <SideAction
+          clickedEvent={(event, name) =>
+            this.handleEvent(event, name, post)
           }
-          actions={[
-            <EmojiAction
-              IsUserLikes={post.IsUserLikes}
-              key="emoji"
-              mystate={post}
-              clickedEvent={(event, name) =>
-                this.handleActions(event, name, post)
-              }
-            />,
-            <CommentAction
-              key="comment"
-              clickedEvent={() => this.showComment(post)}
-            />,
-            <ShareAction key="share" url={`http://blackbuck.me/blackbuck.uat/post_view/${post.id}`} imgUrl={post.image} />
-          ]}
-          // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
-        >
-          {/* <Title level={5} className="post-title">{post.title}</Title> */}
-          <Paragraph className="post-desc">
-            <ShowMoreText lines={3} more="see more" less="see less">
-              {post.meassage}
-            </ShowMoreText>
-            {post.tags != null && post.tags?.length > 0 && (
-              <div className="post-tag">
-                {post.tags?.map((tag, index) => {
-                  return (
-                    <>
-                      {tag != undefined && tag != null && (
-                        <Tag key={index}>
-                          <Link to="/commingsoon">{`${
-                            (tag?.Name || tag).startsWith("#") ? "" : "#"
+          actionsList={this.fetchCardActions(post.userdetails)}
+        />
+      }
+      actions={[
+        <EmojiAction
+          IsUserLikes={post.IsUserLikes}
+          key="emoji"
+          mystate={post}
+          clickedEvent={(event, name) =>
+            this.handleActions(event, name, post)
+          }
+        />,
+        <CommentAction
+          key="comment"
+          clickedEvent={() => this.showComment(post)}
+        />,
+        <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
+      ]}>
+      <Card
+        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
+      >
+        {/* <Title level={5} className="post-title">{post.title}</Title> */}
+        <Paragraph className="post-desc">
+          <ShowMoreText lines={3} more="see more" less="see less">
+            {post.meassage}
+          </ShowMoreText>
+          {post.tags != null && post.tags?.length > 0 && (
+            <div className="post-tag">
+              {post.tags?.map((tag, index) => {
+                return (
+                  <>
+                    {tag != undefined && tag != null && (
+                      <Tag key={index}>
+                        <Link to={`search/${(tag?.Name || tag).replace("#", "")}/Tags`}>{`${(tag?.Name || tag).startsWith("#") ? "" : "#"
                           }${tag?.Name || tag || ""}`}</Link>
-                        </Tag>
-                      )}
-                    </>
-                  );
-                })}
-              </div>
-            )}
-          </Paragraph>
+                      </Tag>
+                    )}
+                  </>
+                );
+              })}
+            </div>
+          )}
+        </Paragraph>
 
-          <Card.Meta
-            className="post-image"
-            avatar={
-              <div onClick={() => this.showModal(post)}>
-                {this.renderPostImages(post.image, post.type, post)}
-              </div>
-            }
-          ></Card.Meta>
-          <div className="d-flex justify-content-between mx-16 py-16">
-            {
-              <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
-                <ul className="card-actions-count pl-0">
-                  {post.likes > 0 && (
-                    <Tooltip
-                      overlayClassName="like-tabs"
-                      title={
-                        <div>
-                          {this.state.reactionsLoading ? (
-                            <Spin />
-                          ) : (
-                            <div className="likes-counters">
-                              <h4>Likes</h4>
-                              {this.state.postReactions?.Likes?.map(
-                                (item, indx) => (
-                                  <p key={indx}>{item.Firstname}</p>
-                                )
-                              )}{" "}
-                            </div>
-                          )}{" "}
-                        </div>
-                      }
-                    >
-                      <li>
-                        <span className="counter-icon likes cursor-pointer"></span>
-                      </li>
-                    </Tooltip>
-                  )}
-                  {post.loves > 0 && (
-                    <Tooltip
-                      overlayClassName="like-tabs"
-                      title={
-                        <div>
-                          {this.state.reactionsLoading ? (
-                            <Spin />
-                          ) : (
-                            <div className="likes-counters">
-                              <h4>Loves</h4>{" "}
-                              {this.state.postReactions?.Loves?.map(
-                                (item, indx) => (
-                                  <p key={indx}>{item.Firstname}</p>
-                                )
-                              )}{" "}
-                            </div>
-                          )}{" "}
-                        </div>
-                      }
-                    >
-                      <li>
-                        <span className="counter-icon loves cursor-pointer"></span>
-                      </li>
-                    </Tooltip>
-                  )}
-                  {post.claps > 0 && (
-                    <Tooltip
-                      overlayClassName="like-tabs"
-                      title={
-                        <div>
-                          {this.state.reactionsLoading ? (
-                            <Spin />
-                          ) : (
-                            <div className="likes-counters">
-                              <h4>Claps</h4>
-                              {this.state.postReactions?.Claps?.map(
-                                (item, indx) => (
-                                  <p key={indx}>{item.Firstname}</p>
-                                )
-                              )}{" "}
-                            </div>
-                          )}
-                        </div>
-                      }
-                    >
-                      <li>
-                        <span className="counter-icon claps cursor-pointer"></span>
-                      </li>
-                    </Tooltip>
-                  )}
-                  {post.whistiles > 0 && (
-                    <Tooltip
-                      overlayClassName="like-tabs"
-                      title={
-                        <div>
-                          {this.state.reactionsLoading ? (
-                            <Spin />
-                          ) : (
-                            <div className="likes-counters">
-                              <h4>Whistiles</h4>{" "}
-                              {this.state.postReactions?.Whistiles?.map(
-                                (item, indx) => (
-                                  <p key={indx}>{item.Firstname}</p>
-                                )
-                              )}{" "}
-                            </div>
-                          )}
-                        </div>
-                      }
-                    >
-                      <li>
-                        <span className="counter-icon whistles cursor-pointer"></span>
-                      </li>
-                    </Tooltip>
-                  )}
-                  {(post.loves || 0) +
-                    (post.claps || 0) +
-                    (post.whistiles || 0) +
-                    (post.likes || 0) >
-                    0 && (
-                    <Tooltip
-                      overlayClassName="like-tabs"
-                      title={
-                        <div className="likes-counters">
-                          {this.state.reactionsLoading ? (
-                            <Spin />
-                          ) : (
+        <Card.Meta
+          className="post-image"
+          avatar={
+            <div onClick={post.type !== 'text' && post.type !== 'Docs' ? () => this.showModal(post) : ''}>
+              {this.renderPostImages(post.image, post.type, post)}
+            </div>
+          }
+        ></Card.Meta>
+
+      </Card>
+      <div className="d-flex justify-content-between mx-16 pt-8 pb-16">
+        {
+          <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
+            <ul className="card-actions-count pl-0">
+              {post.likes > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Likes</h4>
+                            {this.state.postReactions?.Likes?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}{" "}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon likes cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.loves > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Loves</h4>{" "}
+                            {this.state.postReactions?.Loves?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}{" "}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon loves cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.claps > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Claps</h4>
+                            {this.state.postReactions?.Claps?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon claps cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.whistiles > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Whistles</h4>{" "}
+                            {this.state.postReactions?.Whistiles?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon whistles cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {(post.loves || 0) +
+                (post.claps || 0) +
+                (post.whistiles || 0) +
+                (post.likes || 0) >
+                0 && (
+                  <Tooltip
+                    overlayClassName="like-tabs"
+                    title={
+                      <div className="likes-counters">
+                        {this.state.reactionsLoading ? (
+                          <Spin />
+                        ) : (
                             <div>
                               {" "}
                               {this.state.postReactions?.PostActions?.map(
@@ -682,39 +713,269 @@ class Postings extends Component {
                               )}{" "}
                             </div>
                           )}
-                        </div>
-                      }
-                    >
-                      {" "}
-                      <li>
-                        <a>
-                          {" "}
-                          {(post.loves || 0) +
-                            (post.claps || 0) +
-                            (post.whistiles || 0) +
-                            (post.likes || 0)}
-                        </a>
-                      </li>
-                    </Tooltip>
-                  )}
-                </ul>
-              </span>
-            }
-            <ul className="card-actions-count">
-              {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
-              {post.commentsCount != null && (
-                <li
-                  className="mr-0 cursor-pointer"
-                  onClick={() => this.showComment(post)}
-                >
-                  <span></span>
-                  {post.commentsCount} <span> Comments</span>
-                </li>
-              )}
-              {/* <li><span></span>2 <span> Shares</span></li> */}
+                      </div>
+                    }
+                  >
+                    {" "}
+                    <li>
+                      <a>
+                        {" "}
+                        {(post.loves || 0) +
+                          (post.claps || 0) +
+                          (post.whistiles || 0) +
+                          (post.likes || 0)}
+                      </a>
+                    </li>
+                  </Tooltip>
+                )}
             </ul>
+          </span>
+        }
+        <ul className="card-actions-count">
+          {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
+          {post.commentsCount != null && (
+            <li
+              className="mr-0 cursor-pointer"
+              onClick={() => this.showComment(post)}
+            >
+              <span></span>
+              {post.commentsCount} <span> Comments</span>
+            </li>
+          )}
+          {/* <li><span></span>2 <span> Shares</span></li> */}
+        </ul>
+      </div>
+    </Card>
+  }
+  renderCommonCard = (post) => {
+    return <Card
+      title={this.titleAvatar(post.userdetails, post.date, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false))}
+      bordered={true}
+      extra={
+        <SideAction
+          clickedEvent={(event, name) =>
+            this.handleEvent(event, name, post)
+          }
+          actionsList={this.fetchCardActions(post.userdetails)}
+        />
+      }
+      actions={[
+        <EmojiAction
+          IsUserLikes={post.IsUserLikes}
+          key="emoji"
+          mystate={post}
+          clickedEvent={(event, name) =>
+            this.handleActions(event, name, post)
+          }
+        />,
+        <CommentAction
+          key="comment"
+          clickedEvent={() => this.showComment(post)}
+        />,
+        <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
+      ]}
+    // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
+    >
+      {/* <Title level={5} className="post-title">{post.title}</Title> */}
+      <Paragraph className="post-desc">
+        <ShowMoreText lines={3} more="see more" less="see less">
+          {post.meassage}
+        </ShowMoreText>
+        {post.tags != null && post.tags?.length > 0 && (
+          <div className="post-tag">
+            {post.tags?.map((tag, index) => {
+              return (
+                <>
+                  {tag != undefined && tag != null && (
+                    <Tag key={index}>
+                      <Link to={`search/${(tag?.Name || tag).replace("#", "")}/Tags`}>{`${(tag?.Name || tag).startsWith("#") ? "" : "#"
+                        }${tag?.Name || tag || ""}`}</Link>
+                    </Tag>
+                  )}
+                </>
+              );
+            })}
           </div>
-        </Card>
+        )}
+      </Paragraph>
+
+      <Card.Meta
+        className="post-image"
+        avatar={
+          <div onClick={post.type !== 'text' && post.type !== 'Docs' ? () => this.showModal(post) : ''}>
+            {this.renderPostImages(post.image, post.type, post)}
+          </div>
+        }
+      ></Card.Meta>
+      <div className="d-flex justify-content-between mx-16 pt-8 pb-12">
+        {
+          <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
+            <ul className="card-actions-count pl-0">
+              {post.likes > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Likes</h4>
+                            {this.state.postReactions?.Likes?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}{" "}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon likes cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.loves > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Loves</h4>{" "}
+                            {this.state.postReactions?.Loves?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}{" "}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon loves cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.claps > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Claps</h4>
+                            {this.state.postReactions?.Claps?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon claps cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {post.whistiles > 0 && (
+                <Tooltip
+                  overlayClassName="like-tabs"
+                  title={
+                    <div>
+                      {this.state.reactionsLoading ? (
+                        <Spin />
+                      ) : (
+                          <div className="likes-counters">
+                            <h4>Whistles</h4>{" "}
+                            {this.state.postReactions?.Whistiles?.map(
+                              (item, indx) => (
+                                <p key={indx}>{item.Firstname}</p>
+                              )
+                            )}{" "}
+                          </div>
+                        )}
+                    </div>
+                  }
+                >
+                  <li>
+                    <span className="counter-icon whistles cursor-pointer"></span>
+                  </li>
+                </Tooltip>
+              )}
+              {(post.loves || 0) +
+                (post.claps || 0) +
+                (post.whistiles || 0) +
+                (post.likes || 0) >
+                0 && (
+                  <Tooltip
+                    overlayClassName="like-tabs"
+                    title={
+                      <div className="likes-counters">
+                        {this.state.reactionsLoading ? (
+                          <Spin />
+                        ) : (
+                            <div>
+                              {" "}
+                              {this.state.postReactions?.PostActions?.map(
+                                (item, indx) => (
+                                  <p key={indx}>{item.Firstname}</p>
+                                )
+                              )}{" "}
+                            </div>
+                          )}
+                      </div>
+                    }
+                  >
+                    {" "}
+                    <li>
+                      <a>
+                        {" "}
+                        {(post.loves || 0) +
+                          (post.claps || 0) +
+                          (post.whistiles || 0) +
+                          (post.likes || 0)}
+                      </a>
+                    </li>
+                  </Tooltip>
+                )}
+            </ul>
+          </span>
+        }
+        <ul className="card-actions-count">
+          {/* {(post.likes != null && post?.likes != 0) && <li><span></span>{post.likes} <span> Likes</span></li>} */}
+          {post.commentsCount != null && (
+            <li
+              className="mr-0 cursor-pointer"
+              onClick={() => this.showComment(post)}
+            >
+              <span></span>
+              {post.commentsCount} <span> Comments</span>
+            </li>
+          )}
+          {/* <li><span></span>2 <span> Shares</span></li> */}
+        </ul>
+      </div>
+    </Card>
+
+  }
+  renderPost = (post) => {
+    return (
+      <div
+        className={`post-card ${this.state.commentselection.indexOf(post.id) > -1
+          ? "comment-show"
+          : ""
+          }`}
+      >
+        {post.Shares && post.Shares.length !== 0 ? this.renderShareCard(post) : this.renderCommonCard(post)}
         {this.state.commentselection.indexOf(post.id) > -1 && (
           <Comments
             onUpdate={(prop, value) => {
@@ -806,6 +1067,9 @@ const mapDispatchToProps = (dispatch) => {
     upadateProfile: (info, type) => {
       dispatch(postUpdation(info, type));
     },
+    updateSearch: () => {
+      dispatch(updateSearchValue(null));
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Postings);

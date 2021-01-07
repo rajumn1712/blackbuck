@@ -49,16 +49,15 @@ const ownerActions = [
 ];
 
 const { Option } = Select;
-const internshipsObj = {
-  InternshipId: "",
-  CompanyLogo: "",
-  uploadsources: [],
-};
 class Intership extends Component {
   formRef = createRef();
   state = {
     internships: this.props.internships,
-    internshipsObj: internshipsObj,
+    internshipsObj: {
+      InternshipId: "",
+      CompanyLogo: "",
+      uploadsources: [],
+    },
     initialValues: {
       CompanyName: "",
       ShortName: "",
@@ -107,13 +106,19 @@ class Intership extends Component {
         this.setState({ ...this.state, fileUploading: false });
       }
       if (status === "done") {
-        const { internshipsObj } = this.state;
+        let { internshipsObj } = this.state;
         internshipsObj.CompanyLogo = info.file.response[0];
-        this.setState({ internshipsObj: internshipsObj });
-        message.success(`${info.file.name} file uploaded successfully.`);
+        this.setState({ ...this.state,internshipsObj });
+        notify({
+          description: `Logo uploaded successfully.`,
+          message: "Upload",
+        });
         this.setState({ ...this.state, fileUploading: false });
       } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        notify({
+          description: `Logo upload failed.`,
+          message: "Upload",
+        });
         this.setState({ ...this.state, fileUploading: false });
       }
     },
@@ -132,9 +137,8 @@ class Intership extends Component {
         File: "",
         Size: "",
       };
-      let { internshipsObj } = {
-        ...this.state,
-      };
+      let { internshipsObj } = this.state
+      
       if (status === "done") {
         certificates.Avatar = info.file.name.split(".")[1];
         certificates.File = info.file.name;
@@ -147,12 +151,12 @@ class Intership extends Component {
           fileUpload: false,
         });
         notify({
-          description: `${info.file.name} file uploaded successfully.`,
+          description: `Certificate uploaded successfully.`,
           message: "Upload",
         });
       } else if (status === "error") {
         notify({
-          description: `${info.file.name} file upload failed.`,
+          description: `File upload failed.`,
           type: "error",
           message: "Upload",
         });
@@ -160,9 +164,9 @@ class Intership extends Component {
     },
   };
   deleteLogo = () => {
-    const internshipsObj = { ...this.state };
+    const internshipsObj = { ...this.state.internshipsObj };
     internshipsObj.CompanyLogo = "";
-    this.setState({ internshipsObj: internshipsObj });
+    this.setState({...this.state, internshipsObj: internshipsObj });
   };
   deleteFile = (key) => {
     const internship = { ...this.state.internshipsObj };
@@ -176,10 +180,10 @@ class Intership extends Component {
         break;
       case "Delete":
         Modal.confirm({
-          title: "Alert",
+          title: "Confirm",
           icon: "",
           content: "Are you sure want to delete internship?",
-          okText: "Delete",
+          okText: "Ok",
           cancelText: "Cancel",
           onOk: () => this.deleteInternship(item),
         });
@@ -208,7 +212,9 @@ class Intership extends Component {
       const { CompanyName, ShortName, Location, Duration } = internship;
       internshipsObj.InternshipId = internship.InternshipId;
       internshipsObj.CompanyLogo = internship.CompanyLogo;
-      internshipsObj.uploadsources = [...internship.Certificate];
+      internshipsObj.uploadsources = internship.Certificate
+        ? [...internship.Certificate]
+        : [];
       Object.assign(initialValues, {
         CompanyName,
         ShortName,
@@ -261,12 +267,20 @@ class Intership extends Component {
       saveInternships(saveObj).then((res) => {
         this.setState(
           {
+            ...this.state,
             loading: false,
             visible: false,
+            internshipsObj: {
+              InternshipId: "",
+              CompanyLogo: "",
+              uploadsources: [],
+            },
           },
           () => {
             notify({
-              description: "Internship saved successfully",
+              description: `Internship ${
+                this.state.isEdit ? "edited" : "saved"
+              } successfully`,
               message: "Internship",
             });
             this.props.callback(true);
@@ -296,7 +310,7 @@ class Intership extends Component {
   render() {
     const { user } = store.getState().oidc;
     const data = [...this.state.internships];
-    const { internshipsObj, duration, initialValues ,visible} = this.state;
+    const { internshipsObj, duration, initialValues, visible } = this.state;
     return (
       <div className="custom-card internship-card">
         <Card
@@ -352,7 +366,7 @@ class Intership extends Component {
                       {item.CompanyLogo ? (
                         <img src={item.CompanyLogo} />
                       ) : (
-                        item.CompanyName
+                        item.ShortName.substring(0,2)
                       )}
                     </div>
                     <h4 className="title">{item.CompanyName}</h4>
@@ -384,190 +398,196 @@ class Intership extends Component {
           saved={this.handleOk}
         >
           {this.state.loading && <Loader className="loader-top-middle" />}
-         {visible && <Formik
-            enableReinitialize
-            initialValues={initialValues}
-            innerRef={this.formRef}
-            validate={(values) => this.handleValidate(values)}
-            // validationSchema={this.validateSchema}
-          >
-            {({ values, setFieldValue }) => {
-              return (
-                <Form layout="vertical">
-                  <Row gutter={8}>
-                    <Col xs={24}>
-                      <Form.Item
-                        label="Company Name"
-                        name="Company Name"
-                        rules={[{ required: true }]}
-                        className="custom-fields"
-                      >
-                        <Field
-                          className="ant-input"
-                          name="CompanyName"
-                          value={values.CompanyName}
-                        />
-                        <span className="validateerror">
-                          <ErrorMessage name="CompanyName" />
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24}>
-                      <Form.Item
-                        label="Short Name"
-                        name="Short Name"
-                        rules={[{ required: true }]}
-                        className="custom-fields"
-                      >
-                        <Field
-                          className="ant-input"
-                          name="ShortName"
-                          value={values.ShortName}
-                        />
-                        <span className="validateerror">
-                          <ErrorMessage name="ShortName" />
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12}>
-                      <Form.Item
-                        label="Place"
-                        name="Place"
-                        rules={[{ required: true }]}
-                        className="custom-fields"
-                      >
-                        <Field
-                          className="ant-input"
-                          name="Location"
-                          value={values.Location}
-                        />
-                        <span className="validateerror">
-                          <ErrorMessage name="Location" />
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12}>
-                      <Form.Item
-                        label="Duration"
-                        name="Duration"
-                        rules={[{ required: true }]}
-                        className="custom-fields custom-select"
-                      >
-                        <Select
-                          name="Duration"
-                          defaultValue=""
-                          onChange={(value) => setFieldValue("Duration", value)}
-                          value={values.Duration}
+          {visible && (
+            <Formik
+              enableReinitialize
+              initialValues={initialValues}
+              innerRef={this.formRef}
+              validate={(values) => this.handleValidate(values)}
+              // validationSchema={this.validateSchema}
+            >
+              {({ values, setFieldValue }) => {
+                return (
+                  <Form layout="vertical">
+                    <Row gutter={8}>
+                      <Col xs={24}>
+                        <Form.Item
+                          label="Company Name"
+                          name="Company Name"
+                          rules={[{ required: true }]}
+                          className="custom-fields"
                         >
-                          <Option value="">Select Duration</Option>
-                          {duration.map((duration, index) => {
-                            return (
-                              <Option key={index} value={duration}>
-                                {duration}
-                              </Option>
-                            );
-                          })}
-                        </Select>
-                        <span className="validateerror">
-                          <ErrorMessage name="Duration" />
-                        </span>
-                      </Form.Item>
-                    </Col>
+                          <Field
+                            className="ant-input"
+                            name="CompanyName"
+                            value={values.CompanyName}
+                          />
+                          <span className="validateerror">
+                            <ErrorMessage name="CompanyName" />
+                          </span>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24}>
+                        <Form.Item
+                          label="Short Name"
+                          name="Short Name"
+                          rules={[{ required: true }]}
+                          className="custom-fields"
+                        >
+                          <Field
+                            className="ant-input"
+                            name="ShortName"
+                            value={values.ShortName}
+                          />
+                          <span className="validateerror">
+                            <ErrorMessage name="ShortName" />
+                          </span>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12}>
+                        <Form.Item
+                          label="Place"
+                          name="Place"
+                          rules={[{ required: true }]}
+                          className="custom-fields"
+                        >
+                          <Field
+                            className="ant-input"
+                            name="Location"
+                            value={values.Location}
+                          />
+                          <span className="validateerror">
+                            <ErrorMessage name="Location" />
+                          </span>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12}>
+                        <Form.Item
+                          label="Duration"
+                          name="Duration"
+                          rules={[{ required: true }]}
+                          className="custom-fields custom-select"
+                        >
+                          <Select
+                            name="Duration"
+                            defaultValue=""
+                            onChange={(value) =>
+                              setFieldValue("Duration", value)
+                            }
+                            value={values.Duration}
+                          >
+                            <Option value="">Select Duration</Option>
+                            {duration.map((duration, index) => {
+                              return (
+                                <Option key={index} value={duration}>
+                                  {duration}
+                                </Option>
+                              );
+                            })}
+                          </Select>
+                          <span className="validateerror">
+                            <ErrorMessage name="Duration" />
+                          </span>
+                        </Form.Item>
+                      </Col>
 
-                    <Col xs={24} md={12} className="mb-16">
-                      <Dragger
-                        className="upload"
-                        {...this.uploadProps}
-                        onRemove={() =>
-                          this.setState({
-                            ...this.state.internshipsObj,
-                            CompanyLogo: "",
-                          })
-                        }
-                      >
-                        {this.state.fileUploading && (
-                          <Loader className="loader-top-middle" />
-                        )}
-                        <span className="sharebox-icons photo-upload"></span>
-                        <p className="ant-upload-text mt-8 mb-0">Upload Logo</p>
-                      </Dragger>
-                    </Col>
-                    <Col xs={24} md={12} className="mb-16">
-                      <Dragger
-                        className="upload"
-                        {...this.uploadfileProps}
-                        onRemove={() =>
-                          this.setState({
-                            ...this.state.internshipsObj,
-                            Certificate: [],
-                          })
-                        }
-                      >
-                        {this.state.fileUpload && (
-                          <Loader className="loader-top-middle" />
-                        )}
-                        <span className="sharebox-icons photo-upload"></span>
-                        <p className="ant-upload-text mt-8 mb-0">
-                          Upload Certificate
-                        </p>
-                      </Dragger>
-                    </Col>
-
-                    <Col xs={24}>
-                      <div className="mb-16 upload-preview">
-                        <Image src={internshipsObj.CompanyLogo} />
-                        <a
-                          class="item-close"
-                          onClick={() =>
+                      <Col xs={24} md={12} className="mb-16">
+                        <Dragger
+                          className="upload"
+                          {...this.uploadProps}
+                          onRemove={() =>
                             this.setState({
                               ...this.state.internshipsObj,
                               CompanyLogo: "",
                             })
                           }
                         >
-                          {internshipsObj.CompanyLogo && (
-                            <Tooltip title="Remove">
-                              <span
-                                className="close-icon"
-                                onClick={() => this.deleteLogo()}
-                              ></span>
-                            </Tooltip>
+                          {this.state.fileUploading && (
+                            <Loader className="loader-top-middle" />
                           )}
-                        </a>
-                      </div>
-                      <div className="docs about-icons education">
-                        <List
-                          itemLayout="horizontal"
-                          dataSource={internshipsObj.uploadsources}
-                          renderItem={(item, indx) => (
-                            <List.Item className="upload-preview mt-8">
-                              <List.Item.Meta
-                                avatar={[
-                                  <span
-                                    className={`doc-icons ${item.Avatar}`}
-                                  ></span>,
-                                ]}
-                                title={item.File}
-                                description={
-                                  <div className="file-size f-14">
-                                    {item.Size} {"KB"}
-                                  </div>
-                                }
-                              />
-                              <span
-                                className="close-icon"
-                                onClick={() => this.deleteFile(indx)}
-                              ></span>
-                            </List.Item>
+                          <span className="sharebox-icons photo-upload"></span>
+                          <p className="ant-upload-text mt-8 mb-0">
+                            Upload Logo
+                          </p>
+                        </Dragger>
+                      </Col>
+                      <Col xs={24} md={12} className="mb-16">
+                        <Dragger
+                          className="upload"
+                          {...this.uploadfileProps}
+                          onRemove={() =>
+                            this.setState({
+                              ...this.state.internshipsObj,
+                              Certificate: [],
+                            })
+                          }
+                        >
+                          {this.state.fileUpload && (
+                            <Loader className="loader-top-middle" />
                           )}
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                </Form>
-              );
-            }}
-          </Formik>}
+                          <span className="sharebox-icons photo-upload"></span>
+                          <p className="ant-upload-text mt-8 mb-0">
+                            Upload Certificate
+                          </p>
+                        </Dragger>
+                      </Col>
+
+                      <Col xs={24}>
+                        <div className="mb-16 upload-preview">
+                          <Image src={internshipsObj.CompanyLogo} />
+                          <a
+                            class="item-close"
+                            onClick={() =>
+                              this.setState({
+                                ...this.state.internshipsObj,
+                                CompanyLogo: "",
+                              })
+                            }
+                          >
+                            {internshipsObj.CompanyLogo && (
+                              <Tooltip title="Remove">
+                                <span
+                                  className="close-icon"
+                                  onClick={() => this.deleteLogo()}
+                                ></span>
+                              </Tooltip>
+                            )}
+                          </a>
+                        </div>
+                        <div className="docs about-icons education">
+                          <List
+                            itemLayout="horizontal"
+                            dataSource={internshipsObj.uploadsources}
+                            renderItem={(item, indx) => (
+                              <List.Item className="upload-preview mt-8">
+                                <List.Item.Meta
+                                  avatar={[
+                                    <span
+                                      className={`doc-icons ${item.Avatar}`}
+                                    ></span>,
+                                  ]}
+                                  title={item.File}
+                                  description={
+                                    <div className="file-size f-14">
+                                      {item.Size} {"KB"}
+                                    </div>
+                                  }
+                                />
+                                <span
+                                  className="close-icon"
+                                  onClick={() => this.deleteFile(indx)}
+                                ></span>
+                              </List.Item>
+                            )}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                  </Form>
+                );
+              }}
+            </Formik>
+          )}
         </CommonModal>
       </div>
     );

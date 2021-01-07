@@ -42,6 +42,9 @@ const fetchFriendRequests = (user_id) => {
 const saveProfileImage = (user_id, type, obj) => {
   return apiClient.post(PROFILE_API + `saveProfilePic/${user_id}/${type}`, obj);
 };
+const saveGroupImage = (group_id, type, obj) => {
+  return apiClient.post(PROFILE_API + `updateGroupPics/${group_id}/${type}`, obj);
+};
 const saveAboutMe = (obj) => {
   return apiClient.post(PROFILE_API + `saveAboutMe`, obj);
 };
@@ -72,8 +75,8 @@ const cancelGroupRequest = (group_id, user_id) => {
 const fetchUserGroups = (user_id, take, skip) => {
   return apiClient.get(GROUPS_API + `getUserGroups/${user_id}/${take}/${skip}`);
 };
-const fetchTags = (take, skip) => {
-  return apiClient.get(TAGS_API + `getTags/${take}/${skip}`);
+const fetchTags = (user_id, take, skip) => {
+  return apiClient.get(TAGS_API + `getTags/${user_id}/${take}/${skip}`);
 };
 const fetchInterestsLu = (take, skip) => {
   return apiClient.get(PROFILE_API + `getAllInterests/${take}/${skip}`);
@@ -135,8 +138,8 @@ const editGroup = (group_id, userid, type) => {
 const fetchInerests = () => {
   return apiClient.get(FRIENDS_API + "getInterests");
 };
-const saveOnboard = (object) => {
-  return apiClient.post(FRIENDS_API + "saveUserInfo", object);
+const saveOnboard = (object, method) => {
+  return apiClient.post(FRIENDS_API + (method ? method : "saveUserInfo"), object);
 };
 const getAdminFriends = (user_id, groupid) => {
   return apiClient.get(PROFILE_API + `getAdminFriends/${groupid}/${user_id}`);
@@ -147,9 +150,31 @@ const saveInvitations = (object) => {
 const getMedia = (groupId, type, take, skip) => {
   return apiClient.get(PROFILE_API + `getGroupPhotos/${groupId}/${take}/${skip}/${type}`);
 };
-const getMembers=(groupId,take,skip)=>{
-  return apiClient.get(PROFILE_API + `getGroupMembers/${groupId}/${take}/${skip}`);
+const getMembers = (groupId, userId, take, skip) => {
+  return apiClient.get(PROFILE_API + `getGroupMembers/${groupId}/${userId}/${take}/${skip}`);
 }
+const deleteUserGroup = (group_id) => {
+  return apiClient.get(PROFILE_API + `groupDelete/${group_id}`);
+};
+const saveAdminUsers = (object) => {
+  return apiClient.post(PROFILE_API + "saveGroupAdminUsers", object);
+};
+const fetchUserColleges = () => {
+  return apiClient.get(FRIENDS_API + "getColleges");
+};
+
+const getNotifications = (userId,take,skip) => {
+  return apiClient.get(PROFILE_API + `getNotifications/${userId}/${take}/${skip}`);
+};
+const unFriend = (user_id, friend_id) => {
+  return apiClient.get(PROFILE_API + `deleteFriend/${user_id}/${friend_id}`)
+}
+const fetchNotificationCount = (userId) => {
+  return apiClient.get(PROFILE_API + `getNotificationsCount/${userId}`);
+};
+const saveUserPassword = (object) => {
+  return apiClient.post(process.env.REACT_APP_AUTHORITY + "/Account/ChangePassword", object);
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -160,6 +185,7 @@ export {
   acceptFrienRequest,
   fetchFriendRequests,
   saveProfileImage,
+  saveGroupImage,
   saveAboutMe,
   saveInternships,
   deleteinternship,
@@ -190,5 +216,12 @@ export {
   getAdminFriends,
   saveInvitations,
   getMedia,
-  getMembers
+  getMembers,
+  deleteUserGroup,
+  saveAdminUsers,
+  fetchUserColleges,
+  getNotifications,
+  unFriend,
+  fetchNotificationCount,
+  saveUserPassword
 };

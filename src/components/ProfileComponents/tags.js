@@ -4,16 +4,13 @@ import { Link } from 'react-router-dom';
 import { fetchTags } from '../../shared/api/apiServer';
 import '../../index.css';
 import '../../App.css';
-const data = [
-    { title: '#IPL' },
-    { title: '#COVID-19' },
-    { title: '#HBD@PK' },
-    { title: '#RRRMovie' },
-    { title: '#IPL 2020' }
-];
+import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import connectStateProps from '../../shared/stateConnect';
+import { connect } from 'react-redux';
+
 class FriendRequests extends Component {
     componentDidMount() {
-        fetchTags(10, 0).then(res => {
+        fetchTags(this.props?.profile?.Id, 10, 0).then(res => {
             const { tags } = this.state;
             res.data.forEach(item => {
                 if (Array.isArray(item)) {
@@ -23,12 +20,13 @@ class FriendRequests extends Component {
                     })
                 }
             });
-            this.setState({ tags: tags })
+            this.setState({ tags: tags, loading: false })
         });
     }
 
     state = {
-        tags: []
+        tags: [],
+        loading: true
     }
 
     render() {
@@ -37,11 +35,14 @@ class FriendRequests extends Component {
         return (
             <div className="custom-card tag-card">
                 <Card title="#Tags" bordered={false} >
-                    <List
+                    <List loading={this.state.loading}
                         itemLayout="vertical"
-                        dataSource={tags?.slice(0, 10)}
+                        dataSource={tags?.slice(0, 5)}
                         renderItem={item => (
-                            <div className="tag-name"><Link to="/commingsoon">{item}</Link></div>
+                            <div className="tag-name"><Link onClick={() => {
+                                this.props.updateSearchValue(item.replace("#", ""));
+                                this.props.history.push(`/search/${item.replace("#", "")}/Tags`)
+                            }}>{item}</Link></div>
 
                         )}
                     />
@@ -51,4 +52,7 @@ class FriendRequests extends Component {
         )
     }
 }
-export default FriendRequests;
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile };
+};
+export default withRouter(connectStateProps(connect(mapStateToProps)(FriendRequests)));

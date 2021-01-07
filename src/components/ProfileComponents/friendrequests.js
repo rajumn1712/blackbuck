@@ -49,6 +49,7 @@ class FriendRequests extends Component {
       Image: this.props?.profile?.ProfilePic,
       Email: this.props?.profile?.Email,
       Type: "accept",
+      CreatedDate:new Date(),
     };
     acceptFrienRequest(
       this.props.profile?.Id,
@@ -102,15 +103,17 @@ class FriendRequests extends Component {
               <List.Item>
                 <List.Item.Meta
                   avatar={
-                    <Avatar
+                    <Link to={"/profileview/" + item.UserId}><Avatar
                       className="request-image"
                       src={item.Image || defaultUser}
-                    />
+                    /></Link>
                   }
                   title={
                     <div className="d-flex align-items-center">
                       <span className="overflow-text">
+                      <Link className="overflow-text post-title" to={"/profileview/" + item.UserId}>
                         {[item.Firstname, item.Lastname].join(" ")}
+                        </Link>
                       </span>
                     </div>
                   }
@@ -127,8 +130,8 @@ class FriendRequests extends Component {
                         >
                           {item?.mutualFriends?.map((member, index) => {
                             return (
-                              <Avatar
-                                src={member.Image}
+                              <Link to={"/profileview/" + member.UserId}><Avatar
+                                src={member.Image || defaultUser}
                                 key={index}
                                 style={{
                                   backgroundColor: member.Image
@@ -143,6 +146,7 @@ class FriendRequests extends Component {
                                       member.Lastname.charAt(0),
                                     ].join("")}
                               </Avatar>
+                              </Link>
                             );
                           })}
                         </Avatar.Group>

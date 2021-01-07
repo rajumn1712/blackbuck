@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../shared/authentication/protected_route";
 import CommingSoon from "./comingsoon";
- import Friends from "../components/friends";
+import Friends from "../components/friends";
 // import Contact from "../contact-us";
 import Home from "../home";
 import Callback from "../shared/authentication/callback";
@@ -18,6 +18,13 @@ import { Col, Row } from "antd";
 import Settings from "./settings";
 import Notifications from "./notification";
 import Connection from '../connections';
+import SinglePostView from "./singlePostview";
+import Admin from "../admin";
+import LMSComponent from "../lms";
+import CMSComponent from "../careers";
+import CourseContent from "../lms/coursecontent";
+import QandA from "../lms/QandA";
+import OverView from "../lms/overview";
 
 
 const onBoard = () => {
@@ -34,18 +41,23 @@ const onBoard = () => {
 const Router = () => {
   return (
     <Switch>
-      <Route path="/notifications" component={Notifications} />
-      <Route path="/support" component={Help} />
-      <Route path="/settings" component={Settings} />
+      <ProtectedRoute path="/lms" component={LMSComponent} />
+      <ProtectedRoute path="/cms" component={CMSComponent} />
+      <ProtectedRoute path="/QandA" component={QandA} />
+      <ProtectedRoute path="/overview" component={OverView} />
+      <ProtectedRoute path="/coursecontent" component={CourseContent} />
+      <ProtectedRoute path="/admin" component={Admin} />
+      <ProtectedRoute path="/post/:id" component={SinglePostView} />
+      <ProtectedRoute path="/notifications" component={Notifications} />
+      <ProtectedRoute path="/support" component={Help} />
+      <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
-      <ProtectedRoute path="/friends" component={Connection} /> 
-      {/* <Route path="/contact" component={Contact} /> */}
+      <ProtectedRoute path="/friends" component={Connection} />
       <Route path="/callback" component={Callback} />
       <ProtectedRoute path="/profile/:tabkey" component={Profile} />
       <ProtectedRoute path="/profileview/:userId" component={ProfileView} />
       <Route path="/group" component={Group} />
       <ProtectedRoute path="/groupview/:id" component={GroupView} />
-      {/* <Route path="/creategroup" component={CreateGroup} /> */}
       <Route path="/commingsoon" component={CommingSoon} />
       <ProtectedRoute path="/newgroup/:id" component={CreateGroup} />
       <ProtectedRoute path="" component={Home} />

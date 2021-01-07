@@ -37,18 +37,44 @@ class VideoProfile extends Component {
         this.setState({ ...this.state, fileUploading: false });
       }
       if (status === "done") {
+        this.setState({...this.state,inputValue:''})
         let { inputValue } = this.state;
         inputValue = info.file.response[0];
         notify({
-          description: `${info.file.name} file uploaded successfully.`,
+          description: `Video uploaded successfully.`,
           message: "Upload",
         });
         this.setState({ ...this.state, fileUploading: false, inputValue });
       } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        notify({
+          message:"Upload",
+          description:'Something went wrong',
+          type:'error'
+        })
         this.setState({ ...this.state, fileUploading: false });
       }
     },
+    beforeUpload: (file) => {
+      const isMp4 = file.type === "video/mp4" || file.type === "video/mpeg4";
+    if (!isMp4) {
+      notify({
+        message:"Error",
+        description:'Video format not supported',
+        type:'error'
+      })
+      return false;
+    } else {
+      const fileMaxSize = 25 * 1000000;
+      if (file.size > fileMaxSize) {
+        notify({
+          message: "Upload",
+          description: `Video size does not exceed 25 MB`,
+          type: "warning",
+        });
+      }
+      return file.size <= fileMaxSize;
+    }
+    }  
   };
   showModal = (e) => {
     e.preventDefault();
@@ -71,8 +97,9 @@ class VideoProfile extends Component {
     if (response.ok) {
       this.setState(
         {
+          ...this.state,
           loading: false,
-          visible: false,
+          visible: false,inputValue:''
         },
         () => {
           notify({
@@ -92,7 +119,9 @@ class VideoProfile extends Component {
   };
   handleCancel = (e) => {
     this.setState({
+      ...this.state,
       visible: false,
+      inputValue:''
     });
   };
   render() {

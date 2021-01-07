@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip } from 'antd'
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip,Button } from 'antd'
+import { Link, withRouter } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
@@ -14,8 +14,9 @@ import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
 import { connect } from 'react-redux';
-import { fetchUserFriends } from '../shared/api/apiServer';
+import { fetchFriendRequests, fetchUserFriends, fetchNotificationCount} from '../shared/api/apiServer';
 import ChatSystem from '../utils/chat-system';
+import Notifications from '../components/notification';
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
@@ -24,63 +25,6 @@ const logout = () => {
     userLogout();
     userManager.signoutRedirect()
 }
-const notifications = (
-    <div className="notification-dropdown">
-        <div className="noti-dropdown-header">
-            <h3>Notifications</h3>
-            <Link to="/notifications" >View all</Link>
-        </div>
-        <Divider className="my-0" />
-        <div className="notification-list unread">
-            <div className="notification-image">
-                <Avatar src={avatar} />
-            </div>
-            <div className="notification-description ">
-                <p>Vin Diesel commented on your post.</p>
-                <span>3 minutes ago</span>
-            </div>
-        </div>
-        <div className="notification-list read">
-            <div className="notification-image">
-                <Avatar src={sherlyn} />
-            </div>
-            <div className="notification-description ">
-                <p>Shrelyn mentioned you in the timeline.</p>
-                <span>18 hours ago</span>
-            </div>
-        </div>
-        <div className="notification-list read">
-            <div className="notification-image">
-                <Avatar src={avatar2} />
-            </div>
-            <div className="notification-description ">
-                <p>Andrew sent you a friend request.</p>
-                <span>1 day ago</span>
-            </div>
-        </div>
-        <div className="notification-list  read">
-            <div className="notification-image">
-                <Avatar src={user_Image} />
-            </div>
-            <div className="notification-description">
-                <p>Simon added a new photo.</p>
-                <span>2 days ago</span>
-            </div>
-        </div>
-        <div className="notification-list read">
-            <div className="notification-image">
-                <Avatar src={userImage} />
-            </div>
-            <div className="notification-description">
-                <p>Vin Diesel shared his story.</p>
-                <span>3 days ago</span>
-            </div>
-        </div>
-    </div>
-);
-
-
-
 class HeaderComponent extends React.Component {
 
     state = {
@@ -92,7 +36,10 @@ class HeaderComponent extends React.Component {
         agentProfile: {
             imageUrl: null,
             teamName: null
-        }
+        },
+        notifications: null,
+        notificationsCount: 0,
+        search_value: this.props.search_value
     };
 
     showDrawer = async () => {
@@ -104,16 +51,47 @@ class HeaderComponent extends React.Component {
     };
     componentDidMount() {
         const storeState = store.getState();
-        const { FirstName, LastName, Email, ProfilePic } = storeState.oidc?.profile || {};
+        const { FirstName, LastName, Email, ProfilePic, Id } = storeState.oidc?.profile || {};
+        this.handleNotifications(Id);
         this.setState({ FirstName, LastName, Email, ProfilePic });
         store.subscribe(async () => {
             const state = store.getState();
             if (state.oidc?.profile) {
-                const { FirstName, LastName, Email, ProfilePic } = state.oidc.profile;
+                const { FirstName, LastName, Email, ProfilePic, Id } = state.oidc.profile;
+                this.handleNotifications(Id);
                 this.setState({ FirstName, LastName, Email, ProfilePic })
             }
-        })
+        });
 
+
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.search_value != this.props.search_value) { this.setState({ ...this.state, search_value: this.props.search_value }); }
+    }
+    async handleNotifications(id) {
+                const notifications = <div className="notification-dropdown">
+                    <div className="noti-dropdown-header p-12 text-left">
+                        <h3>Notifications</h3>
+                    </div>
+                    <Divider className="my-0" />
+                    <div className="notification-container">
+                    <Notifications onRef={notification=>this.notification=notification} type="ddl"/>
+                    </div>
+                    <Divider className="my-0" />
+                   {(this.state.notificationsCount>10) && <div className="p-8 pt-4">
+                    <Link className="f-16 semibold text-primary p-8 d-block button-hover" to="/profile/IsProfileNotificationsTab">View all</Link>
+                    </div>}
+                    
+                </div>;
+        this.setState({ ...this.state, notifications })
+        this.getNotificationsCount(id)
+
+    }
+    getNotificationsCount = async (id) => {
+        const notificationCount = await fetchNotificationCount(id ? id : (this.props?.profile?.Id));
+        if (notificationCount.ok) {
+            this.setState({ ...this.state, notificationsCount: notificationCount.data[0].Count })
+        }
     }
     onClose = () => {
         this.setState({
@@ -145,14 +123,19 @@ class HeaderComponent extends React.Component {
                 <Link to="/support"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
                 </Link>
             </Menu.Item>
+            { this.props?.profile?.Role?.is &&
+                <Menu.Item key="4">
+                    <Link to="/lms"><span className="icons globe-icon" /><span className="pl-16">My Dashboard</span>
+                    </Link>
+                </Menu.Item>
+            }
             <Menu.Divider />
-            <Menu.Item key="4">
-                <a onClick={logout}><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
+            <Menu.Item key="5" onClick={logout}>
+                <a ><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
             </Menu.Item>
         </Menu >)
     }
     showChatWindow = (user) => {
-        debugger
         this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image, teamName: user.Firstname } })
     }
     render() {
@@ -165,54 +148,60 @@ class HeaderComponent extends React.Component {
                             <Link to="/" className="logo-brand">
                                 <img src={Logo} alt="Blackbuck" width="55px" />
                             </Link>
-                            <Search className="header-searchbar" placeholder="Search" onSearch={onSearch} />
+                            {this.props?.profile?.IsOnBoardProcess && <Search onChange={(event) => {
+                                const val = document.querySelector(".ant-input-search").querySelector(".ant-input").value;
+                                this.setState({ ...this.state, search_value: val });
+                            }} value={this.state.search_value} className="header-searchbar" placeholder="Search" onSearch={(value) => {
+                                this.setState({ ...this.state, search_value: value });
+                                this.props.history.push("/search/" + value + "/Search")
+                            }} />}
                         </div>
                     </Col>
                     <Col span={8} justify="center">
-                        <Menu className="menu-items text-center" mode="horizontal" defaultSelectedKeys={['home']}>
-                            <Menu.Item key="home">
-                                <Tooltip title="Home" placement="bottom">
-                                    <Link to="/"><span className="icons home-icon"></span></Link>
+                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal" defaultSelectedKeys={['home']}>
+                            <Menu.Item key="home" id="headerIcon">
+                                <Tooltip title="Home" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link to="/" className="header-link"><span className="icons home-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item>
-                            <Menu.Item key="about">
-                                <Tooltip title="Connections" placement="bottom">
-                                    <Link to="/friends"><span className="icons social-icon"></span></Link>
+                            {/* <Menu.Item key="about">
+                                <Tooltip title="Connections" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link to="/friends" className="header-link"><span className="icons social-icon"></span></Link>
                                 </Tooltip>
-                            </Menu.Item>
+                            </Menu.Item> */}
                             <Menu.Item key="contact">
-                                <Tooltip title="Careers" placement="bottom">
-                                    <Link to="/commingsoon"><span className="icons suitcase-icon" /></Link>
+                                <Tooltip title="Careers" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link to="/cms" className="header-link"><span className="icons suitcase-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
-                            <Menu.Item key="posts">
-                                <Tooltip title="LMS" placement="bottom">
-                                    <Link to="/commingsoon"><span className="icons lms-icon" /></Link>
+                            <Menu.Item key="lms">
+                                <Tooltip title="LMS" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link to="/lms" className="header-link"><span className="icons lms-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
-                        </Menu>
+                        </Menu>}
                     </Col>
                     <Col span={8} >
                         <Menu className="menu-items text-right right-menu" mode="horizontal">
-                            <Menu.Item key="">
-                                <Tooltip title="Messages">
-                                    <Link onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
+                            {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
+                                <Tooltip title="Messages" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link className="header-link" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
                                 </Tooltip>
-                            </Menu.Item>
-                            <Menu.Item key="">
-                                <Dropdown overlay={notifications} trigger={['click']} placement="bottomCenter">
-                                    <Tooltip title="Notifications">
-                                        <Link to="/about">
-                                            <Badge className="notification-count" count={5} showZero>
+                            </Menu.Item>}
+                            {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
+                            <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                        <Link className="header-link">
+                                            <Badge className="notification-count" count={this.state.notificationsCount} showZero>
                                                 <span className="icons notification-icon" />
                                             </Badge>
                                         </Link>
                                     </Tooltip>
                                 </Dropdown>
-                            </Menu.Item>
-                            <Menu.Item key="" >
-                                <Dropdown overlay={this.menu} trigger={['click']} >
-                                    <Link to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
+                            </Menu.Item>}
+                            <Menu.Item key="">
+                                <Dropdown overlay={this.menu} trigger={['click']} getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link className="header-link" to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
                                         <img src={this.props?.profile?.ProfilePic || defaultUser} />
                                     </Link>
                                 </Dropdown>
@@ -266,7 +255,7 @@ class HeaderComponent extends React.Component {
     }
 }
 const mapStateToProps = ({ oidc }) => {
-    const { user, profile } = oidc;
-    return { profile, user }
+    const { user, profile, search_value } = oidc;
+    return { profile, user, search_value }
 }
-export default connect(mapStateToProps)(HeaderComponent);
+export default withRouter(connect(mapStateToProps)(HeaderComponent));

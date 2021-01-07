@@ -3,7 +3,7 @@ import { Card, Avatar, Menu, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { profileSuccess } from "../reducers/auth";
 import defaultUser from "../styles/images/defaultuser.jpg";
-import coverphoto from "../styles/images/post-image.jpg";
+import coverphoto from "../styles/images/default-cover.png";
 import { connect } from "react-redux";
 import { store } from "../store";
 const { Meta } = Card;
@@ -44,17 +44,20 @@ class Identity extends Component {
           ]}
           cover={<img src={homeInfo?.CoverPic || coverphoto} />}
         >
-          <Link to="/profile/1">
+          <Link to="/profile/IsProfileTab">
             <Meta
               avatar={<Avatar src={homeInfo?.ProfilePic || defaultUser} />}
               title={
                 <div>
                   {homeInfo?.FirstName} {homeInfo?.LastName}
-                  <span className="premium-icon c-default"></span>
+                  {homeInfo?.IsScholar && <span className="premium-icon c-default"></span>}
                 </div>
               }
               description={<Tooltip title={homeInfo?.BranchName} placement={'bottom'}>{homeInfo?.BranchName}</Tooltip>}
             />
+          </Link>
+          <Link to="/profile/IsProfileTab" className="fullprofilelink">
+              View Full Profile
           </Link>
         </Card>
         <Menu
@@ -63,13 +66,13 @@ class Identity extends Component {
           title="Blackbuck"
         >
           <Menu.Item key="profile">
-            <Link to="/profile/1">
+            <Link to="/profile/IsProfileTab">
               <span className="left-menu profile-icon"></span>
               <span>Profile</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="friends">
-            <Link to="/friends">
+            <Link to="/profile/IsProfileFriendsTab">
               <span className="left-menu friends-icon"></span>
               <span>Friends</span>
             </Link>
@@ -81,13 +84,13 @@ class Identity extends Component {
             </Link>
           </Menu.Item> */}
           <Menu.Item key="groups">
-            <Link to="/group">
+            <Link to="/profile/IsProfileGroupsTab">
               <span className="left-menu group-icon"></span>
               <span>Groups</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="notification">
-            <Link to="/notifications">
+            <Link to="/profile/IsProfileNotificationsTab">
               <span className="left-menu noti-icon"></span>
               <span>Notifications</span>
             </Link>

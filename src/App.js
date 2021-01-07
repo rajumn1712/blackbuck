@@ -12,11 +12,12 @@ import LayoutComponent from './common/layout';
 import Loader from './common/loader';
 function App() {
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     }
+    localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then((user) => {
       setLoading(false);
     });

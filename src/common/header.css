@@ -72,7 +72,7 @@
     position: relative;
 }
 
-.main-header .ant-menu-item a:before {
+.main-header .ant-menu-item a.header-link:before {
     width: 50px;
     height: 50px;
 }
@@ -99,7 +99,7 @@
     margin: 0 10px !important;
 }
 
-.main-header .ant-menu-item a {
+.main-header .ant-menu-item a.header-link {
     padding: 12px 11px 19px;
     background: var(--white);
     border-radius: 0.8rem;
@@ -110,10 +110,17 @@
     border: 0;
 }
 
-.main-header .ant-menu-item a:hover, .main-header .ant-menu-item-selected a {
+.main-header .center-menu .ant-menu-item a.header-link:hover, .main-header .center-menu .ant-menu-item-selected a.header-link,
+.main-header .right-menu .ant-menu-item-selected a.header-link, .main-header .right-menu .ant-menu-item a.header-link:hover {
     background: var(--primary);
     border-color: var(--primary);
 
+}
+.profile-dropdown .ant-dropdown-menu-item a:hover,.profile-dropdown .ant-dropdown-menu-item a {
+    background: transparent !important;
+    border-color: transparent !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .main-header .right-menu .avatar-menu, .main-header .right-menu .avatar-menu:hover {
@@ -179,7 +186,7 @@
 .main-header .ant-menu-item a:hover .icons.notification-icon, .ant-menu-item-selected .icons.notification-icon {
     background-position: -207px -48px;
 }
-
+.notification-container{max-height: calc(100vh - 130px); overflow-y: auto;}
 .notification-count .ant-badge-count {
     background: var(--primary) !important;
     border-radius: 4px !important;
@@ -194,18 +201,16 @@
 
 .profile-dropdown, .notification-dropdown {
     margin-top: 10px !important;
-    border-radius: 12px !important;
+    border-radius: 0.8rem !important;
     background: var(--white);
     box-shadow: var(--boxshadow);
-    min-width: 300px !important;
-    margin-right: 16px;
-    padding: 16px 8px;
-    max-height: calc(100vh - 60px);
-    overflow-y: auto;
+    min-width: 320px !important;
+    margin-right: 12px;
+    max-height: calc(100vh - 65px);
 }
 
 .notification-dropdown {
-    margin-top: 6px !important;
+    margin-top: 0px !important;
 }
 .notification-dropdown .ant-divider{
     margin: 0 !important;
@@ -213,10 +218,8 @@
 }
 
 .notification-dropdown.unread {
-    font-weight: 600;
-
+    font-weight: 500;
 }
-
 .profile-dropdown .ant-card-meta .ant-avatar-image, .notification-dropdown .ant-list-item-meta-avatar .ant-avatar-image, .messenger-drawer .ant-card-meta .ant-avatar-image {
     width: 50px;
     height: 50px;
@@ -292,10 +295,10 @@
     margin-bottom: 0;
 }
 
-.notification-dropdown a{
+.text-primary, .text-primarygreen{
     color: var(--primary);
 }
-.notification-dropdown a:hover{
+.text-primary:hover{
     color: var(--primaryhover);
 }
 
@@ -303,15 +306,14 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 8px;
-    max-width: 284px;
+    max-width: 320px;
 }
-.notification-list .notification-image .ant-avatar-image{
+/* .notification-list .notification-image .ant-avatar-image{
     width: 45px;
     height: 45px;
     border-radius: 17px;
     margin-right: 12px;
-}
+} */
 .notification-list .notification-image img{
     flex-shrink: 0;
 }
@@ -319,6 +321,7 @@
     margin: 0;
     font-size: 15px;
     line-height: 16px;
+    white-space: normal;
 }
 .notification-list.unread .notification-description span{
     color: var(--primary);
@@ -333,22 +336,11 @@
     font-weight: 600;
 }
 .notification-list:hover{
-    background-color: #f5f5f5;
-    border-radius: 6px;
+    background-color: var(--bghover);
 }
-.notification-dropdown .noti-dropdown-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 10px;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
 .messenger-chat .ant-drawer-header, .messenger-chat .ant-drawer-body {
     padding: 16px;
 }
-
 .messenger-drawer .ant-card-meta {
     display: flex;
     align-items: center;

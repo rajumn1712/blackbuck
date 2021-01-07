@@ -16,6 +16,7 @@ import Invite from "../shared/components/Invite";
 import Ads from "../components/ads";
 import "./profilestyle.css";
 import PremiumBadge from "../styles/images/premiumbadge.svg";
+import defaultCover from "../styles/images/default-cover.png";
 import { Route, withRouter } from "react-router-dom";
 import Courses from "../components/ProfileComponents/courses";
 import FriendRequests from "../components/ProfileComponents/friendrequests";
@@ -26,14 +27,15 @@ import Postings from "../shared/postings";
 import { connect } from "react-redux";
 import { saveProfileImage } from "../shared/api/apiServer";
 import defaultUser from "../styles/images/defaultuser.jpg";
-import defaultCover from "../styles/images/defaultcover.png";
+// import defaultCover from "../styles/images/defaultcover.png";
 import ImgCrop from "antd-img-crop";
 import { profileSuccess } from "../reducers/auth";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { store } from "../store";
 import ProfileDetail from "./profileDetail";
 import Loader from "../common/loader";
+import notify from "../shared/components/notification";
+import { apiClient } from '../shared/api/clients';
+import Notifications from '../components/notification';
 const { Meta } = Card;
 const { TabPane } = Tabs;
 
@@ -52,6 +54,7 @@ class Profile extends Component {
     isProfilePic: false,
     isDataRefresh: false,
     loading: false,
+    imageLoader: false,
     profile: this.props?.profile,
     tabkey: this.props?.match.params.tabkey,
     showDownload: false,
@@ -63,23 +66,37 @@ class Profile extends Component {
     name: "file",
     multiple: false,
     fileList: [],
-    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
-    onChange: ({ file }) => {
-      const { status } = file;
-      if (status !== "uploading") {
-        this.imageObject.ImageUrl = file.response[0];
-        this.handleImageOk();
-      }
-      if (status === "done") {
-        message.success(
-          `${
-            this.state.isProfilePic ? "Profil picture" : "Cover picture"
-          } uploaded successfully.`
-        );
-      } else if (status === "error") {
-        message.error(`File upload failed.`);
-      }
+    customRequest: ({ file }) => {
+      let formData = new FormData();
+      formData.append(
+        "file",
+        file,
+        file.name +
+          `${this.state.isProfilePic ? "profile_" : "cover_"}${
+            this.props?.profile?.Id
+          }`
+      );
+      apiClient
+        .post(process.env.REACT_APP_AUTHORITY + "/Home/UploadFile", formData)
+        .then((res) => {
+          if(res.ok){
+            this.imageObject.ImageUrl = res.data[0];
+            this.handleImageOk();
+          }
+          else{
+            notify({
+              message:"Error",
+              description:'Something went wrong',
+              type:'error'
+            })
+          }
+        });
     },
+    // action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+    // onChange: ({ file }) => {
+    //   console.log(this.state.isProfilePic)
+    //   this.setState({...this.state,isProfilePic:this.state.isProfilePic})
+    // },
   };
 
   handleDisabledChange = (disabled) => {
@@ -106,6 +123,7 @@ class Profile extends Component {
     }
   };
   handleImageOk = () => {
+    this.setState({ ...this.state, imageLoader: true })
     const imageType = this.state.isProfilePic ? "ProfilePic" : "CoverPic";
     saveProfileImage(this.props?.profile?.Id, imageType, this.imageObject).then(
       (res) => {
@@ -116,6 +134,13 @@ class Profile extends Component {
         }
         this.props.updateProfile(this.props.profile);
         this.imageObject = {};
+        this.setState({ ...this.state, imageLoader: false }, () => {
+          notify({
+            description: `${this.state.isProfilePic ? "Profile picture" : "Cover picture"
+              } uploaded successfully.`,
+            message: "Upload",
+          });
+        })
       }
     );
   };
@@ -129,32 +154,13 @@ class Profile extends Component {
     this.props.history.push(`/profile/${index}`);
     this.setState({ tabkey: index });
   };
-  ExportPdf = () => {
-    this.setState({ ...this.state, loading: true });
-    const input = document.getElementById("downloadpdf");
-    html2canvas(input, {
-      onclone: function (clonedDoc) {
-        clonedDoc.getElementById("downloadpdf").style.visibility = "visible";
-      },
-    }).then((canvas) => {
-      this.setState({ ...this.state, loading: false });
-      const imgData = canvas.toDataURL("image/png", "1.0");
-      const pdf = new jsPDF("p", "in", "a4");
-      pdf.addImage(imgData, "JPEG", 0, 0, 0, 0);
-      pdf.save("download.pdf");
-    });
-  };
 
   render() {
-    const { isDataRefresh, profile, tabkey } = this.state;
+    const { isDataRefresh, profile, tabkey, imageLoader } = this.state;
     // if (this.state.loading) {
     //   return <Loader className="loader-top-middle" />;
     // }
-    const operations = (
-      <Button className="profile-download" onClick={this.ExportPdf}>
-        <span className="post-icons download-icon"></span>Download Profile
-      </Button>
-    );
+    
     return (
       <div className="main">
         <Row gutter={16}>
@@ -164,9 +170,9 @@ class Profile extends Component {
                 className="center-focus"
                 src={profile?.CoverPic || defaultCover}
               />
-              <span className="premium-badge">
+              {this.props?.profile?.IsScholar && <span className="premium-badge">
                 <img src={PremiumBadge} />
-              </span>
+              </span>}
               <ImgCrop
                 aspect={6 / 2}
                 grid={true}
@@ -176,11 +182,10 @@ class Profile extends Component {
                   cropShape: "round",
                 }}
               >
-                <Upload {...this.uploadProps}>
+                <Upload {...this.uploadProps} onChange={() => this.setState({ isProfilePic: false })}>
                   <Tooltip title="Change Coverphoto">
                     <a
                       className="editpost"
-                      onClick={() => this.setState({ isProfilePic: false })}
                     >
                       <span className="left-menu camera-icon" />
                     </a>
@@ -213,14 +218,12 @@ class Profile extends Component {
                         shape="round"
                         beforeCrop={this.handleBeforUpload}
                       >
-                        <Upload {...this.uploadProps}>
+                        <Upload {...this.uploadProps} onChange={() => this.setState({ isProfilePic: true })}>
+                          {imageLoader && <Loader className="loader-top-middle" />}
                           <Avatar src={profile?.ProfilePic || defaultUser} />
                           <Tooltip placement="top" title="Change Photo">
                             <a
                               className="img-camera"
-                              onClick={() =>
-                                this.setState({ isProfilePic: true })
-                              }
                             >
                               <span className="left-menu camera-icon" />{" "}
                             </a>
@@ -241,25 +244,39 @@ class Profile extends Component {
                 <Statistic
                   title="Shares"
                   className="afterline"
-                  value={profile?.Shares}
+                  value={profile?.Shares ? profile?.Shares : 0}
                 />
                 <Statistic
                   title="Interests"
                   className="afterline"
                   value={profile?.Interests ? profile?.Interests : 0}
                 />
-                <Statistic title="Internships" value={profile?.Internships} />
+                <Statistic title="Internships" value={profile?.Internships ? profile?.Internships : 0} />
               </div>
             </div>
             <Tabs
               defaultActiveKey={tabkey}
               className="profile-tabs"
-              tabBarExtraContent={operations}
               onChange={this.handleTabChange}
             >
-              <TabPane tab="Posts" key="1">
+                        <TabPane tab="Profile" key="IsProfileTab">
                 <Route
-                  path="/profile/1"
+                  path="/profile/IsProfileTab"
+                  render={() => {
+                    return (
+                      <div>
+                        {this.state.loading && (
+                          <Loader className="loader-top-middle" />
+                        )}
+                        <ProfileDetail id={this.props?.profile?.Id} onRef={(profiledetails)=>this.getDetails=profiledetails}/>
+                      </div>
+                    );
+                  }}
+                />
+              </TabPane>
+              <TabPane tab="Posts" key="IsProfilePostsTab">
+                <Route
+                  path="/profile/IsProfilePostsTab"
                   render={() => {
                     return (
                       <Row gutter={16}>
@@ -275,24 +292,9 @@ class Profile extends Component {
                   }}
                 />
               </TabPane>
-              <TabPane tab="Profile" key="2">
+              <TabPane tab="Friends" key="IsProfileFriendsTab">
                 <Route
-                  path="/profile/2"
-                  render={() => {
-                    return (
-                      <div>
-                        {this.state.loading && (
-                          <Loader className="loader-top-middle" />
-                        )}
-                        <ProfileDetail id={this.props?.profile?.Id} />
-                      </div>
-                    );
-                  }}
-                />
-              </TabPane>
-              <TabPane tab="Friends" key="3">
-                <Route
-                  path="/profile/3"
+                  path="/profile/IsProfileFriendsTab"
                   render={() => {
                     return (
                       <Row gutter={16}>
@@ -314,9 +316,9 @@ class Profile extends Component {
                   }}
                 />
               </TabPane>
-              <TabPane tab="Groups" className="m-0" key="4">
+              <TabPane tab="Groups" className="m-0" key="IsProfileGroupsTab">
                 <Route
-                  path="/profile/4"
+                  path="/profile/IsProfileGroupsTab"
                   render={() => {
                     return (
                       <Row gutter={16}>
@@ -324,12 +326,42 @@ class Profile extends Component {
                                         <Invite />
                                     </Col> */}
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                          <GroupsPage />
+                          <Tabs defaultActiveKey="1"
+                            className="group-tabs sub-tab profile-tabs">
+                            <TabPane tab="My Groups" key="1">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                            <TabPane tab="Invite Groups" key="2">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <Invite displayas={"Card"} />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                            <TabPane tab="Suggested Groups" key="3">
+                              <Row gutter={16}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                  <Groups displayas={"Card"} />
+                                </Col>
+                              </Row>
+                            </TabPane>
+                          </Tabs>
                         </Col>
                       </Row>
                     );
                   }}
                 />
+              </TabPane>
+              <TabPane tab="Notifications" className="m-0" key="IsProfileNotificationsTab">
+                <Row gutter={16}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Notifications />
+                  </Col>
+                </Row>
               </TabPane>
             </Tabs>
           </Col>

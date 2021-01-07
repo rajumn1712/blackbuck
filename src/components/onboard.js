@@ -51,7 +51,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
             fetchInterests();
         } else if (current == 1) {
             if (interests.length > 0) {
-                await saveOnboard({ UserDetails: { ...initialValues.UserDetails }, Interests: [...initialValues.Interests], OnBoardStep: "2" });
+                await saveOnboard({ UserDetails: { ...initialValues.UserDetails }, Interests: [...initialValues.Interests], OnBoardStep: "2" }, "saveOnBoardInterests");
             }
             fetchGroupSuggestions();
         }
@@ -193,7 +193,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <Row gutter={16}>
                                     <Col xs={24} className="custom-fields">
                                         <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }]}>
-                                            <Select loading={loaders.colleges} defaultValue={initialValues.College.CollegeId} showSearch placeholder="Select a college" onChange={(val) => handleChange("CollegeId", val)}>
+                                            <Select loading={loaders.colleges} defaultValue={initialValues.College.CollegeId} placeholder="Select a college" onChange={(val) => handleChange("CollegeId", val)}>
                                                 {colleges?.map((college, indx) => <Option value={college?.CollegeId}><Avatar src={college.Image} />{college?.CollegeName}</Option>)}
                                             </Select>
                                         </Form.Item>
@@ -211,7 +211,17 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} md={12} className="custom-fields">
-                                        <Form.Item label="Passing out year" name="PassingOutYear" rules={[{ required: true, message: "Passing out year required" }]}>
+                                        <Form.Item label="Passing out year" name="PassingOutYear" rules={[{ required: true, message: "Passing out year required", }, {
+                                            type: "date", validator: async (rule, value, callback) => {
+                                                if (value && initialValues.College.DateOfJoining) {
+                                                    if (new Date(value).getFullYear() <= new Date(initialValues.College.DateOfJoining).getFullYear()) {
+                                                        throw new Error("Passing out year should be greater than Date Of Joining")
+                                                    } else {
+                                                        callback();
+                                                    }
+                                                }
+                                            }
+                                        }]}>
                                             <DatePicker defaultValue={initialValues.College.PassOutYear} onChange={(val) => { handleChange("PassingOutYear", val) }} picker="year" />
                                         </Form.Item>
                                     </Col>
@@ -227,7 +237,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} className="custom-fields multi-select">
-                                        <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one subject" }]}>
+                                        <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one course" }]}>
                                             <Select loading={loaders.subjects} mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" onChange={onSubjectsSelection} filterOption={(input, option) =>
                                                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                             }>
@@ -312,8 +322,8 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                 <h2>Want to join in Groups?</h2>
                             </div>
                             <div className="intro3">
-                                <Link onClick={()=>eleRef.prev()} className="more-frnd-btn left"><span className="icon left-arrow mr-0"></span></Link><Link onClick={()=>eleRef.next()} className="more-frnd-btn" ><span className="icon right-arrow mr-0"></span></Link>
-                                <OwlCarousel ref={(ref)=>setEleRef(ref)} autoWidth={true} items={3} key={`groupcarousel_${groupSuggestions.length}`}>
+                                <Link onClick={() => eleRef.prev()} className="more-frnd-btn left"><span className="icon left-arrow mr-0"></span></Link><Link onClick={() => eleRef.next()} className="more-frnd-btn" ><span className="icon right-arrow mr-0"></span></Link>
+                                <OwlCarousel ref={(ref) => setEleRef(ref)} autoWidth={true} items={3} key={`groupcarousel_${groupSuggestions.length}`}>
                                     {groupSuggestions.map((grpItem, idx) => <Card key={idx} className="carousel-card"
                                         cover={<img alt="example" src={grpItem.image} />}
                                     >

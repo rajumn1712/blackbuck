@@ -24,7 +24,7 @@ class PostCardModal extends Component {
     componentDidMount() { }
     componentWillReceiveProps(props) {
         props.postData.image = props.postData.image ? (Array.isArray(props.postData.image) ? props.postData.image : [props.postData.image]) : props.postData.image;
-        this.setState({ ...this.state, post: props.postData, visible: props.visible}, () => {
+        this.setState({ ...this.state, post: props.postData, visible: props.visible, index: 0 }, () => {
             if (this.state.post.commentsCount > 0 && this.state.commentselection.length == 0) {
                 this.showComment(this.state.post)
             }
@@ -40,7 +40,8 @@ class PostCardModal extends Component {
         commentsection: false,
         reactionsLoading: false,
         postReactions: [],
-        descriptionSelection: []
+        descriptionSelection: [],
+        index: 0
     }
     fetchPostReactions = async (id) => {
         this.setState({ ...this.state, reactionsLoading: true });
@@ -69,7 +70,7 @@ class PostCardModal extends Component {
         this.setState({ ...this.state, commentselection })
     }
     titleAvatar = (user, date) => {
-        return <Link to={(this.props?.profile.Id == user.UserId ? ("/profile/"+"1") : ("/profileview/" + user.UserId))}>
+        return <Link to={(this.props?.profile.Id == user.UserId ? ("/profile/IsProfileTab") : ("/profileview/" + user.UserId))}>
             <Meta
                 avatar={<Avatar src={user.Image || defaultUser} />}
                 title={<span className="overflow-text post-title">{user.Firstname}</span>}
@@ -90,11 +91,17 @@ class PostCardModal extends Component {
         return result;
     }
     goToPrevSlide = () => {
-        this.slider.current.prev();
+        let { index } = this.state;
+        this.setState({ ...this.state, index: index - 1 }, () => {
+            this.slider.current.prev();
+        });
     }
 
     goToNextSlide = () => {
-        this.slider.current.next();
+        let { index } = this.state;
+        this.setState({ ...this.state, index: index + 1 }, () => {
+            this.slider.current.next();
+        });
     }
     renderPostImages = (imageObj, type) => {
         const _result = {
@@ -137,13 +144,13 @@ class PostCardModal extends Component {
 
     render() {
 
-        const { post } = this.state;
+        const { post, index } = this.state;
 
         const { Title, Paragraph } = Typography;
 
         const carouselData = (
             <div className="preview-image">
-                <a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>
+                {<a className="more-frnd-btn prev" onClick={() => this.goToPrevSlide()}><span className="icon left-arrow mr-0"></span></a>}
                 <Carousel ref={this.slider}>
                     {(post.type == 'Image' || post.type == 'Gif') && post.image?.map((image, index) => {
                         return <div key={index}>
@@ -151,7 +158,7 @@ class PostCardModal extends Component {
                         </div>
                     })}
                 </Carousel>
-                <a className="more-frnd-btn next" onClick={() => this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>
+                { <a className="more-frnd-btn next" onClick={() => this.goToNextSlide()}><span className="icon right-arrow mr-0"></span></a>}
             </div>
         )
 
@@ -192,7 +199,7 @@ class PostCardModal extends Component {
                                     }
                                     actions={[<EmojiAction key="emoji" IsUserLikes={post.IsUserLikes} mystate={post} clickedEvent={(event, name) => this.props.handleActions(event, name, post)} />,
                                     <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
-                                    <ShareAction key="share" />
+                                    <ShareAction post={post} key="share" url={`http://blackbuck.me/blackbuck.uat/post_view/${post.id}`} imgUrl={post.image} />
                                     ]}
                                 >
                                     <div className="">
@@ -207,10 +214,10 @@ class PostCardModal extends Component {
                                             </ShowMoreText>
                                             {(post.tags != null && post.tags?.length > 0) && <div className="post-tag">
                                                 {post.tags?.map((tag, index) => {
-                                                    return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`#${tag?.Name || ""}`}</Link></Tag>}</>
+                                                    return <>{(tag != undefined && tag != null) && <Tag key={index}><Link to="/commingsoon">{`${tag || ""}`}</Link></Tag>}</>
                                                 })}
                                             </div>}
-                                            </Paragraph>
+                                        </Paragraph>
                                         <div className="d-flex justify-content-between mx-16 py-16">
                                             {<span onMouseEnter={() => this.fetchPostReactions(post.id)}>
                                                 <ul className="card-actions-count pl-0">
@@ -229,7 +236,7 @@ class PostCardModal extends Component {
                                         </div>
                                     </div>
                                 </Card>
-                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount} onUpdate={(prop, value,object) => { this.props.updatePost(post, prop, value,object) }}
+                                {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount} onUpdate={(prop, value, object) => { this.props.updatePost(post, prop, value, object) }}
                                 />}
                             </div>
                         </Col>

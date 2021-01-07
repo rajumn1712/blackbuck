@@ -136,7 +136,7 @@ class Education extends Component {
           },
           () => {
             notify({
-              description: "Education saved successfully",
+              description: `Education ${this.state.isEdit ? 'Edited' : 'saved'} successfully`,
               message: "Education",
             });
             this.props.callback(true);
@@ -246,7 +246,7 @@ class Education extends Component {
                   className="edu-study"
                   avatar={
                     <div className="about-icons">
-                      <span className="icons location" />
+                      <span className="icons education-icon" />
                     </div>
                   }
                   title={
@@ -358,8 +358,8 @@ class Education extends Component {
                         </Col>
                         <Col xs={24} sm={24}>
                           <Form.Item
-                            label="College/University Name"
-                            name="College/University Name"
+                            label={values.EducationType === 'School' ? 'School Name' : 'College/University Name'}
+                            name={values.EducationType === 'School' ? 'School Name' : 'College/University Name'}
                             rules={[{ required: true }]}
                             className="custom-fields"
                           >
@@ -399,7 +399,7 @@ class Education extends Component {
                           >
                             <Input.Group compact>
                               <RangePicker
-                                disabledDate={this.disabledDate}
+                                // disabledDate={this.disabledDate}
                                 name="AcademicYear"
                                 value={values.AcademicYear}
                                 onChange={(value) =>
@@ -414,8 +414,8 @@ class Education extends Component {
                         </Col>
                         <Col xs={24} sm={12}>
                           <Form.Item
-                            label="Place of College/University"
-                            name="Place of COllege/University"
+                            label={`Place of ${values.EducationType === 'School' ? 'School' : 'College/University'}`}
+                            name={`Place of ${values.EducationType === 'School' ? 'School' : 'College/University'}`}
                             rules={[{ required: true }]}
                             className="custom-fields"
                           >

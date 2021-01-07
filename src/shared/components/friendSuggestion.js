@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Row } from 'antd';
+import { Typography, Button, Row, Col } from 'antd';
 import { apiClient } from '../api/clients';
 import notify from './notification';
 import { cancelFriendRequest, getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
@@ -9,12 +9,48 @@ import defaultUser from '../../styles/images/defaultuser.jpg';
 import OwlCarousel from 'react-owl-carousel2';
 import 'react-owl-carousel2/src/owl.carousel.css';
 import 'react-owl-carousel2/src/owl.theme.default.css'
+import Loader from '../../common/loader';
+import Sharebox from '../../components/SavePostBox/sharebox';
 const { Title, Paragraph } = Typography;
 class FriendSuggestions extends Component {
     carouselRef;
     className = ["one", "two", "three"]
     state = {
-        friends: []
+        friends: [],
+        isViewAllPage: window.location.href.indexOf("friendsuggestions") > -1,
+        loading: true,
+        page: 1,
+        pageSize: window.location.href.indexOf("friendsuggestions") > -1 ? 9 : 10,
+        loadMore: true
+    }
+    handleScroll = () => {
+        const windowHeight =
+            "innerHeight" in window
+                ? window.innerHeight
+                : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+        );
+        const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+        if (windowBottom >= docHeight) {
+            this.loadMore();
+        } else {
+        }
+    };
+    loadMore(e) {
+        if (this.state.loadMore && !this.state.loading) {
+            let { page } = this.state;
+            page += 1;
+            this.setState({ ...this.state, page, loading: true }, () => {
+                this.loadSuggestions();
+            });
+        }
     }
     addFriend = async (friend) => {
         const obj = {
@@ -31,12 +67,16 @@ class FriendSuggestions extends Component {
         })
     }
     componentDidMount() {
+        window.addEventListener("scroll", this.handleScroll);
         this.loadSuggestions();
     }
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
     async loadSuggestions() {
-        const response = await getFriendSuggestions(this.props?.profile?.Id, 1, 100);
+        const response = await getFriendSuggestions(this.props?.profile?.Id, this.state.page, this.state.pageSize);
         if (response.ok) {
-            this.setState({ ...this.state, friends: response.data });
+            this.setState({ ...this.state, friends: this.state.isViewAllPage ? this.state.friends.concat(response.data) : response.data, loading: false, loadMore: response.data.length === this.state.pageSize });
         }
     }
     removeSuggestion = (friend) => {
@@ -66,37 +106,52 @@ class FriendSuggestions extends Component {
     }
     render() {
         if (!this.state.friends || this.state.friends.length === 0) { return null; }
-        return (
-            <div>
-                <div className="friends-thead px-4">
-                    <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title><Link to="/commingsoon" className="link-color d-flex align-items-center">View all</Link>
-                </div>
-                <Row gutter={8}>
-                    <div className="friends">
-                        {/* {friends.map((friend, index) => {
-                        return <div className={"friends-list "+this.className[Math.floor(Math.random() * this.className.length)]}>
-                            <img src={friend.Image || defaultUser} width="100%" height="100%" />
-                            <div className="friends-list--name">
-                                <Paragraph>{friend.FirstName}</Paragraph>
-                                <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
-                            </div>
-                            <a className="addfrnd-btn" onClick={() => this.addFriend(friend)}>
-                                <span className="post-icons addfriend-icon mr-0"></span>
-                            </a>
-                            <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
-                        </div>
-                    }) 
-                    }*/}
-                        {this.state.friends.length > 4 && <><Link className="more-frnd-btn left" onClick={() => { this.carouselRef.prev() }}><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link></>}
+        if (this.state.isViewAllPage) {
+            return (
+                <>
+                    <Sharebox dataRefreshed={() => { }} />
+                    <Row gutter={8} >
 
-                        <OwlCarousel items={3} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${this.state.friends.length}`}>
-                            {this.state.friends.map((friend, index) => <div className="frnds-list-item" key={index}>
-                                <div className="frnds-img">
-                                    <img src={friend.Image || defaultUser} width="100%" height="100%" />
+                        {this.state.friends.map((friend, index) => <Col lg={8}>
+                            <div className="frnds-list-item m-0 mb-8" key={index}>
+                                <div className="frnds-img ">
+                                    <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
                                     <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                                 </div>
                                 <div style={{ padding: 16 }}>
-                                    <Paragraph className="frnd-name text-overflow">{friend.FirstName}</Paragraph>
+                                    <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
+                                    <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
+                                    <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
+                                    <div className="text-center">
+                                        {friend.Type == null && <Button type="default" className="addfrnd semibold" onClick={() => this.addFriend(friend)}><span className="post-icons addfriend-icon"></span>Add Friend</Button>}
+                                        {friend.Type == "request" && <Button type="default" className="addfrnd semibold" onClick={() => this.cancelRequest(friend)}>Cancel Request</Button>}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </Col>)}
+                    </Row>
+                    {this.state.isViewAllPage && this.state.loading && <Loader className="loader-top-middle" />}
+                </>
+            )
+        }
+        return (
+            <div>
+
+                <div className="friends-thead px-4">
+                    <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title><Link to="/friendsuggestions" className="link-color d-flex align-items-center">View all</Link>
+                </div>
+                <Row gutter={8}>
+                    <div className="friends">
+                        {this.state.friends.length > 4 && <><Link className="more-frnd-btn left" onClick={() => { this.carouselRef.prev() }}><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link></>}
+                        <OwlCarousel items={3} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${this.state.friends.length}`}>
+                            {this.state.friends.map((friend, index) => <div className="frnds-list-item" key={index}>
+                                <div className="frnds-img">
+                                    <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
+                                    <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
+                                </div>
+                                <div style={{ padding: 16 }}>
+                                    <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
                                     <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
                                     <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
                                     <div className="text-center">
@@ -106,7 +161,7 @@ class FriendSuggestions extends Component {
                                 </div>
                             </div>)}
                             <div className="frnds-list-item viewall-item">
-                                <Link to="/commingsoon"><Button type="default" className="addfrnd semibold">View all</Button></Link>
+                                <Link to="/friendsuggestions"><Button type="default" className="addfrnd semibold">View all</Button></Link>
                             </div>
                         </OwlCarousel>
                     </div>
