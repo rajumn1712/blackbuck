@@ -1859,7 +1859,7 @@ textarea {
   font-weight: 500;
 }
 .settings-left .ant-card-body {
-  padding: 6px 0;
+  padding: 0;
 }
 .settings-left{position: fixed !important;width: 233.156px;}
 .set-flex .ant-list-item-meta-title {
@@ -1969,9 +1969,9 @@ textarea {
 .settings-card .ant-list-item-meta-title{margin-bottom: 0;}
 .settings-card .ant-card-body{padding: 0;}
 .settings-card{border-radius: 0.8rem !important;}
-.icons.securitylogin-icon{background-position: -700px -254px;}
+.icons.securitylogin-icon{background-position: -697px -254px;}
 .icons.publicposts-icon{background-position: -612px -254px;}
-.icons.blocking-icon{background-position: -728px -254px;}
+.icons.blocking-icon{background-position: -725px -254px;}
 .icons.location-icon{background-position: -758px -254px;}
 .icons.notification-icon{background-position: -2px -305px;}
 .left-menu.location-icon{background-position:-763px -258px;}
@@ -2050,5 +2050,6 @@ textarea {
 .btn-group{position: relative;display: inline-block;vertical-align: middle;}
 #radioBtn .notActive{color:var(--primary);background-color: #fff!important;border: 1px solid var(--primary);}
 #radioBtn .active{color: #fff;}
+.wh-50{width: 50px;height: 50px;}
 .radious-right{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
 .radious-left{border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;}

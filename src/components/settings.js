@@ -106,6 +106,7 @@ class Settings extends React.Component {
         });
     };
 
+    
     handleOk = () => {
         this.setState({ loading: true });
         setTimeout(() => {
@@ -195,7 +196,7 @@ class Settings extends React.Component {
                                             renderItem={item => (
                                                 <List.Item>
                                                     <List.Item.Meta
-                                                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                                        avatar={<Avatar className="wh-50" src={TwoFactor} />}
                                                         title={<a className="f-18 count-link" href="">{item.title}</a>}
                                                         description="This extra step shows it’s really you trying to sign in."
                                                     />

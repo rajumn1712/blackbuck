@@ -53,17 +53,17 @@ const CreateCourse = ({ profile }) => {
                         "NewPassword": "",
                         "Repassword": ""
                     }} onFinishFailed={onFinishFailed} onFinish={(values) => saveUserPass(values)} enableReinitialize>
-                        <div className="d-flex my-8"><span className="change-text">Current</span>
+                        <div className="d-flex my-8"><span className="change-text">Current password</span>
                             <Form.Item name="OldPassword" rules={[{ required: true, message: "Current password  required" }]} className="mb-12" >
                                 <Input.Password value={initialValues.OldPassword} className="w-300 input-height"  onChange={(e) => handleChange("OldPassword", e)} />
                             </Form.Item>
                         </div>
-                        <div className="d-flex my-8"><span className="change-text">New </span>
+                        <div className="d-flex my-8"><span className="change-text">New password</span>
                             <Form.Item name="NewPassword" rules={[{ required: true, message: "New password  required" }, { min: 8, message: "password  atleast 8 characters" }]} className="mb-12" >
                                 <Input.Password value={initialValues.NewPassword} className="w-300 input-height" maxLength="50" onChange={(e) => handleChange("NewPassword", e)} />
                             </Form.Item>
                         </div>
-                        <div className="d-flex my-8"><span className="change-text">Re-enter new </span>
+                        <div className="d-flex my-8"><span className="change-text">Re-enter new password </span>
                             <Form.Item name="Repassword" rules={[{ required: true, message: "Re-enter new password required" }, { min: 8, message: "password  atleast 8 characters"}
                             ]} className="mb-12">
                                 <Input.Password value={initialValues.Repassword} className="w-300 input-height" maxLength="50" onChange={(e) => handleChange("Repassword", e)} />
