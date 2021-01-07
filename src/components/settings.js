@@ -136,13 +136,13 @@ class Settings extends React.Component {
 
                                     <Menu.Item key="profile">
                                         <Link to="/friends">
-                                            <span className="icons securitylogin-icon"></span>
+                                            <span className="left-menu securitylogin-icon"></span>
                                             <span>Change Password</span>
                                         </Link>
                                     </Menu.Item>
                                     <Menu.Item key="profile ">
                                         <Link to="/profile/IsProfileTab">
-                                            <span className="icons blocking-icon"></span>
+                                            <span className="left-menu blocking-icon"></span>
                                             <span>Twofactor Authentication</span>
                                         </Link>
                                     </Menu.Item>
@@ -200,13 +200,15 @@ class Settings extends React.Component {
                                                         title={<a className="f-18 count-link" href="">{item.title}</a>}
                                                         description="This extra step shows it’s really you trying to sign in."
                                                     />
-                                                    <div id="radioBtn" class="btn-group">
+                                                   <div id="radioBtn" class="btn-group">
                                                         <Button size="small" className="radious-right notActive">Enable</Button>
                                                         <Button size="small" type="primary" className="radious-left active">Disable </Button>
                                                     </div>
                                                 </List.Item>
                                             )}
+                                            
                                         />
+                                        
 
                                     </Col>
                                 </Row>

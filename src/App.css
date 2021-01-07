@@ -1969,11 +1969,11 @@ textarea {
 .settings-card .ant-list-item-meta-title{margin-bottom: 0;}
 .settings-card .ant-card-body{padding: 0;}
 .settings-card{border-radius: 0.8rem !important;}
-.icons.securitylogin-icon{background-position: -697px -254px;}
-.icons.publicposts-icon{background-position: -612px -254px;}
-.icons.blocking-icon{background-position: -725px -254px;}
-.icons.location-icon{background-position: -758px -254px;}
-.icons.notification-icon{background-position: -2px -305px;}
+.left-menu.securitylogin-icon{background-position: -705px -258px;}
+.left-menu.publicposts-icon{background-position: -612px -254px;}
+.left-menu.blocking-icon{background-position: -733px -258px;}
+.left-menu.location-icon{background-position: -758px -254px;}
+.left-menu.notification-icon{background-position: -2px -305px;}
 .left-menu.location-icon{background-position:-763px -258px;}
 .text-capiatlize{text-transform: capitalize;}
 .fullprofilelink{
