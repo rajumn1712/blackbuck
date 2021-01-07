@@ -18,7 +18,7 @@ const { Title, Paragraph } = Typography;
 const { Option } = Select;
 const data = [
     {
-        title: 'Two Factor Authentication Set Up',
+        title: 'Authentication Set Up',
     }
 
 ];
@@ -141,7 +141,7 @@ class Settings extends React.Component {
                                     </Menu.Item>
                                     <Menu.Item key="profile ">
                                         <Link to="/profile/IsProfileTab">
-                                            <span className="icons publicposts-icon"></span>
+                                            <span className="icons blocking-icon"></span>
                                             <span>Twofactor Authentication</span>
                                         </Link>
                                     </Menu.Item>
