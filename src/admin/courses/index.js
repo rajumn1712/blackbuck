@@ -1,9 +1,9 @@
-import React, { Component, useState, useEffect } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Statistic, Tabs, DatePicker, Modal, InputNumber, Form } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip } from 'antd';
 import { withRouter } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
-import { ArrowUpOutlined, ArrowDownOutlined, PlusOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
 import { getCollegeBranches, getAuthors } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
@@ -13,34 +13,7 @@ const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
 const { TextArea } = Input;
-const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
-
-const props = {
-    name: 'file',
-    multiple: true,
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    onChange(info) {
-        const { status } = info.file;
-        if (status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
-
-const fileList = [
-    {
-        uid: '-1',
-        name: 'image.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    }
-]
 const uploadButton = (
     <div>
         <PlusOutlined />
@@ -102,7 +75,7 @@ const videoDur = () => (
 );
 
 const AdminCourses = () => {
-    const obj={
+    const obj = {
         "TopicId": "",
         "Title": "",
         "Description": "",
@@ -118,7 +91,7 @@ const AdminCourses = () => {
     const [ShowForm, setShowForm] = useState(false);
     const [current, setCurrent] = React.useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [topicObj, setTopicObj] = useState(obj);
+    const [topicObj, setTopicObj] = useState({ ...obj });
     useEffect(() => {
         fetchBranches();
         fetchAuthors()
@@ -139,6 +112,23 @@ const AdminCourses = () => {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
     }
+
+    const props = {
+        name: 'file',
+        multiple: false,
+        accept: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
+        action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+        onChange(info) {
+            const { status } = info.file;
+            if (status === 'done') {
+                topicObj.VideoUrl = [info.file.Url];
+                setTopicObj({ ...topicObj });
+                message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
 
     const courseObject = {
         "GroupId": "",
@@ -177,33 +167,56 @@ const AdminCourses = () => {
         "IsPublish": false,
         "CourseSections": [
             {
-                "SectionId":"",
+                "SectionId": "",
                 "SectionName": "",
                 "Topics": [
                     {
-                        "TopicId":"",
+                        "TopicId": "",
                         "Title": "",
                         "Description": "",
                         "ThumbNails": [],
                         "VideoSource": "",
-                        "VideoName":"",
+                        "VideoName": "",
                         "VideoUrl": [],
                         "Duration": "",
-                        "Size":""
+                        "Size": ""
                     }
                 ]
             }
         ]
     }
-    const handleChange = (prop, val) => {
-        courseObject[prop] = val.currentTarget ? val.currentTarget.value : val;
+    const handleVidoTimeChange=()=>{
+        
     }
-    const showModal = (type,topObj) => {
+    const handleChange = (prop, val, popup) => {
+        if (!popup)
+            courseObject[prop] = val.currentTarget ? val.currentTarget.value : val;
+        else {
+            topicObj[prop] = val.currentTarget ? val.currentTarget.value : val;
+            setTopicObj({ ...topicObj })
+        }
+    }
+    const deleteImage = () => {
+        topicObj.ThumbNails = [];
+        setTopicObj({ ...topicObj })
+    }
+
+    const onChange = (info) => {
+        const { status } = info.file;
+        if (status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully.`);
+            topicObj.ThumbNails = info.fileList;
+            setTopicObj({ ...topicObj });
+        } else if (status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    }
+    const showModal = (type, topic) => {
         if (type == 'Edit') {
-            setTopicObj(topObj)
+            setTopicObj({ ...topic })
         }
         else {
-            setTopicObj(obj)
+            setTopicObj({ ...obj })
         }
         setIsModalVisible(true);
     };
@@ -362,25 +375,27 @@ const AdminCourses = () => {
                                                     expandIconPosition="right"
                                                 >
                                                     <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">12m 35s</div>}>
-                                                       {item.Topics?.map((topic)=>{ return <Collapse
-                                                            className="mb-8"
-                                                            expandIconPosition="right"
-                                                        >
-                                                            <Panel header={<>{topicTitle} {item.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
-                                                                <div className="d-flex">
-                                                                    <video width="280"><source src={topic.VideoUrl}/></video>
-                                                                    <div className="ml-16">
-                                                                        <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
-                                                                        <p className="f-14 text-secondary mb-8">{topic.Description}</p>
-                                                                        <p className="f-12 text-primary">{topic.Duration} | {topic.Size}</p>
-                                                                        <Button size="small" className="px-16" onClick={()=>showModal('Edit',topic)}>Edit Content</Button>
+                                                        {item.Topics?.map((topic) => {
+                                                            return <Collapse
+                                                                className="mb-8"
+                                                                expandIconPosition="right"
+                                                            >
+                                                                <Panel header={<>{topicTitle} {item.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
+                                                                    <div className="d-flex">
+                                                                        <video width="280"><source src={topic.VideoUrl} /></video>
+                                                                        <div className="ml-16">
+                                                                            <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
+                                                                            <p className="f-14 text-secondary mb-8">{topic.Description}</p>
+                                                                            <p className="f-12 text-primary">{topic.Duration} | {topic.Size}</p>
+                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', topic)}>Edit Content</Button>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </Panel>
-                                                        </Collapse>})
-                                        }
-                                                 
-                                                        <div onClick={()=>showModal('Add')} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                                                </Panel>
+                                                            </Collapse>
+                                                        })
+                                                        }
+
+                                                        <div onClick={() => showModal('Add')} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
                                                     </Panel>
                                                 </Collapse>
                                                 <div className="add-lecture p-4"><span className="icons add"></span></div>
@@ -408,65 +423,106 @@ const AdminCourses = () => {
                     </>}
                     className="addTopicPop"
                 >
-                    <div className="custom-fields">
-                        <label className="text-secondary d-block mb-4">Topic Title</label>
-                        <Input />
-                    </div>
-                    <div className="custom-fields">
-                        <label className="text-secondary d-block mb-4">Topic Description</label>
-                        <TextArea onResize
-                            autoSize={{ minRows: 3, maxRows: 20 }}
-                        />
-                    </div>
-                    <div className="mb-8">
-                        <label className="text-secondary d-block mb-4">Feature Image</label>
-                        <Upload
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                            listType="picture-card"
-                            fileList={fileList}
-                        //onPreview={this.handlePreview}
-                        //onChange={this.handleChange}
-                        >
-                            {fileList.length >= 8 ? null : uploadButton}
-                        </Upload>
-                    </div>
-                    <div className="custom-fields">
-                        <label className="text-secondary d-block mb-4">Video Source</label>
-                        <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source">
-                            <Option value="Upload">Upload</Option>
-                            <Option value="YouTube">YouTube</Option>
-                            <Option value="Vimeo">Vimeo</Option>
-                        </Select>
-                    </div>
-                    <Dragger {...props} className="mb-16">
-                        <p className="ant-upload-drag-icon">
-                            <span className="sharebox-icons video-upload"></span>
-                        </p>
-                        <p className="ant-upload-text f-18, semibold">Click or drag file to this area to upload</p>
-                    </Dragger>
-                    <div className="custom-fields">
-                        <Input placeholder="YouTube URL" />
-                    </div>
-                    <div className="custom-fields">
-                        <Input placeholder="Vimeo URL" />
-                    </div>
-                    <div className="custom-fields">
-                        <label className="text-secondary d-block mb-4">Video Playback Time</label>
-                        <Input.Group compact>
-                            <div className="videoplybacktime">
-                                <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
-                                <em className="text-secondary d-block f-12 mt-4">HH</em>
+                    <Form>
+                        <div className="custom-fields">
+                            <label className="text-secondary d-block mb-4">Topic Title</label>
+                            <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} onChange={(value) => handleChange('Title', value, true)}>
+                                <Input />
+                            </Form.Item>
+                        </div>
+                        <div className="custom-fields">
+                            <label className="text-secondary d-block mb-4">Topic Description</label>
+                            <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} onChange={(value) => handleChange('Description', value, true)}>
+                                <TextArea onResize
+                                    autoSize={{ minRows: 3, maxRows: 20 }}
+                                />
+                            </Form.Item>
+                        </div>
+                        <div className="mb-8">
+                            <label className="text-secondary d-block mb-4">Feature Image</label>
+                            <Upload
+                                action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
+                                listType="picture-card"
+                                accept=".jpg,.jpeg,.png"
+                                onChange={(info) => onChange(info)}
+                                onRemove={() => deleteImage()}
+                            >
+                                {topicObj.ThumbNails.length >= 1 ? null : uploadButton}
+                            </Upload>
+                        </div>
+                        <div className="custom-fields">
+                            <label className="text-secondary d-block mb-4">Video Source</label>
+                            <Form.Item name="VideoSource">
+                                <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
+                                    <Option value="Upload">Upload</Option>
+                                    <Option value="YouTube">YouTube</Option>
+                                    <Option value="Vimeo">Vimeo</Option>
+                                </Select>
+                            </Form.Item>
+                        </div>
+                        {topicObj.VideoSource == "Upload" && <Dragger showUploadList={false} {...props} className="mb-16" disabled={topicObj.VideoUrl.length >= 1}>
+                            <p className="ant-upload-drag-icon">
+                                <span className="sharebox-icons video-upload"></span>
+                            </p>
+                            <p className="ant-upload-text f-18, semibold">Click or drag file to this area to upload</p>
+                        </Dragger>
+
+                        }
+                        {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
+                            <div key={indx} className="mb-16 upload-preview">
+                                <video width="100%" controls>
+                                    <source src={image} />
+                                </video>
+                                <a
+                                    class="item-close"
+                                    onClick={() => {
+                                        topicObj.VideoUrl = []
+                                        setTopicObj({ ...topicObj });
+                                    }
+                                    }
+                                >
+                                    <Tooltip title="Remove">
+                                        <span className="close-icon"></span>
+                                    </Tooltip>
+                                </a>
                             </div>
-                            <div className="videoplybacktime">
-                                <InputNumber min={1} max={10} defaultValue={5} onChange={onChange} />
-                                <em className="text-secondary d-block f-12 mt-4">MM</em>
-                            </div>
-                            <div className="videoplybacktime">
-                                <InputNumber min={1} max={10} defaultValue={0} onChange={onChange} />
-                                <em className="text-secondary d-block f-12 mt-4">SS</em>
-                            </div>
-                        </Input.Group>
-                    </div>
+                        ))}
+                        {topicObj.VideoSource == "YouTube" && <div className="custom-fields">
+                            <Form.Item name="VideoUrl" onChange={(value) => handleChange('VideoUrl', value, true)}>
+                                <Input placeholder="YouTube URL" />
+                            </Form.Item>
+                        </div>
+                        }
+                        {topicObj.VideoSource == "Vimeo" && <div className="custom-fields">
+                            <Form.Item name="VideoUrl" onChange={(value) => handleChange('VideoUrl', value, true)}>
+                                <Input placeholder="Vimeo URL" />
+                            </Form.Item>
+                        </div>
+                        }
+                        <div className="custom-fields">
+                            <label className="text-secondary d-block mb-4">Video Playback Time</label>
+                            <Input.Group compact>
+                                <div className="videoplybacktime">
+                                    <Form.Item name="VideoUrl" onChange={(value) => handleVidoTimeChange('Hours', value)}>
+                                        <InputNumber min={1} max={10} defaultValue={3} />
+                                        <em className="text-secondary d-block f-12 mt-4">HH</em>
+                                    </Form.Item>
+                                </div>
+                                <div className="videoplybacktime">
+                                    <Form.Item name="VideoUrl" onChange={(value) => handleVidoTimeChange('Min', value)}>
+                                        <InputNumber min={1} max={10} defaultValue={5} />
+                                        <em className="text-secondary d-block f-12 mt-4">MM</em>
+                                    </Form.Item>
+                                </div>
+                                <div className="videoplybacktime">
+                                    <Form.Item name="VideoUrl" onChange={(value) => handleVidoTimeChange('Sec', value)}>
+                                        <InputNumber min={1} max={10} defaultValue={0} />
+                                        <em className="text-secondary d-block f-12 mt-4">SS</em>
+                                    </Form.Item>
+                                </div>
+                            </Input.Group>
+                        </div>
+                    </Form>
                 </Modal>
 
                 <Title className="f-18 text-primary semibold">Courses</Title>
