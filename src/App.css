@@ -2053,3 +2053,7 @@ textarea {
 .wh-50{width: 50px;height: 50px;}
 .radious-right{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
 .radious-left{border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;}
+.left-menu.setadmin-icon{background-position: -793px -258px;}
+.left-menu.block-icon{background-position: -823px -258px;}
+.left-menu.setadmin-icon:hover{background-position: -793px -284px;}
+.left-menu.block-icon:hover{background-position: -823px -283px;}

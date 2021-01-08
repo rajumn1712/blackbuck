@@ -118,10 +118,10 @@ class Groups extends Component {
             <div className="custom-card">
                 <Card className="px-12 pt-12" extra={<div>
                     <Tooltip placement="top" title="Block">
-                       <span className="left-menu profile-icon mx-8"></span>
+                       <span className="left-menu block-icon mx-8"></span>
                     </Tooltip>
                     <Tooltip placement="top" title="Set Admin">
-                       <span className="left-menu profile-icon mx-8"></span>
+                       <span className="left-menu setadmin-icon mx-8"></span>
                     </Tooltip>
 
                 </div>}
