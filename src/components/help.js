@@ -30,7 +30,7 @@ class Help extends Component {
                         <h3 className="sub-title">
                             Popular Questions
                         </h3>
-                        <div className="card-background">
+                        <div className="card-background px-0">
                         <Collapse
                             bordered={false}
                             defaultActiveKey={['1']}
@@ -47,7 +47,7 @@ class Help extends Component {
                             <Panel header="How do I add or remove a mobile phone number from my Blackbuck account?" key="3" className="site-collapse-custom-panel">
                                 <p>{text}</p>
                             </Panel>
-                            <Panel header="How do I add to or edit the Intro section of my Blackbuck profile?" key="4" className="site-collapse-custom-panel">
+                            <Panel header="How do I add to or edit the Intro section of my Blackbuck profile?" key="4" className="site-collapse-custom-panel border-none">
                                 <p>{text}</p>
                             </Panel>
                         </Collapse>
