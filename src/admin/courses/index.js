@@ -46,7 +46,7 @@ const videoDur = () => (
     <div className="f-16 m-0 text-secondary video-dur">12m 35s</div>
 );
 
-const AdminCourses = () => {
+const AdminCourses = ({ profile }) => {
     const obj = {
         "TopicId": "",
         "Title": "",
@@ -55,11 +55,11 @@ const AdminCourses = () => {
         "VideoSource": "",
         "VideoName": "",
         "VideoUrl": [],
-        "Duration": "",
+        "Duration": "03:05:00",
         "Size": ""
     }
     const sectionObj = {
-        "SectionId": "",
+        "SectionId": uuidv4(),
         "SectionName": "",
         "IsSaved": false,
         "Topics": [
@@ -72,31 +72,19 @@ const AdminCourses = () => {
         "GroupImage": "",
         "Description": "",
         "Type": "Course",
-        "Author": {
-            "UserId": "",
-            "Firstname": "",
-            "Lastname": "",
-            "Image": "",
-            "Email": ""
-        },
+        "Author": [],
         "CreatedDate": "",
         "CategoryType": "LMS",
         "CourseVideo": "",
-        "AdminUsers": [
-            {
-                "UserId": "",
-                "Firstname": "",
-                "Lastname": "",
-                "Image": "",
-                "Email": ""
-            }
+        "AdminUsers": [{
+            "UserId": profile?.Id,
+            "Firstname": profile?.FirstName,
+            "Lastname": profile?.LastName,
+            "Image": profile?.ProfilePic,
+            "Email": profile?.Email
+        }
         ],
         "Categories": [
-            {
-                "BranchId": "",
-                "Name": "",
-                "Image": ""
-            }
         ],
         "Members": [],
         "Invitations": [],
@@ -105,7 +93,6 @@ const AdminCourses = () => {
         ]
     }
     let formRef = useRef();
-    let secId = "";
     const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
     const [CategoriesLu, setCategoriesLu] = useState([]);
     const [AuthorsLu, setAuthorsLu] = useState([]);
@@ -120,6 +107,8 @@ const AdminCourses = () => {
     const [secObj, setSecObj] = useState({ ...sectionObj });
     const [courseObject, setCourseObject] = useState({ ...courseObj });
     const [fileUploading, setFileUploading] = useState(false);
+    const [secId, setSecId] = useState("");
+    const [form] = Form.useForm();
     useEffect(() => {
         fetchBranches();
         fetchAuthors()
@@ -163,7 +152,7 @@ const AdminCourses = () => {
     };
     const deleteSection = async (item) => {
         if (!item.IsSaved) {
-            courseObject.CourseSection = courseObject.CourseSections.filter(sec => sec.SectionId
+            courseObject.CourseSections = courseObject.CourseSections.filter(sec => sec.SectionId
                 !== item.SectionId);
             setCourseObject({ ...courseObject });
         }
@@ -224,19 +213,66 @@ const AdminCourses = () => {
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
             setShowForm(false)
+            form.resetFields();
         }
         else {
+            window.scrollTo(0, 0);
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
 
     }
+    const getTopicsTime = (items) => {
+        let time = "00:00:00";
+        items.forEach(item => {
+            time = sumTime(time, item.Duration);
+        })
+        time = time.split(":");
+        return time[0] + "h" + time[1] + "m" + time[2] + "s";
+    }
+    function sumTime(t1, t2, array = []) {
+        var times = [3600, 60, 1],
+            sum = [t1, t2, ...array]
+                .map(s => s.split(':').reduce((s, v, i) => s + times[i] * v, 0))
+                .reduce((a, b) => a + b, 0);
+
+        return times
+            .map(t => [Math.floor(sum / t), sum %= t][0])
+            .map(v => v.toString().padStart(2, 0))
+            .join(':');
+    }
     const cancelCourse = () => {
+        form.resetFields();
         setCourseObject({ ...courseObj });
         setShowForm(false)
     }
     const handleChange = (prop, val, popup) => {
-        if (!popup)
-            courseObject[prop] = val.currentTarget ? val.currentTarget.value : val;
+        if (!popup) {
+            if (prop != "Categories" && prop != "Author") {
+                courseObject[prop] = val.currentTarget ? val.currentTarget.value : val;
+            }
+            else {
+                courseObject[prop] = [];
+                (prop == "Categories" ? val : [val]).forEach(item => {
+                    (prop == "Categories" ? CategoriesLu : AuthorsLu).forEach(obj => {
+                        if (item == (prop == "Categories" ? obj.BranchId : obj.UserId)) {
+                            let Object = prop == "Categories" ? {
+                                "BranchId": obj.BranchId,
+                                "Name": obj.BranchName,
+                            } : {
+                                    "UserId": obj.UserId,
+                                    "Firstname": obj.Firstname,
+                                    "Lastname": obj.Lastname,
+                                    "Image": obj.Image,
+                                    "Email": obj.Email,
+                                }
+
+                            courseObject[prop].push({ ...Object });
+                        }
+                    });
+                });
+            }
+            setCourseObject({ ...courseObject })
+        }
         else {
             topicObj[prop] = val.currentTarget ? val.currentTarget.value : val;
             setTopicObj({ ...topicObj })
@@ -248,11 +284,12 @@ const AdminCourses = () => {
     }
     const sectionSave = async () => {
         if (secObj.Topics?.length == 0) {
-            notify({ message: "Warn", type: "warn", description: "Atleast one topic required" });
+            notify({ message: "Warn", type: "error", description: "Atleast one topic required" });
+            return;
         }
-        secObj.IsSaved = secObj.IsSaved ? secObj.IsSaved : false;
         const result = await saveSection(secObj, courseObject.GroupId);
         if (result.ok) {
+            secObj.IsSaved = true;
             courseObject.CourseSections.forEach(item => {
                 if (item.SectionId == secObj.SectionId) {
                     item = secObj;
@@ -266,8 +303,13 @@ const AdminCourses = () => {
         }
     }
     const addSection = () => {
-        courseObject.CourseSections.push(secObj);
-        setCourseObject({ ...courseObject });
+        if (courseObject.CreatedDate) {
+            courseObject.CourseSections.push(secObj);
+            setCourseObject({ ...courseObject });
+        }
+        else {
+            notify({ message: "Error", type: "error", description: "Please save course" });
+        }
     }
     const deleteImage = () => {
         topicObj.ThumbNails = [];
@@ -278,14 +320,14 @@ const AdminCourses = () => {
         const { status } = info.file;
         if (status === 'done') {
             message.success(`${info.file.name} file uploaded successfully.`);
-            topicObj.ThumbNails = info.fileList;
+            topicObj.ThumbNails = info.fileList[0].response;
             setTopicObj({ ...topicObj });
         } else if (status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
     }
     const showModal = (type, topic, sectionId) => {
-        secId = sectionId;
+        setSecId(sectionId);
         if (type == 'Edit') {
             setTopicObj({ ...topic })
             setTopicEdit(true);
@@ -386,7 +428,7 @@ const AdminCourses = () => {
                         </Row>
                     </Card>
                 </div>
-                {ShowForm && <Form initialValues={{ "GroupId": "", "GroupName": "", "GroupImage": "", "Description": "", "Type": "", "Author": [], "CreatedDate": "", "CategoryType": "LMS", "CourseVideo": "", "Categories": "", "CourseSections": [] }} onFinishFailed={() => { }} onFinish={() => coursSave()}>
+                {ShowForm && <Form initialValues={{ "GroupId": "", "GroupName": "", "GroupImage": "", "Description": "", "Type": "", "Author": [], "CreatedDate": "", "CategoryType": "LMS", "CourseVideo": "", "Categories": [], "CourseSections": [] }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
                         <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
@@ -416,11 +458,10 @@ const AdminCourses = () => {
                                                 <label className="text-secondary d-block mb-4">Choose Category</label>
                                                 <Form.Item name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select
-                                                        defaultValue="Choose a Category" placeholder="Choose a Category" className="text-left"
+                                                        placeholder="Choose a Category" className="text-left"
                                                         onChange={(value) => handleChange('Categories', value)}
                                                         mode="multiple"
                                                     >
-                                                        <Option value="">Choose a Category</Option>
                                                         {CategoriesLu?.map((item, index) => {
                                                             return <Option value={item.BranchId} key={index}>{item.BranchName}</Option>
                                                         })}
@@ -451,7 +492,7 @@ const AdminCourses = () => {
                                                     className="mb-16"
                                                     expandIconPosition="right"
                                                 >
-                                                    <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">12m 35s</div>}>
+                                                    <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">{getTopicsTime(item.Topics)}</div>}>
                                                         {item.Topics?.map((topic) => {
                                                             return <Collapse
                                                                 className="mb-8"
@@ -479,7 +520,7 @@ const AdminCourses = () => {
                                             </div>
                                                 <div className="lecture-collapse mb-16">
                                                     <div className="custom-fields entr-course-title p-12 mb-12">
-                                                        <Form onFinishFailed={() => { }} onFinish={() => sectionSave()}>
+                                                        <Form id="secForm" initialValues={{ ...sectionObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()}>
                                                             <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
                                                                 <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value)} />
                                                             </Form.Item>
@@ -597,19 +638,19 @@ const AdminCourses = () => {
                                 <Input.Group compact>
                                     <div className="videoplybacktime">
                                         <Form.Item  >
-                                            <InputNumber min={1} max={10} defaultValue={3} onChange={(value) => handleVidoTimeChange('Hours', value)} />
+                                            <InputNumber min={0} max={10} defaultValue={0} onChange={(value) => handleVidoTimeChange('Hours', value)} />
                                             <em className="text-secondary d-block f-12 mt-4">HH</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
                                         <Form.Item >
-                                            <InputNumber min={1} max={10} defaultValue={5} onChange={(value) => handleVidoTimeChange('Min', value)} />
+                                            <InputNumber min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Min', value)} />
                                             <em className="text-secondary d-block f-12 mt-4">MM</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
                                         <Form.Item>
-                                            <InputNumber min={1} max={10} defaultValue={0} onChange={(value) => handleVidoTimeChange('Sec', value)} />
+                                            <InputNumber min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Sec', value)} />
                                             <em className="text-secondary d-block f-12 mt-4">SS</em>
                                         </Form.Item>
                                     </div>
