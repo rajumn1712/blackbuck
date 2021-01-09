@@ -179,6 +179,9 @@ const saveUserPassword = (object) => {
 const getAuthors = () => {
   return apiClient.get(ADMIN_API + "getAuthors/1000/0");
 };
+const saveTopic = (obj, courseId, secId) => {
+  return apiClient.post(ADMIN_API + "getAuthors" + `/${courseId}/${secId}`, obj);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -229,4 +232,5 @@ export {
   fetchNotificationCount,
   saveUserPassword,
   getAuthors,
+  saveTopic
 };

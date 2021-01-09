@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip } from 'antd';
 import { withRouter } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { values } from 'lodash';
+import { uuidv4 } from '../../utils';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -86,12 +87,19 @@ const AdminCourses = () => {
         "Duration": "",
         "Size": ""
     }
+    let formRef = useRef();
+    let secId = "";
+    const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
     const [CategoriesLu, setCategoriesLu] = useState([]);
     const [AuthorsLu, setAuthorsLu] = useState([]);
     const [ShowForm, setShowForm] = useState(false);
     const [current, setCurrent] = React.useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [topicObj, setTopicObj] = useState({ ...obj });
+    const [videoTimeObj, setVideoTimeObj] = useState({ ...TimeObj });
+    const [topicEdit, setTopicEdit] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     useEffect(() => {
         fetchBranches();
         fetchAuthors()
@@ -121,7 +129,9 @@ const AdminCourses = () => {
         onChange(info) {
             const { status } = info.file;
             if (status === 'done') {
-                topicObj.VideoUrl = [info.file.Url];
+                topicObj.VideoUrl = info.file.response;
+                topicObj.VideoName = info.file.name;
+                topicObj.Size = info.file.size;
                 setTopicObj({ ...topicObj });
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
@@ -185,8 +195,35 @@ const AdminCourses = () => {
             }
         ]
     }
-    const handleVidoTimeChange=()=>{
-        
+    const handleVidoTimeChange = (prop, val) => {
+        videoTimeObj[prop] = val.currentTarget ? val.currentTarget.value : val;
+        setVideoTimeObj({ ...videoTimeObj }, () => {
+
+        })
+        topicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
+        setTopicObj({ ...topicObj });
+    }
+    const topicSave = async () => {
+        if (topicObj.ThumbNails?.length == 0) {
+            setIsError(true);
+            setErrorMessage("Feature image required");
+            formRef.current.scrollTop = 0;
+            return;
+        }
+        if (topicObj.VideoUrl?.length == 0) {
+            setIsError(true);
+            setErrorMessage("Video source/video required");
+            formRef.current.scrollTop = 0;
+            return;
+        }
+
+        const result = await saveTopic(topicObj, courseObject.GroupId, secId);
+        if (result.ok) {
+            notify({ message: "Topic", description: "Topic saved successfully" });
+        }
+        else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
     }
     const handleChange = (prop, val, popup) => {
         if (!popup)
@@ -211,12 +248,16 @@ const AdminCourses = () => {
             message.error(`${info.file.name} file upload failed.`);
         }
     }
-    const showModal = (type, topic) => {
+    const showModal = (type, topic, sectionId) => {
+        secId = sectionId;
         if (type == 'Edit') {
             setTopicObj({ ...topic })
+            setTopicEdit(true);
         }
         else {
+            obj.TopicId = uuidv4();
             setTopicObj({ ...obj })
+            setTopicEdit(false);
         }
         setIsModalVisible(true);
     };
@@ -387,7 +428,7 @@ const AdminCourses = () => {
                                                                             <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
                                                                             <p className="f-14 text-secondary mb-8">{topic.Description}</p>
                                                                             <p className="f-12 text-primary">{topic.Duration} | {topic.Size}</p>
-                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', topic)}>Edit Content</Button>
+                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', topic, item.SectionId)}>Edit Content</Button>
                                                                         </div>
                                                                     </div>
                                                                 </Panel>
@@ -395,7 +436,7 @@ const AdminCourses = () => {
                                                         })
                                                         }
 
-                                                        <div onClick={() => showModal('Add')} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                                        <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
                                                     </Panel>
                                                 </Collapse>
                                                 <div className="add-lecture p-4"><span className="icons add"></span></div>
@@ -419,108 +460,114 @@ const AdminCourses = () => {
                 </Form>}
                 <Modal title="Add Topic" visible={isModalVisible} onCancel={handleCancel} centered
                     footer={<>
-                        <Button type="primary">Save</Button>
+                        <Button type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
                     </>}
                     className="addTopicPop"
-                >
-                    <Form>
-                        <div className="custom-fields">
-                            <label className="text-secondary d-block mb-4">Topic Title</label>
-                            <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} onChange={(value) => handleChange('Title', value, true)}>
-                                <Input />
-                            </Form.Item>
-                        </div>
-                        <div className="custom-fields">
-                            <label className="text-secondary d-block mb-4">Topic Description</label>
-                            <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} onChange={(value) => handleChange('Description', value, true)}>
-                                <TextArea onResize
-                                    autoSize={{ minRows: 3, maxRows: 20 }}
-                                />
-                            </Form.Item>
-                        </div>
-                        <div className="mb-8">
-                            <label className="text-secondary d-block mb-4">Feature Image</label>
-                            <Upload
-                                action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
-                                listType="picture-card"
-                                accept=".jpg,.jpeg,.png"
-                                onChange={(info) => onChange(info)}
-                                onRemove={() => deleteImage()}
-                            >
-                                {topicObj.ThumbNails.length >= 1 ? null : uploadButton}
-                            </Upload>
-                        </div>
-                        <div className="custom-fields">
-                            <label className="text-secondary d-block mb-4">Video Source</label>
-                            <Form.Item name="VideoSource">
-                                <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
-                                    <Option value="Upload">Upload</Option>
-                                    <Option value="YouTube">YouTube</Option>
-                                    <Option value="Vimeo">Vimeo</Option>
-                                </Select>
-                            </Form.Item>
-                        </div>
-                        {topicObj.VideoSource == "Upload" && <Dragger showUploadList={false} {...props} className="mb-16" disabled={topicObj.VideoUrl.length >= 1}>
-                            <p className="ant-upload-drag-icon">
-                                <span className="sharebox-icons video-upload"></span>
-                            </p>
-                            <p className="ant-upload-text f-18, semibold">Click or drag file to this area to upload</p>
-                        </Dragger>
 
-                        }
-                        {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
-                            <div key={indx} className="mb-16 upload-preview">
-                                <video width="100%" controls>
-                                    <source src={image} />
-                                </video>
-                                <a
-                                    class="item-close"
-                                    onClick={() => {
-                                        topicObj.VideoUrl = []
-                                        setTopicObj({ ...topicObj });
-                                    }
-                                    }
-                                >
-                                    <Tooltip title="Remove">
-                                        <span className="close-icon"></span>
-                                    </Tooltip>
-                                </a>
+                >
+                    <Form id="myForm" onFinishFailed={() => { }} onFinish={() => topicSave()} >
+                        <div ref={formRef}>
+                            {isError && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
+                            <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4">Topic Title</label>
+                                <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} >
+                                    <Input onChange={(value) => handleChange('Title', value, true)} />
+                                </Form.Item>
                             </div>
-                        ))}
-                        {topicObj.VideoSource == "YouTube" && <div className="custom-fields">
-                            <Form.Item name="VideoUrl" onChange={(value) => handleChange('VideoUrl', value, true)}>
-                                <Input placeholder="YouTube URL" />
-                            </Form.Item>
-                        </div>
-                        }
-                        {topicObj.VideoSource == "Vimeo" && <div className="custom-fields">
-                            <Form.Item name="VideoUrl" onChange={(value) => handleChange('VideoUrl', value, true)}>
-                                <Input placeholder="Vimeo URL" />
-                            </Form.Item>
-                        </div>
-                        }
-                        <div className="custom-fields">
-                            <label className="text-secondary d-block mb-4">Video Playback Time</label>
-                            <Input.Group compact>
-                                <div className="videoplybacktime">
-                                    <Form.Item name="VideoUrl" onChange={(value) => handleVidoTimeChange('Hours', value)}>
-                                        <InputNumber min={1} max={10} defaultValue={3} />
-                                        <em className="text-secondary d-block f-12 mt-4">HH</em>
-                                    </Form.Item>
+                            <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4">Topic Description</label>
+                                <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} >
+                                    <TextArea onResize
+                                        autoSize={{ minRows: 3, maxRows: 20 }}
+                                        onChange={(value) => handleChange('Description', value, true)}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <div className="mb-8">
+                                <label className="text-secondary d-block mb-4">Feature Image</label>
+                                <Upload
+                                    action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
+                                    listType="picture-card"
+                                    accept=".jpg,.jpeg,.png"
+                                    onChange={(info) => onChange(info)}
+                                    onRemove={() => deleteImage()}
+                                    onPreview={() => { }}
+                                >
+                                    {topicObj.ThumbNails.length >= 1 ? null : uploadButton}
+                                </Upload>
+                            </div>
+                            <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4">Video Source</label>
+                                <Form.Item name="VideoSource">
+                                    <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
+                                        <Option value="Upload">Upload</Option>
+                                        <Option value="YouTube">YouTube</Option>
+                                        <Option value="Vimeo">Vimeo</Option>
+                                    </Select>
+                                </Form.Item>
+                            </div>
+                            {topicObj.VideoSource == "Upload" && <Dragger showUploadList={false} {...props} className="mb-16" disabled={topicObj.VideoUrl.length >= 1}>
+                                <p className="ant-upload-drag-icon">
+                                    <span className="sharebox-icons video-upload"></span>
+                                </p>
+                                <p className="ant-upload-text f-18, semibold">Click or drag file to this area to upload</p>
+                            </Dragger>
+
+                            }
+                            {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
+                                <div key={indx} className="mb-16 upload-preview">
+                                    <video width="100%" controls>
+                                        <source src={image} />
+                                    </video>
+                                    <a
+                                        class="item-close"
+                                        onClick={() => {
+                                            topicObj.VideoUrl = []
+                                            setTopicObj({ ...topicObj });
+                                        }
+                                        }
+                                    >
+                                        <Tooltip title="Remove">
+                                            <span className="close-icon"></span>
+                                        </Tooltip>
+                                    </a>
                                 </div>
-                                <div className="videoplybacktime">
-                                    <Form.Item name="VideoUrl" onChange={(value) => handleVidoTimeChange('Min', value)}>
-                                        <InputNumber min={1} max={10} defaultValue={5} />
-                                        <em className="text-secondary d-block f-12 mt-4">MM</em>
-                                    </Form.Item>
-                                </div>
-                                <div className="videoplybacktime">
-                                    <Form.Item name="VideoUrl" onChange={(value) => handleVidoTimeChange('Sec', value)}>
-                                        <InputNumber min={1} max={10} defaultValue={0} />
-                                        <em className="text-secondary d-block f-12 mt-4">SS</em>
-                                    </Form.Item>
-                                </div>
-                            </Input.Group>
+                            ))}
+                            {topicObj.VideoSource == "YouTube" && <div className="custom-fields">
+                                <Form.Item name="VideoUrl" >
+                                    <Input placeholder="YouTube URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
+                                </Form.Item>
+                            </div>
+                            }
+                            {topicObj.VideoSource == "Vimeo" && <div className="custom-fields">
+                                <Form.Item name="VideoUrl" >
+                                    <Input placeholder="Vimeo URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
+                                </Form.Item>
+                            </div>
+                            }
+                            <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4">Video Playback Time</label>
+                                <Input.Group compact>
+                                    <div className="videoplybacktime">
+                                        <Form.Item  >
+                                            <InputNumber min={1} max={10} defaultValue={3} onChange={(value) => handleVidoTimeChange('Hours', value)} />
+                                            <em className="text-secondary d-block f-12 mt-4">HH</em>
+                                        </Form.Item>
+                                    </div>
+                                    <div className="videoplybacktime">
+                                        <Form.Item >
+                                            <InputNumber min={1} max={10} defaultValue={5} onChange={(value) => handleVidoTimeChange('Min', value)} />
+                                            <em className="text-secondary d-block f-12 mt-4">MM</em>
+                                        </Form.Item>
+                                    </div>
+                                    <div className="videoplybacktime">
+                                        <Form.Item>
+                                            <InputNumber min={1} max={10} defaultValue={0} onChange={(value) => handleVidoTimeChange('Sec', value)} />
+                                            <em className="text-secondary d-block f-12 mt-4">SS</em>
+                                        </Form.Item>
+                                    </div>
+                                </Input.Group>
+                            </div>
                         </div>
                     </Form>
                 </Modal>
@@ -628,4 +675,4 @@ const courseData = [
 function onChange(pagination, filters, sorter, extra) {
     console.log('params', pagination, filters, sorter, extra);
 }
-export default connectStateProps(withRouter(AdminCourses)); 
+export default connectStateProps(withRouter(AdminCourses));
