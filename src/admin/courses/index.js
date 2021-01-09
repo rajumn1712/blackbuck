@@ -5,10 +5,11 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { values } from 'lodash';
 import { uuidv4 } from '../../utils';
+import Loader from "../../common/loader";
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -22,36 +23,6 @@ const uploadButton = (
     </div>
 );
 
-const columns = [
-    {
-        title: 'File Name',
-        dataIndex: 'name',
-        key: 'name',
-        width: 200
-    },
-    {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-        width: 50
-    },
-    {
-        title: 'Size',
-        dataIndex: 'size',
-        key: 'size',
-        width: 50
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-            <Space size="middle">
-                <a className="semibold" style={{ color: 'var(--red)' }}>Delete</a>
-            </Space>
-        ),
-        width: 50
-    },
-];
 
 const data = [
     {
@@ -90,76 +61,13 @@ const AdminCourses = () => {
     const sectionObj = {
         "SectionId": "",
         "SectionName": "",
+        "IsSaved": false,
         "Topics": [
-            {
-                "TopicId": "",
-                "Title": "",
-                "Description": "",
-                "ThumbNails": [],
-                "VideoSource": "",
-                "VideoName": "",
-                "VideoUrl": [],
-                "Duration": "",
-                "Size": ""
-            }
         ]
     }
-    let formRef = useRef();
-    let secId = "";
-    const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
-    const [CategoriesLu, setCategoriesLu] = useState([]);
-    const [AuthorsLu, setAuthorsLu] = useState([]);
-    const [ShowForm, setShowForm] = useState(false);
-    const [current, setCurrent] = React.useState(0);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [topicObj, setTopicObj] = useState({ ...obj });
-    const [videoTimeObj, setVideoTimeObj] = useState({ ...TimeObj });
-    const [topicEdit, setTopicEdit] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [secObj, setSecObj] = useState({ ...sectionObj });
-    useEffect(() => {
-        fetchBranches();
-        fetchAuthors()
-    }, []);
-    const fetchBranches = async () => {
-        const branchResponse = await getCollegeBranches();
-        if (branchResponse.ok) {
-            setCategoriesLu(branchResponse.data);
-        } else {
-            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
-        }
-    }
-    const fetchAuthors = async () => {
-        const branchResponse = await getAuthors();
-        if (branchResponse.ok) {
-            setAuthorsLu(branchResponse.data);
-        } else {
-            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
-        }
-    }
 
-    const props = {
-        name: 'file',
-        multiple: false,
-        accept: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
-        action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
-        onChange(info) {
-            const { status } = info.file;
-            if (status === 'done') {
-                topicObj.VideoUrl = info.file.response;
-                topicObj.VideoName = info.file.name;
-                topicObj.Size = info.file.size;
-                setTopicObj({ ...topicObj });
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
-
-    const courseObject = {
-        "GroupId": "",
+    const courseObj = {
+        "GroupId": uuidv4(),
         "GroupName": "",
         "GroupImage": "",
         "Description": "",
@@ -194,32 +102,79 @@ const AdminCourses = () => {
         "Invitations": [],
         "IsPublish": false,
         "CourseSections": [
-            {
-                "SectionId": "",
-                "SectionName": "",
-                "Topics": [
-                    {
-                        "TopicId": "",
-                        "Title": "",
-                        "Description": "",
-                        "ThumbNails": [],
-                        "VideoSource": "",
-                        "VideoName": "",
-                        "VideoUrl": [],
-                        "Duration": "",
-                        "Size": ""
-                    }
-                ]
-            }
         ]
     }
+    let formRef = useRef();
+    let secId = "";
+    const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
+    const [CategoriesLu, setCategoriesLu] = useState([]);
+    const [AuthorsLu, setAuthorsLu] = useState([]);
+    const [ShowForm, setShowForm] = useState(false);
+    const [current, setCurrent] = React.useState(0);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [topicObj, setTopicObj] = useState({ ...obj });
+    const [videoTimeObj, setVideoTimeObj] = useState({ ...TimeObj });
+    const [topicEdit, setTopicEdit] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [secObj, setSecObj] = useState({ ...sectionObj });
+    const [courseObject, setCourseObject] = useState({ ...courseObj });
+    const [fileUploading, setFileUploading] = useState(false);
+    useEffect(() => {
+        fetchBranches();
+        fetchAuthors()
+    }, []);
+    const fetchBranches = async () => {
+        const branchResponse = await getCollegeBranches();
+        if (branchResponse.ok) {
+            setCategoriesLu(branchResponse.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+        }
+    }
+    const fetchAuthors = async () => {
+        const branchResponse = await getAuthors();
+        if (branchResponse.ok) {
+            setAuthorsLu(branchResponse.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+        }
+    }
+
+    const props = {
+        name: 'file',
+        multiple: false,
+        accept: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
+        action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+        onChange(info) {
+            setFileUploading(true);
+            const { status } = info.file;
+            if (status === 'done') {
+                setFileUploading(false);
+                topicObj.VideoUrl = info.file.response;
+                topicObj.VideoName = info.file.name;
+                topicObj.Size = info.file.size;
+                setTopicObj({ ...topicObj });
+                message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
     const deleteSection = async (item) => {
-        const result = await sectionDeletion(topicObj, courseObject.GroupId, item.SectionId);
-        if (result.ok) {
-            notify({ message: "Section", description: "Section deleted successfully" });
+        if (!item.IsSaved) {
+            courseObject.CourseSection = courseObject.CourseSections.filter(sec => sec.SectionId
+                !== item.SectionId);
+            setCourseObject({ ...courseObject });
         }
         else {
-            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+            const result = await sectionDeletion(topicObj, courseObject.GroupId, item.SectionId);
+            if (result.ok) {
+                notify({ message: "Section", description: "Section deleted successfully" });
+            }
+            else {
+                notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+            }
         }
     }
     const handleVidoTimeChange = (prop, val) => {
@@ -229,6 +184,14 @@ const AdminCourses = () => {
         })
         topicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
         setTopicObj({ ...topicObj });
+    }
+    const refreshCourseDetails = async () => {
+        const branchResponse = await getCourse(courseObject.GroupId);
+        if (branchResponse.ok) {
+            setCourseObject({ ...branchResponse.data[0] });
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+        }
     }
     const topicSave = async () => {
         if (topicObj.ThumbNails?.length == 0) {
@@ -246,11 +209,30 @@ const AdminCourses = () => {
 
         const result = await saveTopic(topicObj, courseObject.GroupId, secId);
         if (result.ok) {
+            setIsModalVisible(false);
+            refreshCourseDetails();
             notify({ message: "Topic", description: "Topic saved successfully" });
         }
         else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
+    }
+    const coursSave = async () => {
+        courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
+        const result = await saveCourse(courseObject);
+        if (result.ok) {
+            notify({ message: "Course", description: "Course saved successfully" });
+            setCourseObject({ ...courseObj });
+            setShowForm(false)
+        }
+        else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
+
+    }
+    const cancelCourse = () => {
+        setCourseObject({ ...courseObj });
+        setShowForm(false)
     }
     const handleChange = (prop, val, popup) => {
         if (!popup)
@@ -259,6 +241,33 @@ const AdminCourses = () => {
             topicObj[prop] = val.currentTarget ? val.currentTarget.value : val;
             setTopicObj({ ...topicObj })
         }
+    }
+    const secItemsChange = (prop, val) => {
+        secObj[prop] = val.currentTarget ? val.currentTarget.value : val;
+        setSecObj({ ...secObj })
+    }
+    const sectionSave = async () => {
+        if (secObj.Topics?.length == 0) {
+            notify({ message: "Warn", type: "warn", description: "Atleast one topic required" });
+        }
+        secObj.IsSaved = secObj.IsSaved ? secObj.IsSaved : false;
+        const result = await saveSection(secObj, courseObject.GroupId);
+        if (result.ok) {
+            courseObject.CourseSections.forEach(item => {
+                if (item.SectionId == secObj.SectionId) {
+                    item = secObj;
+                }
+            });
+            setCourseObject({ ...courseObject });
+            notify({ message: "Section", description: "Topic saved successfully" });
+        }
+        else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
+    }
+    const addSection = () => {
+        courseObject.CourseSections.push(secObj);
+        setCourseObject({ ...courseObject });
     }
     const deleteImage = () => {
         topicObj.ThumbNails = [];
@@ -377,7 +386,7 @@ const AdminCourses = () => {
                         </Row>
                     </Card>
                 </div>
-                {ShowForm && <Form initialValues={{ "GroupId": "", "GroupName": "", "GroupImage": "", "Description": "", "Type": "", "Author": [], "CreatedDate": "", "CategoryType": "LMS", "CourseVideo": "", "Categories": "", "CourseSections": [] }}>
+                {ShowForm && <Form initialValues={{ "GroupId": "", "GroupName": "", "GroupImage": "", "Description": "", "Type": "", "Author": [], "CreatedDate": "", "CategoryType": "LMS", "CourseVideo": "", "Categories": "", "CourseSections": [] }} onFinishFailed={() => { }} onFinish={() => coursSave()}>
 
                     <Row>
                         <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
@@ -435,7 +444,7 @@ const AdminCourses = () => {
                                         </Row>
                                     </div>
                                     <div className="create-course mt-16">
-                                        <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white">Add Course Section</div>
+                                        <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>
                                         {courseObject.CourseSections?.map((item) => {
                                             return <div> <div className="lecture-collapse mb-16">
                                                 <Collapse
@@ -466,20 +475,29 @@ const AdminCourses = () => {
                                                         <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
                                                     </Panel>
                                                 </Collapse>
-                                                <div className="add-lecture p-4"><span className="icons add"></span></div>
+                                                <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>
                                             </div>
                                                 <div className="lecture-collapse mb-16">
                                                     <div className="custom-fields entr-course-title p-12 mb-12">
-                                                        <Input placeholder="Add section title here" className="f-16 mb-16" />
-                                                        <div className="text-right">
-                                                            <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                            <Button type="default" className="addContent px-16" size="small">Cancel</Button>
-                                                        </div>
+                                                        <Form onFinishFailed={() => { }} onFinish={() => sectionSave()}>
+                                                            <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
+                                                                <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value)} />
+                                                            </Form.Item>
+                                                            <div className="text-right">
+                                                                <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
+                                                                <Button type="default" className="addContent px-16" size="small">Cancel</Button>
+                                                            </div>
+                                                        </Form>
                                                     </div>
                                                     <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
                                                 </div>
                                             </div>
                                         })}
+                                        <div className="text-right">
+                                            <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
+                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Publish</Button>}
+                                            <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
+                                        </div>
                                     </div>
                                 </Col>
                             </Row>
@@ -542,6 +560,7 @@ const AdminCourses = () => {
                             </Dragger>
 
                             }
+                            {fileUploading && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 upload-preview">
                                     <video width="100%" controls>

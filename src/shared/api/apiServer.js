@@ -164,7 +164,7 @@ const fetchUserColleges = () => {
   return apiClient.get(FRIENDS_API + "getColleges");
 };
 
-const getNotifications = (userId,take,skip) => {
+const getNotifications = (userId, take, skip) => {
   return apiClient.get(PROFILE_API + `getNotifications/${userId}/${take}/${skip}`);
 };
 const unFriend = (user_id, friend_id) => {
@@ -184,6 +184,15 @@ const saveTopic = (obj, courseId, secId) => {
 }
 const sectionDeletion = (courseId, secId) => {
   return apiClient.get(ADMIN_API + "deleteSection" + `/${courseId}/${secId}`);
+}
+const saveSection = (obj, courseId) => {
+  return apiClient.post(ADMIN_API + "saveSection" + `/${courseId}`, obj);
+}
+const saveCourse = (obj) => {
+  return apiClient.post(ADMIN_API + "saveCourse", obj);
+}
+const getCourse = (courseId) => {
+  return apiClient.get(ADMIN_API + "getCourse" + `/${courseId}`);
 }
 export {
   getFriendSuggestions,
@@ -236,5 +245,8 @@ export {
   saveUserPassword,
   getAuthors,
   saveTopic,
-  sectionDeletion
+  sectionDeletion,
+  saveSection,
+  saveCourse,
+  getCourse
 };
