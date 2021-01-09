@@ -180,7 +180,10 @@ const getAuthors = () => {
   return apiClient.get(ADMIN_API + "getAuthors/1000/0");
 };
 const saveTopic = (obj, courseId, secId) => {
-  return apiClient.post(ADMIN_API + "getAuthors" + `/${courseId}/${secId}`, obj);
+  return apiClient.post(ADMIN_API + "saveTopic" + `/${courseId}/${secId}`, obj);
+}
+const sectionDeletion = (courseId, secId) => {
+  return apiClient.get(ADMIN_API + "deleteSection" + `/${courseId}/${secId}`);
 }
 export {
   getFriendSuggestions,
@@ -232,5 +235,6 @@ export {
   fetchNotificationCount,
   saveUserPassword,
   getAuthors,
-  saveTopic
+  saveTopic,
+  sectionDeletion
 };

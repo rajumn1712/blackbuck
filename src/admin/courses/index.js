@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { values } from 'lodash';
 import { uuidv4 } from '../../utils';
@@ -87,6 +87,23 @@ const AdminCourses = () => {
         "Duration": "",
         "Size": ""
     }
+    const sectionObj = {
+        "SectionId": "",
+        "SectionName": "",
+        "Topics": [
+            {
+                "TopicId": "",
+                "Title": "",
+                "Description": "",
+                "ThumbNails": [],
+                "VideoSource": "",
+                "VideoName": "",
+                "VideoUrl": [],
+                "Duration": "",
+                "Size": ""
+            }
+        ]
+    }
     let formRef = useRef();
     let secId = "";
     const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
@@ -100,6 +117,7 @@ const AdminCourses = () => {
     const [topicEdit, setTopicEdit] = useState(false);
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [secObj, setSecObj] = useState({ ...sectionObj });
     useEffect(() => {
         fetchBranches();
         fetchAuthors()
@@ -194,6 +212,15 @@ const AdminCourses = () => {
                 ]
             }
         ]
+    }
+    const deleteSection = async (item) => {
+        const result = await sectionDeletion(topicObj, courseObject.GroupId, item.SectionId);
+        if (result.ok) {
+            notify({ message: "Section", description: "Section deleted successfully" });
+        }
+        else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
     }
     const handleVidoTimeChange = (prop, val) => {
         videoTimeObj[prop] = val.currentTarget ? val.currentTarget.value : val;
@@ -410,7 +437,7 @@ const AdminCourses = () => {
                                     <div className="create-course mt-16">
                                         <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white">Add Course Section</div>
                                         {courseObject.CourseSections?.map((item) => {
-                                            return <div className="lecture-collapse mb-16">
+                                            return <div> <div className="lecture-collapse mb-16">
                                                 <Collapse
                                                     className="mb-16"
                                                     expandIconPosition="right"
@@ -441,17 +468,18 @@ const AdminCourses = () => {
                                                 </Collapse>
                                                 <div className="add-lecture p-4"><span className="icons add"></span></div>
                                             </div>
-                                        })}
-                                        <div className="lecture-collapse mb-16">
-                                            <div className="custom-fields entr-course-title p-12 mb-12">
-                                                <Input placeholder="Add section title here" className="f-16 mb-16" />
-                                                <div className="text-right">
-                                                    <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                    <Button type="default" className="addContent px-16" size="small">Cancel</Button>
+                                                <div className="lecture-collapse mb-16">
+                                                    <div className="custom-fields entr-course-title p-12 mb-12">
+                                                        <Input placeholder="Add section title here" className="f-16 mb-16" />
+                                                        <div className="text-right">
+                                                            <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
+                                                            <Button type="default" className="addContent px-16" size="small">Cancel</Button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
                                                 </div>
                                             </div>
-                                            <div className="add-lecture p-4"><span className="icons close"></span></div>
-                                        </div>
+                                        })}
                                     </div>
                                 </Col>
                             </Row>
