@@ -263,10 +263,9 @@ const AdminCourses = ({ profile }) => {
 
             postObject.Posts.push({ ...Obj })
         })
-        const result = await publishCourse(courseObject);
+        const result = await publishCourse(postObject);
         if (result.ok) {
             notify({ message: "Publish", description: "Course published successfully" });
-            setCourseObject({ ...courseObj });
             setShowForm(false)
             form.resetFields();
         }
