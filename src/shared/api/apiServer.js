@@ -194,6 +194,9 @@ const saveCourse = (obj) => {
 const getCourse = (courseId) => {
   return apiClient.get(ADMIN_API + "getCourse" + `/${courseId}`);
 }
+const publishCourse = (obj) => {
+  return apiClient.post(ADMIN_API + "coursePublish", obj);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -248,5 +251,6 @@ export {
   sectionDeletion,
   saveSection,
   saveCourse,
-  getCourse
+  getCourse,
+  publishCourse
 };

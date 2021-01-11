@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { values } from 'lodash';
 import { uuidv4 } from '../../utils';
@@ -92,6 +92,12 @@ const AdminCourses = ({ profile }) => {
         "CourseSections": [
         ]
     }
+    let postObject = {
+        "GroupId": "",
+        "IsPublish": true,
+        "Posts": [
+        ]
+    };
     let formRef = useRef();
     const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
     const [CategoriesLu, setCategoriesLu] = useState([]);
@@ -220,6 +226,54 @@ const AdminCourses = ({ profile }) => {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
 
+    }
+    const coursePublish = async () => {
+        postObject.GroupId = courseObject.GroupId;
+        postObject.IsPublish = true;
+        courseObject.Categories.forEach(item => {
+            let Obj = {
+                "PostId": uuidv4(),
+                "CourseId": courseObject.GroupId,
+                "Type": "Video",
+                "Message": courseObject.Description,
+                "Title": courseObject.GroupName,
+                "IsAnonymous": false,
+                "CategoryType": "LMS",
+                "PostType": "Course",
+                "ImageUrl": courseObject.GroupImage,
+                "CreatedDate": new Date(),
+                "UserDetails": {
+                    "UserId": profile?.Id,
+                    "Firstname": profile?.FirstName,
+                    "Lastname": profile?.LastName,
+                    "Image": profile?.ProfilePic,
+                    "Email": profile?.Email
+                },
+                "Tags": [],
+                "Likes": [],
+                "Comments": [],
+                "Group": {
+                    "GroupId": null,
+                    "GroupName": null,
+                    "GroupImage": null
+                },
+                "Shares": [],
+                "dupType": "Video"
+            };
+
+            postObject.Posts.push({ ...Obj })
+        })
+        const result = await publishCourse(courseObject);
+        if (result.ok) {
+            notify({ message: "Publish", description: "Course published successfully" });
+            setCourseObject({ ...courseObj });
+            setShowForm(false)
+            form.resetFields();
+        }
+        else {
+            window.scrollTo(0, 0);
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
     }
     const getTopicsTime = (items) => {
         let time = "00:00:00";
@@ -351,69 +405,69 @@ const AdminCourses = ({ profile }) => {
         setCurrent(current - 1);
     };
     return (<>
-    <div className="card-background mb-12">
-        <Row gutter={12}>
-            <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Members"
-                        value={600}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-            <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Posts"
-                        value={254}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-            <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Courses"
-                        value={21}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-            <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Groups"
-                        value={50}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-            <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Shares"
-                        value={45}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-            <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Interships"
-                        value={14}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-        </Row>
+        <div className="card-background mb-12">
+            <Row gutter={12}>
+                <Col span={4}>
+                    <Card className="admin-kpi-card">
+                        <Statistic
+                            title="Members"
+                            value={600}
+                            valueStyle={{ color: 'var(--textprimary)' }}
+                            prefix={<ArrowUpOutlined />}
+                        />
+                    </Card>
+                </Col>
+                <Col span={4}>
+                    <Card className="admin-kpi-card">
+                        <Statistic
+                            title="Posts"
+                            value={254}
+                            valueStyle={{ color: 'var(--textprimary)' }}
+                            prefix={<ArrowUpOutlined />}
+                        />
+                    </Card>
+                </Col>
+                <Col span={4}>
+                    <Card className="admin-kpi-card">
+                        <Statistic
+                            title="Courses"
+                            value={21}
+                            valueStyle={{ color: 'var(--textprimary)' }}
+                            prefix={<ArrowUpOutlined />}
+                        />
+                    </Card>
+                </Col>
+                <Col span={4}>
+                    <Card className="admin-kpi-card">
+                        <Statistic
+                            title="Groups"
+                            value={50}
+                            valueStyle={{ color: 'var(--textprimary)' }}
+                            prefix={<ArrowUpOutlined />}
+                        />
+                    </Card>
+                </Col>
+                <Col span={4}>
+                    <Card className="admin-kpi-card">
+                        <Statistic
+                            title="Shares"
+                            value={45}
+                            valueStyle={{ color: 'var(--textprimary)' }}
+                            prefix={<ArrowUpOutlined />}
+                        />
+                    </Card>
+                </Col>
+                <Col span={4}>
+                    <Card className="admin-kpi-card">
+                        <Statistic
+                            title="Interships"
+                            value={14}
+                            valueStyle={{ color: 'var(--textprimary)' }}
+                            prefix={<ArrowUpOutlined />}
+                        />
+                    </Card>
+                </Col>
+            </Row>
         </div>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -538,7 +592,7 @@ const AdminCourses = ({ profile }) => {
                                         })}
                                         <div className="text-right">
                                             <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
-                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Publish</Button>}
+                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
                                             <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
                                         </div>
                                     </div>
