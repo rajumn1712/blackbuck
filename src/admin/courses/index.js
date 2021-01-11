@@ -351,7 +351,8 @@ const AdminCourses = ({ profile }) => {
         setCurrent(current - 1);
     };
     return (<>
-        <Row gutter={12} className="mb-12">
+    <div className="card-background mb-12">
+        <Row gutter={12}>
             <Col span={4}>
                 <Card className="admin-kpi-card">
                     <Statistic
@@ -413,6 +414,7 @@ const AdminCourses = ({ profile }) => {
                 </Card>
             </Col>
         </Row>
+        </div>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <div className="custom-card mb-16">
