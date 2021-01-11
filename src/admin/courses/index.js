@@ -14,6 +14,7 @@ import { values } from 'lodash';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
 import { Link } from "react-router-dom";
+import video from '../../styles/images/video.mp4';
 const { Meta } = Card;
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -485,6 +486,13 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <span>Introduction</span>
+                                                <video controls width="100%">
+                                                    <source src={video} />
+                                                </video>
+                                            </Col>
+
                                         </Row>
                                     </div>
                                     <div className="create-course mt-16">
@@ -730,7 +738,7 @@ const AdminCourses = ({ profile }) => {
                                     </Card>
                                 </Col>
                                 <Col xs={24} md={10} lg={6}>
-                                    <Card 
+                                    <Card
                                         className="card-item"
                                         cover={<img alt="photography" src={SEO} />}
                                         actions={[
@@ -740,10 +748,10 @@ const AdminCourses = ({ profile }) => {
                                         <Meta
                                             title="SEO & Digital Marketing"
                                             description={
-                                                    <div className="addon-info">
-                                                        <span className="mr-8"><span className="grp-type-icon video-play" />10 Members</span>
-                                                        <div>Date: <span>11-01-2021</span></div>
-                                                    </div>} 
+                                                <div className="addon-info">
+                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Members</span>
+                                                    <div>Date: <span>11-01-2021</span></div>
+                                                </div>}
                                         />
                                     </Card>
                                 </Col>
@@ -762,7 +770,7 @@ const AdminCourses = ({ profile }) => {
                                                     <span className="mr-8"><span className="grp-type-icon video-play" />10 Members</span>
                                                     <div>Date: <span>11-01-2021</span></div>
                                                 </div>}
-                                         />
+                                        />
                                     </Card>
                                 </Col>
                             </Row>
