@@ -3,7 +3,7 @@ import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload
 import { withRouter } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
-import { ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
 import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
@@ -27,7 +27,6 @@ const uploadButton = (
         <div style={{ marginTop: 8 }}>Upload</div>
     </div>
 );
-
 const data = [
     {
         key: '1',
@@ -354,6 +353,7 @@ const AdminCourses = ({ profile }) => {
     const prev = () => {
         setCurrent(current - 1);
     };
+    const { Dragger } = Upload;
     return (<>
         <Row gutter={12} className="mb-12">
             <Col span={4}>
@@ -486,8 +486,16 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
+
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <span className="text-secondary">Introduction video</span>
+                                                <div className="text-secondary">Introduction video</div>
+                                                <div className="mb-12">
+                                                    <Dragger {...props}>
+                                                        <p className="ant-upload-drag-icon">
+                                                            <InboxOutlined />
+                                                        </p>
+                                                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                                                    </Dragger></div>
                                                 <video controls width="100%">
                                                     <source src={video} />
                                                 </video>
