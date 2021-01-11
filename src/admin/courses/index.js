@@ -692,13 +692,16 @@ const AdminCourses = ({ profile }) => {
                 <div className="custom-card">
                     <Card>
                         <div className="p-12">
-                            <Table columns={courseColumns} dataSource={courseData} size="small" pagination={{ position: ["bottomCenter"] }} bordered={true} />
+                            {/* <Table columns={courseColumns} dataSource={courseData} size="small" pagination={{ position: ["bottomCenter"] }} bordered={true} /> */}
 
                             <Row gutter={16}>
                                 <Col xs={24} md={10} lg={6}>
                                     <Card
                                         className="card-item"
                                         cover={<img alt="photography" src={photography} />}
+                                        actions={[
+                                            <Link className="text-red card-item-button-red">Delete</Link>
+                                        ]}
                                     >
                                         <Meta
                                             title="Photography"
@@ -713,6 +716,9 @@ const AdminCourses = ({ profile }) => {
                                     <Card
                                         className="card-item"
                                         cover={<img alt="photography" src={Blogging} />}
+                                        actions={[
+                                            <Link className="text-red card-item-button-red">Delete</Link>
+                                        ]}
                                     >
                                         <Meta
                                             title="Blogging, Content Marketing & Vlogging"
@@ -724,9 +730,12 @@ const AdminCourses = ({ profile }) => {
                                     </Card>
                                 </Col>
                                 <Col xs={24} md={10} lg={6}>
-                                    <Card
+                                    <Card 
                                         className="card-item"
                                         cover={<img alt="photography" src={SEO} />}
+                                        actions={[
+                                            <Link className="text-red card-item-button-red">Delete</Link>
+                                        ]}
                                     >
                                         <Meta
                                             title="SEO & Digital Marketing"
@@ -742,6 +751,9 @@ const AdminCourses = ({ profile }) => {
                                     <Card
                                         className="card-item"
                                         cover={<img alt="photography" src={photography} />}
+                                        actions={[
+                                            <Link className="text-red card-item-button-red">Delete</Link>
+                                        ]}
                                     >
                                         <Meta
                                             title="Photography"
