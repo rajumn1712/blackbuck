@@ -102,6 +102,9 @@ const Members = ({ profile }) => {
                 {/* <Tooltip placement="top" title="Block">
                     <span className="left-menu block-icon mx-8"></span>
                 </Tooltip> */}
+                <Tooltip placement="top" title="Set Scroller" onClick={() => showModal()}>
+                    <span className="left-menu setscroller-icon mx-8"></span>
+                </Tooltip>
                 <Tooltip placement="top" title="Set Admin" onClick={() => showModal()}>
                     <span className="left-menu setadmin-icon mx-8"></span>
                 </Tooltip>
