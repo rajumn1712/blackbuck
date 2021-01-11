@@ -487,7 +487,7 @@ const AdminCourses = ({ profile }) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <span>Introduction</span>
+                                                <span className="text-secondary">Introduction</span>
                                                 <video controls width="100%">
                                                     <source src={video} />
                                                 </video>
