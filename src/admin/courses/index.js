@@ -457,7 +457,7 @@ const AdminCourses = ({ profile }) => {
                                             </Form.Item>
                                         </div>
                                         <Row gutter={16}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select custom-fields">
                                                 <label className="text-secondary d-block mb-4">Choose Category</label>
                                                 <Form.Item name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select

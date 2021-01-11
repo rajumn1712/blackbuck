@@ -147,4 +147,4 @@ transition-duration: 167ms;}
 .card-item .card-item-button{width: 100%;color: var(--primary) !important;font-weight: 500;font-size: var(--f-14) !important;line-height: 1.42857 !important;}
 .card-item .ant-card-actions li{margin: 0;}
 .card-item .ant-card-actions .card-item-button{padding-top:12px;padding-bottom: 12px;}
-.card-item .ant-card-actions .card-item-button-red{width: 100%;font-weight: 500;font-size: var(--f-14) !important;line-height: 1.42857 !important;}
+.card-item .ant-card-actions .card-item-button-red{width: 100%;font-weight: 500;font-size: var(--f-14) !important;line-height: 1.42857 !important;padding-top:12px;padding-bottom: 12px;}
