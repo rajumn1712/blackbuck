@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip } from 'antd';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip, Image } from 'antd';
 import { withRouter } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
@@ -7,14 +7,12 @@ import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons'
 import connectStateProps from '../../shared/stateConnect';
 import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
-import photography from '../../styles/images/photography.png';
-import SEO from '../../styles/images/seo-marketing.png';
-import Blogging from '../../styles/images/blogging-content.png';
 import { values } from 'lodash';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
 import { Link } from "react-router-dom";
 import video from '../../styles/images/video.mp4';
+import Courses from './Courses'
 const { Meta } = Card;
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -72,13 +70,13 @@ const AdminCourses = ({ profile }) => {
     const courseObj = {
         "GroupId": uuidv4(),
         "GroupName": "",
-        "GroupImage": "",
+        "GroupImage": [],
         "Description": "",
         "Type": "Course",
         "Author": [],
         "CreatedDate": "",
         "CategoryType": "LMS",
-        "CourseVideo": "",
+        "CourseVideo": [],
         "AdminUsers": [{
             "UserId": profile?.Id,
             "Firstname": profile?.FirstName,
@@ -112,6 +110,9 @@ const AdminCourses = ({ profile }) => {
     const [fileUploading, setFileUploading] = useState(false);
     const [secId, setSecId] = useState("");
     const [form] = Form.useForm();
+    const [showGrid, setShowGrid] = useState(true);
+    const [fileImgUploading, setFileImgUploading] = useState(false);
+    const [fileVideoUploading, setFileVideoUploading] = useState(false);
     useEffect(() => {
         fetchBranches();
         fetchAuthors()
@@ -216,6 +217,7 @@ const AdminCourses = ({ profile }) => {
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
             setShowForm(false)
+            setShowGrid(true);
             form.resetFields();
         }
         else {
@@ -246,6 +248,7 @@ const AdminCourses = ({ profile }) => {
     const cancelCourse = () => {
         form.resetFields();
         setCourseObject({ ...courseObj });
+        setShowGrid(true);
         setShowForm(false)
     }
     const handleChange = (prop, val, popup) => {
@@ -427,12 +430,12 @@ const AdminCourses = ({ profile }) => {
                                 <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
                             </Col>
                             <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                <Button type="dashed" onClick={() => setShowForm(true)}>Create Course</Button>
+                                <Button type="dashed" onClick={() => { setShowForm(true); setShowGrid(false); }}>Create Course</Button>
                             </Col>
                         </Row>
                     </Card>
                 </div>
-                {ShowForm && <Form initialValues={{ "GroupId": "", "GroupName": "", "GroupImage": "", "Description": "", "Type": "", "Author": [], "CreatedDate": "", "CategoryType": "LMS", "CourseVideo": "", "Categories": [], "CourseSections": [] }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
+                {ShowForm && <Form initialValues={{ "GroupId": "", "GroupName": "", "GroupImage": [], "Description": "", "Type": "", "Author": [], "CreatedDate": "", "CategoryType": "LMS", "CourseVideo": [], "Categories": [], "CourseSections": [] }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
                         <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
@@ -486,19 +489,108 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <div className="text-secondary">Course Image</div>
+                                                <div className="mb-12">
+                                                    <Dragger
+                                                        className="upload"
+                                                        {...props}
+                                                        onChange={(info) => {
+                                                            setFileImgUploading(true);
+                                                            const { status } = info.file;
+                                                            if (status === 'done') {
+                                                                setFileImgUploading(false);
+                                                                courseObject.GroupImage = info.file.response;
+                                                                setCourseObject({ ...courseObject })
+                                                                message.success(`${info.file.name} file uploaded successfully.`);
+                                                            } else if (status === 'error') {
+                                                                message.error(`${info.file.name} file upload failed.`);
+                                                            }
+                                                        }}
+                                                        accept=".jpg,.jpeg,.png"
+                                                        onRemove={() => {
+                                                            courseObject.GroupImage = [];
+                                                            setCourseObject({ ...courseObject })
+                                                        }}
+                                                        showUploadList={false}
+                                                        disabled={fileImgUploading || courseObject.GroupImage.length > 0}
+                                                    >
+                                                        <span className="sharebox-icons photo-upload"></span>
+                                                        <p className="ant-upload-text mt-8 mb-0">Upload Image</p>
+                                                    </Dragger>
+                                                    {fileImgUploading && <Loader className="loader-top-middle" />}
+                                                    {courseObject.GroupImage?.map((image, indx) => (
+                                                        <div key={indx} className="mb-16 upload-preview">
+                                                            <Image src={image} />
+                                                            <a
+                                                                class="item-close"
+                                                                onClick={() => {
+                                                                    courseObject.GroupImage = [];
+                                                                    setCourseObject({
+                                                                        ...courseObject
+                                                                    })
+                                                                }}
+                                                            >
+                                                                <Tooltip title="Remove">
+                                                                    <span className="close-icon"></span>
+                                                                </Tooltip>
+                                                            </a>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </Col>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <div className="text-secondary">Introduction video</div>
                                                 <div className="mb-12">
-                                                    <Dragger {...props}>
-                                                        <p className="ant-upload-drag-icon">
-                                                            <InboxOutlined />
-                                                        </p>
-                                                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                                                    </Dragger></div>
-                                                <video controls width="100%">
-                                                    <source src={video} />
-                                                </video>
+                                                    <Dragger
+                                                        className="upload"
+                                                        {...props}
+                                                        onRemove={() => {
+                                                            courseObject.CourseVideo = [];
+                                                            setCourseObject({ ...courseObject })
+                                                        }}
+                                                        onChange={(info) => {
+                                                            setFileVideoUploading(true);
+                                                            const { status } = info.file;
+                                                            if (status === 'done') {
+                                                                setFileVideoUploading(false);
+                                                                courseObject.CourseVideo = info.file.response;
+                                                                setCourseObject({ ...courseObject })
+                                                                message.success(`${info.file.name} file uploaded successfully.`);
+                                                            } else if (status === 'error') {
+                                                                message.error(`${info.file.name} file upload failed.`);
+                                                            }
+                                                        }}
+                                                        accept=".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm"
+                                                        showUploadList={false}
+                                                        disabled={fileVideoUploading || courseObject.CourseVideo.length > 0}
+                                                    >
+                                                        <span className="sharebox-icons video-upload"></span>
+                                                        <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
+                                                    </Dragger>
+                                                    {fileVideoUploading && <Loader className="loader-top-middle" />}
+                                                    {courseObject.CourseVideo?.map((image, indx) => (
+                                                        <div key={indx} className="mb-16 upload-preview">
+                                                            <video width="100%" controls>
+                                                                <source src={image} />
+                                                            </video>
+                                                            <a
+                                                                class="item-close"
+                                                                onClick={() => {
+                                                                    courseObject.CourseVideo = [];
+                                                                    setCourseObject({
+                                                                        ...courseObject
+                                                                    })
+                                                                }
+                                                                }
+                                                            >
+                                                                <Tooltip title="Remove">
+                                                                    <span className="close-icon"></span>
+                                                                </Tooltip>
+                                                            </a>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </Col>
 
                                         </Row>
@@ -679,181 +771,14 @@ const AdminCourses = ({ profile }) => {
                     </Form>
                 </Modal>
 
-                <Title className="f-18 text-primary semibold">Courses</Title>
-                <div className="custom-card">
-                    <Card className="p-12 custom-fields">
-                        <Row gutter={16} align="middle">
-                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                <Input placeholder="Course Name" />
-                            </Col>
-                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                <Select allowClear placeholder="Choose Group">
-                                    <Option value="Mechanical Engineering">Mechanical Engineering</Option>
-                                    <Option value="Chemical Engineering">Chemical Engineering</Option>
-                                    <Option value="Information Technology">Information Technology</Option>
-                                    <Option value="Civil Engineering">Civil Engineering</Option>
-                                    <Option value="Aeronautical Engineering">Aeronautical Engineering</Option>
-                                    <Option value="Artificial Intelligence">Artificial Intelligence</Option>
-                                </Select>
-                            </Col>
-                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                <RangePicker placeholder={['From Date', 'To Date']} />
-                            </Col>
-                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                <Button type="primary">Search</Button>
-                            </Col>
-                        </Row>
-                    </Card>
-                </div>
-                <div className="custom-card">
-                    <Card>
-                        <div className="p-12">
-                            {/* <Table columns={courseColumns} dataSource={courseData} size="small" pagination={{ position: ["bottomCenter"] }} bordered={true} /> */}
+                {showGrid && <Courses />
 
-                            <Row gutter={16}>
-                                <Col xs={24} md={10} lg={6}>
-                                    <Card
-                                        className="card-item"
-                                        cover={<img alt="photography" src={photography} />}
-                                        actions={[
-                                            <Link className="text-red card-item-button-red">Delete</Link>
-                                        ]}
-                                    >
-                                        <Meta
-                                            title="Photography"
-                                            description={
-                                                <div className="addon-info">
-                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Members</span>
-                                                    <div>Date: <span>11-01-2021</span></div>
-                                                </div>} />
-                                    </Card>
-                                </Col>
-                                <Col xs={24} md={10} lg={6}>
-                                    <Card
-                                        className="card-item"
-                                        cover={<img alt="photography" src={Blogging} />}
-                                        actions={[
-                                            <Link className="text-red card-item-button-red">Delete</Link>
-                                        ]}
-                                    >
-                                        <Meta
-                                            title="Blogging, Content Marketing & Vlogging"
-                                            description={
-                                                <div className="addon-info">
-                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Members</span>
-                                                    <div>Date: <span>11-01-2021</span></div>
-                                                </div>} />
-                                    </Card>
-                                </Col>
-                                <Col xs={24} md={10} lg={6}>
-                                    <Card
-                                        className="card-item"
-                                        cover={<img alt="photography" src={SEO} />}
-                                        actions={[
-                                            <Link className="text-red card-item-button-red">Delete</Link>
-                                        ]}
-                                    >
-                                        <Meta
-                                            title="SEO & Digital Marketing"
-                                            description={
-                                                <div className="addon-info">
-                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Members</span>
-                                                    <div>Date: <span>11-01-2021</span></div>
-                                                </div>}
-                                        />
-                                    </Card>
-                                </Col>
-                                <Col xs={24} md={10} lg={6}>
-                                    <Card
-                                        className="card-item"
-                                        cover={<img alt="photography" src={photography} />}
-                                        actions={[
-                                            <Link className="text-red card-item-button-red">Delete</Link>
-                                        ]}
-                                    >
-                                        <Meta
-                                            title="Photography"
-                                            description={
-                                                <div className="addon-info">
-                                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Members</span>
-                                                    <div>Date: <span>11-01-2021</span></div>
-                                                </div>}
-                                        />
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Card>
-                </div>
+                }
             </Col>
 
         </Row>
     </>)
 
 }
-const courseColumns = [
-    {
-        title: 'Course Name',
-        dataIndex: 'name',
-        filters: [
-            {
-                text: 'Artificial Intelligence',
-                value: 'Artificial Intelligence',
-            },
-            {
-                text: 'Cyber Security',
-                value: 'Cyber Security',
-            },
-        ],
-        // specify the condition of filtering result
-        // here is that finding the name started with `value`
-        onFilter: (value, record) => record.name.indexOf(value) === 0,
-        sorter: (a, b) => a.name.length - b.name.length,
-        sortDirections: ['descend'],
-        render: text => <a>{text}</a>
-    },
-    {
-        title: 'Members',
-        dataIndex: 'members',
-    },
-    {
-        title: 'Date',
-        dataIndex: 'date',
-    },
-    {
-        title: 'Action',
-        dataIndex: 'action',
-        render: () => <a style={{ color: 'var(--red)' }}>Delete</a>,
-    },
-];
 
-const courseData = [
-    {
-        key: '1',
-        name: 'AFM',
-        members: 5,
-        date: '12-12-2020 06:30 pm',
-    },
-    {
-        key: '2',
-        name: 'Computer Science',
-        members: 10,
-        date: '10-11-2020 09:00 am',
-    },
-    {
-        key: '3',
-        name: 'Mathematics',
-        members: 32,
-        date: '10-11-2020 12:37 pm',
-    },
-    {
-        key: '4',
-        name: 'Cyber Security',
-        members: 15,
-        date: '08-10-2020 01:53 pm',
-    },
-];
-function onChange(pagination, filters, sorter, extra) {
-    console.log('params', pagination, filters, sorter, extra);
-}
 export default connectStateProps(withRouter(AdminCourses));

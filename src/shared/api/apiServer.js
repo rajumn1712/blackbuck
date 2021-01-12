@@ -203,6 +203,12 @@ const getUsers = (userId, take, skip) => {
 const getUsersCount = () => {
   return apiClient.get(ADMIN_API + `getUsersCount`);
 }
+const getGroups = (userId, take, skip) => {
+  return apiClient.get(ADMIN_API + `getAdminCourses/${userId}/${take}/${skip}`);
+}
+const courseDelete = (GroupId) => {
+  return apiClient.get(ADMIN_API + `courseDelete/${GroupId}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -260,5 +266,7 @@ export {
   getCourse,
   publishCourse,
   getUsers,
-  getUsersCount
+  getUsersCount,
+  getGroups,
+  courseDelete
 };
