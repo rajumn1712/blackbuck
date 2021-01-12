@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Input, Row, Col, Button, Select, Table, Tooltip } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import { getUsers, getUsersCount } from '../../shared/api/apiServer';
+import { getUsers, getUsersCount, setScholor } from '../../shared/api/apiServer';
 import connectStateProps from '../../shared/stateConnect';
+import notify from '../../shared/components/notification';
 
 const { Option } = Select;
 const columns = [
@@ -33,6 +34,7 @@ const Members = ({ profile }) => {
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);
+    const [isModal, setIsModal] = useState(false);
     useEffect(() => {
         getMembersCount();
         getMembers(1, 20);
@@ -40,6 +42,9 @@ const Members = ({ profile }) => {
     const getMembers = async (page, pageSize) => {
         const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
         if (response.ok) {
+            response.data.forEach((item, index) => {
+                item["key"] = index;
+            })
             setData(response.data);
         }
 
@@ -54,8 +59,19 @@ const Members = ({ profile }) => {
         }
 
     }
-    const showModal = () => {
-
+    const showModal = (type) => {
+        if (selection.length == 0 || selection.length > 1) {
+            notify({
+                description: "Please select one record only",
+                message: "Selection",
+            });
+        }
+        else {
+            if (type == "scholor")
+                changeScholor();
+            else
+                setIsModal(true)
+        }
     }
     const onRecordSelect = (record) => {
         const idx = selection.indexOf(record);
@@ -65,6 +81,16 @@ const Members = ({ profile }) => {
             selection.push(record);
         }
         setSelection(selection);
+    }
+    const changeScholor = () => {
+        setScholor(selection[0].Id).then((res) => {
+            if (res.ok) {
+                notify({
+                    description: "Scholor updated successfully",
+                    message: "Scholor",
+                });
+            }
+        });
     }
     return <>
         <Title className="f-18 text-primary semibold">Members</Title>
@@ -102,7 +128,7 @@ const Members = ({ profile }) => {
                 {/* <Tooltip placement="top" title="Block">
                     <span className="left-menu block-icon mx-8"></span>
                 </Tooltip> */}
-                <Tooltip placement="top" title="Set Scroller" onClick={() => showModal()}>
+                <Tooltip placement="top" title="Set Scroller" onClick={() => showModal("scholor")}>
                     <span className="left-menu setscroller-icon mx-8"></span>
                 </Tooltip>
                 <Tooltip placement="top" title="Set Admin" onClick={() => showModal()}>
@@ -112,9 +138,8 @@ const Members = ({ profile }) => {
             </div>}>
                 <Table
                     rowSelection={{
-                        type: "checkbox",
                         hideSelectAll: true,
-                        onSelect: (record) => onRecordSelect(record)
+                        onSelect: onRecordSelect,
                     }}
                     columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
             </Card>

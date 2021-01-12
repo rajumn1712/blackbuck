@@ -209,6 +209,9 @@ const getGroups = (userId, take, skip) => {
 const courseDelete = (GroupId) => {
   return apiClient.get(ADMIN_API + `courseDelete/${GroupId}`);
 }
+const setScholor = (userId) => {
+  return apiClient.get(ADMIN_API + `setIsScholar/${userId}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -268,5 +271,6 @@ export {
   getUsers,
   getUsersCount,
   getGroups,
-  courseDelete
+  courseDelete,
+  setScholor
 };

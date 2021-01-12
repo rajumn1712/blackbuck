@@ -103,70 +103,69 @@ class Courses extends Component {
     render() {
         const { lstCourses } = this.state;
         return <>
-            <div className="d-flex">
-                <div>
-                    <Title className="f-18 text-primary semibold">Courses</Title>
-                    <div className="custom-card">
-                        <Card className="p-12 custom-fields">
-                            <Row gutter={16} align="middle">
-                                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                    <Input placeholder="Course Name" />
-                                </Col>
-                                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                    <Select allowClear placeholder="Choose Group">
-                                        <Option value="Mechanical Engineering">Mechanical Engineering</Option>
-                                        <Option value="Chemical Engineering">Chemical Engineering</Option>
-                                        <Option value="Information Technology">Information Technology</Option>
-                                        <Option value="Civil Engineering">Civil Engineering</Option>
-                                        <Option value="Aeronautical Engineering">Aeronautical Engineering</Option>
-                                        <Option value="Artificial Intelligence">Artificial Intelligence</Option>
-                                    </Select>
-                                </Col>
-                                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                    <RangePicker placeholder={['From Date', 'To Date']} />
-                                </Col>
-                                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                    <Button type="primary">Search</Button>
-                                </Col>
-                            </Row>
-                        </Card>
-                    </div>
-                    <div className="custom-card">
-                        <Card >
-                            <div className="p-12">
+            <div>
+                <Title className="f-18 text-primary semibold">Courses</Title>
+                <div className="custom-card">
+                    <Card className="p-12 custom-fields">
+                        <Row gutter={16} align="middle">
+                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                <Input placeholder="Course Name" />
+                            </Col>
+                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                <Select allowClear placeholder="Choose Group">
+                                    <Option value="Mechanical Engineering">Mechanical Engineering</Option>
+                                    <Option value="Chemical Engineering">Chemical Engineering</Option>
+                                    <Option value="Information Technology">Information Technology</Option>
+                                    <Option value="Civil Engineering">Civil Engineering</Option>
+                                    <Option value="Aeronautical Engineering">Aeronautical Engineering</Option>
+                                    <Option value="Artificial Intelligence">Artificial Intelligence</Option>
+                                </Select>
+                            </Col>
+                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                <RangePicker placeholder={['From Date', 'To Date']} />
+                            </Col>
+                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                <Button type="primary">Search</Button>
+                            </Col>
+                        </Row>
+                    </Card>
+                </div>
+                <div className="custom-card">
+                    <Card >
+                        <div className="p-12">
 
-                                <Row gutter={16}>
-                                    <Col xs={24} md={10} lg={6}>
-                                        {lstCourses.map((course, index) => {
-                                            return <Card key={index}
-                                                className="card-item"
-                                                cover={<img alt="photography" src={course.Image || defaultguser} />}
-                                                actions={[
-                                                    <Link className="text-red card-item-button-red" onClick={() => this.deleteCourse(course)}>Delete</Link>
-                                                ]}
-                                            >
-                                                <Meta
-                                                    title={<div onClick={this.props.onCourseEdit()}>{course.CourseName}</div>}
-                                                    description={
-                                                        <div className="addon-info">
-                                                            {course.Members && <span className="mr-8"><span className="grp-type-icon video-play" />{course.Members} Members</span>}
-                                                            {course.Date && <div>Date: <span>{moment(course.Date).format('ll')}</span></div>}
-                                                        </div>} />
-                                            </Card>
-                                        })
-                                        }
-                                    </Col>
-                                    {
-                                        lstCourses.length == 0 &&
-                                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>
-
+                            <Row gutter={16}>
+                                <Col xs={24} md={24} lg={24}>
+                                    {lstCourses.map((course, index) => {
+                                        return <Card key={index}
+                                            className="card-item"
+                                            cover={<img alt="photography" src={course.Image || defaultguser} />}
+                                            actions={[
+                                                <Link className="text-red card-item-button-red" onClick={() => this.deleteCourse(course)}>Delete</Link>
+                                            ]}
+                                        >
+                                            <Meta
+                                                title={<div onClick={this.props.onCourseEdit()}>{course.CourseName}</div>}
+                                                description={
+                                                    <div className="addon-info">
+                                                        {course.Members && <span className="mr-8"><span className="grp-type-icon video-play" />{course.Members} Members</span>}
+                                                        {course.Date && <div>Date: <span>{moment(course.Date).format('ll')}</span></div>}
+                                                    </div>} />
+                                        </Card>
+                                    })
                                     }
-                                </Row>
-                            </div>
-                        </Card>
-                    </div>
+                                </Col>
+                                {
+                                    lstCourses.length == 0 &&
+                                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>
+
+                                }
+                            </Row>
+                        </div>
+                    </Card>
                 </div>
             </div>
+
         </>
     }
 }

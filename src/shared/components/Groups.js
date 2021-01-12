@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, Avatar, List, Empty, Row, Col,Skeleton } from "antd";
+import { Button, Card, Avatar, List, Empty, Row, Col, Skeleton } from "antd";
 import notify from "./notification";
 import { apiClient } from "../api/clients";
 import { Link } from "react-router-dom";
@@ -256,7 +256,7 @@ class Groups extends Component {
         })}
       {this.state.data.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
     </Row>) : (
-        <div className="custom-card sub-text card-scroll">          
+        <div className="custom-card sub-text card-scroll">
           <Card
             title="Groups"
             bordered={true}
@@ -267,7 +267,6 @@ class Groups extends Component {
             </Button>,
             ]}
           >
-            <Skeleton className="p-12" avatar paragraph={{ rows: 1 }} />
             {/* {loading && <Loader className="loader-top-middle" />} */}
             <List
               loading={loading}
