@@ -22,9 +22,22 @@ class Courses extends Component {
     componentDidMount() {
         window.addEventListener("scroll", this.handleScroll);
         this.getGroups();
+        if (this.props.onRef)
+            this.props.onRef(this);
     }
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll);
+    }
+    refresh = () => {
+        this.setState({
+            lstCourses: [],
+            page: 1,
+            pageSize: 20,
+            loading: false,
+            loadMore: true,
+        }, () => {
+            this.getGroups();
+        })
     }
     deleteCourse = (course) => {
         courseDelete(course.Id).then((res) => {
@@ -135,17 +148,17 @@ class Courses extends Component {
                         <div className="p-12">
 
                             <Row gutter={16}>
-                                <Col xs={24} md={24} lg={24}>
+                                <Col xs={24} md={10} lg={6}>
                                     {lstCourses.map((course, index) => {
                                         return <Card key={index}
                                             className="card-item"
-                                            cover={<img alt="photography" src={course.Image || defaultguser} />}
+                                            cover={<img alt="photography" src={course.Image?.[0] || defaultguser} />}
                                             actions={[
                                                 <Link className="text-red card-item-button-red" onClick={() => this.deleteCourse(course)}>Delete</Link>
                                             ]}
                                         >
                                             <Meta
-                                                title={<div onClick={this.props.onCourseEdit()}>{course.CourseName}</div>}
+                                                title={<a className="post-title" onClick={() => this.props.onCourseEdit(course.Id)}>{course.CourseName}</a>}
                                                 description={
                                                     <div className="addon-info">
                                                         {course.Members && <span className="mr-8"><span className="grp-type-icon video-play" />{course.Members} Members</span>}

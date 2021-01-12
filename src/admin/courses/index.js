@@ -97,7 +97,7 @@ const AdminCourses = ({ profile }) => {
     const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
     const [CategoriesLu, setCategoriesLu] = useState([]);
     const [AuthorsLu, setAuthorsLu] = useState([]);
-    const [ShowForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState(false);
     const [current, setCurrent] = React.useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [topicObj, setTopicObj] = useState({ ...obj });
@@ -113,6 +113,7 @@ const AdminCourses = ({ profile }) => {
     const [showGrid, setShowGrid] = useState(true);
     const [fileImgUploading, setFileImgUploading] = useState(false);
     const [fileVideoUploading, setFileVideoUploading] = useState(false);
+    const [CoursesObj, setCoursesObj] = useState("");
     useEffect(() => {
         fetchBranches();
         fetchAuthors()
@@ -155,9 +156,10 @@ const AdminCourses = ({ profile }) => {
         },
     };
 
-   const onCourseEdit = () => {
-        setShowForm(true);
-        setShowGrid(false);
+    const onCourseEdit = (id) => {
+        courseObject.GroupId = id;
+        setCourseObject({ ...courseObject })
+        refreshCourseDetails(true);
     }
     const deleteSection = async (item) => {
         if (!item.IsSaved) {
@@ -186,10 +188,26 @@ const AdminCourses = ({ profile }) => {
     const refreshCourseDetails = async () => {
         const branchResponse = await getCourse(courseObject.GroupId);
         if (branchResponse.ok) {
-            setCourseObject({ ...branchResponse.data[0] });
+            bindCourseData(branchResponse.data[0])
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
+    }
+    const bindCourseData = (obj) => {
+        courseObject.Author = [];
+        courseObject.Categories = [];
+        courseObject.CourseSections = obj.CourseSections;
+        courseObject.GroupName = obj.GroupName;
+        courseObject.CourseVideo = obj.CourseVideo;
+        courseObject.GroupImage = obj.GroupImage;
+        obj.Author.forEach(item => {
+            courseObject.Author.push(item.UserId)
+        });
+        obj.Categories.forEach(item => {
+            courseObject.Categories.push(item.BranchId)
+        });
+        setCourseObject({ ...courseObject });
+        setShowForm(true);
     }
     const topicSave = async () => {
         if (topicObj.ThumbNails?.length == 0) {
@@ -221,8 +239,8 @@ const AdminCourses = ({ profile }) => {
         if (result.ok) {
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
-            setShowForm(false)
-            setShowGrid(true);
+            setShowForm({ ...false })
+            CoursesObj.refresh();
             form.resetFields();
         }
         else {
@@ -435,12 +453,12 @@ const AdminCourses = ({ profile }) => {
                                 <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
                             </Col>
                             <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                <Button type="dashed" onClick={() => { setShowForm(true); setShowGrid(false); }}>Create Course</Button>
+                                <Button type="dashed" onClick={() => { setShowForm(true) }}>Create Course</Button>
                             </Col>
                         </Row>
                     </Card>
                 </div>
-                {ShowForm && <Form initialValues={{ "GroupId": "", "GroupName": "", "GroupImage": [], "Description": "", "Type": "", "Author": [], "CreatedDate": "", "CategoryType": "LMS", "CourseVideo": [], "Categories": [], "CourseSections": [] }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
+                {showForm && <Form initialValues={{ ...courseObject }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
                         <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
@@ -453,14 +471,14 @@ const AdminCourses = ({ profile }) => {
                                     <div className="create-course">
                                         <div className="custom-fields">
                                             <label className="text-secondary d-block mb-4">Course Title</label>
-                                            <Form.Item name="GroupName" rules={[{ required: true, message: "Course Title  required" }]} onChange={(value) => handleChange('GroupName', value)}>
-                                                <Input placeholder="e.g. Learn how to code from scratch" value={values.GroupName} />
+                                            <Form.Item name="GroupName" rules={[{ required: true, message: "Course Title  required" }]}>
+                                                <Input placeholder="e.g. Learn how to code from scratch" onChange={(value) => handleChange('GroupName', value)} />
                                             </Form.Item>
                                         </div>
                                         <div className="custom-fields">
                                             <label className="text-secondary d-block mb-4">Course Description</label>
-                                            <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} onChange={(value) => handleChange('Description', value)}>
-                                                <TextArea onResize
+                                            <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]}>
+                                                <TextArea onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }}
                                                 />
                                             </Form.Item>
@@ -776,9 +794,9 @@ const AdminCourses = ({ profile }) => {
                     </Form>
                 </Modal>
 
-                {showGrid && <Courses onCourseEdit={() => onCourseEdit()} />
+                <Courses onCourseEdit={(id) => onCourseEdit(id)} onRef={courses => setCoursesObj(courses)} />
 
-                }
+
             </Col>
 
         </Row>
