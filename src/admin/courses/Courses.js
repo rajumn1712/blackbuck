@@ -146,7 +146,7 @@ class Courses extends Component {
                                                 ]}
                                             >
                                                 <Meta
-                                                    title={course.CourseName}
+                                                    title={<div onClick={this.props.onCourseEdit()}>{course.CourseName}</div>}
                                                     description={
                                                         <div className="addon-info">
                                                             {course.Members && <span className="mr-8"><span className="grp-type-icon video-play" />{course.Members} Members</span>}

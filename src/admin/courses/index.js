@@ -154,6 +154,11 @@ const AdminCourses = ({ profile }) => {
             }
         },
     };
+
+   const onCourseEdit = () => {
+        setShowForm(true);
+        setShowGrid(false);
+    }
     const deleteSection = async (item) => {
         if (!item.IsSaved) {
             courseObject.CourseSections = courseObject.CourseSections.filter(sec => sec.SectionId
@@ -771,7 +776,7 @@ const AdminCourses = ({ profile }) => {
                     </Form>
                 </Modal>
 
-                {showGrid && <Courses />
+                {showGrid && <Courses onCourseEdit={() => onCourseEdit()} />
 
                 }
             </Col>
