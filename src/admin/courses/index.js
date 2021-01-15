@@ -303,15 +303,17 @@ const AdminCourses = ({ profile }) => {
             setTopicObj({ ...topicObj })
         }
     }
-    const secItemsChange = (prop, val) => {
+    const secItemsChange = (prop, val, index) => {
         secObj[prop] = val.currentTarget ? val.currentTarget.value : val;
         setSecObj({ ...secObj })
+        courseObject.CourseSections[index][prop] = val.currentTarget ? val.currentTarget.value : val;
+        setCourseObject({ ...courseObject });
     }
     const sectionSave = async () => {
-        if (secObj.Topics?.length == 0) {
-            notify({ message: "Warn", type: "error", description: "Atleast one topic required" });
-            return;
-        }
+        // if (secObj.Topics?.length == 0) {
+        //     notify({ message: "Warn", type: "error", description: "Atleast one topic required" });
+        //     return;
+        // }
         const result = await saveSection(secObj, courseObject.GroupId);
         if (result.ok) {
             secObj.IsSaved = true;
@@ -321,7 +323,7 @@ const AdminCourses = ({ profile }) => {
                 }
             });
             setCourseObject({ ...courseObject });
-            notify({ message: "Section", description: "Topic saved successfully" });
+            notify({ message: "Section", description: "Section saved successfully" });
         }
         else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
@@ -616,8 +618,8 @@ const AdminCourses = ({ profile }) => {
                                     </div>
                                     <div className="create-course mt-16">
                                         <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>
-                                        {courseObject.CourseSections?.map((item) => {
-                                            return <div> <div className="lecture-collapse mb-16">
+                                        {courseObject.CourseSections?.map((item, index) => {
+                                            return <div> <div className="lecture-collapse mb-16" key={index}>
                                                 <Collapse
                                                     className="mb-16"
                                                     expandIconPosition="right"
@@ -650,9 +652,9 @@ const AdminCourses = ({ profile }) => {
                                             </div>
                                                 <div className="lecture-collapse mb-16">
                                                     <div className="custom-fields entr-course-title p-12 mb-12">
-                                                        <Form id="secForm" initialValues={{ ...sectionObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()}>
+                                                        <Form id="secForm" initialValues={item} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
                                                             <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value)} />
+                                                                {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                             </Form.Item>
                                                             <div className="text-right">
                                                                 <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
