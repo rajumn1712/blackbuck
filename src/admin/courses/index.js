@@ -201,7 +201,7 @@ const AdminCourses = ({ profile }) => {
         obj.Categories.forEach(item => {
             ObjCourse.Categories.push(item.BranchId)
         });
-        setCourseObject({ ...ObjCourse });
+        setCourseObject({ ...obj });
         form.setFieldsValue({ ...ObjCourse })
         setShowForm(true);
     }
