@@ -50,7 +50,7 @@ const AdminCourses = ({ profile }) => {
         "Title": "",
         "Description": "",
         "ThumbNails": [],
-        "VideoSource": "",
+        "VideoSource": "Upload",
         "VideoName": "",
         "VideoUrl": [],
         "Duration": "03:05:00",
@@ -367,6 +367,7 @@ const AdminCourses = ({ profile }) => {
         setIsModalVisible(true);
     };
     const handleCancel = () => {
+        setTopicObj({ ...obj })
         setIsModalVisible(false);
     };
 
@@ -684,7 +685,7 @@ const AdminCourses = ({ profile }) => {
                     className="addTopicPop"
 
                 >
-                    <Form id="myForm" onFinishFailed={() => { }} onFinish={() => topicSave()} >
+                    <Form id="myForm" onFinishFailed={() => { }} onFinish={() => topicSave()} initialValues={{ ...topicObj }}>
                         <div ref={formRef}>
                             {isError && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             <div className="custom-fields">
@@ -754,13 +755,13 @@ const AdminCourses = ({ profile }) => {
                                 </div>
                             ))}
                             {topicObj.VideoSource == "YouTube" && <div className="custom-fields">
-                                <Form.Item name="VideoUrl" >
+                                <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="YouTube URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
                                 </Form.Item>
                             </div>
                             }
                             {topicObj.VideoSource == "Vimeo" && <div className="custom-fields">
-                                <Form.Item name="VideoUrl" >
+                                <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="Vimeo URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
                                 </Form.Item>
                             </div>
