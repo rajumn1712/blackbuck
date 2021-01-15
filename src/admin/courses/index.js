@@ -43,9 +43,6 @@ const data = [
 const topicTitle = (
     <span className="left-menu play mr-4"></span>
 )
-const videoDur = () => (
-    <div className="f-16 m-0 text-secondary video-dur">12m 35s</div>
-);
 
 const AdminCourses = ({ profile }) => {
     const obj = {
@@ -156,8 +153,8 @@ const AdminCourses = ({ profile }) => {
         },
     };
 
-    const onCourseEdit = (id) => {
-        setShowForm(false);
+    const onCourseEditObj = (id) => {
+        setShowForm(true);
         courseObject.GroupId = id;
         setCourseObject({ ...courseObject })
         refreshCourseDetails(true);
@@ -198,10 +195,6 @@ const AdminCourses = ({ profile }) => {
         let ObjCourse = { ...obj }
         ObjCourse.Author = [];
         ObjCourse.Categories = [];
-        ObjCourse.CourseSections = obj.CourseSections;
-        ObjCourse.GroupName = obj.GroupName;
-        ObjCourse.CourseVideo = obj.CourseVideo;
-        ObjCourse.GroupImage = obj.GroupImage;
         obj.Author.forEach(item => {
             ObjCourse.Author.push(item.UserId)
         });
@@ -209,6 +202,7 @@ const AdminCourses = ({ profile }) => {
             ObjCourse.Categories.push(item.BranchId)
         });
         setCourseObject({ ...ObjCourse });
+        form.setFieldsValue({ ...ObjCourse })
         setShowForm(true);
     }
     const topicSave = async () => {
@@ -460,7 +454,7 @@ const AdminCourses = ({ profile }) => {
                         </Row>
                     </Card>
                 </div>
-                {showForm && <Form initialValues={courseObject} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
+                {showForm && <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
                         <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
@@ -796,7 +790,7 @@ const AdminCourses = ({ profile }) => {
                     </Form>
                 </Modal>
 
-                <Courses onCourseEdit={(id) => onCourseEdit(id)} onRef={courses => setCoursesObj(courses)} />
+                <Courses onCourseEdit={(id) => onCourseEditObj(id)} onRef={courses => setCoursesObj(courses)} />
 
 
             </Col>
