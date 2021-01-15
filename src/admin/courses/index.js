@@ -157,6 +157,7 @@ const AdminCourses = ({ profile }) => {
     };
 
     const onCourseEdit = (id) => {
+        setShowForm(false);
         courseObject.GroupId = id;
         setCourseObject({ ...courseObject })
         refreshCourseDetails(true);
@@ -194,19 +195,20 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const bindCourseData = (obj) => {
-        courseObject.Author = [];
-        courseObject.Categories = [];
-        courseObject.CourseSections = obj.CourseSections;
-        courseObject.GroupName = obj.GroupName;
-        courseObject.CourseVideo = obj.CourseVideo;
-        courseObject.GroupImage = obj.GroupImage;
+        let ObjCourse = { ...obj }
+        ObjCourse.Author = [];
+        ObjCourse.Categories = [];
+        ObjCourse.CourseSections = obj.CourseSections;
+        ObjCourse.GroupName = obj.GroupName;
+        ObjCourse.CourseVideo = obj.CourseVideo;
+        ObjCourse.GroupImage = obj.GroupImage;
         obj.Author.forEach(item => {
-            courseObject.Author.push(item.UserId)
+            ObjCourse.Author.push(item.UserId)
         });
         obj.Categories.forEach(item => {
-            courseObject.Categories.push(item.BranchId)
+            ObjCourse.Categories.push(item.BranchId)
         });
-        setCourseObject({ ...courseObject });
+        setCourseObject({ ...ObjCourse });
         setShowForm(true);
     }
     const topicSave = async () => {
@@ -458,7 +460,7 @@ const AdminCourses = ({ profile }) => {
                         </Row>
                     </Card>
                 </div>
-                {showForm && <Form initialValues={{ ...courseObject }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
+                {showForm && <Form initialValues={courseObject} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
                         <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
