@@ -12,7 +12,8 @@ import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
 import { Link } from "react-router-dom";
 import video from '../../styles/images/video.mp4';
-import Courses from './Courses'
+import Courses from './Courses';
+// import ytdl from 'youtube.get-video-info'
 const { Meta } = Card;
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -218,7 +219,25 @@ const AdminCourses = ({ profile }) => {
             formRef.current.scrollTop = 0;
             return;
         }
-
+        // if (topicObj.VideoSource == "YouTube") {
+        //     var video_id = topicObj.VideoUrl.split('v=')[1];
+        //     var ampersandPosition = video_id.indexOf('&');
+        //     if (ampersandPosition != -1) {
+        //         video_id = video_id.substring(0, ampersandPosition);
+        //     }
+        //     ytdl.retrieve(video_id, function (err, res) {
+        //         topicObj.VideoName = res.name;
+        //         topicObj.Size = res.size;
+        //         setTopicObj({ ...topicObj });
+        //         saveTopicUpdate();
+        //     });
+        //     return;
+        // }
+        // else {
+        saveTopicUpdate();
+        // }
+    }
+    const saveTopicUpdate = async () => {
         const result = await saveTopic(topicObj, courseObject.GroupId, secId);
         if (result.ok) {
             setIsModalVisible(false);

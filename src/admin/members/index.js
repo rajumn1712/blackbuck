@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Input, Row, Col, Button, Select, Table, Tooltip } from 'antd';
+import { Card, Input, Row, Col, Button, Select, Table, Tooltip, Form } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { getUsers, getUsersCount, setScholor } from '../../shared/api/apiServer';
 import connectStateProps from '../../shared/stateConnect';
 import notify from '../../shared/components/notification';
+import Modal from 'antd/lib/modal/Modal';
 
 const { Option } = Select;
 const columns = [
@@ -31,10 +32,12 @@ const columns = [
 
 ];
 const Members = ({ profile }) => {
+    const obj = { Type: "", GroupName: "", GroupId: "", SystemType: "", Isroot: false }
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);
     const [isModal, setIsModal] = useState(false);
+    const [adminObj, setAdminObj] = useState({ ...obj });
     useEffect(() => {
         getMembersCount();
         getMembers(1, 20);
@@ -92,6 +95,16 @@ const Members = ({ profile }) => {
             }
         });
     }
+    const handleCancel = () => {
+        setIsModal(true)
+    }
+    const setAdmin = () => {
+
+    }
+    const handleChange = (prop, value) => {
+        adminObj[prop] = value.currentTarget ? value.currentTarget.value : value;
+        setAdminObj({ ...adminObj })
+    }
     return <>
         <Title className="f-18 text-primary semibold">Members</Title>
         <div className="custom-card">
@@ -144,6 +157,35 @@ const Members = ({ profile }) => {
                     columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
             </Card>
         </div>
+        <Modal title="Add Topic" visible={isModal} onCancel={handleCancel} centered
+            footer={<>
+                <Button type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
+            </>}
+            className="addTopicPop"
+
+        >
+            <Form id="myForm" onFinishFailed={() => { }} onFinish={() => setAdmin()} initialValues={{ Type: "", GroupName: "", GroupId: "", SystemType: "", Isroot: false }}>
+                <div>
+                    <div className="custom-fields">
+                        <label className="text-secondary d-block mb-4">Type</label>
+                        <Form.Item name="Type" rules={[{ required: true, message: "Type  required" }]} >
+                            <Input onChange={(value) => handleChange('Type', value, true)} />
+                        </Form.Item>
+                    </div>
+                    {adminObj.Type === "System" && <div className="custom-fields">
+                        <label className="text-secondary d-block mb-4">Video Source</label>
+                        <Form.Item name="VideoSource">
+                            <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
+                                <Option value="Social">Social</Option>
+                                <Option value="LMS">LMS</Option>
+                                <Option value="Careers">Careers</Option>
+                            </Select>
+                        </Form.Item>
+                    </div>
+                    }
+                </div>
+            </Form>
+        </Modal>
     </>
 }
 export default connectStateProps(Members);

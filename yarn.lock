@@ -10587,7 +10587,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.87.0, request@^2.88.0:
+request@^2.72.0, request@^2.87.0, request@^2.88.0:
   version "2.88.2"
   resolved "https://registry.npmjs.org/request/-/request-2.88.2.tgz"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -12738,6 +12738,13 @@ yeast@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
+
+youtube.get-video-info@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/youtube.get-video-info/-/youtube.get-video-info-1.0.2.tgz#27a2a4b964690b269e2101c7a06923aa5c2b1922"
+  integrity sha512-Q8JmZTStlz1TSuhMo9pxWtcDwdOj+5kuq+JTx2L4B5DC0I3cV0ROrXyWgOoMnA4nwzZ9F0EKHwClwQ2mwtQwfw==
+  dependencies:
+    request "^2.72.0"
 
 yup@^0.29.3:
   version "0.29.3"
