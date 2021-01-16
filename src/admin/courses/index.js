@@ -54,7 +54,7 @@ const AdminCourses = ({ profile }) => {
         "VideoSource": "Upload",
         "VideoName": "",
         "VideoUrl": [],
-        "Duration": "03:05:00",
+        "Duration": "00:00:00",
         "Size": ""
     }
     const sectionObj = {
@@ -108,6 +108,7 @@ const AdminCourses = ({ profile }) => {
     const [fileUploading, setFileUploading] = useState(false);
     const [secId, setSecId] = useState("");
     const [form] = Form.useForm();
+    const [topicForm] = Form.useForm();
     const [showGrid, setShowGrid] = useState(true);
     const [fileImgUploading, setFileImgUploading] = useState(false);
     const [fileVideoUploading, setFileVideoUploading] = useState(false);
@@ -373,19 +374,22 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const showModal = (type, topic, sectionId) => {
+        let topicObjForsave = type ? { ...topic } : { ...obj }
         setSecId(sectionId);
         if (type == 'Edit') {
-            setTopicObj({ ...topic })
+            setTopicObj(topicObjForsave)
             setTopicEdit(true);
         }
         else {
-            obj.TopicId = uuidv4();
-            setTopicObj({ ...obj })
+            topicObjForsave.TopicId = uuidv4();
+            setTopicObj(topicObjForsave)
             setTopicEdit(false);
         }
-        setIsModalVisible(true);
+        topicForm.setFieldsValue({ ...topicObjForsave })
+        setIsModalVisible(true)
     };
     const handleCancel = () => {
+        topicForm.resetFields();
         setTopicObj({ ...obj })
         setIsModalVisible(false);
     };
@@ -645,19 +649,20 @@ const AdminCourses = ({ profile }) => {
                                                     expandIconPosition="right"
                                                 >
                                                     <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">{getTopicsTime(item.Topics)}</div>}>
-                                                        {item.Topics?.map((topic) => {
+                                                        {item.Topics?.map((topic, index) => {
                                                             return <Collapse
                                                                 className="mb-8"
                                                                 expandIconPosition="right"
+                                                                key={index}
                                                             >
-                                                                <Panel header={<>{topicTitle} {item.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
+                                                                <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
                                                                     <div className="d-flex">
                                                                         <video width="280"><source src={topic.VideoUrl} /></video>
                                                                         <div className="ml-16">
                                                                             <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
                                                                             <p className="f-14 text-secondary mb-8">{topic.Description}</p>
-                                                                            <p className="f-12 text-primary">{topic.Duration} | {topic.Size}</p>
-                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', topic, item.SectionId)}>Edit Content</Button>
+                                                                            <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? topic.Size : "NA"}</p>
+                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
                                                                         </div>
                                                                     </div>
                                                                 </Panel>
@@ -702,9 +707,10 @@ const AdminCourses = ({ profile }) => {
                         <Button type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
                     </>}
                     className="addTopicPop"
+                    destroyOnClose
 
                 >
-                    <Form id="myForm" onFinishFailed={() => { }} onFinish={() => topicSave()} initialValues={{ ...topicObj }}>
+                    <Form id="myForm" onFinishFailed={() => { }} onFinish={() => topicSave()} initialValues={topicObj} form={topicForm}>
                         <div ref={formRef}>
                             {isError && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             <div className="custom-fields">
