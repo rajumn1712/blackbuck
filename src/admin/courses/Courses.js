@@ -144,13 +144,11 @@ class Courses extends Component {
                     </Card>
                 </div>
                 <div className="custom-card">
-                    <Card >
-                        <div className="p-12">
-
+                        <div className="p-12 card-background">
                             <Row gutter={16}>
-                                <Col xs={24} md={10} lg={6}>
-                                    {lstCourses.map((course, index) => {
-                                        return <Card key={index}
+                            {lstCourses.map((course, index) => {
+                                        return<Col xs={24} md={8} lg={6}>
+                                     <Card key={index}
                                             className="card-item"
                                             cover={<img alt="photography" src={course.Image?.[0] || defaultguser} />}
                                             actions={[
@@ -165,9 +163,9 @@ class Courses extends Component {
                                                         {course.Date && <div>Date: <span>{moment(course.Date).format('ll')}</span></div>}
                                                     </div>} />
                                         </Card>
+                                        </Col>
                                     })
                                     }
-                                </Col>
                                 {
                                     lstCourses.length == 0 &&
                                     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>
@@ -175,7 +173,6 @@ class Courses extends Component {
                                 }
                             </Row>
                         </div>
-                    </Card>
                 </div>
             </div>
 
