@@ -7,10 +7,8 @@ import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons'
 import connectStateProps from '../../shared/stateConnect';
 import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
-import { values } from 'lodash';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
-import { Link } from "react-router-dom";
 import video from '../../styles/images/video.mp4';
 import Courses from './Courses';
 // import ytdl from 'youtube.get-video-info'
@@ -51,6 +49,7 @@ const AdminCourses = ({ profile }) => {
         "Title": "",
         "Description": "",
         "ThumbNails": [],
+        "DupThumbNails": [],
         "VideoSource": "Upload",
         "VideoName": "",
         "VideoUrl": [],
@@ -179,6 +178,7 @@ const AdminCourses = ({ profile }) => {
     }
     const handleVidoTimeChange = (prop, val) => {
         videoTimeObj[prop] = val.currentTarget ? val.currentTarget.value : val;
+        videoTimeObj[prop] = videoTimeObj[prop].length == 1 ? ("0" + videoTimeObj[prop]) : videoTimeObj[prop];
         setVideoTimeObj({ ...videoTimeObj }, () => {
 
         })
@@ -360,6 +360,7 @@ const AdminCourses = ({ profile }) => {
     }
     const deleteImage = () => {
         topicObj.ThumbNails = [];
+        topicObj.DupThumbNails = [];
         setTopicObj({ ...topicObj })
     }
 
@@ -368,13 +369,14 @@ const AdminCourses = ({ profile }) => {
         if (status === 'done') {
             message.success(`${info.file.name} file uploaded successfully.`);
             topicObj.ThumbNails = info.fileList[0].response;
+            topicObj.DupThumbNails = info.fileList;
             setTopicObj({ ...topicObj });
         } else if (status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
     }
     const showModal = (type, topic, sectionId) => {
-        let topicObjForsave = type ? { ...topic } : { ...obj }
+        let topicObjForsave = type == "Edit" ? { ...topic } : { ...obj }
         setSecId(sectionId);
         if (type == 'Edit') {
             setTopicObj(topicObjForsave)
@@ -733,12 +735,13 @@ const AdminCourses = ({ profile }) => {
                                 <Upload
                                     action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
                                     listType="picture-card"
+                                    fileList={topicObj.DupThumbNails?.length > 0 ? topicObj.DupThumbNails : []}
                                     accept=".jpg,.jpeg,.png"
                                     onChange={(info) => onChange(info)}
                                     onRemove={() => deleteImage()}
                                     onPreview={() => { }}
                                 >
-                                    {topicObj.ThumbNails.length >= 1 ? null : uploadButton}
+                                    {topicObj?.ThumbNails?.length >= 1 ? null : uploadButton}
                                 </Upload>
                             </div>
                             <div className="custom-fields">
@@ -788,6 +791,12 @@ const AdminCourses = ({ profile }) => {
                             {topicObj.VideoSource == "Vimeo" && <div className="custom-fields">
                                 <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="Vimeo URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
+                                </Form.Item>
+                            </div>
+                            }
+                            {(topicObj.VideoSource == "Vimeo" || topicObj.VideoSource == "YouTube") && <div className="custom-fields">
+                                <Form.Item name="VideoName" rules={[{ required: true, message: "Video name  required" }]} >
+                                    <Input placeholder="Video Name" onChange={(value) => handleChange('VideoName', value, true)} />
                                 </Form.Item>
                             </div>
                             }
