@@ -536,7 +536,7 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <div className="text-secondary">Course Image</div>
                                                 <div className="mb-12">
                                                     <Dragger
@@ -586,7 +586,7 @@ const AdminCourses = ({ profile }) => {
                                                     ))}
                                                 </div>
                                             </Col>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <div className="text-secondary">Introduction video</div>
                                                 <div className="mb-12">
                                                     <Dragger
