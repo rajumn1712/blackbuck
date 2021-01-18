@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
@@ -121,14 +121,24 @@ const AdminCourses = ({ profile }) => {
     const [fileImgUploading, setFileImgUploading] = useState(false);
     const [fileVideoUploading, setFileVideoUploading] = useState(false);
     const [CoursesObj, setCoursesObj] = useState("");
+    const [counts, setCounts] = useState({ CoursesCouunt: 0, MembersCount: 0 });
     useEffect(() => {
         fetchBranches();
-        fetchAuthors()
+        fetchAuthors();
+        fetchCountsCour();
     }, []);
     const fetchBranches = async () => {
         const branchResponse = await getCollegeBranches();
         if (branchResponse.ok) {
             setCategoriesLu(branchResponse.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+        }
+    }
+    const fetchCountsCour = async () => {
+        const branchResponse = await getCoursesRelCount();
+        if (branchResponse.ok) {
+            setCounts(branchResponse.data[0]);
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
@@ -467,11 +477,11 @@ const AdminCourses = ({ profile }) => {
     const { Dragger } = Upload;
     return (<>
         <Row gutter={12} className="mb-12">
-            <Col span={4}>
+            <Col span={6}>
                 <Card className="admin-kpi-card">
                     <Statistic
                         title="Members"
-                        value={600}
+                        value={counts.MembersCount}
                         valueStyle={{ color: 'var(--textprimary)' }}
                         prefix={<ArrowUpOutlined />}
                     />
@@ -487,11 +497,11 @@ const AdminCourses = ({ profile }) => {
                     />
                 </Card>
             </Col> */}
-            <Col span={4}>
+            <Col span={6}>
                 <Card className="admin-kpi-card">
                     <Statistic
                         title="Courses"
-                        value={21}
+                        value={counts.CoursesCouunt}
                         valueStyle={{ color: 'var(--textprimary)' }}
                         prefix={<ArrowUpOutlined />}
                     />
@@ -507,7 +517,7 @@ const AdminCourses = ({ profile }) => {
                     />
                 </Card>
             </Col> */}
-            <Col span={4}>
+            {/* <Col span={4}>
                 <Card className="admin-kpi-card">
                     <Statistic
                         title="Shares"
@@ -526,7 +536,7 @@ const AdminCourses = ({ profile }) => {
                         prefix={<ArrowUpOutlined />}
                     />
                 </Card>
-            </Col>
+            </Col> */}
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
