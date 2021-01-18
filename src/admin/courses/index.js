@@ -540,7 +540,7 @@ const AdminCourses = ({ profile }) => {
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                <div className="custom-card mb-16">
+                {!showForm && <div className="custom-card mb-16">
                     <Card className="start-course">
                         <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
@@ -553,6 +553,7 @@ const AdminCourses = ({ profile }) => {
                         </Row>
                     </Card>
                 </div>
+                }
                 {showForm && <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
@@ -573,7 +574,7 @@ const AdminCourses = ({ profile }) => {
                                         <div className="custom-fields">
                                             <label className="text-secondary d-block mb-4">Course Description</label>
                                             <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]}>
-                                                <TextArea onResize onChange={(value) => handleChange('Description', value)}
+                                                <TextArea placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }}
                                                 />
                                             </Form.Item>
