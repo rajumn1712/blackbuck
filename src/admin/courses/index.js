@@ -180,14 +180,15 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const handleVidoTimeChange = (prop, val) => {
-        videoTimeObj[prop] = val?.currentTarget ? val.currentTarget.value : val;
-        videoTimeObj[prop] = videoTimeObj[prop].length == 1 ? ("0" + videoTimeObj[prop]) : videoTimeObj[prop];
-        topicObj[prop] = videoTimeObj[prop];
+        let dupTopicObj = { ...topicObj }
+        videoTimeObj[prop] = val;
+        dupTopicObj[prop] = String(val ? val : "0").length == 1 ? ("0" + String(val ? val : "0")) : String(val ? val : "0");
         setVideoTimeObj({ ...videoTimeObj }, () => {
 
         })
-        topicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
-        setTopicObj({ ...topicObj });
+        dupTopicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
+        setTopicObj({ ...dupTopicObj });
+        val=dupTopicObj[prop];
     }
     const refreshCourseDetails = async () => {
         const branchResponse = await getCourse(courseObject.GroupId);
@@ -813,20 +814,20 @@ const AdminCourses = ({ profile }) => {
                                 <label className="text-secondary d-block mb-4">Video Playback Time</label>
                                 <Input.Group compact>
                                     <div className="videoplybacktime">
-                                        <Form.Item name="Hours">
-                                            <InputNumber min={0} max={10} defaultValue={0} onChange={(value) => handleVidoTimeChange('Hours', value)} value={parseInt(topicObj.Hours)} />
+                                        <Form.Item>
+                                            <InputNumber min={"00"} max={10} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Hours', value)} value={topicObj.Hours}/>
                                             <em className="text-secondary d-block f-12 mt-4">HH</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
                                         <Form.Item >
-                                            <InputNumber name="Min" min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Min', value)} value={parseInt(topicObj.Min)} />
+                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Min', value)} value={topicObj.Min}/>
                                             <em className="text-secondary d-block f-12 mt-4">MM</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
-                                        <Form.Item name="Sec">
-                                            <InputNumber min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Sec', value)} value={parseInt(topicObj.Sec)} />
+                                        <Form.Item>
+                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Sec', value)} value={topicObj.Sec}/>
                                             <em className="text-secondary d-block f-12 mt-4">SS</em>
                                         </Form.Item>
                                     </div>
