@@ -54,7 +54,10 @@ const AdminCourses = ({ profile }) => {
         "VideoName": "",
         "VideoUrl": [],
         "Duration": "00:00:00",
-        "Size": ""
+        "Size": "",
+        "Hours": "00",
+        "Min": "00",
+        "Sec": "00",
     }
     const sectionObj = {
         "SectionId": uuidv4(),
@@ -177,8 +180,9 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const handleVidoTimeChange = (prop, val) => {
-        videoTimeObj[prop] = val.currentTarget ? val.currentTarget.value : val;
+        videoTimeObj[prop] = val?.currentTarget ? val.currentTarget.value : val;
         videoTimeObj[prop] = videoTimeObj[prop].length == 1 ? ("0" + videoTimeObj[prop]) : videoTimeObj[prop];
+        topicObj[prop] = videoTimeObj[prop];
         setVideoTimeObj({ ...videoTimeObj }, () => {
 
         })
@@ -379,7 +383,10 @@ const AdminCourses = ({ profile }) => {
         let topicObjForsave = type == "Edit" ? { ...topic } : { ...obj }
         setSecId(sectionId);
         if (type == 'Edit') {
-            setTopicObj(topicObjForsave)
+            topicObjForsave.Hours = topic.Duration.split(":")?.[0]
+            topicObjForsave.Min = topic.Duration.split(":")?.[1]
+            topicObjForsave.Sec = topic.Duration.split(":")?.[2]
+            setTopicObj({ ...topicObjForsave })
             setTopicEdit(true);
         }
         else {
@@ -659,7 +666,9 @@ const AdminCourses = ({ profile }) => {
                                                             >
                                                                 <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
                                                                     <div className="d-flex">
-                                                                        <video width="280"><source src={topic.VideoUrl} /></video>
+                                                                        {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
+                                                                        {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                        {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
                                                                         <div className="ml-16">
                                                                             <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
                                                                             <p className="f-14 text-secondary mb-8">{topic.Description}</p>
@@ -804,20 +813,20 @@ const AdminCourses = ({ profile }) => {
                                 <label className="text-secondary d-block mb-4">Video Playback Time</label>
                                 <Input.Group compact>
                                     <div className="videoplybacktime">
-                                        <Form.Item  >
-                                            <InputNumber min={0} max={10} defaultValue={0} onChange={(value) => handleVidoTimeChange('Hours', value)} />
+                                        <Form.Item name="Hours">
+                                            <InputNumber min={0} max={10} defaultValue={0} onChange={(value) => handleVidoTimeChange('Hours', value)} value={parseInt(topicObj.Hours)} />
                                             <em className="text-secondary d-block f-12 mt-4">HH</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
                                         <Form.Item >
-                                            <InputNumber min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Min', value)} />
+                                            <InputNumber name="Min" min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Min', value)} value={parseInt(topicObj.Min)} />
                                             <em className="text-secondary d-block f-12 mt-4">MM</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
-                                        <Form.Item>
-                                            <InputNumber min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Sec', value)} />
+                                        <Form.Item name="Sec">
+                                            <InputNumber min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Sec', value)} value={parseInt(topicObj.Sec)} />
                                             <em className="text-secondary d-block f-12 mt-4">SS</em>
                                         </Form.Item>
                                     </div>
