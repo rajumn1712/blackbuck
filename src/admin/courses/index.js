@@ -266,7 +266,7 @@ const AdminCourses = ({ profile }) => {
         if (result.ok) {
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
-            setShowForm({ ...false })
+            setShowForm(false)
             CoursesObj.refresh();
             form.resetFields();
         }
