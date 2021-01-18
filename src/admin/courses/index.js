@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
@@ -93,6 +93,12 @@ const AdminCourses = ({ profile }) => {
         "CourseSections": [
         ]
     }
+    let postObject = {
+        "GroupId": "",
+        "IsPublish": true,
+        "Posts": [
+        ]
+    };
     let formRef = useRef();
     const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
     const [CategoriesLu, setCategoriesLu] = useState([]);
@@ -188,7 +194,7 @@ const AdminCourses = ({ profile }) => {
         })
         dupTopicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
         setTopicObj({ ...dupTopicObj });
-        val=dupTopicObj[prop];
+        val = dupTopicObj[prop];
     }
     const refreshCourseDetails = async () => {
         const branchResponse = await getCourse(courseObject.GroupId);
@@ -269,6 +275,53 @@ const AdminCourses = ({ profile }) => {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
 
+    }
+    const coursePublish = async () => {
+        postObject.GroupId = courseObject.GroupId;
+        postObject.IsPublish = true;
+        courseObject.Categories.forEach(item => {
+            let Obj = {
+                "PostId": uuidv4(),
+                "CourseId": courseObject.GroupId,
+                "Type": "Video",
+                "Message": courseObject.Description,
+                "Title": courseObject.GroupName,
+                "IsAnonymous": false,
+                "CategoryType": "LMS",
+                "PostType": "Course",
+                "ImageUrl": courseObject.CourseVideo,
+                "CreatedDate": new Date(),
+                "UserDetails": {
+                    "UserId": profile?.Id,
+                    "Firstname": profile?.FirstName,
+                    "Lastname": profile?.LastName,
+                    "Image": profile?.ProfilePic,
+                    "Email": profile?.Email
+                },
+                "Tags": [],
+                "Likes": [],
+                "Comments": [],
+                "Group": {
+                    "GroupId": null,
+                    "GroupName": null,
+                    "GroupImage": null
+                },
+                "Shares": [],
+                "dupType": "Video"
+            };
+
+            postObject.Posts.push({ ...Obj })
+        })
+        const result = await publishCourse(postObject);
+        if (result.ok) {
+            notify({ message: "Publish", description: "Course published successfully" });
+            setShowForm(false)
+            form.resetFields();
+        }
+        else {
+            window.scrollTo(0, 0);
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
     }
     const getTopicsTime = (items) => {
         let time = "00:00:00";
@@ -705,7 +758,7 @@ const AdminCourses = ({ profile }) => {
                                         })}
                                         <div className="text-right">
                                             <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
-                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Publish</Button>}
+                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
                                             <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
                                         </div>
                                     </div>
@@ -815,19 +868,19 @@ const AdminCourses = ({ profile }) => {
                                 <Input.Group compact>
                                     <div className="videoplybacktime">
                                         <Form.Item>
-                                            <InputNumber min={"00"} max={10} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Hours', value)} value={topicObj.Hours}/>
+                                            <InputNumber min={"00"} max={10} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Hours', value)} value={topicObj.Hours} />
                                             <em className="text-secondary d-block f-12 mt-4">HH</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
                                         <Form.Item >
-                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Min', value)} value={topicObj.Min}/>
+                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Min', value)} value={topicObj.Min} />
                                             <em className="text-secondary d-block f-12 mt-4">MM</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
                                         <Form.Item>
-                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Sec', value)} value={topicObj.Sec}/>
+                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Sec', value)} value={topicObj.Sec} />
                                             <em className="text-secondary d-block f-12 mt-4">SS</em>
                                         </Form.Item>
                                     </div>
