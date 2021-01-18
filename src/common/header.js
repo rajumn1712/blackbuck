@@ -123,9 +123,9 @@ class HeaderComponent extends React.Component {
                 <Link to="/support"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
                 </Link>
             </Menu.Item>
-            { this.props?.profile?.Role?.is &&
+            { this.props?.profile?.Role == 'Admin' &&
                 <Menu.Item key="4">
-                    <Link to="/lms"><span className="icons globe-icon" /><span className="pl-16">My Dashboard</span>
+                    <Link to="/admin"><span className="icons globe-icon" /><span className="pl-16">Admin Settings</span>
                     </Link>
                 </Menu.Item>
             }
