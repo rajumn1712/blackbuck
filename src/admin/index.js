@@ -4,6 +4,7 @@ import { Row, Col, Menu, Card, Avatar } from 'antd';
 import Groups from './groups';
 import AdminCourses from './courses';
 import Members from './members';
+import LMSAssignment from './assignments';
 import defaultUser from "../styles/images/defaultuser.jpg";
 import coverphoto from "../styles/images/default-cover.png";
 import '../../src/profile/profilestyle.css';
@@ -54,9 +55,9 @@ class Admin extends Component {
                             </Menu.Item>
                         </SubMenu>
                         <SubMenu key="sub2" icon={<span className="left-menu profile-icon mr-12" />} title="LMS">
-                            <Menu.Item key="1">Courses</Menu.Item>
-                            <Menu.Item key="2">Members</Menu.Item>
-                            <Menu.Item key="3">Groups</Menu.Item>
+                            <Menu.Item key="assingments">
+                                <Link to="/admin/assignments">Assignments</Link>
+                            </Menu.Item>
                         </SubMenu>
                         <SubMenu key="sub4" icon={<span className="left-menu profile-icon mr-12" />} title="Careers">
                             <Menu.Item key="1">Courses</Menu.Item>
@@ -69,6 +70,7 @@ class Admin extends Component {
                     <Route path="/admin/courses" component={AdminCourses} />
                     <Route path="/admin/members" component={Members} />
                     <Route path="/admin/groups" component={Groups} />
+                    <Route path="/admin/assignments" component={LMSAssignment} />
                 </div>
             </div>
         </>

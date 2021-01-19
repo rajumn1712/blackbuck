@@ -111,20 +111,27 @@ class OverView extends Component {
                 </div>
               </Card>
             </div>
+            <div className="custom-card mb-8">
+                    <Card className="start-course">
+                        <Row align="middle" className="p-16">
+                            <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
+                                <Title level={3} className="normalbold text-white mb-4">Download Course Certificate</Title>
+                                <p className="f-14 text-white mb-0">Your are certified and your certificate is generated now its ready to generate.</p>
+                            </Col>
+                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
+                                <Button type="dashed">Download Here</Button>
+                            </Col>
+                        </Row>
+                    </Card>
+                </div>
             <div className="custom-card">
               <Card title="Comments (5)">
                 <div className="px-12">
                   <Comment
-                    avatar={
-                      <Avatar
-                        src={defaultUser}
-                      />
-                    }
+                    avatar={<Avatar src={defaultUser} />}
                     content={
                       <Form.Item>
-                        <TextArea
-                          autoSize={{ minRows: 2, maxRows: 6 }}
-                        />
+                        <TextArea autoSize={{ minRows: 2, maxRows: 6 }} />
                         <Button
                           htmlType="submit"
                           shape="circle"
@@ -136,7 +143,6 @@ class OverView extends Component {
                       </Form.Item>
                     }
                   />
-                  
                 </div>
               </Card>
             </div>
