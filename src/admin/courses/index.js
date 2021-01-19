@@ -63,6 +63,7 @@ const AdminCourses = ({ profile }) => {
         "SectionId": uuidv4(),
         "SectionName": "",
         "IsSaved": false,
+        "IsShowForm": false,
         "Topics": [
         ]
     }
@@ -136,9 +137,9 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const fetchCountsCour = async () => {
-        const branchResponse = await getCoursesRelCount();
+        const branchResponse = await getCoursesRelCount(profile?.Id);
         if (branchResponse.ok) {
-            setCounts(branchResponse.data[0]);
+            setCounts({ ...branchResponse.data[0] });
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
@@ -189,6 +190,7 @@ const AdminCourses = ({ profile }) => {
             const result = await sectionDeletion(topicObj, courseObject.GroupId, item.SectionId);
             if (result.ok) {
                 notify({ message: "Section", description: "Section deleted successfully" });
+                refreshCourseDetails();
             }
             else {
                 notify({ message: "Error", type: "error", description: "Something went wrong :)" });
@@ -272,12 +274,14 @@ const AdminCourses = ({ profile }) => {
     }
     const coursSave = async () => {
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
+        courseObject.CourseSections = courseObject.CourseSections.filter(item => item.SectionName);
         const result = await saveCourse(courseObject);
         if (result.ok) {
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
             setShowForm(false)
             CoursesObj.refresh();
+            fetchCountsCour();
             form.resetFields();
         }
         else {
@@ -407,9 +411,12 @@ const AdminCourses = ({ profile }) => {
             secObj.IsSaved = true;
             courseObject.CourseSections.forEach(item => {
                 if (item.SectionId == secObj.SectionId) {
-                    item = secObj;
+                    item = { ...secObj };
                 }
             });
+
+            secObj.IsSaved = false;
+            setSecObj({ ...secObj })
             setCourseObject({ ...courseObject });
             notify({ message: "Section", description: "Section saved successfully" });
         }
@@ -418,8 +425,10 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const addSection = () => {
+        setSecObj({ ...sectionObj })
         if (courseObject.CreatedDate) {
-            courseObject.CourseSections.push(secObj);
+            secObj.IsShowForm = true;
+            courseObject.CourseSections.push({ ...secObj });
             setCourseObject({ ...courseObject });
         }
         else {
@@ -731,9 +740,9 @@ const AdminCourses = ({ profile }) => {
                                                             >
                                                                 <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
                                                                     <div className="d-flex">
-                                                                        {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
-                                                                        {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
-                                                                        {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                        {topic.VideoSource == "Upload" && <video width="280" controls poster={topic.ThumbNails?.[0]}><source src={topic.VideoUrl} /></video>}
+                                                                        {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true} poster={topic.ThumbNails?.[0]}></iframe>}
+                                                                        {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true} poster={topic.ThumbNails?.[0]}></iframe>}
                                                                         <div className="ml-16">
                                                                             <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
                                                                             <p className="f-14 text-secondary mb-8">{topic.Description}</p>
@@ -753,7 +762,7 @@ const AdminCourses = ({ profile }) => {
                                             </div>
                                                 <div className="lecture-collapse mb-16">
                                                     <div className="custom-fields entr-course-title p-12 mb-12">
-                                                        <Form id="secForm" initialValues={item} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
+                                                        {item.IsShowForm && < Form id="secForm" initialValues={courseObject.CourseSections[index]} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
                                                             <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
                                                                 {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                             </Form.Item>
@@ -762,6 +771,7 @@ const AdminCourses = ({ profile }) => {
                                                                 <Button type="default" className="addContent px-16" size="small">Cancel</Button>
                                                             </div>
                                                         </Form>
+                                                        }
                                                     </div>
                                                     <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
                                                 </div>
