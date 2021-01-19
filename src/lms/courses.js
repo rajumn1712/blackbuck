@@ -24,7 +24,7 @@ class Courses extends Component {
     render() {
         const { profileData } = this.state;
         return (
-            <div className="coursepage mb-6">
+            <div className="coursepage">
                 <Row gutter={16}>
                     <Col xs={24}>
                         <div className="coverpage coursesbanner">
