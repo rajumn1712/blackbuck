@@ -5,6 +5,7 @@ import '../index.css';
 import '../App.css';
 import { connect } from 'react-redux';
 import { fetchCourseSuggestions } from './api';
+import Courses from '../components/ProfileComponents/courses';
 const { Meta } = Card;
 class CourseList extends Component {
     state = {
@@ -42,7 +43,7 @@ class CourseList extends Component {
                             </div>} />
                 </Card>
 
-                <Card title="Course Suggestions" bordered={false} >
+                {/* <Card title="Course Suggestions" bordered={false} >
                     <List
                         itemLayout="vertical"
                         dataSource={this.state.suggestions}
@@ -51,7 +52,8 @@ class CourseList extends Component {
 
                         )}
                     />
-                </Card>
+                </Card> */}
+                <Courses loadUserCourse={false} />
             </div>
 
         )

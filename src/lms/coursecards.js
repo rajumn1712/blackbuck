@@ -64,8 +64,8 @@ class CourseCards extends Component {
                                                             {course.description}
                                                         </ShowMoreText>
                                                         <div className="addon-info">
-                                                            <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
-                                                            <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
+                                                            <span className="mr-8"><span className="grp-type-icon video-play" />{course.videos} Videos</span>
+                                                            <span className="mr-8"><span className="grp-type-icon lessons" />{course.sections} Lessons</span>
                                                         </div>
                                                     </div>} />
                                         </Card>
