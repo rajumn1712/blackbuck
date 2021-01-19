@@ -740,9 +740,9 @@ const AdminCourses = ({ profile }) => {
                                                             >
                                                                 <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
                                                                     <div className="d-flex">
-                                                                        {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
-                                                                        {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
-                                                                        {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                        {topic.VideoSource == "Upload" && <video width="280" controls poster={topic.ThumbNails?.[0]}><source src={topic.VideoUrl} /></video>}
+                                                                        {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true} poster={topic.ThumbNails?.[0]}></iframe>}
+                                                                        {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true} poster={topic.ThumbNails?.[0]}></iframe>}
                                                                         <div className="ml-16">
                                                                             <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
                                                                             <p className="f-14 text-secondary mb-8">{topic.Description}</p>
