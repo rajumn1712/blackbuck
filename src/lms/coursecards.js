@@ -1,4 +1,4 @@
-import { Card, Col, Row, Statistic, Progress, Tabs, Button } from "antd";
+import { Card, Col, Row, Statistic, Progress, Tabs, Button, Empty } from "antd";
 import React, { Component } from "react";
 import photography from '../styles/images/photography.png'
 import SEO from '../styles/images/seo-marketing.png'
@@ -27,7 +27,7 @@ class CourseCards extends Component {
         key = key == "1" ? "courses" : "recentCourses";
         const _emptyKey = key == "1" ? "recentCourses" : "courses";
         this.setState({ ...this.state, [_emptyKey]: [], loading: true });
-        const response = await fetchUserCourses(this.props.profile.Id, this.state.page, this.state.pageSize);
+        const response = await fetchUserCourses(this.props.profile.Id, this.state.page, this.state.pageSize, key);
         if (response.ok) {
             this.setState({ ...this.state, [key]: response.data, loading: false });
         } else {
@@ -44,6 +44,7 @@ class CourseCards extends Component {
             <div className="custom-card">
                 <Tabs defaultActiveKey="1" className="profile-tabs" onTabClick={(key) => { this.loadCourses(key) }}>
                     <TabPane tab="My Courses" key="1" >
+
                         <Card
 
                             bordered={false}
@@ -73,6 +74,8 @@ class CourseCards extends Component {
                             </div>
 
                         </Card>
+                        {this.state.loading && <Loader className="loader-middle" />}
+                        {!this.state.loading && this.state.courses.length === 0 && this.state.recentCourses.length === 0 && <Empty />}
                     </TabPane>
                     <TabPane tab="Recent Uploads" key="2">
                         <Card
@@ -105,11 +108,12 @@ class CourseCards extends Component {
                                     </Col>)}
                                 </Row>
                             </div>
-
+                            {this.state.loading && <Loader className="loader-middle" />}
+                            {!this.state.loading && this.state.courses.length === 0 && this.state.recentCourses.length === 0 && <Empty />}
                         </Card>
                     </TabPane>
                 </Tabs>
-                {this.state.loading && <Loader className="loader-middle" />}
+
             </div>
 
 

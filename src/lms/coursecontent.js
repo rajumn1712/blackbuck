@@ -22,13 +22,8 @@ class CourseContent extends Component {
         }
     }
     setVideoSource = (src) => {
-        debugger
-        let source = document.createElement("source");
-        let videoEle = document.querySelector("video");
-        // videoEle.removeChild("source");
-        source.setAttribute("src",src);
-        videoEle.appendChild(source);
-        videoEle.play();
+      this.setState({...this.state,selectedVideo:src},()=> document.querySelector("video").play());
+     
     }
     render() {
         return (
@@ -37,8 +32,8 @@ class CourseContent extends Component {
                     <Col className="" xs={24} sm={16} md={16} lg={17} >
                         <div className="preview-image">
                             <Carousel>
-                                <div className="lms-video mb-8">
-                                    <video controls>
+                                <div className="lms-video mb-8" id="video_player">
+                                    <video controls key={this.state.selectedVideo}>
                                         <source src={this.state.selectedVideo} />
                                     </video>
                                 </div>
