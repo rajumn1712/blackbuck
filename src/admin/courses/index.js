@@ -272,6 +272,7 @@ const AdminCourses = ({ profile }) => {
     }
     const coursSave = async () => {
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
+        courseObject.CourseSections = courseObject.CourseSections.filter(item => item.SectionName);
         const result = await saveCourse(courseObject);
         if (result.ok) {
             notify({ message: "Course", description: "Course saved successfully" });
@@ -407,9 +408,12 @@ const AdminCourses = ({ profile }) => {
             secObj.IsSaved = true;
             courseObject.CourseSections.forEach(item => {
                 if (item.SectionId == secObj.SectionId) {
-                    item = secObj;
+                    item = { ...secObj };
                 }
             });
+
+            secObj.IsSaved = false;
+            setSecObj({ ...secObj })
             setCourseObject({ ...courseObject });
             notify({ message: "Section", description: "Section saved successfully" });
         }
@@ -418,8 +422,9 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const addSection = () => {
+        setSecObj({ ...sectionObj })
         if (courseObject.CreatedDate) {
-            courseObject.CourseSections.push(secObj);
+            courseObject.CourseSections.push({ ...secObj });
             setCourseObject({ ...courseObject });
         }
         else {
