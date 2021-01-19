@@ -231,12 +231,12 @@ const AdminCourses = ({ profile }) => {
         setShowForm(true);
     }
     const topicSave = async () => {
-        if (topicObj.ThumbNails?.length == 0) {
-            setIsError(true);
-            setErrorMessage("Feature image required");
-            formRef.current.scrollTop = 0;
-            return;
-        }
+        // if (topicObj.ThumbNails?.length == 0) {
+        //     setIsError(true);
+        //     setErrorMessage("Feature image required");
+        //     formRef.current.scrollTop = 0;
+        //     return;
+        // }
         if (topicObj.VideoUrl?.length == 0) {
             setIsError(true);
             setErrorMessage("Video source/video required");
@@ -435,23 +435,23 @@ const AdminCourses = ({ profile }) => {
             notify({ message: "Error", type: "error", description: "Please save course" });
         }
     }
-    const deleteImage = () => {
-        topicObj.ThumbNails = [];
-        topicObj.DupThumbNails = [];
-        setTopicObj({ ...topicObj })
-    }
+    // const deleteImage = () => {
+    //     topicObj.ThumbNails = [];
+    //     topicObj.DupThumbNails = [];
+    //     setTopicObj({ ...topicObj })
+    // }
 
-    const onChange = (info) => {
-        const { status } = info.file;
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-            topicObj.ThumbNails = info.fileList[0].response;
-            topicObj.DupThumbNails = info.fileList;
-            setTopicObj({ ...topicObj });
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    }
+    // const onChange = (info) => {
+    //     const { status } = info.file;
+    //     if (status === 'done') {
+    //         message.success(`${info.file.name} file uploaded successfully.`);
+    //         topicObj.ThumbNails = info.fileList[0].response;
+    //         topicObj.DupThumbNails = info.fileList;
+    //         setTopicObj({ ...topicObj });
+    //     } else if (status === 'error') {
+    //         message.error(`${info.file.name} file upload failed.`);
+    //     }
+    // }
     const showModal = (type, topic, sectionId) => {
         let topicObjForsave = type == "Edit" ? { ...topic } : { ...obj }
         setSecId(sectionId);
@@ -740,9 +740,9 @@ const AdminCourses = ({ profile }) => {
                                                             >
                                                                 <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
                                                                     <div className="d-flex">
-                                                                        {topic.VideoSource == "Upload" && <video width="280" controls poster={topic.ThumbNails?.[0]}><source src={topic.VideoUrl} /></video>}
-                                                                        {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true} poster={topic.ThumbNails?.[0]}></iframe>}
-                                                                        {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true} poster={topic.ThumbNails?.[0]}></iframe>}
+                                                                        {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
+                                                                        {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                        {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
                                                                         <div className="ml-16">
                                                                             <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
                                                                             <p className="f-14 text-secondary mb-8">{topic.Description}</p>
@@ -814,7 +814,7 @@ const AdminCourses = ({ profile }) => {
                                     />
                                 </Form.Item>
                             </div>
-                            <div className="mb-8">
+                            {/* <div className="mb-8">
                                 <label className="text-secondary d-block mb-4">Feature Image</label>
                                 <Upload
                                     action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
@@ -827,7 +827,7 @@ const AdminCourses = ({ profile }) => {
                                 >
                                     {topicObj?.ThumbNails?.length >= 1 ? null : uploadButton}
                                 </Upload>
-                            </div>
+                            </div> */}
                             <div className="custom-fields">
                                 <label className="text-secondary d-block mb-4">Video Source</label>
                                 <Form.Item name="VideoSource">
@@ -911,7 +911,7 @@ const AdminCourses = ({ profile }) => {
                     </Form>
                 </Modal>
 
-                <Courses onCourseEdit={(id) => onCourseEditObj(id)} onRef={courses => setCoursesObj(courses)} />
+                {!showForm && <Courses onCourseEdit={(id) => onCourseEditObj(id)} onRef={courses => setCoursesObj(courses)} />}
 
 
             </Col>
