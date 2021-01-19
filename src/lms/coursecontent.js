@@ -84,15 +84,15 @@ class CourseContent extends Component {
                                         expandIconPosition="right"
                                     >
                                         {this.state.courseDetails?.CourseSections?.map((section, indx) => <Panel key={indx} header={section.SectionName} key={indx} className="pb-0 course-content flot-left" >
-                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
+                                            <div className="panel-subtext px-16"><span>{section.Topics.length}</span> <span>Videos</span> </div>
                                             <div>
                                                 <List
                                                     itemLayout="horizontal"
                                                     dataSource={section.Topics}
-                                                    renderItem={item => (
-                                                        <List.Item extra={<span className="icon playover-icon"></span>}>
+                                                    renderItem={(item,indx) => (
+                                                        <List.Item extra={<span className="icon playover-icon" key={indx}></span>}>
                                                             <List.Item.Meta
-                                                                title={<a onClick={() => this.setVideoSource(item.VideoUrl[0])}>{item.Title}</a>}
+                                                                title={<a onClick={() => this.setVideoSource(item.VideoUrl[0])}>{indx+1}. {item.Title}</a>}
                                                                 description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.Description}</div>}
                                                             />
                                                         </List.Item>
