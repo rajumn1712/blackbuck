@@ -17,7 +17,6 @@ const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
 const { TextArea } = Input;
-const { RangePicker } = DatePicker;
 const uploadButton = (
     <div>
         <PlusOutlined />
@@ -75,6 +74,9 @@ const AdminCourses = ({ profile }) => {
         "Description": "",
         "Type": "Course",
         "Author": [],
+        "CourseType": "Content",
+        "Date": "",
+        "Link": "",
         "CreatedDate": "",
         "CategoryType": "LMS",
         "CourseVideo": [],
@@ -275,6 +277,11 @@ const AdminCourses = ({ profile }) => {
     const coursSave = async () => {
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
         courseObject.CourseSections = courseObject.CourseSections.filter(item => item.SectionName);
+        courseObject.CourseSections = courseObject.CourseType == "Live" ? [] : courseObject.CourseSections;
+        if (courseObject.CourseType == "Content") {
+            courseObject.Date = "";
+            courseObject.Link = "";
+        }
         const result = await saveCourse(courseObject);
         if (result.ok) {
             notify({ message: "Course", description: "Course saved successfully" });
@@ -365,7 +372,7 @@ const AdminCourses = ({ profile }) => {
     const handleChange = (prop, val, popup) => {
         if (!popup) {
             if (prop != "Categories" && prop != "Author") {
-                courseObject[prop] = val.currentTarget ? val.currentTarget.value : val;
+                courseObject[prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
             }
             else {
                 courseObject[prop] = [];
@@ -617,6 +624,33 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Course Type</label>
+                                                <Form.Item name="CourseType" rules={[{ required: true, message: "Course Type required" }]}>
+                                                    <Select
+                                                        defaultValue="Choose Type" placeholder="Choose Type" className="text-left"
+                                                        onChange={(value) => handleChange('CourseType', value)}
+                                                    >
+                                                        <Option value="">Choose Type</Option>
+                                                        <Option value="Live">Live</Option>
+                                                        <Option value="Content">Content</Option>
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            {courseObject.CourseType == "Live" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Course Type</label>
+                                                <Form.Item name="Date" rules={[{ required: true, message: "Date required" }]} onChange={(value) => handleChange('Date', value)}>
+                                                    <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" />
+                                                </Form.Item>
+                                            </Col>
+                                            }
+                                            {courseObject.CourseType == "Live" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Link</label>
+                                                <Form.Item name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                    <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
+                                                </Form.Item>
+                                            </Col>
+                                            }
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <div className="text-secondary">Course Image</div>
                                                 <div className="mb-12">
@@ -724,59 +758,61 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                     </div>
                                     <div className="create-course mt-16">
-                                        <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>
-                                        {courseObject.CourseSections?.map((item, index) => {
-                                            return <div> <div className="lecture-collapse mb-16" key={index}>
-                                                <Collapse
-                                                    className="mb-16"
-                                                    expandIconPosition="right"
-                                                >
-                                                    <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">{getTopicsTime(item.Topics)}</div>}>
-                                                        {item.Topics?.map((topic, index) => {
-                                                            return <Collapse
-                                                                className="mb-8"
-                                                                expandIconPosition="right"
-                                                                key={index}
-                                                            >
-                                                                <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
-                                                                    <div className="d-flex">
-                                                                        {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
-                                                                        {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
-                                                                        {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
-                                                                        <div className="ml-16">
-                                                                            <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
-                                                                            <p className="f-14 text-secondary mb-8">{topic.Description}</p>
-                                                                            <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? topic.Size : "NA"}</p>
-                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
+                                        {courseObject.CourseType == "Content" && <div>
+                                            <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>
+                                            {courseObject.CourseSections?.map((item, index) => {
+                                                return <div> <div className="lecture-collapse mb-16" key={index}>
+                                                    <Collapse
+                                                        className="mb-16"
+                                                        expandIconPosition="right"
+                                                    >
+                                                        <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">{getTopicsTime(item.Topics)}</div>}>
+                                                            {item.Topics?.map((topic, index) => {
+                                                                return <Collapse
+                                                                    className="mb-8"
+                                                                    expandIconPosition="right"
+                                                                    key={index}
+                                                                >
+                                                                    <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
+                                                                        <div className="d-flex">
+                                                                            {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
+                                                                            {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                            {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                            <div className="ml-16">
+                                                                                <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
+                                                                                <p className="f-14 text-secondary mb-8">{topic.Description}</p>
+                                                                                <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? topic.Size : "NA"}</p>
+                                                                                <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </Panel>
-                                                            </Collapse>
-                                                        })
-                                                        }
+                                                                    </Panel>
+                                                                </Collapse>
+                                                            })
+                                                            }
 
-                                                        <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
-                                                    </Panel>
-                                                </Collapse>
-                                                <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>
-                                            </div>
-                                                <div className="lecture-collapse mb-16">
-                                                    <div className="custom-fields entr-course-title p-12 mb-12">
-                                                        {item.IsShowForm && < Form id="secForm" initialValues={courseObject.CourseSections[index]} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
-                                                            <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
-                                                            </Form.Item>
-                                                            <div className="text-right">
-                                                                <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                                <Button type="default" className="addContent px-16" size="small">Cancel</Button>
-                                                            </div>
-                                                        </Form>
-                                                        }
-                                                    </div>
-                                                    <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
+                                                            <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                                        </Panel>
+                                                    </Collapse>
+                                                    <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>
                                                 </div>
-                                            </div>
-                                        })}
+                                                    <div className="lecture-collapse mb-16">
+                                                        <div className="custom-fields entr-course-title p-12 mb-12">
+                                                            {item.IsShowForm && < Form id="secForm" initialValues={courseObject.CourseSections[index]} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
+                                                                <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
+                                                                    {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
+                                                                </Form.Item>
+                                                                <div className="text-right">
+                                                                    <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
+                                                                    <Button type="default" className="addContent px-16" size="small">Cancel</Button>
+                                                                </div>
+                                                            </Form>
+                                                            }
+                                                        </div>
+                                                        <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
+                                                    </div>
+                                                </div>
+                                            })}
+                                        </div>}
                                         <div className="text-right">
                                             <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
                                             {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
