@@ -26,15 +26,11 @@ class Courses extends Component {
     this.setState({ ...this.state, loading: true });
     const getcourses = await (this.props?.loadUserCourse
       ? getUserCourses
-      : fetchCourseSuggestions)(this.props?.profile?.Id, 10, 0);
+      : fetchCourseSuggestions)(this.props?.profile?.Id, 1000, 0);
     let { courses } = this.state;
     courses = getcourses.data;
     if (getcourses.ok) {
       this.setState({ courses, loading: false });
-      if (isDataRefreshed) {
-        this.props.isDataRefreshed(isDataRefreshed);
-        this.props.isDataRefreshed(false);
-      }
     }
   }
 
@@ -96,7 +92,7 @@ class Courses extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Link to="/commingsoon">View all</Link>
+              <Link to="/lms">View all</Link>
             ) : null
           }
         >
@@ -109,8 +105,8 @@ class Courses extends Component {
                   avatar={<Avatar src={item.image} />}
                   title={
                     <div className="d-flex align-items-center mr-16">
-                      {!this.props.IsHideAction ? <Link to="/commingsoon" title={item.name} className="text-primary text-overflow">{item.name}</Link>: <span className="overflow-text">{item.name}</span>}
-                      
+                      {!this.props.IsHideAction ? <Link to="/commingsoon" title={item.name} className="text-primary text-overflow">{item.name}</Link> : <span className="overflow-text">{item.name}</span>}
+
                     </div>
                   }
                   description={
@@ -139,13 +135,13 @@ class Courses extends Component {
                       Cancel request
                     </Link>
                   ) : (
-                    <Link
-                      className="text-center f-12 list-link"
-                      onClick={() => this.handleCourseJoin(item)}
-                    >
-                      Join
-                    </Link>
-                  ))}
+                      <Link
+                        className="text-center f-12 list-link"
+                        onClick={() => this.handleCourseJoin(item)}
+                      >
+                        Join
+                      </Link>
+                    ))}
               </List.Item>
             )}
           />
