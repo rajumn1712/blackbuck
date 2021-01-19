@@ -52,56 +52,7 @@ class Courses extends Component {
                                 </div>
                             </OwlCarousel>
                         </div>
-                        <Tabs defaultActiveKey="1" className="profile-tabs">
-                            <TabPane tab="Recent Courses" key="1">
-
-                            </TabPane>
-                            <TabPane tab="My Courses" key="2">
-
-                            </TabPane>
-                        </Tabs>
-                        {/* <div className="user-statistic"> */}
-                        {/* <div className="left-statistic">
-                                <Statistic
-                                    title="Total Courses"
-                                    className="afterline"
-                                    value='0'
-                                />
-                                <Statistic
-                                    title="Free Courses"
-                                    value='0'
-                                />
-
-                            </div> */}
-
-                        {/* <div className="bannercard-title">
-                                MY Courses 
-                            </div> */}
-                        {/* <Card className="user-banner">
-                                <Meta
-                                    avatar={
-                                        <div className="img-container">
-                                            <Avatar src={profileData.ProfilePic || defaultUser} />
-                                            <a className="img-camera overlay"><span className="icons camera" /> </a>
-                                        </div>
-                                    }
-                                    title="MY Courses"
-                                  description='sdfg'
-                                />
-                            </Card> */}
-
-                        {/* <div className="right-statistic">
-                                <Statistic
-                                    title="Joined Courses"
-                                    className="afterline"
-                                    value='0'
-                                />
-                                <Statistic
-                                    title="Favorites"
-                                    value='0'
-                                />
-                            </div> */}
-                        {/* </div> */}
+                     
                     </Col>
                 </Row>
             </div>
