@@ -148,7 +148,7 @@ class Courses extends Component {
                     <div className="p-12 card-background xf">
                         <Row gutter={16}>
                             {lstCourses.map((course, index) => {
-                                return <Col xs={24} md={8} lg={6}>
+                                return <Col xs={24} md={8} lg={4}>
                                     <Card key={index}
                                         className="card-item"
                                         cover={<img alt="photography" src={course.Image?.[0] || defaultguser} />}
@@ -160,8 +160,8 @@ class Courses extends Component {
                                             title={<a className="post-title" onClick={() => this.props.onCourseEdit(course.Id)}>{course.CourseName}</a>}
                                             description={
                                                 <div className="addon-info">
-                                                    {course.Members && <span className="mr-8"><span className="grp-type-icon groups mr-4" />{course.Members} Members</span>}
-                                                    {course.Date && <div>Date: <span>{moment(course.Date).format('ll')}</span></div>}
+                                                    {course.Members && <span className="mr-8 f-14">{course.Members} Members</span>}
+                                                    {course.Date && <div className="f-14 text-primary my-4">{moment(course.Date).format('ll')}</div>}
                                                 </div>} />
                                     </Card>
                                 </Col>
