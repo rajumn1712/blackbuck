@@ -110,8 +110,6 @@ class CourseCards extends Component {
                     </TabPane>
                 </Tabs>
                 {this.state.loading && <Loader className="loader-middle" />}
-
-
             </div>
 
 

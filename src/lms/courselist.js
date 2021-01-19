@@ -5,13 +5,6 @@ import '../index.css';
 import '../App.css';
 import { connect } from 'react-redux';
 import { fetchCourseSuggestions } from './api';
-const data = [
-    { title: 'This is panel header 1' },
-    { title: 'This is panel header 2' },
-    { title: 'This is panel header 3' },
-    { title: 'This is panel header 4' },
-    { title: 'This is panel header 5' }
-];
 const { Meta } = Card;
 class CourseList extends Component {
     state = {
@@ -23,10 +16,10 @@ class CourseList extends Component {
     componentDidMount() {
         this.loadSuggestions();
     }
-    loadSuggestions = async() => {
+    loadSuggestions = async () => {
         const response = await fetchCourseSuggestions(this.props.profile?.Id, this.state.page, this.state.pageSize);
-        if(response.ok){
-            this.setState({...this.state,loading:false,suggestions:response.data});
+        if (response.ok) {
+            this.setState({ ...this.state, loading: false, suggestions: response.data });
         }
     }
     render() {
@@ -41,7 +34,6 @@ class CourseList extends Component {
                         title="SEO & Digital Marketing"
                         description={
                             <div>
-
                                 <div className="addon-info">
                                     <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
                                     <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>

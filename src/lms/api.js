@@ -8,4 +8,10 @@ const fetchUserCourses = (user_id, page, pageSize) => {
 const fetchCourseSuggestions = (user_id, page, pageSize) => {
     return apiClient.get(PROFILE_REMOTE + `getCourseSuggestions/${user_id}/${pageSize}/${page * pageSize - pageSize}`)
 }
-export { fetchUserCourses,fetchCourseSuggestions }
+const fetchCourseDetails = (id)=>{
+    return apiClient.get(ADMIN_REMOTE+`getCourse/${id}`)
+}
+const fetchRecentCourses = (user_id, page, pageSize) => {
+    return apiClient.get(PROFILE_REMOTE + `getRecentCourses/${user_id}/${pageSize}/${page * pageSize - pageSize}`)
+}
+export { fetchUserCourses,fetchCourseSuggestions,fetchRecentCourses,fetchCourseDetails }
