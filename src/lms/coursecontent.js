@@ -27,7 +27,7 @@ class CourseContent extends Component {
     }
     render() {
         return (
-            <div className="post-preview-box post-card course-card" >
+            <div className="post-preview-box course-card" >
                 <Row gutter={24} className="py-16">
                     <Col className="" xs={24} sm={16} md={16} lg={17} >
                         <div className="preview-image">
