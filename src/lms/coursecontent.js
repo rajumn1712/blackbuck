@@ -1,33 +1,11 @@
 import React, { Component } from 'react';
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Tabs } from 'antd'
-import { Link } from 'react-router-dom';
-import comingsoon from '../styles/images/coming-soon.png'
+import { Card, List, Row, Col, Carousel, Collapse } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons';
 import '../index.css';
 import '../App.css';
-import video from '../styles/images/video.mp4';
 import OverView from './overview';
 import { fetchCourseDetails } from './api';
 const { Panel } = Collapse;
-const data = [
-    {
-        title: '1. Ant Design Title ',
-        description: '5min'
-    },
-    {
-        title: '2. Ant Design Title ',
-        description: '3min'
-    },
-    {
-        title: '3. Ant Design Title ',
-        description: '2min'
-    },
-    {
-        title: '4. Ant Design Title ',
-        description: '5min'
-    },
-];
-
 class CourseContent extends Component {
     state = {
         courseDetails: {},
