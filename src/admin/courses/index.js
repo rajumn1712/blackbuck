@@ -137,9 +137,9 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const fetchCountsCour = async () => {
-        const branchResponse = await getCoursesRelCount();
+        const branchResponse = await getCoursesRelCount(profile?.Id);
         if (branchResponse.ok) {
-            setCounts(branchResponse.data[0]);
+            setCounts({ ...branchResponse.data[0] });
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
@@ -281,6 +281,7 @@ const AdminCourses = ({ profile }) => {
             setCourseObject({ ...courseObj });
             setShowForm(false)
             CoursesObj.refresh();
+            fetchCountsCour();
             form.resetFields();
         }
         else {

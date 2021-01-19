@@ -212,8 +212,8 @@ const courseDelete = (GroupId) => {
 const setScholor = (userId) => {
   return apiClient.get(ADMIN_API + `setIsScholar/${userId}`);
 }
-const getCoursesRelCount = () => {
-  return apiClient.get(ADMIN_API + `getCoursesCount`);
+const getCoursesRelCount = (user_id) => {
+  return apiClient.get(ADMIN_API + `getCoursesCount/${user_id}`);
 }
 export {
   getFriendSuggestions,
