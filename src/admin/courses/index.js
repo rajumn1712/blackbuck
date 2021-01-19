@@ -63,6 +63,7 @@ const AdminCourses = ({ profile }) => {
         "SectionId": uuidv4(),
         "SectionName": "",
         "IsSaved": false,
+        "IsShowForm": false,
         "Topics": [
         ]
     }
@@ -189,6 +190,7 @@ const AdminCourses = ({ profile }) => {
             const result = await sectionDeletion(topicObj, courseObject.GroupId, item.SectionId);
             if (result.ok) {
                 notify({ message: "Section", description: "Section deleted successfully" });
+                refreshCourseDetails();
             }
             else {
                 notify({ message: "Error", type: "error", description: "Something went wrong :)" });
@@ -424,6 +426,7 @@ const AdminCourses = ({ profile }) => {
     const addSection = () => {
         setSecObj({ ...sectionObj })
         if (courseObject.CreatedDate) {
+            secObj.IsShowForm = true;
             courseObject.CourseSections.push({ ...secObj });
             setCourseObject({ ...courseObject });
         }
@@ -758,7 +761,7 @@ const AdminCourses = ({ profile }) => {
                                             </div>
                                                 <div className="lecture-collapse mb-16">
                                                     <div className="custom-fields entr-course-title p-12 mb-12">
-                                                        <Form id="secForm" initialValues={item} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
+                                                        {item.IsShowForm && < Form id="secForm" initialValues={courseObject.CourseSections[index]} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
                                                             <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
                                                                 {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                             </Form.Item>
@@ -767,6 +770,7 @@ const AdminCourses = ({ profile }) => {
                                                                 <Button type="default" className="addContent px-16" size="small">Cancel</Button>
                                                             </div>
                                                         </Form>
+                                                        }
                                                     </div>
                                                     <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
                                                 </div>
