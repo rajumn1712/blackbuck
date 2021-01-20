@@ -676,8 +676,8 @@ const AdminCourses = ({ profile }) => {
                                                 </Form.Item>
                                             </Col>
                                             }
-                                            </Row>
-                                            <Row gutter={16}>
+                                        </Row>
+                                        <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <div className="text-secondary">Course Image</div>
                                                 <div className="mb-12">
@@ -782,6 +782,20 @@ const AdminCourses = ({ profile }) => {
                                                 </div>
                                             </Col>
 
+                                        </Row>
+                                        <Row gutter={16}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
+                                                <label className="text-secondary d-block mb-4">Add Text</label>
+                                                <Dragger className="upload mb-16">
+                                                    <span className="sharebox-icons docs-upload mb-16"></span>
+                                                    <p className="ant-upload-text">
+                                                        Upload your assignment files here</p>
+                                                    <p className="ant-upload-hint">
+                                                        Support for a single or bulk upload. Strictly prohibit
+                                                        from uploading company data or other band files (doc, PPT,
+                                                        PDF, xls).</p>
+                                                </Dragger>
+                                            </Col>
                                         </Row>
                                     </div>
                                     <div className="create-course mt-16">
