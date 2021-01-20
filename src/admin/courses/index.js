@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip, Image } from 'antd';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip, Image, List } from 'antd';
 import { withRouter } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
@@ -53,6 +53,8 @@ const AdminCourses = ({ profile }) => {
         "VideoName": "",
         "VideoUrl": [],
         "Duration": "00:00:00",
+        "TopicType": "Video",
+        "lstDocuments": [],
         "Size": "",
         "Hours": "00",
         "Min": "00",
@@ -102,6 +104,10 @@ const AdminCourses = ({ profile }) => {
         "Posts": [
         ]
     };
+    const acceptTypes = {
+        "Video": ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
+        "Document": ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
+    }
     let formRef = useRef();
     const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
     const [CategoriesLu, setCategoriesLu] = useState([]);
@@ -158,16 +164,31 @@ const AdminCourses = ({ profile }) => {
     const props = {
         name: 'file',
         multiple: false,
-        accept: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
+        accept: acceptTypes[topicObj.TopicType],
         action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
         onChange(info) {
             setFileUploading(true);
             const { status } = info.file;
             if (status === 'done') {
                 setFileUploading(false);
-                topicObj.VideoUrl = info.file.response;
-                topicObj.VideoName = info.file.name;
-                topicObj.Size = info.file.size;
+                if (topicObj.TopicType == "Document") {
+                    const avatar = info.file?.name
+                        ? info.file.name.substr(info.file.name.lastIndexOf(".") + 1)
+                        : "word";
+                    let response = {
+                        title: info.file.name,
+                        avatar,
+                        url: info.file.response[0],
+                        fileSize: info.file.size,
+                    };
+                    topicObj.lstDocuments = topicObj.lstDocuments
+                        ? topicObj.lstDocuments.concat(response)
+                        : [response];
+                } else {
+                    topicObj.VideoUrl = info.file.response;
+                    topicObj.VideoName = info.file.name;
+                    topicObj.Size = info.file.size;
+                }
                 setTopicObj({ ...topicObj });
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
@@ -189,10 +210,12 @@ const AdminCourses = ({ profile }) => {
             setCourseObject({ ...courseObject });
         }
         else {
-            const result = await sectionDeletion(topicObj, courseObject.GroupId, item.SectionId);
+            const result = await sectionDeletion(courseObject.GroupId, item.SectionId);
             if (result.ok) {
                 notify({ message: "Section", description: "Section deleted successfully" });
-                refreshCourseDetails();
+                // courseObject.CourseSections = courseObject.CourseSections.filter(sec => sec.SectionId
+                //     !== item.SectionId);
+                // setCourseObject({ ...courseObject });
             }
             else {
                 notify({ message: "Error", type: "error", description: "Something went wrong :)" });
@@ -239,11 +262,20 @@ const AdminCourses = ({ profile }) => {
         //     formRef.current.scrollTop = 0;
         //     return;
         // }
-        if (topicObj.VideoUrl?.length == 0) {
+        if (topicObj.VideoUrl?.length == 0 && topicObj.TopicType == "Video") {
             setIsError(true);
             setErrorMessage("Video source/video required");
             formRef.current.scrollTop = 0;
             return;
+        }
+        if (topicObj.TopicType == "Video") {
+            topicObj.lstDocuments = [];
+        }
+        else {
+            topicObj.VideoUrl = [];
+            topicObj.VideoName = "";
+            topicObj.Size = "";
+            topicObj.Duration = "";
         }
         // if (topicObj.VideoSource == "YouTube") {
         //     var video_id = topicObj.VideoUrl.split('v=')[1];
@@ -328,7 +360,8 @@ const AdminCourses = ({ profile }) => {
                     "GroupImage": null
                 },
                 "Shares": [],
-                "dupType": "Video"
+                "dupType": "Video",
+                "PublishDate": new Date(),
             };
 
             postObject.Posts.push({ ...Obj })
@@ -762,8 +795,8 @@ const AdminCourses = ({ profile }) => {
                                                                     expandIconPosition="right"
                                                                     key={index}
                                                                 >
-                                                                    <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
-                                                                        <div className="d-flex">
+                                                                    <Panel header={<>{topic.TopicType == "Video" && topicTitle} {topic.VideoName ? topic.VideoName : topic.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.TopicType == "Video" && topic.Duration}</div>}>
+                                                                        {topic.TopicType == "Video" && <div className="d-flex">
                                                                             {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
                                                                             {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
                                                                             {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
@@ -773,18 +806,47 @@ const AdminCourses = ({ profile }) => {
                                                                                 <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? topic.Size : "NA"}</p>
                                                                                 <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
                                                                             </div>
+                                                                        </div>}
+                                                                        {topic.TopicType == "Document" && <div className="docs">
+                                                                            <List
+                                                                                itemLayout="horizontal"
+                                                                                dataSource={topic.lstDocuments}
+                                                                                renderItem={(item) => (
+                                                                                    <List.Item
+                                                                                        onClick={(ev) => {
+                                                                                            ev.stopPropagation();
+                                                                                            window.open(item.url, "_blank");
+                                                                                        }}
+                                                                                        style={{ cursor: "pointer" }}
+                                                                                    >
+                                                                                        <List.Item.Meta
+                                                                                            avatar={[
+                                                                                                <span className={`doc-icons ${item.avatar}`}></span>,
+                                                                                            ]}
+                                                                                            title={item.title}
+                                                                                            description={
+                                                                                                <div className="file-size f-12">{item.fileSize}</div>
+                                                                                            }
+                                                                                        />
+                                                                                    </List.Item>
+                                                                                )}
+                                                                            />
+                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
                                                                         </div>
+                                                                        }
                                                                     </Panel>
                                                                 </Collapse>
                                                             })
                                                             }
 
                                                             <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                                            <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
                                                         </Panel>
 
                                                     </Collapse>
                                                     }
-                                                    <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>
+                                                    {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
+                                                    {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
@@ -794,11 +856,12 @@ const AdminCourses = ({ profile }) => {
                                                                 </Form.Item>
                                                                 <div className="text-right">
                                                                     <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                                    {/* <Button type="default" className="addContent px-16" size="small">Cancel</Button> */}
+                                                                    <Button type="default" className="addContent px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
                                                                 </div>
                                                             </Form>
                                                         </div>
-                                                        <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
+                                                        {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
+                                                        {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
                                                     </div>
                                                     }
                                                 </div>
@@ -841,6 +904,15 @@ const AdminCourses = ({ profile }) => {
                                     />
                                 </Form.Item>
                             </div>
+                            <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4">Topic Content Type</label>
+                                <Form.Item name="TopicType" rules={[{ required: true, message: "Topic Content Type  required" }]} >
+                                    <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}>
+                                        <Option value="Video">Video</Option>
+                                        <Option value="Document">Document</Option>
+                                    </Select>
+                                </Form.Item>
+                            </div>
                             {/* <div className="mb-8">
                                 <label className="text-secondary d-block mb-4">Feature Image</label>
                                 <Upload
@@ -855,7 +927,7 @@ const AdminCourses = ({ profile }) => {
                                     {topicObj?.ThumbNails?.length >= 1 ? null : uploadButton}
                                 </Upload>
                             </div> */}
-                            <div className="custom-fields">
+                            {topicObj.TopicType == "Video" && <div className="custom-fields">
                                 <label className="text-secondary d-block mb-4">Video Source</label>
                                 <Form.Item name="VideoSource">
                                     <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
@@ -865,7 +937,8 @@ const AdminCourses = ({ profile }) => {
                                     </Select>
                                 </Form.Item>
                             </div>
-                            {topicObj.VideoSource == "Upload" && <Dragger showUploadList={false} {...props} className="mb-16" disabled={topicObj.VideoUrl.length >= 1}>
+                            }
+                            {topicObj.VideoSource == "Upload" && topicObj.TopicType == "Video" && <Dragger showUploadList={false} {...props} className="mb-16" disabled={topicObj.VideoUrl.length >= 1}>
                                 <p className="ant-upload-drag-icon">
                                     <span className="sharebox-icons video-upload"></span>
                                 </p>
@@ -911,7 +984,48 @@ const AdminCourses = ({ profile }) => {
                                 </Form.Item>
                             </div>
                             }
-                            <div className="custom-fields">
+                            {topicObj.TopicType == "Document" && <Dragger
+                                className="upload"
+                                {...props}
+                                showUploadList={false}
+                            >
+                                <span className="sharebox-icons docs-upload"></span>
+                                <p className="ant-upload-text mt-8 mb-0">Upload Documents</p>
+                            </Dragger>
+                            }
+                            {fileUploading && topicObj.TopicType == "Document" && <Loader className="loader-top-middle" />}
+                            {topicObj.TopicType == "Document" &&
+                                <div className="docs mb-16">
+                                    <List
+                                        itemLayout="horizontal"
+                                        dataSource={topicObj.lstDocuments}
+                                        renderItem={(item, indx) => (
+                                            <List.Item className="upload-preview">
+                                                <List.Item.Meta
+                                                    avatar={[
+                                                        <span className={`doc-icons ${item.avatar}`}></span>,
+                                                    ]}
+                                                    title={item.title}
+                                                    description={
+                                                        <div className="file-size f-12">{item.fileSize}</div>
+                                                    }
+                                                />
+                                                <a
+                                                    class="item-close"
+                                                    onClick={() => {
+                                                        topicObj.lstDocuments.splice(indx, 1);
+                                                        setTopicObj({ ...topicObj })
+                                                    }}
+                                                >
+                                                    <Tooltip title="Remove">
+                                                        <span className="close-icon"></span>
+                                                    </Tooltip>
+                                                </a>
+                                            </List.Item>
+                                        )}
+                                    />
+                                </div>}
+                            {topicObj.TopicType == "Video" && <div className="custom-fields">
                                 <label className="text-secondary d-block mb-4">Video Playback Time</label>
                                 <Input.Group compact>
                                     <div className="videoplybacktime">
@@ -934,6 +1048,7 @@ const AdminCourses = ({ profile }) => {
                                     </div>
                                 </Input.Group>
                             </div>
+                            }
                         </div>
                     </Form>
                 </Modal>
