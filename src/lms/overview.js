@@ -7,6 +7,7 @@ import '../App.css';
 import { fetchUserTests, submitTests } from './api';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import Comments from '../shared/components/postings/Comments/Comments';
 
 const { Title, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -34,7 +35,8 @@ const columns = [
 class OverView extends Component {
   state = {
     courseDetails:this.props.courseDetails,
-    tests:[]
+    tests:[],
+    object:{}
 }
 componentDidMount(){
   this.loadUserTests();
@@ -104,8 +106,14 @@ saveUserTestFiles = async ()=>{
                 </div>}
             <div className="custom-card">
               <Card title="Comments (5)">
-                <div className="px-12">
-                  <Comment
+                <div className="px-12 post-card comment-show">
+                {<Comments
+            count={courseDetails.commentsCount || 0}
+            postId={this.props.courseid}
+            object={this.state.object}
+            isLMSComment={true}
+          />}
+                  {/* <Comment
                     avatar={<Avatar src={defaultUser} />}
                     content={
                       <Form.Item>
@@ -120,7 +128,7 @@ saveUserTestFiles = async ()=>{
                         </Button>
                       </Form.Item>
                     }
-                  />
+                  /> */}
                 </div>
               </Card>
             </div>

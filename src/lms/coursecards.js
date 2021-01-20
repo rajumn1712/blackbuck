@@ -75,7 +75,7 @@ class CourseCards extends Component {
                         cover={
                           <img
                             alt="photography"
-                            src={course.image || photography}
+                            src={course.image.length > 0 ? course.image : photography}
                           />
                         }
                       >
@@ -110,7 +110,7 @@ class CourseCards extends Component {
                               </div>
                               <Avatar.Group
                                 className="group-member mt-12"
-                                maxCount={2}
+                                maxCount={5}
                                 size="large"
                                 maxStyle={{
                                   color: "var(--black)",
@@ -165,7 +165,7 @@ class CourseCards extends Component {
                         cover={
                           <img
                             alt="photography"
-                            src={course.image || photography}
+                            src={course.image.length > 0 ? course.image : photography}
                           />
                         }
                         actions={

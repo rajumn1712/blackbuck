@@ -7,6 +7,7 @@ import { fetchComments, postComment } from '../../../api/postsApi';
 import defaultUser from '../../../../styles/images/defaultuser.jpg';
 import Moment from 'react-moment'
 import { uuidv4 } from '../../../../utils';
+import { fetchLMSComments, saveLMSComment } from '../../../../lms/api';
 const commentEdit = (
     <Menu className="custom-dropdown">
       <Menu.Item key="0">
@@ -42,13 +43,16 @@ class Comments extends Component {
         }
     }
     async loadComments(take, skip) {
-        const commentResponse = await fetchComments(this.props.postId, take, skip);
+        const commentResponse = await (this.props.isLMSComment ? fetchLMSComments : fetchComments)(this.props.postId, take, skip);
         if (commentResponse.ok) {
             let { comments } = this.state
-            this.setState({ ...this.state, comments: comments.concat(commentResponse.data[0].Comments) });
+            if(commentResponse.data.length > 0){
+                this.setState({ ...this.state, comments: comments.concat(commentResponse.data[0].Comments) });
+            }
         }
     }
     onSubmit = async () => {
+        let lmscommentObj = {ReferenceId:'',Comments:[]}
         const object = {
             "CommentId":uuidv4(),
             "UserId": this.props.profile?.Id,
@@ -60,7 +64,11 @@ class Comments extends Component {
             "CreatedDate": new Date(),
             "Replies": []
         }
-        const saveResponse = await postComment(this.props.postId, object);
+        if(this.props.isLMSComment){
+            lmscommentObj.ReferenceId = this.props.postId;
+            lmscommentObj.Comments.push(object);
+        }
+        const saveResponse = await (this.props.isLMSComment ? saveLMSComment(lmscommentObj) : postComment(this.props.postId, object));
         if (saveResponse.ok) {
             let { comments } = this.state;
             comments.unshift(object);
@@ -84,7 +92,7 @@ class Comments extends Component {
                             </Button></Form.Item>
                     }
                 />
-                {comments.length > 0 && <> <List
+                {(comments.length > 0) && <> <List
                     className="comment-list"
                     dataSource={comments}
                     header={`${count} ${count > 1 ? 'Comments' : 'Comment'}`}
