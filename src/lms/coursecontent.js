@@ -41,7 +41,7 @@ class CourseContent extends Component {
                         </div>
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <OverView />
+                                {!this.state.loading && <OverView courseid={this.props.match.params.id} courseDetails={this.state.courseDetails}/>}
                             </Col>
                         </Row>
 

@@ -1,61 +1,60 @@
 import React, { Component } from 'react';
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Tabs, Divider, Typography,Input,Button, Result, Tooltip, Upload, Comment, Form } from 'antd'
-import { Link } from 'react-router-dom';
-import { CaretRightOutlined, SmileOutlined } from '@ant-design/icons';
+import { Card, List, Row, Col, Avatar, Divider, Typography, Button, Result, Tooltip, Upload, Comment, Form, Table, Space } from 'antd'
 import defaultUser from "../styles/images/defaultuser.jpg";
 import TextArea from 'antd/lib/input/TextArea';
 import '../index.css';
 import '../App.css';
-import test from "../styles/images/test.svg";
+import { fetchUserTests, submitTests } from './api';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 const { Title, Paragraph } = Typography;
 const { Dragger } = Upload;
-const listData = [
+
+const columns = [
   {
-    title: `Assignment - 1`,
-    fileSize: `25KB`,
-    avatar: `docx`
+    title: 'Title',
+    dataIndex: 'Title',
   },
   {
-    title: `Assignment - 2`,
-    fileSize: `50KB`,
-    avatar: `ppt`
+    title: 'Document',
+    dataIndex: 'Documents',
+    render: text => <a>{text}</a>
   },
   {
-    title: `Assignment - 3`,
-    fileSize: `20KB`,
-    avatar: `pdf`
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => (
+          <Space size="middle">
+              <a className="semibold" style={{ color: 'var(--red)' }}>Download</a>
+          </Space>
+      ),
   },
-  {
-    title: `Assignment - 4`,
-    fileSize: `50KB`,
-    avatar: `docx`
-  }
-];
-const data = [
-    {
-        title: 'Skill levels',
-        description: ' All Levels'
-    },
-    {
-        title: 'Students',
-        description: ' 46865'
-        
-    },
-    {
-        title: 'Languages',
-        description: ' English'
-        
-    },
-    {
-        title: 'video',
-        description: ' 59 total hours'
-        
-    }
 ];
 class OverView extends Component {
+  state = {
+    courseDetails:this.props.courseDetails,
+    tests:[]
+}
+componentDidMount(){
+  this.loadUserTests();
+}
+  loadUserTests = async ()=>{
+    const response = await fetchUserTests(this.props.courseid,this.props?.profile?.Id);
+    if(response.ok){
+        this.setState({...this.state,tests:response.data.Tests});
+    }
+}
+
+saveUserTestFiles = async ()=>{
+  const response = await submitTests(this.state.courseDetails);
+  if(response.ok){
+
+  }
+}
 
     render() {
+      const {courseDetails} = this.state;
         return (
           <div>
             {/* <List
@@ -77,41 +76,20 @@ class OverView extends Component {
               <Card>
                 <div className="p-12">
                   <Title level={4} className="semibold mb-4 text-primary">
-                    What is JavaScript? How does JavaScript work?
+                   {courseDetails.GroupName}
                   </Title>
-                  <p className="text-secondary f-14">5 Views | Jan,01,2021</p>
+                  <p className="text-secondary f-14">{courseDetails.Author[0].Firstname} {courseDetails.Author[0].Lastname} |  {moment(courseDetails.CreatedDate).format('ll')}</p>
                   <Paragraph className="text-primary">
-                    As a multi-paradigm language, JavaScript supports
-                    event-driven, functional, and imperative programming styles.
-                    It has application programming interfaces (APIs) for working
-                    with text, dates, regular expressions, standard data
-                    structures, and the Document Object Model (DOM). As a
-                    multi-paradigm language, JavaScript supports event-driven,
-                    functional, and imperative programming styles. It has
-                    application programming interfaces (APIs) for working with
-                    text, dates, regular expressions, standard data structures,
-                    and the Document Object Model (DOM).
-                  </Paragraph>
-                  <Paragraph className="text-primary">
-                    As a multi-paradigm language, JavaScript supports
-                    event-driven, functional, and imperative programming styles.
-                    It has application programming interfaces (APIs) for working
-                    with text, dates, regular expressions, standard data
-                    structures, and the Document Object Model (DOM). As a
-                    multi-paradigm language, JavaScript supports event-driven,
-                    functional, and imperative programming styles. It has
-                    application programming interfaces (APIs) for working with
-                    text, dates, regular expressions, standard data structures,
-                    and the Document Object Model (DOM).
+                    {courseDetails.Description}
                   </Paragraph>
                   <Divider />
                   <Title className="semibold mb-4 text-primary f-16">
-                    Participent List
+                    Members List
                   </Title>
                 </div>
               </Card>
             </div>
-            <div className="custom-card mb-8">
+            {courseDetails.IsCertified && <div className="custom-card mb-8">
                     <Card className="start-course">
                         <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
@@ -123,7 +101,7 @@ class OverView extends Component {
                             </Col>
                         </Row>
                     </Card>
-                </div>
+                </div>}
             <div className="custom-card">
               <Card title="Comments (5)">
                 <div className="px-12">
@@ -148,13 +126,25 @@ class OverView extends Component {
             </div>
             <div className="custom-card">
               <Card title="Take a Test">
-                <Result
+              <Table columns={columns} dataSource={this.state.tests} size="small" pagination={{ position: ["bottomCenter"] }} bordered={true} />
+                {/* <Result
                   icon={<img src={test} />}
                   title="Test documents are uploaded here"
                   subTitle="Please download and completed the assignments and upload bellow, thank you !"
                   extra={<Button type="primary">Download Here</Button>}
-                />
+                /> */}
                 <div className="px-12 pb-12">
+                {courseDetails.IsUploaded && <Result
+                      icon={<span className="error-icons success" />}
+                      title="Successfully Uploaded"
+                      subTitle="We sent your file's to the admin review, untill approve, please wait..."
+                    />}
+                    {courseDetails.IsRejected && <Result
+                      icon={<span className="error-icons failed" />}
+                      title="Submission Rejected"
+                      subTitle="Please check and modify the assignments before resubmitting."
+                      extra={[<Button type="primary">Re - Upload</Button>]}
+                    ></Result>}
                   <Dragger className="upload mb-16">
                     <span className="sharebox-icons docs-upload mb-16"></span>
                     <p className="ant-upload-text">
@@ -167,31 +157,6 @@ class OverView extends Component {
                     </p>
                   </Dragger>
                   <div className="docs px-0">
-                    <List
-                      itemLayout="horizontal"
-                      dataSource={listData}
-                      renderItem={(item, indx) => (
-                        <List.Item className="upload-preview">
-                          <List.Item.Meta
-                            avatar={[
-                              <span className={`doc-icons ${item.avatar}`} />
-                            ]}
-                            // avatar={item.avatar}
-                            title={item.title}
-                            description={
-                              <div className="file-size f-12">
-                                {item.fileSize}
-                              </div>
-                            }
-                          />
-                          <a class="item-close">
-                            <Tooltip title="Remove">
-                              <span className="close-icon"></span>
-                            </Tooltip>
-                          </a>
-                        </List.Item>
-                      )}
-                    />
                     <div className="mt-12 text-center">
                       <Button type="primary" key="console">
                         Submit Files
@@ -200,17 +165,7 @@ class OverView extends Component {
                   </div>
                   <div className="px-12 pb-12">
                     <Divider />
-                    <Result
-                      icon={<span className="error-icons success" />}
-                      title="Successfully Uploaded"
-                      subTitle="We sent your file's to the admin review, untill approve, please wait..."
-                    />
-                    <Result
-                      icon={<span className="error-icons failed" />}
-                      title="Submission Rejected"
-                      subTitle="Please check and modify the assignments before resubmitting."
-                      extra={[<Button type="primary">Re - Upload</Button>]}
-                    ></Result>
+                    
                   </div>
                 </div>
               </Card>
@@ -237,5 +192,9 @@ class OverView extends Component {
         );
     }
 }
-export default OverView;
+const mapStateToProps = ({ oidc }) => {
+  return { profile: oidc.profile };
+};
+export default connect(mapStateToProps)(OverView);
+
 

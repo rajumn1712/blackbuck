@@ -12,6 +12,7 @@ import {
 } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { connect } from "react-redux";
+import { lmsJoinCourse } from "../../lms/api";
 
 class Courses extends Component {
   state = {
@@ -26,7 +27,7 @@ class Courses extends Component {
     this.setState({ ...this.state, loading: true });
     const getcourses = await (this.props?.loadUserCourse
       ? getUserCourses
-      : fetchCourseSuggestions)(this.props?.profile?.Id, 1000, 0);
+      : fetchCourseSuggestions)(this.props?.profile?.Id, 10, 0);
     let { courses } = this.state;
     courses = getcourses.data;
     if (getcourses.ok) {
@@ -45,7 +46,7 @@ class Courses extends Component {
     if (item.type == "Private") {
       obj.Type = "request";
     }
-    const joinResponse = await joinGroup(item.id, obj);
+    const joinResponse = await lmsJoinCourse(item.id, obj);
     if (joinResponse.ok) {
       notify({
         message: "Courses join",
@@ -113,16 +114,17 @@ class Courses extends Component {
                     <div className="f-12 text-secondary">
                       {item.members && (
                         <span>
-                          {item.members}
+                          {item.members.length}
                         </span>
                       )}{" "}
-                      Members |{" "}
+                      Members 
+                      {/* |{" "}
                       {item.posts && (
                         <span>
                           {item.posts}
                         </span>
                       )}{" "}
-                      posts
+                      posts */}
                     </div>
                   }
                 />
