@@ -56,11 +56,11 @@ const columns = [
     },
   ];
 
-class LMSAssignment extends Component {
+class Jobs extends Component {
   render() {
     return (
       <>
-        <Title className="f-18 text-primary semibold">Assignments</Title>
+        <Title className="f-18 text-primary semibold">Test Submissions</Title>
         <div className="custom-card">
           <Card className="p-12 custom-fields">
             <Table columns={columns} dataSource={data} size="small" bordered={true} pagination={{ position: ["bottomCenter"]}} />
@@ -70,4 +70,4 @@ class LMSAssignment extends Component {
     );
   }
 }
-export default LMSAssignment;
+export default Jobs;
