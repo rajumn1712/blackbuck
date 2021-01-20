@@ -605,13 +605,13 @@ const AdminCourses = ({ profile }) => {
                                     <div className="create-course">
                                         <div className="custom-fields">
                                             <label className="text-secondary d-block mb-4">Course Title</label>
-                                            <Form.Item name="GroupName" rules={[{ required: true, message: "Course Title  required" }]}>
+                                            <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Course Title  required" }]}>
                                                 <Input placeholder="e.g. Learn how to code from scratch" onChange={(value) => handleChange('GroupName', value)} />
                                             </Form.Item>
                                         </div>
                                         <div className="custom-fields">
                                             <label className="text-secondary d-block mb-4">Course Description</label>
-                                            <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]}>
+                                            <Form.Item className="custom-fields" name="Description" rules={[{ required: true, message: "Description  required" }]}>
                                                 <TextArea placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }}
                                                 />
@@ -620,7 +620,7 @@ const AdminCourses = ({ profile }) => {
                                         <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select custom-fields">
                                                 <label className="text-secondary d-block mb-4">Choose Category</label>
-                                                <Form.Item name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
+                                                <Form.Item className="custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select
                                                         placeholder="Choose a Category" className="text-left"
                                                         onChange={(value) => handleChange('Categories', value)}
@@ -634,7 +634,7 @@ const AdminCourses = ({ profile }) => {
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Author Name</label>
-                                                <Form.Item name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
+                                                <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
                                                     <Select
                                                         defaultValue="Choose Author" placeholder="Choose Author" className="text-left"
                                                         onChange={(value) => handleChange('Author', value)}
@@ -648,7 +648,7 @@ const AdminCourses = ({ profile }) => {
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Course Type</label>
-                                                <Form.Item name="CourseType" rules={[{ required: true, message: "Course Type required" }]}>
+                                                <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Course Type required" }]}>
                                                     <Select
                                                         defaultValue="Choose Type" placeholder="Choose Type" className="text-left"
                                                         onChange={(value) => handleChange('CourseType', value)}
@@ -661,18 +661,20 @@ const AdminCourses = ({ profile }) => {
                                             </Col>
                                             {courseObject.CourseType == "Live" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Course Type</label>
-                                                <Form.Item name="Date" rules={[{ required: true, message: "Date required" }]} onChange={(value) => handleChange('Date', value)}>
+                                                <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]} onChange={(value) => handleChange('Date', value)}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" />
                                                 </Form.Item>
                                             </Col>
                                             }
                                             {courseObject.CourseType == "Live" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Link</label>
-                                                <Form.Item name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
                                                 </Form.Item>
                                             </Col>
                                             }
+                                            </Row>
+                                            <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <div className="text-secondary">Course Image</div>
                                                 <div className="mb-12">
@@ -704,7 +706,7 @@ const AdminCourses = ({ profile }) => {
                                                     </Dragger>
                                                     {fileImgUploading && <Loader className="loader-top-middle" />}
                                                     {courseObject.GroupImage?.map((image, indx) => (
-                                                        <div key={indx} className="mb-16 upload-preview">
+                                                        <div key={indx} className="mb-16 mt-8 upload-preview">
                                                             <Image src={image} />
                                                             <a
                                                                 class="item-close"
@@ -754,7 +756,7 @@ const AdminCourses = ({ profile }) => {
                                                     </Dragger>
                                                     {fileVideoUploading && <Loader className="loader-top-middle" />}
                                                     {courseObject.CourseVideo?.map((image, indx) => (
-                                                        <div key={indx} className="mb-16 upload-preview">
+                                                        <div key={indx} className="mb-16 mt-8 upload-preview">
                                                             <video width="100%" controls>
                                                                 <source src={image} />
                                                             </video>
@@ -840,7 +842,7 @@ const AdminCourses = ({ profile }) => {
                                                             }
 
                                                             <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
-                                                            <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
+                                                            <div onClick={() => deleteSection(item)} className="f-18 remove-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
                                                         </Panel>
 
                                                     </Collapse>
@@ -856,7 +858,7 @@ const AdminCourses = ({ profile }) => {
                                                                 </Form.Item>
                                                                 <div className="text-right">
                                                                     <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                                    <Button type="default" className="addContent px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
+                                                                    <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
                                                                 </div>
                                                             </Form>
                                                         </div>
@@ -948,7 +950,7 @@ const AdminCourses = ({ profile }) => {
                             }
                             {fileUploading && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
-                                <div key={indx} className="mb-16 upload-preview">
+                                <div key={indx} className="mb-16 mt-8 upload-preview">
                                     <video width="100%" controls>
                                         <source src={image} />
                                     </video>

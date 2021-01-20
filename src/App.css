@@ -2011,6 +2011,9 @@ textarea {
 .add-course-section{
   border: 1px dashed var(--line); border-radius: 8px; background: var(--primary);
 }
+.remove-course-section:hover{
+  border: 1px solid var(--red) !important; border-radius: 8px; color: var(--red) !important;
+}
 @media (min-width: 768px){
   .addTopicPop{width: 600px !important}
 }
@@ -2070,5 +2073,10 @@ textarea {
 .left-menu.setscroller-icon{background-position: -848px -259px;}
 .left-menu.setscroller-icon:hover{background-position: -848px -284px;}
 .left-menu.social-networking{background-position: -757px -202px;}
+.left-menu.social-networking:hover{background-position: -757px -228px;}
 .left-menu.lmsicon{background-position: -705px -201px;}
+.left-menu.lmsicon:hover{background-position: -705px -227px;}
 .left-menu.Careers{background-position: -733px -200px;}
+.left-menu.Careers:hover{background-position: -733px -226px;}
+.admin-left-pane .ant-menu-submenu-title:hover, .admin-left-pane .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-item:hover, .ant-menu-item-active{color: var( --primary) !important;}
+.admin-left-pane .ant-menu-submenu-vertical > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow::before, .admin-left-pane .ant-menu-submenu-vertical > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow::after{color: var( --primary);background: var( --primary) !important;}
