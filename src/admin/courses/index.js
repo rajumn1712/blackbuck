@@ -409,22 +409,11 @@ const AdminCourses = ({ profile }) => {
         setCourseObject({ ...courseObject });
     }
     const sectionSave = async () => {
-        // if (secObj.Topics?.length == 0) {
-        //     notify({ message: "Warn", type: "error", description: "Atleast one topic required" });
-        //     return;
-        // }
+        secObj.IsSaved = true;
         const result = await saveSection(secObj, courseObject.GroupId);
         if (result.ok) {
-            secObj.IsSaved = true;
-            courseObject.CourseSections.forEach(item => {
-                if (item.SectionId == secObj.SectionId) {
-                    item = { ...secObj };
-                }
-            });
-
-            secObj.IsSaved = false;
+            refreshCourseDetails();
             setSecObj({ ...secObj })
-            setCourseObject({ ...courseObject });
             notify({ message: "Section", description: "Section saved successfully" });
         }
         else {
@@ -759,10 +748,10 @@ const AdminCourses = ({ profile }) => {
                                     </div>
                                     <div className="create-course mt-16">
                                         {courseObject.CourseType == "Content" && <div>
-                                            <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>
+                                            {courseObject.CourseSections?.length == 0 && <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>}
                                             {courseObject.CourseSections?.map((item, index) => {
                                                 return <div> <div className="lecture-collapse mb-16" key={index}>
-                                                    <Collapse
+                                                    {item.IsSaved && <Collapse
                                                         className="mb-16"
                                                         expandIconPosition="right"
                                                     >
@@ -792,24 +781,26 @@ const AdminCourses = ({ profile }) => {
 
                                                             <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
                                                         </Panel>
+
                                                     </Collapse>
+                                                    }
                                                     <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>
                                                 </div>
-                                                    <div className="lecture-collapse mb-16">
+                                                    {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
-                                                            {item.IsShowForm && < Form id="secForm" initialValues={courseObject.CourseSections[index]} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
+                                                            < Form id="secForm" initialValues={courseObject.CourseSections[index]} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
                                                                 <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
                                                                     {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                                 </Form.Item>
                                                                 <div className="text-right">
                                                                     <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                                    <Button type="default" className="addContent px-16" size="small">Cancel</Button>
+                                                                    {/* <Button type="default" className="addContent px-16" size="small">Cancel</Button> */}
                                                                 </div>
                                                             </Form>
-                                                            }
                                                         </div>
                                                         <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
                                                     </div>
+                                                    }
                                                 </div>
                                             })}
                                         </div>}
