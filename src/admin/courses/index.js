@@ -11,6 +11,7 @@ import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
 import video from '../../styles/images/video.mp4';
 import Courses from './Courses';
+import moment from 'moment';
 // import ytdl from 'youtube.get-video-info'
 const { Meta } = Card;
 const { Panel } = Collapse;
@@ -251,6 +252,8 @@ const AdminCourses = ({ profile }) => {
         obj.Categories.forEach(item => {
             ObjCourse.Categories.push(item.BranchId)
         });
+        obj.Date = obj.Date ? moment(obj.Date).local() : "";
+        ObjCourse.Date = ObjCourse.Date ? moment(ObjCourse.Date).local() : "";
         setCourseObject({ ...obj });
         form.setFieldsValue({ ...ObjCourse })
         setShowForm(true);
@@ -661,7 +664,7 @@ const AdminCourses = ({ profile }) => {
                                             </Col>
                                             {courseObject.CourseType == "Live" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Course Type</label>
-                                                <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]} onChange={(value) => handleChange('Date', value)}>
+                                                <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" />
                                                 </Form.Item>
                                             </Col>
