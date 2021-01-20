@@ -3,8 +3,9 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { Row, Col, Menu, Card, Avatar } from 'antd';
 import Groups from './groups';
 import AdminCourses from './courses';
+// import Jobs from './jobs';
 import Members from './members';
-import LMSAssignment from './assignments';
+import TestSubmissions from './testsubmissions';
 import defaultUser from "../styles/images/defaultuser.jpg";
 import coverphoto from "../styles/images/default-cover.png";
 import '../../src/profile/profilestyle.css';
@@ -43,7 +44,7 @@ class Admin extends Component {
                         </Menu.Item>
                     </Menu> */}
                     <Menu mode="vertical" theme="light">
-                        <SubMenu key="sub1" icon={<span className="left-menu profile-icon mr-12" />} title="Social Networking">
+                        <SubMenu key="sub1" icon={<span className="left-menu social-networking mr-12" />} title="Social Networking">
                             <Menu.Item key="courses">
                                 <Link to="/admin/courses">Courses</Link>
                             </Menu.Item>
@@ -54,15 +55,14 @@ class Admin extends Component {
                                 <Link to="/admin/groups">Groups</Link>
                             </Menu.Item>
                         </SubMenu>
-                        <SubMenu key="sub2" icon={<span className="left-menu profile-icon mr-12" />} title="LMS">
+                        <SubMenu key="sub2" icon={<span className="left-menu lmsicon mr-12" />} title="LMS">
                             <Menu.Item key="assingments">
-                                <Link to="/admin/assignments">Assignments</Link>
+                                <Link to="/admin/testsubmissions">Test Submissions</Link>
                             </Menu.Item>
                         </SubMenu>
-                        <SubMenu key="sub4" icon={<span className="left-menu profile-icon mr-12" />} title="Careers">
-                            <Menu.Item key="1">Courses</Menu.Item>
-                            <Menu.Item key="2">Members</Menu.Item>
-                            <Menu.Item key="3">Groups</Menu.Item>
+                        <SubMenu key="sub4" icon={<span className="left-menu Careers mr-12" />} title="Careers">
+                            <Menu.Item key="1">Members</Menu.Item>
+                            <Menu.Item key="2">Jobs</Menu.Item>
                         </SubMenu>
                     </Menu>
                 </div>
@@ -70,7 +70,8 @@ class Admin extends Component {
                     <Route path="/admin/courses" component={AdminCourses} />
                     <Route path="/admin/members" component={Members} />
                     <Route path="/admin/groups" component={Groups} />
-                    <Route path="/admin/assignments" component={LMSAssignment} />
+                    <Route path="/admin/testsubmissions" component={TestSubmissions} />
+                    {/* <Route path="/admin/jobs" component={Jobs} /> */}
                 </div>
             </div>
         </>

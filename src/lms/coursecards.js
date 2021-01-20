@@ -59,7 +59,7 @@ class CourseCards extends Component {
                                     {this.state.courses?.map((course, indx) => (
                                         <Col key={indx} xs={24} md={12} lg={8}>
                                             <Card
-                                                className="card-item"
+                                                className="card-item ss"
                                                 cover={
                                                     <img
                                                         alt="photography"
@@ -87,17 +87,15 @@ class CourseCards extends Component {
                                                                 </Paragraph>
                                                                 <div>
                                                                     <span className="mr-12 f-12 text-secondary">
-                                                                        <span className="grp-type-icon video-play" />
-                                    10 Videos
-                                  </span>
+                                                                        <span className="grp-type-icon video-play" />10 Videos
+                                                                    </span>
                                                                     <span className="f-12 text-secondary">
-                                                                        <span className="grp-type-icon lessons" />5
-                                    Lessons
-                                  </span>
+                                                                        <span className="grp-type-icon lessons" />5 Lessons 
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                             <Avatar.Group className="group-member mt-12"
-                                                                maxCount={2}
+                                                                maxCount={5}
                                                                 size="large"
                                                                 maxStyle={{
                                                                     color: 'var(--black)',
@@ -108,7 +106,10 @@ class CourseCards extends Component {
                                                                 <Avatar src={defaultUser} />
                                                                 <Avatar style={{ backgroundColor: 'var(--primary)' }}>
                                                                     K
-                                </Avatar>
+                                                                </Avatar>
+                                                                <Avatar style={{ backgroundColor: 'var(--primary)' }}>
+                                                                    S
+                                                                </Avatar>
                                                                 <Tooltip title="Ant User" placement="top">
                                                                     <Avatar
                                                                         style={{ backgroundColor: "#87d068" }}
