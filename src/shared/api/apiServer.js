@@ -84,7 +84,7 @@ const fetchInterestsLu = (take, skip) => {
 };
 const fetchCourseSuggestions = (user_id, take, skip) => {
   return apiClient.get(
-    PROFILE_API + `userCourseSuggestions/${user_id}/${take}/${skip}`
+    PROFILE_API + `getCourseSuggestions/${user_id}/${take}/${skip}`
   );
 };
 const saveInterest = (object) => {
@@ -212,6 +212,9 @@ const courseDelete = (GroupId) => {
 const setScholor = (userId) => {
   return apiClient.get(ADMIN_API + `setIsScholar/${userId}`);
 }
+const getCoursesRelCount = (user_id) => {
+  return apiClient.get(ADMIN_API + `getCoursesCount/${user_id}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -272,5 +275,6 @@ export {
   getUsersCount,
   getGroups,
   courseDelete,
-  setScholor
+  setScholor,
+  getCoursesRelCount
 };

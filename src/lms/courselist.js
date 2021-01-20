@@ -1,54 +1,76 @@
-import React, { Component } from 'react';
-import { Card, List, Row, Col, Progress } from 'antd'
-import { Link } from 'react-router-dom';
-import { fetchTags } from '../shared/api/apiServer';
-import CourseContent from '../lms/coursecontent'
-import SEO from '../styles/images/seo-marketing.png'
-import '../index.css';
-import '../App.css';
-const data = [
-    { title: 'This is panel header 1' },
-    { title: 'This is panel header 2' },
-    { title: 'This is panel header 3' },
-    { title: 'This is panel header 4' },
-    { title: 'This is panel header 5' }
-];
+import React, { Component } from "react";
+import { Card, List, Progress } from "antd";
+import { Link } from "react-router-dom";
+import "../index.css";
+import "../App.css";
+import { connect } from "react-redux";
+import { fetchCourseSuggestions } from "./api";
+import Courses from '../components/ProfileComponents/courses';
+import Title from "antd/lib/typography/Title";
+
 const { Meta } = Card;
 class CourseList extends Component {
-    render() {
-        return (
-            <div className="custom-card tag-card">
-
-                <Card
-                    className="card-item"  actions={[
-                        <Link className="card-item-button">Continue</Link>
-                    ]}>
-                    <Meta
-                        title="SEO & Digital Marketing"
-                        description={
-                            <div>
-                                
-                                <div className="addon-info">
-                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
-                                    <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
-                                </div>
-                                <div className="my-16 progres-bar"><Progress percent={30} /></div>
-                            </div>} />
-                </Card>
-
-                <Card title="Course List" bordered={false} >
-                    <List
-                        itemLayout="vertical"
-                        dataSource={data}
-                        renderItem={item => (
-                            <div className="tag-name"><Link to="/coursecontent">{item.title}</Link></div>
-
-                        )}
-                    />
-                </Card>
-            </div>
-
-        )
+  state = {
+    suggestions: [],
+    loading: true,
+    page: 1,
+    pageSize: 10
+  };
+  componentDidMount() {
+    this.loadSuggestions();
+  }
+  loadSuggestions = async () => {
+    const response = await fetchCourseSuggestions(
+      this.props.profile?.Id,
+      this.state.page,
+      this.state.pageSize
+    );
+    if (response.ok) {
+      this.setState({
+        ...this.state,
+        loading: false,
+        suggestions: response.data
+      });
     }
+  };
+  render() {
+    return (
+      <div className="custom-card tag-card">
+        <Card className="card-item" actions={[<Link className="card-item-button">Continue</Link>]}>
+            <Title className="text-primary f-16 semibold mb-8">
+              SEO & Digital Marketing
+            </Title>
+            <div className="addon-info">
+              <span className="mr-12 f-12 text-secondary">
+                <span className="grp-type-icon video-play" />
+                10 Videos
+              </span>
+              <span className="f-12 text-secondary">
+                <span className="grp-type-icon lessons" />5 Lessons
+              </span>
+            </div>
+            <div className="mt-12 progres-bar">
+              <Progress percent={30} />
+            </div>
+        </Card>
+        {/* <Card title="Course Suggestions" bordered={false}>
+          <List
+            itemLayout="vertical"
+            dataSource={this.state.suggestions}
+            renderItem={item => (
+              <div className="tag-name">
+                <Link to="/coursecontent">{item.name}</Link>
+              </div>
+            )}
+          />
+        </Card> */}
+         <Courses loadUserCourse={false} />
+      </div>
+    );
+  }
 }
-export default CourseList;
+
+const mapStateToProps = ({ oidc }) => {
+  return { profile: oidc.profile };
+};
+export default connect(mapStateToProps)(CourseList);

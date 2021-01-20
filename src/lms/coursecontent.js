@@ -1,51 +1,40 @@
 import React, { Component } from 'react';
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Tabs } from 'antd'
-import { Link } from 'react-router-dom';
-import comingsoon from '../styles/images/coming-soon.png'
+import { Card, List, Row, Col, Carousel, Collapse } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons';
 import '../index.css';
 import '../App.css';
-import { Checkbox } from 'antd';
-import video from '../styles/images/video.mp4';
-import QandA from './QandA';
 import OverView from './overview';
+import { fetchCourseDetails } from './api';
 const { Panel } = Collapse;
-const { TabPane } = Tabs;
-const data = [
-    {
-        title: '1. Ant Design Title ',
-        description: '5min'
-    },
-    {
-        title: '2. Ant Design Title ',
-        description: '3min'
-    },
-    {
-        title: '3. Ant Design Title ',
-        description: '2min'
-    },
-    {
-        title: '4. Ant Design Title ',
-        description: '5min'
-    },
-];
-
 class CourseContent extends Component {
-
-    render() {
-
-        function onChange(e) {
-            console.log(`checked = ${e.target.checked}`);
+    state = {
+        courseDetails: {},
+        loading: true,
+        selectedVideo: null
+    }
+    componentDidMount() {
+        this.loadCourseDetails();
+    }
+    loadCourseDetails = async () => {
+        const response = await fetchCourseDetails(this.props.match.params.id);
+        if (response.ok) {
+            this.setState({ ...this.state, courseDetails: response.data[0], loading: false });
         }
+    }
+    setVideoSource = (src) => {
+      this.setState({...this.state,selectedVideo:src},()=> document.querySelector("video").play());
+     
+    }
+    render() {
         return (
-            <div className="post-preview-box post-card course-card" >
+            <div className="post-preview-box course-card" >
                 <Row gutter={24} className="py-16">
                     <Col className="" xs={24} sm={16} md={16} lg={17} >
                         <div className="preview-image">
                             <Carousel>
-                                <div className="lms-video mb-8">
-                                    <video controls>
-                                        <source src={video} />
+                                <div className="lms-video mb-8" id="video_player">
+                                    <video controls key={this.state.selectedVideo}>
+                                        <source src={this.state.selectedVideo} />
                                     </video>
                                 </div>
                             </Carousel>
@@ -86,81 +75,33 @@ class CourseContent extends Component {
                     <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
                         <div className="custom-card video-card">
                             <Card title="Course Content" bordered={false} >
-                            <div className="height-scroll">
-                                <Collapse
-                                    bordered={false}
-                                    defaultActiveKey={['1']}
-                                    expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-                                    className="site-collapse-custom-collapse"
-                                    expandIconPosition="right"
-                                >
-                                    
-                                        <Panel header="What is JavaScript? How does JavaScript work?" key="1" className="pb-0 course-content flot-left" >
-                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
+                                <div className="height-scroll">
+                                    <Collapse
+                                        bordered={false}
+                                        defaultActiveKey={['1']}
+                                        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+                                        className="site-collapse-custom-collapse"
+                                        expandIconPosition="right"
+                                    >
+                                        {this.state.courseDetails?.CourseSections?.map((section, indx) => <Panel key={indx} header={section.SectionName} key={indx} className="pb-0 course-content flot-left" >
+                                            <div className="panel-subtext px-16"><span>{section.Topics.length}</span> <span>Videos</span> </div>
                                             <div>
                                                 <List
                                                     itemLayout="horizontal"
-                                                    dataSource={data}
-                                                    renderItem={item => (
-                                                        <List.Item extra={<span className="icon playover-icon"></span>}>
+                                                    dataSource={section.Topics}
+                                                    renderItem={(item,indx) => (
+                                                        <List.Item extra={<span className="icon playover-icon" key={indx}></span>}>
                                                             <List.Item.Meta
-                                                                title={<a href="https://ant.design">{item.title}</a>}
-                                                                description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.description}</div>}
+                                                                title={<a onClick={() => this.setVideoSource(item.VideoUrl[0])}>{indx+1}. {item.Title}</a>}
+                                                                description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.Description}</div>}
                                                             />
                                                         </List.Item>
                                                     )}
                                                 />
                                             </div>
-                                        </Panel>
-                                        <Panel header="Chapter 1 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
-                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
-                                            <List
-                                                itemLayout="horizontal"
-                                                dataSource={data}
-                                                renderItem={item => (
-                                                    <List.Item extra={<span className="icon play-icon"></span>}>
-                                                        <List.Item.Meta
-                                                            title={<a href="https://ant.design">{item.title}</a>}
-                                                            description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.description}</div>}
-                                                        />
-                                                    </List.Item>
-                                                )}
-                                            />
-                                        </Panel>
-                                        <Panel header="Chapter 2 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
-                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
-                                            <List
-                                                itemLayout="horizontal"
-                                                dataSource={data}
-                                                renderItem={item => (
-                                                    <List.Item extra={<span className="icon play-inprogress"></span>}>
-                                                        <List.Item.Meta
+                                        </Panel>)}
 
-                                                            title={<a href="https://ant.design">{item.title}</a>}
-                                                            description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.description}</div>}
-                                                        />
-                                                    </List.Item>
-                                                )}
-                                            />
-                                        </Panel>
-                                        <Panel header="Chapter 3 Introduction to JavaScript" key="1" className="pb-0 course-content flot-left" >
-                                            <div className="panel-subtext px-16"><span>4/5</span> | <span>23min</span> </div>
-                                            <List className=""
-                                                itemLayout="horizontal"
-                                                dataSource={data}
-                                                renderItem={item => (
-                                                    <List.Item extra={<span className="icon playover-icon"></span>}>
-                                                        <List.Item.Meta
-
-                                                            title={<a href="https://ant.design">{item.title}</a>}
-                                                            description={<div className="f-12"><span className="grp-type-icon video-play"></span> {item.description}</div>}
-                                                        />
-                                                    </List.Item>
-                                                )}
-                                            />
-                                        </Panel>
-                                    
-                                </Collapse></div>
+                                    </Collapse></div>
                             </Card>
                         </div>
 

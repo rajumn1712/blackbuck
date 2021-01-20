@@ -108,8 +108,8 @@
 .mx-0{margin-left: 0; margin-right: 0;}
 .mx-4{margin-left: 4px; margin-right: 4px;}
 .mx-8{margin-left: 8px; margin-right: 8px !important;}
-.mx-12{margin-left: 12px; margin-right: 12px;}
-.mx-16{margin-left: 16px; margin-right: 16px;}
+.mx-12{margin-left: 12px; margin-right: 12px !important;}
+.mx-16{margin-left: 16px; margin-right: 16px !important;}
 .my-0{margin-top: 0; margin-bottom: 0;}
 .my-4{margin-top: 4px !important; margin-bottom: 4px !important;}
 .my-8{margin-top: 8px; margin-bottom: 8px;}

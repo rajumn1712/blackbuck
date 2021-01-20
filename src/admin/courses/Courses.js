@@ -7,6 +7,7 @@ import { getGroups, courseDelete } from "../../shared/api/apiServer";
 import { connect } from "react-redux";
 import moment from "moment";
 import defaultguser from "../../styles/images/default-cover.png";
+import SideAction from '../../shared/components/postings/Actions/SideActions';
 const { Meta } = Card;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -116,9 +117,9 @@ class Courses extends Component {
     render() {
         const { lstCourses } = this.state;
         return <>
-            <div>
+            <div className="group-page">
                 <Title className="f-18 text-primary semibold">Courses</Title>
-                <div className="custom-card">
+                {/* <div className="custom-card">
                     <Card className="p-12 custom-fields">
                         <Row gutter={16} align="middle">
                             <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
@@ -142,37 +143,37 @@ class Courses extends Component {
                             </Col>
                         </Row>
                     </Card>
-                </div>
+                </div> */}
                 <div className="custom-card">
-                        <div className="p-12 card-background">
-                            <Row gutter={16}>
+                    <div className="p-12 card-background xf">
+                        <Row gutter={16}>
                             {lstCourses.map((course, index) => {
-                                        return<Col xs={24} md={8} lg={6}>
-                                     <Card key={index}
-                                            className="card-item"
-                                            cover={<img alt="photography" src={course.Image?.[0] || defaultguser} />}
-                                            actions={[
-                                                <Link className="text-red card-item-button-red" onClick={() => this.deleteCourse(course)}>Delete</Link>
-                                            ]}
-                                        >
-                                            <Meta
-                                                title={<a className="post-title" onClick={() => this.props.onCourseEdit(course.Id)}>{course.CourseName}</a>}
-                                                description={
-                                                    <div className="addon-info">
-                                                        {course.Members && <span className="mr-8"><span className="grp-type-icon video-play" />{course.Members} Members</span>}
-                                                        {course.Date && <div>Date: <span>{moment(course.Date).format('ll')}</span></div>}
-                                                    </div>} />
-                                        </Card>
-                                        </Col>
-                                    })
-                                    }
-                                {
-                                    lstCourses.length == 0 &&
-                                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>
+                                return <Col xs={24} md={8} lg={4}>
+                                    <Card key={index}
+                                        className="card-item"
+                                        cover={<img alt="photography" src={course.Image?.[0] || defaultguser} />}
+                                        actions={[
+                                            <Link className="text-red card-item-button-red" onClick={() => this.deleteCourse(course)}>Delete</Link>
+                                        ]}
+                                    >
+                                        <Meta
+                                            title={<a className="post-title" onClick={() => this.props.onCourseEdit(course.Id)}>{course.CourseName}</a>}
+                                            description={
+                                                <div className="addon-info">
+                                                    {course.Members && <span className="mr-8 f-14">{course.Members} Members</span>}
+                                                    {course.Date && <div className="f-14 text-primary my-4">{moment(course.Date).format('ll')}</div>}
+                                                </div>} />
+                                    </Card>
+                                </Col>
+                            })
+                            }
+                            {
+                                lstCourses.length == 0 &&
+                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>
 
-                                }
-                            </Row>
-                        </div>
+                            }
+                        </Row>
+                    </div>
                 </div>
             </div>
 

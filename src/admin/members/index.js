@@ -107,7 +107,7 @@ const Members = ({ profile }) => {
     }
     return <>
         <Title className="f-18 text-primary semibold">Members</Title>
-        <div className="custom-card">
+        {/* <div className="custom-card">
             <Card className="p-12 custom-fields">
                 <Row gutter={16} align="middle">
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
@@ -135,7 +135,7 @@ const Members = ({ profile }) => {
                     </Col>
                 </Row>
             </Card>
-        </div>
+        </div> */}
         <div className="custom-card">
             <Card className="px-12 pt-12" extra={<div>
                 {/* <Tooltip placement="top" title="Block">

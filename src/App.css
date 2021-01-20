@@ -501,13 +501,17 @@
 }
 .item-close {
   position: absolute;
+  width: 32px;
+  height: 32px;
   background: var(--white);
   box-shadow: var(--boxshadow);
-  top: 12px;
-  right: 12px;
-  border-radius: 8px;
+  top: 10px;
+  right: 10px;
+  border-radius: 16px;
   z-index: 9;
   opacity: 0;
+  text-align: center;
+  line-height: 30px;
 }
 .upload-preview:hover .item-close {
   opacity: 1;
@@ -520,7 +524,7 @@
   align-items: center;
 }
 .close-icon,
-.anticon.anticon-delete {
+.anticon.anticon-delete, .error-icons {
   width: 30px;
   height: 30px;
   vertical-align: middle;
@@ -580,6 +584,9 @@
 .icon.repost-icon{
   background-position: -194px -397px;
 }
+.error-icons{width: 72px; height: 72px; cursor: default;}
+.error-icons.success{background-position: -91px -567px;}
+.error-icons.failed{background-position: -4px -567px;}
 .repost-arrow{
   width: 18px !important; height: 16px !important;
 }
@@ -1496,6 +1503,7 @@
 .group-member .ant-avatar {
   width: 40px;
   height: 40px;
+  line-height: 36px;
 }
 .ant-upload.ant-upload-drag .ant-upload {
   padding: 24px 0 !important;
@@ -2026,6 +2034,7 @@ textarea {
 .card-background{background: #ffff;border-radius: 0.8rem;padding: 12px;}
 /* .course-card .ant-card{border-radius: 0 !important;} */
 .progres-bar .ant-progress-text{font-size: 12px;margin-left: 3px;}
+.lms-video{background: var(--white); border-radius: 0.8rem;}
 .lms-video video{width: 100%;height: 100%;border-radius: 0.8rem;display: block;}
 .grp-type-icon.video-play{background-position:-240px -396px;}
 .grp-type-icon.lessons{background-position:-260px -397px;}
@@ -2035,10 +2044,10 @@ textarea {
 .icon.play-icon{background-position:-619px -226px;}
 .icon.play-inprogress{background-position:-647px -226px;}
 .invite-card .ant-btn:hover{color: var(--white) !important ;}
-.card-height{height: 384px;}
+/* .card-height{height: 384px;} */
 .flot-left .ant-collapse-extra{float: left !important;}
 .panel-subtext{font-size: 12px;color: rgba(0, 0, 0, 0.45);}
-.height-scroll{height: 447px;overflow: auto;}
+.height-scroll{min-height: calc(100vh - 150px); overflow: auto;}
 .button-hover:hover{background: rgba(0, 0, 0, 0.05);}
 .lms-video video:focus{outline: none;}
 .noti-dropdown .notifications{border: 0 !important;}

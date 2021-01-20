@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
@@ -17,7 +17,6 @@ const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
 const { TextArea } = Input;
-const { RangePicker } = DatePicker;
 const uploadButton = (
     <div>
         <PlusOutlined />
@@ -54,12 +53,16 @@ const AdminCourses = ({ profile }) => {
         "VideoName": "",
         "VideoUrl": [],
         "Duration": "00:00:00",
-        "Size": ""
+        "Size": "",
+        "Hours": "00",
+        "Min": "00",
+        "Sec": "00",
     }
     const sectionObj = {
         "SectionId": uuidv4(),
         "SectionName": "",
         "IsSaved": false,
+        "IsShowForm": false,
         "Topics": [
         ]
     }
@@ -71,6 +74,9 @@ const AdminCourses = ({ profile }) => {
         "Description": "",
         "Type": "Course",
         "Author": [],
+        "CourseType": "Content",
+        "Date": "",
+        "Link": "",
         "CreatedDate": "",
         "CategoryType": "LMS",
         "CourseVideo": [],
@@ -90,6 +96,12 @@ const AdminCourses = ({ profile }) => {
         "CourseSections": [
         ]
     }
+    let postObject = {
+        "GroupId": "",
+        "IsPublish": true,
+        "Posts": [
+        ]
+    };
     let formRef = useRef();
     const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
     const [CategoriesLu, setCategoriesLu] = useState([]);
@@ -112,14 +124,24 @@ const AdminCourses = ({ profile }) => {
     const [fileImgUploading, setFileImgUploading] = useState(false);
     const [fileVideoUploading, setFileVideoUploading] = useState(false);
     const [CoursesObj, setCoursesObj] = useState("");
+    const [counts, setCounts] = useState({ CoursesCouunt: 0, MembersCount: 0 });
     useEffect(() => {
         fetchBranches();
-        fetchAuthors()
+        fetchAuthors();
+        fetchCountsCour();
     }, []);
     const fetchBranches = async () => {
         const branchResponse = await getCollegeBranches();
         if (branchResponse.ok) {
             setCategoriesLu(branchResponse.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+        }
+    }
+    const fetchCountsCour = async () => {
+        const branchResponse = await getCoursesRelCount(profile?.Id);
+        if (branchResponse.ok) {
+            setCounts({ ...branchResponse.data[0] });
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
@@ -170,6 +192,7 @@ const AdminCourses = ({ profile }) => {
             const result = await sectionDeletion(topicObj, courseObject.GroupId, item.SectionId);
             if (result.ok) {
                 notify({ message: "Section", description: "Section deleted successfully" });
+                refreshCourseDetails();
             }
             else {
                 notify({ message: "Error", type: "error", description: "Something went wrong :)" });
@@ -177,13 +200,15 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const handleVidoTimeChange = (prop, val) => {
-        videoTimeObj[prop] = val.currentTarget ? val.currentTarget.value : val;
-        videoTimeObj[prop] = videoTimeObj[prop].length == 1 ? ("0" + videoTimeObj[prop]) : videoTimeObj[prop];
+        let dupTopicObj = { ...topicObj }
+        videoTimeObj[prop] = val;
+        dupTopicObj[prop] = String(val ? val : "0").length == 1 ? ("0" + String(val ? val : "0")) : String(val ? val : "0");
         setVideoTimeObj({ ...videoTimeObj }, () => {
 
         })
-        topicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
-        setTopicObj({ ...topicObj });
+        dupTopicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
+        setTopicObj({ ...dupTopicObj });
+        val = dupTopicObj[prop];
     }
     const refreshCourseDetails = async () => {
         const branchResponse = await getCourse(courseObject.GroupId);
@@ -208,12 +233,12 @@ const AdminCourses = ({ profile }) => {
         setShowForm(true);
     }
     const topicSave = async () => {
-        if (topicObj.ThumbNails?.length == 0) {
-            setIsError(true);
-            setErrorMessage("Feature image required");
-            formRef.current.scrollTop = 0;
-            return;
-        }
+        // if (topicObj.ThumbNails?.length == 0) {
+        //     setIsError(true);
+        //     setErrorMessage("Feature image required");
+        //     formRef.current.scrollTop = 0;
+        //     return;
+        // }
         if (topicObj.VideoUrl?.length == 0) {
             setIsError(true);
             setErrorMessage("Video source/video required");
@@ -251,12 +276,19 @@ const AdminCourses = ({ profile }) => {
     }
     const coursSave = async () => {
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
+        courseObject.CourseSections = courseObject.CourseSections.filter(item => item.SectionName);
+        courseObject.CourseSections = courseObject.CourseType == "Live" ? [] : courseObject.CourseSections;
+        if (courseObject.CourseType == "Content") {
+            courseObject.Date = "";
+            courseObject.Link = "";
+        }
         const result = await saveCourse(courseObject);
         if (result.ok) {
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
-            setShowForm({ ...false })
+            setShowForm(false)
             CoursesObj.refresh();
+            fetchCountsCour();
             form.resetFields();
         }
         else {
@@ -264,6 +296,53 @@ const AdminCourses = ({ profile }) => {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
 
+    }
+    const coursePublish = async () => {
+        postObject.GroupId = courseObject.GroupId;
+        postObject.IsPublish = true;
+        courseObject.Categories.forEach(item => {
+            let Obj = {
+                "PostId": uuidv4(),
+                "CourseId": courseObject.GroupId,
+                "Type": "Video",
+                "Message": courseObject.Description,
+                "Title": courseObject.GroupName,
+                "IsAnonymous": false,
+                "CategoryType": "LMS",
+                "PostType": "Course",
+                "ImageUrl": courseObject.CourseVideo,
+                "CreatedDate": new Date(),
+                "UserDetails": {
+                    "UserId": profile?.Id,
+                    "Firstname": profile?.FirstName,
+                    "Lastname": profile?.LastName,
+                    "Image": profile?.ProfilePic,
+                    "Email": profile?.Email
+                },
+                "Tags": [],
+                "Likes": [],
+                "Comments": [],
+                "Group": {
+                    "GroupId": null,
+                    "GroupName": null,
+                    "GroupImage": null
+                },
+                "Shares": [],
+                "dupType": "Video"
+            };
+
+            postObject.Posts.push({ ...Obj })
+        })
+        const result = await publishCourse(postObject);
+        if (result.ok) {
+            notify({ message: "Publish", description: "Course published successfully" });
+            setShowForm(false)
+            form.resetFields();
+        }
+        else {
+            window.scrollTo(0, 0);
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
     }
     const getTopicsTime = (items) => {
         let time = "00:00:00";
@@ -293,7 +372,7 @@ const AdminCourses = ({ profile }) => {
     const handleChange = (prop, val, popup) => {
         if (!popup) {
             if (prop != "Categories" && prop != "Author") {
-                courseObject[prop] = val.currentTarget ? val.currentTarget.value : val;
+                courseObject[prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
             }
             else {
                 courseObject[prop] = [];
@@ -339,9 +418,12 @@ const AdminCourses = ({ profile }) => {
             secObj.IsSaved = true;
             courseObject.CourseSections.forEach(item => {
                 if (item.SectionId == secObj.SectionId) {
-                    item = secObj;
+                    item = { ...secObj };
                 }
             });
+
+            secObj.IsSaved = false;
+            setSecObj({ ...secObj })
             setCourseObject({ ...courseObject });
             notify({ message: "Section", description: "Section saved successfully" });
         }
@@ -350,36 +432,41 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const addSection = () => {
+        setSecObj({ ...sectionObj })
         if (courseObject.CreatedDate) {
-            courseObject.CourseSections.push(secObj);
+            secObj.IsShowForm = true;
+            courseObject.CourseSections.push({ ...secObj });
             setCourseObject({ ...courseObject });
         }
         else {
             notify({ message: "Error", type: "error", description: "Please save course" });
         }
     }
-    const deleteImage = () => {
-        topicObj.ThumbNails = [];
-        topicObj.DupThumbNails = [];
-        setTopicObj({ ...topicObj })
-    }
+    // const deleteImage = () => {
+    //     topicObj.ThumbNails = [];
+    //     topicObj.DupThumbNails = [];
+    //     setTopicObj({ ...topicObj })
+    // }
 
-    const onChange = (info) => {
-        const { status } = info.file;
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-            topicObj.ThumbNails = info.fileList[0].response;
-            topicObj.DupThumbNails = info.fileList;
-            setTopicObj({ ...topicObj });
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    }
+    // const onChange = (info) => {
+    //     const { status } = info.file;
+    //     if (status === 'done') {
+    //         message.success(`${info.file.name} file uploaded successfully.`);
+    //         topicObj.ThumbNails = info.fileList[0].response;
+    //         topicObj.DupThumbNails = info.fileList;
+    //         setTopicObj({ ...topicObj });
+    //     } else if (status === 'error') {
+    //         message.error(`${info.file.name} file upload failed.`);
+    //     }
+    // }
     const showModal = (type, topic, sectionId) => {
         let topicObjForsave = type == "Edit" ? { ...topic } : { ...obj }
         setSecId(sectionId);
         if (type == 'Edit') {
-            setTopicObj(topicObjForsave)
+            topicObjForsave.Hours = topic.Duration.split(":")?.[0]
+            topicObjForsave.Min = topic.Duration.split(":")?.[1]
+            topicObjForsave.Sec = topic.Duration.split(":")?.[2]
+            setTopicObj({ ...topicObjForsave })
             setTopicEdit(true);
         }
         else {
@@ -406,11 +493,11 @@ const AdminCourses = ({ profile }) => {
     const { Dragger } = Upload;
     return (<>
         <Row gutter={12} className="mb-12">
-            <Col span={4}>
+            <Col span={6}>
                 <Card className="admin-kpi-card">
                     <Statistic
                         title="Members"
-                        value={600}
+                        value={counts.MembersCount}
                         valueStyle={{ color: 'var(--textprimary)' }}
                         prefix={<ArrowUpOutlined />}
                     />
@@ -426,11 +513,11 @@ const AdminCourses = ({ profile }) => {
                     />
                 </Card>
             </Col> */}
-            <Col span={4}>
+            <Col span={6}>
                 <Card className="admin-kpi-card">
                     <Statistic
                         title="Courses"
-                        value={21}
+                        value={counts.CoursesCouunt}
                         valueStyle={{ color: 'var(--textprimary)' }}
                         prefix={<ArrowUpOutlined />}
                     />
@@ -446,7 +533,7 @@ const AdminCourses = ({ profile }) => {
                     />
                 </Card>
             </Col> */}
-            <Col span={4}>
+            {/* <Col span={4}>
                 <Card className="admin-kpi-card">
                     <Statistic
                         title="Shares"
@@ -465,11 +552,11 @@ const AdminCourses = ({ profile }) => {
                         prefix={<ArrowUpOutlined />}
                     />
                 </Card>
-            </Col>
+            </Col> */}
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                <div className="custom-card mb-16">
+                {!showForm && <div className="custom-card mb-16">
                     <Card className="start-course">
                         <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
@@ -482,6 +569,7 @@ const AdminCourses = ({ profile }) => {
                         </Row>
                     </Card>
                 </div>
+                }
                 {showForm && <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
@@ -502,7 +590,7 @@ const AdminCourses = ({ profile }) => {
                                         <div className="custom-fields">
                                             <label className="text-secondary d-block mb-4">Course Description</label>
                                             <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]}>
-                                                <TextArea onResize onChange={(value) => handleChange('Description', value)}
+                                                <TextArea placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }}
                                                 />
                                             </Form.Item>
@@ -536,6 +624,33 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Course Type</label>
+                                                <Form.Item name="CourseType" rules={[{ required: true, message: "Course Type required" }]}>
+                                                    <Select
+                                                        defaultValue="Choose Type" placeholder="Choose Type" className="text-left"
+                                                        onChange={(value) => handleChange('CourseType', value)}
+                                                    >
+                                                        <Option value="">Choose Type</Option>
+                                                        <Option value="Live">Live</Option>
+                                                        <Option value="Content">Content</Option>
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            {courseObject.CourseType == "Live" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Course Type</label>
+                                                <Form.Item name="Date" rules={[{ required: true, message: "Date required" }]} onChange={(value) => handleChange('Date', value)}>
+                                                    <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" />
+                                                </Form.Item>
+                                            </Col>
+                                            }
+                                            {courseObject.CourseType == "Live" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Link</label>
+                                                <Form.Item name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                    <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
+                                                </Form.Item>
+                                            </Col>
+                                            }
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <div className="text-secondary">Course Image</div>
                                                 <div className="mb-12">
@@ -643,59 +758,64 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                     </div>
                                     <div className="create-course mt-16">
-                                        <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>
-                                        {courseObject.CourseSections?.map((item, index) => {
-                                            return <div> <div className="lecture-collapse mb-16" key={index}>
-                                                <Collapse
-                                                    className="mb-16"
-                                                    expandIconPosition="right"
-                                                >
-                                                    <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">{getTopicsTime(item.Topics)}</div>}>
-                                                        {item.Topics?.map((topic, index) => {
-                                                            return <Collapse
-                                                                className="mb-8"
-                                                                expandIconPosition="right"
-                                                                key={index}
-                                                            >
-                                                                <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
-                                                                    <div className="d-flex">
-                                                                        <video width="280"><source src={topic.VideoUrl} /></video>
-                                                                        <div className="ml-16">
-                                                                            <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
-                                                                            <p className="f-14 text-secondary mb-8">{topic.Description}</p>
-                                                                            <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? topic.Size : "NA"}</p>
-                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
+                                        {courseObject.CourseType == "Content" && <div>
+                                            <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>
+                                            {courseObject.CourseSections?.map((item, index) => {
+                                                return <div> <div className="lecture-collapse mb-16" key={index}>
+                                                    <Collapse
+                                                        className="mb-16"
+                                                        expandIconPosition="right"
+                                                    >
+                                                        <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">{getTopicsTime(item.Topics)}</div>}>
+                                                            {item.Topics?.map((topic, index) => {
+                                                                return <Collapse
+                                                                    className="mb-8"
+                                                                    expandIconPosition="right"
+                                                                    key={index}
+                                                                >
+                                                                    <Panel header={<>{topicTitle} {topic.VideoName}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.Duration}</div>}>
+                                                                        <div className="d-flex">
+                                                                            {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
+                                                                            {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                            {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                            <div className="ml-16">
+                                                                                <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
+                                                                                <p className="f-14 text-secondary mb-8">{topic.Description}</p>
+                                                                                <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? topic.Size : "NA"}</p>
+                                                                                <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </Panel>
-                                                            </Collapse>
-                                                        })
-                                                        }
+                                                                    </Panel>
+                                                                </Collapse>
+                                                            })
+                                                            }
 
-                                                        <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
-                                                    </Panel>
-                                                </Collapse>
-                                                <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>
-                                            </div>
-                                                <div className="lecture-collapse mb-16">
-                                                    <div className="custom-fields entr-course-title p-12 mb-12">
-                                                        <Form id="secForm" initialValues={item} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
-                                                            <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
-                                                            </Form.Item>
-                                                            <div className="text-right">
-                                                                <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                                <Button type="default" className="addContent px-16" size="small">Cancel</Button>
-                                                            </div>
-                                                        </Form>
-                                                    </div>
-                                                    <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
+                                                            <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                                        </Panel>
+                                                    </Collapse>
+                                                    <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>
                                                 </div>
-                                            </div>
-                                        })}
+                                                    <div className="lecture-collapse mb-16">
+                                                        <div className="custom-fields entr-course-title p-12 mb-12">
+                                                            {item.IsShowForm && < Form id="secForm" initialValues={courseObject.CourseSections[index]} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
+                                                                <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
+                                                                    {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
+                                                                </Form.Item>
+                                                                <div className="text-right">
+                                                                    <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
+                                                                    <Button type="default" className="addContent px-16" size="small">Cancel</Button>
+                                                                </div>
+                                                            </Form>
+                                                            }
+                                                        </div>
+                                                        <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>
+                                                    </div>
+                                                </div>
+                                            })}
+                                        </div>}
                                         <div className="text-right">
                                             <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
-                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Publish</Button>}
+                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
                                             <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
                                         </div>
                                     </div>
@@ -730,7 +850,7 @@ const AdminCourses = ({ profile }) => {
                                     />
                                 </Form.Item>
                             </div>
-                            <div className="mb-8">
+                            {/* <div className="mb-8">
                                 <label className="text-secondary d-block mb-4">Feature Image</label>
                                 <Upload
                                     action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
@@ -743,7 +863,7 @@ const AdminCourses = ({ profile }) => {
                                 >
                                     {topicObj?.ThumbNails?.length >= 1 ? null : uploadButton}
                                 </Upload>
-                            </div>
+                            </div> */}
                             <div className="custom-fields">
                                 <label className="text-secondary d-block mb-4">Video Source</label>
                                 <Form.Item name="VideoSource">
@@ -804,20 +924,20 @@ const AdminCourses = ({ profile }) => {
                                 <label className="text-secondary d-block mb-4">Video Playback Time</label>
                                 <Input.Group compact>
                                     <div className="videoplybacktime">
-                                        <Form.Item  >
-                                            <InputNumber min={0} max={10} defaultValue={0} onChange={(value) => handleVidoTimeChange('Hours', value)} />
+                                        <Form.Item>
+                                            <InputNumber min={"00"} max={10} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Hours', value)} value={topicObj.Hours} />
                                             <em className="text-secondary d-block f-12 mt-4">HH</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
                                         <Form.Item >
-                                            <InputNumber min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Min', value)} />
+                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Min', value)} value={topicObj.Min} />
                                             <em className="text-secondary d-block f-12 mt-4">MM</em>
                                         </Form.Item>
                                     </div>
                                     <div className="videoplybacktime">
                                         <Form.Item>
-                                            <InputNumber min={0} max={59} defaultValue={0} onChange={(value) => handleVidoTimeChange('Sec', value)} />
+                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Sec', value)} value={topicObj.Sec} />
                                             <em className="text-secondary d-block f-12 mt-4">SS</em>
                                         </Form.Item>
                                     </div>
@@ -827,7 +947,7 @@ const AdminCourses = ({ profile }) => {
                     </Form>
                 </Modal>
 
-                <Courses onCourseEdit={(id) => onCourseEditObj(id)} onRef={courses => setCoursesObj(courses)} />
+                {!showForm && <Courses onCourseEdit={(id) => onCourseEditObj(id)} onRef={courses => setCoursesObj(courses)} />}
 
 
             </Col>
