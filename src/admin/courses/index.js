@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
@@ -97,7 +97,9 @@ const AdminCourses = ({ profile }) => {
         "Invitations": [],
         "IsPublish": false,
         "CourseSections": [
-        ]
+        ],
+        "Tests": [],
+        "Documents": []
     }
     const docsObj = {
         courseId: uuidv4(),
@@ -321,6 +323,14 @@ const AdminCourses = ({ profile }) => {
     const coursSave = async () => {
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
         courseObject.CourseSections = courseObject.CourseSections.filter(item => item.SectionName);
+        courseObject.Documents.forEach(item => {
+            let Obj = {
+                "TestId": uuidv4(),
+                "Title": item.title,
+                "Documents": item.url,
+            }
+            courseObject.Tests.push({ ...Obj });
+        })
         courseObject.CourseSections = courseObject.CourseType == "Live" ? [] : courseObject.CourseSections;
         if (courseObject.CourseType == "Content") {
             courseObject.Date = "";
@@ -516,7 +526,24 @@ const AdminCourses = ({ profile }) => {
         setTopicObj({ ...obj })
         setIsModalVisible(false);
     };
-
+    const submitFiles = async () => {
+        courseObject.Tests = [];
+        courseObject.Documents.forEach(item => {
+            let Obj = {
+                "TestId": uuidv4(),
+                "Title": item.title,
+                "Documents": item.url,
+            }
+            courseObject.Tests.push({ ...Obj });
+        })
+        const result = await submitDocs({ CourseId: courseObject.GroupId, Tests: courseObject.Tests });
+        if (result.ok) {
+            notify({ message: "Test Documents", description: "Documents saved successfully" });
+        }
+        else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
+    }
     const next = () => {
         setCurrent(current + 1);
     };
@@ -525,6 +552,35 @@ const AdminCourses = ({ profile }) => {
         setCurrent(current - 1);
     };
     const { Dragger } = Upload;
+    const uploadProps = {
+        name: 'file',
+        multiple: false,
+        accept: ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
+        action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+        onChange(info) {
+            setFileUploading(true);
+            const { status } = info.file;
+            if (status === 'done') {
+                setFileUploading(false);
+                const avatar = info.file?.name
+                    ? info.file.name.substr(info.file.name.lastIndexOf(".") + 1)
+                    : "word";
+                let response = {
+                    title: info.file.name,
+                    avatar,
+                    url: info.file.response[0],
+                    fileSize: info.file.size,
+                };
+                courseObject.Documents = courseObject.Documents
+                    ? courseObject.Documents.concat(response)
+                    : [response];
+                setCourseObject({ ...courseObject });
+                message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
     return (<>
         <Row gutter={12} className="mb-12">
             <Col span={6}>
@@ -794,8 +850,9 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
-                                                <label className="text-secondary d-block mb-4">Add Text</label>
-                                                <Dragger className="upload mb-16">
+                                                <label className="text-secondary d-block mb-4">Add Test</label>
+                                                {fileUploading && <Loader className="loader-top-middle" />}
+                                                <Dragger showUploadList={false} className="upload mb-16" {...uploadProps}>
                                                     <span className="sharebox-icons docs-upload mb-16"></span>
                                                     <p className="ant-upload-text">
                                                         Upload your assignment files here</p>
@@ -806,37 +863,49 @@ const AdminCourses = ({ profile }) => {
                                                 </Dragger>
                                             </Col>
                                         </Row>
-                                        {topicObj.TopicType == "Document" &&
-                                            <div className="docs mb-16">
-                                                <List
-                                                    itemLayout="horizontal"
-                                                    dataSource={topicObj.lstDocuments}
-                                                    renderItem={(item, indx) => (
-                                                        <List.Item className="upload-preview">
-                                                            <List.Item.Meta
-                                                                avatar={[
-                                                                    <span className={`doc-icons ${item.avatar}`}></span>,
-                                                                ]}
-                                                                title={item.title}
-                                                                description={
-                                                                    <div className="file-size f-12">{item.fileSize}</div>
-                                                                }
-                                                            />
-                                                            <a
-                                                                class="item-close"
-                                                                onClick={() => {
-                                                                    topicObj.lstDocuments.splice(indx, 1);
-                                                                    setTopicObj({ ...topicObj })
-                                                                }}
-                                                            >
-                                                                <Tooltip title="Remove">
-                                                                    <span className="close-icon"></span>
-                                                                </Tooltip>
-                                                            </a>
-                                                        </List.Item>
-                                                    )}
-                                                />
-                                            </div>}
+                                        <Row gutter={16}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
+
+                                                <div className="docs mb-16 mt-16">
+                                                    <List
+                                                        itemLayout="horizontal"
+                                                        dataSource={courseObject.Documents}
+                                                        renderItem={(item, indx) => (
+                                                            <List.Item className="upload-preview">
+                                                                <List.Item.Meta
+                                                                    avatar={[
+                                                                        <span className={`doc-icons ${item.avatar}`}></span>,
+                                                                    ]}
+                                                                    title={item.title}
+                                                                    description={
+                                                                        <div className="file-size f-12">{item.fileSize}</div>
+                                                                    }
+                                                                />
+                                                                <a
+                                                                    class="item-close"
+                                                                    onClick={() => {
+                                                                        courseObject.Documents.splice(indx, 1);
+                                                                        setTopicObj({ ...courseObject })
+                                                                    }}
+                                                                >
+                                                                    <Tooltip title="Remove">
+                                                                        <span className="close-icon"></span>
+                                                                    </Tooltip>
+                                                                </a>
+                                                            </List.Item>
+                                                        )}
+                                                    />
+                                                </div>
+                                                {courseObject.CreatedDate && <div className="docs px-0">
+                                                    <div className="mt-12 text-center">
+                                                        <Button type="primary" key="console" onClick={() => submitFiles()}>
+                                                            Submit Files
+                      </Button>
+                                                    </div>
+                                                </div>
+                                                }
+                                            </Col>
+                                        </Row>
                                     </div>
                                     <div className="create-course mt-16">
                                         {courseObject.CourseType == "Content" && <div>

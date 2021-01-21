@@ -221,6 +221,9 @@ const getSystemGroups = (user_id) => {
 const setSystemAdmin = (user_id, category) => {
   return apiClient.get(ADMIN_API + `setAsAdmin/${user_id}/${category}`);
 }
+const submitDocs = (obj) => {
+  return apiClient.post(ADMIN_API + "saveTests", obj);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -284,5 +287,6 @@ export {
   setScholor,
   getCoursesRelCount,
   getSystemGroups,
-  setSystemAdmin
+  setSystemAdmin,
+  submitDocs
 };
