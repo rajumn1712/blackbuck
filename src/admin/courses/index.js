@@ -806,6 +806,37 @@ const AdminCourses = ({ profile }) => {
                                                 </Dragger>
                                             </Col>
                                         </Row>
+                                        {topicObj.TopicType == "Document" &&
+                                            <div className="docs mb-16">
+                                                <List
+                                                    itemLayout="horizontal"
+                                                    dataSource={topicObj.lstDocuments}
+                                                    renderItem={(item, indx) => (
+                                                        <List.Item className="upload-preview">
+                                                            <List.Item.Meta
+                                                                avatar={[
+                                                                    <span className={`doc-icons ${item.avatar}`}></span>,
+                                                                ]}
+                                                                title={item.title}
+                                                                description={
+                                                                    <div className="file-size f-12">{item.fileSize}</div>
+                                                                }
+                                                            />
+                                                            <a
+                                                                class="item-close"
+                                                                onClick={() => {
+                                                                    topicObj.lstDocuments.splice(indx, 1);
+                                                                    setTopicObj({ ...topicObj })
+                                                                }}
+                                                            >
+                                                                <Tooltip title="Remove">
+                                                                    <span className="close-icon"></span>
+                                                                </Tooltip>
+                                                            </a>
+                                                        </List.Item>
+                                                    )}
+                                                />
+                                            </div>}
                                     </div>
                                     <div className="create-course mt-16">
                                         {courseObject.CourseType == "Content" && <div>
