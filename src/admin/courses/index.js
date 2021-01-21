@@ -100,7 +100,7 @@ const AdminCourses = ({ profile }) => {
         ]
     }
     const docsObj = {
-        courseId: courseObject.GroupId,
+        courseId: uuidv4(),
         Tests: [],
     }
     const TestObj = {
