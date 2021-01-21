@@ -99,7 +99,8 @@ const AdminCourses = ({ profile }) => {
         "CourseSections": [
         ],
         "Tests": [],
-        "Documents": []
+        "Documents": [],
+        "UrlType":[]
     }
     const docsObj = {
         courseId: uuidv4(),
@@ -321,6 +322,7 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const coursSave = async () => {
+        courseObject.Tests=[];
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
         courseObject.CourseSections = courseObject.CourseSections.filter(item => item.SectionName);
         courseObject.Documents.forEach(item => {
