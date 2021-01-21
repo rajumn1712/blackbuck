@@ -38,6 +38,9 @@ const fetchLMSComments = (user_id, take, skip) => {
     LMS_REMOTE + `getComments/${user_id}/${take || 10}/${skip}`
   );
 };
+const saveCourseTopic = (obj)=>{
+ return apiClient.post(LMS_REMOTE + 'saveCourseTopicViews',obj)
+}
 export {
   fetchUserCourses,
   fetchCourseSuggestions,
@@ -47,4 +50,5 @@ export {
   submitTests,
   saveLMSComment,
   fetchLMSComments,
+  saveCourseTopic
 };

@@ -95,7 +95,7 @@ class Comments extends Component {
                 {(comments.length > 0) && <> <List
                     className="comment-list"
                     dataSource={comments}
-                    header={`${count} ${count > 1 ? 'Comments' : 'Comment'}`}
+                    header={!this.props.isLMSComment ? `${count} ${count > 1 ? 'Comments' : 'Comment'}` : ''}
                     itemLayout="horizontal"
                 renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={<><Moment fromNow>{item.CreatedDate}</Moment>{this.props.profile?.Id==item.UserId && <Dropdown placement="bottomRight" overlay={commentEdit} trigger={['click']}><a className="ant-dropdown-link"><span class="post-icons h-more-icon mr-0 ml-8 cursor-pointer"></span></a></Dropdown>}</>} avatar={<Avatar src={item.Image || defaultUser} />}>
                         {/* {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}

@@ -8,6 +8,8 @@ import { fetchUserTests, submitTests } from './api';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Comments from '../shared/components/postings/Comments/Comments';
+import Loader from '../common/loader';
+import notify from '../shared/components/notification';
 
 const { Title, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -36,7 +38,9 @@ class OverView extends Component {
   state = {
     courseDetails:this.props.courseDetails,
     tests:[],
-    object:{}
+    object:{},
+    fileUploading:false,
+    uploadSources:[]
 }
 componentDidMount(){
   this.loadUserTests();
@@ -47,6 +51,63 @@ componentDidMount(){
         this.setState({...this.state,tests:response.data.Tests});
     }
 }
+uploadProps = {
+  name: "file",
+  multiple: true,
+  action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+  onChange: (info) => {
+    this.setState({ ...this.state, fileUploading: true });
+    const { status } = info.file;
+    if (status !== "uploading") {
+    }
+    if (status === "done") {
+        const avatar = info.file?.name
+          ? info.file.name.substr(info.file.name.lastIndexOf(".") + 1)
+          : "word";
+        let response = {
+          title: info.file.name,
+          avatar,
+          url: info.file.response[0],
+          fileSize: info.file.size,
+        };
+        this.postObject.ImageUrl = this.postObject.ImageUrl
+          ? this.postObject.ImageUrl.concat(response)
+          : [response];
+        this.setState({
+          ...this.state,
+          uploadSources: this.state.uploadSources
+            ? this.state.uploadSources.concat(response)
+            : [response],
+        });
+
+      notify({
+        description: `${this.postObject.Type} uploaded successfully.`,
+        message: "Upload",
+      });
+      this.setState({ ...this.state, fileUploading: false });
+    } else if (status === "error") {
+      notify({
+        description: `${this.postObject.Type} upload failed.`,
+        type: "error",
+        message: "Upload",
+      });
+      this.setState({ ...this.state, fileUploading: false });
+    } else if (status == undefined) {
+      this.setState({ ...this.state, fileUploading: false });
+    }
+  },
+  beforeUpload: (file, list) => {
+    const fileMaxSize = 25 * 1000000;
+    if (file.size > fileMaxSize) {
+      notify({
+        message: "Upload",
+        description: `Document size does not exceed 25 MB`,
+        type: "warning",
+      });
+    }
+    return file.size <= fileMaxSize;
+  },
+};
 
 saveUserTestFiles = async ()=>{
   const response = await submitTests(this.state.courseDetails);
@@ -105,10 +166,10 @@ saveUserTestFiles = async ()=>{
                     </Card>
                 </div>}
             <div className="custom-card">
-              <Card title="Comments (5)">
+              <Card title="Comments">
                 <div className="px-12 post-card comment-show">
                 {<Comments
-            count={courseDetails.commentsCount || 0}
+            count={0}
             postId={this.props.courseid}
             object={this.state.object}
             isLMSComment={true}
@@ -153,7 +214,11 @@ saveUserTestFiles = async ()=>{
                       subTitle="Please check and modify the assignments before resubmitting."
                       extra={[<Button type="primary">Re - Upload</Button>]}
                     ></Result>}
-                  <Dragger className="upload mb-16">
+                  <Dragger className="upload mb-16"
+                  {...this.uploadProps}
+                  showUploadList={false}
+                  >
+                    {this.state.fileUploading && <Loader className="loader-top-middle" />}
                     <span className="sharebox-icons docs-upload mb-16"></span>
                     <p className="ant-upload-text">
                       Upload your assignment files here
