@@ -4,56 +4,58 @@ import defaultUser from "../styles/images/defaultuser.jpg";
 import TextArea from 'antd/lib/input/TextArea';
 import '../index.css';
 import '../App.css';
-import { fetchUserTests, submitTests } from './api';
+import { fetchUserTests, getCertifiedFlags, getCourseMembersList, submitTests } from './api';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Comments from '../shared/components/postings/Comments/Comments';
 import Loader from '../common/loader';
 import notify from '../shared/components/notification';
+import { uuidv4 } from '../utils';
+import { Link } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
 const { Dragger } = Upload;
 
-const columns = [
-  {
-    title: 'Title',
-    dataIndex: 'Title',
-  },
-  {
-    title: 'Document',
-    dataIndex: 'Documents',
-    render: text => <a>{text}</a>
-  },
-  {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-          <Space size="middle">
-              <a className="semibold" style={{ color: 'var(--red)' }}>Download</a>
-          </Space>
-      ),
-  },
-];
 class OverView extends Component {
   state = {
     courseDetails:this.props.courseDetails,
     tests:[],
     object:{},
     fileUploading:false,
-    uploadSources:[]
+    uploadSources:[],
+    TestsObj:[],
+    flagsData:{},
+    Members:{},
+    size:5,
+    page: 1,
+    showUpload:true
 }
 componentDidMount(){
-  this.loadUserTests();
+  this.getMembersList();
+  this.getCertified();
 }
-  loadUserTests = async ()=>{
-    const response = await fetchUserTests(this.props.courseid,this.props?.profile?.Id);
-    if(response.ok){
-        this.setState({...this.state,tests:response.data.Tests});
-    }
+getMembersList = async ()=>{
+  const response = await getCourseMembersList(this.props.courseid,this.state.page,this.state.size);
+  if(response.ok){
+    this.setState({...this.state,Members:response.data})
+  }
 }
+getCertified = async ()=>{
+  const response = await getCertifiedFlags(this.props.courseid,this.props.profile?.Id);
+  if(response.ok){
+    this.setState({...this.state,flagsData:response.data[0]})
+  }
+}
+//   loadUserTests = async ()=>{
+//     const response = await fetchUserTests(this.props.courseid,this.props?.profile?.Id);
+//     if(response.ok){
+//         this.setState({...this.state,tests:response.data.Tests});
+//     }
+// }
 uploadProps = {
   name: "file",
   multiple: true,
+  accept:".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
   action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
   onChange: (info) => {
     this.setState({ ...this.state, fileUploading: true });
@@ -70,24 +72,29 @@ uploadProps = {
           url: info.file.response[0],
           fileSize: info.file.size,
         };
-        this.postObject.ImageUrl = this.postObject.ImageUrl
-          ? this.postObject.ImageUrl.concat(response)
-          : [response];
+        let testObj = {
+          TestId:uuidv4(),
+          Title:info.file.name,
+          Documents:info.file.response[0]
+        }
         this.setState({
           ...this.state,
           uploadSources: this.state.uploadSources
             ? this.state.uploadSources.concat(response)
             : [response],
+            TestsObj: this.state.TestsObj
+            ? this.state.TestsObj.concat(testObj)
+            : [testObj]
         });
 
       notify({
-        description: `${this.postObject.Type} uploaded successfully.`,
+        description: `Documents uploaded successfully.`,
         message: "Upload",
       });
       this.setState({ ...this.state, fileUploading: false });
     } else if (status === "error") {
       notify({
-        description: `${this.postObject.Type} upload failed.`,
+        description: `Documents upload failed.`,
         type: "error",
         message: "Upload",
       });
@@ -109,15 +116,39 @@ uploadProps = {
   },
 };
 
-saveUserTestFiles = async ()=>{
-  const response = await submitTests(this.state.courseDetails);
-  if(response.ok){
+showMore = () => {
+  let { page } = this.state;
+      page += 1;
+  this.setState({ ...this.state, page },()=>{
+    this.getMembersList();
+  })
+}
 
+saveUserTestFiles = async ()=>{
+  const object ={
+    "Id":uuidv4(),
+  "CourseId": this.props.courseid,
+  "UserId": this.props.profile?.Id,
+  "Firstname": this.props.profile?.FirstName,
+  "Lastname": this.props.profile?.LastName,
+  "Image": this.props.profile?.ProfilePic,
+   "CreatedDate":new Date(),
+   "IsSubmitted":true,
+  "Tests": this.state.TestsObj
+  }
+  const response = await submitTests(object);
+  if(response.ok){
+    notify({
+      message:"Files Submit",
+      description:"Documents submitted successfully",
+      type:"success"
+    })
+    this.getCertified();
   }
 }
 
     render() {
-      const {courseDetails} = this.state;
+      const {courseDetails,flagsData,Members,size,showUpload} = this.state;
         return (
           <div>
             {/* <List
@@ -136,7 +167,9 @@ saveUserTestFiles = async ()=>{
             )}
           /> */}
             <div className="custom-card">
-              <Card>
+              <Card actions={(size > 4 && size < Members?.length) ? [
+                    <Button type="primary" onClick={() => this.showMore()}>See More</Button>
+                ] : []}>
                 <div className="p-12">
                   <Title level={4} className="semibold mb-4 text-primary">
                    {courseDetails.GroupName}
@@ -149,10 +182,25 @@ saveUserTestFiles = async ()=>{
                   <Title className="semibold mb-4 text-primary f-16">
                     Members List
                   </Title>
+                  {Members.length > 0 && <div className=" pb-16">
+                            <Avatar.Group
+                                maxCount={size-1}
+                                size="large"
+                                maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
+                            >
+                                {Members.map((user, index) => {
+                                    return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
+                                        <Link to={this.props?.profile.Id == user.UserId ? "/profile/IsProfileTab" : ("/profileview/" + user.UserId)}><Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
+                                        </Avatar></Link> 
+                                    </Tooltip>
+                                })}
+                            </Avatar.Group>
+                        </div>
+                        }
                 </div>
               </Card>
             </div>
-            {courseDetails.IsCertified && <div className="custom-card mb-8">
+            {flagsData.IsCertified && <div className="custom-card mb-8">
                     <Card className="start-course">
                         <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
@@ -174,28 +222,29 @@ saveUserTestFiles = async ()=>{
             object={this.state.object}
             isLMSComment={true}
           />}
-                  {/* <Comment
-                    avatar={<Avatar src={defaultUser} />}
-                    content={
-                      <Form.Item>
-                        <TextArea autoSize={{ minRows: 2, maxRows: 6 }} />
-                        <Button
-                          htmlType="submit"
-                          shape="circle"
-                          type="link"
-                          className="post-btn"
-                        >
-                          <span className="post-icons send-icon mr-0"></span>
-                        </Button>
-                      </Form.Item>
-                    }
-                  /> */}
                 </div>
               </Card>
             </div>
             <div className="custom-card">
-              <Card title="Take a Test">
-              <Table columns={columns} dataSource={this.state.tests} size="small" pagination={{ position: ["bottomCenter"] }} bordered={true} />
+              <Card title={flagsData.IsSubmitted ? '' : 'Take a Test'}>
+              <List
+              itemLayout="horizontal"
+              dataSource={courseDetails.Tests}
+              renderItem={(item, indx) => (
+                <List.Item className="upload-preview">
+                  <List.Item.Meta
+                    avatar={[
+                      <span className={`doc-icons ${item.avatar}`}></span>,
+                    ]}
+                    // avatar={item.avatar}
+                    title={item.title}
+                    description={
+                      <div className="file-size f-12">{item.fileSize}</div>
+                    }
+                  />
+                </List.Item>
+              )}
+            />
                 {/* <Result
                   icon={<img src={test} />}
                   title="Test documents are uploaded here"
@@ -203,18 +252,18 @@ saveUserTestFiles = async ()=>{
                   extra={<Button type="primary">Download Here</Button>}
                 /> */}
                 <div className="px-12 pb-12">
-                {courseDetails.IsUploaded && <Result
+               {flagsData.IsSubmitted && <Result
                       icon={<span className="error-icons success" />}
                       title="Successfully Uploaded"
                       subTitle="We sent your file's to the admin review, untill approve, please wait..."
                     />}
-                    {courseDetails.IsRejected && <Result
+                    {flagsData.IsRejected && <Result
                       icon={<span className="error-icons failed" />}
                       title="Submission Rejected"
                       subTitle="Please check and modify the assignments before resubmitting."
-                      extra={[<Button type="primary">Re - Upload</Button>]}
+                      extra={[<Button type="primary" onClick={()=>{this.setState({...this.state,showUpload:false})}}>Re - Upload</Button>]}
                     ></Result>}
-                  <Dragger className="upload mb-16"
+                  {(!flagsData.IsSubmitted || !showUpload) && <Dragger className="upload mb-16"
                   {...this.uploadProps}
                   showUploadList={false}
                   >
@@ -228,14 +277,46 @@ saveUserTestFiles = async ()=>{
                       from uploading company data or other band files (doc, PPT,
                       PDF, xls).
                     </p>
-                  </Dragger>
-                  <div className="docs px-0">
+                  </Dragger>}
+                  {(!flagsData.IsSubmitted || !showUpload) && <div className="docs px-0">
+                  <List
+              itemLayout="horizontal"
+              dataSource={this.state.uploadSources}
+              renderItem={(item, indx) => (
+                <List.Item className="upload-preview">
+                  <List.Item.Meta
+                    avatar={[
+                      <span className={`doc-icons ${item.avatar}`}></span>,
+                    ]}
+                    // avatar={item.avatar}
+                    title={item.title}
+                    description={
+                      <div className="file-size f-12">{item.fileSize}</div>
+                    }
+                  />
+                  <a
+                    class="item-close"
+                    onClick={() => {
+                      let { uploadSources,TestsObj } = this.state;
+                      TestsObj.splice(indx, 1);
+                      uploadSources.splice(indx, 1);
+                      this.setState({ ...this.state, uploadSources });
+                    }}
+                  >
+                    <Tooltip title="Remove">
+                      <span className="close-icon"></span>
+                    </Tooltip>
+                  </a>
+                </List.Item>
+              )}
+            />
                     <div className="mt-12 text-center">
-                      <Button type="primary" key="console">
+                      <Button type="primary" key="console" disabled={this.state.uploadSources.length==0}
+                      onClick={this.saveUserTestFiles}>
                         Submit Files
                       </Button>
                     </div>
-                  </div>
+                  </div>}
                   <div className="px-12 pb-12">
                     <Divider />
                     
