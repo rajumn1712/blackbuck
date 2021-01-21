@@ -224,6 +224,12 @@ const setSystemAdmin = (user_id, category) => {
 const submitDocs = (obj) => {
   return apiClient.post(ADMIN_API + "saveTests", obj);
 }
+const getSubmissions = (user_id) => {
+  return apiClient.get(ADMIN_API + `getSubmitTests/${user_id}`);
+}
+const certipyRejectDocument = (Id, type) => {
+  return apiClient.get(ADMIN_API + `CertifiedOrReject/${Id}/${type}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -288,5 +294,7 @@ export {
   getCoursesRelCount,
   getSystemGroups,
   setSystemAdmin,
-  submitDocs
+  submitDocs,
+  getSubmissions,
+  certipyRejectDocument
 };
