@@ -536,7 +536,7 @@ const AdminCourses = ({ profile }) => {
             }
             courseObject.Tests.push({ ...Obj });
         })
-        const result = await submitDocs({ CourseId: courseObject.GroupId, Tests: courseObject.Tests });
+        const result = await submitDocs({ CourseId: courseObject.GroupId, Tests: courseObject.Tests ,Documents:courseObject.Documents});
         if (result.ok) {
             notify({ message: "Test Documents", description: "Documents saved successfully" });
         }
