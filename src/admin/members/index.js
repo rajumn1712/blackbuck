@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Input, Row, Col, Button, Select, Table, Tooltip, Form } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import { getUsers, getUsersCount, setScholor } from '../../shared/api/apiServer';
+import { getUsers, getUsersCount, setScholor, getSystemGroups, setSystemAdmin, saveAdminUsers } from '../../shared/api/apiServer';
 import connectStateProps from '../../shared/stateConnect';
 import notify from '../../shared/components/notification';
 import Modal from 'antd/lib/modal/Modal';
@@ -32,12 +32,14 @@ const columns = [
 
 ];
 const Members = ({ profile }) => {
-    const obj = { Type: "", GroupName: "", GroupId: "", SystemType: "", Isroot: false }
+    const obj = { Type: "Group", GroupName: "", GroupId: "", SystemType: "Root", Isroot: false }
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);
     const [isModal, setIsModal] = useState(false);
     const [adminObj, setAdminObj] = useState({ ...obj });
+    const [groups, setGroups] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     useEffect(() => {
         getMembersCount();
         getMembers(1, 20);
@@ -53,6 +55,8 @@ const Members = ({ profile }) => {
 
     }
     const onPageChange = (page, pageSize) => {
+        setSelection([])
+        setSelectedRowKeys([]);
         getMembers(page, pageSize);
     }
     const getMembersCount = async () => {
@@ -72,8 +76,11 @@ const Members = ({ profile }) => {
         else {
             if (type == "scholor")
                 changeScholor();
-            else
+            else {
+                setAdminObj({ ...obj })
+                fetchGroupSuggestions();
                 setIsModal(true)
+            }
         }
     }
     const onRecordSelect = (record) => {
@@ -86,7 +93,7 @@ const Members = ({ profile }) => {
         setSelection(selection);
     }
     const changeScholor = () => {
-        setScholor(selection[0].Id).then((res) => {
+        setScholor(selection[0].UserId).then((res) => {
             if (res.ok) {
                 notify({
                     description: "Scholor updated successfully",
@@ -96,11 +103,54 @@ const Members = ({ profile }) => {
         });
     }
     const handleCancel = () => {
-        setIsModal(true)
+        setIsModal(false)
     }
-    const setAdmin = () => {
+    const setAdmin = async () => {
+        if (adminObj.Type == "Group") {
+            let saveAdminObj = {
+                GroupId: adminObj.GroupId,
+                AdminUsers: [{
+                    "UserId": selection[0]?.UserId,
+                    "Firstname": selection[0]?.FirstName,
+                    "Lastname": selection[0]?.LastName,
+                    "Image": selection[0]?.ProfilePic,
+                    "Email": selection[0]?.Email
+                }]
+            };
+            const groupAdminData = await saveAdminUsers(saveAdminObj);
+            if (groupAdminData.ok) {
+                setIsModal(false)
+                setSelection([])
+                setSelectedRowKeys([]);
+                notify({ message: "Group Admin", description: "Set as admin successfully" });
+            } else {
+                notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+            }
+        }
+        else {
+            const setAdminsData = await setSystemAdmin(selection[0]?.UserId, adminObj.SystemType);
+            if (setAdminsData.ok) {
+                setIsModal(false)
+                setSelection([])
+                setSelectedRowKeys([]);
+                notify({ message: "System", description: "Set as Admin successfully" });
+            } else {
+                notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+            }
+        }
 
     }
+    const fetchGroupSuggestions = async () => {
+        const groupsData = await getSystemGroups(selection[0]?.UserId);
+        if (groupsData.ok) {
+            setGroups(groupsData.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
+    }
+    const onSelectedRowKeysChange = selectedRowKeys => {
+        setSelectedRowKeys(selectedRowKeys);
+    };
     const handleChange = (prop, value) => {
         adminObj[prop] = value.currentTarget ? value.currentTarget.value : value;
         setAdminObj({ ...adminObj })
@@ -153,6 +203,8 @@ const Members = ({ profile }) => {
                     rowSelection={{
                         hideSelectAll: true,
                         onSelect: onRecordSelect,
+                        selectedRowKeys: selectedRowKeys,
+                        onChange: onSelectedRowKeysChange
                     }}
                     columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
             </Card>
@@ -161,24 +213,37 @@ const Members = ({ profile }) => {
             footer={<>
                 <Button type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
             </>}
-            className="addTopicPop"
+            destroyOnClose={true}
 
         >
-            <Form id="myForm" onFinishFailed={() => { }} onFinish={() => setAdmin()} initialValues={{ Type: "", GroupName: "", GroupId: "", SystemType: "", Isroot: false }}>
+            <Form id="myForm" onFinishFailed={() => { }} onFinish={() => setAdmin()} initialValues={{ Type: "Group", GroupName: "", GroupId: "", SystemType: "Root", Isroot: false }}>
                 <div>
                     <div className="custom-fields">
-                        <label className="text-secondary d-block mb-4">Type</label>
+                        <label className="text-secondary d-block mb-4">Choose Type</label>
                         <Form.Item name="Type" rules={[{ required: true, message: "Type  required" }]} >
-                            <Input onChange={(value) => handleChange('Type', value, true)} />
+                            <Select defaultValue="Group" placeholder="Choose Type" onChange={(value) => handleChange('Type', value, true)} >
+                                <Option value="Group">Group</Option>
+                                <Option value="System">System</Option>
+                            </Select>
                         </Form.Item>
                     </div>
                     {adminObj.Type === "System" && <div className="custom-fields">
-                        <label className="text-secondary d-block mb-4">Video Source</label>
-                        <Form.Item name="VideoSource">
-                            <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
-                                <Option value="Social">Social</Option>
+                        <label className="text-secondary d-block mb-4">System Type</label>
+                        <Form.Item name="SystemType">
+                            <Select defaultValue="Root" placeholder="Choose System Type" onChange={(value) => handleChange('SystemType', value, true)}>
+                                <Option value="Root">Root</Option>
                                 <Option value="LMS">LMS</Option>
                                 <Option value="Careers">Careers</Option>
+                            </Select>
+                        </Form.Item>
+                    </div>
+                    }
+                    {adminObj.Type === "Group" && <div className="custom-fields">
+                        <label className="text-secondary d-block mb-4">Group</label>
+                        <Form.Item name="GroupId" rules={[{ required: true, message: "Group  required" }]}>
+                            <Select defaultValue="Choose Group" placeholder="Choose Group" onChange={(val) => handleChange("GroupId", val)}>
+                                <Option value="">Choose Group</Option>
+                                {groups?.map((group) => <Option value={group?.id}>{group?.name}</Option>)}
                             </Select>
                         </Form.Item>
                     </div>

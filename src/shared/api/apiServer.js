@@ -215,6 +215,12 @@ const setScholor = (userId) => {
 const getCoursesRelCount = (user_id) => {
   return apiClient.get(ADMIN_API + `getCoursesCount/${user_id}`);
 }
+const getSystemGroups = (user_id) => {
+  return apiClient.get(ADMIN_API + `getSystemGroups/${user_id}`);
+}
+const setSystemAdmin = (user_id, category) => {
+  return apiClient.get(ADMIN_API + `setAsAdmin/${user_id}/${category}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -276,5 +282,7 @@ export {
   getGroups,
   courseDelete,
   setScholor,
-  getCoursesRelCount
+  getCoursesRelCount,
+  getSystemGroups,
+  setSystemAdmin
 };
