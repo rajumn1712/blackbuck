@@ -100,7 +100,7 @@ const AdminCourses = ({ profile }) => {
         ],
         "Tests": [],
         "Documents": [],
-        "UrlType":[]
+        "UrlType": []
     }
     const docsObj = {
         courseId: uuidv4(),
@@ -322,7 +322,7 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const coursSave = async () => {
-        courseObject.Tests=[];
+        courseObject.Tests = [];
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
         courseObject.CourseSections = courseObject.CourseSections.filter(item => item.SectionName);
         courseObject.Documents.forEach(item => {
@@ -330,6 +330,8 @@ const AdminCourses = ({ profile }) => {
                 "TestId": uuidv4(),
                 "Title": item.title,
                 "Documents": item.url,
+                "Avatar": item.avatar,
+                "Size": item.fileSize
             }
             courseObject.Tests.push({ ...Obj });
         })
@@ -535,10 +537,12 @@ const AdminCourses = ({ profile }) => {
                 "TestId": uuidv4(),
                 "Title": item.title,
                 "Documents": item.url,
+                "Avatar": item.avatar,
+                "Size": item.fileSize
             }
             courseObject.Tests.push({ ...Obj });
         })
-        const result = await submitDocs({ CourseId: courseObject.GroupId, Tests: courseObject.Tests ,Documents:courseObject.Documents});
+        const result = await submitDocs({ CourseId: courseObject.GroupId, Tests: courseObject.Tests, Documents: courseObject.Documents });
         if (result.ok) {
             notify({ message: "Test Documents", description: "Documents saved successfully" });
         }
