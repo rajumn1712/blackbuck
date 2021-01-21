@@ -24,7 +24,7 @@ class OverView extends Component {
     fileUploading:false,
     uploadSources:[],
     TestsObj:[],
-    flagsData:{},
+    flagsData:{"IsSubmitted":null,"IsCertified":null,"IsRejected":null},
     Members:{},
     size:5,
     page: 1,
@@ -43,7 +43,10 @@ getMembersList = async ()=>{
 getCertified = async ()=>{
   const response = await getCertifiedFlags(this.props.courseid,this.props.profile?.Id);
   if(response.ok){
-    this.setState({...this.state,flagsData:response.data[0]})
+    if(response.data.length > 0){
+      this.setState({...this.state,flagsData:response.data[0]})
+    }
+    
   }
 }
 //   loadUserTests = async ()=>{
@@ -227,24 +230,27 @@ saveUserTestFiles = async ()=>{
             </div>
             <div className="custom-card">
               <Card title={flagsData.IsSubmitted ? '' : 'Take a Test'}>
-              <List
+                <div className="docs px-0">
+                <List
               itemLayout="horizontal"
               dataSource={courseDetails.Tests}
               renderItem={(item, indx) => (
                 <List.Item className="upload-preview">
                   <List.Item.Meta
                     avatar={[
-                      <span className={`doc-icons ${item.avatar}`}></span>,
+                      <span className={`doc-icons ${item.Avatar}`}></span>,
                     ]}
                     // avatar={item.avatar}
-                    title={item.title}
+                    title={<a href={item.Documents}>{item.Title}</a>}
                     description={
-                      <div className="file-size f-12">{item.fileSize}</div>
+                      <div className="file-size f-12">{item.Size}</div>
                     }
                   />
                 </List.Item>
               )}
             />
+                </div>
+              
                 {/* <Result
                   icon={<img src={test} />}
                   title="Test documents are uploaded here"

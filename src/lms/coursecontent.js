@@ -4,7 +4,7 @@ import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
 import OverView from "./overview";
-import { fetchCourseDetails, saveCourseTopic } from "./api";
+import { fetchCourseDetails, getUserWatchedVideos, saveCourseTopic } from "./api";
 import { connect } from "react-redux";
 const { Panel } = Collapse;
 class CourseContent extends Component {
@@ -12,9 +12,11 @@ class CourseContent extends Component {
     courseDetails: {},
     loading: true,
     selectedVideo: null,
+    watchedVideos:[]
   };
   componentDidMount() {
     this.loadCourseDetails();
+    this.getUserWatchedVideos();
   }
   loadCourseDetails = async () => {
     const response = await fetchCourseDetails(this.props.match.params.id);
@@ -26,6 +28,12 @@ class CourseContent extends Component {
       });
     }
   };
+  getUserWatchedVideos = async ()=>{
+      const response = await getUserWatchedVideos(this.props.match.params.id,this.props.profile?.Id)
+      if(response.ok){
+          this.setState({...this.state,watchedVideos:response.data})
+      }
+  }
   setVideoSource = async (section, item) => {
     const object = {
       CourseId: this.props.match.params.id,
@@ -37,12 +45,24 @@ class CourseContent extends Component {
     const saveResponse = await saveCourseTopic(object);
     if (saveResponse.ok) {
       this.setState({ ...this.state, selectedVideo: item.VideoUrl[0] }, () => {
-        this.loadCourseDetails()
+        this.getUserWatchedVideos()
         document.querySelector("video").play()
       }
       );
     }
   };
+
+  comaprevalues = (section,item)=>{
+      let {watchedVideos} = this.state;
+      for(const i in watchedVideos){
+          if(watchedVideos[i].SectionId === section.SectionId && watchedVideos[i].TopicId === item.TopicId){
+              console.log(true);
+          }else{
+              console.log(false)
+          }
+      }
+  }
+  
   render() {
     return (
       <div className="post-preview-box course-card">

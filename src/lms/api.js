@@ -47,6 +47,9 @@ const getCourseMembersList = (course_id,pageNo,pageSize)=>{
 const getCertifiedFlags = (course_id,user_id)=>{
   return apiClient.get(LMS_REMOTE + `getAdminCertified/${course_id}/${user_id}`)
 }
+const getUserWatchedVideos = (course_id,user_id)=>{
+  return apiClient.get(LMS_REMOTE + `getUserWatchedVideos/${course_id}/${user_id}`)
+}
 export {
   fetchUserCourses,
   fetchCourseSuggestions,
@@ -58,5 +61,6 @@ export {
   fetchLMSComments,
   saveCourseTopic,
   getCourseMembersList,
-  getCertifiedFlags
+  getCertifiedFlags,
+  getUserWatchedVideos
 };
