@@ -45,9 +45,6 @@ class Admin extends Component {
                     </Menu> */}
                     <Menu mode="vertical" theme="light">
                         <SubMenu key="sub1" icon={<span className="left-menu social-networking mr-12" />} title="Social Networking">
-                            <Menu.Item key="courses">
-                                <Link to="/admin/courses">Courses</Link>
-                            </Menu.Item>
                             <Menu.Item key="members">
                                 <Link to="/admin/members">Members</Link>
                             </Menu.Item>
@@ -56,6 +53,9 @@ class Admin extends Component {
                             </Menu.Item>
                         </SubMenu>
                         <SubMenu key="sub2" icon={<span className="left-menu lmsicon mr-12" />} title="LMS">
+                        <Menu.Item key="courses">
+                                <Link to="/admin/courses">Courses</Link>
+                            </Menu.Item>
                             <Menu.Item key="assingments">
                                 <Link to="/admin/testsubmissions">Test Submissions</Link>
                             </Menu.Item>

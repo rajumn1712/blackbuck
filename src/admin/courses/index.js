@@ -99,6 +99,15 @@ const AdminCourses = ({ profile }) => {
         "CourseSections": [
         ]
     }
+    const docsObj = {
+        courseId: courseObject.GroupId,
+        Tests: [],
+    }
+    const TestObj = {
+        "TestId": uuidv4(),
+        "Title": "",
+        "Documents": ""
+    }
     let postObject = {
         "GroupId": "",
         "IsPublish": true,
