@@ -60,7 +60,8 @@ const TestSubmissions = ({ profile }) => {
   const getTestSubmissions = async (page, pageSize) => {
     const response = await getSubmissions(profile?.Id, pageSize, ((pageSize * page) - pageSize));
     if (response.ok) {
-      setData(response.data);
+      let data = response.data;
+      setData(data);
     }
 
   }
