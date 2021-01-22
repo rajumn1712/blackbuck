@@ -24,6 +24,7 @@ class CourseContent extends Component {
       this.setState({
         ...this.state,
         courseDetails: response.data[0],
+        selectedVideo:response.data[0].CourseVideo[0],
         loading: false,
       });
     }

@@ -149,6 +149,12 @@ saveUserTestFiles = async ()=>{
     this.getCertified();
   }
 }
+reUpload = ()=>{
+  let {flagsData} = this.state;
+  flagsData.IsRejected = false;
+  flagsData.IsSubmitted = false;
+  this.setState({...this.state,flagsData})
+}
 
     render() {
       const {courseDetails,flagsData,Members,size,showUpload} = this.state;
@@ -230,7 +236,7 @@ saveUserTestFiles = async ()=>{
             </div>
             <div className="custom-card">
               <Card title={flagsData.IsSubmitted ? '' : 'Take a Test'}>
-                <div className="docs px-0">
+                {!flagsData.IsSubmitted && <div className="docs px-0">
                 <List
               itemLayout="horizontal"
               dataSource={courseDetails.Tests}
@@ -249,7 +255,7 @@ saveUserTestFiles = async ()=>{
                 </List.Item>
               )}
             />
-                </div>
+                </div>}
               
                 {/* <Result
                   icon={<img src={test} />}
@@ -258,7 +264,7 @@ saveUserTestFiles = async ()=>{
                   extra={<Button type="primary">Download Here</Button>}
                 /> */}
                 <div className="px-12 pb-12">
-               {flagsData.IsSubmitted && <Result
+               {(flagsData.IsSubmitted&&!flagsData.IsRejected&&!flagsData.IsCertified) && <Result
                       icon={<span className="error-icons success" />}
                       title="Successfully Uploaded"
                       subTitle="We sent your file's to the admin review, untill approve, please wait..."
@@ -267,9 +273,9 @@ saveUserTestFiles = async ()=>{
                       icon={<span className="error-icons failed" />}
                       title="Submission Rejected"
                       subTitle="Please check and modify the assignments before resubmitting."
-                      extra={[<Button type="primary" onClick={()=>{this.setState({...this.state,showUpload:false})}}>Re - Upload</Button>]}
+                      extra={[<Button type="primary" onClick={this.reUpload}>Re - Upload</Button>]}
                     ></Result>}
-                  {(!flagsData.IsSubmitted || !showUpload) && <Dragger className="upload mb-16"
+                  {!flagsData.IsSubmitted && <Dragger className="upload mb-16"
                   {...this.uploadProps}
                   showUploadList={false}
                   >
