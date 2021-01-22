@@ -339,6 +339,7 @@ const AdminCourses = ({ profile }) => {
         if (courseObject.CourseType == "Content") {
             courseObject.Date = "";
             courseObject.Link = "";
+            courseObject.UrlType = "";
         }
         const result = await saveCourse(courseObject);
         if (result.ok) {
@@ -734,12 +735,26 @@ const AdminCourses = ({ profile }) => {
                                                 </Form.Item>
                                             </Col>
                                             {courseObject.CourseType == "Live" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4">Course Type</label>
+                                                <label className="text-secondary d-block mb-4">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" />
                                                 </Form.Item>
                                             </Col>
                                             }
+                                            {courseObject.CourseType == "Live" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4">Link Type</label>
+                                                <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
+                                                    <Select
+                                                        defaultValue="Choose Link Type" placeholder="Choose Link Type" className="text-left"
+                                                        onChange={(value) => handleChange('UrlType', value)}
+                                                    >
+                                                        <Option value="">Choose Link Type</Option>
+                                                        <Option value="Zoom">Zoom</Option>
+                                                        <Option value="GotoMeeting">GotoMeeting</Option>
+                                                        <Option value="Others">Others</Option>
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>}
                                             {courseObject.CourseType == "Live" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
