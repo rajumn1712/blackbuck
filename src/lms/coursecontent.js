@@ -82,7 +82,6 @@ class CourseContent extends Component {
           },
           () => {
             this.getUserWatchedVideos();
-            this.comparewatchedVideos(section, item);
             if (item.VideoSource === "Upload") {
               document.querySelector("video").play();
             }
@@ -98,14 +97,6 @@ class CourseContent extends Component {
         });
       }
     }
-  };
-
-  comparewatchedVideos = (section, item) => {
-    let { watchedVideos } = this.state;
-    const value = watchedVideos.filter(watchedvideo => {
-      return (section.SectionId === watchedvideo.SectionId && item.TopicId === watchedvideo.TopicId)
-    })
-    console.log(value)
   };
 
   render() {
@@ -136,8 +127,9 @@ class CourseContent extends Component {
                           key={this.state.selectedVideo}
                           src={this.state.selectedVideo
                             .split("watch?v=")
-                            .join("embed/")}
+                            .join("embed/")+'?autoplay=1'}
                           frameborder="0"
+                          allow='autoplay; encrypted-media'
                           allowfullscreen
                           X-Frame-Options={true}
                         ></iframe>
@@ -151,8 +143,9 @@ class CourseContent extends Component {
                           src={`https://player.vimeo.com/video/${this.state.selectedVideo.split("/")[
                             this.state.selectedVideo.split("/").length - 1
                             ]
-                            }`}
+                            }?autoplay=1`}
                           frameborder="0"
+                          allow='autoplay; encrypted-media'
                           allowfullscreen
                           X-Frame-Options={true}
                         ></iframe>
@@ -227,7 +220,7 @@ class CourseContent extends Component {
                               renderItem={(item, index) => (
                                 <List.Item
                                   extra={
-                                    <span
+                                    item.TopicType === 'Video' && <span
                                       className={`icon ${item.IsChecked ? 'playover-icon' : 'play-icon'}`}
                                       key={index}
                                     ></span>
