@@ -285,6 +285,7 @@ const AdminCourses = ({ profile }) => {
         }
         if (topicObj.TopicType == "Video") {
             topicObj.lstDocuments = [];
+            topicObj.VideoName = topicObj.Title;
         }
         else {
             topicObj.VideoUrl = [];
@@ -398,6 +399,7 @@ const AdminCourses = ({ profile }) => {
             notify({ message: "Publish", description: "Course published successfully" });
             setShowForm(false)
             form.resetFields();
+            setCourseObject({ ...courseObj });
         }
         else {
             window.scrollTo(0, 0);
@@ -458,7 +460,7 @@ const AdminCourses = ({ profile }) => {
             setCourseObject({ ...courseObject })
         }
         else {
-            topicObj[prop] = val.currentTarget ? val.currentTarget.value : val;
+            topicObj[prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
             setTopicObj({ ...topicObj })
         }
     }
@@ -481,11 +483,13 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const addSection = () => {
-        sectionObj.SectionId = uuidv4();
-        setSecObj({ ...sectionObj })
+        let secAddObj = { ...sectionObj }
+        secAddObj.SectionId = uuidv4();
+        secAddObj.SectionName = "";
+        setSecObj(secAddObj)
         if (courseObject.CreatedDate) {
-            secObj.IsShowForm = true;
-            courseObject.CourseSections.push({ ...secObj });
+            secAddObj.IsShowForm = true;
+            courseObject.CourseSections.push({ ...secAddObj });
             setCourseObject({ ...courseObject });
         }
         else {
@@ -526,6 +530,7 @@ const AdminCourses = ({ profile }) => {
         }
         topicForm.setFieldsValue({ ...topicObjForsave })
         setIsModalVisible(true)
+        setFileUploading(false);
     };
     const handleCancel = () => {
         topicForm.resetFields();
@@ -988,7 +993,7 @@ const AdminCourses = ({ profile }) => {
                                                             })
                                                             }
 
-                                                            <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                                            <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
                                                             <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
                                                         </Panel>
 
@@ -1039,13 +1044,13 @@ const AdminCourses = ({ profile }) => {
                         <div ref={formRef}>
                             {isError && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Topic Title</label>
+                                <label className="text-secondary d-block mb-4">Title</label>
                                 <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} >
                                     <Input onChange={(value) => handleChange('Title', value, true)} />
                                 </Form.Item>
                             </div>
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Topic Description</label>
+                                <label className="text-secondary d-block mb-4">Description</label>
                                 <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} >
                                     <TextArea onResize
                                         autoSize={{ minRows: 3, maxRows: 20 }}
@@ -1054,8 +1059,8 @@ const AdminCourses = ({ profile }) => {
                                 </Form.Item>
                             </div>
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Topic Content Type</label>
-                                <Form.Item name="TopicType" rules={[{ required: true, message: "Topic Content Type  required" }]} >
+                                <label className="text-secondary d-block mb-4">Content Type</label>
+                                <Form.Item name="TopicType" rules={[{ required: true, message: "Content Type  required" }]} >
                                     <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}>
                                         <Option value="Video">Video</Option>
                                         <Option value="Document">Document</Option>
@@ -1095,7 +1100,7 @@ const AdminCourses = ({ profile }) => {
                             </Dragger>
 
                             }
-                            {fileUploading && <Loader className="loader-top-middle" />}
+                            {fileUploading && topicObj.VideoSource == "Upload" && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 mt-8 upload-preview">
                                     <video width="100%" controls>
@@ -1127,12 +1132,12 @@ const AdminCourses = ({ profile }) => {
                                 </Form.Item>
                             </div>
                             }
-                            {(topicObj.VideoSource == "Vimeo" || topicObj.VideoSource == "YouTube") && <div className="custom-fields">
+                            {/* {(topicObj.VideoSource == "Vimeo" || topicObj.VideoSource == "YouTube") && <div className="custom-fields">
                                 <Form.Item name="VideoName" rules={[{ required: true, message: "Video name  required" }]} >
                                     <Input placeholder="Video Name" onChange={(value) => handleChange('VideoName', value, true)} />
                                 </Form.Item>
                             </div>
-                            }
+                            } */}
                             {topicObj.TopicType == "Document" && <Dragger
                                 className="upload"
                                 {...props}
