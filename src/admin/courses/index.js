@@ -497,6 +497,13 @@ const AdminCourses = ({ profile }) => {
             notify({ message: "Error", type: "error", description: "Please save course" });
         }
     }
+
+    const bytesToSize = (bytes) => {
+        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        if (bytes == 0) return '0 Byte';
+        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+        return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    }
     // const deleteImage = () => {
     //     topicObj.ThumbNails = [];
     //     topicObj.DupThumbNails = [];
@@ -529,6 +536,7 @@ const AdminCourses = ({ profile }) => {
             setTopicObj(topicObjForsave)
             setTopicEdit(false);
         }
+        setIsError(false);
         topicForm.setFieldsValue({ ...topicObjForsave })
         setIsModalVisible(true)
         setFileUploading(false);
@@ -958,7 +966,7 @@ const AdminCourses = ({ profile }) => {
                                                                             <div className="ml-16">
                                                                                 <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
                                                                                 <p className="f-14 text-secondary mb-8">{topic.Description}</p>
-                                                                                <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? topic.Size : "NA"}</p>
+                                                                                <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? bytesToSize(topic.Size) : "NA"}</p>
                                                                                 <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
                                                                             </div>
                                                                         </div>}
@@ -1101,7 +1109,8 @@ const AdminCourses = ({ profile }) => {
                             </Dragger>
 
                             }
-                            {fileUploading && topicObj.VideoSource == "Upload" && <Loader className="loader-top-middle" />}
+                            {isError && topicObj.TopicType == "Video" && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
+                            {fileUploading && topicObj.TopicType == "Video" && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 mt-8 upload-preview">
                                     <video width="100%" controls>
