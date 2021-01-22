@@ -209,7 +209,7 @@ const Members = ({ profile }) => {
                     columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
             </Card>
         </div>
-        <Modal title="Add Topic" visible={isModal} onCancel={handleCancel} centered
+        <Modal title="Add Admin" visible={isModal} onCancel={handleCancel} centered
             footer={<>
                 <Button type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
             </>}
