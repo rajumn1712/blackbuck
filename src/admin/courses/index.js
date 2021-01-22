@@ -239,12 +239,9 @@ const AdminCourses = ({ profile }) => {
         let dupTopicObj = { ...topicObj }
         videoTimeObj[prop] = val;
         dupTopicObj[prop] = String(val ? val : "0").length == 1 ? ("0" + String(val ? val : "0")) : String(val ? val : "0");
-        setVideoTimeObj({ ...videoTimeObj }, () => {
-
-        })
+        setVideoTimeObj({ ...videoTimeObj })
         dupTopicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
         setTopicObj({ ...dupTopicObj });
-        val = dupTopicObj[prop];
     }
     const refreshCourseDetails = async () => {
         const branchResponse = await getCourse(courseObject.GroupId);
@@ -285,6 +282,7 @@ const AdminCourses = ({ profile }) => {
         }
         if (topicObj.TopicType == "Video") {
             topicObj.lstDocuments = [];
+            topicObj.VideoName = topicObj.Title;
         }
         else {
             topicObj.VideoUrl = [];
@@ -311,6 +309,7 @@ const AdminCourses = ({ profile }) => {
         // }
     }
     const saveTopicUpdate = async () => {
+        topicObj.Duration = topicObj.Hours + ":" + topicObj.Min + ":" + topicObj.Sec;
         const result = await saveTopic(topicObj, courseObject.GroupId, secId);
         if (result.ok) {
             setIsModalVisible(false);
@@ -335,7 +334,7 @@ const AdminCourses = ({ profile }) => {
             }
             courseObject.Tests.push({ ...Obj });
         })
-        courseObject.CourseSections = courseObject.CourseType == "Live" ? [] : courseObject.CourseSections;
+        courseObject.CourseSections = courseObject.CourseType == "Live Session" ? [] : courseObject.CourseSections;
         if (courseObject.CourseType == "Content") {
             courseObject.Date = "";
             courseObject.Link = "";
@@ -398,6 +397,7 @@ const AdminCourses = ({ profile }) => {
             notify({ message: "Publish", description: "Course published successfully" });
             setShowForm(false)
             form.resetFields();
+            setCourseObject({ ...courseObj });
         }
         else {
             window.scrollTo(0, 0);
@@ -410,6 +410,9 @@ const AdminCourses = ({ profile }) => {
             time = sumTime(time, item.Duration);
         })
         time = time.split(":");
+        time[0] = time[0]?.length < 2 ? ("0" + time[0]) : time[0];
+        time[1] = time[1]?.length < 2 ? ("0" + time[1]) : time[1];
+        time[2] = time[2]?.length < 2 ? ("0" + time[2]) : time[2];
         return time[0] + "h" + time[1] + "m" + time[2] + "s";
     }
     function sumTime(t1, t2, array = []) {
@@ -458,7 +461,7 @@ const AdminCourses = ({ profile }) => {
             setCourseObject({ ...courseObject })
         }
         else {
-            topicObj[prop] = val.currentTarget ? val.currentTarget.value : val;
+            topicObj[prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
             setTopicObj({ ...topicObj })
         }
     }
@@ -481,11 +484,13 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const addSection = () => {
-        sectionObj.SectionId = uuidv4();
-        setSecObj({ ...sectionObj })
+        let secAddObj = { ...sectionObj }
+        secAddObj.SectionId = uuidv4();
+        secAddObj.SectionName = "";
+        setSecObj(secAddObj)
         if (courseObject.CreatedDate) {
-            secObj.IsShowForm = true;
-            courseObject.CourseSections.push({ ...secObj });
+            secAddObj.IsShowForm = true;
+            courseObject.CourseSections.push({ ...secAddObj });
             setCourseObject({ ...courseObject });
         }
         else {
@@ -526,6 +531,7 @@ const AdminCourses = ({ profile }) => {
         }
         topicForm.setFieldsValue({ ...topicObjForsave })
         setIsModalVisible(true)
+        setFileUploading(false);
     };
     const handleCancel = () => {
         topicForm.resetFields();
@@ -680,22 +686,22 @@ const AdminCourses = ({ profile }) => {
                                 <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
                                     <div className="create-course">
                                         <div className="custom-fields">
-                                            <label className="text-secondary d-block mb-4">Course Title</label>
-                                            <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Course Title  required" }]}>
-                                                <Input placeholder="e.g. Learn how to code from scratch" onChange={(value) => handleChange('GroupName', value)} />
+                                            <label className="text-secondary d-block mb-4">Title</label>
+                                            <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
+                                                <Input placeholder="e.g. Learn how to code from scratch" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
                                         </div>
                                         <div className="custom-fields">
-                                            <label className="text-secondary d-block mb-4">Course Description</label>
+                                            <label className="text-secondary d-block mb-4">Description</label>
                                             <Form.Item className="custom-fields" name="Description" rules={[{ required: true, message: "Description  required" }]}>
                                                 <TextArea placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
-                                                    autoSize={{ minRows: 3, maxRows: 30 }}
+                                                    autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
                                                 />
                                             </Form.Item>
                                         </div>
                                         <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select custom-fields">
-                                                <label className="text-secondary d-block mb-4">Choose Category</label>
+                                                <label className="text-secondary d-block mb-4">Category</label>
                                                 <Form.Item className="custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select
                                                         placeholder="Choose a Category" className="text-left"
@@ -723,26 +729,25 @@ const AdminCourses = ({ profile }) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4">Course Type</label>
-                                                <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Course Type required" }]}>
+                                                <label className="text-secondary d-block mb-4">Type</label>
+                                                <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
-                                                        defaultValue="Choose Type" placeholder="Choose Type" className="text-left"
+                                                        defaultValue="Content" className="text-left"
                                                         onChange={(value) => handleChange('CourseType', value)}
                                                     >
-                                                        <Option value="">Choose Type</Option>
-                                                        <Option value="Live">Live</Option>
+                                                        <Option value="Live Session">Live Session</Option>
                                                         <Option value="Content">Content</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            {courseObject.CourseType == "Live" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" />
                                                 </Form.Item>
                                             </Col>
                                             }
-                                            {courseObject.CourseType == "Live" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
                                                     <Select
@@ -756,7 +761,7 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>}
-                                            {courseObject.CourseType == "Live" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
@@ -872,7 +877,7 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
-                                                <label className="text-secondary d-block mb-4">Add Test</label>
+                                                {/* <label className="text-secondary d-block mb-4">Add Test</label> */}
                                                 {fileUploading && <Loader className="loader-top-middle" />}
                                                 <Dragger showUploadList={false} className="upload mb-16" {...uploadProps}>
                                                     <span className="sharebox-icons docs-upload mb-16"></span>
@@ -918,14 +923,14 @@ const AdminCourses = ({ profile }) => {
                                                         )}
                                                     />
                                                 </div>
-                                                {courseObject.CreatedDate && <div className="docs px-0">
+                                                {/* {courseObject.CreatedDate && <div className="docs px-0">
                                                     <div className="mt-12 text-center">
                                                         <Button type="primary" key="console" onClick={() => submitFiles()}>
                                                             Submit Files
                       </Button>
                                                     </div>
                                                 </div>
-                                                }
+                                                } */}
                                             </Col>
                                         </Row>
                                     </div>
@@ -989,7 +994,7 @@ const AdminCourses = ({ profile }) => {
                                                             })
                                                             }
 
-                                                            <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
+                                                            <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
                                                             <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
                                                         </Panel>
 
@@ -1040,13 +1045,13 @@ const AdminCourses = ({ profile }) => {
                         <div ref={formRef}>
                             {isError && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Topic Title</label>
+                                <label className="text-secondary d-block mb-4">Title</label>
                                 <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} >
                                     <Input onChange={(value) => handleChange('Title', value, true)} />
                                 </Form.Item>
                             </div>
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Topic Description</label>
+                                <label className="text-secondary d-block mb-4">Description</label>
                                 <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} >
                                     <TextArea onResize
                                         autoSize={{ minRows: 3, maxRows: 20 }}
@@ -1055,8 +1060,8 @@ const AdminCourses = ({ profile }) => {
                                 </Form.Item>
                             </div>
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Topic Content Type</label>
-                                <Form.Item name="TopicType" rules={[{ required: true, message: "Topic Content Type  required" }]} >
+                                <label className="text-secondary d-block mb-4">Content Type</label>
+                                <Form.Item name="TopicType" rules={[{ required: true, message: "Content Type  required" }]} >
                                     <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}>
                                         <Option value="Video">Video</Option>
                                         <Option value="Document">Document</Option>
@@ -1096,7 +1101,7 @@ const AdminCourses = ({ profile }) => {
                             </Dragger>
 
                             }
-                            {fileUploading && <Loader className="loader-top-middle" />}
+                            {fileUploading && topicObj.VideoSource == "Upload" && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 mt-8 upload-preview">
                                     <video width="100%" controls>
@@ -1128,12 +1133,12 @@ const AdminCourses = ({ profile }) => {
                                 </Form.Item>
                             </div>
                             }
-                            {(topicObj.VideoSource == "Vimeo" || topicObj.VideoSource == "YouTube") && <div className="custom-fields">
+                            {/* {(topicObj.VideoSource == "Vimeo" || topicObj.VideoSource == "YouTube") && <div className="custom-fields">
                                 <Form.Item name="VideoName" rules={[{ required: true, message: "Video name  required" }]} >
                                     <Input placeholder="Video Name" onChange={(value) => handleChange('VideoName', value, true)} />
                                 </Form.Item>
                             </div>
-                            }
+                            } */}
                             {topicObj.TopicType == "Document" && <Dragger
                                 className="upload"
                                 {...props}
