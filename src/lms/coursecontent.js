@@ -19,16 +19,16 @@ class CourseContent extends Component {
     watchedVideos: [],
     IsRenderType: null,
     IsVideoSource: null,
-    lstDocuments:[],
-    IsChecked:false
+    lstDocuments: [],
+    IsChecked: false
   };
   componentDidMount() {
     this.loadCourseDetails();
-    this.getUserWatchedVideos();
   }
   loadCourseDetails = async () => {
     const response = await fetchCourseDetails(this.props.match.params.id);
     if (response.ok) {
+      this.getUserWatchedVideos();
       this.setState({
         ...this.state,
         courseDetails: response.data[0],
@@ -44,10 +44,21 @@ class CourseContent extends Component {
       this.props.profile?.Id
     );
     if (response.ok) {
-      this.setState({ ...this.state, watchedVideos: response.data });
+      let { courseDetails } = this.state;
+      courseDetails.CourseSections.forEach((item, index) => {
+        item.Topics.forEach(topic => {
+          response.data.forEach(watchTopic => {
+            if (watchTopic.TopicId == topic.TopicId && watchTopic.SectionId == item.SectionId) {
+              topic.IsChecked = true;
+            }
+          });
+        });
+      });
+
+      this.setState({ ...this.state, watchedVideos: response.data, courseDetails });
     }
   };
-  setVideoSource = async (section, item) => {
+  setVideoSource = async (section, item, indx, index) => {
     const object = {
       CourseId: this.props.match.params.id,
       SectionId: section.SectionId,
@@ -59,20 +70,23 @@ class CourseContent extends Component {
     const saveResponse = await saveCourseTopic(object);
     if (saveResponse.ok) {
       if (item.TopicType === "Video") {
+        let { courseDetails } = this.state;
+        courseDetails.CourseSections[indx].Topics[index].IsChecked = true;
         this.setState(
           {
             ...this.state,
             IsRenderType: item.TopicType,
             IsVideoSource: item.VideoSource,
-            selectedVideo: item.VideoSource==='Upload' ? item.VideoUrl[0] : item.VideoUrl,
+            selectedVideo: item.VideoSource === 'Upload' ? item.VideoUrl[0] : item.VideoUrl,
+            courseDetails
           },
           () => {
             this.getUserWatchedVideos();
-            this.comparewatchedVideos(section,item);
-            if(item.VideoSource === "Upload"){
+            this.comparewatchedVideos(section, item);
+            if (item.VideoSource === "Upload") {
               document.querySelector("video").play();
             }
-            
+
           }
         );
       } else {
@@ -80,7 +94,7 @@ class CourseContent extends Component {
           ...this.state,
           IsRenderType: item.TopicType,
           IsVideoSource: item.VideoSource,
-          lstDocuments:item.lstDocuments
+          lstDocuments: item.lstDocuments
         });
       }
     }
@@ -88,7 +102,7 @@ class CourseContent extends Component {
 
   comparewatchedVideos = (section, item) => {
     let { watchedVideos } = this.state;
-    const value = watchedVideos.filter(watchedvideo=>{
+    const value = watchedVideos.filter(watchedvideo => {
       return (section.SectionId === watchedvideo.SectionId && item.TopicId === watchedvideo.TopicId)
     })
     console.log(value)
@@ -101,78 +115,77 @@ class CourseContent extends Component {
           <Col className="" xs={24} sm={16} md={16} lg={17}>
             <div className="preview-image">
               <Carousel>
-                
-                  {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
-                    <video controls key={this.state.selectedVideo}>
-                      <source src={this.state.selectedVideo} />
-                    </video></div>
-                  )}
-                  {this.state.IsRenderType === "Video" && (
-                    <div className="lms-video mb-8" id="video_player">
-                      {this.state.IsVideoSource == "Upload" && (
-                        <video controls key={this.state.selectedVideo}>
-                          <source src={this.state.selectedVideo} />
-                        </video>
+
+                {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
+                  <video controls key={this.state.selectedVideo}>
+                    <source src={this.state.selectedVideo} />
+                  </video></div>
+                )}
+                {this.state.IsRenderType === "Video" && (
+                  <div className="lms-video mb-8" id="video_player">
+                    {this.state.IsVideoSource == "Upload" && (
+                      <video controls key={this.state.selectedVideo}>
+                        <source src={this.state.selectedVideo} />
+                      </video>
+                    )}
+                    {this.state.IsVideoSource == "YouTube" &&
+                      this.state.selectedVideo && (
+                        <iframe
+                          width="640"
+                          height="360"
+                          key={this.state.selectedVideo}
+                          src={this.state.selectedVideo
+                            .split("watch?v=")
+                            .join("embed/")}
+                          frameborder="0"
+                          allowfullscreen
+                          X-Frame-Options={true}
+                        ></iframe>
                       )}
-                      {this.state.IsVideoSource == "YouTube" &&
-                        this.state.selectedVideo && (
-                          <iframe
+                    {this.state.IsVideoSource == "Vimeo" &&
+                      this.state.selectedVideo && (
+                        <iframe
                           width="640"
                           height="360"
                           key={this.state.selectedVideo}
-                            src={this.state.selectedVideo
-                              .split("watch?v=")
-                              .join("embed/")}
-                            frameborder="0"
-                            allowfullscreen
-                            X-Frame-Options={true}
-                          ></iframe>
-                        )}
-                      {this.state.IsVideoSource == "Vimeo" &&
-                        this.state.selectedVideo && (
-                          <iframe
-                          width="640"
-                          height="360"
-                          key={this.state.selectedVideo}
-                            src={`https://player.vimeo.com/video/${
-                              this.state.selectedVideo.split("/")[
-                                this.state.selectedVideo.split("/").length - 1
-                              ]
+                          src={`https://player.vimeo.com/video/${this.state.selectedVideo.split("/")[
+                            this.state.selectedVideo.split("/").length - 1
+                            ]
                             }`}
-                            frameborder="0"
-                            allowfullscreen
-                            X-Frame-Options={true}
-                          ></iframe>
-                        )}
-                    </div>
-                  )}
-                  {this.state.IsRenderType === 'Document' && <div className="docs px-0">
+                          frameborder="0"
+                          allowfullscreen
+                          X-Frame-Options={true}
+                        ></iframe>
+                      )}
+                  </div>
+                )}
+                {this.state.IsRenderType === 'Document' && <div className="docs px-0">
                   <List
-                  itemLayout="horizontal"
-                  dataSource={this.state.lstDocuments}
-                  renderItem={(item) => (
-                    <List.Item
-                      onClick={(ev) => {
-                        ev.stopPropagation();
-                        window.open(item.url, "_blank");
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <List.Item.Meta
-                        avatar={[
-                          <span className={`doc-icons ${item.avatar}`}></span>,
-                        ]}
-                        title={item.title}
-                        description={
-                          <div className="file-size f-12">{item.fileSize}</div>
-                        }
-                      />
-                    </List.Item>
-                  )}
-                />
-                    </div>
-                  }
-                
+                    itemLayout="horizontal"
+                    dataSource={this.state.lstDocuments}
+                    renderItem={(item) => (
+                      <List.Item
+                        onClick={(ev) => {
+                          ev.stopPropagation();
+                          window.open(item.url, "_blank");
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <List.Item.Meta
+                          avatar={[
+                            <span className={`doc-icons ${item.avatar}`}></span>,
+                          ]}
+                          title={item.title}
+                          description={
+                            <div className="file-size f-12">{item.fileSize}</div>
+                          }
+                        />
+                      </List.Item>
+                    )}
+                  />
+                </div>
+                }
+
               </Carousel>
             </div>
             <Row gutter={16}>
@@ -211,12 +224,12 @@ class CourseContent extends Component {
                             <List
                               itemLayout="horizontal"
                               dataSource={section.Topics}
-                              renderItem={(item, indx) => (
+                              renderItem={(item, index) => (
                                 <List.Item
                                   extra={
                                     <span
-                                      className={`icon ${this.state.IsChecked ? 'playover-icon' : 'play-icon'}`}
-                                      key={indx}
+                                      className={`icon ${item.IsChecked ? 'playover-icon' : 'play-icon'}`}
+                                      key={index}
                                     ></span>
                                   }
                                 >
@@ -224,10 +237,10 @@ class CourseContent extends Component {
                                     title={
                                       <a
                                         onClick={() =>
-                                          this.setVideoSource(section, item)
+                                          this.setVideoSource(section, item, indx, index)
                                         }
                                       >
-                                        {indx + 1}. {item.Title}
+                                        {index + 1}. {item.Title}
                                       </a>
                                     }
                                     description={
