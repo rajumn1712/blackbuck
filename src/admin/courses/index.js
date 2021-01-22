@@ -226,9 +226,9 @@ const AdminCourses = ({ profile }) => {
             const result = await sectionDeletion(courseObject.GroupId, item.SectionId);
             if (result.ok) {
                 notify({ message: "Section", description: "Section deleted successfully" });
-                // courseObject.CourseSections = courseObject.CourseSections.filter(sec => sec.SectionId
-                //     !== item.SectionId);
-                // setCourseObject({ ...courseObject });
+                courseObject.CourseSections = courseObject.CourseSections.filter(sec => sec.SectionId
+                    !== item.SectionId);
+                setCourseObject({ ...courseObject });
             }
             else {
                 notify({ message: "Error", type: "error", description: "Something went wrong :)" });
@@ -481,6 +481,7 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const addSection = () => {
+        sectionObj.SectionId = uuidv4();
         setSecObj({ ...sectionObj })
         if (courseObject.CreatedDate) {
             secObj.IsShowForm = true;
@@ -989,7 +990,7 @@ const AdminCourses = ({ profile }) => {
                                                             }
 
                                                             <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Add Another Topic</div>
-                                                            <div onClick={() => deleteSection(item)} className="f-18 remove-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
+                                                            <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
                                                         </Panel>
 
                                                     </Collapse>
@@ -999,7 +1000,7 @@ const AdminCourses = ({ profile }) => {
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
-                                                            < Form id="secForm" initialValues={courseObject.CourseSections[index]} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
+                                                            < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
                                                                 <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
                                                                     {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                                 </Form.Item>
@@ -1202,7 +1203,7 @@ const AdminCourses = ({ profile }) => {
                     </Form>
                 </Modal>
 
-                {!showForm && <Courses onCourseEdit={(id) => onCourseEditObj(id)} onRef={courses => setCoursesObj(courses)} />}
+                {!showForm && <Courses onCourseEdit={(id) => onCourseEditObj(id)} onRef={courses => setCoursesObj(courses)} onCourseDelete={() => fetchCountsCour()} />}
 
 
             </Col>

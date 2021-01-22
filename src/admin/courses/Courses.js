@@ -54,6 +54,7 @@ class Courses extends Component {
                     loading: false,
                     lstCourses: lstCourses,
                 });
+                this.props.onCourseDelete();
             }
         });
     }
