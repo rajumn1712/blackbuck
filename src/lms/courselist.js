@@ -38,19 +38,20 @@ class CourseList extends Component {
       <div className="custom-card tag-card">
         <Card className="card-item">
             <Title className="text-primary f-16 semibold mb-8">
-              SEO & Digital Marketing
+              {/* SEO & Digital Marketing */}
             </Title>
             <div className="addon-info">
               <span className="mr-12 f-12 text-secondary">
                 <span className="grp-type-icon video-play" />
-                10 Videos
+                {/* 10 Videos */}
               </span>
               <span className="f-12 text-secondary">
-                <span className="grp-type-icon lessons" />5 Lessons
+                <span className="grp-type-icon lessons" />
+                {/* 5 Lessons */}
               </span>
             </div>
             <div className="mt-12 progres-bar d-flex">
-              <Progress percent={30} /><span className="ml-4"><Link className="card-item-button">Continue</Link></span>
+              <Progress percent='' /><span className="ml-4"><Link className="card-item-button">Continue</Link></span>
             </div>
         </Card>
         {/* <Card title="Course Suggestions" bordered={false}>

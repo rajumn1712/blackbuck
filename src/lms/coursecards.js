@@ -2,24 +2,18 @@ import {
   Card,
   Col,
   Row,
-  Statistic,
-  Progress,
   Tabs,
-  Button,
   Empty,
   Typography,
   Avatar,
   Tooltip,
 } from "antd";
 import React, { Component } from "react";
-import photography from "../styles/images/photography.png";
-import SEO from "../styles/images/seo-marketing.png";
-import Blogging from "../styles/images/blogging-content.png";
+import photography from "../styles/images/default-cover.png";
 import defaultUser from "../styles/images/defaultuser.jpg";
 import { Link } from "react-router-dom";
 import { fetchUserCourses } from "./api";
 import { connect } from "react-redux";
-import ShowMoreText from "react-show-more-text";
 import Loader from "../common/loader";
 
 const { Meta } = Card;

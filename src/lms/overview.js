@@ -222,18 +222,6 @@ reUpload = ()=>{
                         </Row>
                     </Card>
                 </div>}
-            <div className="custom-card comment-over">
-              <Card title="Comments">
-                <div className="px-12 post-card comment-show comment-over">
-                {<Comments
-            count={0}
-            postId={this.props.courseid}
-            object={this.state.object}
-            isLMSComment={true}
-          />}
-                </div>
-              </Card>
-            </div>
             <div className="custom-card">
               <Card title={flagsData.IsSubmitted ? '' : 'Take a Test'}>
                 {!flagsData.IsSubmitted && <div className="docs px-0">
@@ -290,7 +278,7 @@ reUpload = ()=>{
                       PDF, xls).
                     </p>
                   </Dragger>}
-                  {(!flagsData.IsSubmitted || !showUpload) && <div className="docs px-0">
+                  {(!flagsData.IsSubmitted) && <div className="docs px-0">
                   <List
               itemLayout="horizontal"
               dataSource={this.state.uploadSources}
@@ -322,17 +310,29 @@ reUpload = ()=>{
                 </List.Item>
               )}
             />
-                    <div className="mt-12 text-center">
-                      <Button type="primary" key="console" disabled={this.state.uploadSources.length==0}
+                    {this.state.uploadSources.length > 0 && <div className="mt-12 text-center">
+                      <Button type="primary" key="console"
                       onClick={this.saveUserTestFiles}>
                         Submit Files
                       </Button>
-                    </div>
+                    </div>}
                   </div>}
                   <div className="px-12 pb-12">
                     <Divider />
                     
                   </div>
+                </div>
+              </Card>
+            </div>
+            <div className="custom-card comment-over">
+              <Card title="Comments">
+                <div className="px-12 post-card comment-show comment-over">
+                {<Comments
+            count={0}
+            postId={this.props.courseid}
+            object={this.state.object}
+            isLMSComment={true}
+          />}
                 </div>
               </Card>
             </div>

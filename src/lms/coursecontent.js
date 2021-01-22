@@ -4,7 +4,11 @@ import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
 import OverView from "./overview";
-import { fetchCourseDetails, getUserWatchedVideos, saveCourseTopic } from "./api";
+import {
+  fetchCourseDetails,
+  getUserWatchedVideos,
+  saveCourseTopic,
+} from "./api";
 import { connect } from "react-redux";
 const { Panel } = Collapse;
 class CourseContent extends Component {
@@ -12,7 +16,10 @@ class CourseContent extends Component {
     courseDetails: {},
     loading: true,
     selectedVideo: null,
-    watchedVideos:[]
+    watchedVideos: [],
+    IsRenderType: null,
+    IsVideoSource: null,
+    lstDocuments:[]
   };
   componentDidMount() {
     this.loadCourseDetails();
@@ -24,17 +31,21 @@ class CourseContent extends Component {
       this.setState({
         ...this.state,
         courseDetails: response.data[0],
-        selectedVideo:response.data.length >0 ? response.data[0].CourseVideo[0] : null,
+        selectedVideo:
+          response.data.length > 0 ? response.data[0].CourseVideo[0] : null,
         loading: false,
       });
     }
   };
-  getUserWatchedVideos = async ()=>{
-      const response = await getUserWatchedVideos(this.props.match.params.id,this.props.profile?.Id)
-      if(response.ok){
-          this.setState({...this.state,watchedVideos:response.data})
-      }
-  }
+  getUserWatchedVideos = async () => {
+    const response = await getUserWatchedVideos(
+      this.props.match.params.id,
+      this.props.profile?.Id
+    );
+    if (response.ok) {
+      this.setState({ ...this.state, watchedVideos: response.data });
+    }
+  };
   setVideoSource = async (section, item) => {
     const object = {
       CourseId: this.props.match.params.id,
@@ -42,28 +53,51 @@ class CourseContent extends Component {
       TopicId: item.TopicId,
       UserId: this.props?.profile?.Id,
       IsView: true,
+      CreatedDate: new Date(),
     };
     const saveResponse = await saveCourseTopic(object);
     if (saveResponse.ok) {
-      this.setState({ ...this.state, selectedVideo: item.VideoUrl[0] }, () => {
-        this.getUserWatchedVideos()
-        document.querySelector("video").play()
+      if (item.TopicType === "Video") {
+        this.setState(
+          {
+            ...this.state,
+            IsRenderType: item.TopicType,
+            IsVideoSource: item.VideoSource,
+            selectedVideo: item.VideoSource==='Upload' ? item.VideoUrl[0] : item.VideoUrl,
+          },
+          () => {
+            this.getUserWatchedVideos();
+            if(item.VideoSource === "Upload"){
+              document.querySelector("video").play();
+            }
+            
+          }
+        );
+      } else {
+        this.setState({
+          ...this.state,
+          IsRenderType: item.TopicType,
+          IsVideoSource: item.VideoSource,
+          lstDocuments:item.lstDocuments
+        });
       }
-      );
     }
   };
 
-  comaprevalues = (section,item)=>{
-      let {watchedVideos} = this.state;
-      for(const i in watchedVideos){
-          if(watchedVideos[i].SectionId === section.SectionId && watchedVideos[i].TopicId === item.TopicId){
-              console.log(true);
-          }else{
-              console.log(false)
-          }
+  comaprevalues = (section, item) => {
+    let { watchedVideos } = this.state;
+    for (const i in watchedVideos) {
+      if (
+        watchedVideos[i].SectionId === section.SectionId &&
+        watchedVideos[i].TopicId === item.TopicId
+      ) {
+        console.log(true);
+      } else {
+        console.log(false);
       }
-  }
-  
+    }
+  };
+
   render() {
     return (
       <div className="post-preview-box course-card">
@@ -71,11 +105,74 @@ class CourseContent extends Component {
           <Col className="" xs={24} sm={16} md={16} lg={17}>
             <div className="preview-image">
               <Carousel>
-                <div className="lms-video mb-8" id="video_player">
-                  <video controls key={this.state.selectedVideo}>
-                    <source src={this.state.selectedVideo} />
-                  </video>
-                </div>
+                
+                  {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
+                    <video controls key={this.state.selectedVideo}>
+                      <source src={this.state.selectedVideo} />
+                    </video></div>
+                  )}
+                  {this.state.IsRenderType === "Video" && (
+                    <div className="lms-video mb-8" id="video_player">
+                      {this.state.IsVideoSource == "Upload" && (
+                        <video controls key={this.state.selectedVideo}>
+                          <source src={this.state.selectedVideo} />
+                        </video>
+                      )}
+                      {this.state.IsVideoSource == "YouTube" &&
+                        this.state.selectedVideo && (
+                          <iframe
+                          key={this.state.selectedVideo}
+                            src={this.state.selectedVideo
+                              .split("watch?v=")
+                              .join("embed/")}
+                            frameborder="0"
+                            allowfullscreen
+                            X-Frame-Options={true}
+                          ></iframe>
+                        )}
+                      {this.state.IsVideoSource == "Vimeo" &&
+                        this.state.selectedVideo && (
+                          <iframe
+                          key={this.state.selectedVideo}
+                            src={`https://player.vimeo.com/video/${
+                              this.state.selectedVideo.split("/")[
+                                this.state.selectedVideo.split("/").length - 1
+                              ]
+                            }`}
+                            frameborder="0"
+                            allowfullscreen
+                            X-Frame-Options={true}
+                          ></iframe>
+                        )}
+                    </div>
+                  )}
+                  {this.state.IsRenderType === 'Document' && <div className="docs px-0">
+                  <List
+                  itemLayout="horizontal"
+                  dataSource={this.state.lstDocuments}
+                  renderItem={(item) => (
+                    <List.Item
+                      onClick={(ev) => {
+                        ev.stopPropagation();
+                        window.open(item.url, "_blank");
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <List.Item.Meta
+                        avatar={[
+                          <span className={`doc-icons ${item.avatar}`}></span>,
+                        ]}
+                        title={item.title}
+                        description={
+                          <div className="file-size f-12">{item.fileSize}</div>
+                        }
+                      />
+                    </List.Item>
+                  )}
+                />
+                    </div>
+                  }
+                
               </Carousel>
             </div>
             <Row gutter={16}>
@@ -166,7 +263,7 @@ class CourseContent extends Component {
                                     }
                                     description={
                                       <div className="f-12">
-                                        <span className="grp-type-icon video-play"></span>{" "}
+                                        <span className={`grp-type-icon ${item.TopicType === 'Video' ? 'video-play' : 'lessons'}`}></span>{" "}
                                         {item.Description}
                                       </div>
                                     }
@@ -181,9 +278,7 @@ class CourseContent extends Component {
                   </Collapse>
                 </div>
               </Card>
-              <Card title="Recommended Video" bordered={false}>
-              
-              </Card>
+              <Card title="Recommended Video" bordered={false}></Card>
             </div>
           </Col>
         </Row>
