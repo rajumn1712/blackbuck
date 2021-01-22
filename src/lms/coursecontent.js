@@ -68,6 +68,7 @@ class CourseContent extends Component {
           },
           () => {
             this.getUserWatchedVideos();
+            this.comparewatchedVideos(section,item);
             if(item.VideoSource === "Upload"){
               document.querySelector("video").play();
             }
@@ -85,18 +86,12 @@ class CourseContent extends Component {
     }
   };
 
-  comaprevalues = (section, item) => {
+  comparewatchedVideos = (section, item) => {
     let { watchedVideos } = this.state;
-    for (const i in watchedVideos) {
-      if (
-        watchedVideos[i].SectionId === section.SectionId &&
-        watchedVideos[i].TopicId === item.TopicId
-      ) {
-        console.log(true);
-      } else {
-        console.log(false);
-      }
-    }
+    const value = watchedVideos.filter(watchedvideo=>{
+      return (section.SectionId === watchedvideo.SectionId && item.TopicId === watchedvideo.TopicId)
+    })
+    console.log(value)
   };
 
   render() {
@@ -190,33 +185,6 @@ class CourseContent extends Component {
                 )}
               </Col>
             </Row>
-
-            {/* <Tabs defaultActiveKey="1"
-                            className="group-tabs profile-tabs">
-                            <TabPane tab="Overview" key="1">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <OverView />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                            <TabPane tab="Q&A" key="2">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div>
-                                        <QandA />
-                                    </div>
-                                    </Col>
-                                </Row>
-                            </TabPane> */}
-            {/* <TabPane tab="Comments" key="3">
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-
-                                    </Col>
-                                </Row>
-                            </TabPane> */}
-            {/* </Tabs>*/}
           </Col>
           <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
             <div className="custom-card video-card">
@@ -239,10 +207,6 @@ class CourseContent extends Component {
                           key={indx}
                           className="pb-0 course-content flot-left"
                         >
-                          {/* <div className="panel-subtext px-16">
-                            <span>{section.Topics.length}</span>{" "}
-                            <span>Videos</span>{" "}
-                          </div> */}
                           <div>
                             <List
                               itemLayout="horizontal"
@@ -251,7 +215,7 @@ class CourseContent extends Component {
                                 <List.Item
                                   extra={
                                     <span
-                                      className="icon playover-icon"
+                                      className={`icon ${this.state.IsChecked ? 'playover-icon' : 'play-icon'}`}
                                       key={indx}
                                     ></span>
                                   }
@@ -283,7 +247,7 @@ class CourseContent extends Component {
                   </Collapse>
                 </div>
               </Card>
-              <Card title="Recommended Video" bordered={false}></Card>
+              {/* <Card title="Recommended Video" bordered={false}></Card> */}
             </div>
           </Col>
         </Row>

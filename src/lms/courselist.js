@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, List, Progress } from "antd";
+import { Card, Empty, List, Progress } from "antd";
 import { Link } from "react-router-dom";
 import "../index.css";
 import "../App.css";
@@ -38,42 +38,33 @@ class CourseList extends Component {
   loadUserRecentCourse = async ()=>{
     const response = await userRecentWatchedCourse(this.props.profile?.Id)
     if(response.ok){
-      this.setState({...this.state,recentList:response.data[0]})
+      this.setState({...this.state,recentList:response.data})
     }
   }
   render() {
     const {recentList} = this.state
     return (
       <div className="custom-card tag-card">
-        <Card className="card-item">
+        {recentList.length > 0 && <Card className="card-item">
             <Title className="text-primary f-16 semibold mb-8">
-              {recentList.name}
+              {recentList[0].name}
             </Title>
             <div className="addon-info">
               <span className="mr-12 f-12 text-secondary">
                 <span className="grp-type-icon video-play" />
-                {recentList.sections} Sections
+                {recentList[0].sections} Sections
               </span>
               <span className="f-12 text-secondary">
                 <span className="grp-type-icon lessons" />
-                {recentList.videos} Videos
+                {recentList[0].videos} Videos
               </span>
             </div>
             <div className="mt-12 progres-bar d-flex">
-              <Progress percent={recentList.Percentage} /><span className="ml-4"><Link to={"course/" + recentList.id} className="card-item-button">Continue</Link></span>
+              <Progress percent={recentList[0].Percentage} /><span className="ml-4"><Link to={"course/" + recentList[0].id} className="card-item-button">Continue</Link></span>
             </div>
-        </Card>
-        {/* <Card title="Course Suggestions" bordered={false}>
-          <List
-            itemLayout="vertical"
-            dataSource={this.state.suggestions}
-            renderItem={item => (
-              <div className="tag-name">
-                <Link to="/coursecontent">{item.name}</Link>
-              </div>
-            )}
-          />
-        </Card> */}
+        </Card>}
+        {recentList.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>}
+                                
          <Courses loadUserCourse={false} />
       </div>
     );
