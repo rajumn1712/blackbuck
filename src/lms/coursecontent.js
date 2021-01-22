@@ -19,7 +19,8 @@ class CourseContent extends Component {
     watchedVideos: [],
     IsRenderType: null,
     IsVideoSource: null,
-    lstDocuments:[]
+    lstDocuments:[],
+    IsChecked:false
   };
   componentDidMount() {
     this.loadCourseDetails();
@@ -238,10 +239,10 @@ class CourseContent extends Component {
                           key={indx}
                           className="pb-0 course-content flot-left"
                         >
-                          <div className="panel-subtext px-16">
+                          {/* <div className="panel-subtext px-16">
                             <span>{section.Topics.length}</span>{" "}
                             <span>Videos</span>{" "}
-                          </div>
+                          </div> */}
                           <div>
                             <List
                               itemLayout="horizontal"

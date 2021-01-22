@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../index.css";
 import "../App.css";
 import { connect } from "react-redux";
-import { fetchCourseSuggestions } from "./api";
+import { fetchCourseSuggestions, userRecentWatchedCourse } from "./api";
 import Courses from '../components/ProfileComponents/courses';
 import Title from "antd/lib/typography/Title";
 
@@ -12,11 +12,13 @@ const { Meta } = Card;
 class CourseList extends Component {
   state = {
     suggestions: [],
+    recentList:{},
     loading: true,
     page: 1,
     pageSize: 10
   };
   componentDidMount() {
+    this.loadUserRecentCourse();
     this.loadSuggestions();
   }
   loadSuggestions = async () => {
@@ -33,25 +35,32 @@ class CourseList extends Component {
       });
     }
   };
+  loadUserRecentCourse = async ()=>{
+    const response = await userRecentWatchedCourse(this.props.profile?.Id)
+    if(response.ok){
+      this.setState({...this.state,recentList:response.data[0]})
+    }
+  }
   render() {
+    const {recentList} = this.state
     return (
       <div className="custom-card tag-card">
         <Card className="card-item">
             <Title className="text-primary f-16 semibold mb-8">
-              {/* SEO & Digital Marketing */}
+              {recentList.name}
             </Title>
             <div className="addon-info">
               <span className="mr-12 f-12 text-secondary">
                 <span className="grp-type-icon video-play" />
-                {/* 10 Videos */}
+                {recentList.sections} Sections
               </span>
               <span className="f-12 text-secondary">
                 <span className="grp-type-icon lessons" />
-                {/* 5 Lessons */}
+                {recentList.videos} Videos
               </span>
             </div>
             <div className="mt-12 progres-bar d-flex">
-              <Progress percent='' /><span className="ml-4"><Link className="card-item-button">Continue</Link></span>
+              <Progress percent={recentList.Percentage} /><span className="ml-4"><Link to={"course/" + recentList.id} className="card-item-button">Continue</Link></span>
             </div>
         </Card>
         {/* <Card title="Course Suggestions" bordered={false}>
