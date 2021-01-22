@@ -239,12 +239,9 @@ const AdminCourses = ({ profile }) => {
         let dupTopicObj = { ...topicObj }
         videoTimeObj[prop] = val;
         dupTopicObj[prop] = String(val ? val : "0").length == 1 ? ("0" + String(val ? val : "0")) : String(val ? val : "0");
-        setVideoTimeObj({ ...videoTimeObj }, () => {
-
-        })
+        setVideoTimeObj({ ...videoTimeObj })
         dupTopicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
         setTopicObj({ ...dupTopicObj });
-        val = dupTopicObj[prop];
     }
     const refreshCourseDetails = async () => {
         const branchResponse = await getCourse(courseObject.GroupId);
@@ -312,6 +309,7 @@ const AdminCourses = ({ profile }) => {
         // }
     }
     const saveTopicUpdate = async () => {
+        topicObj.Duration = topicObj.Hours + ":" + topicObj.Min + ":" + topicObj.Sec;
         const result = await saveTopic(topicObj, courseObject.GroupId, secId);
         if (result.ok) {
             setIsModalVisible(false);
@@ -412,6 +410,9 @@ const AdminCourses = ({ profile }) => {
             time = sumTime(time, item.Duration);
         })
         time = time.split(":");
+        time[0] = time[0]?.length < 2 ? ("0" + time[0]) : time[0];
+        time[1] = time[1]?.length < 2 ? ("0" + time[1]) : time[1];
+        time[2] = time[2]?.length < 2 ? ("0" + time[2]) : time[2];
         return time[0] + "h" + time[1] + "m" + time[2] + "s";
     }
     function sumTime(t1, t2, array = []) {
