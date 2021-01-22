@@ -2053,6 +2053,7 @@ textarea {
 .height-scroll{min-height: calc(100vh - 150px); overflow: auto;}
 .button-hover:hover{background: rgba(0, 0, 0, 0.05);}
 .lms-video video:focus{outline: none;}
+.hideempty .ant-list-empty-text{display: none;}
 .noti-dropdown .notifications{border: 0 !important;}
 .noti-dropdown .noti-text{white-space: normal;overflow: break-word;text-align: left;}
 .noti-dropdown .ant-list-item-meta-description{text-align: left;}

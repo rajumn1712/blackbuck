@@ -278,7 +278,7 @@ reUpload = ()=>{
                       PDF, xls).
                     </p>
                   </Dragger>}
-                  {(!flagsData.IsSubmitted) && <div className="docs px-0">
+                  {(!flagsData.IsSubmitted) && <div className="docs px-0 hideempty">
                   <List
               itemLayout="horizontal"
               dataSource={this.state.uploadSources}

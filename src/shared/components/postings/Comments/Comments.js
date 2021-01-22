@@ -80,18 +80,6 @@ class Comments extends Component {
         const { comments, count } = this.state;
         return (
             <div className="post-comment">
-
-                <Comment
-                    avatar={
-                        <Avatar src={this.props.profile?.ProfilePic || defaultUser} />
-                    }
-                    content={
-                        <Form.Item><TextArea onChange={this.onChange} value={this.state.Comment}  autoSize={{ minRows: 1, maxRows: 6 }} />
-                            <Button disabled={!this.state.Comment} htmlType="submit" onClick={this.onSubmit} shape="circle" type="link" className="post-btn">
-                                <span className="post-icons send-icon mr-0"></span>
-                            </Button></Form.Item>
-                    }
-                />
                 {(comments.length > 0) && <> <List
                     className="comment-list"
                     dataSource={comments}
@@ -111,6 +99,17 @@ class Comments extends Component {
                     </Comment>
                     }
                 /> {comments.length !== count && <a className="more-comments mt-16" onClick={() => this.loadComments(5, comments.length)}>View more comments</a>}</>}
+                <Comment
+                    avatar={
+                        <Avatar src={this.props.profile?.ProfilePic || defaultUser} />
+                    }
+                    content={
+                        <Form.Item><TextArea onChange={this.onChange} value={this.state.Comment}  autoSize={{ minRows: 1, maxRows: 6 }} />
+                            <Button disabled={!this.state.Comment} htmlType="submit" onClick={this.onSubmit} shape="circle" type="link" className="post-btn">
+                                <span className="post-icons send-icon mr-0"></span>
+                            </Button></Form.Item>
+                    }
+                />
             </div>
         )
     }
