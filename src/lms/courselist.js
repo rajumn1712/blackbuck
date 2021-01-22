@@ -36,7 +36,7 @@ class CourseList extends Component {
   render() {
     return (
       <div className="custom-card tag-card">
-        <Card className="card-item" actions={[<Link className="card-item-button">Continue</Link>]}>
+        <Card className="card-item">
             <Title className="text-primary f-16 semibold mb-8">
               SEO & Digital Marketing
             </Title>
@@ -49,8 +49,8 @@ class CourseList extends Component {
                 <span className="grp-type-icon lessons" />5 Lessons
               </span>
             </div>
-            <div className="mt-12 progres-bar">
-              <Progress percent={30} />
+            <div className="mt-12 progres-bar d-flex">
+              <Progress percent={30} /><span className="ml-4"><Link className="card-item-button">Continue</Link></span>
             </div>
         </Card>
         {/* <Card title="Course Suggestions" bordered={false}>

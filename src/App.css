@@ -37,7 +37,7 @@
   color: var(--primary) !important;
 }
 .ant-menu-item,
-.ant-menu-item-selected {
+.ant-menu-item-selected, .comment-over .post-comment, .comment-over .ant-card-head {
   border: 0 !important;
 }
 .icons,

@@ -180,6 +180,9 @@ class CourseContent extends Component {
                   </Collapse>
                 </div>
               </Card>
+              <Card title="Recommended Video" bordered={false}>
+              
+              </Card>
             </div>
           </Col>
         </Row>

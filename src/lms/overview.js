@@ -216,9 +216,9 @@ saveUserTestFiles = async ()=>{
                         </Row>
                     </Card>
                 </div>}
-            <div className="custom-card">
+            <div className="custom-card comment-over">
               <Card title="Comments">
-                <div className="px-12 post-card comment-show">
+                <div className="px-12 post-card comment-show comment-over">
                 {<Comments
             count={0}
             postId={this.props.courseid}
