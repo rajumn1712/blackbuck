@@ -928,7 +928,7 @@ const AdminCourses = ({ profile }) => {
                                                                     ]}
                                                                     title={item.title}
                                                                     description={
-                                                                        <div className="file-size f-12">{item.fileSize}</div>
+                                                                        <div className="file-size f-12">{bytesToSize(item.fileSize)}</div>
                                                                     }
                                                                 />
                                                                 <a
@@ -1003,7 +1003,7 @@ const AdminCourses = ({ profile }) => {
                                                                                             ]}
                                                                                             title={item.title}
                                                                                             description={
-                                                                                                <div className="file-size f-12">{item.fileSize}</div>
+                                                                                                <div className="file-size f-12">{bytesToSize(item.fileSize)}</div>
                                                                                             }
                                                                                         />
                                                                                     </List.Item>
@@ -1186,7 +1186,7 @@ const AdminCourses = ({ profile }) => {
                                                     ]}
                                                     title={item.title}
                                                     description={
-                                                        <div className="file-size f-12">{item.fileSize}</div>
+                                                        <div className="file-size f-12">{bytesToSize(item.fileSize)}</div>
                                                     }
                                                 />
                                                 <a
