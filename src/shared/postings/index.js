@@ -965,7 +965,6 @@ class Postings extends Component {
         </ul>
       </div>
     </Card>
-
   }
   renderPost = (post) => {
     return (
@@ -1055,6 +1054,14 @@ class Postings extends Component {
           }}
           fetchCardActions={(user) => this.fetchCardActions(user)}
         />
+
+
+        {/* <div>
+          <Card>
+            Dsdgfdg
+          </Card>
+        </div> */}
+
       </div>
     );
   }
