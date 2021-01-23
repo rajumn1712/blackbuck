@@ -292,7 +292,7 @@ downloadCertificate = ()=>{
                 </div>
               </Card>
             </div>
-            {<div className="custom-card mb-8">
+            {flagsData.IsCertified && <div className="custom-card mb-8">
                     <Card className="start-course">
                         <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
@@ -323,6 +323,18 @@ downloadCertificate = ()=>{
                       <div className="file-size f-12">{item.Size}</div>
                     }
                   />
+                  <a
+                    class="item-close"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.open(item.Documents)
+                    }}
+                    target="_blank"
+                  >
+                    <Tooltip title="Download">
+                      <span className="post-icons download-coloricon"></span>
+                    </Tooltip>
+                  </a>
                 </List.Item>
               )}
             />

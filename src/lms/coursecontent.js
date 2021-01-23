@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty } from "antd";
+import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty, Tooltip } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
@@ -163,21 +163,29 @@ class CourseContent extends Component {
                     dataSource={this.state.lstDocuments}
                     renderItem={(item) => (
                       <List.Item
-                        onClick={(ev) => {
-                          ev.stopPropagation();
-                          window.open(item.url, "_blank");
-                        }}
-                        style={{ cursor: "pointer" }}
+                      className="upload-preview"
                       >
                         <List.Item.Meta
                           avatar={[
                             <span className={`doc-icons ${item.avatar}`}></span>,
                           ]}
-                          title={item.title}
+                          title={<a href={item.url}>{item.title}</a>}
                           description={
                             <div className="file-size f-12">{item.fileSize}</div>
                           }
                         />
+                        <a
+                    class="item-close"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.open(item.url)
+                    }}
+                    target="_blank"
+                  >
+                    <Tooltip title="Download">
+                      <span className="post-icons download-coloricon"></span>
+                    </Tooltip>
+                  </a>
                       </List.Item>
                     )}
                   />
