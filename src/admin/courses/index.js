@@ -323,7 +323,12 @@ const AdminCourses = ({ profile }) => {
     const coursSave = async () => {
         courseObject.Tests = [];
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
-        courseObject.CourseSections = courseObject.CourseSections.filter(item => item.SectionName);
+        courseObject.CourseSections = courseObject.CourseSections.filter(item => {
+            if (item.SectionName) {
+                item.IsSaved = true;
+                return item;
+            }
+        });
         courseObject.Documents.forEach(item => {
             let Obj = {
                 "TestId": uuidv4(),
@@ -472,6 +477,10 @@ const AdminCourses = ({ profile }) => {
         setCourseObject({ ...courseObject });
     }
     const sectionSave = async () => {
+        if (!secObj.SectionName) {
+            notify({ message: "Error", type: "error", description: "Please enter section title" });
+            return;
+        }
         secObj.IsSaved = true;
         const result = await saveSection(secObj, courseObject.GroupId);
         if (result.ok) {
@@ -1003,19 +1012,19 @@ const AdminCourses = ({ profile }) => {
                                                             }
 
                                                             <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
-                                                            <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
+                                                            {/* <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div> */}
                                                         </Panel>
 
                                                     </Collapse>
                                                     }
-                                                    {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
-                                                    {courseObject.CourseSections?.length - 1 !== index && <div className=" add-lectureclose add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
+                                                    {<div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
+                                                    {<div className=" add-lectureclose add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
-                                                            < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
+                                                            < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }}  >
                                                                 <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here" addonAfter={<span className="icons add"></span>} onChange={(value) => secItemsChange("SectionName", value, index)} />}
+                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here" addonAfter={<Tooltip title={"Save Section"}><span className="icon playover-icon" htmlType="submit" type="primary" onClick={() => sectionSave()}></span></Tooltip>} onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                                 </Form.Item>
                                                                 <div className="text-right">
                                                                     {/* <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button> */}
@@ -1023,7 +1032,7 @@ const AdminCourses = ({ profile }) => {
                                                                 </div>
                                                             </Form>
                                                         </div>
-                                                        {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
+                                                        {/* {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>} */}
                                                         {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
                                                     </div>
                                                     }
