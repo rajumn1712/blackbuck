@@ -108,8 +108,18 @@ uploadProps = {
       this.setState({ ...this.state, fileUploading: false });
     }
   },
-  beforeUpload: (file, list) => {
+  beforeUpload: (file) => {
+    let accepted = false;
     const fileMaxSize = 25 * 1000000;
+    const acceptTypes = "doc,docx,ott,rtf,docm,dot,odt,dotm,md,xls,xlsx,csv"
+    if(!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)){
+      notify({
+        message: "Upload",
+        description: `File format not supported`,
+        type: "warning",
+      });
+       accepted = true;
+    }
     if (file.size > fileMaxSize) {
       notify({
         message: "Upload",
@@ -117,7 +127,7 @@ uploadProps = {
         type: "warning",
       });
     }
-    return file.size <= fileMaxSize;
+    return file.size <= fileMaxSize && !accepted;
   },
 };
 
