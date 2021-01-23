@@ -158,8 +158,10 @@ class HeaderComponent extends React.Component {
                         </div>
                     </Col>
                     <Col span={8} justify="center">
-                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal" defaultSelectedKeys={['home']}>
-                            <Menu.Item key="home" id="headerIcon">
+                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal" 
+                        defaultSelectedKeys={['newsfeed']}
+                        selectedKeys={[this.props.location.pathname]}>
+                            <Menu.Item key="/newsfeed" id="headerIcon">
                                 <Tooltip title="Home" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/" className="header-link"><span className="icons home-icon"></span></Link>
                                 </Tooltip>
@@ -169,12 +171,12 @@ class HeaderComponent extends React.Component {
                                     <Link to="/friends" className="header-link"><span className="icons social-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item> */}
-                            <Menu.Item key="contact">
+                            <Menu.Item key="/cms">
                                 <Tooltip title="Careers" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/cms" className="header-link"><span className="icons suitcase-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
-                            <Menu.Item key="lms">
+                            <Menu.Item key="/lms">
                                 <Tooltip title="LMS" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/lms" className="header-link"><span className="icons lms-icon" /></Link>
                                 </Tooltip>
