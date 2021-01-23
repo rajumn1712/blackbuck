@@ -87,6 +87,11 @@ const fetchCourseSuggestions = (user_id, take, skip) => {
     PROFILE_API + `getCourseSuggestions/${user_id}/${take}/${skip}`
   );
 };
+const usercourseSuggestions = (user_id, take, skip) => {
+  return apiClient.get(
+    PROFILE_API + `userCourseSuggestions/${user_id}/${take}/${skip}`
+  );
+};
 const saveInterest = (object) => {
   return apiClient.post(PROFILE_API + "saveInterests", object);
 };
@@ -254,6 +259,7 @@ export {
   fetchTags,
   fetchInterestsLu,
   fetchCourseSuggestions,
+  usercourseSuggestions,
   saveInterest,
   deleteInterest,
   getUserCourses,

@@ -65,7 +65,7 @@ class CourseList extends Component {
         </Card>}
         {recentList.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>}
                                 
-         <Courses loadUserCourse={false} />
+         <Courses loadUserCourse={false} isDataReferesh={this.props.isDataReferesh}/>
       </div>
     );
   }

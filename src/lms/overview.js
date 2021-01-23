@@ -13,6 +13,7 @@ import Loader from '../common/loader';
 import notify from '../shared/components/notification';
 import { uuidv4 } from '../utils';
 import { Link } from 'react-router-dom';
+import { apiClient } from '../shared/api/clients';
 
 const { Title, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -27,7 +28,7 @@ class OverView extends Component {
     TestsObj:[],
     flagsData:{"IsSubmitted":null,"IsCertified":null,"IsRejected":null},
     Members:{},
-    size:5,
+    size:10,
     page: 1,
     showUpload:true
 }
@@ -157,27 +158,94 @@ reUpload = ()=>{
   this.setState({...this.state,flagsData})
 }
 
+downloadCertificate = ()=>{
+  const html = `
+  <!DOCTYPE html>
+    <html>
+
+        <head>
+		<meta charset="UTF-8">     
+		<link href="http://fonts.cdnfonts.com/css/neue-haas-grotesk-text-pro" rel="stylesheet">       
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Download CERTIFICATE</title>
+            <style>
+                body{line - height: 30px;}
+         @import url('http://fonts.cdnfonts.com/css/neue-haas-grotesk-text-pro');
+        * {
+            font-family: 'Neue Haas Grotesk Text Pro', sans-serif;
+        }
+			</style>
+        </head>
+
+        <body>
+            <table border="1" style="border-collapse: collapse; width: 50%;height:477px;text-align:center;margin: auto;background-image: url('../lms/aa.png'); background-repeat: no-repeat;">
+                <tbody>
+                    <tr>
+                        <td style="width: 100%;vertical-align: top;">
+                            <table border="1" style="border-collapse: collapse; width: 100%; border-style: none; float: left;">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 100%; border-style: none none solid;vertical-align: top;border:0;text-align: left;">
+										<span style="display:flex;">
+										<span><img src="../lms/logo.svg" width="56" height="56" alt="" style="padding:35px 0 0 45px;margin-bottom: 15px;" /></span>
+										<span style="font-family: arial, helvetica, sans-serif;font-size: 24px;color: #353744;padding: 48px 0 0 8px;margin-bottom: 15px;">BlackBuck</span>
+										</span>
+										</td>
+                                    </tr>
+									<tr>
+										<td style="text-align:center;font-size:28px;font-weight:600;padding-top:20px;border:0;font-family: arial, helvetica, sans-serif;color:#07A3B2;">CERTIFICATE</td>
+									</tr>
+									<tr>
+										<td style="padding:0;text-align:center;width:30px;font-family: arial, helvetica, sans-serif;border:0;">
+											<img src="../lms/ce1.png" width="238" height="25px" alt="" style="margin-bottom: 15px;text-align:center;margin-bottom:0;" />
+										</td>
+									</tr>
+									<tr>
+										<td style="text-align:center;font-size:18px;padding:10px 35px;border:0;font-family: arial, helvetica, sans-serif;">
+										<p style="line-height: 1.8;letter-spacing: 1px;">This is to certify that ${this.props.profile?.FirstName} ${this.props.profile?.LastName} successfully completed of official BlackBuck Insights: on BlackBuck online course</p>
+										</td>
+									</tr>
+									
+									
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </body>
+    </html>
+  `
+  apiClient.post(process.env.REACT_APP_AUTHORITY + '/Account/DownLoadProfile',{
+    FileName:this.props?.about?.Firstname,
+    TemplateContent:html
+  }).then(res=>{
+    if(res.ok){
+      window.open(res.data);
+      this.setState({...this.state,loading:false},()=>{
+        notify({
+          message:"Download",
+          description:'Certificate downloaded successfully'
+          
+        })
+      })
+    }else{
+      notify({
+        message:"Error",
+        description:'Something went wrong',
+        type:'error'
+      })
+    }
+  })
+}
+
+
     render() {
       const {courseDetails,flagsData,Members,size,showUpload} = this.state;
         return (
           <div>
-            {/* <List
-            itemLayout="horizontal"
-            dataSource={data}
-            renderItem={item => (
-              <List.Item>
-                <List.Item.Meta
-                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title={<a>{item.title}</a>}
-                  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                />
-                
-              </List.Item>
-              
-            )}
-          /> */}
             <div className="custom-card">
-              <Card actions={(size > 4 && size < Members?.length) ? [
+              <Card actions={(size > 9 && size < Members?.length) ? [
                     <Button type="primary" onClick={() => this.showMore()}>See More</Button>
                 ] : []}>
                 <div className="p-12">
@@ -193,20 +261,20 @@ reUpload = ()=>{
                     Members List 
                   </Title>
                    <div className=" pb-16">
-                            {/* <Avatar.Group
+                            <Avatar.Group
                                 maxCount={size-1}
                                 size="large"
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
-                                {Members.map((user, index) => {
+                                {Members.length > 0 && Members.map((user, index) => {
                                     return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
                                         <Link to={this.props?.profile.Id == user.UserId ? "/profile/IsProfileTab" : ("/profileview/" + user.UserId)}><Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
                                         </Avatar></Link> 
                                     </Tooltip>
                                 })}
-                            </Avatar.Group> */}
+                            </Avatar.Group>
 
-                            <Avatar.Group className="img-marginremove"
+                            {/* <Avatar.Group className="img-marginremove"
                                     maxCount={9}
                                     size="large"
                                     maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
@@ -219,12 +287,12 @@ reUpload = ()=>{
                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                </Avatar.Group>
+                                </Avatar.Group> */}
                         </div>
                 </div>
               </Card>
             </div>
-            {flagsData.IsCertified && <div className="custom-card mb-8">
+            {<div className="custom-card mb-8">
                     <Card className="start-course">
                         <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
@@ -232,13 +300,13 @@ reUpload = ()=>{
                                 <p className="f-14 text-white mb-0">Your are certified and your certificate is generated now its ready to generate.</p>
                             </Col>
                             <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                <Button type="dashed">Download Here</Button>
+                                <Button type="dashed" onClick={this.downloadCertificate}>Download Here</Button>
                             </Col>
                         </Row>
                     </Card>
                 </div>}
-            <div className="custom-card">
-              <Card title={flagsData.IsSubmitted ? '' : 'Take a Test'}>
+            {!flagsData.IsCertified && <div className="custom-card">
+              <Card title='Take a Test'>
                 {!flagsData.IsSubmitted && <div className="docs px-0">
                 <List
               itemLayout="horizontal"
@@ -259,13 +327,6 @@ reUpload = ()=>{
               )}
             />
                 </div>}
-              
-                {/* <Result
-                  icon={<img src={test} />}
-                  title="Test documents are uploaded here"
-                  subTitle="Please download and completed the assignments and upload bellow, thank you !"
-                  extra={<Button type="primary">Download Here</Button>}
-                /> */}
                 <div className="px-12 pb-12">
                {(flagsData.IsSubmitted&&!flagsData.IsRejected&&!flagsData.IsCertified) && <Result
                       icon={<span className="error-icons success" />}
@@ -289,7 +350,7 @@ reUpload = ()=>{
                     </p>
                     <p className="ant-upload-hint">
                       Support for a single or bulk upload. Strictly prohibit
-                      from uploading company data or other band files (doc, PPT,
+                       from uploading company data or other band files (doc, PPT,
                       PDF, xls).
                     </p>
                   </Dragger>}
@@ -338,7 +399,7 @@ reUpload = ()=>{
                   </div>
                 </div>
               </Card>
-            </div>
+            </div>}
             <div className="custom-card comment-over">
               <Card title="Comments">
                 <div className="px-12 post-card comment-show comment-over">

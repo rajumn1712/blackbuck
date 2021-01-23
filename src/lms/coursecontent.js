@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, List, Row, Col, Carousel, Collapse, Avatar } from "antd";
+import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
@@ -200,7 +200,7 @@ class CourseContent extends Component {
           <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
             <div className="custom-card video-card">
               <Card title="Course Content" bordered={false}>
-                <div className="height-scroll">
+                {this.state.courseDetails?.CourseSections?.length > 0 && <div className="height-scroll">
                   <Collapse
                     bordered={false}
                     defaultActiveKey={["1"]}
@@ -256,7 +256,8 @@ class CourseContent extends Component {
                       )
                     )}
                   </Collapse>
-                </div>
+                </div>}
+                {this.state.courseDetails?.CourseSections?.length == 0 && <Empty />}
               </Card>
               <Card title="Recommended Video" bordered={false}>
                 

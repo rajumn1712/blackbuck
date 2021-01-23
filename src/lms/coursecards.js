@@ -30,6 +30,8 @@ class CourseCards extends Component {
   };
   componentDidMount() {
     this.loadCourses("1");
+    if (this.props.onRef)
+            this.props.onRef(this);
   }
   loadCourses = async (key) => {
     key = key == "1" ? "courses" : "recentCourses";
@@ -185,11 +187,11 @@ class CourseCards extends Component {
                               <div>
                                 <span className="mr-12 f-12 text-secondary">
                                   <span className="grp-type-icon video-play" />
-                                  {course.videos} Videos
+                                  {course.sections} Sections
                                 </span>
                                 <span className="f-12 text-secondary">
                                   <span className="grp-type-icon lessons" />
-                                  {course.sections}
+                                  {course.videos} Videos
                                   Lessons
                                 </span>
                               </div>

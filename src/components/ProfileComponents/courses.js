@@ -27,7 +27,7 @@ class Courses extends Component {
     this.setState({ ...this.state, loading: true });
     const getcourses = await (this.props?.loadUserCourse
       ? getUserCourses
-      : fetchCourseSuggestions)(this.props?.profile?.Id, 10, 0);
+      : fetchCourseSuggestions)(this.props?.profile?.Id, 5, 0);
     let { courses } = this.state;
     courses = getcourses.data;
     if (getcourses.ok) {
@@ -51,12 +51,15 @@ class Courses extends Component {
       notify({
         message: "Courses join",
         description:
-          item.type === "Private" ? "Request sent" : "Joined to course",
+          item.type === "Private" ? "Request sent" : "Course joined successfully",
       });
       // if (item.type !== 'Private') {
       //     this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
       //     this.props.updateProfile(this.props.profile)
       // }
+      if(this.props.isDataReferesh){
+        this.props.isDataReferesh.loadCourses("1")
+      }
       this.updateCourse(item);
     } else {
       notify({

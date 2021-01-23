@@ -13,11 +13,11 @@ class LMSComponent extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={16} lg={17} xl={17}>
                         <Courses />
-                        <CourseCards />
+                        <CourseCards onRef={(courses)=>this.coursedetails =courses}/>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={7} xl={7}>
                         <Affix offsetTop={86} >
-                            <CourseList />
+                            <CourseList isDataReferesh={this.coursedetails}/>
 
                         </Affix>
                     </Col>
