@@ -280,6 +280,12 @@ const AdminCourses = ({ profile }) => {
             formRef.current.scrollTop = 0;
             return;
         }
+        if (topicObj.lstDocuments?.length == 0 && topicObj.TopicType == "Document") {
+            setIsError(true);
+            setErrorMessage("Atleast one document required");
+            formRef.current.scrollTop = 0;
+            return;
+        }
         if (topicObj.TopicType == "Video") {
             topicObj.lstDocuments = [];
             topicObj.VideoName = topicObj.Title;
@@ -473,6 +479,15 @@ const AdminCourses = ({ profile }) => {
         }
         else {
             topicObj[prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
+            if (prop == "TopicType" && topicObj[prop] == "Document") {
+                topicObj.VideoUrl = [];
+                topicObj.Duration = "00:00:00";
+                setIsError(false);
+            }
+            if (prop == "TopicType" && topicObj[prop] == "Video") {
+                topicObj.lstDocuments = [];
+                setIsError(false);
+            }
             setTopicObj({ ...topicObj })
         }
     }
@@ -1070,7 +1085,7 @@ const AdminCourses = ({ profile }) => {
                             <div className="custom-fields">
                                 <label className="text-secondary d-block mb-4">Title</label>
                                 <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} >
-                                    <Input onChange={(value) => handleChange('Title', value, true)} maxLength={150}/>
+                                    <Input onChange={(value) => handleChange('Title', value, true)} maxLength={150} />
                                 </Form.Item>
                             </div>
                             <div className="custom-fields">
@@ -1127,7 +1142,7 @@ const AdminCourses = ({ profile }) => {
                             }
                             {isError && topicObj.TopicType == "Video" && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             {fileUploading && topicObj.TopicType == "Video" && <Loader className="loader-top-middle" />}
-                            {topicObj.VideoSource == "Upload" && topicObj.VideoUrl?.map((image, indx) => (
+                            {topicObj.VideoSource == "Upload" && topicObj.TopicType == "Video" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 mt-8 upload-preview">
                                     <video width="100%" controls>
                                         <source src={image} />
@@ -1174,6 +1189,7 @@ const AdminCourses = ({ profile }) => {
                             </Dragger>
                             }
                             {fileUploading && topicObj.TopicType == "Document" && <Loader className="loader-top-middle" />}
+                            {isError && topicObj.TopicType == "Document" && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             {topicObj.TopicType == "Document" &&
                                 <div className="docs mb-16">
                                     <List
