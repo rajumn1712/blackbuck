@@ -2090,3 +2090,4 @@ textarea {
 .objectfit-cover img{height: 208px;object-fit: cover;}
 .right-shape .ant-input{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
 .right-shape .ant-input-group-addon{border-top-right-radius: 0.8rem;border-bottom-right-radius: 0.8rem;}
+.course-create{background: var(--bodybg);padding: 16px;}
