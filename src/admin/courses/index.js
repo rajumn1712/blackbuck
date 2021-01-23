@@ -810,7 +810,7 @@ const AdminCourses = ({ profile }) => {
                                                     {fileImgUploading && <Loader className="loader-top-middle" />}
                                                     {courseObject.GroupImage?.map((image, indx) => (
                                                         <div key={indx} className="mb-16 mt-8 upload-preview">
-                                                            <Image src={image} />
+                                                            <Image className="objectfit-cover" src={image} />
                                                             <a
                                                                 class="item-close"
                                                                 onClick={() => {
@@ -1009,17 +1009,17 @@ const AdminCourses = ({ profile }) => {
                                                     </Collapse>
                                                     }
                                                     {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
-                                                    {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
+                                                    {courseObject.CourseSections?.length - 1 !== index && <div className=" add-lectureclose add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
                                                                 <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    {item.SectionId && <Input placeholder="Add section title here" className="f-16 mb-16" onChange={(value) => secItemsChange("SectionName", value, index)} />}
+                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here" addonAfter={<span className="icons add"></span>}  onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                                 </Form.Item>
                                                                 <div className="text-right">
-                                                                    <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                                    <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
+                                                                    {/* <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button> */}
+                                                                    {/* <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button> */}
                                                                 </div>
                                                             </Form>
                                                         </div>

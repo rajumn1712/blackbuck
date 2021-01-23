@@ -149,7 +149,7 @@ class Courses extends Component {
                     <div className="p-12 card-background xf">
                         <Row gutter={16}>
                             {lstCourses.map((course, index) => {
-                                return <Col xs={24} md={8} lg={4}>
+                                return <Col xs={24} md={8} lg={6}>
                                     <Card key={index}
                                         className="card-item"
                                         cover={<img alt="photography" src={course.Image?.[0] || defaultguser} />}

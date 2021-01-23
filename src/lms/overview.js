@@ -4,6 +4,7 @@ import defaultUser from "../styles/images/defaultuser.jpg";
 import TextArea from 'antd/lib/input/TextArea';
 import '../index.css';
 import '../App.css';
+import user from '../styles/images/user.jpg';
 import { fetchUserTests, getCertifiedFlags, getCourseMembersList, submitTests } from './api';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -189,10 +190,10 @@ reUpload = ()=>{
                   </Paragraph>
                   <Divider />
                   <Title className="semibold mb-4 text-primary f-16">
-                    Members List
+                    Members List 
                   </Title>
-                  {Members.length > 0 && <div className=" pb-16">
-                            <Avatar.Group
+                   <div className=" pb-16">
+                            {/* <Avatar.Group
                                 maxCount={size-1}
                                 size="large"
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
@@ -203,9 +204,23 @@ reUpload = ()=>{
                                         </Avatar></Link> 
                                     </Tooltip>
                                 })}
-                            </Avatar.Group>
+                            </Avatar.Group> */}
+
+                            <Avatar.Group className="img-marginremove"
+                                    maxCount={9}
+                                    size="large"
+                                    maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
+                                >
+                                    <Avatar src={user} />
+                                    <Avatar src={user} />
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                </Avatar.Group>
                         </div>
-                        }
                 </div>
               </Card>
             </div>

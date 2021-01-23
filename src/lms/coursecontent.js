@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, List, Row, Col, Carousel, Collapse } from "antd";
+import { Card, List, Row, Col, Carousel, Collapse, Avatar } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
@@ -11,6 +11,11 @@ import {
 } from "./api";
 import { connect } from "react-redux";
 const { Panel } = Collapse;
+const data = [
+  {
+    title: 'A musical and visual delight! ',
+  }
+]
 class CourseContent extends Component {
   state = {
     courseDetails: {},
@@ -127,7 +132,7 @@ class CourseContent extends Component {
                           key={this.state.selectedVideo}
                           src={this.state.selectedVideo
                             .split("watch?v=")
-                            .join("embed/")+'?autoplay=1'}
+                            .join("embed/") + '?autoplay=1'}
                           frameborder="0"
                           allow='autoplay; encrypted-media'
                           allowfullscreen
@@ -142,7 +147,7 @@ class CourseContent extends Component {
                           key={this.state.selectedVideo}
                           src={`https://player.vimeo.com/video/${this.state.selectedVideo.split("/")[
                             this.state.selectedVideo.split("/").length - 1
-                            ]
+                          ]
                             }?autoplay=1`}
                           frameborder="0"
                           allow='autoplay; encrypted-media'
@@ -253,7 +258,28 @@ class CourseContent extends Component {
                   </Collapse>
                 </div>
               </Card>
-              {/* <Card title="Recommended Video" bordered={false}></Card> */}
+              <Card title="Recommended Video" bordered={false}>
+                
+
+                <List
+                  itemLayout="horizontal"
+                  dataSource={data}
+                  renderItem={item => (
+                    <List.Item>
+                      <List.Item.Meta
+                        avatar={<div className="video-recommended mb-8" id="video_player">
+                        <video controls key={this.state.selectedVideo}>
+                          <source src={this.state.selectedVideo} />
+                        </video></div>}
+                        title={<a href="https://ant.design">{item.title}</a>}
+                        description={<div className="f-13"><div>Computer Course</div><div><span>124k Views</span> . <span>1 Month ago</span></div></div>}
+                      />
+                    </List.Item>
+                  )}
+                />
+
+
+              </Card>
             </div>
           </Col>
         </Row>
