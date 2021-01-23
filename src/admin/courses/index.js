@@ -696,7 +696,7 @@ const AdminCourses = ({ profile }) => {
                                         <div className="custom-fields">
                                             <label className="text-secondary d-block mb-4">Title</label>
                                             <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
-                                                <Input placeholder="e.g. Learn how to code from scratch" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
+                                                <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
                                         </div>
                                         <div className="custom-fields">
@@ -751,7 +751,7 @@ const AdminCourses = ({ profile }) => {
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
-                                                    <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" />
+                                                    <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} />
                                                 </Form.Item>
                                             </Col>
                                             }
@@ -1015,7 +1015,7 @@ const AdminCourses = ({ profile }) => {
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()} >
                                                                 <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here" addonAfter={<span className="icons add"></span>}  onChange={(value) => secItemsChange("SectionName", value, index)} />}
+                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here" addonAfter={<span className="icons add"></span>} onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                                 </Form.Item>
                                                                 <div className="text-right">
                                                                     {/* <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button> */}
