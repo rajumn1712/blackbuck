@@ -441,6 +441,11 @@ const AdminCourses = ({ profile }) => {
         if (!popup) {
             if (prop != "Categories" && prop != "Author") {
                 courseObject[prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
+                if (courseObject[prop] == "Content" && prop == "CourseType") {
+                    courseObject.UrlType = "";
+                    courseObject.Date = "";
+                    courseObject.Link = "";
+                }
             }
             else {
                 courseObject[prop] = [];
@@ -464,6 +469,7 @@ const AdminCourses = ({ profile }) => {
                 });
             }
             setCourseObject({ ...courseObject })
+            form.setFieldsValue({ UrlType: courseObject.UrlType, Date: courseObject.Date, Link: courseObject.Link })
         }
         else {
             topicObj[prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
