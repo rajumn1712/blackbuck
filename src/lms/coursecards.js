@@ -88,8 +88,8 @@ class CourseCards extends Component {
                             <div className="coursecard-cont">
                               <div>
                                 <Paragraph
-                                  ellipsis={{ rows: 3 }}
-                                  className="f-14 text-primary mb-8"
+                                  ellipsis={{ rows: 2 }}
+                                  className="f-14 text-primary mb-8" style={{height: '42px'}}
                                 >
                                   {course.description}
                                 </Paragraph>
@@ -181,7 +181,7 @@ class CourseCards extends Component {
                           }
                           description={
                             <div>
-                              <Paragraph lines={4}>
+                              <Paragraph lines={2} style={{height: '42px'}}>
                                 {course.description}
                               </Paragraph>
                               <div>
