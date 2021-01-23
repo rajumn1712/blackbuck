@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Card, Select, Input, Row, Col, DatePicker, Button, Empty } from 'antd';
+import { Menu, Card, Select, Input, Row, Col, DatePicker, Button, Empty, Modal } from 'antd';
 import { Link, withRouter } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import notify from '../../shared/components/notification';
@@ -41,6 +41,16 @@ class Courses extends Component {
         })
     }
     deleteCourse = (course) => {
+        Modal.confirm({
+            title: "Confirm",
+            icon: "",
+            content: "Are you sure want to delete course?",
+            okText: "Ok",
+            cancelText: "Cancel",
+            onOk: () => this.confirmCourseDelete(course),
+        });
+    }
+    confirmCourseDelete = (course) => {
         courseDelete(course.Id).then((res) => {
             if (res.ok) {
                 notify({
