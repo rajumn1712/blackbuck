@@ -212,6 +212,9 @@ const AdminCourses = ({ profile }) => {
 
     const onCourseEditObj = (id) => {
         setShowForm(true);
+        setFileImgUploading(false);
+        setFileVideoUploading(false)
+        setFileUploading(false)
         courseObject.GroupId = id;
         setCourseObject({ ...courseObject })
         refreshCourseDetails(true);
@@ -706,7 +709,12 @@ const AdminCourses = ({ profile }) => {
                                 <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
                             </Col>
                             <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                <Button type="dashed" onClick={() => { setShowForm(true) }}>Create Course</Button>
+                                <Button type="dashed" onClick={() => {
+                                    setShowForm(true)
+                                    setFileImgUploading(false);
+                                    setFileVideoUploading(false)
+                                    setFileUploading(false)
+                                }}>Create Course</Button>
                             </Col>
                         </Row>
                     </Card>
@@ -1061,8 +1069,8 @@ const AdminCourses = ({ profile }) => {
                                             })}
                                         </div>}
                                         <div className="text-right">
-                                            <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
-                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
+                                            <Button disabled={fileVideoUploading} type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
+                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button disabled={fileVideoUploading} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
                                             <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
                                         </div>
                                     </div>
@@ -1073,7 +1081,7 @@ const AdminCourses = ({ profile }) => {
                 </Form>}
                 <Modal title="Add Topic" visible={isModalVisible} onCancel={handleCancel} centered
                     footer={<>
-                        <Button type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
+                        <Button disabled={fileUploading} type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
                     </>}
                     className="addTopicPop"
                     destroyOnClose
