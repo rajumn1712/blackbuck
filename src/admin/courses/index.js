@@ -1070,7 +1070,7 @@ const AdminCourses = ({ profile }) => {
                             <div className="custom-fields">
                                 <label className="text-secondary d-block mb-4">Title</label>
                                 <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} >
-                                    <Input onChange={(value) => handleChange('Title', value, true)} />
+                                    <Input onChange={(value) => handleChange('Title', value, true)} maxLength={150}/>
                                 </Form.Item>
                             </div>
                             <div className="custom-fields">
@@ -1079,6 +1079,7 @@ const AdminCourses = ({ profile }) => {
                                     <TextArea onResize
                                         autoSize={{ minRows: 3, maxRows: 20 }}
                                         onChange={(value) => handleChange('Description', value, true)}
+                                        maxLength={1024}
                                     />
                                 </Form.Item>
                             </div>
