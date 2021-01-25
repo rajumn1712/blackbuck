@@ -30,7 +30,7 @@ class OverView extends Component {
     Members:{},
     size:10,
     page: 1,
-    showUpload:true
+    showUpload:false
 }
 componentDidMount(){
   this.getMembersList();
@@ -148,8 +148,8 @@ saveUserTestFiles = async ()=>{
   "Lastname": this.props.profile?.LastName,
   "Image": this.props.profile?.ProfilePic,
    "CreatedDate":new Date(),
-   "IsSubmitted":this.state.flagsData.ReSubmit ? false : true,
-   "ReSubmit":this.state.flagsData.ReSubmit,
+   "IsSubmitted":this.state.flagsData.showUpload ? false : true,
+   "ReSubmit":this.state.flagsData.showUpload ? true : false,
    "IsRejected":false,
    "IsCertified":false,
   "Tests": this.state.TestsObj
@@ -165,11 +165,12 @@ saveUserTestFiles = async ()=>{
   }
 }
 reUpload = ()=>{
-  let {flagsData} = this.state;
-  flagsData.ReSubmit = true;
+  let {flagsData,showUpload} = this.state;
+  showUpload = true
   flagsData.IsRejected = false;
+  flagsData.IsCertified = false;
   flagsData.IsSubmitted = false;
-  this.setState({...this.state,flagsData})
+  this.setState({...this.state,flagsData,showUpload})
 }
 
 downloadCertificate = ()=>{
@@ -356,7 +357,7 @@ downloadCertificate = ()=>{
             />
                 </div>}
                 <div className="px-12 pb-12">
-               {(flagsData.IsSubmitted&&!flagsData.IsRejected&&!flagsData.IsCertified) && <Result
+               {(flagsData.IsSubmitted || flagsData.ReSubmit) && <Result
                       icon={<span className="error-icons success" />}
                       title="Successfully Uploaded"
                       subTitle="We sent your file's to the admin review, untill approve, please wait..."
@@ -367,7 +368,7 @@ downloadCertificate = ()=>{
                       subTitle="Please check and modify the assignments before resubmitting."
                       extra={[<Button type="primary" onClick={this.reUpload}>Re - Upload</Button>]}
                     ></Result>}
-                  {(courseDetails.Tests.length > 0 && !flagsData.IsSubmitted) && <Dragger className="upload mb-16"
+                  {(courseDetails.Tests.length > 0 && (!flagsData.IsCertified && !flagsData.IsRejected && !flagsData.IsSubmitted)) && <Dragger className="upload mb-16"
                   {...this.uploadProps}
                   showUploadList={false}
                   >
@@ -382,7 +383,7 @@ downloadCertificate = ()=>{
                       PDF, xls).
                     </p>
                   </Dragger>}
-                  {(courseDetails.Tests.length > 0 && !flagsData.IsSubmitted) && <div className="docs px-0 hideempty">
+                  {(courseDetails.Tests.length > 0 && (!flagsData.IsCertified && !flagsData.IsRejected && !flagsData.IsSubmitted)) && <div className="docs px-0 hideempty">
                   <List
               itemLayout="horizontal"
               dataSource={this.state.uploadSources}
