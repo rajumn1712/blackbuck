@@ -6,6 +6,8 @@ import AdminCourses from './courses';
 // import Jobs from './jobs';
 import Members from './members';
 import TestSubmissions from './testsubmissions';
+import AccessDenied from '../components/accessdenined';
+import { connect } from 'react-redux';
 import defaultUser from "../styles/images/defaultuser.jpg";
 import coverphoto from "../styles/images/default-cover.png";
 import '../../src/profile/profilestyle.css';
@@ -53,7 +55,7 @@ class Admin extends Component {
                             </Menu.Item>
                         </SubMenu>
                         <SubMenu key="sub2" icon={<span className="left-menu lmsicon mr-12" />} title="LMS">
-                        <Menu.Item key="courses">
+                            <Menu.Item key="courses">
                                 <Link to="/admin/courses">Courses</Link>
                             </Menu.Item>
                             <Menu.Item key="assingments">
@@ -66,15 +68,18 @@ class Admin extends Component {
                         </SubMenu>
                     </Menu>
                 </div>
-                <div style={{flex: 1, marginLeft: 260}} className="p-12">
-                    <Route path="/admin/courses" component={AdminCourses} />
-                    <Route path="/admin/members" component={Members} />
-                    <Route path="/admin/groups" component={Groups} />
-                    <Route path="/admin/testsubmissions" component={TestSubmissions} />
+                <div style={{ flex: 1, marginLeft: 260 }} className="p-12">
+                    <Route path="/admin/courses" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? AdminCourses : AccessDenied} />
+                    <Route path="/admin/members" component={(this.props?.profile?.Category == "Root") ? Members : AccessDenied} />
+                    <Route path="/admin/groups" component={(this.props?.profile?.Category == "Root") ? Groups : AccessDenied} />
+                    <Route path="/admin/testsubmissions" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? TestSubmissions : AccessDenied} />
                     {/* <Route path="/admin/jobs" component={Jobs} /> */}
                 </div>
             </div>
         </>
     }
 }
-export default Admin;
+const mapStateToProps = ({ oidc }) => {
+    return { profile: oidc.profile };
+};
+export default connect(mapStateToProps)(Admin);
