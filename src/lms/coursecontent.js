@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty, Tooltip,Typography } from "antd";
+import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty, Tooltip,Typography,Divider } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
 import OverView from "./overview";
+import user from '../styles/images/user.jpg';
 import {
   fetchCourseDetails,
   getUserWatchedVideos,
@@ -110,8 +111,9 @@ class CourseContent extends Component {
       <div className="post-preview-box course-card">
         <Row gutter={24} className="py-16">
           <Col className="" xs={24} sm={16} md={16} lg={17}>
+            <div className="card-background p-0 mb-12">
             <div className="preview-image">
-            <Title level={4} className="semibold mb-4 text-primary">
+            <Title level={4} className="p-12 semibold mb-4 text-primary">
             {this.state.courseDetails.GroupName}
             </Title>
               <Carousel>
@@ -160,7 +162,7 @@ class CourseContent extends Component {
                       )}
                   </div>
                 )}
-                {this.state.IsRenderType === 'Document' && <div className="docs px-0">
+                {this.state.IsRenderType === 'Document' && <div className="docs px-12">
                   <List
                     itemLayout="horizontal"
                     dataSource={this.state.lstDocuments}
@@ -197,6 +199,36 @@ class CourseContent extends Component {
 
               </Carousel>
             </div>
+            <div className="py-12">
+               <div className="px-12">
+                  <p className="text-secondary f-14">Neha sruthi | Jan 23, 2021</p>
+                  <Paragraph className="text-primary mb-4">
+                  Learn to use Python professionally, learning both Python 2 and Python 3! Create games with Python, like Tic Tac Toe and Blackjack! Learn advanced Python features, like the collections module and how to work with timestamps! Learn to use Object Oriented Programming with classes! Understand complex topics, like decorators. Understand how to use both the Jupyter Notebook and create .py files Get an understanding of how to create GUIs in the Jupyter Notebook system! Build a complete understanding of Python from the ground up!
+                  </Paragraph></div>
+                  <Divider className="mt-0 mb-6" />
+                  <div className="px-12">
+                  <Title className="semibold mb-4 text-primary f-16">
+                    Members List 
+                  </Title>
+                   <div>
+                            
+                             <Avatar.Group className="img-marginremove"
+                                    maxCount={9}
+                                    size="large"
+                                    maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
+                                >
+                                    <Avatar src={user} />
+                                    <Avatar src={user} />
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                </Avatar.Group> 
+                        </div></div>
+                </div>
+            </div>
             <Row gutter={16}>
               <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 {!this.state.loading && (
@@ -207,6 +239,7 @@ class CourseContent extends Component {
                 )}
               </Col>
             </Row>
+            
           </Col>
           <Col className="p-0" xs={24} sm={8} md={8} lg={7}>
             <div className="custom-card video-card">

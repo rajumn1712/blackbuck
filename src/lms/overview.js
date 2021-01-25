@@ -259,13 +259,13 @@ downloadCertificate = ()=>{
         return (
           <div>
             <div className="custom-card">
-              <Card actions={(size > 9 && size < Members?.length) ? [
+              {/*<Card actions={(size > 9 && size < Members?.length) ? [
                     <Button type="primary" onClick={() => this.showMore()}>See More</Button>
                 ] : []}>
-                <div className="py-12">
-                  {/* <Title level={4} className="semibold mb-4 text-primary">
+                 <div className="py-12">
+                   <Title level={4} className="semibold mb-4 text-primary">
                    {courseDetails.GroupName}
-                  </Title> */}
+                  </Title> 
                   <div className="px-12">
                   <p className="text-secondary f-14">{courseDetails.Author[0].Firstname} {courseDetails.Author[0].Lastname} |  {moment(courseDetails.CreatedDate).format('ll')}</p>
                   <Paragraph className="text-primary">
@@ -304,9 +304,9 @@ downloadCertificate = ()=>{
                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                 </Avatar.Group> */}
-                        </div></div>
-                </div>
-              </Card>
+                        {/* </div></div>
+                </div> 
+              </Card>*/}
             </div>
             {flagsData.IsCertified && <div className="custom-card mb-8">
                     <Card className="start-course">
@@ -323,7 +323,7 @@ downloadCertificate = ()=>{
                 </div>}
             {(courseDetails.Tests.length > 0 &&!flagsData.IsCertified) && <div className="custom-card">
               <Card title='Take a Test'>
-                {!flagsData.IsSubmitted && <div className="docs px-0">
+                {!flagsData.IsSubmitted && <div className="docs px-12">
                 <List
               itemLayout="horizontal"
               dataSource={courseDetails.Tests}
