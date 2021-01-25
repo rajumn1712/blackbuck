@@ -738,10 +738,10 @@ const AdminCourses = ({ profile }) => {
                                                 <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
                                         </div>
-                                        <div className="custom-fields">
+                                        <div className="">
                                             <label className="text-secondary d-block mb-4">Description</label>
-                                            <Form.Item className="custom-fields" name="Description" rules={[{ required: true, message: "Description  required" }]}>
-                                                <TextArea placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
+                                            <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>
+                                                <TextArea className="custom-fields" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
                                                 />
                                             </Form.Item>
@@ -1049,7 +1049,7 @@ const AdminCourses = ({ profile }) => {
 
                                                     </Collapse>
                                                     }
-                                                    {<div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
+                                                    {<div className="add-lecture p-4" onClick={() => addSection()}> <Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
                                                     {/* {<div className=" add-lectureclose add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>} */}
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
