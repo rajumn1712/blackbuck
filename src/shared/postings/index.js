@@ -975,7 +975,7 @@ class Postings extends Component {
     </Card>
   }
   renderCourseCard = (post) => {
-    return <>{post.ConteType === "LiveSession" ? <div>
+    return <>{post.CourseType === "LiveSession" ? <div>
       <img width="100%" src={zoom} />
       <div className="course-create d-flex justify-between">
         <div>
