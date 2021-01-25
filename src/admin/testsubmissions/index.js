@@ -25,6 +25,10 @@ const TestSubmissions = ({ profile }) => {
       dataIndex: 'Firstname',
     },
     {
+      title: 'Course Name',
+      dataIndex: 'CourseName',
+    },
+    {
       title: 'Document',
       dataIndex: 'document',
       render: (text, record) => record.Tests?.map((test, index) => {
