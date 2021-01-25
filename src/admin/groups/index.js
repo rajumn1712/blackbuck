@@ -5,6 +5,8 @@ import { getAllSystemGroups, groupBlock } from '../../shared/api/apiServer';
 import connectStateProps from '../../shared/stateConnect';
 import notify from '../../shared/components/notification';
 import Modal from 'antd/lib/modal/Modal';
+import moment from 'moment';
+import Loader from "../../common/loader";
 
 const { Option } = Select;
 const columns = [
@@ -49,7 +51,40 @@ const columns = [
         ),
     },
 ];
-
+const columnsGroups = [
+    {
+        title: 'Group Name',
+        dataIndex: 'name',
+        // render: text => {{text}}
+    },
+    {
+        title: 'Posts',
+        dataIndex: 'postsCount',
+    },
+    {
+        title: 'Type',
+        dataIndex: 'type',
+    },
+    {
+        title: 'Date',
+        dataIndex: 'date',
+        render: (text, record) => (
+            moment(record.date).format('ll')
+        ),
+    },
+    {
+        title: 'Members',
+        dataIndex: 'members',
+    },
+    {
+        title: 'Admin',
+        dataIndex: 'admin',
+        key: 'admin',
+        render: (text, record) => record.adminUsers?.map((admin, index) => {
+            return <span>{admin.Firstname}{index !== record.adminUsers?.length - 1 && ", "}</span>
+        })
+    },
+];
 const data = [
     {
         key: '1',
@@ -69,6 +104,7 @@ const Groups = ({ profile }) => {
     const [isModal, setIsModal] = useState(false);
     const [groups, setGroups] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         getGroups(1, 20);
     }, []);
@@ -115,12 +151,19 @@ const Groups = ({ profile }) => {
         getGroups(page, pageSize);
     }
     const getGroups = async (page, pageSize) => {
+        setLoading(true);
         const response = await getAllSystemGroups(pageSize, ((pageSize * page) - pageSize));
         if (response.ok) {
+            setLoading(false);
             response.data.forEach((item, index) => {
                 item["key"] = index;
             })
             setData(response.data);
+        }
+        else {
+            setLoading(false);
+            window.scrollTo(0, 0);
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
 
     }
@@ -152,12 +195,14 @@ const Groups = ({ profile }) => {
             </Card>
         </div> */}
         <div className="custom-card">
-            <Card className="px-12 pt-12" extra={<div>
+            <Card className="px-12 pt-12"
+            >
+                {/* extra={<div>
                 <Tooltip placement="top" title="Block">
                     <span className="left-menu block-icon mx-8"></span>
                 </Tooltip>
-            </div>}
-            >
+            </div>} */}
+                {loading && <Loader className="loader-middle" />}
                 <Table
                     rowSelection={{
                         hideSelectAll: true,
@@ -165,7 +210,7 @@ const Groups = ({ profile }) => {
                         selectedRowKeys: selectedRowKeys,
                         onChange: onSelectedRowKeysChange
                     }}
-                    columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
+                    columns={columnsGroups} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: 200, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
             </Card>
         </div>
     </>
