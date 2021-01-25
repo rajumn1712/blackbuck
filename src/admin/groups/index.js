@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Tag, Form, Tabs, Tooltip } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import { getUsers, getUsersCount, setScholor, getSystemGroups, setSystemAdmin, saveAdminUsers } from '../../shared/api/apiServer';
+import { getAllSystemGroups, groupBlock } from '../../shared/api/apiServer';
 import connectStateProps from '../../shared/stateConnect';
 import notify from '../../shared/components/notification';
 import Modal from 'antd/lib/modal/Modal';
@@ -90,7 +90,7 @@ const data = [
     },
 ];
 const Groups = ({ profile }) => {
-//const [data, setData] = useState([]);
+    //const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);
     const [isModal, setIsModal] = useState(false);
@@ -120,7 +120,7 @@ const Groups = ({ profile }) => {
         setSelection(selection);
     }
     const blockGroup = () => {
-        setScholor(selection[0].UserId).then((res) => {
+        groupBlock(selection[0].UserId).then((res) => {
             if (res.ok) {
                 notify({
                     description: "Group  blocked successfully",
@@ -140,7 +140,7 @@ const Groups = ({ profile }) => {
             response.data.forEach((item, index) => {
                 item["key"] = index;
             })
-          //  setData(response.data);
+            //  setData(response.data);
         }
 
     }
