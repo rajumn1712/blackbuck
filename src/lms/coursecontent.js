@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty, Tooltip,Typography,Divider } from "antd";
+import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty, Tooltip,Typography,Divider, Button } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
@@ -140,6 +140,16 @@ class CourseContent extends Component {
             {this.state.courseDetails.GroupName}
             </Title>
               <Carousel>
+                {courseDetails.CourseType === "Live Session" && <div className="mt-12 text-center">
+                      <Button type="primary" key="console"
+                      onClick={(e)=>{
+                        e.stopPropagation()
+                        window.open(courseDetails.Link)
+                      }}>
+                        Join Session
+                      </Button>
+                    </div>}
+                {courseDetails.CourseType === "Content" && <>
                 {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
                   <video controls key={this.state.selectedVideo}>
                     <source src={this.state.selectedVideo} />
@@ -219,7 +229,7 @@ class CourseContent extends Component {
                   />
                 </div>
                 }
-
+</>}
               </Carousel>
             </div>
             <div className="py-12">
