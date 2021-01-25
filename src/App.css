@@ -2102,3 +2102,6 @@ textarea {
 .video-active .ant-collapse-header, .video-active .anticon.anticon-caret-right{color: var(--white) !important;}
 .playicons.continue-icon{background-position: -671px -113px;}
 .playicons.close-section{background-position: -712px -110px;margin: 10px 0 0 10px;}
+.description-space .ant-row.ant-form-item{margin-bottom: 12 !important;}
+.live-btn{background: var(--red); font-weight: 500; font-size: var(--f-12); color: var(--white); padding: 2px 8px; position: absolute; right: 0; bottom: 0; width: auto !important;}
+.live-btn:hover{color: var(--white) !important;}
