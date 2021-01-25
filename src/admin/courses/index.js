@@ -118,7 +118,7 @@ const AdminCourses = ({ profile }) => {
         "Posts": [
         ]
     };
-    const acceptTypes = {
+    const acceptTypesForTopic = {
         "Video": ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
         "Document": ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
     }
@@ -178,8 +178,21 @@ const AdminCourses = ({ profile }) => {
     const props = {
         name: 'file',
         multiple: false,
-        accept: acceptTypes[topicObj.TopicType],
+        accept: acceptTypesForTopic[topicObj.TopicType],
         action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+        beforeUpload: (file) => {
+            let accepted = false;
+            const acceptTypes = acceptTypesForTopic[topicObj.TopicType]
+            if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                notify({
+                    message: "Upload",
+                    description: `File format not supported`,
+                    type: "warning",
+                });
+                accepted = true;
+            }
+            return !accepted;
+        },
         onChange(info) {
             setFileUploading(true);
             const { status } = info.file;
@@ -624,6 +637,19 @@ const AdminCourses = ({ profile }) => {
         multiple: false,
         accept: ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
         action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+        beforeUpload: (file) => {
+            let accepted = false;
+            const acceptTypes = ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv";
+            if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                notify({
+                    message: "Upload",
+                    description: `File format not supported`,
+                    type: "warning",
+                });
+                accepted = true;
+            }
+            return !accepted;
+        },
         onChange(info) {
             setFileUploading(true);
             const { status } = info.file;
@@ -900,6 +926,20 @@ const AdminCourses = ({ profile }) => {
                                                                 message.error(`${info.file.name} file upload failed.`);
                                                             }
                                                         }}
+                                                        beforeUpload={(file) => {
+                                                            let accepted = false;
+                                                            const acceptTypes = ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm";
+                                                            if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                                                                notify({
+                                                                    message: "Upload",
+                                                                    description: `File format not supported`,
+                                                                    type: "warning",
+                                                                });
+                                                                accepted = true;
+                                                            }
+                                                            return !accepted;
+                                                        }
+                                                        }
                                                         accept=".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm"
                                                         showUploadList={false}
                                                         disabled={fileVideoUploading || courseObject.CourseVideo.length > 0}
@@ -1055,7 +1095,7 @@ const AdminCourses = ({ profile }) => {
                                                             }
 
                                                             <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
-                                                             <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div> 
+                                                            <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
                                                         </Panel>
 
                                                     </Collapse>
@@ -1067,16 +1107,16 @@ const AdminCourses = ({ profile }) => {
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }}  >
                                                                 <Form.Item className="custom-fields" name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    <div className="d-flex"><div>{item.SectionId &&<Input className="f-16 right-shape" placeholder="Add section title here"
-                                                                        suffix={<Tooltip title="Save Section"><Button small htmlType="submit" type="primary" onClick={() => sectionSave()} onChange={(value) => secItemsChange("SectionName", value, index)}>Save</Button></Tooltip>}
+                                                                    <div className="d-flex"><div>{item.SectionId && <Input className="f-16 right-shape" placeholder="Add section title here"
+                                                                        suffix={<Tooltip title="Save Section"><Button small htmlType="submit" type="primary">Save</Button></Tooltip>}
                                                                         onChange={(value) => secItemsChange("SectionName", value, index)} />
-                                                                        
-                                                                              
-                                                                        
-                                                                        }</div>
+
+
+
+                                                                    }</div>
                                                                         <div><span className="icons close"></span></div>
-                                                                        </div>
-                                                                        
+                                                                    </div>
+
 
                                                                 </Form.Item>
                                                                 <div className="text-right">

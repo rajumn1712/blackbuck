@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Tag, Form, Tabs,Tooltip } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Tag, Form, Tabs, Tooltip } from 'antd';
 import Title from 'antd/lib/typography/Title';
+import { getUsers, getUsersCount, setScholor, getSystemGroups, setSystemAdmin, saveAdminUsers } from '../../shared/api/apiServer';
+import connectStateProps from '../../shared/stateConnect';
+import notify from '../../shared/components/notification';
+import Modal from 'antd/lib/modal/Modal';
 
 const { Option } = Select;
 const columns = [
@@ -85,51 +89,105 @@ const data = [
         admin: 'Blackbuck',
     },
 ];
-class Groups extends Component {
-
-    render() {
-        return <>
-            <Title className="f-18 text-primary semibold">Groups</Title>
-            <div className="custom-card">
-                <Card className="p-12 custom-fields">
-                    <Row gutter={16} align="middle">
-                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                            <Input placeholder="User Name" />
-                        </Col>
-                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                            <Select allowClear placeholder="Choose Group Type">
-                                <Option value="Mechanical Engineering">Private</Option>
-                                <Option value="Chemical Engineering">Public</Option>
-                            </Select>
-                        </Col>
-                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                            <Select allowClear placeholder="Choose College">
-                                <Option value="BVRIT Hyderabad College of Engineering">BVRIT Hyderabad College of Engineering</Option>
-                                <Option value="CGokaraju Rangaraju Institute of Engineering & Technology">Gokaraju Rangaraju Institute of Engineering & Technology</Option>
-                                <Option value="Mahatma Gandhi Institute of Technology (MGIT)">Mahatma Gandhi Institute of Technology (MGIT)</Option>
-                            </Select>
-                        </Col>
-                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                            <Button type="primary">Search</Button>
-                        </Col>
-                    </Row>
-                </Card>
-            </div>
-            <div className="custom-card">
-                <Card className="px-12 pt-12" extra={<div>
-                    <Tooltip placement="top" title="Block">
-                       <span className="left-menu block-icon mx-8"></span>
-                    </Tooltip>
-                    <Tooltip placement="top" title="Set Admin">
-                       <span className="left-menu setadmin-icon mx-8"></span>
-                    </Tooltip>
-
-                </div>}
-                >
-                    <Table columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"] }} bordered={true} />
-                </Card>
-            </div>
-        </>
+const Groups = ({ profile }) => {
+//const [data, setData] = useState([]);
+    const [count, setCount] = useState(0);
+    const [selection, setSelection] = useState([]);
+    const [isModal, setIsModal] = useState(false);
+    const [groups, setGroups] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    useEffect(() => {
+        getMembers(1, 20);
+    }, []);
+    const fetchGroupSuggestions = async () => {
+        const groupsData = await getSystemGroups(selection[0]?.UserId);
+        if (groupsData.ok) {
+            setGroups(groupsData.data);
+        } else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
     }
+    const onSelectedRowKeysChange = selectedRowKeys => {
+        setSelectedRowKeys(selectedRowKeys);
+    };
+    const onRecordSelect = (record) => {
+        const idx = selection.indexOf(record);
+        if (idx > -1) {
+            selection.splice(idx, 1);
+        } else {
+            selection.push(record);
+        }
+        setSelection(selection);
+    }
+    const blockGroup = () => {
+        setScholor(selection[0].UserId).then((res) => {
+            if (res.ok) {
+                notify({
+                    description: "Group  blocked successfully",
+                    message: "Groups",
+                });
+            }
+        });
+    }
+    const onPageChange = (page, pageSize) => {
+        setSelection([])
+        setSelectedRowKeys([]);
+        getMembers(page, pageSize);
+    }
+    const getMembers = async (page, pageSize) => {
+        const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
+        if (response.ok) {
+            response.data.forEach((item, index) => {
+                item["key"] = index;
+            })
+          //  setData(response.data);
+        }
+
+    }
+    return <>
+        <Title className="f-18 text-primary semibold">Groups</Title>
+        {/* <div className="custom-card">
+            <Card className="p-12 custom-fields">
+                <Row gutter={16} align="middle">
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Input placeholder="User Name" />
+                    </Col>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Select allowClear placeholder="Choose Group Type">
+                            <Option value="Mechanical Engineering">Private</Option>
+                            <Option value="Chemical Engineering">Public</Option>
+                        </Select>
+                    </Col>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Select allowClear placeholder="Choose College">
+                            <Option value="BVRIT Hyderabad College of Engineering">BVRIT Hyderabad College of Engineering</Option>
+                            <Option value="CGokaraju Rangaraju Institute of Engineering & Technology">Gokaraju Rangaraju Institute of Engineering & Technology</Option>
+                            <Option value="Mahatma Gandhi Institute of Technology (MGIT)">Mahatma Gandhi Institute of Technology (MGIT)</Option>
+                        </Select>
+                    </Col>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Button type="primary">Search</Button>
+                    </Col>
+                </Row>
+            </Card>
+        </div> */}
+        <div className="custom-card">
+            <Card className="px-12 pt-12" extra={<div>
+                <Tooltip placement="top" title="Block">
+                    <span className="left-menu block-icon mx-8"></span>
+                </Tooltip>
+            </div>}
+            >
+                <Table
+                    rowSelection={{
+                        hideSelectAll: true,
+                        onSelect: onRecordSelect,
+                        selectedRowKeys: selectedRowKeys,
+                        onChange: onSelectedRowKeysChange
+                    }}
+                    columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
+            </Card>
+        </div>
+    </>
 }
-export default Groups;
+export default connectStateProps(Groups);
