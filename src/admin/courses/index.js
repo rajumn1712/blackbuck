@@ -430,7 +430,7 @@ const AdminCourses = ({ profile }) => {
                 "CourseType": courseObject.CourseType,
                 "Link": courseObject.CourseType == "Live Session" ? courseObject.Link : "",
                 "UrlType": courseObject.CourseType == "Live Session" ? courseObject.UrlType : "",
-                "Date": courseObject.CourseType == "Live Session" ? courseObject.Date : "",
+                "LiveDate": courseObject.CourseType == "Live Session" ? courseObject.Date : "",
             };
 
             postObject.Posts.push({ ...Obj })
