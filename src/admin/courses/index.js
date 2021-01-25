@@ -863,7 +863,6 @@ const AdminCourses = ({ profile }) => {
                                                 <div className="mb-12">
                                                     <Dragger
                                                         className="upload"
-                                                        {...props}
                                                         onChange={(info) => {
                                                             setFileImgUploading(true);
                                                             const { status } = info.file;
@@ -876,7 +875,21 @@ const AdminCourses = ({ profile }) => {
                                                                 message.error(`${info.file.name} file upload failed.`);
                                                             }
                                                         }}
+                                                        beforeUpload={(file) => {
+                                                            let accepted = false;
+                                                            const acceptTypes = ".jpg,.jpeg,.png"
+                                                            if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                                                                notify({
+                                                                    message: "Upload",
+                                                                    description: `File format not supported`,
+                                                                    type: "warning",
+                                                                });
+                                                                accepted = true;
+                                                            }
+                                                            return !accepted;
+                                                        }}
                                                         accept=".jpg,.jpeg,.png"
+                                                        action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
                                                         onRemove={() => {
                                                             courseObject.GroupImage = [];
                                                             setCourseObject({ ...courseObject })
@@ -913,7 +926,6 @@ const AdminCourses = ({ profile }) => {
                                                 <div className="mb-12">
                                                     <Dragger
                                                         className="upload"
-                                                        {...props}
                                                         onRemove={() => {
                                                             courseObject.CourseVideo = [];
                                                             setCourseObject({ ...courseObject })
@@ -944,6 +956,7 @@ const AdminCourses = ({ profile }) => {
                                                             return !accepted;
                                                         }
                                                         }
+                                                        action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
                                                         accept=".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm"
                                                         showUploadList={false}
                                                         disabled={fileVideoUploading || courseObject.CourseVideo.length > 0}
@@ -1099,7 +1112,7 @@ const AdminCourses = ({ profile }) => {
                                                             }
                                                             <div className="text-right">
                                                                 <Button type="primary" size="small" className="px-16 mr-8" onClick={() => showModal('Add', null, item.SectionId)}>{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</Button>
-                                                                <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>                                                               
+                                                                <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
                                                             </div>
                                                             {/* <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
                                                             <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div> */}
@@ -1114,14 +1127,14 @@ const AdminCourses = ({ profile }) => {
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()}>
                                                                 <Form.Item className="custom-fields" name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    <div className="d-flex"><div style={{width: '100%'}}>{item.SectionId && <Input className="py-0 f-16 right-shape" placeholder="Add section title here"
+                                                                    <div className="d-flex"><div style={{ width: '100%' }}>{item.SectionId && <Input className="py-0 f-16 right-shape" placeholder="Add section title here"
                                                                         suffix={<Tooltip title="Save Section"><Button small htmlType="submit" type="primary">Save</Button></Tooltip>}
                                                                         onChange={(value) => secItemsChange("SectionName", value, index)} />
 
 
 
                                                                     }</div>
-                                                                        <div><Tooltip title="Delete Section"><span className="playicons close-section"></span></Tooltip></div>
+                                                                        <div><Tooltip title="Delete Section"><span className="playicons close-section" onClick={() => deleteSection(item)}></span></Tooltip></div>
                                                                     </div>
 
 
@@ -1132,7 +1145,7 @@ const AdminCourses = ({ profile }) => {
                                                                 </div> */}
                                                             </Form>
                                                         </div>
-                                                        {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
+                                                        {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><Tooltip title="Remove Section"><span className="icons close" onClick={() => deleteSection(item)}></span></Tooltip></div>}
                                                         {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
                                                     </div>
                                                     }
