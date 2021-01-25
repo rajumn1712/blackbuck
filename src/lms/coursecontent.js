@@ -35,7 +35,7 @@ class CourseContent extends Component {
     IsChecked: false,
     Members:[],
     size:10,
-    page:1,
+    page:0,
     recommendedVideos:[]
   };
   componentDidMount() {
@@ -268,7 +268,13 @@ class CourseContent extends Component {
                                     </Tooltip>
                                 })}
                             </Avatar.Group>
-                        </div></div>
+                        </div>
+                        {size > 9 && size < Members?.length && <div className="mt-12 text-center">
+                      <Button type="primary" key="console"
+                      onClick={() => this.showMore()}>See More
+                      </Button>
+                    </div>}
+                        </div>
                 </div>
             </div>
             <Row gutter={16}>
@@ -357,7 +363,7 @@ class CourseContent extends Component {
                         <video >
                           <source src={item.CourseVideo} />
                         </video></div>}
-                        title={<a href="https://ant.design">{item.CourseName}</a>}
+                        title={<Link to={"/course/" + item.CourseId}>{item.CourseName}</Link>}
                         description={<div className="f-12"><div>{item.Description}</div><div><span>{item.ViewCount} Views</span> . <span>{<Moment fromNow>{item.CreatedDate}</Moment>}</span></div></div>}
                       />
                     </List.Item>

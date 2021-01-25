@@ -44,6 +44,7 @@ import { uuidv4 } from "../../utils";
 import VisSenseFactory from "vissense";
 import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
+import { joinGroupNew } from "../api/apiServer";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -975,7 +976,7 @@ class Postings extends Component {
     </Card>
   }
   renderCourseCard = (post) => {
-    return <>{post.CourseType === "LiveSession" ? <div>
+    return <>{post.CourseType === "Live Session" ? <div>
       <img width="100%" src={zoom} />
       <div className="course-create d-flex justify-between">
         <div>
@@ -983,7 +984,7 @@ class Postings extends Component {
           <span>2K Members</span>
         </div>
         <div>
-          <Button type="primary">Jion Live</Button>
+          <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Jion Live</Button>
         </div>
       </div>
     </div> : <>
@@ -998,7 +999,7 @@ class Postings extends Component {
           <div className="d-flex justify-between">
 
             <div>
-              <Button type="primary">Join Course</Button>
+              <Button type="primary" onClick={() => this.joinCourse(post.CourseId)}>Join Course</Button>
             </div>
           </div>
         </div>
@@ -1061,6 +1062,22 @@ class Postings extends Component {
     }
     this.setState({ ...this.state, descriptionSelection });
   };
+  joinCourse = (id) => {
+    const obj = {
+      "UserId": this.props?.profile?.Id,
+      "Firstname": this.props?.profile?.FirstName,
+      "Lastname": this.props?.profile?.LastName,
+      "Email": this.props?.profile?.Email,
+      "Image": this.props?.profile?.ProfilePic
+    }
+    joinGroupNew(id, obj).then(res => {
+      if (res.ok) {
+        notify({ message: "Join Course", description: "You have joined to course" });
+      } else {
+        notify({ message: "Join Course", description: JSON.stringify(res.originalError), type: "error" });
+      }
+    })
+  }
   render() {
     return (
       <div onScroll={this.handleScroll}>
