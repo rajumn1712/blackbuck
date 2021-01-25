@@ -111,8 +111,8 @@ const Members = ({ profile }) => {
                 GroupId: adminObj.GroupId,
                 AdminUsers: [{
                     "UserId": selection[0]?.UserId,
-                    "Firstname": selection[0]?.FirstName,
-                    "Lastname": selection[0]?.LastName,
+                    "Firstname": selection[0]?.Firstname,
+                    "Lastname": selection[0]?.Lastname,
                     "Image": selection[0]?.ProfilePic,
                     "Email": selection[0]?.Email
                 }]
