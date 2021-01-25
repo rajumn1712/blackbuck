@@ -99,14 +99,14 @@ const Groups = ({ profile }) => {
     useEffect(() => {
         getMembers(1, 20);
     }, []);
-    const fetchGroupSuggestions = async () => {
-        const groupsData = await getSystemGroups(selection[0]?.UserId);
-        if (groupsData.ok) {
-            setGroups(groupsData.data);
-        } else {
-            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
-        }
-    }
+    // const fetchGroupSuggestions = async () => {
+    //     const groupsData = await getSystemGroups(selection[0]?.UserId);
+    //     if (groupsData.ok) {
+    //         setGroups(groupsData.data);
+    //     } else {
+    //         notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+    //     }
+    // }
     const onSelectedRowKeysChange = selectedRowKeys => {
         setSelectedRowKeys(selectedRowKeys);
     };
@@ -134,16 +134,16 @@ const Groups = ({ profile }) => {
         setSelectedRowKeys([]);
         getMembers(page, pageSize);
     }
-    const getMembers = async (page, pageSize) => {
-        const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
-        if (response.ok) {
-            response.data.forEach((item, index) => {
-                item["key"] = index;
-            })
-            //  setData(response.data);
-        }
+    // const getMembers = async (page, pageSize) => {
+    //     const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
+    //     if (response.ok) {
+    //         response.data.forEach((item, index) => {
+    //             item["key"] = index;
+    //         })
+    //         //  setData(response.data);
+    //     }
 
-    }
+    // }
     return <>
         <Title className="f-18 text-primary semibold">Groups</Title>
         {/* <div className="custom-card">
