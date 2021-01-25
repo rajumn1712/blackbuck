@@ -1349,7 +1349,7 @@
   border-bottom-right-radius: 8px !important;
 }
 .custom-fields .ant-select-selector,
-.custom-fields .ant-picker.ant-picker-range {
+.custom-fields .ant-picker.ant-picker-range, .custom-fields .ant-form-item-control-input-content {
   min-height: 48px;
   height: 48px !important;
   border-radius: 8px !important;
@@ -2090,5 +2090,5 @@ textarea {
 .video-recommended video{width: 130px;display: block;}
 .objectfit-cover img{height: 208px;object-fit: cover;}
 .right-shape .ant-input{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
-.right-shape .ant-input-group-addon{border-top-right-radius: 8px;border-bottom-right-radius: 8px;}
+/* .right-shape .ant-input-group-addon{border-top-right-radius: 8px;border-bottom-right-radius: 8px;} */
 .course-create{background: var(--bodybg);padding: 16px;}
