@@ -21,7 +21,7 @@ class OverView extends Component {
     fileUploading:false,
     uploadSources:[],
     TestsObj:[],
-    flagsData:{"IsSubmitted":null,"IsCertified":null,"IsRejected":null,ReSubmit:null},
+    flagsData:{Id:null,"IsSubmitted":null,"IsCertified":null,"IsRejected":null,ReSubmit:null},
     showUpload:false
 }
 componentDidMount(){
@@ -120,7 +120,7 @@ uploadProps = {
 
 saveUserTestFiles = async ()=>{
   const object ={
-    "Id":uuidv4(),
+    "Id":this.state.flagsData.Id ? this.state.flagsData.Id : uuidv4(),
   "CourseId": this.props.courseid,
   "UserId": this.props.profile?.Id,
   "Firstname": this.props.profile?.FirstName,
@@ -144,12 +144,11 @@ saveUserTestFiles = async ()=>{
   }
 }
 reUpload = ()=>{
-  let {flagsData,showUpload} = this.state;
-  showUpload = true
+  let {flagsData} = this.state;
   flagsData.IsRejected = false;
   flagsData.IsCertified = false;
   flagsData.IsSubmitted = false;
-  this.setState({...this.state,flagsData,showUpload})
+  this.setState({...this.state,flagsData,showUpload:true})
 }
 
 downloadCertificate = ()=>{
