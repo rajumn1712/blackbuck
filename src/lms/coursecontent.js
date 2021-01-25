@@ -152,10 +152,13 @@ class CourseContent extends Component {
         <Row gutter={24} className="py-16">
           <Col className="" xs={24} sm={16} md={16} lg={17}>
             <div className="card-background p-0 mb-12">
-            <div className="preview-image">
-            <Title level={4} className="p-12 semibold mb-4 text-primary">
+            <div className="p-12">
+            <Title level={4} className="semibold mb-4 text-primary">
             {this.state.courseDetails.GroupName}
             </Title>
+            <p className="text-secondary m-0 f-14">{this.state.courseDetails.Author[0].Firstname} {this.state.courseDetails.Author[0].Lastname} |  {moment(this.state.courseDetails.CreatedDate).format('ll')}</p>
+            </div>
+            <div className="preview-image">
               <Carousel>
                 {courseDetails.CourseType === "Live Session" && <div className="px-12 d-flex justify-content-between">
                   <div>
@@ -174,7 +177,7 @@ class CourseContent extends Component {
                   </div>
                     </div>}
                 {courseDetails.CourseType === "Content" && <>
-                {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
+                {!this.state.IsRenderType && (<div className="lms-video" id="video_player">
                   <video controls="false" key={this.state.selectedVideo}>
                     <source src={this.state.selectedVideo} />
                   </video></div>
@@ -258,23 +261,20 @@ class CourseContent extends Component {
             </div>
             <div className="py-12">
                <div className="px-12">
-                  <p className="text-secondary f-14">{this.state.courseDetails.Author[0].Firstname} {this.state.courseDetails.Author[0].Lastname} |  {moment(this.state.courseDetails.CreatedDate).format('ll')}</p>
-                  <Paragraph className="text-primary mb-4">
+                  <Paragraph className="text-primary mb-12">
                   <ShowMoreText lines={3} more="see more" less="see less">
                   {this.state.courseDetails.Description}
-        </ShowMoreText>
-                  
+                  </ShowMoreText>
                   </Paragraph></div>
                   <Divider className="mt-0 mb-6" />
                   <div className="px-12">
-                  <Title className="semibold mb-4 text-primary f-16">
+                  <Title className="semibold mb-12 mt-12 text-primary f-16">
                     Members List 
                   </Title>
-                   <div>
-                            
+                   <div>   
                    <Avatar.Group
                                 maxCount={size-1}
-                                size="large"
+                                size={80}
                                 maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
                             >
                                 {Members.length > 0 && Members.map((user, index) => {
@@ -377,7 +377,7 @@ class CourseContent extends Component {
                       <List.Item.Meta
                         avatar={<div className="video-recommended mb-8" id="video_player">
                         <video >
-                          <source src={item.CourseVideo || video} />
+                        <source src={item.CourseVideo || video} />
                         </video></div>}
                         title={<Link onClick={()=>this.reloadCourse(item)}>{item.CourseName}</Link>}
                         description={<div className="f-12"><div>{item.Author[0].Firstname} {item.Author[0].Lastname}</div><div><span>{item.ViewCount} Views</span> . <span>{<Moment fromNow>{item.CreatedDate}</Moment>}</span></div></div>}
@@ -399,4 +399,4 @@ class CourseContent extends Component {
 const mapStateToProps = ({ oidc }) => {
   return { profile: oidc.profile };
 };
-export default withRouter(connect(mapStateToProps)(CourseContent));
+export default connect(mapStateToProps)(CourseContent);
