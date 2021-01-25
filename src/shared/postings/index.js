@@ -976,7 +976,7 @@ class Postings extends Component {
     </Card>
   }
   renderCourseCard = (post) => {
-    return <>{post.CourseType === "LiveSession" ? <div>
+    return <>{post.CourseType === "Live Session" ? <div>
       <img width="100%" src={zoom} />
       <div className="course-create d-flex justify-between">
         <div>
@@ -984,7 +984,7 @@ class Postings extends Component {
           <span>2K Members</span>
         </div>
         <div>
-          <Button type="primary">Jion Live</Button>
+          <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Jion Live</Button>
         </div>
       </div>
     </div> : <>
