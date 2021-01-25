@@ -42,7 +42,7 @@ class CourseContent extends Component {
     this.loadCourseDetails();
   }
   loadCourseDetails = async () => {
-    const response = await fetchCourseDetails(this.props.match.params.id);
+    const response = await fetchCourseDetails(this.props.match.params.id,this.props.profile?.Id);
     if (response.ok) {
       this.getUserWatchedVideos();
       this.setState({
@@ -364,7 +364,7 @@ class CourseContent extends Component {
                           <source src={item.CourseVideo} />
                         </video></div>}
                         title={<Link to={"/course/" + item.CourseId}>{item.CourseName}</Link>}
-                        description={<div className="f-12"><div>{item.Description}</div><div><span>{item.ViewCount} Views</span> . <span>{<Moment fromNow>{item.CreatedDate}</Moment>}</span></div></div>}
+                        description={<div className="f-12"><div>{item.Author[0].Firstname} {item.Author[0].Lastname}</div><div><span>{item.ViewCount} Views</span> . <span>{<Moment fromNow>{item.CreatedDate}</Moment>}</span></div></div>}
                       />
                     </List.Item>
                   )}
