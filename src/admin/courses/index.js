@@ -41,6 +41,7 @@ const data = [
 
 const topicTitle = (
     <span className="left-menu play mr-4"></span>
+    // <span className="left-menu docment mr-4"></span>
 )
 
 const AdminCourses = ({ profile }) => {
