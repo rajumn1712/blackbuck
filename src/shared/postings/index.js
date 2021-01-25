@@ -999,23 +999,24 @@ class Postings extends Component {
         </div>
           {/* <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Join Live</Button> */}
       </div>
-    </div> : <>
-        {post.type === "Video" && <video width="100%" controls muted>
+    </div> : <div className="livecourse-card mx-16">
+        {post.type === "Video" && <video width="100%" controls muted className="coursevideo-card">
           <source src={post.image[0]} />
         </video>}
-        <div className="course-create">
-          <Title level={5} className="mb-4">{post.title}</Title>
-          <ShowMoreText lines={3} more="see more" less="see less">
+        <div className="course-create p-12">
+          <Title level={5} className="mb-4 text-dark">{post.title}</Title>
+          <ShowMoreText lines={3} more="see more" less="see less" className="text-primary"> 
             {post.meassage}
           </ShowMoreText>
-          <div className="d-flex justify-between">
-
-            <div>
-              <Button type="primary" onClick={() => this.joinCourse(post.CourseId)}>Join Course</Button>
-            </div>
+          <div className="course-create d-flex mt-16 justify-between">
+          <div className="d-flex align-items-center">
+            <Avatar src={defaultUser} className="mr-8" />
+            <p className="m-0 f-14">{"Author Name"}</p>
           </div>
+          <Button type="primary" onClick={() => this.joinCourse(post.CourseId)}>Join Course</Button>
         </div>
-      </>}</>
+        </div>
+      </div>}</>
   }
   renderPost = (post) => {
     return (

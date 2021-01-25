@@ -157,14 +157,21 @@ class CourseContent extends Component {
             {this.state.courseDetails.GroupName}
             </Title>
               <Carousel>
-                {courseDetails.CourseType === "Live Session" && <div className="mt-12 text-center">
-                      <Button type="primary" key="console"
+                {courseDetails.CourseType === "Live Session" && <div className="px-12 d-flex justify-content-between">
+                  <div>
+                    <span className="playicons goto-meeting mt-4 mr-8"></span>
+                    <span className="playicons zoom mt-4 mr-8"></span>
+                    <span className="playicons others-meeting mt-4 mr-8"></span>
+                  </div>
+                  <div>
+                    <Button type="primary" key="console"
                       onClick={(e)=>{
                         e.stopPropagation()
                         window.open(courseDetails.Link)
                       }}>
                         Join Session
-                      </Button>
+                    </Button>
+                  </div>
                     </div>}
                 {courseDetails.CourseType === "Content" && <>
                 {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
