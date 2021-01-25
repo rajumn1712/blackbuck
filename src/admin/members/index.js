@@ -239,7 +239,7 @@ const Members = ({ profile }) => {
                     </div>
                     }
                     {adminObj.Type === "Group" && <div className="custom-fields">
-                        <label className="text-secondary d-block mb-4">Group</label>
+                        <label className="text-secondary d-block mb-4 ant-form-item-required">* Group</label>
                         <Form.Item name="GroupId" rules={[{ required: true, message: "Group  required" }]}>
                             <Select defaultValue="Choose Group" placeholder="Choose Group" onChange={(val) => handleChange("GroupId", val)}>
                                 <Option value="">Choose Group</Option>
