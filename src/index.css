@@ -17,7 +17,7 @@ html {--antd-wave-shadow-color: var(--primary); --scroll-bar: 0;}
 .c-text{cursor: text !important;}
 a{color: var(--primary);}
 a:hover,a:active{color: var(--primaryhover) !important;}
-.d-flex{display: flex;}
+.d-flex{display: flex !important;}
 .align-items-center{align-items: center;}
 .justify-between{justify-content: space-between;}
 .p-relative{position: relative;}
