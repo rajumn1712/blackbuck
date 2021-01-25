@@ -4,7 +4,7 @@ const GROUPS_API = "service/api/groups/";
 const PROFILE_API = "service/api/profile/";
 const TAGS_API = "service/api/posts/";
 const ADMIN_API = "service/api/admin/";
-
+const LMS_API = "service/api/LMS/"
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     FRIENDS_API +
@@ -244,6 +244,9 @@ const getAllSystemGroups = (take, skip) => {
 const groupBlock = (obj) => {
   return apiClient.get(ADMIN_API + `getAllSystemGroups`);
 }
+const joinGroupNew = (id, obj) => {
+  return apiClient.post(LMS_API + "joinCourse/" + id, obj);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -314,5 +317,6 @@ export {
   certipyRejectDocument,
   topicDelete,
   getAllSystemGroups,
-  groupBlock
+  groupBlock,
+  joinGroupNew
 };
