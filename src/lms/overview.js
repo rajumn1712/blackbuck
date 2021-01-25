@@ -60,7 +60,7 @@ getCertified = async ()=>{
 uploadProps = {
   name: "file",
   multiple: true,
-  accept:".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
+  accept:".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv,.ppt,.pdf",
   action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
   onChange: (info) => {
     this.setState({ ...this.state, fileUploading: true });
@@ -111,7 +111,7 @@ uploadProps = {
   beforeUpload: (file) => {
     let accepted = false;
     const fileMaxSize = 25 * 1000000;
-    const acceptTypes = "doc,docx,ott,rtf,docm,dot,odt,dotm,md,xls,xlsx,csv"
+    const acceptTypes = "doc,docx,ott,rtf,docm,dot,odt,dotm,md,xls,xlsx,csv,ppt,pdf"
     if(!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)){
       notify({
         message: "Upload",
@@ -149,6 +149,9 @@ saveUserTestFiles = async ()=>{
   "Image": this.props.profile?.ProfilePic,
    "CreatedDate":new Date(),
    "IsSubmitted":true,
+   "ReSubmit":this.state.flagsData.ReSubmit,
+   "IsRejected":false,
+   "IsCertified":false,
   "Tests": this.state.TestsObj
   }
   const response = await submitTests(object);
@@ -163,6 +166,7 @@ saveUserTestFiles = async ()=>{
 }
 reUpload = ()=>{
   let {flagsData} = this.state;
+  flagsData.ReSubmit = true;
   flagsData.IsRejected = false;
   flagsData.IsSubmitted = false;
   this.setState({...this.state,flagsData})
@@ -315,9 +319,9 @@ downloadCertificate = ()=>{
                         </Row>
                     </Card>
                 </div>}
-            {!flagsData.IsCertified && <div className="custom-card">
+            {(courseDetails.Tests.length > 0 &&!flagsData.IsCertified) && <div className="custom-card">
               <Card title='Take a Test'>
-                {!flagsData.IsSubmitted && <div className="docs p-12">
+                {!flagsData.IsSubmitted && <div className="docs px-0">
                 <List
               itemLayout="horizontal"
               dataSource={courseDetails.Tests}
@@ -342,7 +346,7 @@ downloadCertificate = ()=>{
                     target="_blank"
                   >
                     <Tooltip title="Download">
-                      <span className="post-icons download-coloricon mt-6 ml-6"></span>
+                      <span className="post-icons download-coloricon"></span>
                     </Tooltip>
                   </a>
                 </List.Item>
@@ -361,7 +365,7 @@ downloadCertificate = ()=>{
                       subTitle="Please check and modify the assignments before resubmitting."
                       extra={[<Button type="primary" onClick={this.reUpload}>Re - Upload</Button>]}
                     ></Result>}
-                  {!flagsData.IsSubmitted && <Dragger className="upload mb-16"
+                  {(courseDetails.Tests.length > 0 && !flagsData.IsSubmitted) && <Dragger className="upload mb-16"
                   {...this.uploadProps}
                   showUploadList={false}
                   >
@@ -376,7 +380,7 @@ downloadCertificate = ()=>{
                       PDF, xls).
                     </p>
                   </Dragger>}
-                  {(!flagsData.IsSubmitted) && <div className="docs px-0 hideempty">
+                  {(courseDetails.Tests.length > 0 && !flagsData.IsSubmitted) && <div className="docs px-0 hideempty">
                   <List
               itemLayout="horizontal"
               dataSource={this.state.uploadSources}
@@ -415,10 +419,10 @@ downloadCertificate = ()=>{
                       </Button>
                     </div>}
                   </div>}
-                  <div className="px-12 pb-12">
+                  {/* <div className="px-12 pb-12">
                     <Divider />
                     
-                  </div>
+                  </div> */}
                 </div>
               </Card>
             </div>}

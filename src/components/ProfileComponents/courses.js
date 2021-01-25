@@ -109,7 +109,7 @@ class Courses extends Component {
                   avatar={<Avatar src={item.image} />}
                   title={
                     <div className="d-flex align-items-center mr-16">
-                      {!this.props.IsHideAction ? <Link to={"/course/" + item.id} title={item.name} className="text-primary text-overflow">{item.name}</Link> : <span className="overflow-text">{item.name}</span>}
+                      {(!this.props.IsHideAction && this.props.loadUserCourse) ? <Link to={"/course/" + item.id} title={item.name} className="text-primary text-overflow">{item.name}</Link> : <span className="overflow-text">{item.name}</span>}
 
                     </div>
                   }
@@ -117,7 +117,7 @@ class Courses extends Component {
                     <div className="f-12 text-secondary">
                       {item.members && (
                         <span>
-                          {item.members.length}
+                          {!this.props.loadUserCourse ? item.members : item.members.concat(item.AdminUsers).length}
                         </span>
                       )}{" "}
                       Members 
