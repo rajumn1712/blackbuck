@@ -2106,7 +2106,7 @@ textarea {
 .live-btn{background: var(--red); font-weight: 500; font-size: var(--f-12); color: var(--white); padding: 2px 8px; position: absolute; right: 0; bottom: 0; width: auto !important;}
 .live-btn:hover, .live-btn-hover a:hover{color: var(--white) !important;}
 .livecourse-card{border-radius: 0.8rem; border: 1px solid var(--line)}
-.livecourse-card .zoom-img, .live-btn-hover{border-radius: 0.8rem 0.8rem 0 0;}
+.livecourse-card .zoom-img, .live-btn-hover, .coursevideo-card{border-radius: 0.8rem 0.8rem 0 0;}
 .live-btn-hover{position: absolute; top: 0; right: 0; bottom: 0; left: 0;background: var(--black-50); justify-content: center;visibility: hidden; transition: 0.3s ease-in-out;}
 .live-btn-hover a{border: 1px solid var(--white); color: var(--white); display: inline-block; padding: 12px 24px; border-radius: 0.4rem; background: var(--black-80)}
 .post-card:hover .live-btn-hover{visibility: visible;}
@@ -2114,3 +2114,4 @@ textarea {
 .playicons.goto-meeting{background-position: -754px -111px;}
 .playicons.zoom{background-position: -842px -112px;}
 .playicons.others-meeting{background-position: -799px -111px;}
+.coursevideo-card{margin-bottom: -6px;}
