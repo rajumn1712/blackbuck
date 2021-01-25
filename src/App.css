@@ -2118,3 +2118,4 @@ textarea {
 .playicons.zoom{background-position: -842px -112px;}
 .playicons.others-meeting{background-position: -799px -111px;} */
 .coursevideo-card{margin-bottom: -6px;}
+.ant-list-item.active-topic{background: var(--black-50);}
