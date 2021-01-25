@@ -831,13 +831,13 @@ const AdminCourses = ({ profile }) => {
                                 <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
                                     <div className="create-course">
                                         <div className="custom-fields">
-                                            <label className="text-secondary d-block mb-4">Title</label>
+                                            <label className="text-secondary d-block mb-4 semibold">Title</label>
                                             <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
                                                 <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
                                         </div>
                                         <div className="">
-                                            <label className="text-secondary d-block mb-4">Description</label>
+                                            <label className="text-secondary d-block mb-4 semibold">Description</label>
                                             <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>
                                                 <TextArea className="custom-fields" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
@@ -846,7 +846,7 @@ const AdminCourses = ({ profile }) => {
                                         </div>
                                         <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
-                                                <label className="text-secondary d-block mb-4">Category</label>
+                                                <label className="text-secondary d-block mb-4 semibold">Category</label>
                                                 <Form.Item className="lh-24 custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select
                                                         placeholder="Choose a Category" className="text-left"
@@ -861,7 +861,7 @@ const AdminCourses = ({ profile }) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
-                                                <label className="text-secondary d-block mb-4">Author Name</label>
+                                                <label className="text-secondary d-block mb-4 semibold">Author Name</label>
                                                 <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
                                                     <Select
                                                         defaultValue="Choose Author" placeholder="Choose Author" className="text-left"
@@ -875,7 +875,7 @@ const AdminCourses = ({ profile }) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
-                                                <label className="text-secondary d-block mb-4">Type</label>
+                                                <label className="text-secondary d-block mb-4 semibold">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
                                                         defaultValue="Content" className="text-left"
@@ -894,7 +894,7 @@ const AdminCourses = ({ profile }) => {
                                             </Col>
                                             }
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4">Link Type</label>
+                                                <label className="text-secondary d-block mb-4 semibold">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
                                                     <Select
                                                         defaultValue="Choose Link Type" placeholder="Choose Link Type" className="text-left"
@@ -908,7 +908,7 @@ const AdminCourses = ({ profile }) => {
                                                 </Form.Item>
                                             </Col>}
                                             {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4">Link</label>
+                                                <label className="text-secondary d-block mb-4 semibold">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
                                                 </Form.Item>
@@ -917,7 +917,7 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <div className="text-secondary">Course Image</div>
+                                                <label className="text-secondary d-block mb-4 semibold">Course Image</label>
                                                 <div className="mb-12">
                                                     <Dragger
                                                         className="upload"
@@ -983,7 +983,7 @@ const AdminCourses = ({ profile }) => {
                                                 </div>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <div className="text-secondary">Introduction video</div>
+                                                <label className="text-secondary d-block mb-4 semibold">Introduction video</label>
                                                 <div className="mb-12">
                                                     <Dragger
                                                         className="upload"
