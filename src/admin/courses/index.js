@@ -377,6 +377,14 @@ const AdminCourses = ({ profile }) => {
         }
     }
     const coursSave = async () => {
+        if (courseObject.CourseType == "Content" && courseObject.CourseVideo?.length == 0) {
+            notify({
+                message: "Course",
+                description: `Introduction video Required`,
+                type: "warning",
+            });
+            return;
+        }
         courseObject.Tests = [];
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
         courseObject.CourseSections = courseObject.CourseSections.filter(item => {
