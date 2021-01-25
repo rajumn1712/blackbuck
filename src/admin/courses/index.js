@@ -150,6 +150,7 @@ const AdminCourses = ({ profile }) => {
     const [CoursesObj, setCoursesObj] = useState("");
     const [counts, setCounts] = useState({ CoursesCouunt: 0, MembersCount: 0 });
     const [isCourseChanged, setIsCourseChanged] = useState(false);
+    const [isVideoLoded, setIsVideoLoded] = useState(false);
     useEffect(() => {
         fetchBranches();
         fetchAuthors();
@@ -341,7 +342,10 @@ const AdminCourses = ({ profile }) => {
         // }
     }
     const saveTopicUpdate = async () => {
-        topicObj.Duration = topicObj.Hours + ":" + topicObj.Min + ":" + topicObj.Sec;
+        if (topicObj.VideoSource == "Upload")
+            topicObj.Duration = new Date((topicObj.Sec ? topicObj.Sec : 0) * 1000).toISOString().substr(11, 8);
+        else
+            topicObj.Duration = "";
         const result = await saveTopic(topicObj, courseObject.GroupId, secId);
         if (result.ok) {
             setIsModalVisible(false);
@@ -466,7 +470,7 @@ const AdminCourses = ({ profile }) => {
         time[0] = time[0]?.length < 2 ? ("0" + time[0]) : time[0];
         time[1] = time[1]?.length < 2 ? ("0" + time[1]) : time[1];
         time[2] = time[2]?.length < 2 ? ("0" + time[2]) : time[2];
-        return time[0] + "h" + time[1] + "m" + time[2] + "s";
+        return time[0] + ":" + time[1] + ":" + time[2];
     }
     function sumTime(t1, t2, array = []) {
         var times = [3600, 60, 1],
@@ -613,6 +617,7 @@ const AdminCourses = ({ profile }) => {
         topicForm.setFieldsValue({ ...topicObjForsave })
         setIsModalVisible(true)
         setFileUploading(false);
+        setIsVideoLoded(false)
     };
     const handleCancel = () => {
         topicForm.resetFields();
@@ -846,7 +851,7 @@ const AdminCourses = ({ profile }) => {
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
-                                                    <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} />
+                                                    <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
                                             }
@@ -1193,7 +1198,7 @@ const AdminCourses = ({ profile }) => {
                 </Form>}
                 <Modal title="Add Topic" visible={isModalVisible} onCancel={handleCancel} centered
                     footer={<>
-                        <Button disabled={fileUploading} type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
+                        <Button disabled={fileUploading || ((topicObj.VideoSource == "Upload" && topicObj.TopicType == "Video") ? !isVideoLoded : (topicObj.TopicType == "Document" ? topicObj.lstDocuments?.length === 0 : false))} type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
                     </>}
                     className="addTopicPop"
                     destroyOnClose
@@ -1264,7 +1269,11 @@ const AdminCourses = ({ profile }) => {
                             {fileUploading && topicObj.TopicType == "Video" && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.TopicType == "Video" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 mt-8 upload-preview">
-                                    <video width="100%" controls>
+                                    <video width="100%" controls onLoadedMetadata={e => {
+                                        setIsVideoLoded(true)
+                                        topicObj.Sec = e.target.duration ? e.target.duration : 0;
+                                        setTopicObj({ ...topicObj })
+                                    }}>
                                         <source src={image} />
                                     </video>
                                     <a
@@ -1281,13 +1290,13 @@ const AdminCourses = ({ profile }) => {
                                     </a>
                                 </div>
                             ))}
-                            {topicObj.VideoSource == "YouTube" && <div className="custom-fields">
+                            {topicObj.VideoSource == "YouTube" && topicObj.TopicType == "Video" && <div className="custom-fields">
                                 <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="YouTube URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
                                 </Form.Item>
                             </div>
                             }
-                            {topicObj.VideoSource == "Vimeo" && <div className="custom-fields">
+                            {topicObj.VideoSource == "Vimeo" && topicObj.TopicType == "Video" && <div className="custom-fields">
                                 <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="Vimeo URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
                                 </Form.Item>
@@ -1341,7 +1350,7 @@ const AdminCourses = ({ profile }) => {
                                         )}
                                     />
                                 </div>}
-                            {topicObj.TopicType == "Video" && <div className="custom-fields">
+                            {/* {topicObj.TopicType == "Video" && <div className="custom-fields">
                                 <label className="text-secondary d-block mb-4">Video Playback Time</label>
                                 <Input.Group compact>
                                     <div className="videoplybacktime">
@@ -1364,7 +1373,7 @@ const AdminCourses = ({ profile }) => {
                                     </div>
                                 </Input.Group>
                             </div>
-                            }
+                            } */}
                         </div>
                     </Form>
                 </Modal>

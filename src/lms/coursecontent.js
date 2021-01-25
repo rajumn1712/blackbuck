@@ -184,7 +184,7 @@ class CourseContent extends Component {
                 {courseDetails.CourseType === "Live Session" && <div className="px-12">
                 <div className="custom-card mb-16">
                 {/* Gotomeeting */}
-                        <Card className="start-gotomeeting">
+                        {courseDetails.UrlType === 'GotoMeeting' && <Card className="start-gotomeeting">
                           <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
                               <div>
@@ -200,9 +200,9 @@ class CourseContent extends Component {
                                 Join Session
                               </Button>
                             </Col>
-                          </Row></Card>
+                          </Row></Card>}
                 {/* Zoom */}
-                        <Card className="start-zoom">
+                        {courseDetails.UrlType === 'Zoom' && <Card className="start-zoom">
                           <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
                               <div>
@@ -218,9 +218,9 @@ class CourseContent extends Component {
                                 Join Session
                               </Button>
                             </Col>
-                          </Row></Card>
+                          </Row></Card>}
                 {/* Others */}
-                        <Card className="start-others">
+                        {courseDetails.UrlType === 'Others' && <Card className="start-others">
                           <Row align="middle" className="p-16">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
                               <div>
@@ -237,7 +237,7 @@ class CourseContent extends Component {
                               </Button>
                             </Col>
                           </Row>
-                        </Card>
+                        </Card>}
                       </div>
                     </div>}
                 {courseDetails.CourseType === "Content" && <>
@@ -382,7 +382,7 @@ class CourseContent extends Component {
                 {this.state.courseDetails?.CourseSections?.length > 0 && <div className="height-scroll">
                   <Collapse
                     bordered={false}
-                    defaultActiveKey={["1"]}
+                    defaultActiveKey={["0"]}
                     expandIcon={({ isActive }) => (
                       <CaretRightOutlined rotate={isActive ? 90 : 0} />
                     )}
