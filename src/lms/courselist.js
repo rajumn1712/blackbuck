@@ -51,11 +51,11 @@ class CourseList extends Component {
             </Title>
             <div className="addon-info">
               <span className="mr-12 f-12 text-secondary">
-                <span className="grp-type-icon video-play" />
+                <span className="grp-type-icon lessons" />
                 {recentList[0].sections} Sections
               </span>
               <span className="f-12 text-secondary">
-                <span className="grp-type-icon lessons" />
+                <span className="grp-type-icon video-play" />
                 {recentList[0].videos} Videos
               </span>
             </div>

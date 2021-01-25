@@ -95,11 +95,11 @@ class CourseCards extends Component {
                                 </Paragraph>
                                 <div>
                                   <span className="mr-12 f-12 text-secondary">
-                                    <span className="grp-type-icon video-play" />
+                                    <span className="grp-type-icon lessons" />
                                     {course.sections} Sections
                                   </span>
                                   <span className="f-12 text-secondary">
-                                    <span className="grp-type-icon lessons" />
+                                    <span className="grp-type-icon video-play" />
                                     {course.videos} Videos
                                   </span>
                                 </div>
@@ -114,7 +114,7 @@ class CourseCards extends Component {
                                   fontWeight: "bold",
                                 }}
                               >
-                                  {course.members?.map((member,index)=>{
+                                  {course.members.concat(course.AdminUsers)?.map((member,index)=>{
                                      return <Tooltip title={member.Firstname} key={index}>
                                          <Avatar src={member.image || defaultUser}/>
                                      </Tooltip>

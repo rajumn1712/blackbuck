@@ -148,7 +148,7 @@ saveUserTestFiles = async ()=>{
   "Lastname": this.props.profile?.LastName,
   "Image": this.props.profile?.ProfilePic,
    "CreatedDate":new Date(),
-   "IsSubmitted":true,
+   "IsSubmitted":this.state.flagsData.ReSubmit ? false : true,
    "ReSubmit":this.state.flagsData.ReSubmit,
    "IsRejected":false,
    "IsCertified":false,
@@ -231,7 +231,7 @@ downloadCertificate = ()=>{
     </html>
   `
   apiClient.post(process.env.REACT_APP_AUTHORITY + '/Account/DownLoadProfile',{
-    FileName:this.props?.about?.Firstname,
+    FileName:this.props?.profile?.FirstName,
     TemplateContent:html
   }).then(res=>{
     if(res.ok){

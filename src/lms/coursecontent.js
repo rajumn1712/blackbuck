@@ -112,7 +112,7 @@ class CourseContent extends Component {
           <Col className="" xs={24} sm={16} md={16} lg={17}>
             <div className="preview-image">
             <Title level={4} className="semibold mb-4 text-primary">
-                dfghjk
+            {this.state.courseDetails.GroupName}
             </Title>
               <Carousel>
                 {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
