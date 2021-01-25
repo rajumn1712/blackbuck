@@ -35,6 +35,10 @@ const TestSubmissions = ({ profile }) => {
       })
     },
     {
+      title: 'Status',
+      render: (text, record) => <span >{record.IsCertified ? 'Certified' : (record.IsRejected ? "Rejected" : (record.IsSubmitted ? "Submitted" : "Re-Submitted"))}</span>
+    },
+    {
       title: 'Date and Time',
       dataIndex: 'CreatedDate',
       render: (text) => <span ><Moment fromNow>{text}</Moment></span>
@@ -42,15 +46,15 @@ const TestSubmissions = ({ profile }) => {
     {
       title: '',
       dataIndex: 'action',
-      render: (text, record) => <><Dropdown overlay={<Menu className="custom-dropdown">
+      render: (text, record) => <>{(!record.IsCertified && !record.IsRejected) && <Dropdown overlay={<Menu className="custom-dropdown">
         <Menu.Item key="0">
-          <span onClick={() => certifyDoc(record, "Certified")}>Certified</span>
+          <span onClick={() => certifyDoc(record, "Certified")}>Certify</span>
         </Menu.Item>
         <Menu.Item key="1">
-          <span onClick={() => certifyDoc(record, "Rejected")}>Rejected</span>
+          <span onClick={() => certifyDoc(record, "Rejected")}>Reject</span>
         </Menu.Item>
       </Menu>} trigger={['click']}>
-        <div className="text-right"><a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons more-icon mr-0"></span></a></div></Dropdown></>,
+        <div className="text-right"><a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="post-icons more-icon mr-0"></span></a></div></Dropdown>}</>,
     },
   ];
   const [data, setData] = useState([])
