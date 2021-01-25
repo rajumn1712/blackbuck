@@ -138,6 +138,7 @@
   height: 84px;
   margin: auto;
 }
+.float-right{float: right;}
 .profile-card .ant-card-meta-detail {
   color: var(--white) !important;
   margin-top: 10px;
@@ -1302,7 +1303,7 @@
   background-color: #f9f9f9;
   padding: 0 !important;
 }
-.modal-interest .modal-search .ant-select-selector .ant-select-selection-item {
+.modal-interest .modal-search .ant-select-selector .ant-select-selection-item, .lh-24 .ant-select-selector .ant-select-selection-item .ant-select-selection-item-content, .lh-24 .ant-select-selector .ant-select-selection-item .ant-select-selection-item-remove{
   line-height: 24px !important;
 }
 .modal-interest .modal-search .ant-select-selector {
@@ -2089,5 +2090,5 @@ textarea {
 .video-recommended video{width: 130px;display: block;border-radius: 0.8rem;}
 .objectfit-cover img{height: 208px;object-fit: cover;}
 .right-shape .ant-input{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
-.right-shape .ant-input-group-addon{border-top-right-radius: 0.8rem;border-bottom-right-radius: 0.8rem;}
+.right-shape .ant-input-group-addon{border-top-right-radius: 8px;border-bottom-right-radius: 8px;}
 .course-create{background: var(--bodybg);padding: 16px;}

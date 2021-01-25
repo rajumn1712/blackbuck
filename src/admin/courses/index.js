@@ -746,9 +746,9 @@ const AdminCourses = ({ profile }) => {
                                             </Form.Item>
                                         </div>
                                         <Row gutter={16}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select custom-fields">
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
                                                 <label className="text-secondary d-block mb-4">Category</label>
-                                                <Form.Item className="custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
+                                                <Form.Item className="lh-24 custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select
                                                         placeholder="Choose a Category" className="text-left"
                                                         onChange={(value) => handleChange('Categories', value)}
@@ -760,7 +760,7 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
                                                 <label className="text-secondary d-block mb-4">Author Name</label>
                                                 <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
                                                     <Select
@@ -774,7 +774,7 @@ const AdminCourses = ({ profile }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
                                                 <label className="text-secondary d-block mb-4">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
@@ -923,7 +923,7 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
-                                                {/* <label className="text-secondary d-block mb-4">Add Test</label> */}
+                                                 <label className="text-secondary d-block mb-4">Add Test</label>
                                                 {fileUploading && <Loader className="loader-top-middle" />}
                                                 <Dragger showUploadList={false} className="upload mb-16" {...uploadProps}>
                                                     <span className="sharebox-icons docs-upload mb-16"></span>
@@ -1005,7 +1005,8 @@ const AdminCourses = ({ profile }) => {
                                                                                 <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
                                                                                 <p className="f-14 text-secondary mb-8">{topic.Description}</p>
                                                                                 <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? bytesToSize(topic.Size) : "NA"}</p>
-                                                                                <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
+                                                                                <Button size="small" className="px-16 mr-8" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit</Button>
+                                                                                <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete</Button> 
                                                                             </div>
                                                                         </div>}
                                                                         {topic.TopicType == "Document" && <div className="docs">
@@ -1047,17 +1048,17 @@ const AdminCourses = ({ profile }) => {
                                                     </Collapse>
                                                     }
                                                     {<div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
-                                                    {<div className=" add-lectureclose add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
+                                                    {/* {<div className=" add-lectureclose add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>} */}
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }}  >
                                                                 <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here" addonAfter={<Tooltip title={"Save Section"}><span className="icon playover-icon" htmlType="submit" type="primary" onClick={() => sectionSave()}></span></Tooltip>} onChange={(value) => secItemsChange("SectionName", value, index)} />}
+                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here" addonAfter={<Tooltip title={"Save Section"}><span className="" htmlType="submit" type="primary" onClick={() => sectionSave()}>Save Section</span></Tooltip>} onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                                 </Form.Item>
                                                                 <div className="text-right">
                                                                     {/* <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button> */}
-                                                                    {/* <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button> */}
+                                                                     <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button> 
                                                                 </div>
                                                             </Form>
                                                         </div>
@@ -1068,11 +1069,16 @@ const AdminCourses = ({ profile }) => {
                                                 </div>
                                             })}
                                         </div>}
-                                        <div className="text-right">
+
+                                    </div>
+                                    <div className="card-background mt-16">
+                                    <span className="text-left">
+                                    <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
+                                    </span>
+                                        <span className="text-right float-right">
                                             <Button disabled={fileVideoUploading} type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
                                             {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button disabled={fileVideoUploading} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
-                                            <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
-                                        </div>
+                                        </span>
                                     </div>
                                 </Col>
                             </Row>
