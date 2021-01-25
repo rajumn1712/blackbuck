@@ -2102,3 +2102,4 @@ textarea {
 .video-active .ant-collapse-header, .video-active .anticon.anticon-caret-right{color: var(--white) !important;}
 .playicons.continue-icon{background-position: -671px -113px;}
 .playicons.close-section{background-position: -712px -110px;margin: 10px 0 0 10px;}
+.description-space .ant-row.ant-form-item{margin-bottom: 12 !important;}

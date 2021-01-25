@@ -1185,7 +1185,7 @@ const AdminCourses = ({ profile }) => {
                                     <Input onChange={(value) => handleChange('Title', value, true)} maxLength={150} />
                                 </Form.Item>
                             </div>
-                            <div className="custom-fields">
+                            <div className="description-space">
                                 <label className="text-secondary d-block mb-4">Description</label>
                                 <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} >
                                     <TextArea onResize
