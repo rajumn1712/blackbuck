@@ -1367,7 +1367,7 @@
   border-radius: 8px !important;
 }
 .custom-fields textarea.ant-input {
-  min-height: 90px !important;
+  /* min-height: 90px !important; */
 }
 .ant-input,
 .ant-select-selector,
