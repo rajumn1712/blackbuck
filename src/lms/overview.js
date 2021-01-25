@@ -305,7 +305,7 @@ downloadCertificate = ()=>{
                 </div>}
             {(courseDetails.Tests.length > 0 &&!flagsData.IsCertified) && <div className="custom-card">
               <Card title='Take a Test'>
-                {!flagsData.IsSubmitted && <div className="docs px-12">
+                {!flagsData.IsSubmitted && <div className="docs p-12">
                 <List
               itemLayout="horizontal"
               dataSource={courseDetails.Tests}
@@ -349,7 +349,7 @@ downloadCertificate = ()=>{
                       subTitle="Please check and modify the assignments before resubmitting."
                       extra={[<Button type="primary" onClick={this.reUpload}>Re - Upload</Button>]}
                     ></Result>}
-                  {(courseDetails.Tests.length > 0 && (!flagsData.IsCertified && !flagsData.IsRejected && !flagsData.IsSubmitted && !flagsData.ReSubmit)) && <Dragger className="upload mb-16"
+                  {(courseDetails.Tests.length > 0 && (!flagsData.IsCertified && !flagsData.IsRejected && !flagsData.IsSubmitted && !flagsData.ReSubmit)) && <Dragger className="upload"
                   {...this.uploadProps}
                   showUploadList={false}
                   >
