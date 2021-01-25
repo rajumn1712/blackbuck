@@ -196,8 +196,8 @@ const saveSection = (obj, courseId) => {
 const saveCourse = (obj) => {
   return apiClient.post(ADMIN_API + "saveCourse", obj);
 }
-const getCourse = (courseId) => {
-  return apiClient.get(ADMIN_API + "getCourse" + `/${courseId}`);
+const getCourse = (courseId,user_id) => {
+  return apiClient.get(ADMIN_API + "getCourse" + `/${courseId}/${user_id}`);
 }
 const publishCourse = (obj) => {
   return apiClient.post(ADMIN_API + "coursePublish", obj);

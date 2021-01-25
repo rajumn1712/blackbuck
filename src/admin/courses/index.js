@@ -264,7 +264,7 @@ const AdminCourses = ({ profile }) => {
         setTopicObj({ ...dupTopicObj });
     }
     const refreshCourseDetails = async () => {
-        const branchResponse = await getCourse(courseObject.GroupId);
+        const branchResponse = await getCourse(courseObject.GroupId,profile?.Id);
         if (branchResponse.ok) {
             bindCourseData(branchResponse.data[0])
         } else {
