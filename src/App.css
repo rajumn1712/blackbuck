@@ -2036,6 +2036,9 @@ textarea {
 .custom_tabs .ant-tabs-tab-btn{ font-weight: 500;}
 .custom_tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--primary);}
 .custom_tabs .ant-tabs-ink-bar, .start-course{background: var(--primary) !important;}
+.start-gotomeeting{background: #f68d2d !important;}
+.start-zoom{background: #5082c3 !important;}
+.start-others{background: var(--primary) !important;}
 .admin-kpi-card{border: 1px solid var(--line) !important; border-radius: 0.8rem !important;}
 .ant-input-group-wrapper.header-searchbar {display: initial;}
 .frnds-scroll{height: 280px;overflow: scroll;padding-right: 8px;}
@@ -2111,7 +2114,7 @@ textarea {
 .live-btn-hover a{border: 1px solid var(--white); color: var(--white); display: inline-block; padding: 12px 24px; border-radius: 0.4rem; background: var(--black-80)}
 .post-card:hover .live-btn-hover{visibility: visible;}
 .livecourse-date{background: var(--white);border-radius: 0.4rem; border: 1px dashed var(--border);}
-.playicons.goto-meeting{background-position: -754px -111px;}
+/* .playicons.goto-meeting{background-position: -754px -111px;}
 .playicons.zoom{background-position: -842px -112px;}
-.playicons.others-meeting{background-position: -799px -111px;}
+.playicons.others-meeting{background-position: -799px -111px;} */
 .coursevideo-card{margin-bottom: -6px;}
