@@ -47,7 +47,7 @@
 .p-8{padding: 8px;}
 .p-16{padding: 16px;}
 .p-12{padding: 12px !important;}
-.pl-0{padding-left: 0px;}
+.pl-0{padding-left: 0px !important;}
 .pl-4{padding-left: 4px;}
 .pl-8{padding-left: 8px;}
 .pl-16{padding-left: 16px;}
