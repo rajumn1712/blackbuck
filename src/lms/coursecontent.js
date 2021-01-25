@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import {
   fetchCourseDetails,
   getCourseMembersList,
+  getRecommendedVideos,
   getUserWatchedVideos,
   saveCourseTopic,
 } from "./api";
@@ -33,7 +34,8 @@ class CourseContent extends Component {
     IsChecked: false,
     Members:[],
     size:10,
-    page:1
+    page:1,
+    recommendedVideos:[]
   };
   componentDidMount() {
     this.loadCourseDetails();
@@ -50,6 +52,7 @@ class CourseContent extends Component {
         loading: false,
       },()=>{
         this.getMembersList();
+        this.getRecommendedVideos();
       });
     }
   };
@@ -64,6 +67,12 @@ class CourseContent extends Component {
     const response = await getCourseMembersList(this.props.match.params.id,this.state.page,this.state.size);
     if(response.ok){
       this.setState({...this.state,Members:response.data})
+    }
+  }
+  getRecommendedVideos = async ()=>{
+    const response = await getRecommendedVideos(this.props.match.params.id)
+    if(response.ok){
+      this.setState({...this.state,recommendedVideos:response.data})
     }
   }
   getUserWatchedVideos = async () => {
@@ -100,6 +109,7 @@ class CourseContent extends Component {
       if (item.TopicType === "Video") {
         let { courseDetails } = this.state;
         courseDetails.CourseSections[indx].Topics[index].IsChecked = true;
+        courseDetails.CourseSections[indx].Topics[index].IsAddClass = 'video-active'
         this.setState(
           {
             ...this.state,
@@ -128,7 +138,7 @@ class CourseContent extends Component {
   };
 
   render() {
-    const {courseDetails,Members,size}=this.state
+    const {courseDetails,Members,size,recommendedVideos}=this.state
     return (
       <>
       {Object.keys(courseDetails).length > 0 && <div className="post-preview-box course-card">
@@ -291,7 +301,7 @@ class CourseContent extends Component {
                           key={indx}
                           header={section.SectionName}
                           key={indx}
-                          className="pb-0 course-content flot-left video-active"
+                          className="pb-0 course-content flot-left"
                         >
                           <div>
                             <List
@@ -299,6 +309,7 @@ class CourseContent extends Component {
                               dataSource={section.Topics}
                               renderItem={(item, index) => (
                                 <List.Item
+                                className={item.IsAddClass}
                                   extra={
                                     item.TopicType === 'Video' && <span
                                       className={`icon ${item.IsChecked ? 'playover-icon' : 'play-icon'}`}
