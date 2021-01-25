@@ -530,6 +530,7 @@
 .upload-preview .ant-list-item-meta {
   align-items: center;
 }
+.playicons{width: 30px;height: 30px;vertical-align: middle;display: inline-block;cursor: pointer;background: url(../src/styles/images/icons.svg) no-repeat;}
 .close-icon,
 .anticon.anticon-delete, .error-icons {
   width: 30px;
@@ -2096,3 +2097,4 @@ textarea {
 /* .right-shape .ant-input-group-addon{border-top-right-radius: 8px;border-bottom-right-radius: 8px;} */
 .course-create{background: var(--bodybg);padding: 16px;}
 .video-active{background: var(--primary);}
+.playicons.continue-icon{background-position: -671px -113px;}
