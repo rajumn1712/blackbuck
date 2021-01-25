@@ -995,7 +995,7 @@ const AdminCourses = ({ profile }) => {
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
 
-                                                <div className="docs mb-16 mt-16">
+                                                <div className="docs mb-16 mt-16 pl-0">
                                                     <List
                                                         itemLayout="horizontal"
                                                         dataSource={courseObject.Documents}
@@ -1097,9 +1097,12 @@ const AdminCourses = ({ profile }) => {
                                                                 </Collapse>
                                                             })
                                                             }
-
-                                                            <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
-                                                            <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div>
+                                                            <div className="text-right">
+                                                                <Button type="primary" size="small" className="px-16 mr-8" onClick={() => showModal('Add', null, item.SectionId)}>{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</Button>
+                                                                <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>                                                               
+                                                            </div>
+                                                            {/* <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
+                                                            <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div> */}
                                                         </Panel>
 
                                                     </Collapse>
@@ -1111,22 +1114,22 @@ const AdminCourses = ({ profile }) => {
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()}>
                                                                 <Form.Item className="custom-fields" name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    <div className="d-flex"><div>{item.SectionId && <Input className="f-16 right-shape" placeholder="Add section title here"
+                                                                    <div className="d-flex"><div style={{width: '100%'}}>{item.SectionId && <Input className="f-16 right-shape" placeholder="Add section title here"
                                                                         suffix={<Tooltip title="Save Section"><Button small htmlType="submit" type="primary">Save</Button></Tooltip>}
                                                                         onChange={(value) => secItemsChange("SectionName", value, index)} />
 
 
 
                                                                     }</div>
-                                                                        <div><span className="icons close"></span></div>
+                                                                        <div><Tooltip title="Delete Section"><span className="playicons close-section"></span></Tooltip></div>
                                                                     </div>
 
 
                                                                 </Form.Item>
-                                                                <div className="text-right">
-                                                                    {/* <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button> */}
-                                                                    {/* <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>  */}
-                                                                </div>
+                                                                {/* <div className="text-right">
+                                                                    <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
+                                                                    <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
+                                                                </div> */}
                                                             </Form>
                                                         </div>
                                                         {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
@@ -1272,7 +1275,7 @@ const AdminCourses = ({ profile }) => {
                             {fileUploading && topicObj.TopicType == "Document" && <Loader className="loader-top-middle" />}
                             {isError && topicObj.TopicType == "Document" && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             {topicObj.TopicType == "Document" &&
-                                <div className="docs mb-16">
+                                <div className="docs mb-16 pl-0 mt-8">
                                     <List
                                         itemLayout="horizontal"
                                         dataSource={topicObj.lstDocuments}
