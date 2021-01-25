@@ -1055,13 +1055,13 @@ const AdminCourses = ({ profile }) => {
                                                             }
 
                                                             <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
-                                                            {/* <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div> */}
+                                                             <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div> 
                                                         </Panel>
 
                                                     </Collapse>
                                                     }
-                                                    {<div className="add-lecture p-4" onClick={() => addSection()}> <Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
-                                                    {/* {<div className=" add-lectureclose add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>} */}
+                                                    {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
+                                                    {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}> <Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
@@ -1078,7 +1078,7 @@ const AdminCourses = ({ profile }) => {
                                                                 </div>
                                                             </Form>
                                                         </div>
-                                                        {/* {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>} */}
+                                                        {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
                                                         {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
                                                     </div>
                                                     }
