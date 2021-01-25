@@ -401,7 +401,7 @@ const AdminCourses = ({ profile }) => {
             let Obj = {
                 "PostId": uuidv4(),
                 "CourseId": courseObject.GroupId,
-                "Type": "Video",
+                "Type": courseObject.CourseType == "Live Session" ? "Text" : "Video",
                 "Message": courseObject.Description,
                 "Title": courseObject.GroupName,
                 "IsAnonymous": false,
@@ -427,6 +427,10 @@ const AdminCourses = ({ profile }) => {
                 "Shares": [],
                 "dupType": "Video",
                 "PublishDate": new Date(),
+                "CourseType": courseObject.CourseType,
+                "Link": courseObject.CourseType == "Live Session" ? courseObject.Link : "",
+                "UrlType": courseObject.CourseType == "Live Session" ? courseObject.UrlType : "",
+                "LiveDate": courseObject.CourseType == "Live Session" ? courseObject.Date : "",
             };
 
             postObject.Posts.push({ ...Obj })
@@ -975,7 +979,7 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
-                                                <label className="text-secondary d-block mb-4">Add Test</label>
+                                                {/* <label className="text-secondary d-block mb-4">Add Test</label> */}
                                                 {fileUploading && <Loader className="loader-top-middle" />}
                                                 <Dragger showUploadList={false} className="upload mb-16" {...uploadProps}>
                                                     <span className="sharebox-icons docs-upload mb-16"></span>
@@ -1105,7 +1109,7 @@ const AdminCourses = ({ profile }) => {
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
-                                                            < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }}  >
+                                                            < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()}>
                                                                 <Form.Item className="custom-fields" name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
                                                                     <div className="d-flex"><div>{item.SectionId && <Input className="f-16 right-shape" placeholder="Add section title here"
                                                                         suffix={<Tooltip title="Save Section"><Button small htmlType="submit" type="primary">Save</Button></Tooltip>}
