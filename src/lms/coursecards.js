@@ -93,18 +93,19 @@ class CourseCards extends Component {
                                 >
                                   {course.description}
                                 </Paragraph>
-                                <div>
-                                  <span className="mr-12 f-12 text-secondary">
-                                    <span className="grp-type-icon lessons" />
+                                <div className="justify-content-between">
+                                  <span className="mr-4 f-12 text-secondary">
                                     {course.sections} Sections
-                                  </span>
-                                  <span className="f-12 text-secondary">
-                                    <span className="grp-type-icon video-play" />
+                                  </span> |
+                                  <span className="mx-4 f-12 text-secondary">
                                     {course.videos} Videos
+                                  </span>|
+                                  <span className="ml-4 f-12 text-secondary">
+                                    {course.videos} Members
                                   </span>
                                 </div>
                               </div>
-                              <Avatar.Group
+                              {/* <Avatar.Group
                                 className="group-member mt-12"
                                 maxCount={5}
                                 size="large"
@@ -118,7 +119,7 @@ class CourseCards extends Component {
                                      return <Tooltip title={member.Firstname} key={index}>
                                          <Avatar src={member.image || defaultUser}/>
                                      </Tooltip>
-                                  })}
+                                  })} */}
                                 {/* <Avatar src={defaultUser} />
                                 <Avatar
                                   style={{ backgroundColor: "var(--primary)" }}
@@ -135,7 +136,7 @@ class CourseCards extends Component {
                                   style={{ backgroundColor: "#1890ff" }}
                                   icon={<img src={defaultUser} />}
                                 /> */}
-                              </Avatar.Group>
+                              {/* </Avatar.Group> */}
                             </div>
                           }
                         />
