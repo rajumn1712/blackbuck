@@ -74,7 +74,7 @@ class CourseCards extends Component {
                             alt="photography"
                             src={course.image.length > 0 ? course.image : photography}
                           />
-                          <span className="live-btn">LIVE</span>
+                          {course.CourseType === 'Live Session' && <span className="live-btn">LIVE</span>}
                           </>
                         }
                       >
@@ -96,7 +96,7 @@ class CourseCards extends Component {
                                 >
                                   {course.description}
                                 </Paragraph>
-                                <div className="justify-content-between">
+                                {course.CourseType === 'Content' && <div className="justify-content-between">
                                   <span className="mr-4 f-12 text-secondary">
                                     {course.sections} Sections
                                   </span> |
@@ -104,9 +104,14 @@ class CourseCards extends Component {
                                     {course.videos} Videos
                                   </span>|
                                   <span className="ml-4 f-12 text-secondary">
-                                    {course.members.concat(course.AdminUsers).length} Members
+                                    {course.members.length} Members
                                   </span>
-                                </div>
+                                </div>}
+                                {course.CourseType === 'Live Session' && <div className="justify-content-between">
+                                <span className="ml-4 f-12 text-secondary">
+                                    {course.members.length} Members
+                                  </span>
+                                  </div>}
                               </div>
                               {/* <Avatar.Group
                                 className="group-member mt-12"
@@ -163,10 +168,13 @@ class CourseCards extends Component {
                       <Card
                         className="card-item card-height"
                         cover={
+                          <>
                           <img
                             alt="photography"
                             src={course.image.length > 0 ? course.image : photography}
                           />
+                          {course.CourseType === 'Live Session' && <span className="live-btn">LIVE</span>}
+                          </>
                         }
                         actions={
                           [
@@ -188,7 +196,7 @@ class CourseCards extends Component {
                               <Paragraph lines={2} style={{height: '42px'}}>
                                 {course.description}
                               </Paragraph>
-                              <div className="justify-content-between">
+                              {course.CourseType === 'Content' && <div className="justify-content-between">
                                   <span className="mr-4 f-12 text-secondary">
                                     {course.sections} Sections
                                   </span> |
@@ -196,9 +204,14 @@ class CourseCards extends Component {
                                     {course.videos} Videos
                                   </span>|
                                   <span className="ml-4 f-12 text-secondary">
-                                    {course.members} Members
+                                    {course.members.length} Members
                                   </span>
-                                </div>
+                                </div>}
+                                {course.CourseType === 'Live Session' && <div className="justify-content-between">
+                                <span className="ml-4 f-12 text-secondary">
+                                    {course.members.length} Members
+                                  </span>
+                                  </div>}
                             </div>
                           }
                         />
