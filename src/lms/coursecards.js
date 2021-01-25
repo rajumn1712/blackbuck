@@ -101,7 +101,7 @@ class CourseCards extends Component {
                                     {course.videos} Videos
                                   </span>|
                                   <span className="ml-4 f-12 text-secondary">
-                                    {course.videos} Members
+                                    {course.members.concat(course.AdminUsers).length} Members
                                   </span>
                                 </div>
                               </div>
@@ -185,17 +185,17 @@ class CourseCards extends Component {
                               <Paragraph lines={2} style={{height: '42px'}}>
                                 {course.description}
                               </Paragraph>
-                              <div>
-                                <span className="mr-12 f-12 text-secondary">
-                                  <span className="grp-type-icon video-play" />
-                                  {course.sections} Sections
-                                </span>
-                                <span className="f-12 text-secondary">
-                                  <span className="grp-type-icon lessons" />
-                                  {course.videos} Videos
-                                  Lessons
-                                </span>
-                              </div>
+                              <div className="justify-content-between">
+                                  <span className="mr-4 f-12 text-secondary">
+                                    {course.sections} Sections
+                                  </span> |
+                                  <span className="mx-4 f-12 text-secondary">
+                                    {course.videos} Videos
+                                  </span>|
+                                  <span className="ml-4 f-12 text-secondary">
+                                    {course.members} Members
+                                  </span>
+                                </div>
                             </div>
                           }
                         />
