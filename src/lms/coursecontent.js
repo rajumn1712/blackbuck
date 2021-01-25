@@ -348,27 +348,31 @@ class CourseContent extends Component {
                       {courseDetails.CourseType === "Content" && (
                         <>
                           {!this.state.IsRenderType && (
-                            <div className="lms-video mb-8" id="video_player">
+                            <div className="lms-video" id="video_player">
+                              <div className="video-container">
                               <video
                                 controls="false"
+                                class="video"
                                 key={this.state.selectedVideo}
                               >
                                 <source src={this.state.selectedVideo} />
                               </video>
+                              </div>
                             </div>
                           )}
                           {this.state.IsRenderType === "Video" && (
-                            <div className="lms-video mb-8" id="video_player">
-                              {this.state.IsVideoSource == "Upload" && (
-                                <video controls key={this.state.selectedVideo}>
+                            <div className="lms-video " id="video_player">
+                              {this.state.IsVideoSource == "Upload" && (<div className="video-container">
+                                <video controls key={this.state.selectedVideo} class="video">
                                   <source src={this.state.selectedVideo} />
                                 </video>
+                                </div>
                               )}
                               {this.state.IsVideoSource == "YouTube" &&
                                 this.state.selectedVideo && (
                                   <iframe
-                                    width="640"
-                                    height="360"
+                                    width="100%"
+                                    height="500"
                                     key={this.state.selectedVideo}
                                     src={
                                       this.state.selectedVideo
@@ -384,8 +388,8 @@ class CourseContent extends Component {
                               {this.state.IsVideoSource == "Vimeo" &&
                                 this.state.selectedVideo && (
                                   <iframe
-                                    width="640"
-                                    height="360"
+                                    width="100%"
+                                    height="500"
                                     key={this.state.selectedVideo}
                                     src={`https://player.vimeo.com/video/${
                                       this.state.selectedVideo.split("/")[
