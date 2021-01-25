@@ -104,12 +104,12 @@ class CourseCards extends Component {
                                     {course.videos} Videos
                                   </span>|
                                   <span className="ml-4 f-12 text-secondary">
-                                    {course.members.length} Members
+                                    {course.members.concat(course.AdminUsers).length} Members
                                   </span>
                                 </div>}
                                 {course.CourseType === 'Live Session' && <div className="justify-content-between">
                                 <span className="ml-4 f-12 text-secondary">
-                                    {course.members.length} Members
+                                    {course.members.concat(course.AdminUsers).length} Members
                                   </span>
                                   </div>}
                               </div>
