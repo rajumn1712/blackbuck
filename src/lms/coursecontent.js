@@ -6,7 +6,7 @@ import "../App.css";
 import OverView from "./overview";
 import defaultUser from "../styles/images/defaultuser.jpg";
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import {
   fetchCourseDetails,
   getCourseMembersList,
@@ -16,6 +16,8 @@ import {
 } from "./api";
 import { connect } from "react-redux";
 import Moment from "react-moment";
+import ShowMoreText from "react-show-more-text";
+import video from '../styles/images/video.mp4';
 const { Panel } = Collapse;
 const data = [
   {
@@ -137,6 +139,10 @@ class CourseContent extends Component {
       }
     }
   };
+  reloadCourse = (item)=>{
+    this.props.history.push(`/course/${item.CourseId}`);
+    window.location.reload()
+  }
 
   render() {
     const {courseDetails,Members,size,recommendedVideos}=this.state
@@ -247,7 +253,10 @@ class CourseContent extends Component {
                <div className="px-12">
                   <p className="text-secondary f-14">{this.state.courseDetails.Author[0].Firstname} {this.state.courseDetails.Author[0].Lastname} |  {moment(this.state.courseDetails.CreatedDate).format('ll')}</p>
                   <Paragraph className="text-primary mb-4">
+                  <ShowMoreText lines={3} more="see more" less="see less">
                   {this.state.courseDetails.Description}
+        </ShowMoreText>
+                  
                   </Paragraph></div>
                   <Divider className="mt-0 mb-6" />
                   <div className="px-12">
@@ -337,7 +346,7 @@ class CourseContent extends Component {
                                     description={
                                       <div className="f-12">
                                         <span className={`grp-type-icon ${item.TopicType === 'Video' ? 'video-play' : 'lessons'}`}></span>{" "}
-                                        {item.Description}
+                                        {item.Description.length > 25 ? `${item.Description.substring(0,45)}...` : item.Description}
                                       </div>
                                     }
                                   />
@@ -361,9 +370,9 @@ class CourseContent extends Component {
                       <List.Item.Meta
                         avatar={<div className="video-recommended mb-8" id="video_player">
                         <video >
-                          <source src={item.CourseVideo} />
+                          <source src={item.CourseVideo || video} />
                         </video></div>}
-                        title={<Link to={"/course/" + item.CourseId}>{item.CourseName}</Link>}
+                        title={<Link onClick={()=>this.reloadCourse(item)}>{item.CourseName}</Link>}
                         description={<div className="f-12"><div>{item.Author[0].Firstname} {item.Author[0].Lastname}</div><div><span>{item.ViewCount} Views</span> . <span>{<Moment fromNow>{item.CreatedDate}</Moment>}</span></div></div>}
                       />
                     </List.Item>
@@ -383,4 +392,4 @@ class CourseContent extends Component {
 const mapStateToProps = ({ oidc }) => {
   return { profile: oidc.profile };
 };
-export default connect(mapStateToProps)(CourseContent);
+export default withRouter(connect(mapStateToProps)(CourseContent));
