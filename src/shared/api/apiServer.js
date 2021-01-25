@@ -238,6 +238,12 @@ const certipyRejectDocument = (Id, type) => {
 const topicDelete = (courseId, sectionId, Id) => {
   return apiClient.get(ADMIN_API + `deleteTopic/${courseId}/${sectionId}/${Id}`);
 }
+const getAllSystemGroups = (take, skip) => {
+  return apiClient.get(ADMIN_API + `getAllSystemGroups/${take}/${skip}`);
+}
+const groupBlock = (obj) => {
+  return apiClient.get(ADMIN_API + `getAllSystemGroups`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -306,5 +312,7 @@ export {
   submitDocs,
   getSubmissions,
   certipyRejectDocument,
-  topicDelete
+  topicDelete,
+  getAllSystemGroups,
+  groupBlock
 };

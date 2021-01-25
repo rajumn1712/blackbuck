@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Tag, Form, Tabs, Tooltip } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import { getUsers, getUsersCount, setScholor, getSystemGroups, setSystemAdmin, saveAdminUsers } from '../../shared/api/apiServer';
+import { getAllSystemGroups, groupBlock } from '../../shared/api/apiServer';
 import connectStateProps from '../../shared/stateConnect';
 import notify from '../../shared/components/notification';
 import Modal from 'antd/lib/modal/Modal';
@@ -90,23 +90,23 @@ const data = [
     },
 ];
 const Groups = ({ profile }) => {
-//const [data, setData] = useState([]);
+    //const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);
     const [isModal, setIsModal] = useState(false);
     const [groups, setGroups] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     useEffect(() => {
-        getMembers(1, 20);
+        //getMembers(1, 20);
     }, []);
-    const fetchGroupSuggestions = async () => {
-        const groupsData = await getSystemGroups(selection[0]?.UserId);
-        if (groupsData.ok) {
-            setGroups(groupsData.data);
-        } else {
-            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
-        }
-    }
+    // const fetchGroupSuggestions = async () => {
+    //     const groupsData = await getSystemGroups(selection[0]?.UserId);
+    //     if (groupsData.ok) {
+    //         setGroups(groupsData.data);
+    //     } else {
+    //         notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+    //     }
+    // }
     const onSelectedRowKeysChange = selectedRowKeys => {
         setSelectedRowKeys(selectedRowKeys);
     };
@@ -120,7 +120,7 @@ const Groups = ({ profile }) => {
         setSelection(selection);
     }
     const blockGroup = () => {
-        setScholor(selection[0].UserId).then((res) => {
+        groupBlock(selection[0].UserId).then((res) => {
             if (res.ok) {
                 notify({
                     description: "Group  blocked successfully",
@@ -132,18 +132,18 @@ const Groups = ({ profile }) => {
     const onPageChange = (page, pageSize) => {
         setSelection([])
         setSelectedRowKeys([]);
-        getMembers(page, pageSize);
+       // getMembers(page, pageSize);
     }
-    const getMembers = async (page, pageSize) => {
-        const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
-        if (response.ok) {
-            response.data.forEach((item, index) => {
-                item["key"] = index;
-            })
-          //  setData(response.data);
-        }
+    // const getMembers = async (page, pageSize) => {
+    //     const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
+    //     if (response.ok) {
+    //         response.data.forEach((item, index) => {
+    //             item["key"] = index;
+    //         })
+    //         //  setData(response.data);
+    //     }
 
-    }
+    // }
     return <>
         <Title className="f-18 text-primary semibold">Groups</Title>
         {/* <div className="custom-card">
