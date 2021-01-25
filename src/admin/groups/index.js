@@ -61,43 +61,16 @@ const data = [
         admin: 'Blackbuck',
 
     },
-    {
-        key: '2',
-        groupname: 'CSC Champs',
-        posts: '35',
-        type: 'Public',
-        date: '11-12-2020 05:05 pm',
-        members: 20,
-        admin: 'Blackbuck',
-    },
-    {
-        key: '3',
-        groupname: 'Mech Mantra!',
-        posts: '5',
-        type: 'Private',
-        date: '05-11-2020 01:00 pm',
-        members: 68,
-        admin: 'Blackbuck',
-    },
-    {
-        key: '4',
-        groupname: 'Pan India Movies',
-        posts: '20',
-        type: 'Public',
-        date: '11-10-2020 01:00 pm',
-        members: 101,
-        admin: 'Blackbuck',
-    },
 ];
 const Groups = ({ profile }) => {
-    //const [data, setData] = useState([]);
+    const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);
     const [isModal, setIsModal] = useState(false);
     const [groups, setGroups] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     useEffect(() => {
-        //getMembers(1, 20);
+        getGroups(1, 20);
     }, []);
     // const fetchGroupSuggestions = async () => {
     //     const groupsData = await getSystemGroups(selection[0]?.UserId);
@@ -120,30 +93,37 @@ const Groups = ({ profile }) => {
         setSelection(selection);
     }
     const blockGroup = () => {
-        groupBlock(selection[0].UserId).then((res) => {
-            if (res.ok) {
-                notify({
-                    description: "Group  blocked successfully",
-                    message: "Groups",
-                });
-            }
-        });
+        if (selection.length == 0 || selection.length > 1) {
+            notify({
+                description: "Please select one record only",
+                message: "Selection",
+            });
+        } {
+            groupBlock(selection[0].UserId).then((res) => {
+                if (res.ok) {
+                    notify({
+                        description: "Group  blocked successfully",
+                        message: "Groups",
+                    });
+                }
+            });
+        }
     }
     const onPageChange = (page, pageSize) => {
         setSelection([])
         setSelectedRowKeys([]);
-       // getMembers(page, pageSize);
+        getGroups(page, pageSize);
     }
-    // const getMembers = async (page, pageSize) => {
-    //     const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
-    //     if (response.ok) {
-    //         response.data.forEach((item, index) => {
-    //             item["key"] = index;
-    //         })
-    //         //  setData(response.data);
-    //     }
+    const getGroups = async (page, pageSize) => {
+        const response = await getAllSystemGroups(pageSize, ((pageSize * page) - pageSize));
+        if (response.ok) {
+            response.data.forEach((item, index) => {
+                item["key"] = index;
+            })
+            setData(response.data);
+        }
 
-    // }
+    }
     return <>
         <Title className="f-18 text-primary semibold">Groups</Title>
         {/* <div className="custom-card">
