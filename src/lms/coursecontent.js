@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty, Tooltip } from "antd";
+import { Card, List, Row, Col, Carousel, Collapse, Avatar, Empty, Tooltip,Typography } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
@@ -16,6 +16,7 @@ const data = [
     title: 'A musical and visual delight! ',
   }
 ]
+const { Title, Paragraph } = Typography;
 class CourseContent extends Component {
   state = {
     courseDetails: {},
@@ -110,8 +111,10 @@ class CourseContent extends Component {
         <Row gutter={24} className="py-16">
           <Col className="" xs={24} sm={16} md={16} lg={17}>
             <div className="preview-image">
+            <Title level={4} className="semibold mb-4 text-primary">
+                dfghjk
+            </Title>
               <Carousel>
-
                 {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
                   <video controls key={this.state.selectedVideo}>
                     <source src={this.state.selectedVideo} />
@@ -267,9 +270,7 @@ class CourseContent extends Component {
                 </div>}
                 {this.state.courseDetails?.CourseSections?.length == 0 && <Empty />}
               </Card>
-              <Card title="Recommended Video" bordered={false}>
-                
-
+              <Card title="Recommended Video" bordered={false}>         
                 <List
                   itemLayout="horizontal"
                   dataSource={data}
@@ -281,7 +282,7 @@ class CourseContent extends Component {
                           <source src={this.state.selectedVideo} />
                         </video></div>}
                         title={<a href="https://ant.design">{item.title}</a>}
-                        description={<div className="f-13"><div>Computer Course</div><div><span>124k Views</span> . <span>1 Month ago</span></div></div>}
+                        description={<div className="f-12"><div>Computer Course</div><div><span>124k Views</span> . <span>1 Month ago</span></div></div>}
                       />
                     </List.Item>
                   )}

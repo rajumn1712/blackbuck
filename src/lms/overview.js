@@ -259,9 +259,9 @@ downloadCertificate = ()=>{
                     <Button type="primary" onClick={() => this.showMore()}>See More</Button>
                 ] : []}>
                 <div className="p-12">
-                  <Title level={4} className="semibold mb-4 text-primary">
+                  {/* <Title level={4} className="semibold mb-4 text-primary">
                    {courseDetails.GroupName}
-                  </Title>
+                  </Title> */}
                   <p className="text-secondary f-14">{courseDetails.Author[0].Firstname} {courseDetails.Author[0].Lastname} |  {moment(courseDetails.CreatedDate).format('ll')}</p>
                   <Paragraph className="text-primary">
                     {courseDetails.Description}
@@ -317,7 +317,7 @@ downloadCertificate = ()=>{
                 </div>}
             {!flagsData.IsCertified && <div className="custom-card">
               <Card title='Take a Test'>
-                {!flagsData.IsSubmitted && <div className="docs px-0">
+                {!flagsData.IsSubmitted && <div className="docs p-12">
                 <List
               itemLayout="horizontal"
               dataSource={courseDetails.Tests}
@@ -342,7 +342,7 @@ downloadCertificate = ()=>{
                     target="_blank"
                   >
                     <Tooltip title="Download">
-                      <span className="post-icons download-coloricon"></span>
+                      <span className="post-icons download-coloricon mt-6 ml-6"></span>
                     </Tooltip>
                   </a>
                 </List.Item>

@@ -1054,7 +1054,10 @@ const AdminCourses = ({ profile }) => {
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }}  >
                                                                 <Form.Item name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here" addonAfter={<Tooltip title={"Save Section"}><span className="" htmlType="submit" type="primary" onClick={() => sectionSave()}>Save Section</span></Tooltip>} onChange={(value) => secItemsChange("SectionName", value, index)} />}
+                                                                    {item.SectionId && <Input className="f-16 mb-16 right-shape" placeholder="Add section title here"  
+                                                                    suffix={<Tooltip title="Save Section"><span htmlType="submit" type="primary" onClick={() => sectionSave()} onChange={(value) => secItemsChange("SectionName", value, index)}>Save</span></Tooltip>} 
+                                                                    enterButton={<span className="icons close" htmlType="submit" type="primary" onClick={() => sectionSave()}></span>} onChange={(value) => secItemsChange("SectionName", value, index)} />} 
+                                                                    {/* addonAfter={<span className="icons close" htmlType="submit" type="primary" onClick={() => sectionSave()}></span>} onChange={(value) => secItemsChange("SectionName", value, index)} />} */}
                                                                 </Form.Item>
                                                                 <div className="text-right">
                                                                     {/* <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button> */}
