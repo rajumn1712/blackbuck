@@ -4,9 +4,12 @@ import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
 import "../App.css";
 import OverView from "./overview";
-import user from '../styles/images/user.jpg';
+import defaultUser from "../styles/images/defaultuser.jpg";
+import moment from 'moment';
+import { Link } from 'react-router-dom';
 import {
   fetchCourseDetails,
+  getCourseMembersList,
   getUserWatchedVideos,
   saveCourseTopic,
 } from "./api";
@@ -27,7 +30,10 @@ class CourseContent extends Component {
     IsRenderType: null,
     IsVideoSource: null,
     lstDocuments: [],
-    IsChecked: false
+    IsChecked: false,
+    Members:[],
+    size:10,
+    page:1
   };
   componentDidMount() {
     this.loadCourseDetails();
@@ -42,9 +48,24 @@ class CourseContent extends Component {
         selectedVideo:
           response.data.length > 0 ? response.data[0].CourseVideo[0] : null,
         loading: false,
+      },()=>{
+        this.getMembersList();
       });
     }
   };
+  showMore = () => {
+    let { page } = this.state;
+        page += 1;
+    this.setState({ ...this.state, page },()=>{
+      this.getMembersList();
+    })
+  }
+  getMembersList = async ()=>{
+    const response = await getCourseMembersList(this.props.match.params.id,this.state.page,this.state.size);
+    if(response.ok){
+      this.setState({...this.state,Members:response.data})
+    }
+  }
   getUserWatchedVideos = async () => {
     const response = await getUserWatchedVideos(
       this.props.match.params.id,
@@ -107,8 +128,10 @@ class CourseContent extends Component {
   };
 
   render() {
+    const {courseDetails,Members,size}=this.state
     return (
-      <div className="post-preview-box course-card">
+      <>
+      {Object.keys(courseDetails).length > 0 && <div className="post-preview-box course-card">
         <Row gutter={24} className="py-16">
           <Col className="" xs={24} sm={16} md={16} lg={17}>
             <div className="card-background p-0 mb-12">
@@ -201,9 +224,9 @@ class CourseContent extends Component {
             </div>
             <div className="py-12">
                <div className="px-12">
-                  <p className="text-secondary f-14">Neha sruthi | Jan 23, 2021</p>
+                  <p className="text-secondary f-14">{this.state.courseDetails.Author[0].Firstname} {this.state.courseDetails.Author[0].Lastname} |  {moment(this.state.courseDetails.CreatedDate).format('ll')}</p>
                   <Paragraph className="text-primary mb-4">
-                  Learn to use Python professionally, learning both Python 2 and Python 3! Create games with Python, like Tic Tac Toe and Blackjack! Learn advanced Python features, like the collections module and how to work with timestamps! Learn to use Object Oriented Programming with classes! Understand complex topics, like decorators. Understand how to use both the Jupyter Notebook and create .py files Get an understanding of how to create GUIs in the Jupyter Notebook system! Build a complete understanding of Python from the ground up!
+                  {this.state.courseDetails.Description}
                   </Paragraph></div>
                   <Divider className="mt-0 mb-6" />
                   <div className="px-12">
@@ -212,20 +235,18 @@ class CourseContent extends Component {
                   </Title>
                    <div>
                             
-                             <Avatar.Group className="img-marginremove"
-                                    maxCount={9}
-                                    size="large"
-                                    maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
-                                >
-                                    <Avatar src={user} />
-                                    <Avatar src={user} />
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                </Avatar.Group> 
+                   <Avatar.Group
+                                maxCount={size-1}
+                                size="large"
+                                maxStyle={{ color: 'var(--primary)', backgroundColor: 'var(--secondary)' }}
+                            >
+                                {Members.length > 0 && Members.map((user, index) => {
+                                    return <Tooltip title={user.Firstname ? user.Firstname : user.FirstName} placement="top">
+                                        <Link to={this.props?.profile.Id == user.UserId ? "/profile/IsProfileTab" : ("/profileview/" + user.UserId)}><Avatar src={user.Image || defaultUser} key={index} style={{ backgroundColor: user.colorbc }}>
+                                        </Avatar></Link> 
+                                    </Tooltip>
+                                })}
+                            </Avatar.Group>
                         </div></div>
                 </div>
             </div>
@@ -326,7 +347,8 @@ class CourseContent extends Component {
             </div>
           </Col>
         </Row>
-      </div>
+      </div>}
+      </>
     );
   }
 }

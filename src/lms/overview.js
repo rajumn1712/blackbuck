@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import { Card, List, Row, Col, Avatar, Divider, Typography, Button, Result, Tooltip, Upload, Comment, Form, Table, Space } from 'antd'
-import defaultUser from "../styles/images/defaultuser.jpg";
-import TextArea from 'antd/lib/input/TextArea';
+import { Card, List, Row, Col, Typography, Button, Result, Tooltip, Upload, } from 'antd'
 import '../index.css';
 import '../App.css';
-import user from '../styles/images/user.jpg';
-import { fetchUserTests, getCertifiedFlags, getCourseMembersList, submitTests } from './api';
+import { getCertifiedFlags, submitTests } from './api';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import Comments from '../shared/components/postings/Comments/Comments';
 import Loader from '../common/loader';
 import notify from '../shared/components/notification';
 import { uuidv4 } from '../utils';
-import { Link } from 'react-router-dom';
 import { apiClient } from '../shared/api/clients';
 
 const { Title, Paragraph } = Typography;
@@ -26,21 +21,11 @@ class OverView extends Component {
     fileUploading:false,
     uploadSources:[],
     TestsObj:[],
-    flagsData:{"IsSubmitted":null,"IsCertified":null,"IsRejected":null},
-    Members:{},
-    size:10,
-    page: 1,
+    flagsData:{"IsSubmitted":null,"IsCertified":null,"IsRejected":null,ReSubmit:null},
     showUpload:false
 }
 componentDidMount(){
-  this.getMembersList();
   this.getCertified();
-}
-getMembersList = async ()=>{
-  const response = await getCourseMembersList(this.props.courseid,this.state.page,this.state.size);
-  if(response.ok){
-    this.setState({...this.state,Members:response.data})
-  }
 }
 getCertified = async ()=>{
   const response = await getCertifiedFlags(this.props.courseid,this.props.profile?.Id);
@@ -60,7 +45,7 @@ getCertified = async ()=>{
 uploadProps = {
   name: "file",
   multiple: true,
-  accept:".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv,.ppt,.pdf",
+  accept:".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv,.pptx,.pdf",
   action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
   onChange: (info) => {
     this.setState({ ...this.state, fileUploading: true });
@@ -111,7 +96,7 @@ uploadProps = {
   beforeUpload: (file) => {
     let accepted = false;
     const fileMaxSize = 25 * 1000000;
-    const acceptTypes = "doc,docx,ott,rtf,docm,dot,odt,dotm,md,xls,xlsx,csv,ppt,pdf"
+    const acceptTypes = "doc,docx,ott,rtf,docm,dot,odt,dotm,md,xls,xlsx,csv,pptx,pdf"
     if(!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)){
       notify({
         message: "Upload",
@@ -131,13 +116,7 @@ uploadProps = {
   },
 };
 
-showMore = () => {
-  let { page } = this.state;
-      page += 1;
-  this.setState({ ...this.state, page },()=>{
-    this.getMembersList();
-  })
-}
+
 
 saveUserTestFiles = async ()=>{
   const object ={
@@ -256,7 +235,7 @@ downloadCertificate = ()=>{
 
 
     render() {
-      const {courseDetails,flagsData,Members,size,showUpload} = this.state;
+      const {courseDetails,flagsData} = this.state;
         return (
           <div>
             <div className="custom-card">
