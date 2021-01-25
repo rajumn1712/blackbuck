@@ -1034,7 +1034,8 @@ const AdminCourses = ({ profile }) => {
                                                                                     </List.Item>
                                                                                 )}
                                                                             />
-                                                                            <Button size="small" className="px-16" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit Content</Button>
+                                                                            <Button size="small" className="px-16 mr-8" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit</Button>
+                                                                            <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete</Button> 
                                                                         </div>
                                                                         }
                                                                     </Panel>
