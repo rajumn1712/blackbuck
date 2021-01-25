@@ -5,17 +5,11 @@ import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
 import Logo from '../styles/images/logo.svg';
-import avatar from '../styles/images/avatar.png';
-import avatar2 from '../styles/images/user.jpg';
-import userImage from '../styles/images/user_image.jpg';
-import user_Image from '../styles/images/user-image.jpg';
 import defaultUser from '../styles/images/defaultuser.jpg';
-import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
 import { connect } from 'react-redux';
-import { fetchFriendRequests, fetchUserFriends, fetchNotificationCount} from '../shared/api/apiServer';
-import ChatSystem from '../utils/chat-system';
+import {fetchUserFriends, fetchNotificationCount} from '../shared/api/apiServer';
 import Notifications from '../components/notification';
 const { Meta } = Card;
 const { Search } = Input;
