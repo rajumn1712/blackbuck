@@ -947,6 +947,7 @@ const AdminCourses = ({ profile }) => {
                                                         onRemove={() => {
                                                             courseObject.CourseVideo = [];
                                                             setCourseObject({ ...courseObject })
+                                                            setIsCourseChanged(true);
                                                         }}
                                                         onChange={(info) => {
                                                             if (status == "uploading") {
@@ -954,6 +955,7 @@ const AdminCourses = ({ profile }) => {
                                                             }
                                                             const { status } = info.file;
                                                             if (status === 'done') {
+                                                                setIsCourseChanged(true);
                                                                 setFileVideoUploading(false);
                                                                 courseObject.CourseVideo = info.file.response;
                                                                 setCourseObject({ ...courseObject })
