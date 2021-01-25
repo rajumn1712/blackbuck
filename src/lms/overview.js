@@ -127,8 +127,8 @@ saveUserTestFiles = async ()=>{
   "Lastname": this.props.profile?.LastName,
   "Image": this.props.profile?.ProfilePic,
    "CreatedDate":new Date(),
-   "IsSubmitted":this.state.flagsData.showUpload ? false : true,
-   "ReSubmit":this.state.flagsData.showUpload ? true : false,
+   "IsSubmitted":this.state.showUpload ? false : true,
+   "ReSubmit":this.state.showUpload ? true : false,
    "IsRejected":false,
    "IsCertified":false,
   "Tests": this.state.TestsObj
