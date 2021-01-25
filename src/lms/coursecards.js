@@ -193,9 +193,12 @@ class CourseCards extends Component {
                           }
                           description={
                             <div>
-                              <Paragraph lines={2} style={{height: '42px'}}>
-                                {course.description}
-                              </Paragraph>
+                              <Paragraph
+                                  ellipsis={{ rows: 2 }}
+                                  className="f-14 text-primary mb-8" style={{height: '42px'}}
+                                >
+                                  {course.description}
+                                </Paragraph>
                               {course.CourseType === 'Content' && <div className="justify-content-between">
                                   <span className="mr-4 f-12 text-secondary">
                                     {course.sections} Sections

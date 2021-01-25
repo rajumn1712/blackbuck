@@ -382,7 +382,7 @@ class CourseContent extends Component {
                 {this.state.courseDetails?.CourseSections?.length > 0 && <div className="height-scroll">
                   <Collapse
                     bordered={false}
-                    defaultActiveKey={["1"]}
+                    defaultActiveKey={["0"]}
                     expandIcon={({ isActive }) => (
                       <CaretRightOutlined rotate={isActive ? 90 : 0} />
                     )}
