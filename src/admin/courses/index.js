@@ -184,6 +184,7 @@ const AdminCourses = ({ profile }) => {
             let accepted = false;
             const acceptTypes = acceptTypesForTopic[topicObj.TopicType]
             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                setFileUploading(false);
                 notify({
                     message: "Upload",
                     description: `File format not supported`,
@@ -194,8 +195,10 @@ const AdminCourses = ({ profile }) => {
             return !accepted;
         },
         onChange(info) {
-            setFileUploading(true);
             const { status } = info.file;
+            if (status == "uploading") {
+                setFileUploading(true);
+            }
             if (status === 'done') {
                 setFileUploading(false);
                 if (topicObj.TopicType == "Document") {
@@ -646,6 +649,7 @@ const AdminCourses = ({ profile }) => {
             let accepted = false;
             const acceptTypes = ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv";
             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                setFileUploading(false);
                 notify({
                     message: "Upload",
                     description: `File format not supported`,
@@ -656,8 +660,10 @@ const AdminCourses = ({ profile }) => {
             return !accepted;
         },
         onChange(info) {
-            setFileUploading(true);
             const { status } = info.file;
+            if (status == "uploading") {
+                setFileUploading(true);
+            }
             if (status === 'done') {
                 setFileUploading(false);
                 const avatar = info.file?.name
@@ -865,8 +871,10 @@ const AdminCourses = ({ profile }) => {
                                                     <Dragger
                                                         className="upload"
                                                         onChange={(info) => {
-                                                            setFileImgUploading(true);
                                                             const { status } = info.file;
+                                                            if (status == "uploading") {
+                                                                setFileImgUploading(true);
+                                                            }
                                                             if (status === 'done') {
                                                                 setFileImgUploading(false);
                                                                 courseObject.GroupImage = info.file.response;
@@ -880,6 +888,7 @@ const AdminCourses = ({ profile }) => {
                                                             let accepted = false;
                                                             const acceptTypes = ".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
                                                             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                                                                setFileImgUploading(false);
                                                                 notify({
                                                                     message: "Upload",
                                                                     description: `File format not supported`,
@@ -932,7 +941,9 @@ const AdminCourses = ({ profile }) => {
                                                             setCourseObject({ ...courseObject })
                                                         }}
                                                         onChange={(info) => {
-                                                            setFileVideoUploading(true);
+                                                            if (status == "uploading") {
+                                                                setFileVideoUploading(true);
+                                                            }
                                                             const { status } = info.file;
                                                             if (status === 'done') {
                                                                 setFileVideoUploading(false);
@@ -947,6 +958,7 @@ const AdminCourses = ({ profile }) => {
                                                             let accepted = false;
                                                             const acceptTypes = ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm";
                                                             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                                                                setFileVideoUploading(false);
                                                                 notify({
                                                                     message: "Upload",
                                                                     description: `File format not supported`,
