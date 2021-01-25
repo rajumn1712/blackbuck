@@ -58,6 +58,7 @@ class CourseContent extends Component {
     size: 10,
     page: 0,
     recommendedVideos: [],
+    selectedTopicid:null
   };
   componentDidMount() {
     this.loadCourseDetails();
@@ -142,6 +143,7 @@ class CourseContent extends Component {
     }
   };
   setVideoSource = async (section, item, indx, index) => {
+    this.setState({...this.state,selectedTopicid:item.TopicId})
     const object = {
       CourseId: this.props.match.params.id,
       SectionId: section.SectionId,
@@ -155,8 +157,6 @@ class CourseContent extends Component {
       if (item.TopicType === "Video") {
         let { courseDetails } = this.state;
         courseDetails.CourseSections[indx].Topics[index].IsChecked = true;
-        courseDetails.CourseSections[indx].Topics[index].IsAddClass =
-          "video-active";
         this.setState(
           {
             ...this.state,
@@ -571,7 +571,7 @@ class CourseContent extends Component {
                                       dataSource={section.Topics}
                                       renderItem={(item, index) => (
                                         <List.Item
-                                          className={item.IsAddClass}
+                                          className={this.state.selectedTopicid === item.TopicId ? 'active-topic' : ''}
                                           extra={
                                             item.TopicType === "Video" && (
                                               <span
