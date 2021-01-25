@@ -1107,14 +1107,14 @@ const AdminCourses = ({ profile }) => {
 
                                                     </Collapse>
                                                     }
-                                                    {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
+                                                    {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><Tooltip title="Remove Section"><span className="icons close" onClick={() => deleteSection(item)}></span></Tooltip></div>}
                                                     {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}> <Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
                                                 </div>
                                                     {!item.IsSaved && <div className="lecture-collapse mb-16">
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()}>
                                                                 <Form.Item className="custom-fields" name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    <div className="d-flex"><div style={{width: '100%'}}>{item.SectionId && <Input className="f-16 right-shape" placeholder="Add section title here"
+                                                                    <div className="d-flex"><div style={{width: '100%'}}>{item.SectionId && <Input className="py-0 f-16 right-shape" placeholder="Add section title here"
                                                                         suffix={<Tooltip title="Save Section"><Button small htmlType="submit" type="primary">Save</Button></Tooltip>}
                                                                         onChange={(value) => secItemsChange("SectionName", value, index)} />
 
@@ -1133,7 +1133,7 @@ const AdminCourses = ({ profile }) => {
                                                             </Form>
                                                         </div>
                                                         {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><span className="icons close" onClick={() => deleteSection(item)}></span></div>}
-                                                        {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><span className="icons add"></span></div>}
+                                                        {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
                                                     </div>
                                                     }
                                                 </div>
