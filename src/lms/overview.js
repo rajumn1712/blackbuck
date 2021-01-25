@@ -346,7 +346,7 @@ downloadCertificate = ()=>{
                       subTitle="Please check and modify the assignments before resubmitting."
                       extra={[<Button type="primary" onClick={this.reUpload}>Re - Upload</Button>]}
                     ></Result>}
-                  {(courseDetails.Tests.length > 0 && (!flagsData.IsCertified && !flagsData.IsRejected && !flagsData.IsSubmitted)) && <Dragger className="upload mb-16"
+                  {(courseDetails.Tests.length > 0 && (!flagsData.IsCertified && !flagsData.IsRejected && !flagsData.IsSubmitted && !flagsData.ReSubmit)) && <Dragger className="upload mb-16"
                   {...this.uploadProps}
                   showUploadList={false}
                   >
@@ -361,7 +361,7 @@ downloadCertificate = ()=>{
                       PDF, xls).
                     </p>
                   </Dragger>}
-                  {(courseDetails.Tests.length > 0 && (!flagsData.IsCertified && !flagsData.IsRejected && !flagsData.IsSubmitted)) && <div className="docs px-0 hideempty">
+                  {(courseDetails.Tests.length > 0 && (!flagsData.IsCertified && !flagsData.IsRejected && !flagsData.IsSubmitted && !flagsData.ReSubmit)) && <div className="docs px-0 hideempty">
                   <List
               itemLayout="horizontal"
               dataSource={this.state.uploadSources}
