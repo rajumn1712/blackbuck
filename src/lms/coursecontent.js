@@ -186,7 +186,7 @@ class CourseContent extends Component {
                     target="_blank"
                   >
                     <Tooltip title="Download">
-                      <span className="post-icons download-coloricon"></span>
+                      <span className="post-icons download-coloricon mt-6 ml-6"></span>
                     </Tooltip>
                   </a>
                       </List.Item>
