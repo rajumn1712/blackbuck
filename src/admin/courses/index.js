@@ -567,7 +567,7 @@ const AdminCourses = ({ profile }) => {
     //     }
     // }
     const showModal = (type, topic, sectionId) => {
-        let topicObjForsave = type == "Edit" ? { ...topic } : { ...obj }
+        let topicObjForsave = type == "Edit" ? JSON.parse(JSON.stringify(topic)) : { ...obj }
         setSecId(sectionId);
         if (type == 'Edit') {
             topicObjForsave.Hours = topic.Duration.split(":")?.[0]
