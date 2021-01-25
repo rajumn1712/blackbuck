@@ -976,12 +976,21 @@ class Postings extends Component {
     </Card>
   }
   renderCourseCard = (post) => {
+    const liveIcon = {
+      Zoom: zoom,
+      GotoMeeting: "",
+      Others: ""
+    }
     return <>{post.CourseType === "Live Session" ? <div>
-      <img width="100%" src={zoom} />
+      <img style={{ cursor: "pointer" }} onClick={() => { window.open(post.Link, "_blank") }} width="100%" src={liveIcon[post.UrlType]} />
       <div className="course-create d-flex justify-between">
         <div>
           <span className="mr-8"><img src={logo} /></span>
-          <span>2K Members</span>
+          <span>{"Author Name"}</span>
+        </div>
+        <div style={{ flexDirection: "column" }}>
+          <Moment format={"DD/MM/YYYY HH:MM"}>{post.LiveDate}</Moment>
+          <Moment fromNow>{post.LiveDate}</Moment>
         </div>
         <div>
           <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Jion Live</Button>

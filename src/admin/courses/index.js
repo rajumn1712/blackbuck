@@ -426,6 +426,7 @@ const AdminCourses = ({ profile }) => {
                 },
                 "Shares": [],
                 "dupType": "Video",
+                "Author": courseObject.Author,
                 "PublishDate": new Date(),
                 "CourseType": courseObject.CourseType,
                 "Link": courseObject.CourseType == "Live Session" ? courseObject.Link : "",
@@ -877,7 +878,7 @@ const AdminCourses = ({ profile }) => {
                                                         }}
                                                         beforeUpload={(file) => {
                                                             let accepted = false;
-                                                            const acceptTypes = ".jpg,.jpeg,.png"
+                                                            const acceptTypes = ".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
                                                             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
                                                                 notify({
                                                                     message: "Upload",
