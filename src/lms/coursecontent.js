@@ -281,7 +281,7 @@ class CourseContent extends Component {
                           key={indx}
                           header={section.SectionName}
                           key={indx}
-                          className="pb-0 course-content flot-left"
+                          className="pb-0 course-content flot-left video-active"
                         >
                           <div>
                             <List

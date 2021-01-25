@@ -2096,5 +2096,6 @@ textarea {
 .right-shape .ant-input{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
 /* .right-shape .ant-input-group-addon{border-top-right-radius: 8px;border-bottom-right-radius: 8px;} */
 .course-create{background: var(--bodybg);padding: 16px;}
-.video-active{background: var(--primary);}
+.video-active{background: var(--primary); color: var(--white)}
+.video-active .ant-collapse-header, .video-active .anticon.anticon-caret-right{color: var(--white) !important;}
 .playicons.continue-icon{background-position: -671px -113px;}
