@@ -17,11 +17,9 @@ import Comments from "../components/postings/Comments/Comments";
 import CommentAction from "../components/postings/Actions/CommentAction";
 import ShareAction from "../components/postings/Actions/ShareActions";
 import EmojiAction from "../components/postings/Actions/EmojiActions";
-import video from '../../styles/images/video.mp4';
-import user from '../../styles/images/user.jpg';
+
 import zoom from '../../styles/images/zoom.jpg';
-import zoomlogo from '../../styles/images/zoomlogo.svg';
-import logo from '../../styles/images/logo.svg';
+import live_session from '../../styles/images/live_session.png';
 import {
   deletePost,
   fetchPostReactions,
@@ -978,26 +976,26 @@ class Postings extends Component {
   renderCourseCard = (post) => {
     const liveIcon = {
       Zoom: zoom,
-      GotoMeeting: "",
-      Others: ""
+      GotoMeeting: live_session,
+      Others: live_session
     }
     return <>{post.CourseType === "Live Session" ? <div className="livecourse-card mx-16">
       <div className="p-relative">
         <img onClick={() => { window.open(post.Link, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
         <div className="live-btn-hover d-flex align-items-center">
-            <a className="f-24 semibold" onClick={() => { window.open(post.Link, "_blank") }}>Join Live Session</a>
+          <a className="f-24 semibold" onClick={() => { window.open(post.Link, "_blank") }}>Join Live Session</a>
         </div>
       </div>
       <div className="course-create p-12 d-flex justify-between">
         <div className="d-flex align-items-center">
-          <Avatar src={defaultUser} className="mr-8" />
-          <p className="m-0 f-14">{"Author Name"}</p>
+          <Avatar src={post.Author !== null ? post.Author[0].Image : defaultUser} className="mr-8" />
+          <p className="m-0 f-14">{post.Author !== null && `${post.Author[0]?.Firstname} ${post.Author[0]?.Lastname}`}</p>
         </div>
         <div className="d-flex livecourse-date py-8 px-16">
           <Moment className="f-16 semibold mr-16 text-primary" format={"DD/MM/YYYY HH:MM"}>{post.LiveDate}</Moment>
           <Moment className="f-16 semibold text-secondary" fromNow>{post.LiveDate}</Moment>
         </div>
-          {/* <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Join Live</Button> */}
+        {/* <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Join Live</Button> */}
       </div>
     </div> : <div className="livecourse-card mx-16">
         {post.type === "Video" && <video width="100%" controls muted className="coursevideo-card">
@@ -1005,16 +1003,16 @@ class Postings extends Component {
         </video>}
         <div className="course-create p-12">
           <Title level={5} className="mb-4 text-dark">{post.title}</Title>
-          <ShowMoreText lines={3} more="see more" less="see less" className="text-primary"> 
+          <ShowMoreText lines={3} more="see more" less="see less" className="text-primary">
             {post.meassage}
           </ShowMoreText>
           <div className="course-create d-flex mt-16 justify-between">
-          <div className="d-flex align-items-center">
-            <Avatar src={defaultUser} className="mr-8" />
-            <p className="m-0 f-14">{"Author Name"}</p>
+            <div className="d-flex align-items-center">
+              <Avatar src={post.Author !== null ? post.Author[0].Image : defaultUser} className="mr-8" />
+              <p className="m-0 f-14">{post.Author !== null && `${post.Author[0]?.Firstname} ${post.Author[0]?.Lastname}`}</p>
+            </div>
+            <Button type="primary" onClick={() => this.joinCourse(post.CourseId)}>Join Course</Button>
           </div>
-          <Button type="primary" onClick={() => this.joinCourse(post.CourseId)}>Join Course</Button>
-        </div>
         </div>
       </div>}</>
   }
