@@ -262,15 +262,17 @@ downloadCertificate = ()=>{
               <Card actions={(size > 9 && size < Members?.length) ? [
                     <Button type="primary" onClick={() => this.showMore()}>See More</Button>
                 ] : []}>
-                <div className="p-12">
+                <div className="py-12">
                   {/* <Title level={4} className="semibold mb-4 text-primary">
                    {courseDetails.GroupName}
                   </Title> */}
+                  <div className="px-12">
                   <p className="text-secondary f-14">{courseDetails.Author[0].Firstname} {courseDetails.Author[0].Lastname} |  {moment(courseDetails.CreatedDate).format('ll')}</p>
                   <Paragraph className="text-primary">
                     {courseDetails.Description}
-                  </Paragraph>
-                  <Divider />
+                  </Paragraph></div>
+                  <Divider className="my-4" />
+                  <div className="px-12">
                   <Title className="semibold mb-4 text-primary f-16">
                     Members List 
                   </Title>
@@ -302,7 +304,7 @@ downloadCertificate = ()=>{
                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                     <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
                                 </Avatar.Group> */}
-                        </div>
+                        </div></div>
                 </div>
               </Card>
             </div>
@@ -346,7 +348,7 @@ downloadCertificate = ()=>{
                     target="_blank"
                   >
                     <Tooltip title="Download">
-                      <span className="post-icons download-coloricon"></span>
+                      <span className="post-icons download-coloricon mt-6 ml-6"></span>
                     </Tooltip>
                   </a>
                 </List.Item>
