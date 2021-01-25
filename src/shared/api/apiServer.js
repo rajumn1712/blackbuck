@@ -235,6 +235,9 @@ const getSubmissions = (user_id) => {
 const certipyRejectDocument = (Id, type) => {
   return apiClient.get(ADMIN_API + `CertifiedOrReject/${Id}/${type}`);
 }
+const topicDelete = (courseId, sectionId, Id) => {
+  return apiClient.get(ADMIN_API + `deleteTopic/${courseId}/${sectionId}/${Id}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -302,5 +305,6 @@ export {
   setSystemAdmin,
   submitDocs,
   getSubmissions,
-  certipyRejectDocument
+  certipyRejectDocument,
+  topicDelete
 };

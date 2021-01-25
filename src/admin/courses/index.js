@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
@@ -325,6 +325,17 @@ const AdminCourses = ({ profile }) => {
             setIsModalVisible(false);
             refreshCourseDetails();
             notify({ message: "Topic", description: "Topic saved successfully" });
+        }
+        else {
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+        }
+    }
+
+    const deleteTopic = async (topic, section) => {
+        const result = await topicDelete(courseObject.GroupId, section.SectionId, topic.TopicId);
+        if (result.ok) {
+            refreshCourseDetails();
+            notify({ message: "Topic", description: "Topic deleted successfully" });
         }
         else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
@@ -924,7 +935,7 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
-                                                 <label className="text-secondary d-block mb-4">Add Test</label>
+                                                <label className="text-secondary d-block mb-4">Add Test</label>
                                                 {fileUploading && <Loader className="loader-top-middle" />}
                                                 <Dragger showUploadList={false} className="upload mb-16" {...uploadProps}>
                                                     <span className="sharebox-icons docs-upload mb-16"></span>
@@ -1007,7 +1018,7 @@ const AdminCourses = ({ profile }) => {
                                                                                 <p className="f-14 text-secondary mb-8">{topic.Description}</p>
                                                                                 <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? bytesToSize(topic.Size) : "NA"}</p>
                                                                                 <Button size="small" className="px-16 mr-8" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit</Button>
-                                                                                <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete</Button> 
+                                                                                <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteTopic(topic, item)}>Delete</Button>
                                                                             </div>
                                                                         </div>}
                                                                         {topic.TopicType == "Document" && <div className="docs">
@@ -1035,7 +1046,7 @@ const AdminCourses = ({ profile }) => {
                                                                                 )}
                                                                             />
                                                                             <Button size="small" className="px-16 mr-8" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit</Button>
-                                                                            <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete</Button> 
+                                                                            <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteTopic(topic, item)}>Delete</Button>
                                                                         </div>
                                                                         }
                                                                     </Panel>
@@ -1056,14 +1067,14 @@ const AdminCourses = ({ profile }) => {
                                                         <div className="custom-fields entr-course-title p-12 mb-12">
                                                             < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }}  >
                                                                 <Form.Item className="custom-fields" name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    {item.SectionId && <Input className="f-16 right-shape" placeholder="Add section title here"  
-                                                                    suffix={<Tooltip title="Save Section"><span htmlType="submit" type="primary" onClick={() => sectionSave()} onChange={(value) => secItemsChange("SectionName", value, index)}>Save</span></Tooltip>} 
-                                                                    
-                                                                     addonAfter={<Tooltip title="Delete Section"><span className="icons close" htmlType="submit" type="primary" onClick={() => deleteSection(item)}></span></Tooltip>} onChange={(value) => secItemsChange("SectionName", value, index)} />} 
+                                                                    {item.SectionId && <Input className="f-16 right-shape" placeholder="Add section title here"
+                                                                        suffix={<Tooltip title="Save Section"><span htmlType="submit" type="primary" onClick={() => sectionSave()} onChange={(value) => secItemsChange("SectionName", value, index)}>Save</span></Tooltip>}
+
+                                                                        addonAfter={<Tooltip title="Delete Section"><span className="icons close" htmlType="submit" type="primary" onClick={() => deleteSection(item)}></span></Tooltip>} onChange={(value) => secItemsChange("SectionName", value, index)} />}
                                                                 </Form.Item>
                                                                 <div className="text-right">
                                                                     {/* <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button> */}
-                                                                     {/* <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>  */}
+                                                                    {/* <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>  */}
                                                                 </div>
                                                             </Form>
                                                         </div>
@@ -1077,9 +1088,9 @@ const AdminCourses = ({ profile }) => {
 
                                     </div>
                                     <div className="card-background mt-16">
-                                    <span className="text-left">
-                                    <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
-                                    </span>
+                                        <span className="text-left">
+                                            <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
+                                        </span>
                                         <span className="text-right float-right">
                                             <Button disabled={fileVideoUploading} type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
                                             {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button disabled={fileVideoUploading} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
