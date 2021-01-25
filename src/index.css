@@ -20,6 +20,7 @@ a:hover,a:active{color: var(--primaryhover) !important;}
 .d-flex{display: flex;}
 .align-items-center{align-items: center;}
 .justify-between{justify-content: space-between;}
+.p-relative{position: relative;}
 /* .site-layout-content { background: #f0f7ff url(../src/styles/images/body.svg) no-repeat; background-size: cover; background-attachment: fixed; height: 100%; margin-top: 70px;} */
 .site-layout-content {background-color: #f3f2ef !important; height:100%; margin-top: 70px;}
 .site-page-header {border: 1px solid rgb(148, 148, 148); bottom: 20px; }

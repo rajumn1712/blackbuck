@@ -2097,11 +2097,17 @@ textarea {
 .objectfit-cover img{height: 208px;object-fit: cover;}
 .right-shape .ant-input{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
 /* .right-shape .ant-input-group-addon{border-top-right-radius: 8px;border-bottom-right-radius: 8px;} */
-.course-create{background: var(--bodybg);padding: 16px;}
+.course-create{background: var(--bodybg); border-radius: 0 0 0.8rem 0.8rem;}
 .video-active{background: var(--primary); color: var(--white)}
 .video-active .ant-collapse-header, .video-active .anticon.anticon-caret-right{color: var(--white) !important;}
 .playicons.continue-icon{background-position: -671px -113px;}
 .playicons.close-section{background-position: -712px -110px;margin: 10px 0 0 10px;}
 .description-space .ant-row.ant-form-item{margin-bottom: 12 !important;}
 .live-btn{background: var(--red); font-weight: 500; font-size: var(--f-12); color: var(--white); padding: 2px 8px; position: absolute; right: 0; bottom: 0; width: auto !important;}
-.live-btn:hover{color: var(--white) !important;}
+.live-btn:hover, .live-btn-hover a:hover{color: var(--white) !important;}
+.livecourse-card{border-radius: 0.8rem; border: 1px solid var(--line)}
+.livecourse-card .zoom-img, .live-btn-hover{border-radius: 0.8rem 0.8rem 0 0;}
+.live-btn-hover{position: absolute; top: 0; right: 0; bottom: 0; left: 0;background: var(--black-50); justify-content: center;visibility: hidden; transition: 0.3s ease-in-out;}
+.live-btn-hover a{border: 1px solid var(--white); color: var(--white); display: inline-block; padding: 12px 24px; border-radius: 0.4rem; background: var(--black-80)}
+.post-card:hover .live-btn-hover{visibility: visible;}
+.livecourse-date{background: var(--white);border-radius: 0.4rem; border: 1px dashed var(--border);}
