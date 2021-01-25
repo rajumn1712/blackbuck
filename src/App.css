@@ -2102,4 +2102,14 @@ textarea {
 .video-active .ant-collapse-header, .video-active .anticon.anticon-caret-right{color: var(--white) !important;}
 .playicons.continue-icon{background-position: -671px -113px;}
 .playicons.close-section{background-position: -712px -110px;margin: 10px 0 0 10px;}
-.description-space .ant-row.ant-form-item{margin-bottom: 12 !important;}
+.description-space .ant-row.ant-form-item{margin-bottom: 16px !important;}
+/* {    display: inline-block;
+  margin-right: 4px;
+  color: #ff4d4f;
+  font-size: 14px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: '*';} */
+.playicons.goto-meeting{background-position: -754px -111px;}
+.playicons.zoom{background-position: -842px -112px;}
+.playicons.others-meeting{background-position: -799px -111px;}
