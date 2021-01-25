@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import '../../styles/theme.css';
 import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete, getPublishedObject } from '../../shared/api/apiServer';
 import notify from '../../shared/components/notification';
 import { uuidv4 } from '../../utils';
 import Loader from "../../common/loader";
@@ -151,6 +151,7 @@ const AdminCourses = ({ profile }) => {
     const [counts, setCounts] = useState({ CoursesCouunt: 0, MembersCount: 0 });
     const [isCourseChanged, setIsCourseChanged] = useState(false);
     const [isVideoLoded, setIsVideoLoded] = useState(false);
+    const [posts, setPosts] = useState([]);
     useEffect(() => {
         fetchBranches();
         fetchAuthors();
@@ -233,14 +234,14 @@ const AdminCourses = ({ profile }) => {
         },
     };
 
-    const onCourseEditObj = (id) => {
+    const onCourseEditObj = (id, isPublished) => {
         setShowForm(true);
         setFileImgUploading(false);
         setFileVideoUploading(false)
         setFileUploading(false)
         courseObject.GroupId = id;
         setCourseObject({ ...courseObject })
-        refreshCourseDetails(true);
+        refreshCourseDetails(true, isPublished);
         setIsCourseChanged(false);
     }
     const deleteSection = async (item) => {
@@ -270,7 +271,15 @@ const AdminCourses = ({ profile }) => {
         dupTopicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
         setTopicObj({ ...dupTopicObj });
     }
-    const refreshCourseDetails = async () => {
+    const refreshCourseDetails = async (isEdit, isPublished) => {
+        if (isPublished) {
+            const publishResponse = await getPublishedObject(courseObject.GroupId);
+            if (publishResponse.ok) {
+                setPosts(publishResponse.data)
+            } else {
+                notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+            }
+        }
         const branchResponse = await getCourse(courseObject.GroupId, profile?.Id);
         if (branchResponse.ok) {
             bindCourseData(branchResponse.data[0])
@@ -410,46 +419,74 @@ const AdminCourses = ({ profile }) => {
     const coursePublish = async () => {
         postObject.GroupId = courseObject.GroupId;
         postObject.IsPublish = true;
-        courseObject.Categories.forEach(item => {
-            let Obj = {
-                "PostId": uuidv4(),
-                "CourseId": courseObject.GroupId,
-                "Type": courseObject.CourseType == "Live Session" ? "Text" : "Video",
-                "Message": courseObject.Description,
-                "Title": courseObject.GroupName,
-                "IsAnonymous": false,
-                "CategoryType": "LMS",
-                "PostType": "Course",
-                "ImageUrl": courseObject.CourseVideo,
-                "CreatedDate": new Date(),
-                "UserDetails": {
-                    "UserId": profile?.Id,
-                    "Firstname": profile?.FirstName,
-                    "Lastname": profile?.LastName,
-                    "Image": profile?.ProfilePic,
-                    "Email": profile?.Email
-                },
-                "Tags": [],
-                "Likes": [],
-                "Comments": [],
-                "Group": {
-                    "GroupId": null,
-                    "GroupName": null,
-                    "GroupImage": null
-                },
-                "Shares": [],
-                "dupType": "Video",
-                "Author": courseObject.Author,
-                "PublishDate": new Date(),
-                "CourseType": courseObject.CourseType,
-                "Link": courseObject.CourseType == "Live Session" ? courseObject.Link : "",
-                "UrlType": courseObject.CourseType == "Live Session" ? courseObject.UrlType : "",
-                "LiveDate": courseObject.CourseType == "Live Session" ? courseObject.Date : "",
-            };
+        postObject.Posts = [];
+        if (!courseObject.IsPublish) {
+            courseObject.Categories.forEach(item => {
+                let Obj = {
+                    "PostId": uuidv4(),
+                    "CourseId": courseObject.GroupId,
+                    "Type": courseObject.CourseType == "Live Session" ? "Text" : "Video",
+                    "Message": courseObject.Description,
+                    "Title": courseObject.GroupName,
+                    "IsAnonymous": false,
+                    "CategoryType": "LMS",
+                    "PostType": "Course",
+                    "ImageUrl": courseObject.CourseVideo,
+                    "CreatedDate": new Date(),
+                    "UserDetails": {
+                        "UserId": profile?.Id,
+                        "Firstname": profile?.FirstName,
+                        "Lastname": profile?.LastName,
+                        "Image": profile?.ProfilePic,
+                        "Email": profile?.Email
+                    },
+                    "Tags": [],
+                    "Likes": [],
+                    "Comments": [],
+                    "Group": {
+                        "GroupId": null,
+                        "GroupName": null,
+                        "GroupImage": null
+                    },
+                    "Shares": [],
+                    "dupType": "Video",
+                    "Author": courseObject.Author,
+                    "PublishDate": new Date(),
+                    "CourseType": courseObject.CourseType,
+                    "Link": courseObject.CourseType == "Live Session" ? courseObject.Link : "",
+                    "UrlType": courseObject.CourseType == "Live Session" ? courseObject.UrlType : "",
+                    "LiveDate": courseObject.CourseType == "Live Session" ? courseObject.Date : "",
+                };
 
-            postObject.Posts.push({ ...Obj })
-        })
-        const result = await publishCourse(postObject);
+                postObject.Posts.push({ ...Obj })
+            })
+        }
+        else {
+            posts.forEach(item => {
+                let Obj = {
+                    "PostId": item.PostId,
+                    "Type": courseObject.CourseType == "Live Session" ? "Text" : "Video",
+                    "Message": courseObject.Description,
+                    "Title": courseObject.GroupName,
+                    "ImageUrl": courseObject.CourseVideo,
+                    "UserDetails": {
+                        "UserId": profile?.Id,
+                        "Firstname": profile?.FirstName,
+                        "Lastname": profile?.LastName,
+                        "Image": profile?.ProfilePic,
+                        "Email": profile?.Email
+                    },
+                    "Author": courseObject.Author,
+                    "CourseType": courseObject.CourseType,
+                    "Link": courseObject.CourseType == "Live Session" ? courseObject.Link : "",
+                    "UrlType": courseObject.CourseType == "Live Session" ? courseObject.UrlType : "",
+                    "LiveDate": courseObject.CourseType == "Live Session" ? courseObject.Date : "",
+                    "CreatedDate": new Date(),
+                };
+                postObject.Posts.push({ ...Obj })
+            })
+        }
+        const result = await publishCourse(postObject, courseObject.IsPublish);
         if (result.ok) {
             notify({ message: "Publish", description: "Course published successfully" });
             setShowForm(false)
@@ -815,6 +852,7 @@ const AdminCourses = ({ profile }) => {
                                                         placeholder="Choose a Category" className="text-left"
                                                         onChange={(value) => handleChange('Categories', value)}
                                                         mode="multiple"
+                                                        disabled={courseObject.CreatedDate}
                                                     >
                                                         {CategoriesLu?.map((item, index) => {
                                                             return <Option value={item.BranchId} key={index}>{item.BranchName}</Option>
@@ -1077,7 +1115,7 @@ const AdminCourses = ({ profile }) => {
                                             </Col>
                                         </Row>
                                     </div>
-                                    <div className="create-course mt-16">
+                                    {courseObject.CourseType == "Content" && <div className="create-course mt-16">
                                         {courseObject.CourseType == "Content" && <div>
                                             {courseObject.CourseSections?.length == 0 && <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>}
                                             {courseObject.CourseSections?.map((item, index) => {
@@ -1182,13 +1220,14 @@ const AdminCourses = ({ profile }) => {
                                         </div>}
 
                                     </div>
+                                    }
                                     <div className="card-background mt-16">
                                         <span className="text-left">
                                             <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
                                         </span>
                                         <span className="text-right float-right">
                                             <Button disabled={fileVideoUploading} type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
-                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button disabled={fileVideoUploading || isCourseChanged} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
+                                            {(courseObject.CreatedDate) && <Button disabled={fileVideoUploading || isCourseChanged} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
                                         </span>
                                     </div>
                                 </Col>
@@ -1378,7 +1417,7 @@ const AdminCourses = ({ profile }) => {
                     </Form>
                 </Modal>
 
-                {!showForm && <Courses onCourseEdit={(id) => onCourseEditObj(id)} onRef={courses => setCoursesObj(courses)} onCourseDelete={() => fetchCountsCour()} />}
+                {!showForm && <Courses onCourseEdit={(id, ispublish) => onCourseEditObj(id, ispublish)} onRef={courses => setCoursesObj(courses)} onCourseDelete={() => fetchCountsCour()} />}
 
 
             </Col>
