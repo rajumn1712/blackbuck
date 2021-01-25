@@ -647,7 +647,7 @@ class CourseContent extends Component {
                                 >
                                   {item.CourseVideo.length > 0 ? <video>
                                     <source src={item.CourseVideo || video} />
-                                  </video> : <Image src={video}></Image>}
+                                  </video> : <img src={video} style={{'width':'130px'}}/>}
                                 </div>
                               }
                               title={
