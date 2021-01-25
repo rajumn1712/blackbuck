@@ -43,6 +43,10 @@ const topicTitle = (
     <span className="left-menu play mr-4"></span>
     // <span className="left-menu docment mr-4"></span>
 )
+const docTitle = (
+    <span className="left-menu docment"></span>
+    // <span className="left-menu docment mr-4"></span>
+)
 
 const AdminCourses = ({ profile }) => {
     const obj = {
@@ -145,6 +149,7 @@ const AdminCourses = ({ profile }) => {
     const [fileVideoUploading, setFileVideoUploading] = useState(false);
     const [CoursesObj, setCoursesObj] = useState("");
     const [counts, setCounts] = useState({ CoursesCouunt: 0, MembersCount: 0 });
+    const [isCourseChanged, setIsCourseChanged] = useState(false);
     useEffect(() => {
         fetchBranches();
         fetchAuthors();
@@ -184,6 +189,7 @@ const AdminCourses = ({ profile }) => {
             let accepted = false;
             const acceptTypes = acceptTypesForTopic[topicObj.TopicType]
             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                setFileUploading(false);
                 notify({
                     message: "Upload",
                     description: `File format not supported`,
@@ -194,8 +200,10 @@ const AdminCourses = ({ profile }) => {
             return !accepted;
         },
         onChange(info) {
-            setFileUploading(true);
             const { status } = info.file;
+            if (status == "uploading") {
+                setFileUploading(true);
+            }
             if (status === 'done') {
                 setFileUploading(false);
                 if (topicObj.TopicType == "Document") {
@@ -232,6 +240,7 @@ const AdminCourses = ({ profile }) => {
         courseObject.GroupId = id;
         setCourseObject({ ...courseObject })
         refreshCourseDetails(true);
+        setIsCourseChanged(false);
     }
     const deleteSection = async (item) => {
         if (!item.IsSaved) {
@@ -261,7 +270,7 @@ const AdminCourses = ({ profile }) => {
         setTopicObj({ ...dupTopicObj });
     }
     const refreshCourseDetails = async () => {
-        const branchResponse = await getCourse(courseObject.GroupId);
+        const branchResponse = await getCourse(courseObject.GroupId, profile?.Id);
         if (branchResponse.ok) {
             bindCourseData(branchResponse.data[0])
         } else {
@@ -509,6 +518,7 @@ const AdminCourses = ({ profile }) => {
             }
             setCourseObject({ ...courseObject })
             form.setFieldsValue({ UrlType: courseObject.UrlType, Date: courseObject.Date, Link: courseObject.Link })
+            setIsCourseChanged(true)
         }
         else {
             topicObj[prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
@@ -646,6 +656,7 @@ const AdminCourses = ({ profile }) => {
             let accepted = false;
             const acceptTypes = ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv";
             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                setFileUploading(false);
                 notify({
                     message: "Upload",
                     description: `File format not supported`,
@@ -656,8 +667,10 @@ const AdminCourses = ({ profile }) => {
             return !accepted;
         },
         onChange(info) {
-            setFileUploading(true);
             const { status } = info.file;
+            if (status == "uploading") {
+                setFileUploading(true);
+            }
             if (status === 'done') {
                 setFileUploading(false);
                 const avatar = info.file?.name
@@ -757,6 +770,7 @@ const AdminCourses = ({ profile }) => {
                                     setFileImgUploading(false);
                                     setFileVideoUploading(false)
                                     setFileUploading(false)
+                                    setIsCourseChanged(false);
                                 }}>Create Course</Button>
                             </Col>
                         </Row>
@@ -865,8 +879,10 @@ const AdminCourses = ({ profile }) => {
                                                     <Dragger
                                                         className="upload"
                                                         onChange={(info) => {
-                                                            setFileImgUploading(true);
                                                             const { status } = info.file;
+                                                            if (status == "uploading") {
+                                                                setFileImgUploading(true);
+                                                            }
                                                             if (status === 'done') {
                                                                 setFileImgUploading(false);
                                                                 courseObject.GroupImage = info.file.response;
@@ -880,6 +896,7 @@ const AdminCourses = ({ profile }) => {
                                                             let accepted = false;
                                                             const acceptTypes = ".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
                                                             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                                                                setFileImgUploading(false);
                                                                 notify({
                                                                     message: "Upload",
                                                                     description: `File format not supported`,
@@ -932,7 +949,9 @@ const AdminCourses = ({ profile }) => {
                                                             setCourseObject({ ...courseObject })
                                                         }}
                                                         onChange={(info) => {
-                                                            setFileVideoUploading(true);
+                                                            if (status == "uploading") {
+                                                                setFileVideoUploading(true);
+                                                            }
                                                             const { status } = info.file;
                                                             if (status === 'done') {
                                                                 setFileVideoUploading(false);
@@ -947,6 +966,7 @@ const AdminCourses = ({ profile }) => {
                                                             let accepted = false;
                                                             const acceptTypes = ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm";
                                                             if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                                                                setFileVideoUploading(false);
                                                                 notify({
                                                                     message: "Upload",
                                                                     description: `File format not supported`,
@@ -1066,7 +1086,7 @@ const AdminCourses = ({ profile }) => {
                                                                     expandIconPosition="right"
                                                                     key={index}
                                                                 >
-                                                                    <Panel header={<>{topic.TopicType == "Video" && topicTitle} {topic.VideoName ? topic.VideoName : topic.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.TopicType == "Video" && topic.Duration}</div>}>
+                                                                    <Panel header={<>{topic.TopicType == "Video" && topicTitle}{topic.TopicType == "Document" && docTitle}{topic.VideoName ? topic.VideoName : topic.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.TopicType == "Video" && topic.Duration}</div>}>
                                                                         {topic.TopicType == "Video" && <div className="d-flex">
                                                                             {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
                                                                             {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
@@ -1161,7 +1181,7 @@ const AdminCourses = ({ profile }) => {
                                         </span>
                                         <span className="text-right float-right">
                                             <Button disabled={fileVideoUploading} type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
-                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button disabled={fileVideoUploading} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
+                                            {(courseObject.CreatedDate && !courseObject.IsPublish) && <Button disabled={fileVideoUploading || isCourseChanged} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
                                         </span>
                                     </div>
                                 </Col>

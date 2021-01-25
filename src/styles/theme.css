@@ -11,6 +11,8 @@
   --textlightcolor: #BBB9B9;
   --white: #ffffff;
   --black : #000000;
+  --black-80 : rgba(0,0,0,0.8);
+  --black-50 : rgba(0,0,0,0.5);
   --btnlight: #DEDFE1;
   --boxshadow: 0 3px 6px rgba(0, 0, 0, 0.125);
   --bghover: rgba(0, 0, 0, 0.05);

@@ -69,10 +69,13 @@ class CourseCards extends Component {
                       <Card
                         className="card-item"
                         cover={
+                          <>
                           <img
                             alt="photography"
                             src={course.image.length > 0 ? course.image : photography}
                           />
+                          <span className="live-btn">LIVE</span>
+                          </>
                         }
                       >
                         <Meta

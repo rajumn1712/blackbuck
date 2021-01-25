@@ -18,8 +18,8 @@ const fetchCourseSuggestions = (user_id, page, pageSize) => {
       }`
   );
 };
-const fetchCourseDetails = (id) => {
-  return apiClient.get(ADMIN_REMOTE + `getCourse/${id}`);
+const fetchCourseDetails = (course_id,user_id) => {
+  return apiClient.get(ADMIN_REMOTE + `getCourse/${course_id}/${user_id}`);
 };
 const lmsJoinCourse = (course_id, obj) => {
   return apiClient.post(LMS_REMOTE + "joinCourse/" + course_id, obj);

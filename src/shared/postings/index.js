@@ -19,7 +19,7 @@ import ShareAction from "../components/postings/Actions/ShareActions";
 import EmojiAction from "../components/postings/Actions/EmojiActions";
 import video from '../../styles/images/video.mp4';
 import user from '../../styles/images/user.jpg';
-import zoom from '../../styles/images/zoom.png';
+import zoom from '../../styles/images/zoom.jpg';
 import zoomlogo from '../../styles/images/zoomlogo.svg';
 import logo from '../../styles/images/logo.svg';
 import {
@@ -981,20 +981,23 @@ class Postings extends Component {
       GotoMeeting: "",
       Others: ""
     }
-    return <>{post.CourseType === "Live Session" ? <div>
-      <img style={{ cursor: "pointer" }} onClick={() => { window.open(post.Link, "_blank") }} width="100%" src={liveIcon[post.UrlType]} />
-      <div className="course-create d-flex justify-between">
-        <div>
-          <span className="mr-8"><img src={logo} /></span>
-          <span>{"Author Name"}</span>
+    return <>{post.CourseType === "Live Session" ? <div className="livecourse-card mx-16">
+      <div className="p-relative">
+        <img onClick={() => { window.open(post.Link, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
+        <div className="live-btn-hover d-flex align-items-center">
+            <a className="f-24 semibold" onClick={() => { window.open(post.Link, "_blank") }}>Join Live Session</a>
         </div>
-        <div style={{ flexDirection: "column" }}>
-          <Moment format={"DD/MM/YYYY HH:MM"}>{post.LiveDate}</Moment>
-          <Moment fromNow>{post.LiveDate}</Moment>
+      </div>
+      <div className="course-create p-12 d-flex justify-between">
+        <div className="d-flex align-items-center">
+          <Avatar src={defaultUser} className="mr-8" />
+          <p className="m-0 f-14">{"Author Name"}</p>
         </div>
-        <div>
-          <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Jion Live</Button>
+        <div className="d-flex livecourse-date py-8 px-16">
+          <Moment className="f-16 semibold mr-16 text-primary" format={"DD/MM/YYYY HH:MM"}>{post.LiveDate}</Moment>
+          <Moment className="f-16 semibold text-secondary" fromNow>{post.LiveDate}</Moment>
         </div>
+          {/* <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Join Live</Button> */}
       </div>
     </div> : <>
         {post.type === "Video" && <video width="100%" controls muted>
