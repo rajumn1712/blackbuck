@@ -97,7 +97,7 @@ const Groups = ({ profile }) => {
     const [groups, setGroups] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     useEffect(() => {
-        getMembers(1, 20);
+        //getMembers(1, 20);
     }, []);
     // const fetchGroupSuggestions = async () => {
     //     const groupsData = await getSystemGroups(selection[0]?.UserId);
@@ -132,7 +132,7 @@ const Groups = ({ profile }) => {
     const onPageChange = (page, pageSize) => {
         setSelection([])
         setSelectedRowKeys([]);
-        getMembers(page, pageSize);
+       // getMembers(page, pageSize);
     }
     // const getMembers = async (page, pageSize) => {
     //     const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
