@@ -271,12 +271,12 @@ downloadCertificate = ()=>{
                   <Paragraph className="text-primary">
                     {courseDetails.Description}
                   </Paragraph></div>
-                  <Divider className="my-4" />
+                  <Divider className="mt-0 mb-6" />
                   <div className="px-12">
                   <Title className="semibold mb-4 text-primary f-16">
                     Members List 
                   </Title>
-                   <div className=" pb-16">
+                   <div>
                             <Avatar.Group
                                 maxCount={size-1}
                                 size="large"
