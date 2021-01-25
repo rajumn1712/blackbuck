@@ -15,6 +15,7 @@ import {
   saveCourseTopic,
 } from "./api";
 import { connect } from "react-redux";
+import Moment from "react-moment";
 const { Panel } = Collapse;
 const data = [
   {
@@ -161,7 +162,7 @@ class CourseContent extends Component {
                     </div>}
                 {courseDetails.CourseType === "Content" && <>
                 {!this.state.IsRenderType && (<div className="lms-video mb-8" id="video_player">
-                  <video controls key={this.state.selectedVideo}>
+                  <video controls="false" key={this.state.selectedVideo}>
                     <source src={this.state.selectedVideo} />
                   </video></div>
                 )}
@@ -348,16 +349,16 @@ class CourseContent extends Component {
               <Card title="Recommended Video" bordered={false}>         
                 <List
                   itemLayout="horizontal"
-                  dataSource={data}
+                  dataSource={recommendedVideos}
                   renderItem={item => (
                     <List.Item>
                       <List.Item.Meta
                         avatar={<div className="video-recommended mb-8" id="video_player">
-                        <video controls key={this.state.selectedVideo}>
-                          <source src={this.state.selectedVideo} />
+                        <video >
+                          <source src={item.CourseVideo} />
                         </video></div>}
-                        title={<a href="https://ant.design">{item.title}</a>}
-                        description={<div className="f-12"><div>Computer Course</div><div><span>124k Views</span> . <span>1 Month ago</span></div></div>}
+                        title={<a href="https://ant.design">{item.CourseName}</a>}
+                        description={<div className="f-12"><div>{item.Description}</div><div><span>{item.ViewCount} Views</span> . <span>{<Moment fromNow>{item.CreatedDate}</Moment>}</span></div></div>}
                       />
                     </List.Item>
                   )}
