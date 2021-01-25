@@ -60,7 +60,7 @@ class CourseList extends Component {
               </span>
             </div>
             <div className="mt-12 progres-bar d-flex">
-              <Progress percent={recentList[0].Percentage} /><span className="ml-4"><Link to={"course/" + recentList[0].id} className="card-item-button">Continue</Link></span>
+              <Progress percent={Math.floor(recentList[0].Percentage)} /><span className="ml-4"><Link to={"course/" + recentList[0].id} className="card-item-button">Continue</Link></span>
             </div>
         </Card>}
         {recentList.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>}
