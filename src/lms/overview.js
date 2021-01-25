@@ -9,6 +9,9 @@ import Loader from '../common/loader';
 import notify from '../shared/components/notification';
 import { uuidv4 } from '../utils';
 import { apiClient } from '../shared/api/clients';
+import logo from './logo.png';
+import certificatelogo from './ce1.png';
+import aapng from './aa.png';
 
 const { Title, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -171,7 +174,7 @@ downloadCertificate = ()=>{
         </head>
 
         <body>
-            <table border="1" style="border-collapse: collapse; width: 50%;height:477px;text-align:center;margin: auto;background-image: url('../lms/aa.png'); background-repeat: no-repeat;">
+            <table border="1" style="border-collapse: collapse; width: 50%;height:477px;text-align:center;margin: auto;background-image: url('${aapng}'); background-repeat: no-repeat;">
                 <tbody>
                     <tr>
                         <td style="width: 100%;vertical-align: top;">
@@ -180,7 +183,7 @@ downloadCertificate = ()=>{
                                     <tr>
                                         <td style="width: 100%; border-style: none none solid;vertical-align: top;border:0;text-align: left;">
 										<span style="display:flex;">
-										<span><img src="../lms/logo.svg" width="56" height="56" alt="" style="padding:35px 0 0 45px;margin-bottom: 15px;" /></span>
+										<span><img src="${logo}" width="56" height="56" alt="" style="padding:35px 0 0 45px;margin-bottom: 15px;" /></span>
 										<span style="font-family: arial, helvetica, sans-serif;font-size: 24px;color: #353744;padding: 48px 0 0 8px;margin-bottom: 15px;">BlackBuck</span>
 										</span>
 										</td>
@@ -190,7 +193,7 @@ downloadCertificate = ()=>{
 									</tr>
 									<tr>
 										<td style="padding:0;text-align:center;width:30px;font-family: arial, helvetica, sans-serif;border:0;">
-											<img src="../lms/ce1.png" width="238" height="25px" alt="" style="margin-bottom: 15px;text-align:center;margin-bottom:0;" />
+											<img src="${certificatelogo}" width="238" height="25px" alt="" style="margin-bottom: 15px;text-align:center;margin-bottom:0;" />
 										</td>
 									</tr>
 									<tr>

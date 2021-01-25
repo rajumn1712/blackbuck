@@ -42,7 +42,7 @@ const saveCourseTopic = (obj)=>{
  return apiClient.post(LMS_REMOTE + 'saveCourseTopicViews',obj)
 }
 const getCourseMembersList = (course_id,pageNo,pageSize)=>{
-  return apiClient.get(LMS_REMOTE + `getMembersList/${course_id}/${pageSize}/${pageNo * pageSize - pageSize}`)
+  return apiClient.get(LMS_REMOTE + `getMembersList/${course_id}/${pageSize}/${pageNo}`)
 }
 const getCertifiedFlags = (course_id,user_id)=>{
   return apiClient.get(LMS_REMOTE + `getAdminCertified/${course_id}/${user_id}`)
