@@ -3,7 +3,8 @@ const FRIENDS_API = "service/api/home/";
 const GROUPS_API = "service/api/groups/";
 const PROFILE_API = "service/api/profile/";
 const TAGS_API = "service/api/posts/";
-
+const ADMIN_API = "service/api/admin/";
+const LMS_API = "service/api/LMS/"
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     FRIENDS_API +
@@ -82,6 +83,11 @@ const fetchInterestsLu = (take, skip) => {
   return apiClient.get(PROFILE_API + `getAllInterests/${take}/${skip}`);
 };
 const fetchCourseSuggestions = (user_id, take, skip) => {
+  return apiClient.get(
+    PROFILE_API + `getCourseSuggestions/${user_id}/${take}/${skip}`
+  );
+};
+const usercourseSuggestions = (user_id, take, skip) => {
   return apiClient.get(
     PROFILE_API + `userCourseSuggestions/${user_id}/${take}/${skip}`
   );
@@ -163,7 +169,7 @@ const fetchUserColleges = () => {
   return apiClient.get(FRIENDS_API + "getColleges");
 };
 
-const getNotifications = (userId,take,skip) => {
+const getNotifications = (userId, take, skip) => {
   return apiClient.get(PROFILE_API + `getNotifications/${userId}/${take}/${skip}`);
 };
 const unFriend = (user_id, friend_id) => {
@@ -175,6 +181,76 @@ const fetchNotificationCount = (userId) => {
 const saveUserPassword = (object) => {
   return apiClient.post(process.env.REACT_APP_AUTHORITY + "/Account/ChangePassword", object);
 };
+const getAuthors = () => {
+  return apiClient.get(ADMIN_API + "getAuthors/1000/0");
+};
+const saveTopic = (obj, courseId, secId) => {
+  return apiClient.post(ADMIN_API + "saveTopic" + `/${courseId}/${secId}`, obj);
+}
+const sectionDeletion = (courseId, secId) => {
+  return apiClient.get(ADMIN_API + "deleteSection" + `/${courseId}/${secId}`);
+}
+const saveSection = (obj, courseId) => {
+  return apiClient.post(ADMIN_API + "saveSection" + `/${courseId}`, obj);
+}
+const saveCourse = (obj) => {
+  return apiClient.post(ADMIN_API + "saveCourse", obj);
+}
+const getCourse = (courseId, user_id) => {
+  return apiClient.get(ADMIN_API + "getCourse" + `/${courseId}/${user_id}`);
+}
+const publishCourse = (obj, isPublish) => {
+  let method = isPublish ? "updateCoursePosts" : "coursePublish";
+  return apiClient.post(ADMIN_API + `${method}`, obj);
+}
+const getUsers = (userId, take, skip) => {
+  return apiClient.get(ADMIN_API + `getUsers/${userId}/${take}/${skip}`);
+}
+const getUsersCount = () => {
+  return apiClient.get(ADMIN_API + `getUsersCount`);
+}
+const getGroups = (userId, take, skip) => {
+  return apiClient.get(ADMIN_API + `getAdminCourses/${userId}/${take}/${skip}`);
+}
+const courseDelete = (GroupId) => {
+  return apiClient.get(ADMIN_API + `courseDelete/${GroupId}`);
+}
+const setScholor = (userId) => {
+  return apiClient.get(ADMIN_API + `setIsScholar/${userId}`);
+}
+const getCoursesRelCount = (user_id) => {
+  return apiClient.get(ADMIN_API + `getCoursesCount/${user_id}`);
+}
+const getSystemGroups = (user_id) => {
+  return apiClient.get(ADMIN_API + `getSystemGroups/${user_id}`);
+}
+const setSystemAdmin = (user_id, category) => {
+  return apiClient.get(ADMIN_API + `setAsAdmin/${user_id}/${category}`);
+}
+const submitDocs = (obj) => {
+  return apiClient.post(ADMIN_API + "saveTests", obj);
+}
+const getSubmissions = (user_id) => {
+  return apiClient.get(ADMIN_API + `getSubmitTests/${user_id}`);
+}
+const certipyRejectDocument = (Id, type) => {
+  return apiClient.get(ADMIN_API + `CertifiedOrReject/${Id}/${type}`);
+}
+const topicDelete = (courseId, sectionId, Id) => {
+  return apiClient.get(ADMIN_API + `deleteTopic/${courseId}/${sectionId}/${Id}`);
+}
+const getAllSystemGroups = (take, skip) => {
+  return apiClient.get(ADMIN_API + `getAllSystemGroups/${take}/${skip}`);
+}
+const groupBlock = (obj) => {
+  return apiClient.get(ADMIN_API + `getAllSystemGroups`);
+}
+const joinGroupNew = (id, obj) => {
+  return apiClient.post(LMS_API + "joinCourse/" + id, obj);
+}
+const getPublishedObject = (courseId) => {
+  return apiClient.get(ADMIN_API + `getPostsByCoureId/${courseId}`,);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -199,6 +275,7 @@ export {
   fetchTags,
   fetchInterestsLu,
   fetchCourseSuggestions,
+  usercourseSuggestions,
   saveInterest,
   deleteInterest,
   getUserCourses,
@@ -223,5 +300,28 @@ export {
   getNotifications,
   unFriend,
   fetchNotificationCount,
-  saveUserPassword
+  saveUserPassword,
+  getAuthors,
+  saveTopic,
+  sectionDeletion,
+  saveSection,
+  saveCourse,
+  getCourse,
+  publishCourse,
+  getUsers,
+  getUsersCount,
+  getGroups,
+  courseDelete,
+  setScholor,
+  getCoursesRelCount,
+  getSystemGroups,
+  setSystemAdmin,
+  submitDocs,
+  getSubmissions,
+  certipyRejectDocument,
+  topicDelete,
+  getAllSystemGroups,
+  groupBlock,
+  joinGroupNew,
+  getPublishedObject
 };

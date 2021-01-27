@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  Card,
+  Card, Button,
   Avatar,
   Typography,
   Tooltip,
@@ -17,6 +17,9 @@ import Comments from "../components/postings/Comments/Comments";
 import CommentAction from "../components/postings/Actions/CommentAction";
 import ShareAction from "../components/postings/Actions/ShareActions";
 import EmojiAction from "../components/postings/Actions/EmojiActions";
+
+import zoom from '../../styles/images/zoom.jpg';
+import live_session from '../../styles/images/live_session.png';
 import {
   deletePost,
   fetchPostReactions,
@@ -39,10 +42,12 @@ import { uuidv4 } from "../../utils";
 import VisSenseFactory from "vissense";
 import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
+import { joinGroupNew } from "../api/apiServer";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Paragraph } = Typography;
 const { TabPane } = Tabs;
+const { Title } = Typography;
 let postObj = { tags: [], userdetails: {} };
 class Postings extends Component {
   state = {
@@ -173,7 +178,7 @@ class Postings extends Component {
     var videoVisibilityMonitor = monitorBuilder.build();
     videoVisibilityMonitor.start();
   }
-  titleAvatar = (user, date, isShareCard, mainUser, isGroup) => {
+  titleAvatar = (user, date, isShareCard, mainUser, isGroup, post_type) => {
     const _key = isShareCard ? "share" : (isGroup ? "group" : "normal")
     const elements = {
       share: <span className="overflow-text text-secondary"> <Link
@@ -191,7 +196,7 @@ class Postings extends Component {
             ? "/profile/IsProfileTab"
             : "/profileview/" + user?.UserId
         }
-      ><span className="post-title">{user?.Firstname}</span></Link>{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
+      ><span className="post-title">{user?.Firstname}</span></Link>{post_type === "Course" && " Added a course"}{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
         to={"/groupview/" + mainUser?.GroupId}
       ><span className="post-title">{mainUser?.Firstname}</span></Link></>}</span>,
       normal: <span className="overflow-text text-secondary"> <Link
@@ -527,7 +532,7 @@ class Postings extends Component {
     }
   };
   renderShareCard = (post) => {
-    return <Card title={this.titleAvatar(post.userdetails, post.date, true, post.Shares[0])}
+    return <Card title={this.titleAvatar(post.userdetails, post.date, true, post.Shares[0], false, post.PostType)}
       bordered={true}
       extra={
         <SideAction
@@ -552,8 +557,8 @@ class Postings extends Component {
         />,
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
-      <Card
-        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate)}
+      {post.PostType === "Course" ? this.renderCourseCard(post) : <Card
+        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, null, false, post.PostType)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">
@@ -588,7 +593,7 @@ class Postings extends Component {
         ></Card.Meta>
 
       </Card>
-      <div className="d-flex justify-content-between mx-16 pt-8 pb-16">
+      } <div className="d-flex justify-content-between mx-16 pt-8 pb-16">
         {
           <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
             <ul className="card-actions-count pl-0">
@@ -749,7 +754,7 @@ class Postings extends Component {
   }
   renderCommonCard = (post) => {
     return <Card
-      title={this.titleAvatar(post.userdetails, post.date, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false))}
+      title={this.titleAvatar(post.userdetails, post.date, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false), post.PostType)}
       bordered={true}
       extra={
         <SideAction
@@ -777,7 +782,8 @@ class Postings extends Component {
     // cover={<div onClick={() => this.showModal(post)}>{this.renderPostImages(post.image, post.type, post)}</div>}
     >
       {/* <Title level={5} className="post-title">{post.title}</Title> */}
-      <Paragraph className="post-desc">
+
+      {post.PostType === "Course" ? this.renderCourseCard(post) : <><Paragraph className="post-desc">
         <ShowMoreText lines={3} more="see more" less="see less">
           {post.meassage}
         </ShowMoreText>
@@ -799,14 +805,15 @@ class Postings extends Component {
         )}
       </Paragraph>
 
-      <Card.Meta
-        className="post-image"
-        avatar={
-          <div onClick={post.type !== 'text' && post.type !== 'Docs' ? () => this.showModal(post) : ''}>
-            {this.renderPostImages(post.image, post.type, post)}
-          </div>
-        }
-      ></Card.Meta>
+        <Card.Meta
+          className="post-image"
+          avatar={
+            <div onClick={post.type !== 'text' && post.type !== 'Docs' ? () => this.showModal(post) : ''}>
+              {this.renderPostImages(post.image, post.type, post)}
+            </div>
+          }
+        ></Card.Meta>
+      </>}
       <div className="d-flex justify-content-between mx-16 pt-8 pb-12">
         {
           <span onMouseEnter={() => this.fetchPostReactions(post.id)}>
@@ -965,7 +972,49 @@ class Postings extends Component {
         </ul>
       </div>
     </Card>
-
+  }
+  renderCourseCard = (post) => {
+    const liveIcon = {
+      Zoom: zoom,
+      GotoMeeting: live_session,
+      Others: live_session
+    }
+    return <>{post.CourseType === "Live Session" ? <div className="livecourse-card mx-16">
+      <div className="p-relative">
+        <img onClick={() => { window.open(post.Link, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
+        <div className="live-btn-hover d-flex align-items-center">
+          <a className="f-24 semibold" onClick={() => { window.open(post.Link, "_blank") }}>Join Live Session</a>
+        </div>
+      </div>
+      <div className="course-create p-12 d-flex justify-between">
+        <div className="d-flex align-items-center">
+          <Avatar src={post.Author !== null ? post.Author[0].Image : defaultUser} className="mr-8" />
+          <p className="m-0 f-14">{post.Author !== null && `${post.Author[0]?.Firstname} ${post.Author[0]?.Lastname}`}</p>
+        </div>
+        <div className="d-flex livecourse-date py-8 px-16">
+          <Moment className="f-16 semibold mr-16 text-primary" format={"DD/MM/YYYY HH:MM"}>{post.LiveDate}</Moment>
+          <Moment className="f-16 semibold text-secondary" fromNow>{post.LiveDate}</Moment>
+        </div>
+        {/* <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Join Live</Button> */}
+      </div>
+    </div> : <div className="livecourse-card mx-16">
+        {post.type === "Video" && <video width="100%" controls muted className="coursevideo-card">
+          <source src={post.image[0]} />
+        </video>}
+        <div className="course-create p-12">
+          <Title level={5} className="mb-4 text-dark">{post.title}</Title>
+          <ShowMoreText lines={3} more="see more" less="see less" className="text-primary">
+            {post.meassage}
+          </ShowMoreText>
+          <div className="course-create d-flex mt-16 justify-between">
+            <div className="d-flex align-items-center">
+              <Avatar src={post.Author !== null ? post.Author[0].Image : defaultUser} className="mr-8" />
+              <p className="m-0 f-14">{post.Author !== null && `${post.Author[0]?.Firstname} ${post.Author[0]?.Lastname}`}</p>
+            </div>
+            <Button type="primary" onClick={() => this.joinCourse(post.CourseId)}>Join Course</Button>
+          </div>
+        </div>
+      </div>}</>
   }
   renderPost = (post) => {
     return (
@@ -976,6 +1025,7 @@ class Postings extends Component {
           }`}
       >
         {post.Shares && post.Shares.length !== 0 ? this.renderShareCard(post) : this.renderCommonCard(post)}
+        {/* {this.renderCourseCard(post)} */}
         {this.state.commentselection.indexOf(post.id) > -1 && (
           <Comments
             onUpdate={(prop, value) => {
@@ -1023,6 +1073,22 @@ class Postings extends Component {
     }
     this.setState({ ...this.state, descriptionSelection });
   };
+  joinCourse = (id) => {
+    const obj = {
+      "UserId": this.props?.profile?.Id,
+      "Firstname": this.props?.profile?.FirstName,
+      "Lastname": this.props?.profile?.LastName,
+      "Email": this.props?.profile?.Email,
+      "Image": this.props?.profile?.ProfilePic
+    }
+    joinGroupNew(id, obj).then(res => {
+      if (res.ok) {
+        notify({ message: "Join Course", description: "You have joined to course" });
+      } else {
+        notify({ message: "Join Course", description: JSON.stringify(res.originalError), type: "error" });
+      }
+    })
+  }
   render() {
     return (
       <div onScroll={this.handleScroll}>
@@ -1035,7 +1101,6 @@ class Postings extends Component {
           />
         )}
         {this.props.friendsSuggestions && <FriendSuggestions />}
-
         {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
         {this.state.loading && <Loader className="loader-top-middle" />}
         {!this.state.loading &&
@@ -1055,6 +1120,7 @@ class Postings extends Component {
           }}
           fetchCardActions={(user) => this.fetchCardActions(user)}
         />
+
       </div>
     );
   }

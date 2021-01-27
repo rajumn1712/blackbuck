@@ -11,6 +11,8 @@
   --textlightcolor: #BBB9B9;
   --white: #ffffff;
   --black : #000000;
+  --black-80 : rgba(0,0,0,0.8);
+  --black-50 : rgba(0,0,0,0.5);
   --btnlight: #DEDFE1;
   --boxshadow: 0 3px 6px rgba(0, 0, 0, 0.125);
   --bghover: rgba(0, 0, 0, 0.05);
@@ -47,7 +49,7 @@
 .p-8{padding: 8px;}
 .p-16{padding: 16px;}
 .p-12{padding: 12px !important;}
-.pl-0{padding-left: 0px;}
+.pl-0{padding-left: 0px !important;}
 .pl-4{padding-left: 4px;}
 .pl-8{padding-left: 8px;}
 .pl-16{padding-left: 16px;}
@@ -66,13 +68,14 @@
 .pb-8{padding-bottom: 8px;}
 .pb-12{padding-bottom: 12px !important;}
 .pb-16{padding-bottom: 16px;}
-.px-0{padding-left: 0; padding-right: 0;}
+.px-0{padding-left: 0 !important; padding-right: 0 !important;}
 .px-4{padding-left: 4px; padding-right: 4px;}
 .px-8{padding-left: 8px; padding-right: 8px;}
 .px-12{padding-left: 12px !important; padding-right: 12px !important;}
 .px-16{padding-left: 16px !important; padding-right: 16px !important;}
-.py-0{padding-top: 0; padding-bottom: 0;}
+.py-0{padding-top: 0 !important; padding-bottom: 0 !important;}
 .py-4{padding-top: 4px; padding-bottom: 4px;}
+.py-12{padding-top: 12px !important; padding-bottom: 12px !important;}
 .py-8{padding-top: 8px; padding-bottom: 8px;}
 .py-16{padding-top: 16px; padding-bottom: 16px;}
 
@@ -83,8 +86,9 @@
 .m-16{margin: 16px !important;}
 .m-auto, .m-auto ul{margin: auto;}
 .ml-auto{margin-left: auto !important;}
-.ml-0{margin-left: 0px;}
+.ml-0, .img-marginremove .ant-avatar{margin-left: 0px !important;}
 .ml-4{margin-left: 4px;}
+.ml-6{margin-left: 6px;}
 .ml-8{margin-left: 8px;}
 .ml-16{margin-left: 16px !important;}
 .mr-0{margin-right: 0px !important;}
@@ -95,6 +99,7 @@
 .mr-16{margin-right: 16px;}
 .mt-0{margin-top: 0px !important;}
 .mt-4{margin-top: 4px;}
+.mt-6{margin-top: 6px;}
 .mt-8{margin-top: 8px !important;}
 .mt-16{margin-top: 16px !important;}
 .mt-12{margin-top: 12px;}
@@ -108,12 +113,13 @@
 .mx-0{margin-left: 0; margin-right: 0;}
 .mx-4{margin-left: 4px; margin-right: 4px;}
 .mx-8{margin-left: 8px; margin-right: 8px !important;}
-.mx-12{margin-left: 12px; margin-right: 12px;}
-.mx-16{margin-left: 16px; margin-right: 16px;}
+.mx-12{margin-left: 12px; margin-right: 12px !important;}
+.mx-16{margin-left: 16px; margin-right: 16px !important;}
 .my-0{margin-top: 0; margin-bottom: 0;}
 .my-4{margin-top: 4px !important; margin-bottom: 4px !important;}
 .my-8{margin-top: 8px; margin-bottom: 8px;}
-.my-16{margin-top: 16px; margin-bottom: 16px;}
+.my-12{margin-top: 12px; margin-bottom: 12px !important;}
+.my-16{margin-top: 16px; margin-bottom: 16px ;}
 
 /*--Color--*/
 .text-secondary{color: var(--textsecondary)}

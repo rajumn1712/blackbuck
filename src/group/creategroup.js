@@ -28,7 +28,8 @@ class CreateGroup extends Component {
         GroupId: null,
         AdminUsers: null,
         CreatedDate: "",
-        Members: []
+        Members: [],
+        Categories:[]
     }
     formRef = createRef();
 
@@ -123,7 +124,8 @@ class CreateGroup extends Component {
                 "Email": this.props?.profile?.Email
             }],
             CreatedDate: groupObject.CreatedDate ? new Date(groupObject.CreatedDate) : new Date(),
-            Members: []
+            Members: [],
+            Categories:[]
         };
     };
     handleBeforUpload = (file) => {

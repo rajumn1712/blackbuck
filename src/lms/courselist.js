@@ -1,54 +1,77 @@
-import React, { Component } from 'react';
-import { Card, List, Row, Col, Progress } from 'antd'
-import { Link } from 'react-router-dom';
-import { fetchTags } from '../shared/api/apiServer';
-import CourseContent from '../lms/coursecontent'
-import SEO from '../styles/images/seo-marketing.png'
-import '../index.css';
-import '../App.css';
-const data = [
-    { title: 'This is panel header 1' },
-    { title: 'This is panel header 2' },
-    { title: 'This is panel header 3' },
-    { title: 'This is panel header 4' },
-    { title: 'This is panel header 5' }
-];
+import React, { Component } from "react";
+import { Card, Empty, List, Progress,Tooltip } from "antd";
+import { Link } from "react-router-dom";
+import "../index.css";
+import "../App.css";
+import { connect } from "react-redux";
+import { fetchCourseSuggestions, userRecentWatchedCourse } from "./api";
+import Courses from '../components/ProfileComponents/courses';
+import Title from "antd/lib/typography/Title";
+
 const { Meta } = Card;
 class CourseList extends Component {
-    render() {
-        return (
-            <div className="custom-card tag-card">
-
-                <Card
-                    className="card-item"  actions={[
-                        <Link className="card-item-button">Continue</Link>
-                    ]}>
-                    <Meta
-                        title="SEO & Digital Marketing"
-                        description={
-                            <div>
-                                
-                                <div className="addon-info">
-                                    <span className="mr-8"><span className="grp-type-icon video-play" />10 Videos</span>
-                                    <span className="mr-8"><span className="grp-type-icon lessons" />5 Lessons</span>
-                                </div>
-                                <div className="my-16 progres-bar"><Progress percent={30} /></div>
-                            </div>} />
-                </Card>
-
-                <Card title="Course List" bordered={false} >
-                    <List
-                        itemLayout="vertical"
-                        dataSource={data}
-                        renderItem={item => (
-                            <div className="tag-name"><Link to="/coursecontent">{item.title}</Link></div>
-
-                        )}
-                    />
-                </Card>
-            </div>
-
-        )
+  state = {
+    suggestions: [],
+    recentList:{},
+    loading: true,
+    page: 1,
+    pageSize: 10
+  };
+  componentDidMount() {
+    this.loadUserRecentCourse();
+    this.loadSuggestions();
+  }
+  loadSuggestions = async () => {
+    const response = await fetchCourseSuggestions(
+      this.props.profile?.Id,
+      this.state.page,
+      this.state.pageSize
+    );
+    if (response.ok) {
+      this.setState({
+        ...this.state,
+        loading: false,
+        suggestions: response.data
+      });
     }
+  };
+  loadUserRecentCourse = async ()=>{
+    const response = await userRecentWatchedCourse(this.props.profile?.Id)
+    if(response.ok){
+      this.setState({...this.state,recentList:response.data})
+    }
+  }
+  render() {
+    const {recentList} = this.state
+    return (
+      <div className="custom-card tag-card">
+        {recentList.length > 0 && <Card className="card-item">
+            <Title className="text-primary f-16 semibold mb-8">
+              {recentList[0].name}
+            </Title>
+            <div className="addon-info">
+              <span className="mr-12 f-12 text-secondary">
+                <span className="grp-type-icon lessons" />
+                {recentList[0].sections} Sections
+              </span>
+              <span className="f-12 text-secondary">
+                <span className="grp-type-icon video-play" />
+                {recentList[0].videos} Videos
+              </span>
+            </div>
+            <div className="mt-12 progres-bar d-flex">
+              <Progress percent={Math.floor(recentList[0].Percentage)} /><span className="ml-4"><Link to={"course/" + recentList[0].id} className="card-item-button"><Tooltip placement="topRight" title="Continue"><span className="playicons continue-icon"></span></Tooltip></Link></span>
+            </div>
+        </Card>}
+        {recentList.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>}
+                                
+         <Courses loadUserCourse={false} isDataReferesh={this.props.isDataReferesh}/>
+      </div>
+    );
+  }
 }
-export default CourseList;
+
+const mapStateToProps = ({ oidc }) => {
+  return { profile: oidc.profile };
+};
+export default connect(mapStateToProps)(CourseList);

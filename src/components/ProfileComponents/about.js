@@ -381,12 +381,12 @@ class About extends Component {
                     {/* <Col xs={24}>
                                     <h3>Contact</h3>
                                 </Col> */}
-                    <Col xs={24}>
+                    <Col xs={24} className="mb-16">
                       <Form.Item
                         label="About Me"
                         name="About Me"
                         rules={[{ required: true }]}
-                        className="custom-fields mb-24"
+                        className="custom-fields"
                       >
                         <Field
                           component="textarea"

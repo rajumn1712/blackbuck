@@ -5,7 +5,7 @@ import Onboard1 from '../styles/images/onboard1.svg';
 import Onboard2 from '../styles/images/onboard2.svg';
 import Onboard3 from '../styles/images/onboard3.svg';
 
-import { fetchCourseSuggestions, fetchInerests, getBranchSubjects, getCollegeBranches, getColleges, joinGroup as JoinGroup, saveOnboard } from '../shared/api/apiServer';
+import { usercourseSuggestions, fetchInerests, getBranchSubjects, getCollegeBranches, getColleges, joinGroup as JoinGroup, saveOnboard } from '../shared/api/apiServer';
 import notify from '../shared/components/notification';
 import connectStateProps from '../shared/stateConnect';
 import OwlCarousel from 'react-owl-carousel2';
@@ -127,7 +127,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
 
     }
     const fetchGroupSuggestions = async () => {
-        const grpSuggetions = await fetchCourseSuggestions(profile?.Id, 5, 0);
+        const grpSuggetions = await usercourseSuggestions(profile?.Id, 5, 0);
         if (grpSuggetions.ok) {
             setGroupSuggetions(grpSuggetions.data);
         } else {

@@ -5,17 +5,11 @@ import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
 import { userLogout } from '../reducers/auth';
 import Logo from '../styles/images/logo.svg';
-import avatar from '../styles/images/avatar.png';
-import avatar2 from '../styles/images/user.jpg';
-import userImage from '../styles/images/user_image.jpg';
-import user_Image from '../styles/images/user-image.jpg';
 import defaultUser from '../styles/images/defaultuser.jpg';
-import sherlyn from '../styles/images/sherlyn.jpg';
 import './header.css';
 import '../index.css';
 import { connect } from 'react-redux';
-import { fetchFriendRequests, fetchUserFriends, fetchNotificationCount} from '../shared/api/apiServer';
-import ChatSystem from '../utils/chat-system';
+import {fetchUserFriends, fetchNotificationCount} from '../shared/api/apiServer';
 import Notifications from '../components/notification';
 const { Meta } = Card;
 const { Search } = Input;
@@ -123,9 +117,9 @@ class HeaderComponent extends React.Component {
                 <Link to="/support"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
                 </Link>
             </Menu.Item>
-            { this.props?.profile?.Role?.is &&
+            { this.props?.profile?.Role == 'Admin' &&
                 <Menu.Item key="4">
-                    <Link to="/lms"><span className="icons globe-icon" /><span className="pl-16">My Dashboard</span>
+                    <Link to="/admin/courses"><span className="icons settings-icon" /><span className="pl-16">Admin Settings</span>
                     </Link>
                 </Menu.Item>
             }
@@ -158,8 +152,10 @@ class HeaderComponent extends React.Component {
                         </div>
                     </Col>
                     <Col span={8} justify="center">
-                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal" defaultSelectedKeys={['home']}>
-                            <Menu.Item key="home" id="headerIcon">
+                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal" 
+                        defaultSelectedKeys={['newsfeed']}
+                        selectedKeys={[this.props.location.pathname]}>
+                            <Menu.Item key="/newsfeed" id="headerIcon">
                                 <Tooltip title="Home" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/" className="header-link"><span className="icons home-icon"></span></Link>
                                 </Tooltip>
@@ -169,12 +165,12 @@ class HeaderComponent extends React.Component {
                                     <Link to="/friends" className="header-link"><span className="icons social-icon"></span></Link>
                                 </Tooltip>
                             </Menu.Item> */}
-                            <Menu.Item key="contact">
+                            <Menu.Item key="/cms">
                                 <Tooltip title="Careers" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/cms" className="header-link"><span className="icons suitcase-icon" /></Link>
                                 </Tooltip>
                             </Menu.Item>
-                            <Menu.Item key="lms">
+                            <Menu.Item key="/lms">
                                 <Tooltip title="LMS" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/lms" className="header-link"><span className="icons lms-icon" /></Link>
                                 </Tooltip>

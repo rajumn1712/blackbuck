@@ -45,7 +45,7 @@ const Router = () => {
       <ProtectedRoute path="/cms" component={CMSComponent} />
       <ProtectedRoute path="/QandA" component={QandA} />
       <ProtectedRoute path="/overview" component={OverView} />
-      <ProtectedRoute path="/coursecontent" component={CourseContent} />
+      <ProtectedRoute path="/course/:id" component={CourseContent} />
       <ProtectedRoute path="/admin" component={Admin} />
       <ProtectedRoute path="/post/:id" component={SinglePostView} />
       <ProtectedRoute path="/notifications" component={Notifications} />

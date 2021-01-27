@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, Avatar, List, Empty, Row, Col } from "antd";
+import { Button, Card, Avatar, List, Empty, Row, Col, Skeleton } from "antd";
 import notify from "./notification";
 import { apiClient } from "../api/clients";
 import { Link } from "react-router-dom";

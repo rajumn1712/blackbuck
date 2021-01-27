@@ -12,6 +12,7 @@ import {
 } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
 import { connect } from "react-redux";
+import { lmsJoinCourse } from "../../lms/api";
 
 class Courses extends Component {
   state = {
@@ -26,15 +27,11 @@ class Courses extends Component {
     this.setState({ ...this.state, loading: true });
     const getcourses = await (this.props?.loadUserCourse
       ? getUserCourses
-      : fetchCourseSuggestions)(this.props?.profile?.Id, 10, 0);
+      : fetchCourseSuggestions)(this.props?.profile?.Id, 5, 0);
     let { courses } = this.state;
     courses = getcourses.data;
     if (getcourses.ok) {
       this.setState({ courses, loading: false });
-      if (isDataRefreshed) {
-        this.props.isDataRefreshed(isDataRefreshed);
-        this.props.isDataRefreshed(false);
-      }
     }
   }
 
@@ -49,17 +46,20 @@ class Courses extends Component {
     if (item.type == "Private") {
       obj.Type = "request";
     }
-    const joinResponse = await joinGroup(item.id, obj);
+    const joinResponse = await lmsJoinCourse(item.id, obj);
     if (joinResponse.ok) {
       notify({
         message: "Courses join",
         description:
-          item.type === "Private" ? "Request sent" : "Joined to course",
+          item.type === "Private" ? "Request sent" : "Course joined successfully",
       });
       // if (item.type !== 'Private') {
       //     this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
       //     this.props.updateProfile(this.props.profile)
       // }
+      if(this.props.isDataReferesh){
+        this.props.isDataReferesh.loadCourses("1")
+      }
       this.updateCourse(item);
     } else {
       notify({
@@ -96,7 +96,7 @@ class Courses extends Component {
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
-              <Link to="/commingsoon">View all</Link>
+              <Link to="/lms">View all</Link>
             ) : null
           }
         >
@@ -109,24 +109,25 @@ class Courses extends Component {
                   avatar={<Avatar src={item.image} />}
                   title={
                     <div className="d-flex align-items-center mr-16">
-                      {!this.props.IsHideAction ? <Link to="/commingsoon" title={item.name} className="text-primary text-overflow">{item.name}</Link>: <span className="overflow-text">{item.name}</span>}
-                      
+                      {(!this.props.IsHideAction && this.props.loadUserCourse) ? <Link to={"/course/" + item.id} title={item.name} className="text-primary text-overflow">{item.name}</Link> : <span className="overflow-text">{item.name}</span>}
+
                     </div>
                   }
                   description={
                     <div className="f-12 text-secondary">
                       {item.members && (
                         <span>
-                          {item.members}
+                          {!this.props.loadUserCourse ? item.members : item.members.concat(item.AdminUsers).length}
                         </span>
                       )}{" "}
-                      Members |{" "}
+                      Members 
+                      {/* |{" "}
                       {item.posts && (
                         <span>
                           {item.posts}
                         </span>
                       )}{" "}
-                      posts
+                      posts */}
                     </div>
                   }
                 />
@@ -139,13 +140,13 @@ class Courses extends Component {
                       Cancel request
                     </Link>
                   ) : (
-                    <Link
-                      className="text-center f-12 list-link"
-                      onClick={() => this.handleCourseJoin(item)}
-                    >
-                      Join
-                    </Link>
-                  ))}
+                      <Link
+                        className="text-center f-12 list-link"
+                        onClick={() => this.handleCourseJoin(item)}
+                      >
+                        Join
+                      </Link>
+                    ))}
               </List.Item>
             )}
           />
