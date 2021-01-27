@@ -47,7 +47,7 @@ const { Title, Paragraph } = Typography;
 class CourseContent extends Component {
   state = {
     courseDetails: {},
-    loading: true,
+    loading: false,
     selectedVideo: null,
     watchedVideos: [],
     IsRenderType: null,
@@ -56,12 +56,18 @@ class CourseContent extends Component {
     IsChecked: false,
     Members: [],
     size: 10,
-    page: 0,
+    page: 1,
+    pageSize:1,
     recommendedVideos: [],
-    selectedTopicid:null
+    selectedTopicid: null,
+    loadMore: true,
   };
   componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
     this.loadCourseDetails();
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
   componentDidUpdate(previewProps) {
     if (previewProps.match.params.id != this.props.match.params.id) {
@@ -93,26 +99,39 @@ class CourseContent extends Component {
     }
   };
   showMore = () => {
-    let { page } = this.state;
-    page += 1;
-    this.setState({ ...this.state, page }, () => {
+    let { pageSize } = this.state;
+    pageSize += 1;
+    this.setState({ ...this.state, pageSize }, () => {
       this.getMembersList();
     });
   };
   getMembersList = async () => {
     const response = await getCourseMembersList(
       this.props.match.params.id,
-      this.state.page,
+      this.state.pageSize,
       this.state.size
     );
+    let {Members} = this.state;
+    Members = Members.concat(response.data)
     if (response.ok) {
-      this.setState({ ...this.state, Members: response.data });
+      this.setState({ ...this.state, Members });
     }
   };
   getRecommendedVideos = async () => {
-    const response = await getRecommendedVideos(this.props.match.params.id);
+    const response = await getRecommendedVideos(
+      this.props.match.params.id,
+      this.state.page,
+      this.state.size
+    );
+    let {recommendedVideos} = this.state;
+    recommendedVideos = recommendedVideos.concat(response.data)
     if (response.ok) {
-      this.setState({ ...this.state, recommendedVideos: response.data });
+      this.setState({
+        ...this.state,
+        recommendedVideos,
+        loading: false,
+        loadMore: response.data.length === this.state.size,
+      });
     }
   };
   getUserWatchedVideos = async () => {
@@ -143,7 +162,7 @@ class CourseContent extends Component {
     }
   };
   setVideoSource = async (section, item, indx, index) => {
-    this.setState({...this.state,selectedTopicid:item.TopicId})
+    this.setState({ ...this.state, selectedTopicid: item.TopicId });
     const object = {
       CourseId: this.props.match.params.id,
       SectionId: section.SectionId,
@@ -200,14 +219,45 @@ class CourseContent extends Component {
       this.loadCourseDetails();
     }
   };
+  handleScroll = () => {
+    const windowHeight =
+      "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+    if (windowBottom >= docHeight) {
+      this.loadMore();
+    } else {
+    }
+  };
+  loadMore() {
+    if (this.state.loadMore && !this.state.loading) {
+      let { page } = this.state;
+      page += 1;
+      this.setState({ ...this.state, page, loading: true }, () => {
+        this.getRecommendedVideos();
+      });
+    }
+  }
 
   render() {
     const { courseDetails, Members, size, recommendedVideos } = this.state;
     return (
       <>
-        {this.state.loading && <Loader className="loader-top-middle" />}
         {Object.keys(courseDetails).length > 0 && (
-          <div className="post-preview-box course-card">
+          <div
+            className="post-preview-box course-card"
+            onScroll={this.handleScroll}
+          >
             <Row gutter={24} className="py-16">
               <Col className="" xs={24} sm={16} md={16} lg={17}>
                 <div className="card-background p-0 mb-12">
@@ -350,22 +400,27 @@ class CourseContent extends Component {
                           {!this.state.IsRenderType && (
                             <div className="lms-video" id="video_player">
                               <div className="video-container">
-                              <video
-                                controls="false"
-                                class="video"
-                                key={this.state.selectedVideo}
-                              >
-                                <source src={this.state.selectedVideo} />
-                              </video>
+                                <video
+                                  controls="false"
+                                  class="video"
+                                  key={this.state.selectedVideo}
+                                >
+                                  <source src={this.state.selectedVideo} />
+                                </video>
                               </div>
                             </div>
                           )}
                           {this.state.IsRenderType === "Video" && (
                             <div className="lms-video " id="video_player">
-                              {this.state.IsVideoSource == "Upload" && (<div className="video-container">
-                                <video controls key={this.state.selectedVideo} class="video">
-                                  <source src={this.state.selectedVideo} />
-                                </video>
+                              {this.state.IsVideoSource == "Upload" && (
+                                <div className="video-container">
+                                  <video
+                                    controls
+                                    key={this.state.selectedVideo}
+                                    class="video"
+                                  >
+                                    <source src={this.state.selectedVideo} />
+                                  </video>
                                 </div>
                               )}
                               {this.state.IsVideoSource == "YouTube" &&
@@ -575,7 +630,12 @@ class CourseContent extends Component {
                                       dataSource={section.Topics}
                                       renderItem={(item, index) => (
                                         <List.Item
-                                          className={this.state.selectedTopicid === item.TopicId ? 'active-topic' : ''}
+                                          className={
+                                            this.state.selectedTopicid ===
+                                            item.TopicId
+                                              ? "active-topic"
+                                              : ""
+                                          }
                                           extra={
                                             item.TopicType === "Video" && (
                                               <span
@@ -590,21 +650,36 @@ class CourseContent extends Component {
                                           }
                                         >
                                           <List.Item.Meta
-                                            title={
-                                              <a
-                                                onClick={() =>
-                                                  this.setVideoSource(
-                                                    section,
-                                                    item,
-                                                    indx,
-                                                    index
-                                                  )
-                                                }
-                                              >
-                                                {index + 1}. {item.Title}
-                                              </a>
-                                            }
-                                            description={
+                                            // title={
+                                            //   <span
+                                            //     onClick={() =>
+                                            //       this.setVideoSource(
+                                            //         section,
+                                            //         item,
+                                            //         indx,
+                                            //         index
+                                            //       )
+                                            //     }
+                                            //   >
+                                            //     {index + 1}. {item.Title}
+                                            //   </span>
+                                            // }
+                                            description={[
+                                              <div className="f-12">
+                                                <span
+                                                  className="cursor-pointer"
+                                                  onClick={() =>
+                                                    this.setVideoSource(
+                                                      section,
+                                                      item,
+                                                      indx,
+                                                      index
+                                                    )
+                                                  }
+                                                >
+                                                  {index + 1}. {item.Title}
+                                                </span>
+                                              </div>,
                                               <div className="f-12">
                                                 <span
                                                   className={`grp-type-icon ${
@@ -619,8 +694,8 @@ class CourseContent extends Component {
                                                       45
                                                     )}...`
                                                   : item.Description}
-                                              </div>
-                                            }
+                                              </div>,
+                                            ]}
                                           />
                                         </List.Item>
                                       )}
@@ -649,9 +724,16 @@ class CourseContent extends Component {
                                   className="video-recommended mb-8"
                                   id="video_player"
                                 >
-                                  {item.CourseVideo.length > 0 ? <video>
-                                    <source src={item.CourseVideo || video} />
-                                  </video> : <img src={video} style={{'width':'130px'}}/>}
+                                  {item.CourseVideo.length > 0 ? (
+                                    <video>
+                                      <source src={item.CourseVideo || video} />
+                                    </video>
+                                  ) : (
+                                    <img
+                                      src={video}
+                                      style={{ width: "130px" }}
+                                    />
+                                  )}
                                 </div>
                               }
                               title={
@@ -682,6 +764,9 @@ class CourseContent extends Component {
                         )}
                       />
                     </Card>
+                  )}
+                  {this.state.loading && (
+                    <Loader className="loader-top-middle" />
                   )}
                 </div>
               </Col>

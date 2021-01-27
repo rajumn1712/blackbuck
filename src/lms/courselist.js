@@ -62,9 +62,7 @@ class CourseList extends Component {
             <div className="mt-12 progres-bar d-flex">
               <Progress percent={Math.floor(recentList[0].Percentage)} /><span className="ml-4"><Link to={"course/" + recentList[0].id} className="card-item-button"><Tooltip placement="topRight" title="Continue"><span className="playicons continue-icon"></span></Tooltip></Link></span>
             </div>
-        </Card>}
-        {recentList.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>}
-                                
+        </Card>}                
          <Courses loadUserCourse={false} isDataReferesh={this.props.isDataReferesh}/>
       </div>
     );
