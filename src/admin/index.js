@@ -21,30 +21,6 @@ class Admin extends Component {
         return <>
             <div className="d-flex">
                 <div className="bg-white admin-left-pane">
-                    {/* <Menu
-                        className="menu-items profile-menu"
-                        mode="vertical"
-                        title="Blackbuck"
-                    >
-                        <Menu.Item key="courses">
-                            <Link to="/admin/courses">
-                                <span className="left-menu profile-icon"></span>
-                                <span>Courses</span>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item key="members">
-                            <Link to="/admin/members">
-                                <span className="left-menu profile-icon"></span>
-                                <span>Members</span>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item key="groups">
-                            <Link to="/admin/groups">
-                                <span className="left-menu profile-icon"></span>
-                                <span>Groups</span>
-                            </Link>
-                        </Menu.Item>
-                    </Menu> */}
                     <Menu mode="vertical" theme="light">
                         <SubMenu key="sub1" icon={<span className="left-menu social-networking mr-12" />} title="Social Networking">
                             <Menu.Item key="members">
@@ -63,7 +39,7 @@ class Admin extends Component {
                             </Menu.Item>
                         </SubMenu>
                         <SubMenu key="sub4" icon={<span className="left-menu Careers mr-12" />} title="Careers">
-                            <Menu.Item key="1">Members</Menu.Item>
+                            <Menu.Item key="1">Job Applications</Menu.Item>
                             <Menu.Item key="2">Jobs</Menu.Item>
                         </SubMenu>
                     </Menu>
@@ -73,7 +49,6 @@ class Admin extends Component {
                     <Route path="/admin/members" component={(this.props?.profile?.Category == "Root") ? Members : AccessDenied} />
                     <Route path="/admin/groups" component={(this.props?.profile?.Category == "Root") ? Groups : AccessDenied} />
                     <Route path="/admin/testsubmissions" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? TestSubmissions : AccessDenied} />
-                    {/* <Route path="/admin/jobs" component={Jobs} /> */}
                 </div>
             </div>
         </>

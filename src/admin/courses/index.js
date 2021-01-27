@@ -12,7 +12,6 @@ import Loader from "../../common/loader";
 import video from '../../styles/images/video.mp4';
 import Courses from './Courses';
 import moment from 'moment';
-// import ytdl from 'youtube.get-video-info'
 const { Meta } = Card;
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -41,11 +40,9 @@ const data = [
 
 const topicTitle = (
     <span className="left-menu play mr-4"></span>
-    // <span className="left-menu docment mr-4"></span>
 )
 const docTitle = (
     <span className="left-menu docment"></span>
-    // <span className="left-menu docment mr-4"></span>
 )
 
 const AdminCourses = ({ profile }) => {
@@ -304,12 +301,6 @@ const AdminCourses = ({ profile }) => {
         setShowForm(true);
     }
     const topicSave = async () => {
-        // if (topicObj.ThumbNails?.length == 0) {
-        //     setIsError(true);
-        //     setErrorMessage("Feature image required");
-        //     formRef.current.scrollTop = 0;
-        //     return;
-        // }
         if (topicObj.VideoUrl?.length == 0 && topicObj.TopicType == "Video") {
             setIsError(true);
             setErrorMessage("Video source/video required");
@@ -332,23 +323,7 @@ const AdminCourses = ({ profile }) => {
             topicObj.Size = "";
             topicObj.Duration = "";
         }
-        // if (topicObj.VideoSource == "YouTube") {
-        //     var video_id = topicObj.VideoUrl.split('v=')[1];
-        //     var ampersandPosition = video_id.indexOf('&');
-        //     if (ampersandPosition != -1) {
-        //         video_id = video_id.substring(0, ampersandPosition);
-        //     }
-        //     ytdl.retrieve(video_id, function (err, res) {
-        //         topicObj.VideoName = res.name;
-        //         topicObj.Size = res.size;
-        //         setTopicObj({ ...topicObj });
-        //         saveTopicUpdate();
-        //     });
-        //     return;
-        // }
-        // else {
         saveTopicUpdate();
-        // }
     }
     const saveTopicUpdate = async () => {
         if (topicObj.VideoSource == "Upload")
@@ -626,23 +601,6 @@ const AdminCourses = ({ profile }) => {
         var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
         return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     }
-    // const deleteImage = () => {
-    //     topicObj.ThumbNails = [];
-    //     topicObj.DupThumbNails = [];
-    //     setTopicObj({ ...topicObj })
-    // }
-
-    // const onChange = (info) => {
-    //     const { status } = info.file;
-    //     if (status === 'done') {
-    //         message.success(`${info.file.name} file uploaded successfully.`);
-    //         topicObj.ThumbNails = info.fileList[0].response;
-    //         topicObj.DupThumbNails = info.fileList;
-    //         setTopicObj({ ...topicObj });
-    //     } else if (status === 'error') {
-    //         message.error(`${info.file.name} file upload failed.`);
-    //     }
-    // }
     const showModal = (type, topic, sectionId) => {
         let topicObjForsave = type == "Edit" ? JSON.parse(JSON.stringify(topic)) : { ...obj }
         setSecId(sectionId);
@@ -668,33 +626,6 @@ const AdminCourses = ({ profile }) => {
         topicForm.resetFields();
         setTopicObj({ ...obj })
         setIsModalVisible(false);
-    };
-    const submitFiles = async () => {
-        courseObject.Tests = [];
-        courseObject.Documents.forEach(item => {
-            let Obj = {
-                "TestId": uuidv4(),
-                "Title": item.title,
-                "Documents": item.url,
-                "Avatar": item.avatar,
-                "Size": item.fileSize
-            }
-            courseObject.Tests.push({ ...Obj });
-        })
-        const result = await submitDocs({ CourseId: courseObject.GroupId, Tests: courseObject.Tests, Documents: courseObject.Documents });
-        if (result.ok) {
-            notify({ message: "Test Documents", description: "Documents saved successfully" });
-        }
-        else {
-            notify({ message: "Error", type: "error", description: "Something went wrong :)" });
-        }
-    }
-    const next = () => {
-        setCurrent(current + 1);
-    };
-
-    const prev = () => {
-        setCurrent(current - 1);
     };
     const { Dragger } = Upload;
     const uploadProps = {
@@ -754,16 +685,6 @@ const AdminCourses = ({ profile }) => {
                     />
                 </Card>
             </Col>
-            {/* <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Posts"
-                        value={254}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col> */}
             <Col span={6}>
                 <Card className="admin-kpi-card">
                     <Statistic
@@ -774,36 +695,6 @@ const AdminCourses = ({ profile }) => {
                     />
                 </Card>
             </Col>
-            {/* <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Groups"
-                        value={50}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col> */}
-            {/* <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Shares"
-                        value={45}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-            <Col span={4}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Interships"
-                        value={14}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col> */}
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -1066,7 +957,6 @@ const AdminCourses = ({ profile }) => {
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
-                                                {/* <label className="text-secondary d-block mb-4">Add Test</label> */}
                                                 {fileUploading && <Loader className="loader-top-middle" />}
                                                 <Dragger showUploadList={false} className="upload mb-16" {...uploadProps}>
                                                     <span className="sharebox-icons docs-upload mb-16"></span>
@@ -1112,14 +1002,6 @@ const AdminCourses = ({ profile }) => {
                                                         )}
                                                     />
                                                 </div>
-                                                {/* {courseObject.CreatedDate && <div className="docs px-0">
-                                                    <div className="mt-12 text-center">
-                                                        <Button type="primary" key="console" onClick={() => submitFiles()}>
-                                                            Submit Files
-                      </Button>
-                                                    </div>
-                                                </div>
-                                                } */}
                                             </Col>
                                         </Row>
                                     </div>
@@ -1188,8 +1070,6 @@ const AdminCourses = ({ profile }) => {
                                                                 <Button type="primary" size="small" className="px-16 mr-8" onClick={() => showModal('Add', null, item.SectionId)}>{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</Button>
                                                                 <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
                                                             </div>
-                                                            {/* <div onClick={() => showModal('Add', null, item.SectionId)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</div>
-                                                            <div onClick={() => deleteSection(item)} className="f-18 add-course-section mt-12 p-12 text-center semibold cursor-pointer text-white">Delete Section</div> */}
                                                         </Panel>
 
                                                     </Collapse>
@@ -1213,10 +1093,6 @@ const AdminCourses = ({ profile }) => {
 
 
                                                                 </Form.Item>
-                                                                {/* <div className="text-right">
-                                                                    <Button type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Add Section</Button>
-                                                                    <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
-                                                                </div> */}
                                                             </Form>
                                                         </div>
                                                         {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><Tooltip title="Remove Section"><span className="icons close" onClick={() => deleteSection(item)}></span></Tooltip></div>}
@@ -1279,20 +1155,6 @@ const AdminCourses = ({ profile }) => {
                                     </Select>
                                 </Form.Item>
                             </div>
-                            {/* <div className="mb-8">
-                                <label className="text-secondary d-block mb-4">Feature Image</label>
-                                <Upload
-                                    action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
-                                    listType="picture-card"
-                                    fileList={topicObj.DupThumbNails?.length > 0 ? topicObj.DupThumbNails : []}
-                                    accept=".jpg,.jpeg,.png"
-                                    onChange={(info) => onChange(info)}
-                                    onRemove={() => deleteImage()}
-                                    onPreview={() => { }}
-                                >
-                                    {topicObj?.ThumbNails?.length >= 1 ? null : uploadButton}
-                                </Upload>
-                            </div> */}
                             {topicObj.TopicType == "Video" && <div className="custom-fields">
                                 <label className="text-secondary d-block mb-4">Video Source</label>
                                 <Form.Item name="VideoSource">
@@ -1349,12 +1211,6 @@ const AdminCourses = ({ profile }) => {
                                 </Form.Item>
                             </div>
                             }
-                            {/* {(topicObj.VideoSource == "Vimeo" || topicObj.VideoSource == "YouTube") && <div className="custom-fields">
-                                <Form.Item name="VideoName" rules={[{ required: true, message: "Video name  required" }]} >
-                                    <Input placeholder="Video Name" onChange={(value) => handleChange('VideoName', value, true)} />
-                                </Form.Item>
-                            </div>
-                            } */}
                             {topicObj.TopicType == "Document" && <Dragger
                                 className="upload"
                                 {...props}
@@ -1397,30 +1253,6 @@ const AdminCourses = ({ profile }) => {
                                         )}
                                     />
                                 </div>}
-                            {/* {topicObj.TopicType == "Video" && <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Video Playback Time</label>
-                                <Input.Group compact>
-                                    <div className="videoplybacktime">
-                                        <Form.Item>
-                                            <InputNumber min={"00"} max={10} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Hours', value)} value={topicObj.Hours} />
-                                            <em className="text-secondary d-block f-12 mt-4">HH</em>
-                                        </Form.Item>
-                                    </div>
-                                    <div className="videoplybacktime">
-                                        <Form.Item >
-                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Min', value)} value={topicObj.Min} />
-                                            <em className="text-secondary d-block f-12 mt-4">MM</em>
-                                        </Form.Item>
-                                    </div>
-                                    <div className="videoplybacktime">
-                                        <Form.Item>
-                                            <InputNumber min={"00"} max={59} defaultValue={"00"} onChange={(value) => handleVidoTimeChange('Sec', value)} value={topicObj.Sec} />
-                                            <em className="text-secondary d-block f-12 mt-4">SS</em>
-                                        </Form.Item>
-                                    </div>
-                                </Input.Group>
-                            </div>
-                            } */}
                         </div>
                     </Form>
                 </Modal>
