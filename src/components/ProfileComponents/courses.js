@@ -153,13 +153,13 @@ class Courses extends Component {
               </List.Item>
             )}
           />
-          <div className="text-center">
+          {!this.props?.loadUserCourse && <div className="text-center">
               {size >= 5 && (
                 <a className="more-comments" onClick={() => this.getCourseSuggestions()}>
                   View more courses
                 </a>
               )}
-            </div>
+            </div>}
         </Card>
       </div>
     );
