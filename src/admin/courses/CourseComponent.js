@@ -293,6 +293,7 @@ const CourseComponent = ({ profile, history }) => {
         if (result.ok) {
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
+            history.push("/admin/courses")
         }
         else {
             window.scrollTo(0, 0);
@@ -373,6 +374,7 @@ const CourseComponent = ({ profile, history }) => {
         const result = await publishCourse(postObject, courseObject.IsPublish);
         if (result.ok) {
             notify({ message: "Publish", description: "Course published successfully" });
+            history.push("/admin/courses")
         }
         else {
             window.scrollTo(0, 0);
@@ -402,6 +404,7 @@ const CourseComponent = ({ profile, history }) => {
             .join(':');
     }
     const cancelCourse = () => {
+        history.push("/admin/courses");
     }
     const handleChange = (prop, val, popup) => {
         if (!popup) {
@@ -554,17 +557,13 @@ const CourseComponent = ({ profile, history }) => {
         },
     };
 
-    return <>
+    return (<>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
                         <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
-                            <div className="text-center my-16 pb-16">
-                                <Title level={1} className="normalbold text-primary">Get Started with the course</Title>
-                                <p className="f-14 text-secondary">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
-                            </div>
                             <Row>
                                 <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
                                     <div className="create-course">
@@ -1094,7 +1093,7 @@ const CourseComponent = ({ profile, history }) => {
                 </Modal>
             </Col>
 
-        </Row>
-    </>
+        </Row></>)
+
 }
 export default connectStateProps(withRouter(CourseComponent));
