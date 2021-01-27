@@ -3,6 +3,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { Row, Col, Menu, Card, Avatar } from 'antd';
 import Groups from './groups';
 import AdminCourses from './courses';
+import CourseComponent from './courses/CourseComponent';
 // import Jobs from './jobs';
 import Members from './members';
 import TestSubmissions from './testsubmissions';
@@ -49,6 +50,7 @@ class Admin extends Component {
                     <Route path="/admin/members" component={(this.props?.profile?.Category == "Root") ? Members : AccessDenied} />
                     <Route path="/admin/groups" component={(this.props?.profile?.Category == "Root") ? Groups : AccessDenied} />
                     <Route path="/admin/testsubmissions" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? TestSubmissions : AccessDenied} />
+                    <Route path="/admin/course/:id" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? CourseComponent : AccessDenied} />
                 </div>
             </div>
         </>

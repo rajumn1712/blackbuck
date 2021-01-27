@@ -10,7 +10,7 @@ class CreateCourse extends Component {
                     title="Create Course"
                 >
                     <div className="p-16">
-dfd
+                        dfd
                     </div>
                 </Card>
             </div>
