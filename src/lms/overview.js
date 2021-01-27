@@ -238,6 +238,11 @@ downloadCertificate = ()=>{
     }
   })
 }
+updateCount=(prop,value)=>{
+  let {courseDetails} = this.state;
+  courseDetails.CommentCount = value;
+  this.setState({...this.state,courseDetails});
+}
 
 
     render() {
@@ -418,10 +423,13 @@ downloadCertificate = ()=>{
               </Card>
             </div>}
             <div className="custom-card comment-over">
-              <Card title="Comments">
+              <Card title={`Comments (${courseDetails.CommentCount})`}>
                 <div className="px-12 post-card comment-show comment-over">
                 {<Comments
-            count={0}
+                onUpdate={(prop, value) => {
+                  this.updateCount(prop, value);
+                }}
+                count={courseDetails.CommentCount}
             postId={this.props.courseid}
             object={this.state.object}
             isLMSComment={true}
