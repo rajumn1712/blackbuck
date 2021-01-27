@@ -84,7 +84,7 @@ const fetchInterestsLu = (take, skip) => {
 };
 const fetchCourseSuggestions = (user_id, take, skip) => {
   return apiClient.get(
-    PROFILE_API + `getCourseSuggestions/${user_id}/${take}/${skip}`
+    PROFILE_API + `getCourseSuggestions/${user_id}/${take}/${take * skip - skip}`
   );
 };
 const usercourseSuggestions = (user_id, take, skip) => {

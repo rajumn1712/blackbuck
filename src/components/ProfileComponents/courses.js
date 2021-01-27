@@ -13,11 +13,13 @@ import {
 import Loader from "../../common/loader";
 import { connect } from "react-redux";
 import { lmsJoinCourse } from "../../lms/api";
+import { responsiveArray } from "antd/lib/_util/responsiveObserve";
 
 class Courses extends Component {
   state = {
     courses: [],
     loading: false,
+    size:0
   };
 
   componentDidMount() {
@@ -27,11 +29,11 @@ class Courses extends Component {
     this.setState({ ...this.state, loading: true });
     const getcourses = await (this.props?.loadUserCourse
       ? getUserCourses
-      : fetchCourseSuggestions)(this.props?.profile?.Id, 5, 0);
+      : fetchCourseSuggestions)(this.props?.profile?.Id, 5, 1);
     let { courses } = this.state;
-    courses = getcourses.data;
+    courses = courses.concat(getcourses.data);
     if (getcourses.ok) {
-      this.setState({ courses, loading: false });
+      this.setState({ courses, loading: false,size:getcourses.data.length });
     }
   }
 
@@ -87,9 +89,9 @@ class Courses extends Component {
   render() {
     const { user } = store.getState().oidc;
 
-    const { courses } = this.state;
+    const { courses,size,loading } = this.state;
     return (
-      <div className="custom-card">
+      <div className="custom-card sub-text card-scroll">
         {/* {this.state.loading && <Loader className="loader-top-middle" />} */}
         <Card
           title="Courses"
@@ -101,6 +103,7 @@ class Courses extends Component {
           }
         >
           <List
+          loading={loading}
             itemLayout="horizontal"
             dataSource={courses}
             renderItem={(item) => (
@@ -150,6 +153,13 @@ class Courses extends Component {
               </List.Item>
             )}
           />
+          <div className="text-center">
+              {size >= 5 && (
+                <a className="more-comments" onClick={() => this.getCourseSuggestions()}>
+                  View more courses
+                </a>
+              )}
+            </div>
         </Card>
       </div>
     );

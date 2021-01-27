@@ -71,7 +71,9 @@ class CourseContent extends Component {
   }
   componentDidUpdate(previewProps) {
     if (previewProps.match.params.id != this.props.match.params.id) {
-      this.loadCourseDetails();
+      this.setState({...this.state,recommendedVideos: []},()=>{
+        this.loadCourseDetails();
+      })
     }
   }
   loadCourseDetails = async () => {
