@@ -45,7 +45,7 @@ const docTitle = (
     <span className="left-menu docment"></span>
 )
 
-const AdminCourses = ({ profile }) => {
+const AdminCourses = ({ profile, history }) => {
     const obj = {
         "TopicId": "",
         "Title": "",
@@ -698,26 +698,13 @@ const AdminCourses = ({ profile }) => {
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                {!showForm && <div className="custom-card mb-16">
-                    <Card className="start-course">
-                        <Row align="middle" className="p-16">
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
-                                <Title level={3} className="normalbold text-white">Get Started with the course</Title>
-                                <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
-                            </Col>
-                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                <Button type="dashed" onClick={() => {
-                                    setShowForm(true)
-                                    setFileImgUploading(false);
-                                    setFileVideoUploading(false)
-                                    setFileUploading(false)
-                                    setIsCourseChanged(false);
-                                }}>Create Course</Button>
-                            </Col>
-                        </Row>
+                {counts.CoursesCouunt > 0 && <div className="text-right mb-16">
+                    <Card>
+                        <Button type="primary" size="small" className="px-16 mr-8" onClick={() => {
+                            history.push("/admin/course/new")
+                        }}>Create Course</Button>
                     </Card>
-                </div>
-                }
+                </div>}
                 {showForm && <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>

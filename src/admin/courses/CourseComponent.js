@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter, useParams } from "react-router-dom";
 import connectStateProps from '../../shared/stateConnect';
 import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip, Image, List } from 'antd';
 import { uuidv4 } from '../../utils';
@@ -23,6 +23,8 @@ const CourseComponent = ({ profile, history }) => {
         "TopicId": "",
         "Title": "",
         "Description": "",
+        "ThumbNails": [],
+        "DupThumbNails": [],
         "VideoSource": "Upload",
         "VideoName": "",
         "VideoUrl": [],
@@ -30,6 +32,8 @@ const CourseComponent = ({ profile, history }) => {
         "TopicType": "Video",
         "lstDocuments": [],
         "Size": "",
+        "Hours": "00",
+        "Min": "00",
         "Sec": "00",
     }
     const sectionObj = {
@@ -81,6 +85,7 @@ const CourseComponent = ({ profile, history }) => {
         "Video": ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
         "Document": ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
     }
+    let { id } = useParams();
     const [CategoriesLu, setCategoriesLu] = useState([]);
     const [AuthorsLu, setAuthorsLu] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -96,9 +101,13 @@ const CourseComponent = ({ profile, history }) => {
     const [isCourseChanged, setIsCourseChanged] = useState(false);
     const [isVideoLoded, setIsVideoLoded] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState((id !== 'new'))
     useEffect(() => {
         fetchBranches();
         fetchAuthors();
+        if (id !== 'new') {
+            refreshCourseDetails(id)
+        }
     }, []);
     const fetchBranches = async () => {
         const branchResponse = await getCollegeBranches();
@@ -194,13 +203,19 @@ const CourseComponent = ({ profile, history }) => {
             if (branchResponse.data[0].IsPublished && !isFromFunctions) {
                 const publishResponse = await getPublishedObject(courseObject.GroupId);
                 if (publishResponse.ok) {
+                    setLoading(false)
                     setPosts(publishResponse.data)
                 } else {
+                    setLoading(false)
                     notify({ message: "Error", type: "error", description: "Something went wrong :)" })
                 }
             }
+            else {
+                setLoading(false);
+            }
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+            setLoading(false)
         }
     }
     const bindCourseData = (obj) => {
@@ -257,6 +272,7 @@ const CourseComponent = ({ profile, history }) => {
         }
     }
     const coursSave = async () => {
+        setLoading(true)
         if (courseObject.CourseType == "Content" && courseObject.CourseVideo?.length == 0) {
             notify({
                 message: "Course",
@@ -291,17 +307,20 @@ const CourseComponent = ({ profile, history }) => {
         }
         const result = await saveCourse(courseObject);
         if (result.ok) {
+            setLoading(false)
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
             history.push("/admin/courses")
         }
         else {
+            setLoading(false)
             window.scrollTo(0, 0);
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
 
     }
     const coursePublish = async () => {
+        setLoading(true)
         postObject.GroupId = courseObject.GroupId;
         postObject.IsPublish = true;
         postObject.Posts = [];
@@ -373,10 +392,12 @@ const CourseComponent = ({ profile, history }) => {
         }
         const result = await publishCourse(postObject, courseObject.IsPublish);
         if (result.ok) {
+            setLoading(false)
             notify({ message: "Publish", description: "Course published successfully" });
             history.push("/admin/courses")
         }
         else {
+            setLoading(false)
             window.scrollTo(0, 0);
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
@@ -558,6 +579,7 @@ const CourseComponent = ({ profile, history }) => {
     };
 
     return (<>
+        {loading && <Loader className="loader-middle" />}
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
@@ -730,10 +752,10 @@ const CourseComponent = ({ profile, history }) => {
                                                             setIsCourseChanged(true);
                                                         }}
                                                         onChange={(info) => {
+                                                            const { status } = info.file;
                                                             if (status == "uploading") {
                                                                 setFileVideoUploading(true);
                                                             }
-                                                            const { status } = info.file;
                                                             if (status === 'done') {
                                                                 setIsCourseChanged(true);
                                                                 setFileVideoUploading(false);
