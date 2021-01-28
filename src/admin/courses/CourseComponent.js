@@ -201,7 +201,7 @@ const CourseComponent = ({ profile, history }) => {
         if (branchResponse.ok) {
             bindCourseData(branchResponse.data[0])
             if (branchResponse.data[0].IsPublished && !isFromFunctions) {
-                const publishResponse = await getPublishedObject(courseObject.GroupId);
+                const publishResponse = await getPublishedObject(branchResponse.data[0].GroupId);
                 if (publishResponse.ok) {
                     setLoading(false)
                     setPosts(publishResponse.data)
@@ -590,13 +590,13 @@ const CourseComponent = ({ profile, history }) => {
                                 <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
                                     <div className="create-course">
                                         <div className="custom-fields">
-                                            <label className="text-secondary d-block mb-4 semibold">Title</label>
+                                            <label className="text-secondary d-block mb-4 semibold required">Title</label>
                                             <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
                                                 <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
                                         </div>
                                         <div className="">
-                                            <label className="text-secondary d-block mb-4 semibold">Description</label>
+                                            <label className="text-secondary d-block mb-4 semibold required">Description</label>
                                             <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>
                                                 <TextArea className="custom-fields" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
@@ -605,7 +605,7 @@ const CourseComponent = ({ profile, history }) => {
                                         </div>
                                         <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
-                                                <label className="text-secondary d-block mb-4 semibold">Category</label>
+                                                <label className="text-secondary d-block mb-4 semibold required">Category</label>
                                                 <Form.Item className="lh-24 custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select
                                                         placeholder="Choose a Category" className="text-left"
@@ -620,7 +620,7 @@ const CourseComponent = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
-                                                <label className="text-secondary d-block mb-4 semibold">Author Name</label>
+                                                <label className="text-secondary d-block mb-4 semibold  required">Author Name</label>
                                                 <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
                                                     <Select
                                                         defaultValue="Choose Author" placeholder="Choose Author" className="text-left"
@@ -634,7 +634,7 @@ const CourseComponent = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
-                                                <label className="text-secondary d-block mb-4 semibold">Type</label>
+                                                <label className="text-secondary d-block mb-4 semibold  required">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
                                                         defaultValue="Content" className="text-left"
@@ -646,14 +646,14 @@ const CourseComponent = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4">Date</label>
+                                                <label className="text-secondary d-block mb-4  required">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
                                             }
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4 semibold">Link Type</label>
+                                                <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
                                                     <Select
                                                         defaultValue="Choose Link Type" placeholder="Choose Link Type" className="text-left"
@@ -667,7 +667,7 @@ const CourseComponent = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>}
                                             {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4 semibold">Link</label>
+                                                <label className="text-secondary d-block mb-4 semibold required ">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
                                                 </Form.Item>
@@ -990,13 +990,13 @@ const CourseComponent = ({ profile, history }) => {
                     <Form id="myForm" onFinishFailed={() => { }} onFinish={() => topicSave()} initialValues={topicObj} form={topicForm}>
                         <div>
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Title</label>
+                                <label className="text-secondary d-block mb-4  required">Title</label>
                                 <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} >
                                     <Input onChange={(value) => handleChange('Title', value, true)} maxLength={150} />
                                 </Form.Item>
                             </div>
                             <div className="description-space">
-                                <label className="text-secondary d-block mb-4">Description</label>
+                                <label className="text-secondary d-block mb-4  required">Description</label>
                                 <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} >
                                     <TextArea onResize
                                         autoSize={{ minRows: 3, maxRows: 20 }}
@@ -1006,7 +1006,7 @@ const CourseComponent = ({ profile, history }) => {
                                 </Form.Item>
                             </div>
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Content Type</label>
+                                <label className="text-secondary d-block mb-4  required">Content Type</label>
                                 <Form.Item name="TopicType" rules={[{ required: true, message: "Content Type  required" }]} >
                                     <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}>
                                         <Option value="Video">Video</Option>
@@ -1015,7 +1015,7 @@ const CourseComponent = ({ profile, history }) => {
                                 </Form.Item>
                             </div>
                             {topicObj.TopicType == "Video" && <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Video Source</label>
+                                <label className="text-secondary d-block mb-4  required">Video Source</label>
                                 <Form.Item name="VideoSource">
                                     <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
                                         <Option value="Upload">Upload</Option>
@@ -1058,12 +1058,14 @@ const CourseComponent = ({ profile, history }) => {
                                 </div>
                             ))}
                             {topicObj.VideoSource == "YouTube" && topicObj.TopicType == "Video" && <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4  required">YouTube URL</label>
                                 <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="YouTube URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
                                 </Form.Item>
                             </div>
                             }
                             {topicObj.VideoSource == "Vimeo" && topicObj.TopicType == "Video" && <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4  required">Vimeo URL</label>
                                 <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="Vimeo URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
                                 </Form.Item>
