@@ -23,25 +23,25 @@ class Admin extends Component {
             <div className="d-flex">
                 <div className="bg-white admin-left-pane">
                     <Menu mode="vertical" theme="light">
-                        <SubMenu key="sub1" icon={<span className="left-menu social-networking mr-12" />} title="Social Networking">
-                            <Menu.Item key="members">
+                        <SubMenu key="sub1" icon={<span className="left-menu social-networking mr-12" />} title="Social Networking" className={(this.props.location.pathname == '/admin/members' || this.props.location.pathname == '/admin/groups') ? "ant-menu-submenu-selected  ant-menu-submenu-active" : ""}>
+                            <Menu.Item key="members" className={this.props.location.pathname == '/admin/members' ? 'ant-menu-item-selected' : ""}>
                                 <Link to="/admin/members">Members</Link>
                             </Menu.Item>
-                            <Menu.Item key="groups">
+                            <Menu.Item key="groups" className={this.props.location.pathname == '/admin/groups' ? 'ant-menu-item-selected' : ""}>
                                 <Link to="/admin/groups">Groups</Link>
                             </Menu.Item>
                         </SubMenu>
-                        <SubMenu key="sub2" icon={<span className="left-menu lmsicon mr-12" />} title="LMS">
-                            <Menu.Item key="courses">
+                        <SubMenu key="sub2" icon={<span className="left-menu lmsicon mr-12" />} title="LMS" className={(this.props.location.pathname == '/admin/courses' || this.props.location.pathname == '/admin/testsubmissions') ? "ant-menu-submenu-selected ant-menu-submenu-active" : ""}>
+                            <Menu.Item key="courses" className={this.props.location.pathname == '/admin/courses' ? 'ant-menu-item-selected' : ""}>
                                 <Link to="/admin/courses">Courses</Link>
                             </Menu.Item>
-                            <Menu.Item key="assingments">
+                            <Menu.Item key="assingments" className={this.props.location.pathname == '/admin/testsubmissions' ? 'ant-menu-item-selected' : ""}>
                                 <Link to="/admin/testsubmissions">Test Submissions</Link>
                             </Menu.Item>
                         </SubMenu>
                         <SubMenu key="sub4" icon={<span className="left-menu Careers mr-12" />} title="Careers">
-                            <Menu.Item key="1">Job Applications</Menu.Item>
-                            <Menu.Item key="2">Jobs</Menu.Item>
+                            <Menu.Item key="1"><Link to="/commingsoon">Job Applications</Link></Menu.Item>
+                            <Menu.Item key="2"><Link to="/commingsoon">Jobs</Link></Menu.Item>
                         </SubMenu>
                     </Menu>
                 </div>

@@ -200,7 +200,7 @@ const CourseComponent = ({ profile, history }) => {
         const branchResponse = await getCourse(id ? id : courseObject.GroupId, profile?.Id);
         if (branchResponse.ok) {
             bindCourseData(branchResponse.data[0])
-            if (branchResponse.data[0].IsPublished && !isFromFunctions) {
+            if (branchResponse.data[0].IsPublish && !isFromFunctions) {
                 const publishResponse = await getPublishedObject(branchResponse.data[0].GroupId);
                 if (publishResponse.ok) {
                     setLoading(false)
