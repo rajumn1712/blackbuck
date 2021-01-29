@@ -441,6 +441,7 @@
 .custom-popup .ant-modal-close {
   display: none !important;
 }
+.mt-auto{margin-top: auto;}
 .justify-content-between,
 .speekar-block {
   justify-content: space-between;
@@ -2152,6 +2153,9 @@ textarea {
 .job-req li .post-icons.job{ background-position: -89px -7px; }
 .job-req li .post-icons.role{ background-position: -290px -7px; }
 .job-req li .post-icons.location{ background-position: -326px -7px; }
+.icons.location{ background-position: -326px -7px; }
+.icons.Careers{background-position: -872px -255px;}
+.icons.wallet{background-position: -875px -257px;}
 .job-ldate{ background: var(--bghover); border-radius: 6px; display: inline-block;}
 .post-icons.view-job {background-position: -5px -200px;}
 .post-icons.apply-job {background-position: -64px -200px;}
