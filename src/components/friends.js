@@ -194,6 +194,7 @@ class Friends extends Component {
                     </div>
                   }
                 />
+                
                  <Dropdown overlay={<Menu className="custom-dropdown">
                         <Menu.Item key="0" onClick={async () => {
                           const unRes = await unFriend(this.props.profile?.Id, item.UserId);
