@@ -22,6 +22,7 @@ import SinglePostView from "./singlePostview";
 import Admin from "../admin";
 import LMSComponent from "../lms";
 import CMSComponent from "../careers";
+import Carers from "../careers/carers"
 import CourseContent from "../lms/coursecontent";
 import QandA from "../lms/QandA";
 import OverView from "../lms/overview";

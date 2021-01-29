@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Affix, Input, Button, Select } from "antd";
 import Identity from "../components/identity";
 import Ads from "../components/ads";
+import Carers from "./carers";
 import BBScholars from "../shared/components/scholars";
 import Tags from "../components/ProfileComponents/tags";
 import JobCard from "./jobcard";
@@ -64,6 +65,7 @@ class CMSComponent extends Component {
           </Col>
           <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
             <Affix offsetTop={86}>
+              <Carers /> 
               <Ads />
             </Affix>
           </Col>
