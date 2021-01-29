@@ -159,6 +159,19 @@ class Courses extends Component {
                 </div> */}
                 <div className="custom-card">
                     <div className="p-12 card-background xf">
+                   <div className="mb-16">
+                <Card className="start-course">
+                    <Row align="middle" className="p-16">
+                        <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
+                            <Title level={3} className="normalbold text-white">Get Started with the course</Title>
+                            <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
+                        </Col>
+                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
+                            <Button size="small" className="px-16 mr-8">Create Course</Button>
+                        </Col>
+                    </Row>
+                </Card>
+                </div>
                         <Row gutter={16}>
                             {lstCourses.map((course, index) => {
                                 return <Col xs={24} md={8} lg={6}>
