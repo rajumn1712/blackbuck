@@ -16,12 +16,12 @@ const ownerActions = [
     {
         action: "Edit",
         icons: "post-icons edit-icon",
-        subTitle: "Edit Group",
+        subTitle: "Edit Course",
     },
     {
         action: "Delete",
         icons: "post-icons delete-icon",
-        subTitle: "Delete Group",
+        subTitle: "Delete Course",
     },
 ];
 class Courses extends Component {
@@ -137,6 +137,18 @@ class Courses extends Component {
             }
         });
     }
+    handleEvent = async (e, name, course) => {
+        switch (name) {
+            case "Edit":
+                this.props.history.push("/admin/course/" + course.Id)
+                break;
+            case "Delete":
+                this.deleteCourse(course)
+                break;
+            default:
+                break;
+        }
+    };
     render() {
         const { lstCourses, loading } = this.state;
         return <>
@@ -204,9 +216,13 @@ class Courses extends Component {
                                                 </div>} />
 
                                         <div className="card-options-right">
-                                            <a className="ant-dropdown-link ml-auto " actionsList={ownerActions}>
-                                                <span className="icons more mr-0"></span>
-                                            </a>
+                                            <SideAction
+                                                horclass="icons more"
+                                                clickedEvent={(event, name) =>
+                                                    this.handleEvent(event, name, course)
+                                                }
+                                                actionsList={ownerActions}
+                                            />
                                         </div>
                                     </Card>
                                 </Col>
