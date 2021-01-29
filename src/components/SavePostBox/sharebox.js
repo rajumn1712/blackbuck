@@ -696,7 +696,7 @@ class ShareBox extends Component {
           title={<h4 className="mb-0">{this.props.profile?.FirstName}</h4>}
           description={
             <div className="mb-0 text-capitalize" id="typeLu">
-              <Dropdown overlay={menu} trigger={["click"]}
+              {!this.props.groupData && <Dropdown overlay={menu} trigger={["click"]}
               getPopupContainer={() => document.querySelector('#typeLu')}>
                 <div
                   className="post-privacy"
@@ -707,6 +707,10 @@ class ShareBox extends Component {
                   <span className="grp-type-icon down ml-4"></span>
                 </div>
               </Dropdown>
+          }
+              {this.props.groupData &&
+                this.props.groupData.GroupName
+              }
             </div>
           }
         />

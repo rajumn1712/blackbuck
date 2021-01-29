@@ -633,7 +633,7 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
+                                            <Col xs={courseObject.CourseType == "Live Session"?12:24} sm={courseObject.CourseType == "Live Session"?12:24} md={courseObject.CourseType == "Live Session"?12:24} lg={courseObject.CourseType == "Live Session"?12:24} xl={courseObject.CourseType == "Live Session"?12:24} xxl={courseObject.CourseType == "Live Session"?12:24} className="">
                                                 <label className="text-secondary d-block mb-4 semibold  required">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
@@ -652,7 +652,7 @@ const CourseComponent = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             }
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
                                                     <Select
