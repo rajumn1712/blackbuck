@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, List, Row, Col, Typography, Button, Result, Tooltip, Upload, } from 'antd'
+import { Card, List, Row, Col, Typography, Button, Result, Tooltip, Upload, Spin, } from 'antd'
 import '../index.css';
 import '../App.css';
 import { getCertifiedFlags, submitTests } from './api';
@@ -25,7 +25,8 @@ class OverView extends Component {
     uploadSources:[],
     TestsObj:[],
     flagsData:{Id:null,"IsSubmitted":null,"IsCertified":null,"IsRejected":null,ReSubmit:null},
-    showUpload:false
+    showUpload:false,
+    buttonLoading:false
 }
 componentDidMount(){
   this.getCertified();
@@ -155,6 +156,7 @@ reUpload = ()=>{
 }
 
 downloadCertificate = ()=>{
+  this.setState({...this.state,buttonLoading:true})
   const html = `
   <!DOCTYPE html>
     <html>
@@ -218,7 +220,7 @@ downloadCertificate = ()=>{
   }).then(res=>{
     if(res.ok){
       window.open(res.data);
-      this.setState({...this.state,loading:false},()=>{
+      this.setState({...this.state,buttonLoading:false},()=>{
         notify({
           message:"Download",
           description:'Certificate downloaded successfully'
@@ -226,13 +228,20 @@ downloadCertificate = ()=>{
         })
       })
     }else{
-      notify({
-        message:"Error",
-        description:'Something went wrong',
-        type:'error'
+      this.setState({...this.state,buttonLoading:false},()=>{
+        notify({
+          message:"Error",
+          description:'Something went wrong',
+          type:'error'
+        })
       })
     }
   })
+}
+updateCount=(prop,value)=>{
+  let {courseDetails} = this.state;
+  courseDetails.CommentCount = value;
+  this.setState({...this.state,courseDetails});
 }
 
 
@@ -298,7 +307,10 @@ downloadCertificate = ()=>{
                                 <p className="f-14 text-white mb-0">Your are certified and your certificate is generated now its ready to generate.</p>
                             </Col>
                             <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                <Button type="dashed" onClick={this.downloadCertificate}>Download Here</Button>
+                                <Button type="dashed" onClick={this.downloadCertificate} disabled={this.state.buttonLoading}>
+                                  {this.state.buttonLoading && <Spin />}
+                                  Download Here
+                                  </Button>
                             </Col>
                         </Row>
                     </Card>
@@ -411,10 +423,13 @@ downloadCertificate = ()=>{
               </Card>
             </div>}
             <div className="custom-card comment-over">
-              <Card title="Comments">
+              <Card title={`Comments (${courseDetails.CommentCount})`}>
                 <div className="px-12 post-card comment-show comment-over">
                 {<Comments
-            count={0}
+                onUpdate={(prop, value) => {
+                  this.updateCount(prop, value);
+                }}
+                count={courseDetails.CommentCount}
             postId={this.props.courseid}
             object={this.state.object}
             isLMSComment={true}

@@ -1,51 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip, Image, List } from 'antd';
-import { withRouter } from "react-router-dom";
-import Title from 'antd/lib/typography/Title';
-import '../../styles/theme.css';
-import { ArrowUpOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons';
+import { withRouter, useParams } from "react-router-dom";
 import connectStateProps from '../../shared/stateConnect';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete, getPublishedObject } from '../../shared/api/apiServer';
-import notify from '../../shared/components/notification';
+import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload, Table, Statistic, DatePicker, Modal, InputNumber, Form, Tooltip, Image, List } from 'antd';
 import { uuidv4 } from '../../utils';
-import Loader from "../../common/loader";
-import video from '../../styles/images/video.mp4';
-import Courses from './Courses';
 import moment from 'moment';
-const { Meta } = Card;
+import notify from '../../shared/components/notification';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete, getPublishedObject } from '../../shared/api/apiServer';
+import Loader from "../../common/loader";
+import Title from 'antd/lib/typography/Title';
+const { Dragger } = Upload;
 const { Panel } = Collapse;
 const { Option } = Select;
-const { Dragger } = Upload;
 const { TextArea } = Input;
-const uploadButton = (
-    <div>
-        <PlusOutlined />
-        <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-);
-const data = [
-    {
-        key: '1',
-        name: 'Introduction.mp4',
-        type: 'Video',
-        size: '50KB',
-    },
-    {
-        key: '2',
-        name: 'Learn how to code from scratch.mp4',
-        type: 'Video',
-        size: '25KB',
-    }
-];
-
 const topicTitle = (
     <span className="left-menu play mr-4"></span>
 )
 const docTitle = (
     <span className="left-menu docment"></span>
 )
-
-const AdminCourses = ({ profile, history }) => {
+const CourseComponent = ({ profile, history }) => {
     const obj = {
         "TopicId": "",
         "Title": "",
@@ -67,11 +40,9 @@ const AdminCourses = ({ profile, history }) => {
         "SectionId": uuidv4(),
         "SectionName": "",
         "IsSaved": false,
-        "IsShowForm": false,
         "Topics": [
         ]
     }
-
     const courseObj = {
         "GroupId": uuidv4(),
         "GroupName": "",
@@ -104,15 +75,6 @@ const AdminCourses = ({ profile, history }) => {
         "Documents": [],
         "UrlType": []
     }
-    const docsObj = {
-        courseId: uuidv4(),
-        Tests: [],
-    }
-    const TestObj = {
-        "TestId": uuidv4(),
-        "Title": "",
-        "Documents": ""
-    }
     let postObject = {
         "GroupId": "",
         "IsPublish": true,
@@ -123,49 +85,34 @@ const AdminCourses = ({ profile, history }) => {
         "Video": ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
         "Document": ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
     }
-    let formRef = useRef();
-    const TimeObj = { "Hours": "0", "Min": "0", "Sec": "0" };
+    let { id } = useParams();
     const [CategoriesLu, setCategoriesLu] = useState([]);
     const [AuthorsLu, setAuthorsLu] = useState([]);
-    const [showForm, setShowForm] = useState(false);
-    const [current, setCurrent] = React.useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [topicObj, setTopicObj] = useState({ ...obj });
-    const [videoTimeObj, setVideoTimeObj] = useState({ ...TimeObj });
-    const [topicEdit, setTopicEdit] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
     const [secObj, setSecObj] = useState({ ...sectionObj });
     const [courseObject, setCourseObject] = useState({ ...courseObj });
     const [fileUploading, setFileUploading] = useState(false);
     const [secId, setSecId] = useState("");
     const [form] = Form.useForm();
     const [topicForm] = Form.useForm();
-    const [showGrid, setShowGrid] = useState(true);
     const [fileImgUploading, setFileImgUploading] = useState(false);
     const [fileVideoUploading, setFileVideoUploading] = useState(false);
-    const [CoursesObj, setCoursesObj] = useState("");
-    const [counts, setCounts] = useState({ CoursesCouunt: 0, MembersCount: 0 });
     const [isCourseChanged, setIsCourseChanged] = useState(false);
     const [isVideoLoded, setIsVideoLoded] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState((id !== 'new'))
     useEffect(() => {
         fetchBranches();
         fetchAuthors();
-        fetchCountsCour();
+        if (id !== 'new') {
+            refreshCourseDetails(id)
+        }
     }, []);
     const fetchBranches = async () => {
         const branchResponse = await getCollegeBranches();
         if (branchResponse.ok) {
             setCategoriesLu(branchResponse.data);
-        } else {
-            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
-        }
-    }
-    const fetchCountsCour = async () => {
-        const branchResponse = await getCoursesRelCount(profile?.Id);
-        if (branchResponse.ok) {
-            setCounts({ ...branchResponse.data[0] });
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
         }
@@ -230,17 +177,6 @@ const AdminCourses = ({ profile, history }) => {
             }
         },
     };
-
-    const onCourseEditObj = (id, isPublished) => {
-        setShowForm(true);
-        setFileImgUploading(false);
-        setFileVideoUploading(false)
-        setFileUploading(false)
-        courseObject.GroupId = id;
-        setCourseObject({ ...courseObject })
-        refreshCourseDetails(true, isPublished);
-        setIsCourseChanged(false);
-    }
     const deleteSection = async (item) => {
         if (!item.IsSaved) {
             courseObject.CourseSections = courseObject.CourseSections.filter(sec => sec.SectionId
@@ -260,28 +196,26 @@ const AdminCourses = ({ profile, history }) => {
             }
         }
     }
-    const handleVidoTimeChange = (prop, val) => {
-        let dupTopicObj = { ...topicObj }
-        videoTimeObj[prop] = val;
-        dupTopicObj[prop] = String(val ? val : "0").length == 1 ? ("0" + String(val ? val : "0")) : String(val ? val : "0");
-        setVideoTimeObj({ ...videoTimeObj })
-        dupTopicObj.Duration = videoTimeObj["Hours"] + ":" + videoTimeObj["Min"] + ":" + videoTimeObj["Sec"];
-        setTopicObj({ ...dupTopicObj });
-    }
-    const refreshCourseDetails = async (isEdit, isPublished) => {
-        if (isPublished) {
-            const publishResponse = await getPublishedObject(courseObject.GroupId);
-            if (publishResponse.ok) {
-                setPosts(publishResponse.data)
-            } else {
-                notify({ message: "Error", type: "error", description: "Something went wrong :)" })
-            }
-        }
-        const branchResponse = await getCourse(courseObject.GroupId, profile?.Id);
+    const refreshCourseDetails = async (id, isFromFunctions) => {
+        const branchResponse = await getCourse(id ? id : courseObject.GroupId, profile?.Id);
         if (branchResponse.ok) {
             bindCourseData(branchResponse.data[0])
+            if (branchResponse.data[0].IsPublish && !isFromFunctions) {
+                const publishResponse = await getPublishedObject(branchResponse.data[0].GroupId);
+                if (publishResponse.ok) {
+                    setLoading(false)
+                    setPosts(publishResponse.data)
+                } else {
+                    setLoading(false)
+                    notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+                }
+            }
+            else {
+                setLoading(false);
+            }
         } else {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+            setLoading(false)
         }
     }
     const bindCourseData = (obj) => {
@@ -297,22 +231,9 @@ const AdminCourses = ({ profile, history }) => {
         obj.Date = obj.Date ? moment(obj.Date).local() : "";
         ObjCourse.Date = ObjCourse.Date ? moment(ObjCourse.Date).local() : "";
         setCourseObject({ ...obj });
-        form.setFieldsValue({ ...ObjCourse })
-        setShowForm(true);
+        form.setFieldsValue({ ...ObjCourse });
     }
     const topicSave = async () => {
-        if (topicObj.VideoUrl?.length == 0 && topicObj.TopicType == "Video") {
-            setIsError(true);
-            setErrorMessage("Video source/video required");
-            formRef.current.scrollTop = 0;
-            return;
-        }
-        if (topicObj.lstDocuments?.length == 0 && topicObj.TopicType == "Document") {
-            setIsError(true);
-            setErrorMessage("Atleast one document required");
-            formRef.current.scrollTop = 0;
-            return;
-        }
         if (topicObj.TopicType == "Video") {
             topicObj.lstDocuments = [];
             topicObj.VideoName = topicObj.Title;
@@ -340,7 +261,6 @@ const AdminCourses = ({ profile, history }) => {
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
     }
-
     const deleteTopic = async (topic, section) => {
         const result = await topicDelete(courseObject.GroupId, section.SectionId, topic.TopicId);
         if (result.ok) {
@@ -352,6 +272,7 @@ const AdminCourses = ({ profile, history }) => {
         }
     }
     const coursSave = async () => {
+        setLoading(true)
         if (courseObject.CourseType == "Content" && courseObject.CourseVideo?.length == 0) {
             notify({
                 message: "Course",
@@ -386,20 +307,20 @@ const AdminCourses = ({ profile, history }) => {
         }
         const result = await saveCourse(courseObject);
         if (result.ok) {
+            setLoading(false)
             notify({ message: "Course", description: "Course saved successfully" });
             setCourseObject({ ...courseObj });
-            setShowForm(false)
-            CoursesObj.refresh();
-            fetchCountsCour();
-            form.resetFields();
+            history.push("/admin/courses")
         }
         else {
+            setLoading(false)
             window.scrollTo(0, 0);
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
 
     }
     const coursePublish = async () => {
+        setLoading(true)
         postObject.GroupId = courseObject.GroupId;
         postObject.IsPublish = true;
         postObject.Posts = [];
@@ -471,12 +392,12 @@ const AdminCourses = ({ profile, history }) => {
         }
         const result = await publishCourse(postObject, courseObject.IsPublish);
         if (result.ok) {
+            setLoading(false)
             notify({ message: "Publish", description: "Course published successfully" });
-            setShowForm(false)
-            form.resetFields();
-            setCourseObject({ ...courseObj });
+            history.push("/admin/courses")
         }
         else {
+            setLoading(false)
             window.scrollTo(0, 0);
             notify({ message: "Error", type: "error", description: "Something went wrong :)" });
         }
@@ -504,10 +425,7 @@ const AdminCourses = ({ profile, history }) => {
             .join(':');
     }
     const cancelCourse = () => {
-        form.resetFields();
-        setCourseObject({ ...courseObj });
-        setShowGrid(true);
-        setShowForm(false)
+        history.push("/admin/courses");
     }
     const handleChange = (prop, val, popup) => {
         if (!popup) {
@@ -549,11 +467,9 @@ const AdminCourses = ({ profile, history }) => {
             if (prop == "TopicType" && topicObj[prop] == "Document") {
                 topicObj.VideoUrl = [];
                 topicObj.Duration = "00:00:00";
-                setIsError(false);
             }
             if (prop == "TopicType" && topicObj[prop] == "Video") {
                 topicObj.lstDocuments = [];
-                setIsError(false);
             }
             setTopicObj({ ...topicObj })
         }
@@ -565,10 +481,6 @@ const AdminCourses = ({ profile, history }) => {
         setCourseObject({ ...courseObject });
     }
     const sectionSave = async () => {
-        if (!secObj.SectionName) {
-            notify({ message: "Error", type: "error", description: "Please enter section title" });
-            return;
-        }
         secObj.IsSaved = true;
         const result = await saveSection(secObj, courseObject.GroupId);
         if (result.ok) {
@@ -586,7 +498,6 @@ const AdminCourses = ({ profile, history }) => {
         secAddObj.SectionName = "";
         setSecObj(secAddObj)
         if (courseObject.CreatedDate) {
-            secAddObj.IsShowForm = true;
             courseObject.CourseSections.push({ ...secAddObj });
             setCourseObject({ ...courseObject });
         }
@@ -594,7 +505,6 @@ const AdminCourses = ({ profile, history }) => {
             notify({ message: "Error", type: "error", description: "Please save course" });
         }
     }
-
     const bytesToSize = (bytes) => {
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
         if (bytes == 0) return '0 Byte';
@@ -605,18 +515,13 @@ const AdminCourses = ({ profile, history }) => {
         let topicObjForsave = type == "Edit" ? JSON.parse(JSON.stringify(topic)) : { ...obj }
         setSecId(sectionId);
         if (type == 'Edit') {
-            topicObjForsave.Hours = topic.Duration.split(":")?.[0]
-            topicObjForsave.Min = topic.Duration.split(":")?.[1]
             topicObjForsave.Sec = topic.Duration.split(":")?.[2]
             setTopicObj({ ...topicObjForsave })
-            setTopicEdit(true);
         }
         else {
             topicObjForsave.TopicId = uuidv4();
             setTopicObj(topicObjForsave)
-            setTopicEdit(false);
         }
-        setIsError(false);
         topicForm.setFieldsValue({ ...topicObjForsave })
         setIsModalVisible(true)
         setFileUploading(false);
@@ -627,7 +532,6 @@ const AdminCourses = ({ profile, history }) => {
         setTopicObj({ ...obj })
         setIsModalVisible(false);
     };
-    const { Dragger } = Upload;
     const uploadProps = {
         name: 'file',
         multiple: false,
@@ -673,57 +577,26 @@ const AdminCourses = ({ profile, history }) => {
             }
         },
     };
+
     return (<>
-        <Row gutter={12} className="mb-12">
-            <Col span={6}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Members"
-                        value={counts.MembersCount}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-            <Col span={6}>
-                <Card className="admin-kpi-card">
-                    <Statistic
-                        title="Courses"
-                        value={counts.CoursesCouunt}
-                        valueStyle={{ color: 'var(--textprimary)' }}
-                        prefix={<ArrowUpOutlined />}
-                    />
-                </Card>
-            </Col>
-        </Row>
+        {loading && <Loader className="loader-middle" />}
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                {counts.CoursesCouunt > 0 && <div className="text-right mb-16">
-                    <Card>
-                        <Button type="primary" size="small" className="px-16 mr-8" onClick={() => {
-                            history.push("/admin/course/new")
-                        }}>Create Course</Button>
-                    </Card>
-                </div>}
-                {showForm && <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
+                <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
                         <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
-                            <div className="text-center my-16 pb-16">
-                                <Title level={1} className="normalbold text-primary">Get Started with the course</Title>
-                                <p className="f-14 text-secondary">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
-                            </div>
                             <Row>
                                 <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
                                     <div className="create-course">
                                         <div className="custom-fields">
-                                            <label className="text-secondary d-block mb-4 semibold">Title</label>
+                                            <label className="text-secondary d-block mb-4 semibold required">Title</label>
                                             <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
                                                 <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
                                         </div>
                                         <div className="">
-                                            <label className="text-secondary d-block mb-4 semibold">Description</label>
+                                            <label className="text-secondary d-block mb-4 semibold required">Description</label>
                                             <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>
                                                 <TextArea className="custom-fields" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
@@ -732,7 +605,7 @@ const AdminCourses = ({ profile, history }) => {
                                         </div>
                                         <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
-                                                <label className="text-secondary d-block mb-4 semibold">Category</label>
+                                                <label className="text-secondary d-block mb-4 semibold required">Category</label>
                                                 <Form.Item className="lh-24 custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select
                                                         placeholder="Choose a Category" className="text-left"
@@ -747,7 +620,7 @@ const AdminCourses = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
-                                                <label className="text-secondary d-block mb-4 semibold">Author Name</label>
+                                                <label className="text-secondary d-block mb-4 semibold  required">Author Name</label>
                                                 <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
                                                     <Select
                                                         defaultValue="Choose Author" placeholder="Choose Author" className="text-left"
@@ -761,7 +634,7 @@ const AdminCourses = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
-                                                <label className="text-secondary d-block mb-4 semibold">Type</label>
+                                                <label className="text-secondary d-block mb-4 semibold  required">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
                                                         defaultValue="Content" className="text-left"
@@ -773,14 +646,14 @@ const AdminCourses = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4">Date</label>
+                                                <label className="text-secondary d-block mb-4  required">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
                                             }
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4 semibold">Link Type</label>
+                                                <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
                                                     <Select
                                                         defaultValue="Choose Link Type" placeholder="Choose Link Type" className="text-left"
@@ -794,7 +667,7 @@ const AdminCourses = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>}
                                             {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
-                                                <label className="text-secondary d-block mb-4 semibold">Link</label>
+                                                <label className="text-secondary d-block mb-4 semibold required ">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
                                                 </Form.Item>
@@ -879,10 +752,10 @@ const AdminCourses = ({ profile, history }) => {
                                                             setIsCourseChanged(true);
                                                         }}
                                                         onChange={(info) => {
+                                                            const { status } = info.file;
                                                             if (status == "uploading") {
                                                                 setFileVideoUploading(true);
                                                             }
-                                                            const { status } = info.file;
                                                             if (status === 'done') {
                                                                 setIsCourseChanged(true);
                                                                 setFileVideoUploading(false);
@@ -952,7 +825,7 @@ const AdminCourses = ({ profile, history }) => {
                                                     <p className="ant-upload-hint">
                                                         Support for a single or bulk upload. Strictly prohibit
                                                         from uploading company data or other band files (doc, PPT,
-                                                        PDF, xls).</p>
+                                    PDF, xls).</p>
                                                 </Dragger>
                                             </Col>
                                         </Row>
@@ -1105,7 +978,7 @@ const AdminCourses = ({ profile, history }) => {
                             </Row>
                         </Col>
                     </Row>
-                </Form>}
+                </Form>
                 <Modal title="Add Topic" visible={isModalVisible} onCancel={handleCancel} centered
                     footer={<>
                         <Button disabled={fileUploading || ((topicObj.VideoSource == "Upload" && topicObj.TopicType == "Video") ? !isVideoLoded : (topicObj.TopicType == "Document" ? topicObj.lstDocuments?.length === 0 : false))} type="primary" form="myForm" key="submit" htmlType="submit">Save</Button>
@@ -1115,16 +988,15 @@ const AdminCourses = ({ profile, history }) => {
 
                 >
                     <Form id="myForm" onFinishFailed={() => { }} onFinish={() => topicSave()} initialValues={topicObj} form={topicForm}>
-                        <div ref={formRef}>
-                            {isError && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
+                        <div>
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Title</label>
+                                <label className="text-secondary d-block mb-4  required">Title</label>
                                 <Form.Item name="Title" rules={[{ required: true, message: "Title  required" }]} >
                                     <Input onChange={(value) => handleChange('Title', value, true)} maxLength={150} />
                                 </Form.Item>
                             </div>
                             <div className="description-space">
-                                <label className="text-secondary d-block mb-4">Description</label>
+                                <label className="text-secondary d-block mb-4  required">Description</label>
                                 <Form.Item name="Description" rules={[{ required: true, message: "Description  required" }]} >
                                     <TextArea onResize
                                         autoSize={{ minRows: 3, maxRows: 20 }}
@@ -1134,7 +1006,7 @@ const AdminCourses = ({ profile, history }) => {
                                 </Form.Item>
                             </div>
                             <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Content Type</label>
+                                <label className="text-secondary d-block mb-4  required">Content Type</label>
                                 <Form.Item name="TopicType" rules={[{ required: true, message: "Content Type  required" }]} >
                                     <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}>
                                         <Option value="Video">Video</Option>
@@ -1143,7 +1015,7 @@ const AdminCourses = ({ profile, history }) => {
                                 </Form.Item>
                             </div>
                             {topicObj.TopicType == "Video" && <div className="custom-fields">
-                                <label className="text-secondary d-block mb-4">Video Source</label>
+                                <label className="text-secondary d-block mb-4  required">Video Source</label>
                                 <Form.Item name="VideoSource">
                                     <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
                                         <Option value="Upload">Upload</Option>
@@ -1161,7 +1033,6 @@ const AdminCourses = ({ profile, history }) => {
                             </Dragger>
 
                             }
-                            {isError && topicObj.TopicType == "Video" && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             {fileUploading && topicObj.TopicType == "Video" && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.TopicType == "Video" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 mt-8 upload-preview">
@@ -1187,12 +1058,14 @@ const AdminCourses = ({ profile, history }) => {
                                 </div>
                             ))}
                             {topicObj.VideoSource == "YouTube" && topicObj.TopicType == "Video" && <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4  required">YouTube URL</label>
                                 <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="YouTube URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
                                 </Form.Item>
                             </div>
                             }
                             {topicObj.VideoSource == "Vimeo" && topicObj.TopicType == "Video" && <div className="custom-fields">
+                                <label className="text-secondary d-block mb-4  required">Vimeo URL</label>
                                 <Form.Item name="VideoUrl" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]} >
                                     <Input placeholder="Vimeo URL" onChange={(value) => handleChange('VideoUrl', value, true)} />
                                 </Form.Item>
@@ -1208,7 +1081,6 @@ const AdminCourses = ({ profile, history }) => {
                             </Dragger>
                             }
                             {fileUploading && topicObj.TopicType == "Document" && <Loader className="loader-top-middle" />}
-                            {isError && topicObj.TopicType == "Document" && <div class="ant-form-item-explain ant-form-item-explain-error"><div role="alert">{errorMessage}</div></div>}
                             {topicObj.TopicType == "Document" &&
                                 <div className="docs mb-16 pl-0 mt-8">
                                     <List
@@ -1243,15 +1115,9 @@ const AdminCourses = ({ profile, history }) => {
                         </div>
                     </Form>
                 </Modal>
-
-                {!showForm && <Courses onCourseEdit={(id, ispublish) => onCourseEditObj(id, ispublish)} onRef={courses => setCoursesObj(courses)} onCourseDelete={() => fetchCountsCour()} />}
-
-
             </Col>
 
-        </Row>
-    </>)
+        </Row></>)
 
 }
-
-export default connectStateProps(withRouter(AdminCourses));
+export default connectStateProps(withRouter(CourseComponent));

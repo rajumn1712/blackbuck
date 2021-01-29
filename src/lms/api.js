@@ -42,7 +42,7 @@ const saveCourseTopic = (obj)=>{
  return apiClient.post(LMS_REMOTE + 'saveCourseTopicViews',obj)
 }
 const getCourseMembersList = (course_id,pageNo,pageSize)=>{
-  return apiClient.get(LMS_REMOTE + `getMembersList/${course_id}/${pageSize}/${pageNo}`)
+  return apiClient.get(LMS_REMOTE + `getMembersList/${course_id}/${pageSize}/${pageNo * pageSize - pageSize}`)
 }
 const getCertifiedFlags = (course_id,user_id)=>{
   return apiClient.get(LMS_REMOTE + `getAdminCertified/${course_id}/${user_id}`)
@@ -53,8 +53,8 @@ const getUserWatchedVideos = (course_id,user_id)=>{
 const userRecentWatchedCourse = (user_id)=>{
   return apiClient.get(LMS_REMOTE + `userRecentWatchedCourse/${user_id}`)
 }
-const getRecommendedVideos = (course_id)=>{
-  return apiClient.get(LMS_REMOTE + `getRecommendedVideos/${course_id}`)
+const getRecommendedVideos = (course_id,pageNo,pageSize)=>{
+  return apiClient.get(LMS_REMOTE + `getRecommendedVideos/${course_id}/${pageSize}/${pageNo * pageSize - pageSize}`)
 }
 export {
   fetchUserCourses,

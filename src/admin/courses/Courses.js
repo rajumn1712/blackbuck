@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import defaultguser from "../../styles/images/default-cover.png";
 import SideAction from '../../shared/components/postings/Actions/SideActions';
+import Loader from "../../common/loader";
 const { Meta } = Card;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -126,8 +127,9 @@ class Courses extends Component {
         });
     }
     render() {
-        const { lstCourses } = this.state;
+        const { lstCourses, loading } = this.state;
         return <>
+            {loading && <Loader className="loader-middle" />}
             <div className="group-page">
                 <Title className="f-18 text-primary semibold">Courses</Title>
                 {/* <div className="custom-card">
@@ -168,7 +170,7 @@ class Courses extends Component {
                                         ]}
                                     >
                                         <Meta
-                                            title={<a className="post-title" onClick={() => this.props.onCourseEdit(course.Id, course.IsPublish)}>{course.CourseName}</a>}
+                                            title={<a className="post-title" onClick={() => { this.props.history.push("/admin/course/" + course.Id) }}>{course.CourseName}</a>}
                                             description={
                                                 <div className="addon-info">
                                                     {course.Members && <span className="mr-8 f-14">{course.Members} Members</span>}
@@ -180,7 +182,19 @@ class Courses extends Component {
                             }
                             {
                                 lstCourses.length == 0 &&
-                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>
+                                <div className="custom-card mt-16"><Card className="start-course">
+                                    <Row align="middle" className="p-16">
+                                        <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
+                                            <Title level={3} className="normalbold text-white">Get Started with the course</Title>
+                                            <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
+                                        </Col>
+                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
+                                            <Button type="dashed" onClick={() => {
+                                                this.props.history.push("/admin/course/new")
+                                            }}>Create Course</Button>
+                                        </Col>
+                                    </Row>
+                                </Card></div>
 
                             }
                         </Row>
