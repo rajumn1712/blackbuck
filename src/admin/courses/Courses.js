@@ -174,11 +174,13 @@ class Courses extends Component {
                             <Card className="start-course">
                                 <Row align="middle" className="p-16">
                                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
-                                        <Title level={3} className="normalbold text-white">Get Started with the course</Title>
+                                        {lstCourses.length == 0 && <Title level={3} className="normalbold text-white">Get Started with the course</Title>}
                                         <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
                                     </Col>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                        <Button size="small" className="px-16 mr-8">Create Course</Button>
+                                        <Button size="small" className="px-16 mr-8" onClick={() => {
+                                            this.props.history.push("/admin/course/new")
+                                        }}>Create Course</Button>
                                     </Col>
                                 </Row>
                             </Card>
@@ -200,7 +202,7 @@ class Courses extends Component {
                                                     {course.Members && <span className="mr-8 f-14">{course.Members} Members</span>}
                                                     {course.Date && <div className="f-14 text-primary my-4">{moment(course.Date).format('ll')}</div>}
                                                 </div>} />
-                                                
+
                                         <div className="card-options-right">
                                             <a className="ant-dropdown-link ml-auto " actionsList={ownerActions}>
                                                 <span className="icons more mr-0"></span>
@@ -209,24 +211,6 @@ class Courses extends Component {
                                     </Card>
                                 </Col>
                             })
-                            }
-                            {
-                                lstCourses.length == 0 &&
-                                <div className="custom-card mt-16"><Card className="start-course">
-                                    <Row align="middle" className="p-16">
-                                        <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
-                                            <Title level={3} className="normalbold text-white">Get Started with the course</Title>
-                                            <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
-                                        </Col>
-                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                            <Button type="dashed" onClick={() => {
-                                                this.props.history.push("/admin/course/new")
-                                            }}>Create Course</Button>
-                                        </Col>
-                                    </Row>
-
-                                </Card></div>
-
                             }
                         </Row>
                     </div>
