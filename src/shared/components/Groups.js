@@ -227,7 +227,7 @@ class Groups extends Component {
                             <span>
                               {group.members ? group.members : ""}
                             </span>{" "}
-                          Members
+                            {group.members > 1 ? "Members" : "Member"}
                           </span>
                         )}
                         {" "}|{" "}
@@ -293,7 +293,7 @@ class Groups extends Component {
                         <div className="text-overflow">
                           <span>
                             <span className="mr-4">{item.members}</span>
-                          Members
+                            {item.members > 1 ? "Members" : "Member"}
                         </span>{" "}
                         |{" "}
                           <span>
