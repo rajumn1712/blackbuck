@@ -298,7 +298,7 @@
 .left-menu.camera-icon {
   background-position: -378px -254px;
 }
-.icons.edit {
+.icons.edit{
   background-position: -61px -198px;
 }
 .icons.add {
@@ -310,7 +310,7 @@
 .left-menu.noti-icon {
   background-position: -124px -200px;
 }
-.left-menu.savedpost-icon {
+.left-menu.savedpost-icon, .post-icons.save-job {
   background-position: -350px -200px;
 }
 .left-menu.interest {
@@ -2142,4 +2142,22 @@ textarea {
     font-family: SimSun, sans-serif;
     line-height: 1;
     content: '*';
+}
+
+/* Careers CSS */
+.scholar-badge{ position: absolute; width: 36px; height: 36px; left: 0; top: 10px; background: var(--white); box-sizing: border-box; border-radius: 0 50% 50% 0;}
+.job-req li{ margin-right: 50px; display: flex; align-items: center; margin-bottom: 16px;}
+.job-req li:last-child{margin-right: 0; }
+.job-req li .post-icons{width: 26px; height: 26px; margin-right: 10px;}
+.job-req li .post-icons.job{ background-position: -89px -7px; }
+.job-req li .post-icons.role{ background-position: -290px -7px; }
+.job-req li .post-icons.location{ background-position: -326px -7px; }
+.job-ldate{ background: var(--bghover); border-radius: 6px; display: inline-block;}
+.post-icons.view-job {background-position: -5px -200px;}
+.post-icons.apply-job {background-position: -64px -200px;}
+
+@media (max-width: 767px){
+  .job-req{flex-wrap: wrap;}
+  .job-card .ant-card-actions .post-icons{display: none;}
+  .job-card .ant-card-actions li:not(:last-child) a {border-right: 1px solid var(--line);}
 }
