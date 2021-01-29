@@ -263,6 +263,12 @@ const getJobById = (id)=>{
 const jobpostingsCount = ()=>{
   return apiClient.get(ADMIN_API + 'getJobPostingCount');
 }
+const getJobApplications = (take,skip)=>{
+  return apiClient.get(ADMIN_API + `getJobApplications/${take}/${skip}`)
+}
+const jobApplicationCount = ()=>{
+  return apiClient.get(ADMIN_API + 'getJobApplicationCount');
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -339,5 +345,7 @@ export {
   saveJobPost,
   getJobPostings,
   getJobById,
-  jobpostingsCount
+  jobpostingsCount,
+  getJobApplications,
+  jobApplicationCount
 };

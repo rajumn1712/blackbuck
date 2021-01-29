@@ -190,7 +190,13 @@ const PostingJob = ({profile,history}) => {
                         name="Years"
                         rules={[{ required: true, message: "Years  required" }]}
                       >
-                        <Select
+                          <Input
+                          placeholder="Years"
+                          onChange={(value) => handleChange('Years', value)}
+                          maxLength={150}
+                          autoComplete="off"
+                        />
+                        {/* <Select
                           defaultValue=""
                           className="text-left"
                           onChange={(value) => handleChange('Years', value)}
@@ -199,7 +205,7 @@ const PostingJob = ({profile,history}) => {
                           {yearsmonths.map((yearfield,indx)=>{
                               return <Option key={indx} value={yearfield}>{yearfield}</Option>
                           })}
-                        </Select>
+                        </Select> */}
                       </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
