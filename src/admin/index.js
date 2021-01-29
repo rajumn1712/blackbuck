@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
-import { Row, Col, Menu, Card, Avatar } from 'antd';
+import { Link, Route } from 'react-router-dom';
+import { Menu, Card } from 'antd';
 import Groups from './groups';
 import AdminCourses from './courses';
 import CourseComponent from './courses/CourseComponent';
@@ -9,9 +9,10 @@ import Members from './members';
 import TestSubmissions from './testsubmissions';
 import AccessDenied from '../components/accessdenined';
 import { connect } from 'react-redux';
-import defaultUser from "../styles/images/defaultuser.jpg";
-import coverphoto from "../styles/images/default-cover.png";
 import '../../src/profile/profilestyle.css';
+import JobPostings from './careers/jobpostings';
+import JobApplications from './careers/jobapplications';
+import PostingJob from './careers/jobpost';
 
 const { Meta } = Card;
 const { SubMenu } = Menu;
@@ -40,8 +41,8 @@ class Admin extends Component {
                             </Menu.Item>
                         </SubMenu>
                         <SubMenu key="sub4" icon={<span className="left-menu Careers mr-12" />} title="Careers">
-                            <Menu.Item key="1"><Link to="/commingsoon">Job Applications</Link></Menu.Item>
-                            <Menu.Item key="2"><Link to="/commingsoon">Jobs</Link></Menu.Item>
+                            <Menu.Item key="1"><Link to="/admin/jobapplications">Job Applications</Link></Menu.Item>
+                            <Menu.Item key="2"><Link to="/admin/jobpostings">Jobs</Link></Menu.Item>
                         </SubMenu>
                     </Menu>
                 </div>
@@ -51,6 +52,9 @@ class Admin extends Component {
                     <Route path="/admin/groups" component={(this.props?.profile?.Category == "Root") ? Groups : AccessDenied} />
                     <Route path="/admin/testsubmissions" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? TestSubmissions : AccessDenied} />
                     <Route path="/admin/course/:id" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? CourseComponent : AccessDenied} />
+                    <Route path="/admin/jobapplications" component={JobApplications}/>
+                    <Route path="/admin/jobpostings" component={JobPostings}/>
+                    <Route path="/admin/postingjob/:id" component={PostingJob}/>
                 </div>
             </div>
         </>

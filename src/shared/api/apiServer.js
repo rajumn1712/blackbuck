@@ -251,6 +251,18 @@ const joinGroupNew = (id, obj) => {
 const getPublishedObject = (courseId) => {
   return apiClient.get(ADMIN_API + `getPostsByCoureId/${courseId}`,);
 }
+const saveJobPost = (obj)=>{
+  return apiClient.post(ADMIN_API + 'saveJobPosting',obj);
+}
+const getJobPostings = (user_id,take,skip)=>{
+  return apiClient.get(ADMIN_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
+}
+const getJobById = (id)=>{
+  return apiClient.get(ADMIN_API + `getJobPostById/${id}`)
+}
+const jobpostingsCount = ()=>{
+  return apiClient.get(ADMIN_API + 'getJobPostingCount');
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -323,5 +335,9 @@ export {
   getAllSystemGroups,
   groupBlock,
   joinGroupNew,
-  getPublishedObject
+  getPublishedObject,
+  saveJobPost,
+  getJobPostings,
+  getJobById,
+  jobpostingsCount
 };
