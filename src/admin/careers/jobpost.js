@@ -8,6 +8,7 @@ import notify from "../../shared/components/notification";
 import Loader from "../../common/loader";
 import connectStateProps from "../../shared/stateConnect";
 import { useParams, withRouter } from "react-router-dom/cjs/react-router-dom.min";
+import { RegionDropdown } from "react-country-region-selector";
 const {Option} = Select;
 
 const PostingJob = ({profile,history}) => {
@@ -351,10 +352,13 @@ const PostingJob = ({profile,history}) => {
                         name="State"
                         rules={[{ required: true, message: "State  required" }]}
                       >
-                    <Input placeholder="State"
-                    onChange={(value) => handleChange('State', value)}
-                          maxLength={150}
-                          autoComplete="off"/>
+                          <RegionDropdown
+                          showDefaultOption={true}
+                          defaultOptionLabel="Select State"
+                          blankOptionLabel="Select State"
+                          onChange={(value) => handleChange("State", value)}
+                          country='India'
+                        />
                       </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
