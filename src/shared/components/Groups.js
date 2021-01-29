@@ -280,7 +280,12 @@ class Groups extends Component {
                     title={
                       <div className="d-flex align-items-center mr-16">
                         <span className="overflow-text" title={item.name}>
-                          {item.name}
+                          {<Link
+                            to={"/groupview/" + item.id}
+                            className="post-title"
+                          >
+                            {item.name}
+                          </Link>}
                           {item.type == "Private" && (
                             <span className="icons-small lock-icon ml-4" />
                           )}

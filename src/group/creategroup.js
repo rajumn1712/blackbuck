@@ -53,7 +53,7 @@ class CreateGroup extends Component {
         })
     }
     state = {
-        GroupTypeLu: ["IT Group", "science group ", "Learning Group"],
+        GroupTypeLu: ["IT Group", "Science Group ", "Learning Group"],
         TypeLu: [
             {
                 Name: "Public",
@@ -246,7 +246,7 @@ class CreateGroup extends Component {
                 <List.Item.Meta className="privacy-dropdown sample-check"
                     avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="select-image" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
-                    description={item.Description ? <div className="f-12">{item.Description}</div> : ''}
+                    description={item.Description ? <div className="f-12" style={{wordBreak: 'break-word',whiteSpace: 'pre-wrap'}}>{item.Description}</div> : ''}
                 />
             </List.Item>
         </div>

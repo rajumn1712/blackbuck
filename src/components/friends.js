@@ -195,26 +195,27 @@ class Friends extends Component {
                   }
                 />
                 
-                 <Dropdown overlay={<Menu className="custom-dropdown">
-                        <Menu.Item key="0" onClick={async () => {
-                          const unRes = await unFriend(this.props.profile?.Id, item.UserId);
-                          if (unRes.ok) {
-                            let frnds = [...this.state.FriendsList];
-                            frnds = frnds.filter(frnd => frnd.UserId !== item.UserId);
-                            this.props.profile.Friends = this.props.profile.Friends ? (this.props.profile.Friends > 0 ? (this.props.profile.Friends - 1) : 0) : 0;
-                            this.props.updateProfile(this.props.profile);
-                            this.setState({ ...this.state, FriendsList: frnds })
-                          } else {
-                            notify({ type: "error", message: "Error", description: "Somethings went wrong. Please try again later" })
-                          }
-                        }}>
-                          <a style={{ cursor: "pointer" }}>Un-friend</a>
-                        </Menu.Item>
-                      </Menu>} trigger={['click']} placement="bottomRight">
-                        <a className="ant-dropdown-link ml-auto" onClick={e => e.preventDefault()}>
-                          <span className="icons more mr-0"></span>
-                        </a>
-                      </Dropdown>
+                {!this.props.userId && <Dropdown overlay={<Menu className="custom-dropdown">
+                  <Menu.Item key="0" onClick={async () => {
+                    const unRes = await unFriend(this.props.profile?.Id, item.UserId);
+                    if (unRes.ok) {
+                      let frnds = [...this.state.FriendsList];
+                      frnds = frnds.filter(frnd => frnd.UserId !== item.UserId);
+                      this.props.profile.Friends = this.props.profile.Friends ? (this.props.profile.Friends > 0 ? (this.props.profile.Friends - 1) : 0) : 0;
+                      this.props.updateProfile(this.props.profile);
+                      this.setState({ ...this.state, FriendsList: frnds })
+                    } else {
+                      notify({ type: "error", message: "Error", description: "Somethings went wrong. Please try again later" })
+                    }
+                  }}>
+                    <a style={{ cursor: "pointer" }}>Un-friend</a>
+                  </Menu.Item>
+                </Menu>} trigger={['click']} placement="bottomRight">
+                  <a className="ant-dropdown-link ml-auto" onClick={e => e.preventDefault()}>
+                    <span className="icons more mr-0"></span>
+                  </a>
+                </Dropdown>
+                }
               </List.Item>
             )}
           />
