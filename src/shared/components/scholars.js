@@ -8,136 +8,127 @@ import defaultUser from "../../styles/images/defaultuser.jpg";
 import user from "../../styles/images/user.jpg";
 import userimage from "../../styles/images/user_image.jpg";
 import scholarBadge from "../../styles/images/premiumbadge.svg";
+import { getScholorUsers } from '../../shared/api/apiServer';
+import notify from '../../shared/components/notification';
+import Loader from "../../common/loader";
+import { connect } from "react-redux";
 
 const { Title, Paragraph } = Typography;
 class BBScholars extends Component {
+  carouselRef;
+  state = {
+    allScholors: [],
+    isViewAllPage: window.location.href.indexOf("scholors") > -1,
+    loading: true
+  }
+  componentDidMount() {
+    this.getScholors()
+  }
+  getScholors = async () => {
+    let { allScholors, loading } = this.state;
+    const scholorResponse = await getScholorUsers((window.location.href.indexOf("scholors") > -1 ? 100 : 10), 0);
+    if (scholorResponse.ok) {
+      allScholors = scholorResponse.data;
+      loading = false;
+      this.setState({ ...this.state, allScholors, loading });
+    } else {
+      loading = false;
+      this.setState({ ...this.state, allScholors, loading });
+      notify({
+        description: "Something went wrong'",
+        message: "Error",
+        type: "error",
+      });
+    }
+  }
   render() {
+    const { allScholors } = this.state;
+    if (!allScholors || allScholors?.length === 0) { return null; }
+    if (this.state.isViewAllPage) {
+      return (
+        <>
+          <Row gutter={8} >
+            {allScholors.map((scholor, index) => <Col lg={8}>
+              <div className="frnds-list-item">
+                <div className="frnds-img">
+                  <div className="scholar-badge p-4">
+                    {scholor.IsScholor && <img src={scholarBadge} />}
+                  </div>
+                  <Link to="">
+                    <img src={scholor.Image || defaultUser} width="100%" height="100%" />
+                  </Link>
+                </div>
+                <div style={{ padding: 16 }}>
+                  <Paragraph className="frnd-name text-overflow c-default">
+                    {scholor.Firstname}
+                  </Paragraph>
+                  <div className="text-center mt-16">
+                    <Button
+                      type="default"
+                      className="addfrnd semibold"
+                    >
+                      <Link to={scholor.UserId === this.props?.profile.Id ? "/profile/IsProfileTab"
+                        : "/profileview/" + scholor.UserId}>  View Profile</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Col>)}
+          </Row>
+          {this.state.isViewAllPage && this.state.loading && <Loader className="loader-top-middle" />}
+        </>
+      )
+    }
     return (
-      <>
+      <div>
         <div className="friends-thead px-4">
           <Title level={5} style={{ fontWeight: 500 }}>
             Blackbuck Scholars
           </Title>
           <Link
-            to="/friendsuggestions"
+            to="/scholors"
             className="link-color d-flex align-items-center"
           >
             View all
           </Link>
         </div>
-            <div className="friends">
-              <Link
-                className="more-frnd-btn left"
-                onClick={() => {
-                  this.carouselRef.prev();
-                }}
-              >
-                <span className="icon left-arrow mr-0"></span>
-              </Link>
-              <Link
-                className="more-frnd-btn"
-                onClick={() => {
-                  this.carouselRef.next();
-                }}
-              >
-                <span className="icon right-arrow mr-0"></span>
-              </Link>
-              <OwlCarousel items={3} autoWidth={true}>
-                <div className="frnds-list-item">
-                  <div className="frnds-img">
-                    <div className="scholar-badge p-4">
-                      <img src={scholarBadge} />
-                    </div>
-                    <Link to="">
-                      <img src={defaultUser} width="100%" height="100%" />
-                    </Link>
-                    <a
-                      className="removefrnd-btn"
-                      onClick={() => console.log("Removed")}
-                    ></a>
+        <Row gutter={8}>
+          <div className="friends">
+            {(allScholors?.length > 4) && <><Link className="more-frnd-btn left" onClick={() => { this.carouselRef.prev() }}><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link></>}
+            <OwlCarousel items={3} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${allScholors}`}>
+              {allScholors.map((scholor, index) => <div className="frnds-list-item">
+                <div className="frnds-img">
+                  <div className="scholar-badge p-4">
+                    {scholor.IsScholor && <img src={scholarBadge} />}
                   </div>
-                  <div style={{ padding: 16 }}>
-                    <Paragraph className="frnd-name text-overflow c-default">
-                        John Doe
-                    </Paragraph>
-                    <div className="text-center mt-16">
-                      <Button
-                        type="default"
-                        className="addfrnd semibold"
-                        onClick={() => console.log("Profile")}
-                      >
-                        View Profile
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="frnds-list-item">
-                  <div className="frnds-img">
-                    <div className="scholar-badge p-4">
-                      <img src={scholarBadge} />
-                    </div>
-                    <Link to="">
-                      <img src={user} width="100%" height="100%" />
-                    </Link>
-                    <a
-                      className="removefrnd-btn"
-                      onClick={() => console.log("Removed")}
-                    ></a>
-                  </div>
-                  <div style={{ padding: 16 }}>
-                    <Paragraph className="frnd-name text-overflow c-default">
-                        Sherlyn Chopra
-                    </Paragraph>
-                    <div className="text-center mt-16">
-                      <Button
-                        type="default"
-                        className="addfrnd semibold"
-                        onClick={() => console.log("Profile")}
-                      >
-                        View Profile
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="frnds-list-item">
-                  <div className="frnds-img">
-                    <div className="scholar-badge p-4">
-                      <img src={scholarBadge} />
-                    </div>
-                    <Link to="">
-                      <img src={userimage} width="100%" height="100%" />
-                    </Link>
-                    <a
-                      className="removefrnd-btn"
-                      onClick={() => console.log("Removed")}
-                    ></a>
-                  </div>
-                  <div style={{ padding: 16 }}>
-                    <Paragraph className="frnd-name text-overflow c-default">
-                        William Smith
-                    </Paragraph>
-                    <div className="text-center mt-16">
-                      <Button
-                        type="default"
-                        className="addfrnd semibold"
-                        onClick={() => console.log("Profile")}
-                      >
-                        View Profile
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="frnds-list-item viewall-item">
-                  <Link to="/friendsuggestions">
-                    <Button type="default" className="addfrnd semibold">
-                      View all
-                    </Button>
+                  <Link to="">
+                    <img src={scholor.Image || defaultUser} width="100%" height="100%" />
                   </Link>
                 </div>
-              </OwlCarousel>
-            </div>
-      </>
-    );
+                <div style={{ padding: 16 }}>
+                  <Paragraph className="frnd-name text-overflow c-default">
+                    {scholor.Firstname}
+                  </Paragraph>
+                  <div className="text-center mt-16">
+                    <Button
+                      type="default"
+                      className="addfrnd semibold"
+                    >
+                      <Link to={scholor.UserId === this.props?.profile.Id ? "/profile/IsProfileTab"
+                        : "/profileview/" + scholor.UserId}>  View Profile</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>)}
+            </OwlCarousel>
+          </div>
+        </Row>
+      </div>
+    )
   }
 }
-export default BBScholars;
+const mapStateToProps = ({ oidc }) => {
+  return { profile: oidc.profile };
+};
+
+export default connect(mapStateToProps)(BBScholars);
