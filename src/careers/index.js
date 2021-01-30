@@ -61,9 +61,6 @@ class CMSComponent extends Component {
             </div>
             <BBScholars />
             <JobCard />
-            <JobCard />
-            <JobCard />
-            <JobCard />
           </Col>
           <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
             <Affix offsetTop={86}>

@@ -18,6 +18,7 @@ const PostingJob = ({profile,history}) => {
             "EmployerName": "",
             "Type": "Internship",
             "Qualification": "",
+            "Skills":"",
             "Years": "",
             "Months": "",
             "Status": "Active",
@@ -178,6 +179,28 @@ const PostingJob = ({profile,history}) => {
                         <Input
                           placeholder="Qualification"
                           onChange={(value) => handleChange('Qualification', value)}
+                          maxLength={150}
+                          autoComplete="off"
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <label className="text-secondary d-block mb-4 semibold required">
+                        Skills
+                      </label>
+                      <Form.Item
+                        className="custom-fields"
+                        name="Skills"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Skills  required",
+                          },
+                        ]}
+                      >
+                        <Input
+                          placeholder="Skills"
+                          onChange={(value) => handleChange('Skills', value)}
                           maxLength={150}
                           autoComplete="off"
                         />

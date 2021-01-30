@@ -4,7 +4,8 @@ const GROUPS_API = "service/api/groups/";
 const PROFILE_API = "service/api/profile/";
 const TAGS_API = "service/api/posts/";
 const ADMIN_API = "service/api/admin/";
-const LMS_API = "service/api/LMS/"
+const LMS_API = "service/api/LMS/";
+const CAREESRS_API = "service/api/careers/";
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     FRIENDS_API +
@@ -272,6 +273,21 @@ const jobApplicationCount = () => {
 const getScholorUsers = (take, skip) => {
   return apiClient.get(ADMIN_API + `getScholorUsers/${take}/${skip}`);
 }
+const allJobPostings = (take,skip)=>{
+  return apiClient.get(CAREESRS_API + `getAllJobPostings/${take}/${skip}`);
+}
+const saveApplicationJob = (obj)=>{
+  return apiClient.post(CAREESRS_API + 'saveJobApplication',obj);
+}
+const saveUserJobPost = (obj)=>{
+  return apiClient.post(CAREESRS_API + 'savedJobPosts',obj);
+}
+const getSavedJobPost = (user_id,take,skip)=>{
+  return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
+}
+const deleteJobSavedPost = (id)=>{
+  return apiClient.post(CAREESRS_API + `deleteSavedJobPost/${id}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -351,5 +367,10 @@ export {
   jobpostingsCount,
   getJobApplications,
   jobApplicationCount,
-  getScholorUsers
+  getScholorUsers,
+  allJobPostings,
+  saveApplicationJob,
+  saveUserJobPost,
+  getSavedJobPost,
+  deleteJobSavedPost
 };
