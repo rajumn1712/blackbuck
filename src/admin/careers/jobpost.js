@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
+import { Button, Card, Col, DatePicker, Form, Input, Row, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import { uuidv4 } from "../../utils";
@@ -97,7 +97,8 @@ const PostingJob = ({profile,history}) => {
                 xxl={16}
                 className="course-steps"
               >
-                <div className="create-course">
+                <div className="">
+                  <Card>
                   <Row gutter={16}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                       <label className="text-secondary d-block mb-4 semibold required">
@@ -356,11 +357,11 @@ const PostingJob = ({profile,history}) => {
                         Role
                       </label>
                       <Form.Item
-                        className="custom-fields"
+                        className="mb-0"
                         name="Role"
                         rules={[{ required: true, message: "Role  required" }]}
                       >
-                        <TextArea
+                        <TextArea 
                           placeholder="Role"
                           onResize
                           autoSize={{ minRows: 3, maxRows: 30 }}
@@ -370,6 +371,7 @@ const PostingJob = ({profile,history}) => {
                       </Form.Item>
                     </Col>
                   </Row>
+                  </Card>
                 </div>
                 <div className="card-background mt-16">
                     <span className="text-left">

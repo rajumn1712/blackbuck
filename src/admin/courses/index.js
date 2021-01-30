@@ -721,7 +721,7 @@ const AdminCourses = ({ profile, history }) => {
                                             <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
                                                 <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
-                                        </div>
+                                        </div> 
                                         <div className="">
                                             <label className="text-secondary d-block mb-4 semibold">Description</label>
                                             <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>

@@ -100,10 +100,10 @@ const JobPostings = ({profile,history})=>{
     <div className="custom-card">
             <Card className="px-12 pt-12" extra={<div>
                 <Tooltip placement="top" title="Add job">
-                    <Link to="/admin/postingjob/new" className="icons add"></Link>
+                    <Link to="/admin/postingjob/new" className="icon add-icon"></Link>
                 </Tooltip>
                 <Tooltip placement="top" title="Edit job">
-                    <Link className="icons edit" onClick={handleJobById}></Link>
+                    <Link className="icon edit-admin" onClick={handleJobById}></Link>
                 </Tooltip>
 
             </div>}>
