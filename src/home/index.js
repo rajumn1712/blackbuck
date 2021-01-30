@@ -12,6 +12,7 @@ import Postings from '../shared/postings';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import SavedPostsComponent from '../shared/postings/savedPosts';
 import FriendSuggestion from '../shared/components/friendSuggestion';
+import BBScholars from '../shared/components/scholars';
 const PostingsComponent = ({ sharebox, friendsSuggestions, postingsType, ...rest }) => {
     return <Postings sharebox={sharebox} friendsSuggestions={friendsSuggestions} postingsType={postingsType} {...rest} />
 }
@@ -37,6 +38,7 @@ class Home extends Component {
                             <Route path="/newsfeed" render={(props) => { return <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
                             <Route path="/friendsuggestions" component={FriendSuggestion} />
+                            <Route path="/scholors" component={BBScholars} />
                             <Route path="/search/:key/:type" render={(props) => {
                                 return <PostingsComponent sharebox={false} friendsSuggestions={false} postingsType={"search"} {...props} />
                             }} />

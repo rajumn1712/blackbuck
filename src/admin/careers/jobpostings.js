@@ -11,7 +11,7 @@ const columns = [
         title: 'Title',
         dataIndex: 'Title',
         key: 'Title',
-        render: text => <a>{text}</a>,
+        render: (text,record) => <Link to={`/admin/postingjob/${record.JobId}`}>{text}</Link>,
     },
     {
         title: 'Employer Name',
@@ -39,6 +39,7 @@ const columns = [
 const JobPostings = ({profile,history})=>{
 
     const [data, setData] = useState([]);
+    const [loading,setLoading] = useState(false);
     const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -49,13 +50,14 @@ const JobPostings = ({profile,history})=>{
     },[])
 
     const getAllJobPostings = async (page,pageSize)=>{
+        setLoading(true)
         const response = await getJobPostings(profile.Id,pageSize, ((pageSize * page) - pageSize));
         if (response.ok) {
             response.data.forEach((item, index) => {
                 item["key"] = index;
             })
             setData(response.data);
-            setCount(response.data.length);
+            setLoading(false)
         }
     }
 
@@ -88,7 +90,7 @@ const JobPostings = ({profile,history})=>{
 
     const handleJobById = ()=>{
         if(selection.length == 0 || selection.length > 1){
-            notify({ message: "Warning", type: "error", description: "Please select one record only" });
+            notify({ message: "Warning", type: "warning", description: "Please select one record only" });
             return;
         }else{
             history.push(`/admin/postingjob/${selection[0].JobId}`)
@@ -114,6 +116,7 @@ const JobPostings = ({profile,history})=>{
                         selectedRowKeys: selectedRowKeys,
                         onChange: onSelectedRowKeysChange
                     }}
+                    loading={loading}
                     columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
             </Card>
         </div>
