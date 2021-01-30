@@ -273,8 +273,12 @@ const jobApplicationCount = () => {
 const getScholorUsers = (take, skip) => {
   return apiClient.get(ADMIN_API + `getScholorUsers/${take}/${skip}`);
 }
-const allJobPostings = (take,skip)=>{
-  return apiClient.get(CAREESRS_API + `getAllJobPostings/${take}/${skip}`);
+const allJobPostings = (take,skip,type,state,city)=>{
+  if(type==='jobsearch'){
+    return apiClient.get(CAREESRS_API + `getSearchJobPostings/${state ? state : null}/${city ? city : null}/${take}/${skip}`)
+  }else{
+    return apiClient.get(CAREESRS_API + `getAllJobPostings/${take}/${skip}`);
+  }
 }
 const saveApplicationJob = (obj)=>{
   return apiClient.post(CAREESRS_API + 'saveJobApplication',obj);

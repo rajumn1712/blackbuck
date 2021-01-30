@@ -6,15 +6,23 @@ import Postings from "../shared/postings";
 import BBScholars from "../shared/components/scholars";
 import Tags from "../components/ProfileComponents/tags";
 import { LikeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { allJobPostings, setSystemAdmin } from "../shared/api/apiServer";
+import { Link, withRouter } from "react-router-dom";
+import {
+  allJobPostings,
+  profileDetail,
+  saveUserJobPost,
+  setSystemAdmin,
+} from "../shared/api/apiServer";
 import Loader from "../common/loader";
 import Moment from "react-moment";
+import { uuidv4 } from "../utils";
+import notify from "../shared/components/notification";
+import connectStateProps from "../shared/stateConnect";
 
 const { Title, Paragraph } = Typography;
-const JobCard = () => {
+const JobCard = (props) => {
   let page = 1;
-  let pageSize = 5;
+  const pageSize = 5;
   let [allJobPosts, setAllJobPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(true);
@@ -28,14 +36,21 @@ const JobCard = () => {
     getJobPostings(page, pageSize);
   }, []);
 
-  const getJobPostings = async (page, pageSize) => {
+  const getJobPostings = async (pageNo, pagesize) => {
     setLoading(true);
-    const response = await allJobPostings(pageSize, pageSize * page - pageSize);
+    const response = await allJobPostings(
+      pagesize,
+      pagesize * pageNo - pagesize,
+      props.postingsType,
+      props.match?.params?.state,
+      props.match?.params?.city
+    );
     if (response.ok) {
       allJobPosts = allJobPosts.concat(response.data);
       setAllJobPosts([...allJobPosts]);
-      setLoadMore(response.data.length === pageSize);
       setLoading(false);
+      setLoadMore(response.data.length === pageSize);
+      console.log(loadMore);
     }
   };
   const handleScroll = () => {
@@ -58,7 +73,7 @@ const JobCard = () => {
     } else {
     }
   };
-  const loadMoreJobs = e => {
+  const loadMoreJobs = (e) => {
     if (loadMore && !loading) {
       page += 1;
       setLoading(true);
@@ -66,10 +81,28 @@ const JobCard = () => {
     }
   };
 
-  function preventDefault(e) {
-    e.preventDefault();
-    console.log("Clicked! But prevent default.");
-  }
+  const saveJobPost = async (job) => {
+    const object = {
+      Id: uuidv4(),
+      JobId: job.JobId,
+      UserId: props.profile.Id,
+      CreateDate: new Date(),
+    };
+    const response = await saveUserJobPost(object);
+    if (response.ok) {
+      notify({
+        message: "Job",
+        type: "success",
+        description: "Job saved for later",
+      });
+    } else {
+      notify({
+        message: "Job",
+        type: "error",
+        description: "Something went wrong",
+      });
+    }
+  };
 
   const renderJobPost = (jobpost, indx) => {
     return (
@@ -97,8 +130,8 @@ const JobCard = () => {
           <Paragraph className="f-12 text-secondary">
             <Moment fromNow>{jobpost.CreateDate}</Moment>
           </Paragraph>
-          <Paragraph className="f-12 mb-4" style={{color: 'var(--primary)'}}>
-            Ziraff Technologies Pvt Ltd
+          <Paragraph className="f-12 mb-8" style={{color: 'var(--primary)'}}>
+            {jobpost.EmployerName}
           </Paragraph>
           <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
             {jobpost.Role}
@@ -182,4 +215,4 @@ const JobCard = () => {
     </div>
   );
 };
-export default JobCard;
+export default connectStateProps(withRouter(JobCard));
