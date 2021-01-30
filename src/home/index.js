@@ -14,6 +14,7 @@ import SavedPostsComponent from '../shared/postings/savedPosts';
 import FriendSuggestion from '../shared/components/friendSuggestion';
 import BBScholars from '../shared/components/scholars';
 import JobCard from '../careers/jobcard';
+import JobDetails from '../careers/jobdetail';
 const PostingsComponent = ({ sharebox, friendsSuggestions, postingsType, ...rest }) => {
     return <Postings sharebox={sharebox} friendsSuggestions={friendsSuggestions} postingsType={postingsType} {...rest} />
 }
@@ -43,9 +44,10 @@ class Home extends Component {
                             <Route path="/search/:key/:type" render={(props) => {
                                 return <PostingsComponent sharebox={false} friendsSuggestions={false} postingsType={"search"} {...props} />
                             }} />
-                            <Route path="to/jobsearch/:state?/:city?" render={(props) => {
+                            <Route path="/jobsearch/:state?/:city?" render={(props) => {
                                 return <JobCard postingsType={"jobsearch"} {...props} />
                             }} />
+                            <Route path="/jobdetail/:jobid" component={JobDetails}/>
                             {/* <Route path="/notifications" component={()=><CommingSoon />}/> */}
                             <Redirect path="" to="/newsfeed" />
                         </Switch>

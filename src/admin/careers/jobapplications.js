@@ -13,12 +13,12 @@ const columns = [
     {
         title: 'Applicant Name',
         dataIndex: 'ApplicantName',
-        key: 'ApplicantName',
+        render:(text,record)=><span>{record.ApplicantDetails.Firstname} {record.ApplicantDetails.Lastname}</span>
     },
     {
         title: 'File Name',
         dataIndex: 'FileName',
-        key: 'FileName',
+        render:(text,record)=><a href={record.Documents.Url}>{record.Documents.File}</a>
     },
     {
         title: 'Skills',

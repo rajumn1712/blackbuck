@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Typography, Statistic, Card, Row, Col, Tag } from "antd";
+import { Button, Typography, Statistic, Card, Row, Col, Tag, Empty } from "antd";
 import Identity from "../components/identity";
 import Ads from "../components/ads";
 import Postings from "../shared/postings";
@@ -18,6 +18,7 @@ import Moment from "react-moment";
 import { uuidv4 } from "../utils";
 import notify from "../shared/components/notification";
 import connectStateProps from "../shared/stateConnect";
+import ApplyModal from "./applyModal";
 
 const { Title, Paragraph } = Typography;
 const JobCard = (props) => {
@@ -27,12 +28,18 @@ const JobCard = (props) => {
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(true);
 
-  // const log = (e)=> {
-  //   console.log(e);
-  // }
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    // window.addEventListener("scroll", handleScroll);
     getJobPostings(page, pageSize);
   }, []);
 
@@ -112,13 +119,13 @@ const JobCard = (props) => {
         bordered={true}
         className="job-card"
         actions={[
-          <a>
+          <a onClick={saveJobPost}>
             <span className="post-icons save-job"></span>Save Job
           </a>,
-          <a>
+          <Link to={`/jobdetail/${jobpost.JobId}`}>
             <span className="post-icons view-job mr-8"></span>View Details
-          </a>,
-          <a>
+          </Link>,
+          <a onClick={showModal}>
             <span className="post-icons apply-job"></span>Apply Now
           </a>
         ]}
@@ -165,54 +172,20 @@ const JobCard = (props) => {
           </span>
         </div>
       </Card>
+      <ApplyModal className="custom-popup"
+          visible={isModalVisible}
+          object={jobpost}
+          cancel={handleCancel}
+          formid="myJobCardFomid"
+        />
       </div>
     );
   };
   return (
     <div onScroll={handleScroll}>
-      {/* <Card className="mb-8">
-          <div className="p-16">
-            <Title className="f-16 semibold text-primary mb-0">
-                UI/UX Designer
-            </Title>
-            <Paragraph className="f-12 text-secondary">Amazon <span >29-01-2021</span></Paragraph>
-            <div className="d-flex justify-content-between">
-              <div className="f-12">
-                <div className="my-8"><span className="icons Careers"></span> 0 - 1 years</div>
-                <div className="my-8"><span className="icons Careers"></span> Not Disclosed</div>
-                <div className="my-8"><span className="icons location"></span> Delhi NCR, New Zealand, Bengaluru, Hyderabad, zirakpur</div>
-              </div>
-              <div className="text-right mt-auto">
-                <Button>Login to apply</Button>
-              </div>
-            </div>           
-          </div>
-        </Card> */}
-      {/* <Card className="mb-8">
-          <div className="p-16">
-            <Title className="f-16 semibold text-primary mb-0">
-              Job description
-            </Title>
-            <Paragraph className="text-secondary">test</Paragraph>
-            <div className="f-14 mb-8">
-            <Title className="f-14 semibold mb-0">Share profile if interested and mention:</Title>
-            <div className="f-12 text-primary">Experience in IOS development:</div>
-            <div className="f-12 text-primary">Experience in Android development:</div>
-            <div className="f-12 text-primary">Experience as Architect:</div>
-            <div className="f-12 text-primary">CTC</div>
-            <div className="f-12 text-primary">ECTC</div>
-            <div className="f-12 text-primary">Preferred location - <span className="f-14">Bangalore/Chennai/Pune:</span></div>
-            </div>
-
-            <Title className="f-14 semibold mb-0"> Key Skills</Title>
-            <div className="tag-name px-0">
-              <Tag closable onClose={log}>Example</Tag>
-              <Tag closable onClose={log}>Test</Tag>
-            </div>
-          </div>
-        </Card> */}
       {allJobPosts?.map((jobpost, indx) => renderJobPost(jobpost, indx))}
       {loading && <Loader className="loader-top-middle" />}
+      {allJobPosts.length == 0 && <Empty/>}
     </div>
   );
 };

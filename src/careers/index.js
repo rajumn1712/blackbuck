@@ -1,12 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Affix, Input, Button, Select, Form } from "antd";
 import Identity from "../components/identity";
 import Ads from "../components/ads";
-import Carers from "./carers";
 import BBScholars from "../shared/components/scholars";
 import Tags from "../components/ProfileComponents/tags";
 import JobCard from "./jobcard";
-import JobDetails from "./jobdetails";
 import { withRouter } from "react-router-dom";
 import { RegionDropdown } from "react-country-region-selector";
 
@@ -54,7 +52,18 @@ const CMSComponent = (props) => {
                   <Form.Item className="custom-fields"
                         name="stateValue"
                         rules={[{ required: true, message: "State  required" }]}>
-                   <Select
+                          <RegionDropdown
+                          showDefaultOption={true}
+                          defaultOptionLabel="Select State"
+                          blankOptionLabel="Select State"
+                          onChange={(value) => {
+                            searchObj.stateValue = value;
+                            setSearchObj({ ...searchObj });
+                          }}
+                          country='India'
+                        />
+                        
+                   {/* <Select
                     showSearch
                     placeholder="Select By State"
                     optionFilterProp="children"
@@ -67,7 +76,7 @@ const CMSComponent = (props) => {
                     <Option value="jack">Jack</Option>
                     <Option value="lucy">Lucy</Option>
                     <Option value="tom">Tom</Option>
-                  </Select>
+                  </Select> */}
                   </Form.Item>
                 </Col>
                 <Col
