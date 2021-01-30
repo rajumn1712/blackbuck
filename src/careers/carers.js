@@ -7,7 +7,25 @@ import { connect } from "react-redux";
 const { Meta } = Card;
 const data = [
     {
-        title: 'Amazon',
+        title: 'Amazon Web Service',
+        jobs: '2 Jobs',
+        logo: '../images/amazon.svg'
+    },
+    {
+        title: 'IBM',
+        jobs: '1 Job'
+    },
+    {
+        title: 'Dr.Reddy\'s',
+        jobs: '15 Jobs'
+    },
+    {
+        title: 'TCS',
+        jobs: '2 Jobs'
+    },
+    {
+        title: 'Wipro',
+        jobs: '2 Jobs'
     },
     
 ]
@@ -15,8 +33,8 @@ class Carers extends Component {
     render() {
         return (
             <div className="custom-card sub-text">
-                <Card title="Carers" bordered={false} extra={<Link to="/commingsoon">View all</Link>} actions={[
-                    <Button type="primary">View more Carers</Button>
+                <Card title="Careers" bordered={false} extra={<Link to="/commingsoon">View all</Link>} actions={[
+                    <Button type="primary">View more Careers</Button>
                 ]} >
                     <List
                         itemLayout="horizontal"
@@ -24,9 +42,9 @@ class Carers extends Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar src={Amazon} />}
+                                    avatar={<Avatar src={Amazon || user} />}
                                     title={<a>{item.title}</a>}
-                                    description="2 Jobs"
+                                    description={item.jobs}
                                 />
                                 <Link
                         className="text-center f-12 list-link"

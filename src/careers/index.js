@@ -14,8 +14,10 @@ class CMSComponent extends Component {
       <div className="main">
         <Row gutter={16}>
           <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
+            <Affix offsetTop={86}>
               <Identity />
               <Tags />
+            </Affix>
           </Col>
           <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
             <div className="share-box px-16 pt-16 text-left">
