@@ -2149,13 +2149,9 @@ textarea {
 .scholar-badge{ position: absolute; width: 36px; height: 36px; left: 0; top: 10px; background: var(--white); box-sizing: border-box; border-radius: 0 50% 50% 0;}
 .job-req li{ margin-right: 50px; display: flex; align-items: center; margin-bottom: 16px;}
 .job-req li:last-child{margin-right: 0; }
-.job-req li .post-icons{width: 26px; height: 26px; margin-right: 10px;}
-.job-req li .post-icons.job{ background-position: -89px -7px; }
-.job-req li .post-icons.role{ background-position: -290px -7px; }
-.job-req li .post-icons.location{ background-position: -326px -7px; }
-.icons.location{ background-position: -326px -7px; }
-.icons.Careers{background-position: -872px -255px;}
-.icons.wallet{background-position: -875px -257px;}
+.job-req .post-icons.job{ background-position: -875px -256px; }
+.job-req .post-icons.role{ background-position: -950px -256px; }
+.job-req .post-icons.location{ background-position: -973px -256px; }
 .icon.add-icon{background-position: -784px -200px;}
 .icon.add-icon:hover{background-position: -784px -226px;}
 .icon.edit-admin{background-position: -810px -200px;}
@@ -2165,7 +2161,7 @@ textarea {
 .job-ldate{ background: var(--bghover); border-radius: 6px; display: inline-block;}
 .post-icons.view-job {background-position: -5px -200px;}
 .post-icons.apply-job {background-position: -64px -200px;}
-
+.job-tag{display: inline-block; margin-right: 8px;}
 @media (max-width: 767px){
   .job-req{flex-wrap: wrap;}
   .job-card .ant-card-actions .post-icons{display: none;}

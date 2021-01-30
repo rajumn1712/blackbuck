@@ -6,6 +6,7 @@ import Carers from "./carers";
 import BBScholars from "../shared/components/scholars";
 import Tags from "../components/ProfileComponents/tags";
 import JobCard from "./jobcard";
+import JobDetails from "./jobdetails";
 
 const { Option } = Select;
 class CMSComponent extends Component {
@@ -20,7 +21,7 @@ class CMSComponent extends Component {
             </Affix>
           </Col>
           <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
-            <div className="share-box px-16 pt-16 text-left">
+            {/* <div className="share-box px-16 pt-16 text-left">
               <Row gutter={16} align="middle">
                 <Col xs={24} sm={12} md={12} lg={10} xl={10} xxl={10} className="custom-fields">
                   <Select
@@ -60,11 +61,12 @@ class CMSComponent extends Component {
               </Row>
             </div>
             <BBScholars />
-            <JobCard />
+            <JobCard /> */}
+            <JobDetails />
           </Col>
           <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
             <Affix offsetTop={86}>
-              <Carers /> 
+              {/* <Carers />  */}
               <Ads />
             </Affix>
           </Col>
