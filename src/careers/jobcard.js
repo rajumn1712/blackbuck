@@ -140,13 +140,14 @@ const JobCard = (props) => {
             <li className="f-14 text-primary">
               <span className="post-icons job mr-16"></span>
               <Paragraph className="f-14 text-primary m-0">
-                {jobpost.Type}
+                {jobpost.Years}
               </Paragraph>
             </li>
             <li className=" f-14 text-primary ">
               <span className="post-icons role mr-16"></span>
               <Paragraph className="f-14 text-primary m-0">
-                {jobpost.Title}
+                5-6LPA
+                {/* {jobpost.SalaryRange} */}
               </Paragraph>
             </li>
             <li className="f-14 text-primary">
