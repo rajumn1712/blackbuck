@@ -6,6 +6,7 @@ import Carers from "./carers";
 import BBScholars from "../shared/components/scholars";
 import Tags from "../components/ProfileComponents/tags";
 import JobCard from "./jobcard";
+import JobDetails from "./jobdetails";
 import { withRouter } from "react-router-dom";
 import { RegionDropdown } from "react-country-region-selector";
 
@@ -49,7 +50,6 @@ const CMSComponent = (props) => {
                   lg={10}
                   xl={10}
                   xxl={10}
-                  className="custom-fields"
                 >
                   <Form.Item className="custom-fields"
                         name="stateValue"
@@ -77,7 +77,6 @@ const CMSComponent = (props) => {
                   lg={10}
                   xl={10}
                   xxl={10}
-                  className="custom-fields"
                 >
                   <Form.Item
                     className="custom-fields"
