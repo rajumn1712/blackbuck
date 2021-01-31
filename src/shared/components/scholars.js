@@ -38,7 +38,7 @@ class BBScholars extends Component {
     if (scholorResponse.ok) {
       allScholors = allScholors.concat(scholorResponse.data);
       loading = false;
-      loadMore = scholorResponse.data.length = allScholors.length;
+      loadMore = scholorResponse.data.length = pageSize ? true : false;
       this.setState({ ...this.state, allScholors, loading });
     } else {
       loading = false;

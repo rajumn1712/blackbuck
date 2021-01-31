@@ -60,7 +60,7 @@ const JobCard = (props) => {
       allJobPosts = allJobPosts.concat(response.data);
       setAllJobPosts([...allJobPosts]);
       setLoading(false);
-      loadMore = response.data.length === pageSize
+      loadMore = response.data.length === pageSize ? true : false;
       setLoadMore(loadMore);
       console.log(loadMore);
     }
