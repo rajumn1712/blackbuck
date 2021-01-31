@@ -29,7 +29,7 @@ class BBScholars extends Component {
     this.getScholors()
   }
   componentWillUnmount() {
-      window.addEventListener("scroll", this.handleScholarsScroll);
+      window.removeEventListener("scroll", this.handleScholarsScroll);
   }
   getScholors = async () => {
     this.setState({...this.state,loading:true})
@@ -39,7 +39,7 @@ class BBScholars extends Component {
       allScholors = allScholors.concat(scholorResponse.data);
       loading = false;
       loadMore = scholorResponse.data.length === pageSize ? true : false;
-      this.setState({ ...this.state, allScholors, loading });
+      this.setState({ ...this.state, allScholors, loading,loadMore });
     } else {
       loading = false;
       this.setState({ ...this.state, allScholors, loading });
@@ -52,24 +52,24 @@ class BBScholars extends Component {
   }
   handleScholarsScroll = () => {
     const windowHeight =
-      "innerHeight" in window
-        ? window.innerHeight
-        : document.documentElement.offsetHeight;
+        "innerHeight" in window
+            ? window.innerHeight
+            : document.documentElement.offsetHeight;
     const body = document.body;
     const html = document.documentElement;
     const docHeight = Math.max(
-      body.scrollHeight,
-      body.offsetHeight,
-      html.clientHeight,
-      html.scrollHeight,
-      html.offsetHeight
+        body.scrollHeight,
+        body.offsetHeight,
+        html.clientHeight,
+        html.scrollHeight,
+        html.offsetHeight
     );
     const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
     if (windowBottom >= docHeight) {
-      this.loadMore();
+        this.loadMore();
     } else {
     }
-  };
+};
   loadMore(e) {
     if (this.state.loadMore && !this.state.loading) {
       let { page } = this.state;
@@ -84,7 +84,7 @@ class BBScholars extends Component {
     if (!allScholors || allScholors?.length === 0) { return null; }
     if (this.state.isViewAllPage) {
       return (
-        <div onScroll={this.handleScholarsScroll}>
+        <div>
           <Row gutter={8} >
             {allScholors.map((scholor, index) => <Col lg={8}>
               <div className="frnds-list-item" key={index}>

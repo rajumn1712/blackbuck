@@ -44,6 +44,7 @@ const JobCard = (props) => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     getJobPostings(page, pageSize);
+    return () => window.removeEventListener("scroll", handleScroll)
   }, []);
 
   const getJobPostings = async (pageNo, pagesize) => {
