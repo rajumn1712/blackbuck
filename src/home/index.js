@@ -47,6 +47,9 @@ class Home extends Component {
                             <Route path="/jobsearch/:state?/:city?" render={(props) => {
                                 return <JobCard postingsType={"jobsearch"} {...props} />
                             }} />
+                            <Route path="/savedjobs" render={(props) => {
+                                return <JobCard postingsType={"savedjobs"} {...props} />
+                            }} />
                             <Route path="/jobdetail/:jobid" component={JobDetails}/>
                             {/* <Route path="/notifications" component={()=><CommingSoon />}/> */}
                             <Redirect path="" to="/newsfeed" />

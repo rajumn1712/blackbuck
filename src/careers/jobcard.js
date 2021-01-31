@@ -24,6 +24,7 @@ const { Title, Paragraph } = Typography;
 const JobCard = (props) => {
   let page = 1;
   const pageSize = 5;
+  let showSavedLink = window.location.href.indexOf('savedjobs') > -1
   let [allJobPosts, setAllJobPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(true);
@@ -46,6 +47,7 @@ const JobCard = (props) => {
   const getJobPostings = async (pageNo, pagesize) => {
     setLoading(true);
     const response = await allJobPostings(
+      props.profile?.Id,
       pagesize,
       pagesize * pageNo - pagesize,
       props.postingsType,
@@ -113,13 +115,12 @@ const JobCard = (props) => {
 
   const renderJobPost = (jobpost, indx) => {
     return (
-      <div className="post-card">
+      <div className="post-card" key={indx}>
       <Card
-        key={indx}
         bordered={true}
         className="job-card"
         actions={[
-          <a onClick={saveJobPost}>
+          !showSavedLink && <a onClick={saveJobPost}>
             <span className="post-icons save-job"></span>Save Job
           </a>,
           <Link to={`/jobdetail/${jobpost.JobId}`}>

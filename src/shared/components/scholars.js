@@ -19,17 +19,30 @@ class BBScholars extends Component {
   state = {
     allScholors: [],
     isViewAllPage: window.location.href.indexOf("scholors") > -1,
-    loading: true
+    loading: false,
+    loadMore:true,
+    page:1,
+    pageSize:4
   }
   componentDidMount() {
+    if(window.location.href.indexOf("scholars") > -1){
+      window.addEventListener("scroll", this.handleScholarsScroll);
+    }
     this.getScholors()
   }
+  componentWillUnmount() {
+    if(window.location.href.indexOf("scholars") > -1){
+      window.addEventListener("scroll", this.handleScholarsScroll);
+    }
+  }
   getScholors = async () => {
-    let { allScholors, loading } = this.state;
-    const scholorResponse = await getScholorUsers((window.location.href.indexOf("scholors") > -1 ? 100 : 10), 0);
+    this.setState({...this.state,loading:true})
+    let { allScholors, loading,page,pageSize,loadMore } = this.state;
+    const scholorResponse = await getScholorUsers(pageSize, page * pageSize - pageSize);
     if (scholorResponse.ok) {
-      allScholors = scholorResponse.data;
+      allScholors = allScholors.concat(scholorResponse.data);
       loading = false;
+      loadMore = scholorResponse.data.length = allScholors.length;
       this.setState({ ...this.state, allScholors, loading });
     } else {
       loading = false;
@@ -41,12 +54,41 @@ class BBScholars extends Component {
       });
     }
   }
+  handleScholarsScroll = () => {
+    const windowHeight =
+      "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+    if (windowBottom >= docHeight) {
+      this.loadMore();
+    } else {
+    }
+  };
+  loadMore(e) {
+    if (this.state.loadMore && !this.state.loading) {
+      let { page } = this.state;
+      page += 1;
+      this.setState({ ...this.state, page, loading: true }, () => {
+        this.getScholors();
+      });
+    }
+  }
   render() {
     const { allScholors } = this.state;
     if (!allScholors || allScholors?.length === 0) { return null; }
     if (this.state.isViewAllPage) {
       return (
-        <>
+        <div onScroll={this.handleScholarsScroll}>
           <Row gutter={8} >
             {allScholors.map((scholor, index) => <Col lg={8}>
               <div className="frnds-list-item">
@@ -76,7 +118,7 @@ class BBScholars extends Component {
             </Col>)}
           </Row>
           {this.state.isViewAllPage && this.state.loading && <Loader className="loader-top-middle" />}
-        </>
+        </div>
       )
     }
     return (

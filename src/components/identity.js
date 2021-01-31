@@ -101,6 +101,12 @@ class Identity extends Component {
               <span>Saved Posts</span>
             </Link>
           </Menu.Item>
+          <Menu.Item key="savedjobs">
+            <Link to="/savedjobs">
+              <span className="left-menu savedpost-icon"></span>
+              <span>Saved Jobs</span>
+            </Link>
+          </Menu.Item>
         </Menu>
       </div>
     );

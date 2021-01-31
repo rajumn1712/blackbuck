@@ -40,7 +40,7 @@ setLoading(false);
   return (
     <>
       <Link className="f-16 semibold mx-4 text-primary" to="/cms">
-        <span class="icon left-arrow mr-0"></span>Back
+        <span class="icon left-arrow mr-0"></span>Back to Careers
       </Link>
       <div className="custom-card mt-12">
       {loading && <Loader className="loader-middile"/>}
