@@ -169,6 +169,7 @@ const ApplyModal = (props) => {
           Submit
         </Button>
       }
+      destroyOnClose
     >
       <Form
       id={props.formid}

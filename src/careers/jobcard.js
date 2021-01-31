@@ -27,7 +27,7 @@ const JobCard = (props) => {
   let showSavedLink = window.location.href.indexOf('savedjobs') > -1
   let [allJobPosts, setAllJobPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadMore, setLoadMore] = useState(true);
+  let [loadMore, setLoadMore] = useState(true);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -40,7 +40,7 @@ const JobCard = (props) => {
   };
 
   useEffect(() => {
-    // window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
     getJobPostings(page, pageSize);
   }, []);
 
@@ -58,7 +58,8 @@ const JobCard = (props) => {
       allJobPosts = allJobPosts.concat(response.data);
       setAllJobPosts([...allJobPosts]);
       setLoading(false);
-      setLoadMore(response.data.length === pageSize);
+      loadMore = response.data.length === pageSize
+      setLoadMore(loadMore);
       console.log(loadMore);
     }
   };
@@ -115,7 +116,7 @@ const JobCard = (props) => {
 
   const renderJobPost = (jobpost, indx) => {
     return (
-      <div className="post-card" key={indx}>
+      <div className="post-card" key={indx} onScroll={handleScroll()}>
       <Card
         bordered={true}
         className="job-card"

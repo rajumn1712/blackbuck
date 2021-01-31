@@ -43,7 +43,7 @@ setLoading(false);
         <span class="icon left-arrow mr-0"></span>Back to Careers
       </Link>
       <div className="custom-card mt-12">
-      {loading && <Loader className="loader-middile"/>}
+      {loading && <Loader className="loader-top-middile"/>}
         <Card>
           <div className="p-12">
             <Title className="f-16 semibold text-primary mb-0">

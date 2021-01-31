@@ -19,21 +19,17 @@ class BBScholars extends Component {
   state = {
     allScholors: [],
     isViewAllPage: window.location.href.indexOf("scholors") > -1,
-    loading: false,
+    loading: true,
     loadMore:true,
     page:1,
-    pageSize:4
+    pageSize:10
   }
   componentDidMount() {
-    if(window.location.href.indexOf("scholars") > -1){
       window.addEventListener("scroll", this.handleScholarsScroll);
-    }
     this.getScholors()
   }
   componentWillUnmount() {
-    if(window.location.href.indexOf("scholars") > -1){
       window.addEventListener("scroll", this.handleScholarsScroll);
-    }
   }
   getScholors = async () => {
     this.setState({...this.state,loading:true})
@@ -84,14 +80,14 @@ class BBScholars extends Component {
     }
   }
   render() {
-    const { allScholors } = this.state;
+    const { allScholors,isViewAllPage,loading } = this.state;
     if (!allScholors || allScholors?.length === 0) { return null; }
     if (this.state.isViewAllPage) {
       return (
         <div onScroll={this.handleScholarsScroll}>
           <Row gutter={8} >
             {allScholors.map((scholor, index) => <Col lg={8}>
-              <div className="frnds-list-item">
+              <div className="frnds-list-item" key={index}>
                 <div className="frnds-img">
                   <div className="scholar-badge p-4">
                     {scholor.IsScholor && <img src={scholarBadge} />}
@@ -117,7 +113,7 @@ class BBScholars extends Component {
               </div>
             </Col>)}
           </Row>
-          {this.state.isViewAllPage && this.state.loading && <Loader className="loader-top-middle" />}
+          {isViewAllPage && loading && <Loader className="loader-top-middle" />}
         </div>
       )
     }
