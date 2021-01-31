@@ -22,6 +22,7 @@ import ApplyModal from "./applyModal";
 
 const { Title, Paragraph } = Typography;
 const JobCard = (props) => {
+  let jobpostObj = {};
   let page = 1;
   const pageSize = 5;
   let showSavedLink = window.location.href.indexOf('savedjobs') > -1
@@ -31,7 +32,8 @@ const JobCard = (props) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const showModal = () => {
+  const showModal = (jobpost) => {
+    jobpostObj = jobpost;
     setIsModalVisible(true);
   };
 
@@ -117,69 +119,63 @@ const JobCard = (props) => {
   const renderJobPost = (jobpost, indx) => {
     return (
       <div className="post-card" key={indx} onScroll={handleScroll()}>
-      <Card
-        bordered={true}
-        className="job-card"
-        actions={[
-          !showSavedLink && <a onClick={saveJobPost}>
-            <span className="post-icons save-job"></span>Save Job
+        <Card
+          bordered={true}
+          className="job-card"
+          actions={[
+            !showSavedLink && <a onClick={saveJobPost}>
+              <span className="post-icons save-job"></span>Save Job
           </a>,
-          <Link to={`/jobdetail/${jobpost.JobId}`}>
-            <span className="post-icons view-job mr-8"></span>View Details
+            <Link to={`/jobdetail/${jobpost.JobId}`}>
+              <span className="post-icons view-job mr-8"></span>View Details
           </Link>,
-          <a onClick={showModal}>
-            <span className="post-icons apply-job"></span>Apply Now
+            <a onClick={()=>showModal({...jobpost})}>
+              <span className="post-icons apply-job"></span>Apply Now
           </a>
-        ]}
-      >
-        <div className="p-12">
-          <Title className="f-16 semibold text-primary mb-0">
-            {jobpost.Title}
-          </Title>
-          <Paragraph className="f-12 text-secondary">
-            <Moment fromNow>{jobpost.CreateDate}</Moment>
-          </Paragraph>
-          <Paragraph className="f-12 mb-8" style={{color: 'var(--primary)'}}>
-            {jobpost.EmployerName}
-          </Paragraph>
-          <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
-            {jobpost.Role}
-          </Paragraph>
-          <ul className="d-flex m-0 pl-0 job-req">
-            <li className="f-14 text-primary">
-              <span className="post-icons job mr-16"></span>
-              <Paragraph className="f-14 text-primary m-0">
-                {jobpost.Years} Yr's
+          ]}
+        >
+          <div className="p-12">
+            <Title className="f-16 semibold text-primary mb-0">
+              {jobpost.Title}
+            </Title>
+            <Paragraph className="f-12 text-secondary">
+              <Moment fromNow>{jobpost.CreateDate}</Moment>
+            </Paragraph>
+            <Paragraph className="f-12 mb-8" style={{ color: 'var(--primary)' }}>
+              {jobpost.EmployerName}
+            </Paragraph>
+            <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
+              {jobpost.Role}
+            </Paragraph>
+            <ul className="d-flex m-0 pl-0 job-req">
+              <li className="f-14 text-primary">
+                <span className="post-icons job mr-16"></span>
+                <Paragraph className="f-14 text-primary m-0">
+                  {jobpost.Years} Yr's
               </Paragraph>
-            </li>
-            <li className=" f-14 text-primary ">
-              <span className="post-icons role mr-16"></span>
-              <Paragraph className="f-14 text-primary m-0">
-                5-6 LPA
+              </li>
+              <li className=" f-14 text-primary ">
+                <span className="post-icons role mr-16"></span>
+                <Paragraph className="f-14 text-primary m-0">
+                  5-6 LPA
                 {/* {jobpost.SalaryRange} */}
-              </Paragraph>
-            </li>
-            <li className="f-14 text-primary">
-              <span className="post-icons location mr-16"></span>
-              <Paragraph className="f-14 text-primary m-0">
-                {jobpost.Place}, {jobpost.City}, {jobpost.State}
-              </Paragraph>
-            </li>
-          </ul>
-          <span className="job-ldate f-12 text-secondary px-8 py-4">
-            Last date |{" "}
-            <span className="semibold text-primary">
-              <Moment format="MM/DD/YYYY">{jobpost.EndDate}</Moment>
+                </Paragraph>
+              </li>
+              <li className="f-14 text-primary">
+                <span className="post-icons location mr-16"></span>
+                <Paragraph className="f-14 text-primary m-0">
+                  {jobpost.Place}, {jobpost.City}, {jobpost.State}
+                </Paragraph>
+              </li>
+            </ul>
+            <span className="job-ldate f-12 text-secondary px-8 py-4">
+              Last date |{" "}
+              <span className="semibold text-primary">
+                <Moment format="MM/DD/YYYY">{jobpost.EndDate}</Moment>
+              </span>
             </span>
-          </span>
-        </div>
-      </Card>
-      <ApplyModal className="custom-popup"
-          visible={isModalVisible}
-          object={jobpost}
-          cancel={handleCancel}
-          formid="myJobCardFomid"
-        />
+          </div>
+        </Card>
       </div>
     );
   };
@@ -187,7 +183,13 @@ const JobCard = (props) => {
     <div onScroll={handleScroll}>
       {allJobPosts?.map((jobpost, indx) => renderJobPost(jobpost, indx))}
       {loading && <Loader className="loader-top-middle" />}
-      {allJobPosts.length == 0 && <Empty/>}
+      {allJobPosts.length == 0 && <Empty />}
+      <ApplyModal className="custom-popup"
+        visible={isModalVisible}
+        object={jobpostObj}
+        cancel={handleCancel}
+        formid="myJobCardFomid"
+      />
     </div>
   );
 };
