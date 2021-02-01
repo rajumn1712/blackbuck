@@ -2149,8 +2149,8 @@ textarea {
 
 /* Careers CSS */
 .scholar-badge{ position: absolute; width: 36px; height: 36px; left: 0; top: 10px; background: var(--white); box-sizing: border-box; border-radius: 0 50% 50% 0;}
-.job-req li{ margin-right: 50px; display: flex; align-items: center; margin-bottom: 16px;}
-.job-req li:last-child{margin-right: 0; }
+.job-req li{display: flex; align-items: center; margin-bottom: 16px;margin-right: 5px;}
+.job-req li:last-child{margin-right: 0;width: 55%; }
 .job-req .post-icons.job{ background-position: -875px -256px; }
 .job-req .post-icons.role{ background-position: -950px -256px; }
 .job-req .post-icons.location{ background-position: -973px -256px; }

@@ -170,7 +170,7 @@ const JobCard = forwardRef((props,ref) => {
             <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
               {jobpost.Role}
             </Paragraph>
-            <ul className="d-flex m-0 pl-0 job-req">
+            <ul className="d-flex m-0 pl-0 job-req justify-content-between">
               <li className="f-14 text-primary">
                 <span className="post-icons job mr-16"></span>
                 <Paragraph className="f-14 text-primary m-0">
