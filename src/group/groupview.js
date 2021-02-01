@@ -523,7 +523,7 @@ class Group extends Component {
               className="ant-dropdown-link"
               onClick={(e) => e.preventDefault()}
             >
-              {(this.state.groupData ?.IsAdmin || (!this.state.groupData ?.IsAdmin && !this.state.groupData ?.IsSystem)) && <span className="icons h-more-icon m-0"></span>}
+              {(this.state.groupData ?.IsAdmin || (!this.state.groupData ?.IsAdmin && !this.state.groupData ?.IsSystem)|| this.state.groupData ?.IsGroupMember) && <span className="icons h-more-icon m-0"></span>}
             </a>
           </Dropdown>
         </button>
@@ -749,9 +749,10 @@ class Group extends Component {
                     {groupData.Members > 1 ? "Members" : "Member"}
                   </span>
                 )}
-                <Button className="mr-8" type="primary" onClick={this.showModal}>
+                {groupData.IsGroupMember && <Button className="mr-8" type="primary" onClick={this.showModal}>
                   <span className="icons add-white"></span> Invite
                 </Button>
+                }
                 {(!groupData.IsGroupMember && !groupData.IsGroupAdmin && !groupData.requestJoin) && <Button type="primary" onClick={() => this.joinGroup(groupData)}>
                   Join
                 </Button>}
@@ -765,7 +766,7 @@ class Group extends Component {
             <Tabs
               defaultActiveKey="1"
               className="profile-tabs"
-              tabBarExtraContent={operations}
+              tabBarExtraContent={(!groupData.IsGroupAdmin && groupData.IsSystem) ? [] : operations}
               onChange={(e) => this.setState({ ...this.state, tabkey: e })}
             >
               <TabPane tab="About" key="3">
