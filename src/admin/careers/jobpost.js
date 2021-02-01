@@ -296,7 +296,7 @@ const PostingJob = ({profile,history}) => {
                       >
                         <DatePicker
                           placeholder="Start Date"
-                          format="DD/MM/YYYY"
+                          format="MM/DD/YYYY"
                           onChange={(value) => handleChange('StartDate', value)}
                           disabledDate={(current) => {
                             return (moment().add(-1, "days") >= current || moment(jobPostingObject.EndDate ? jobPostingObject.EndDate : '').add(+1, "days") <= current);
@@ -325,7 +325,7 @@ const PostingJob = ({profile,history}) => {
                       >
                         <DatePicker
                           placeholder="End Date"
-                          format="DD/MM/YYYY"
+                          format="MM/DD/YYYY"
                           onChange={(value) => handleChange('EndDate', value)}
                           disabledDate={(current) => {
                             return (moment().add(-1, "days") >= current || moment(jobPostingObject.StartDate ? jobPostingObject.StartDate : '').add(-1, "days") >= current);
