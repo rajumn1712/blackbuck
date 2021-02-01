@@ -35,7 +35,7 @@
 .user-statistic .ant-list-item-meta-avatar{margin: auto;}
 .user-statistic .ant-list-item-meta-content{position: relative;top:80px;}
 .privacy-dropdown .ant-list-item-meta-content{top: 0 !important;}
-.privacy-dropdown.sample-check .ant-list-item-meta-content{left:22px;}
+.privacy-dropdown.sample-check .ant-list-item-meta-content{margin-left:10px !important;}
 .privacy-dropdown .ant-list-item-meta-title{font-size: 12px !important;}
 .user-statistic .group-banner {
     border: 0;

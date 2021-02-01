@@ -2013,7 +2013,7 @@ textarea {
 .admin-left-pane{width: 260px; position: fixed; top: 70px; left: 0; bottom: 0;}
 .course-step .ant-collapse{background: var(--white);  border-radius: 0.4rem;}
 .create-course{background: var(--white); padding: 40px 40px 28px; border-radius: 0.8rem; border: 1px solid var(--line)}
-.addContent{height: 32px; font-size: var(--f-12) ;color: var(--textprimary); border-radius: 0.4rem;}
+.addContent{height: 32px; font-size: var(--f-12) ;border-radius: 0.4rem;}
 .lecture-collapse{position: relative;}
 .create-course .ant-collapse-content-box, .create-course .ant-collapse-header{padding: 12px !important;}
 .video-dur{margin-right: 42px}
