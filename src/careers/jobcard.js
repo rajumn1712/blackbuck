@@ -157,8 +157,9 @@ const JobCard = forwardRef((props,ref) => {
           ]}
         >
           <div className="p-12">
-            <Title className="f-16 semibold text-primary mb-0">
-              {jobpost.Title}
+            <Title className="f-16 semibold text-secondary mb-0">
+              <Link to={`/jobdetail/${jobpost.JobId}`}>
+                <span className="post-title">{jobpost.Title}</span></Link>
             </Title>
             <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobpost.CreateDate}</Moment>
