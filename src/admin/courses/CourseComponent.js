@@ -1005,19 +1005,20 @@ const CourseComponent = ({ profile, history }) => {
                                     />
                                 </Form.Item>
                             </div>
-                            <div className="custom-fields">
+                            <div className="custom-fields" id="type">
                                 <label className="text-secondary d-block mb-4  required">Content Type</label>
                                 <Form.Item name="TopicType" rules={[{ required: true, message: "Content Type  required" }]} >
-                                    <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}>
+                                    <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}
+                                    getPopupContainer={() => document.querySelector('#type')}>
                                         <Option value="Video">Video</Option>
                                         <Option value="Document">Document</Option>
                                     </Select>
                                 </Form.Item>
                             </div>
-                            {topicObj.TopicType == "Video" && <div className="custom-fields">
+                            {topicObj.TopicType == "Video" && <div className="custom-fields" id="sourceType">
                                 <label className="text-secondary d-block mb-4  required">Video Source</label>
                                 <Form.Item name="VideoSource">
-                                    <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
+                                    <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)} getPopupContainer={() => document.querySelector('#sourceType')}>
                                         <Option value="Upload">Upload</Option>
                                         <Option value="YouTube">YouTube</Option>
                                         <Option value="Vimeo">Vimeo</Option>
