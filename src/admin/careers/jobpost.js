@@ -52,7 +52,7 @@ const PostingJob = ({profile,history}) => {
 
     const getjobbyid = async (id)=>{
         setLoading(true)
-        const response = await getJobById(id);
+        const response = await getJobById(profile.Id,id);
         if(response.ok){
             bindEditableData(response.data[0]);
         }
