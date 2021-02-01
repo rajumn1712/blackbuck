@@ -60,7 +60,7 @@ const PostingJob = ({profile,history}) => {
 
     const bindEditableData = (obj)=>{
         obj.StartDate = obj.StartDate ? moment(obj.StartDate).local() : "";
-        obj.EndDate = obj.EndDate ? moment(obj.StartDate).local() : "";
+        obj.EndDate = obj.EndDate ? moment(obj.EndDate).local() : "";
         setJobPostingObject({...obj});
         form.setFieldsValue({...obj});
         setLoading(false);
