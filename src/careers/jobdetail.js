@@ -31,7 +31,13 @@ setLoading(false);
     }
   }
   const showModal = () => {
-    setIsModalVisible(true);
+    if(jobDetailObj.IsApplied){
+      notify({
+        message:'Job',
+        type:'warning',
+        description:'Already applied to this job'
+      })
+    }else{setIsModalVisible(true);}
   };
 
   const handleCancel = () => {
@@ -52,7 +58,7 @@ setLoading(false);
             <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobDetailObj.CreateDate}</Moment>
             </Paragraph>
-            <Paragraph className="f-14" style={{ color: "var(--primary)" }}>
+            <Paragraph className="f-14">
               {jobDetailObj.EmployerName}
             </Paragraph>
             <p className="f-14 text-primary mb-12 job-req">

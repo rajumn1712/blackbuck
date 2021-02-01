@@ -274,13 +274,13 @@ const getScholorUsers = (take, skip) => {
   return apiClient.get(ADMIN_API + `getScholorUsers/${take}/${skip}`);
 }
 const allJobPostings = (user_id,take,skip,type,state,city)=>{
-  if(type==='jobsearch'){
+  if(type==='jobsearch'&&state&&city){
     return apiClient.get(CAREESRS_API + `getSearchJobPostings/${state ? state : null}/${city ? city : null}/${take}/${skip}`)
   }else if(type === 'savedjobs'){
     return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
   }
   else{
-    return apiClient.get(CAREESRS_API + `getAllJobPostings/${take}/${skip}`);
+    return apiClient.get(CAREESRS_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
   }
 }
 const saveApplicationJob = (obj)=>{

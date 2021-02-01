@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState, useImperativeHandle } from "react";
 import { Button, Typography, Statistic, Card, Row, Col, Tag, Empty } from "antd";
 import Identity from "../components/identity";
 import Ads from "../components/ads";
@@ -21,7 +21,7 @@ import connectStateProps from "../shared/stateConnect";
 import ApplyModal from "./applyModal";
 
 const { Title, Paragraph } = Typography;
-const JobCard = (props) => {
+const JobCard = forwardRef((props,ref) => {
   let jobpostObj = {};
   let page = 1;
   const pageSize = 5;
@@ -33,19 +33,36 @@ const JobCard = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = (jobpost) => {
-    jobpostObj = jobpost;
-    setIsModalVisible(true);
+    if(jobpost.IsApplied){
+      notify({
+        message:'Job',
+        type:'warning',
+        description:'Already applied to this job'
+      })
+      
+    }else{
+      jobpostObj = jobpost;
+      setIsModalVisible(true);
+    }
+    
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
-  useEffect(() => {
+  useImperativeHandle(ref, () => ({
+    getAlert() {
+      getJobPostings(1,5)
+    }
+  }));
+
+  useEffect(() => {     
     window.addEventListener("scroll", handleScroll);
     getJobPostings(page, pageSize);
     return () => window.removeEventListener("scroll", handleScroll)
-  }, []);
+  }, [props.refresh]);
+
 
   const getJobPostings = async (pageNo, pagesize) => {
     setLoading(true);
@@ -54,8 +71,8 @@ const JobCard = (props) => {
       pagesize,
       pagesize * pageNo - pagesize,
       props.postingsType,
-      props.match?.params?.state,
-      props.match?.params?.city
+      props.searchobj?.stateValue,
+      props.searchobj?.cityValue
     );
     if (response.ok) {
       allJobPosts = allJobPosts.concat(response.data);
@@ -142,7 +159,7 @@ const JobCard = (props) => {
             <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobpost.CreateDate}</Moment>
             </Paragraph>
-            <Paragraph className="f-12 mb-8" style={{ color: 'var(--primary)' }}>
+            <Paragraph className="f-12 mb-8">
               {jobpost.EmployerName}
             </Paragraph>
             <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
@@ -193,5 +210,5 @@ const JobCard = (props) => {
       />
     </div>
   );
-};
+});
 export default connectStateProps(withRouter(JobCard));

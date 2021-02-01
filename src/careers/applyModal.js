@@ -238,7 +238,7 @@ const ApplyModal = (props) => {
           </label>
           <Form.Item name="Comment" rules={[{ required: false }]}>
             <Input
-              placeholder="Optional"
+              placeholder="Type your comment..."
               onChange={(value) => {}}
               maxLength={150}
               autoComplete="off"

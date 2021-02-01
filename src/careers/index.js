@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Row, Col, Affix, Input, Button, Select, Form } from "antd";
 import Identity from "../components/identity";
 import Ads from "../components/ads";
@@ -163,11 +163,12 @@ const CMSComponent = (props) => {
     cityValue: "",
   };
   const [searchObj, setSearchObj] = useState({ ...searchjob });
+  const [refresh,setRefresh] = useState(0)
+  const childRef = useRef()
 
   const jobSearch = () => {
-    props.history.push(
-      `/jobsearch/${searchObj.stateValue}/${searchObj.cityValue}`
-    );
+    
+    setRefresh(refresh+1)
   };
 
   return (
@@ -252,7 +253,7 @@ const CMSComponent = (props) => {
             </Form>
           </div>
           <BBScholars />
-          <JobCard postingsType={"Normal"} />
+          <JobCard postingsType={"Normal"} refresh={refresh} searchobj={searchObj} postingsType={"jobsearch"}/>
         </Col>
         <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
           <Affix offsetTop={86}>

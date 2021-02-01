@@ -44,9 +44,9 @@ class Home extends Component {
                             <Route path="/search/:key/:type" render={(props) => {
                                 return <PostingsComponent sharebox={false} friendsSuggestions={false} postingsType={"search"} {...props} />
                             }} />
-                            <Route path="/jobsearch/:state?/:city?" render={(props) => {
+                            {/* <Route path="/jobsearch/:state?/:city?" render={(props) => {
                                 return <JobCard postingsType={"jobsearch"} {...props} />
-                            }} />
+                            }} /> */}
                             <Route path="/savedjobs" render={(props) => {
                                 return <JobCard postingsType={"savedjobs"} {...props} />
                             }} />
