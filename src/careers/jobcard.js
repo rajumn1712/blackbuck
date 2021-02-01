@@ -174,7 +174,7 @@ const JobCard = forwardRef((props,ref) => {
               <li className="f-14 text-primary">
                 <span className="post-icons job mr-16"></span>
                 <Paragraph className="f-14 text-primary m-0">
-                  {jobpost.Years} Yr's
+                  {jobpost.Years} Yr's {jobpost.Months} M
               </Paragraph>
               </li>
               <li className=" f-14 text-primary ">
