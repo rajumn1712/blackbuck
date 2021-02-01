@@ -187,7 +187,7 @@ const CMSComponent = (props) => {
                 onFinish={() => jobSearch()}
                 form={form}
               >
-            <Row gutter={16} align="middle">
+            <Row gutter={8}>
                 <Col
                   xs={24}
                   sm={12}
@@ -198,7 +198,7 @@ const CMSComponent = (props) => {
                 >
                   <Form.Item className="custom-fields"
                         name="stateValue"
-                        rules={[{ required: (searchObj.cityValue?false:true), message: "State  required" }]}>
+                        rules={[{ required: (searchObj.cityValue?false:true), message: "State required" }]}>
                    <Select
                     showSearch
                     placeholder="Search By State"
@@ -245,18 +245,8 @@ const CMSComponent = (props) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col
-                  xs={24}
-                  sm={12}
-                  md={12}
-                  lg={4}
-                  xl={4}
-                  xxl={4}
-                  className="custom-fields"
-                >
-                  <Button type="primary" htmlType="submit">
-                    Search
-                  </Button>
+                <Col xs={24} sm={12} md={12} lg={4} xl={4} xxl={4}>
+                <Button type="primary" htmlType="submit" className="mt-4"> Search</Button>
                 </Col>
             </Row>
             </Form>

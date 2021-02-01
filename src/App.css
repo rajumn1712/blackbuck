@@ -1198,7 +1198,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.intern-cards .intern-cardfooter .filename .icons {
+.intern-cards .intern-cardfooter .filename .icons,.job-req .post-icons {
   flex-shrink: 0;
 }
 .intern-cards .card-options {
@@ -1342,7 +1342,8 @@
 .custom-fields .ant-input,
 .custom-fields .ant-select,
 .custom-fields .ant-picker, 
-.custom-fields .ant-input-number-input {
+.custom-fields .ant-input-number-input , 
+.custom-fields .ant-select-selection-search-input{
   min-height: 48px;
 }
 .custom-fields .ant-input-group .videoplybacktime:first-child .ant-input-number{
