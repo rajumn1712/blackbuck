@@ -22,13 +22,13 @@ import ApplyModal from "./applyModal";
 
 const { Title, Paragraph } = Typography;
 const JobCard = forwardRef((props,ref) => {
-  let jobpostObj = {};
   let page = 1;
   const pageSize = 5;
   let showSavedLink = window.location.href.indexOf('savedjobs') > -1
   let [allJobPosts, setAllJobPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   let [loadMore, setLoadMore] = useState(true);
+  let [jobpostObj,setJobPostObj] = useState({});
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -42,6 +42,7 @@ const JobCard = forwardRef((props,ref) => {
       
     }else{
       jobpostObj = jobpost;
+      setJobPostObj({...jobpostObj})
       setIsModalVisible(true);
     }
     
@@ -151,7 +152,7 @@ const JobCard = forwardRef((props,ref) => {
             <Link to={`/jobdetail/${jobpost.JobId}`}>
               <span className="post-icons view-job mr-8"></span>View Details
           </Link>,
-            <a onClick={()=>showModal({...jobpost})}>
+            <a onClick={()=>showModal(jobpost)}>
               <span className="post-icons apply-job"></span>Apply Now
           </a>
           ]}
