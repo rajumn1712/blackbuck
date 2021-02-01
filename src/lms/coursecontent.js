@@ -37,6 +37,7 @@ import Moment from "react-moment";
 import ShowMoreText from "react-show-more-text";
 import video from "../styles/images/default-video.jpg";
 import Loader from "../common/loader";
+import notify from "../shared/components/notification";
 const { Panel } = Collapse;
 const data = [
   {
@@ -98,6 +99,15 @@ class CourseContent extends Component {
           }
         }
       );
+    }else{
+      this.setState({...this.state,loading:false},()=>{
+        notify({
+          message:'Error',
+          type:'error',
+  
+          description:'Something went wrong'
+        })
+      })
     }
   };
   showMore = () => {
@@ -134,6 +144,15 @@ class CourseContent extends Component {
         loading: false,
         loadMore: response.data.length === this.state.size,
       });
+    }else{
+      this.setState({...this.state,loading:false},()=>{
+        notify({
+          message:'Error',
+          type:'error',
+  
+          description:'Something went wrong'
+        })
+      })
     }
   };
   getUserWatchedVideos = async () => {

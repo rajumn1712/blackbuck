@@ -258,8 +258,8 @@ const saveJobPost = (obj) => {
 const getJobPostings = (user_id, take, skip) => {
   return apiClient.get(ADMIN_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
 }
-const getJobById = (id) => {
-  return apiClient.get(ADMIN_API + `getJobPostById/${id}`)
+const getJobById = (user_id,id) => {
+  return apiClient.get(ADMIN_API + `getJobPostById/${user_id}/${id}`)
 }
 const jobpostingsCount = () => {
   return apiClient.get(ADMIN_API + 'getJobPostingCount');
@@ -275,7 +275,7 @@ const getScholorUsers = (take, skip) => {
 }
 const allJobPostings = (user_id,take,skip,type,state,city)=>{
   if(type==='jobsearch'&&(state||city)){
-    return apiClient.get(CAREESRS_API + `getSearchJobPostings/${state ? state : null}/${city ? city : null}/${take}/${skip}`)
+    return apiClient.get(CAREESRS_API + `getSearchJobPostings/${user_id}/${state ? state : null}/${city ? city : null}/${take}/${skip}`)
   }else if(type === 'savedjobs'){
     return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
   }

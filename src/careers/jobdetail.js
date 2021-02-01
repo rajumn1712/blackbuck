@@ -10,6 +10,7 @@ import { getJobById } from "../shared/api/apiServer";
 import Moment from "react-moment";
 import Loader from "../common/loader";
 import notify from "../shared/components/notification";
+import connectStateProps from "../shared/stateConnect";
 
 
 const { Title, Paragraph } = Typography;
@@ -24,7 +25,7 @@ const JobDetails = (props) => {
 
   const getJobdetail = async ()=>{
     setLoading(true);
-    const response = await getJobById(props.match.params?.jobid);
+    const response = await getJobById(props.profile?.Id,props.match.params?.jobid);
     if(response.ok){
 jobDetailObj = response.data[0];
 setJobDetailObj({...jobDetailObj});
@@ -126,4 +127,4 @@ setLoading(false);
     </>
   );
 };
-export default withRouter(JobDetails);
+export default connectStateProps(withRouter(JobDetails));
