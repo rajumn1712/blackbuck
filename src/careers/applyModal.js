@@ -39,7 +39,6 @@ const ApplyModal = (props) => {
     onChange: (info) => {
       jobApplication["uploadsources"] = [];
       setJObApplication({ ...jobApplication });
-      setLoading(true);
       const { status } = info.file;
 
       if (status === "done") {
@@ -65,6 +64,9 @@ const ApplyModal = (props) => {
           message: "Upload",
         });
       }
+      else if (status === "uploading") {
+        setLoading(true);
+      }
     },
     beforeUpload: (file) => {
       let accepted = false;
@@ -77,6 +79,7 @@ const ApplyModal = (props) => {
           ) > -1
         )
       ) {
+        setLoading(false);
         notify({
           message: "Upload",
           description: `File format not supported`,
@@ -85,6 +88,7 @@ const ApplyModal = (props) => {
         accepted = true;
       }
       if (file.size > fileMaxSize) {
+        setLoading(false);
         notify({
           message: "Upload",
           description: `Document size does not exceed 25 MB`,
