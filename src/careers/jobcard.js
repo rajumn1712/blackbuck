@@ -181,7 +181,7 @@ const JobCard = forwardRef((props,ref) => {
               <li className=" f-14 text-primary ">
                 <span className="post-icons role mr-16"></span>
                 <Paragraph className="f-14 text-primary m-0">
-                {jobpost.SalaryRange}
+                {jobpost.SalaryRange ? jobpost.SalaryRange : 'Not Disclosed'}
                 </Paragraph>
               </li>
               <li className="f-14 text-primary">

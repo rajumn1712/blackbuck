@@ -70,7 +70,7 @@ const JobApplications = ()=>{
 
     return(
         <>
-        <Title className="f-18 text-primary semibold">Jobs</Title>
+        <Title className="f-18 text-primary semibold">Job Applications</Title>
         <Card className="custom-card">
         <div className="custom-card">
            <Table loading={loading}

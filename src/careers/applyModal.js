@@ -1,4 +1,5 @@
 import { Button, Form, Input, List, Modal, Upload } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 import { set } from "lodash";
 import React, { useState } from "react";
 import Loader from "../common/loader";
@@ -237,16 +238,16 @@ const ApplyModal = (props) => {
             Comment
           </label>
           <Form.Item name="Comment" rules={[{ required: false }]}>
-            <Input
-              placeholder="Type your comment..."
-              onChange={(value) => {}}
-              maxLength={150}
-              autoComplete="off"
-              onChange={(e)=>{
-                  jobApplication.Comment = e.currentTarget.value;
-                  setJObApplication({...jobApplication})
-              }}
-            />
+          <TextArea 
+                          placeholder="Type your comment..."
+                          onResize
+                          autoSize={{ minRows: 3, maxRows: 30 }}
+                          onChange={(e)=>{
+                            jobApplication.Comment = e.currentTarget.value;
+                            setJObApplication({...jobApplication})
+                        }}
+                          maxLength={1360}
+                        />
           </Form.Item>
         </div>
       </Form>

@@ -69,8 +69,6 @@ const PostingJob = ({profile,history}) => {
     const jobSave = async ()=>{
         setLoading(true);
         jobPostingObject.CreateDate = jobPostingObject.CreateDate ? jobPostingObject.CreateDate : new Date();
-      jobPostingObject.StartDate = jobPostingObject.StartDate ? moment(jobPostingObject.StartDate).format("YYYY-MM-DDT00:00:00") : jobPostingObject.StartDate;
-      jobPostingObject.EndDate = jobPostingObject.EndDate ? moment(jobPostingObject.EndDate).format("YYYY-MM-DDT00:00:00") : jobPostingObject.EndDate;
         const saveresponse = await saveJobPost(jobPostingObject);
         if(saveresponse.ok){
             notify({ message: "Job", description: "Job saved successfully" });
@@ -235,7 +233,7 @@ const PostingJob = ({profile,history}) => {
                         </Select> */}
                       </Form.Item>
                     </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                    {jobPostingObject.Type === "Internship" && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                       <label className="text-secondary d-block mb-4 semibold required">
                         Months
                       </label>
@@ -257,17 +255,14 @@ const PostingJob = ({profile,history}) => {
                           })}
                         </Select>
                       </Form.Item>
-                    </Col>
+                    </Col>}
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                      <label className="text-secondary d-block mb-4 semibold required">
+                      <label className="text-secondary d-block mb-4 semibold">
                         Salary Range
                       </label>
                       <Form.Item
                         className="custom-fields"
                         name="SalaryRange"
-                        rules={[
-                          { required: true, message: "Salary Range  required" },
-                        ]}
                       >
                         <Input
                           placeholder="Salary Range"

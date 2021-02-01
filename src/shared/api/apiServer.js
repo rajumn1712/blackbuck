@@ -295,6 +295,9 @@ const getSavedJobPost = (user_id,take,skip)=>{
 const deleteJobSavedPost = (id)=>{
   return apiClient.post(CAREESRS_API + `deleteSavedJobPost/${id}`);
 }
+const deleteJobPost = (id)=>{
+  return apiClient.get(ADMIN_API + `deleteJobPost/${id}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -379,5 +382,6 @@ export {
   saveApplicationJob,
   saveUserJobPost,
   getSavedJobPost,
-  deleteJobSavedPost
+  deleteJobSavedPost,
+  deleteJobPost
 };
