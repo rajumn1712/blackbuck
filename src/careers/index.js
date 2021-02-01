@@ -159,7 +159,7 @@ const statesList = [
 const CMSComponent = (props) => {
   const [form] = Form.useForm();
   const searchjob = {
-    stateValue: "",
+    stateValue: undefined,
     cityValue: "",
   };
   const [searchObj, setSearchObj] = useState({ ...searchjob });
@@ -203,7 +203,9 @@ const CMSComponent = (props) => {
                    <Select
                     showSearch
                     placeholder="Search By State"
+                    allowClear
                     optionFilterProp="children"
+                    value={searchObj.stateValue}
                     filterOption={(input, option) =>
                       option.children
                         .toLowerCase()
