@@ -9,6 +9,7 @@ import { Link, withRouter } from "react-router-dom";
 import { getJobById } from "../shared/api/apiServer";
 import Moment from "react-moment";
 import Loader from "../common/loader";
+import notify from "../shared/components/notification";
 
 
 const { Title, Paragraph } = Typography;
