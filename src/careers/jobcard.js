@@ -179,8 +179,7 @@ const JobCard = forwardRef((props,ref) => {
               <li className=" f-14 text-primary ">
                 <span className="post-icons role mr-16"></span>
                 <Paragraph className="f-14 text-primary m-0">
-                  5-6 LPA
-                {/* {jobpost.SalaryRange} */}
+                {jobpost.SalaryRange}
                 </Paragraph>
               </li>
               <li className="f-14 text-primary">
