@@ -69,6 +69,8 @@ const PostingJob = ({profile,history}) => {
     const jobSave = async ()=>{
         setLoading(true);
         jobPostingObject.CreateDate = jobPostingObject.CreateDate ? jobPostingObject.CreateDate : new Date();
+      jobPostingObject.StartDate = jobPostingObject.StartDate ? moment(jobPostingObject.StartDate).format("YYYY-MM-DDT00:00:00") : jobPostingObject.StartDate;
+      jobPostingObject.EndDate = jobPostingObject.EndDate ? moment(jobPostingObject.EndDate).format("YYYY-MM-DDT00:00:00") : jobPostingObject.EndDate;
         const saveresponse = await saveJobPost(jobPostingObject);
         if(saveresponse.ok){
             notify({ message: "Job", description: "Job saved successfully" });

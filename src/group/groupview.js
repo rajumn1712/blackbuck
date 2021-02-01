@@ -766,7 +766,7 @@ class Group extends Component {
             <Tabs
               defaultActiveKey="1"
               className="profile-tabs"
-              tabBarExtraContent={(!groupData.IsGroupAdmin && groupData.IsSystem) ? [] : operations}
+              tabBarExtraContent={(!groupData.IsGroupAdmin && groupData.IsSystem && !groupData.IsGroupMember ) ? [] : operations}
               onChange={(e) => this.setState({ ...this.state, tabkey: e })}
             >
               <TabPane tab="About" key="3">
