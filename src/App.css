@@ -622,6 +622,7 @@
 .file-size {
   font-weight: 500;
   color: var(--textsecondary);
+  min-width: 100px;
 }
 .ant-btn.btn-cancel {
   background: #dedfe1;

@@ -258,7 +258,7 @@ const PostingJob = ({profile,history}) => {
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                       <label className="text-secondary d-block mb-4 semibold required">
-                        Salaray Range
+                        Salary Range
                       </label>
                       <Form.Item
                         className="custom-fields"
@@ -268,7 +268,7 @@ const PostingJob = ({profile,history}) => {
                         ]}
                       >
                         <Input
-                          placeholder="Salaray Range"
+                          placeholder="Salary Range"
                           onChange={(value) => handleChange('SalaryRange', value)}
                           maxLength={150}
                           autoComplete="off"
