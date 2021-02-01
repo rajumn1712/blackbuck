@@ -135,13 +135,13 @@ class Settings extends React.Component {
                                 >
 
                                     <Menu.Item key="profile">
-                                        <Link to="/friends">
+                                        <Link>
                                             <span className="left-menu securitylogin-icon"></span>
                                             <span>Change Password</span>
                                         </Link>
                                     </Menu.Item>
                                     <Menu.Item key="profile ">
-                                        <Link to="/profile/IsProfileTab">
+                                        <Link>
                                             <span className="left-menu blocking-icon"></span>
                                             <span>Twofactor Authentication</span>
                                         </Link>

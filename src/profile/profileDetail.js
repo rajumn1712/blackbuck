@@ -142,9 +142,9 @@ class ProfileDetail extends Component {
                 <div>
                   <Courses loadUserCourse={true} />
                 </div>
-                <div>
+                {/* <div>
                     <ChangePassword />
-                </div>
+                </div> */}
               </Col>
             </Row>
           </>

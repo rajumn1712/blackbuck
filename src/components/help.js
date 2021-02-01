@@ -62,14 +62,14 @@ class Help extends Component {
                                 <div className="helpcards">
                                 <h3>Contact</h3>
                                     <img src={AccSettings}/>
-                                    <p><span>Email:</span> welcome@gmail.com</p>
+                                    <p className="f-12"><span>Email:</span> CONTACT@THEBLACKBUCKS.COM</p>
                                 </div>
                             </Col>
                             <Col xs={24} md={12} lg={8} >
                                 <div className="helpcards">
                                 <h3>Phone</h3>
                                     <img src={Password}/>
-                                    <p><span>Phone:</span> 258963647</p>
+                                    <p><span>Phone:</span>+91 95503 10517</p>
                                 </div>
                             </Col>
                             <Col xs={24} md={12} lg={8} >

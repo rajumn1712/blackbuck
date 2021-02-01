@@ -597,8 +597,8 @@ const CourseComponent = ({ profile, history }) => {
                                         </div>
                                         <div className="">
                                             <label className="text-secondary d-block mb-4 semibold required">Description</label>
-                                            <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>
-                                                <TextArea className="custom-fields" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
+                                            <Form.Item className="mb-12" name="Description" rules={[{ required: true, message: "Description  required" }]}>
+                                                <TextArea className="" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
                                                 />
                                             </Form.Item>
@@ -633,7 +633,7 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
+                                            <Col xs={courseObject.CourseType == "Live Session"?12:24} sm={courseObject.CourseType == "Live Session"?12:24} md={courseObject.CourseType == "Live Session"?12:24} lg={courseObject.CourseType == "Live Session"?12:24} xl={courseObject.CourseType == "Live Session"?12:24} xxl={courseObject.CourseType == "Live Session"?12:24} className="">
                                                 <label className="text-secondary d-block mb-4 semibold  required">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
@@ -645,14 +645,14 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <label className="text-secondary d-block mb-4  required">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
                                             }
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
                                                     <Select
