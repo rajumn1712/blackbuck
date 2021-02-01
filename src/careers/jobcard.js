@@ -59,16 +59,16 @@ const JobCard = forwardRef((props,ref) => {
 
   useEffect(() => {     
     window.addEventListener("scroll", handleScroll);
+    if (props.refresh) {
+      allJobPosts = [];
+      setAllJobPosts([...allJobPosts]);
+    }
     getJobPostings(page, pageSize);
     return () => window.removeEventListener("scroll", handleScroll)
   }, [props.refresh]);
 
 
   const getJobPostings = async (pageNo, pagesize) => {
-    if(props.refresh){
-      allJobPosts = [];
-      setAllJobPosts([...allJobPosts]);
-    }
     setLoading(true);
     const response = await allJobPostings(
       props.profile?.Id,
