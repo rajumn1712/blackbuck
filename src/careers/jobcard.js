@@ -65,6 +65,10 @@ const JobCard = forwardRef((props,ref) => {
 
 
   const getJobPostings = async (pageNo, pagesize) => {
+    if(props.refresh){
+      allJobPosts = [];
+      setAllJobPosts([...allJobPosts]);
+    }
     setLoading(true);
     const response = await allJobPostings(
       props.profile?.Id,
@@ -123,7 +127,7 @@ const JobCard = forwardRef((props,ref) => {
       notify({
         message: "Job",
         type: "success",
-        description: "Job saved for later",
+        description: "Job application saved",
       });
     } else {
       notify({
@@ -141,7 +145,7 @@ const JobCard = forwardRef((props,ref) => {
           bordered={true}
           className="job-card"
           actions={[
-            !showSavedLink && <a onClick={saveJobPost}>
+            !showSavedLink && <a onClick={()=>saveJobPost(jobpost)}>
               <span className="post-icons save-job"></span>Save Job
           </a>,
             <Link to={`/jobdetail/${jobpost.JobId}`}>

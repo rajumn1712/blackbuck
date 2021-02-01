@@ -27,7 +27,7 @@ const columns = [
     },
     {
         title:'Date of Application',
-        dataIndex: 'CreatedDate',
+        dataIndex: 'CreateDate',
       render: (text) => <span ><Moment fromNow>{text}</Moment></span>
     }
 
