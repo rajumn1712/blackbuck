@@ -54,7 +54,7 @@ const ApplyModal = (props) => {
         setJObApplication({ ...jobApplication });
         setLoading(false);
         notify({
-          description: `Certificate uploaded successfully.`,
+          description: `Resume uploaded successfully.`,
           message: "Upload",
         });
       } else if (status === "error") {
