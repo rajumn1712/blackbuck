@@ -50,7 +50,7 @@ setLoading(false);
               {jobDetailObj.Title}
             </Title>
             <Paragraph className="f-12 text-secondary">
-              <Moment fromNow>{jobDetailObj.CreatedDate}</Moment>
+              <Moment fromNow>{jobDetailObj.CreateDate}</Moment>
             </Paragraph>
             <Paragraph className="f-14" style={{ color: "var(--primary)" }}>
               {jobDetailObj.EmployerName}
