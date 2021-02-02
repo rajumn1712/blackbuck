@@ -260,7 +260,7 @@ const PostingJob = ({profile,history}) => {
                     </Col>}
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                       <label className="text-secondary d-block mb-4 semibold">
-                        Salary Range
+                        {jobPostingObject.Type === "Internship" ? 'Stipend' : 'Salary Range'}
                       </label>
                       <Form.Item
                         className="custom-fields"
