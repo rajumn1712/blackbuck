@@ -267,7 +267,7 @@ const PostingJob = ({profile,history}) => {
                         name="SalaryRange"
                       >
                         <Input
-                          placeholder="Salary Range"
+                          placeholder={jobPostingObject.Type === "Internship" ? 'Stipend' : 'Salary Range'}
                           onChange={(value) => handleChange('SalaryRange', value)}
                           maxLength={150}
                           autoComplete="off"
