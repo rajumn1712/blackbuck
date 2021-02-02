@@ -69,7 +69,7 @@ const Members = ({ profile }) => {
     const showModal = (type) => {
         if (selection.length == 0 || selection.length > 1) {
             notify({
-                description: "Please select one record only",
+                description: "Please select one record",
                 message: "Selection",
             });
         }
@@ -95,6 +95,8 @@ const Members = ({ profile }) => {
     const changeScholor = () => {
         setScholor(selection[0].UserId).then((res) => {
             if (res.ok) {
+                setSelectedRowKeys([]);
+                setSelection([]);
                 notify({
                     description: "Scholor updated successfully",
                     message: "Scholor",
