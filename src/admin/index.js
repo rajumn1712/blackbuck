@@ -52,9 +52,9 @@ class Admin extends Component {
                     <Route path="/admin/groups" component={(this.props?.profile?.Category == "Root") ? Groups : AccessDenied} />
                     <Route path="/admin/testsubmissions" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? TestSubmissions : AccessDenied} />
                     <Route path="/admin/course/:id" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? CourseComponent : AccessDenied} />
-                    <Route path="/admin/jobapplications" component={JobApplications}/>
-                    <Route path="/admin/jobpostings" component={JobPostings}/>
-                    <Route path="/admin/postingjob/:id" component={PostingJob}/>
+                    <Route path="/admin/jobapplications" component={(this.props?.profile?.Category == "Careers" || this.props?.profile?.Category == "Root") ? JobApplications : AccessDenied}/>
+                    <Route path="/admin/jobpostings" component={(this.props?.profile?.Category == "Careers" || this.props?.profile?.Category == "Root") ? JobPostings : AccessDenied}/>
+                    <Route path="/admin/postingjob/:id" component={(this.props?.profile?.Category == "Careers" || this.props?.profile?.Category == "Root") ? PostingJob : AccessDenied}/>
                 </div>
             </div>
         </>
