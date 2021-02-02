@@ -1343,8 +1343,7 @@
 .custom-fields .ant-input,
 .custom-fields .ant-select,
 .custom-fields .ant-picker, 
-.custom-fields .ant-input-number-input , 
-.custom-fields .ant-select-selection-search-input{
+.custom-fields .ant-input-number-input, .custom-fields.state-search .ant-select-selection-search-input{
   min-height: 48px;
 }
 .custom-fields .ant-input-group .videoplybacktime:first-child .ant-input-number{

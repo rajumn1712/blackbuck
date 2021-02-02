@@ -225,7 +225,7 @@ const CMSComponent = (props) => {
                   xl={10}
                   xxl={10}
                 >
-                  <Form.Item className="custom-fields"
+                  <Form.Item className="custom-fields state-search"
                         name="stateValue"
                         rules={[{ required: (searchObj.cityValue?false:true), message: "State required" }]}>
                    <Select
