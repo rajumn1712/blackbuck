@@ -14,6 +14,10 @@ import Loader from "../../common/loader";
 import { connect } from "react-redux";
 
 const { Title, Paragraph } = Typography;
+const options = {
+  items: 3,
+  dots: false,
+};
 class BBScholars extends Component {
   carouselRef;
   state = {
@@ -133,8 +137,8 @@ class BBScholars extends Component {
         <Row gutter={8}>
           <div className="friends">
             {(allScholors?.length > 4) && <><Link className="more-frnd-btn left" onClick={() => { this.carouselRef.prev() }}><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link></>}
-            <OwlCarousel items={3} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${allScholors}`}>
-              {allScholors.map((scholor, index) => <div className="frnds-list-item">
+            <OwlCarousel autoWidth={true} ref={(ref) => this.carouselRef = ref}   options={options} key={`carousel_${allScholors.length}`}>
+              {allScholors.map((scholor, index) => <div className="frnds-list-item" key={index}>
                 <div className="frnds-img">
                   <div className="scholar-badge p-4">
                     {scholor.IsScholor && <img src={scholarBadge} />}
