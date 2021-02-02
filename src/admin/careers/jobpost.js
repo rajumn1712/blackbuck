@@ -59,8 +59,8 @@ const PostingJob = ({profile,history}) => {
     }
 
     const bindEditableData = (obj)=>{
-        obj.StartDate = obj.StartDate ? moment(obj.StartDate).local() : "";
-        obj.EndDate = obj.EndDate ? moment(obj.EndDate).local() : "";
+        obj.StartDate = obj.StartDate ? moment(moment(new Date(obj.StartDate))) : "";
+        obj.EndDate = obj.EndDate ? moment(moment(new Date(obj.EndDate))) : "";
         setJobPostingObject({...obj});
         form.setFieldsValue({...obj});
         setLoading(false);
@@ -68,7 +68,9 @@ const PostingJob = ({profile,history}) => {
 
     const jobSave = async ()=>{
         setLoading(true);
-        jobPostingObject.CreateDate = jobPostingObject.CreateDate ? jobPostingObject.CreateDate : new Date();
+        jobPostingObject.CreateDate = jobPostingObject.CreateDate ? jobPostingObject.CreateDate : moment(new Date()).format();
+        jobPostingObject.StartDate = moment(jobPostingObject.StartDate).format();
+        jobPostingObject.EndDate = moment(jobPostingObject.EndDate).format();
         const saveresponse = await saveJobPost(jobPostingObject);
         if(saveresponse.ok){
             notify({ message: "Job", description: "Job saved successfully" });

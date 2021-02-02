@@ -194,7 +194,10 @@ const JobCard = forwardRef((props,ref) => {
             <ul className="d-flex m-0 pl-0 job-req justify-content-between">
               <li className="f-14 text-primary">
                 <span className="post-icons job mr-16"></span>
-                {jobpost.Years !== '0' ? <Paragraph className="f-14 text-primary m-0">
+                {jobpost.Type === 'Job' && <Paragraph className="f-14 text-primary m-0">
+                  {jobpost.Years} Yr's
+              </Paragraph>}
+              {jobpost.Type === 'Internship' && jobpost.Years !== '0' ? <Paragraph className="f-14 text-primary m-0">
                   {jobpost.Years} Yr's {jobpost.Months} M
               </Paragraph>:<Paragraph className="f-14 text-primary m-0">
               {jobpost.Months} {jobpost.Months === '1' ? 'Month' : 'Months'}
