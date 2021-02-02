@@ -60,7 +60,7 @@ setLoading(false);
             <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobDetailObj.CreateDate}</Moment>
             </Paragraph>
-            <Paragraph className="f-14">
+            <Paragraph className="f-14 text-primarygreen">
               {jobDetailObj.EmployerName}
             </Paragraph>
             {jobDetailObj.Years !== '0' ? <p className="f-14 text-primary mb-12 job-req">
@@ -76,7 +76,7 @@ setLoading(false);
              <p> {jobDetailObj.Place}, {jobDetailObj.City}, {jobDetailObj.State}</p>
             </p>
             <span className="job-ldate f-14 semibold text-secondary px-8 py-4">
-              Apply before |{" "}
+              Apply before :{" "}
               <span className="semibold text-primary f-16">
                 <Moment format="MM/DD/YYYY">{jobDetailObj.EndDate}</Moment>
               </span>

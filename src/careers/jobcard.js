@@ -149,7 +149,7 @@ const JobCard = forwardRef((props,ref) => {
             <Link to={`/jobdetail/${jobpost.JobId}`}>
               <span className="post-icons view-job mr-8"></span>View Details
           </Link>,
-            <a onClick={()=>showModal(jobpost)}>
+            <a className="apply-job-btn" onClick={()=>showModal(jobpost)}>
               <span className="post-icons apply-job"></span>Apply Now
           </a>,
           !showSavedLink && <a onClick={()=>saveJobPost(jobpost)}>
@@ -165,7 +165,7 @@ const JobCard = forwardRef((props,ref) => {
             <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobpost.CreateDate}</Moment>
             </Paragraph>
-            <Paragraph className="f-12 mb-8">
+            <Paragraph className="f-12 mb-8 text-primarygreen">
               {jobpost.EmployerName}
             </Paragraph>
             <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
@@ -194,7 +194,7 @@ const JobCard = forwardRef((props,ref) => {
               </li>
             </ul>
             <span className="job-ldate f-12 text-secondary px-8 py-4">
-              Last date |{" "}
+              Last date -{" "}
               <span className="semibold text-primary">
                 <Moment format="MM/DD/YYYY">{jobpost.EndDate}</Moment>
               </span>
