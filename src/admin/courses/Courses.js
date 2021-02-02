@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Card, Select, Input, Row, Col, DatePicker, Button, Empty, Modal } from 'antd';
+import { Menu, Card, Select, Input, Row, Col, DatePicker, Button, Empty, Modal, Dropdown } from 'antd';
 import { Link, withRouter } from "react-router-dom";
 import Title from 'antd/lib/typography/Title';
 import notify from '../../shared/components/notification';
@@ -12,7 +12,18 @@ import Loader from "../../common/loader";
 const { Meta } = Card;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-
+const ownerActions = [
+    {
+        action: "Edit",
+        icons: "post-icons edit-icon",
+        subTitle: "Edit Course",
+    },
+    {
+        action: "Delete",
+        icons: "post-icons delete-icon",
+        subTitle: "Delete Course",
+    },
+];
 class Courses extends Component {
     state = {
         lstCourses: [],
@@ -126,6 +137,18 @@ class Courses extends Component {
             }
         });
     }
+    handleEvent = async (e, name, course) => {
+        switch (name) {
+            case "Edit":
+                this.props.history.push("/admin/course/" + course.Id)
+                break;
+            case "Delete":
+                this.deleteCourse(course)
+                break;
+            default:
+                break;
+        }
+    };
     render() {
         const { lstCourses, loading } = this.state;
         return <>
@@ -158,7 +181,22 @@ class Courses extends Component {
                     </Card>
                 </div> */}
                 <div className="custom-card">
-                    <div className="p-12 card-background xf">
+                    <div className="p-12 card-background">
+                        <div className="mb-16">
+                            <Card className="start-course">
+                                <Row align="middle" className="p-16">
+                                    <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
+                                        {lstCourses.length == 0 && <Title level={3} className="normalbold text-white">Get Started with the course</Title>}
+                                        <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
+                                    </Col>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
+                                        <Button size="small" className="px-16 mr-8" onClick={() => {
+                                            this.props.history.push("/admin/course/new")
+                                        }}>Create Course</Button>
+                                    </Col>
+                                </Row>
+                            </Card>
+                        </div>
                         <Row gutter={16}>
                             {lstCourses.map((course, index) => {
                                 return <Col xs={24} md={8} lg={6}>
@@ -176,26 +214,19 @@ class Courses extends Component {
                                                     {course.Members && <span className="mr-8 f-14">{course.Members} Members</span>}
                                                     {course.Date && <div className="f-14 text-primary my-4">{moment(course.Date).format('ll')}</div>}
                                                 </div>} />
+
+                                        <div className="card-options-right">
+                                            <SideAction
+                                                horclass="icons more"
+                                                clickedEvent={(event, name) =>
+                                                    this.handleEvent(event, name, course)
+                                                }
+                                                actionsList={ownerActions}
+                                            />
+                                        </div>
                                     </Card>
                                 </Col>
                             })
-                            }
-                            {
-                                lstCourses.length == 0 &&
-                                <div className="custom-card mt-16"><Card className="start-course">
-                                    <Row align="middle" className="p-16">
-                                        <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
-                                            <Title level={3} className="normalbold text-white">Get Started with the course</Title>
-                                            <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
-                                        </Col>
-                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                            <Button type="dashed" onClick={() => {
-                                                this.props.history.push("/admin/course/new")
-                                            }}>Create Course</Button>
-                                        </Col>
-                                    </Row>
-                                </Card></div>
-
                             }
                         </Row>
                     </div>

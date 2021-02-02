@@ -698,13 +698,19 @@ const AdminCourses = ({ profile, history }) => {
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                {counts.CoursesCouunt > 0 && <div className="text-right mb-16">
-                    <Card>
-                        <Button type="primary" size="small" className="px-16 mr-8" onClick={() => {
-                            history.push("/admin/course/new")
-                        }}>Create Course</Button>
-                    </Card>
-                </div>}
+                {/* {counts.CoursesCouunt > 0 && <div className="mb-16">
+                <Card className="start-course">
+                    <Row align="middle" className="p-16">
+                        <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
+                            <Title level={3} className="normalbold text-white">Get Started with the course</Title>
+                            <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
+                        </Col>
+                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
+                            <Button size="small" className="px-16 mr-8" onClick={() => {history.push("/admin/course/new") }}>Create Course</Button>
+                        </Col>
+                    </Row>
+                </Card>
+                </div>} */}
                 {showForm && <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
@@ -721,7 +727,7 @@ const AdminCourses = ({ profile, history }) => {
                                             <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
                                                 <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
-                                        </div>
+                                        </div> 
                                         <div className="">
                                             <label className="text-secondary d-block mb-4 semibold">Description</label>
                                             <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>

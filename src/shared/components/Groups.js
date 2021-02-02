@@ -227,7 +227,7 @@ class Groups extends Component {
                             <span>
                               {group.members ? group.members : ""}
                             </span>{" "}
-                          Members
+                            {group.members > 1 ? "Members" : "Member"}
                           </span>
                         )}
                         {" "}|{" "}
@@ -280,7 +280,12 @@ class Groups extends Component {
                     title={
                       <div className="d-flex align-items-center mr-16">
                         <span className="overflow-text" title={item.name}>
-                          {item.name}
+                          {<Link
+                            to={"/groupview/" + item.id}
+                            className="post-title"
+                          >
+                            {item.name}
+                          </Link>}
                           {item.type == "Private" && (
                             <span className="icons-small lock-icon ml-4" />
                           )}
@@ -293,7 +298,7 @@ class Groups extends Component {
                         <div className="text-overflow">
                           <span>
                             <span className="mr-4">{item.members}</span>
-                          Members
+                            {item.members > 1 ? "Members" : "Member"}
                         </span>{" "}
                         |{" "}
                           <span>

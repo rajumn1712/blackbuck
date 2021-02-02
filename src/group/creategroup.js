@@ -53,7 +53,7 @@ class CreateGroup extends Component {
         })
     }
     state = {
-        GroupTypeLu: ["IT Group", "science group ", "Learning Group"],
+        GroupTypeLu: ["IT Group", "Science Group ", "Learning Group"],
         TypeLu: [
             {
                 Name: "Public",
@@ -246,7 +246,7 @@ class CreateGroup extends Component {
                 <List.Item.Meta className="privacy-dropdown sample-check"
                     avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="select-image" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
-                    description={item.Description ? <div className="f-12">{item.Description}</div> : ''}
+                    description={item.Description ? <div className="f-12" style={{wordBreak: 'break-word',whiteSpace: 'pre-wrap'}}>{item.Description}</div> : ''}
                 />
             </List.Item>
         </div>
@@ -325,7 +325,7 @@ class CreateGroup extends Component {
                                                         </Form.Item>
                                                     </Col>
 
-                                                    <Col xs={24}>
+                                                    <Col xs={24} id="groupType">
                                                         <Form.Item
                                                             label="Group Type"
                                                             className="custom-fields custom-select" name="Group Type" rules={[{ required: true }]}
@@ -337,6 +337,7 @@ class CreateGroup extends Component {
                                                                 onChange={(value) =>
                                                                     setFieldValue("GroupType", value)
                                                                 }
+                                                                getPopupContainer={() => document.querySelector('#groupType')}
                                                             >
                                                                 <Option value="">Select Type</Option>
                                                                 {GroupTypeLu.map((item, index) => {
@@ -354,7 +355,7 @@ class CreateGroup extends Component {
 
                                                     </Col>
 
-                                                    <Col xs={12}>
+                                                    <Col xs={12} id="type">
                                                         <Form.Item
                                                             label="Choose Privacy"
                                                             className="custom-fields custom-select" name="Choose Privacy" rules={[{ required: true }]}
@@ -367,6 +368,7 @@ class CreateGroup extends Component {
                                                                     setFieldValue("Type", value)
                                                                 }
                                                                 optionLabelProp="label"
+                                                                getPopupContainer={() => document.querySelector('#type')}
                                                             >
                                                                 <Option value="" label="Select Type">Select Type</Option>
                                                                 {TypeLu.map((item, index) => {

@@ -81,7 +81,20 @@ class Group extends Component {
       AdminUsers: [],
     },
     tabkey: "1",
-    imageLoader: false
+    imageLoader: false,
+    dataLoading: true
+  };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id == this.props?.match?.params.id) {
+      return;
+    } else {
+      let { groupData, dataLoading } = this.state;
+      groupData = {};
+      dataLoading = true;
+      this.setState({ ...this.state, groupData, dataLoading }, () => {
+        this.getGroupData(nextProps.match.params.id);
+      })
+    }
   };
   onSearch = (e) => {
     let keyword = e.target ? e.target.value : e;
@@ -310,17 +323,28 @@ class Group extends Component {
   componentDidMount() {
     this.getGroupData();
   }
-  getGroupData = () => {
-    let { groupData } = this.state;
-    editGroup(
-      this.props ?.match ?.params.id,
-      this.props ?.profile.Id,
+  getGroupData = async (id) => {
+    let { groupData, dataLoading } = this.state;
+    let res = await editGroup(
+      id ? id : (this.props?.match?.params.id),
+      this.props?.profile.Id,
       "GroupView"
-    ).then((res) => {
+    );
+    if (res.ok) {
       groupData = res.data[0];
+      dataLoading = false;
       groupData.IsAdmin = res.data[0].IsGroupAdmin;
-      this.setState({ ...this.state, groupData });
-    });
+      this.setState({ ...this.state, groupData, dataLoading });
+    }
+    else {
+      notify({
+        message: "Error",
+        description: "Something went wrong :)",
+        type: "error",
+      });
+      dataLoading = false;
+      this.setState({ ...this.state, dataLoading });
+    }
   };
   refreshSave = () => {
     this.getGroupData();
@@ -499,7 +523,7 @@ class Group extends Component {
               className="ant-dropdown-link"
               onClick={(e) => e.preventDefault()}
             >
-              {(this.state.groupData ?.IsAdmin || (!this.state.groupData ?.IsAdmin && !this.state.groupData ?.IsSystem)) && <span className="icons h-more-icon m-0"></span>}
+              {(this.state.groupData ?.IsAdmin || (!this.state.groupData ?.IsAdmin && !this.state.groupData ?.IsSystem)|| this.state.groupData ?.IsGroupMember) && <span className="icons h-more-icon m-0"></span>}
             </a>
           </Dropdown>
         </button>
@@ -515,7 +539,8 @@ class Group extends Component {
       tabkey,
       visibleAddAdmin,
       userFndsLu,
-      imageLoader
+      imageLoader,
+      dataLoading
     } = this.state;
     const friendsData = friendsLu
       .filter((item) => {
@@ -567,6 +592,7 @@ class Group extends Component {
       });
     return groupData ? (
       <div className="main">
+        {dataLoading && <Loader className="loader-middle" />}
         <Row gutter={16}>
           <Col xs={24} sm={12} md={16} lg={18} xl={17} xxl={17}>
             <div className="coverpage">
@@ -720,12 +746,13 @@ class Group extends Component {
                     <span className="f-20 mt-4 fw-400">
                       {groupData.Members}
                     </span>{" "}
-                    Members
+                    {groupData.Members > 1 ? "Members" : "Member"}
                   </span>
                 )}
-                <Button className="mr-8" type="primary" onClick={this.showModal}>
+                {groupData.IsGroupMember && <Button className="mr-8" type="primary" onClick={this.showModal}>
                   <span className="icons add-white"></span> Invite
                 </Button>
+                }
                 {(!groupData.IsGroupMember && !groupData.IsGroupAdmin && !groupData.requestJoin) && <Button type="primary" onClick={() => this.joinGroup(groupData)}>
                   Join
                 </Button>}
@@ -739,13 +766,13 @@ class Group extends Component {
             <Tabs
               defaultActiveKey="1"
               className="profile-tabs"
-              tabBarExtraContent={operations}
+              tabBarExtraContent={(!groupData.IsGroupAdmin && !groupData.IsGroupMember) ? [] : ((groupData.IsGroupMember && groupData.IsSystem) ? [] : operations)}
               onChange={(e) => this.setState({ ...this.state, tabkey: e })}
             >
               <TabPane tab="About" key="3">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <GroupAbout aboutData={groupData} />
+                    {Object.keys(groupData).length > 0 && <GroupAbout aboutData={groupData} key={this.props?.match?.params.id} />}
                   </Col>
                 </Row>
               </TabPane>
@@ -789,7 +816,7 @@ class Group extends Component {
               <TabPane tab="Media" key="2">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Media groupData={groupData} />
+                    {Object.keys(groupData).length > 0 && <Media groupData={groupData} key={this.props?.match?.params.id} />}
                   </Col>
                 </Row>
               </TabPane>

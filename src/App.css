@@ -298,7 +298,7 @@
 .left-menu.camera-icon {
   background-position: -378px -254px;
 }
-.icons.edit {
+.icons.edit{
   background-position: -61px -198px;
 }
 .icons.add {
@@ -310,7 +310,7 @@
 .left-menu.noti-icon {
   background-position: -124px -200px;
 }
-.left-menu.savedpost-icon {
+.left-menu.savedpost-icon, .post-icons.save-job {
   background-position: -350px -200px;
 }
 .left-menu.interest {
@@ -441,6 +441,7 @@
 .custom-popup .ant-modal-close {
   display: none !important;
 }
+.mt-auto{margin-top: auto;}
 .justify-content-between,
 .speekar-block {
   justify-content: space-between;
@@ -621,6 +622,7 @@
 .file-size {
   font-weight: 500;
   color: var(--textsecondary);
+  min-width: 100px;
 }
 .ant-btn.btn-cancel {
   background: #dedfe1;
@@ -1197,7 +1199,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.intern-cards .intern-cardfooter .filename .icons {
+.intern-cards .intern-cardfooter .filename .icons,.job-req .post-icons {
   flex-shrink: 0;
 }
 .intern-cards .card-options {
@@ -1341,7 +1343,8 @@
 .custom-fields .ant-input,
 .custom-fields .ant-select,
 .custom-fields .ant-picker, 
-.custom-fields .ant-input-number-input {
+.custom-fields .ant-input-number-input , 
+.custom-fields .ant-select-selection-search-input{
   min-height: 48px;
 }
 .custom-fields .ant-input-group .videoplybacktime:first-child .ant-input-number{
@@ -2010,7 +2013,7 @@ textarea {
 .admin-left-pane{width: 260px; position: fixed; top: 70px; left: 0; bottom: 0;}
 .course-step .ant-collapse{background: var(--white);  border-radius: 0.4rem;}
 .create-course{background: var(--white); padding: 40px 40px 28px; border-radius: 0.8rem; border: 1px solid var(--line)}
-.addContent{height: 32px; font-size: var(--f-12) ;color: var(--textprimary); border-radius: 0.4rem;}
+.addContent{height: 32px; font-size: var(--f-12) ;border-radius: 0.4rem;}
 .lecture-collapse{position: relative;}
 .create-course .ant-collapse-content-box, .create-course .ant-collapse-header{padding: 12px !important;}
 .video-dur{margin-right: 42px}
@@ -2074,7 +2077,7 @@ textarea {
 .video-card .ant-card-head{margin-bottom: 0 !important;}
 .input-height{min-height: 48px;border-radius: 8px !important;}
 .btn-group{position: relative;display: inline-block;vertical-align: middle;}
-#radioBtn .notActive{color:var(--primary);background-color: #fff!important;border: 1px solid var(--primary);}
+#radioBtn .notActive{color:var(--textsecondary);background-color: #fff!important;border: 1px solid var(--textsecondary);}
 #radioBtn .active{color: #fff;}
 .wh-50{width: 50px;height: 50px;}
 .radious-right{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
@@ -2142,4 +2145,27 @@ textarea {
     font-family: SimSun, sans-serif;
     line-height: 1;
     content: '*';
+}
+
+/* Careers CSS */
+.scholar-badge{ position: absolute; width: 36px; height: 36px; left: 0; top: 10px; background: var(--white); box-sizing: border-box; border-radius: 0 50% 50% 0;}
+.job-req li{display: flex; align-items: center; margin-bottom: 16px;margin-right: 5px;}
+.job-req li:last-child{margin-right: 0;width: 55%; }
+.job-req .post-icons.job{ background-position: -875px -256px; }
+.job-req .post-icons.role{ background-position: -950px -256px; }
+.job-req .post-icons.location{ background-position: -973px -256px; }
+.icon.add-icon{background-position: -784px -200px;}
+.icon.add-icon:hover{background-position: -784px -226px;}
+.icon.edit-admin{background-position: -810px -200px;}
+.icon.edit-admin:hover{background-position: -810px -224px;}
+.icon.delete-admin{background-position: -838px -200px;}
+.icon.delete-admin:hover{background-position: -838px -226px;}
+.job-ldate{ background: var(--bghover); border-radius: 6px; display: inline-block;}
+.post-icons.view-job {background-position: -5px -200px;}
+.post-icons.apply-job {background-position: -64px -200px;}
+.job-tag{display: inline-block; margin-right: 8px;}
+@media (max-width: 767px){
+  .job-req{flex-wrap: wrap;}
+  .job-card .ant-card-actions .post-icons{display: none;}
+  .job-card .ant-card-actions li:not(:last-child) a {border-right: 1px solid var(--line);}
 }

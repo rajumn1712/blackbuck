@@ -597,8 +597,8 @@ const CourseComponent = ({ profile, history }) => {
                                         </div>
                                         <div className="">
                                             <label className="text-secondary d-block mb-4 semibold required">Description</label>
-                                            <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>
-                                                <TextArea className="custom-fields" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
+                                            <Form.Item className="mb-12" name="Description" rules={[{ required: true, message: "Description  required" }]}>
+                                                <TextArea className="" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
                                                     autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
                                                 />
                                             </Form.Item>
@@ -633,7 +633,7 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
+                                            <Col xs={courseObject.CourseType == "Live Session"?12:24} sm={courseObject.CourseType == "Live Session"?12:24} md={courseObject.CourseType == "Live Session"?12:24} lg={courseObject.CourseType == "Live Session"?12:24} xl={courseObject.CourseType == "Live Session"?12:24} xxl={courseObject.CourseType == "Live Session"?12:24} className="">
                                                 <label className="text-secondary d-block mb-4 semibold  required">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
@@ -645,14 +645,14 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <label className="text-secondary d-block mb-4  required">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
                                             }
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
                                                     <Select
@@ -1005,19 +1005,20 @@ const CourseComponent = ({ profile, history }) => {
                                     />
                                 </Form.Item>
                             </div>
-                            <div className="custom-fields">
+                            <div className="custom-fields" id="type">
                                 <label className="text-secondary d-block mb-4  required">Content Type</label>
                                 <Form.Item name="TopicType" rules={[{ required: true, message: "Content Type  required" }]} >
-                                    <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}>
+                                    <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}
+                                    getPopupContainer={() => document.querySelector('#type')}>
                                         <Option value="Video">Video</Option>
                                         <Option value="Document">Document</Option>
                                     </Select>
                                 </Form.Item>
                             </div>
-                            {topicObj.TopicType == "Video" && <div className="custom-fields">
+                            {topicObj.TopicType == "Video" && <div className="custom-fields" id="sourceType">
                                 <label className="text-secondary d-block mb-4  required">Video Source</label>
                                 <Form.Item name="VideoSource">
-                                    <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)}>
+                                    <Select defaultValue="Choose Video Source" allowClear placeholder="Choose Video Source" onChange={(value) => handleChange('VideoSource', value, true)} getPopupContainer={() => document.querySelector('#sourceType')}>
                                         <Option value="Upload">Upload</Option>
                                         <Option value="YouTube">YouTube</Option>
                                         <Option value="Vimeo">Vimeo</Option>

@@ -250,7 +250,7 @@ class GroupsPage extends Component {
                                 <span>
                                   {group.members ? group.members : ""}
                                 </span>{" "}
-                                Members
+                                {group.members > 1 ? "Members" : "Member"}
                               </span>
                             )}
                           </div>

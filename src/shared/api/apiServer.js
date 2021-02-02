@@ -4,7 +4,8 @@ const GROUPS_API = "service/api/groups/";
 const PROFILE_API = "service/api/profile/";
 const TAGS_API = "service/api/posts/";
 const ADMIN_API = "service/api/admin/";
-const LMS_API = "service/api/LMS/"
+const LMS_API = "service/api/LMS/";
+const CAREESRS_API = "service/api/careers/";
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     FRIENDS_API +
@@ -251,6 +252,52 @@ const joinGroupNew = (id, obj) => {
 const getPublishedObject = (courseId) => {
   return apiClient.get(ADMIN_API + `getPostsByCoureId/${courseId}`,);
 }
+const saveJobPost = (obj) => {
+  return apiClient.post(ADMIN_API + 'saveJobPosting', obj);
+}
+const getJobPostings = (user_id, take, skip) => {
+  return apiClient.get(ADMIN_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
+}
+const getJobById = (user_id,id) => {
+  return apiClient.get(ADMIN_API + `getJobPostById/${user_id}/${id}`)
+}
+const jobpostingsCount = () => {
+  return apiClient.get(ADMIN_API + 'getJobPostingCount');
+}
+const getJobApplications = (take, skip) => {
+  return apiClient.get(ADMIN_API + `getJobApplications/${take}/${skip}`)
+}
+const jobApplicationCount = () => {
+  return apiClient.get(ADMIN_API + 'getJobApplicationCount');
+}
+const getScholorUsers = (take, skip) => {
+  return apiClient.get(ADMIN_API + `getScholorUsers/${take}/${skip}`);
+}
+const allJobPostings = (user_id,take,skip,type,state,city)=>{
+  if(type==='jobsearch'&&(state||city)){
+    return apiClient.get(CAREESRS_API + `getSearchJobPostings/${user_id}/${state ? state : null}/${city ? city : null}/${take}/${skip}`)
+  }else if(type === 'savedjobs'){
+    return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
+  }
+  else{
+    return apiClient.get(CAREESRS_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
+  }
+}
+const saveApplicationJob = (obj)=>{
+  return apiClient.post(CAREESRS_API + 'saveJobApplication',obj);
+}
+const saveUserJobPost = (obj)=>{
+  return apiClient.post(CAREESRS_API + 'savedJobPosts',obj);
+}
+const getSavedJobPost = (user_id,take,skip)=>{
+  return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
+}
+const deleteJobSavedPost = (id)=>{
+  return apiClient.post(CAREESRS_API + `deleteSavedJobPost/${id}`);
+}
+const deleteJobPost = (id)=>{
+  return apiClient.get(ADMIN_API + `deleteJobPost/${id}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -323,5 +370,18 @@ export {
   getAllSystemGroups,
   groupBlock,
   joinGroupNew,
-  getPublishedObject
+  getPublishedObject,
+  saveJobPost,
+  getJobPostings,
+  getJobById,
+  jobpostingsCount,
+  getJobApplications,
+  jobApplicationCount,
+  getScholorUsers,
+  allJobPostings,
+  saveApplicationJob,
+  saveUserJobPost,
+  getSavedJobPost,
+  deleteJobSavedPost,
+  deleteJobPost
 };
