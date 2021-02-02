@@ -146,15 +146,15 @@ const JobCard = forwardRef((props,ref) => {
           bordered={true}
           className="job-card"
           actions={[
-            !showSavedLink && <a onClick={()=>saveJobPost(jobpost)}>
-              <span className="post-icons save-job"></span>Save Job
-          </a>,
             <Link to={`/jobdetail/${jobpost.JobId}`}>
               <span className="post-icons view-job mr-8"></span>View Details
           </Link>,
             <a onClick={()=>showModal(jobpost)}>
               <span className="post-icons apply-job"></span>Apply Now
-          </a>
+          </a>,
+          !showSavedLink && <a onClick={()=>saveJobPost(jobpost)}>
+          <span className="post-icons save-job"></span>Save Job
+      </a>,
           ]}
         >
           <div className="p-12">
@@ -174,9 +174,11 @@ const JobCard = forwardRef((props,ref) => {
             <ul className="d-flex m-0 pl-0 job-req justify-content-between">
               <li className="f-14 text-primary">
                 <span className="post-icons job mr-16"></span>
-                <Paragraph className="f-14 text-primary m-0">
+                {jobpost.Years !== '0' ? <Paragraph className="f-14 text-primary m-0">
                   {jobpost.Years} Yr's {jobpost.Months} M
-              </Paragraph>
+              </Paragraph>:<Paragraph className="f-14 text-primary m-0">
+                  {jobpost.Months} Months
+              </Paragraph>}
               </li>
               <li className=" f-14 text-primary ">
                 <span className="post-icons role mr-16"></span>

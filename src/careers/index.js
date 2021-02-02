@@ -189,6 +189,34 @@ const CMSComponent = (props) => {
                 form={form}
               >
             <Row gutter={8}>
+            <Col
+                  xs={24}
+                  sm={12}
+                  md={12}
+                  lg={10}
+                  xl={10}
+                  xxl={10}
+                >
+                  <Form.Item
+                    className="custom-fields"
+                    name="cityValue"
+                    rules={[
+                      {
+                        required: (searchObj.stateValue?false:true),
+                        message: "City required",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Search By City"
+                      name="cityValue"
+                      onChange={(e) => {
+                        searchObj.cityValue = e.currentTarget.value;
+                        setSearchObj({ ...searchObj });
+                      }}
+                    />
+                  </Form.Item>
+                </Col>
                 <Col
                   xs={24}
                   sm={12}
@@ -218,34 +246,6 @@ const CMSComponent = (props) => {
                   >
                     {statesList.map(statevalue => <Option key={statevalue.key} value={statevalue.name}>{statevalue.name}</Option>)}
                   </Select>
-                  </Form.Item>
-                </Col>
-                <Col
-                  xs={24}
-                  sm={12}
-                  md={12}
-                  lg={10}
-                  xl={10}
-                  xxl={10}
-                >
-                  <Form.Item
-                    className="custom-fields"
-                    name="cityValue"
-                    rules={[
-                      {
-                        required: (searchObj.stateValue?false:true),
-                        message: "City required",
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Search By City"
-                      name="cityValue"
-                      onChange={(e) => {
-                        searchObj.cityValue = e.currentTarget.value;
-                        setSearchObj({ ...searchObj });
-                      }}
-                    />
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={4} xl={4} xxl={4}>

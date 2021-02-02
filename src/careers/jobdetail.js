@@ -63,9 +63,11 @@ setLoading(false);
             <Paragraph className="f-14">
               {jobDetailObj.EmployerName}
             </Paragraph>
-            <p className="f-14 text-primary mb-12 job-req">
-              <span className="post-icons job mr-16"></span>{jobDetailObj.Years} Yr's
-            </p>
+            {jobDetailObj.Years !== '0' ? <p className="f-14 text-primary mb-12 job-req">
+              <span className="post-icons job mr-16"></span>{jobDetailObj.Years} Yr's {jobDetailObj.Months} M
+            </p>:<p className="f-14 text-primary mb-12 job-req">
+              <span className="post-icons job mr-16"></span>{jobDetailObj.Months} Months
+            </p>}
             <p className="f-14 text-primary mb-12 job-req">
               <span className="post-icons role mr-16"></span>{jobDetailObj.SalaryRange}
             </p>
