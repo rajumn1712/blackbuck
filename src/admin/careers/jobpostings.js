@@ -132,7 +132,9 @@ const JobPostings = ({ profile, history }) => {
   const confirmJObDelete = async () => {
     const response = await deleteJobPost(selection[0].JobId);
     if (response.ok) {
-        getAllJobPostings(1,10)
+        getAllJobPostings(1,10);
+        setSelectedRowKeys([]);
+                setSelection([]);
       notify({
         message: "Delete",
         type: "success",
