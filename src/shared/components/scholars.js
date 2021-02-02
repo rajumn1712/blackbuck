@@ -87,7 +87,7 @@ class BBScholars extends Component {
         <div>
           <Row gutter={8} >
             {allScholors.map((scholor, index) => <Col lg={8}>
-              <div className="frnds-list-item" key={index}>
+              <div className="frnds-list-item mb-10" key={index}>
                 <div className="frnds-img">
                   <div className="scholar-badge p-4">
                     {scholor.IsScholor && <img src={scholarBadge} />}

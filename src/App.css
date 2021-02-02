@@ -1649,6 +1649,9 @@ textarea {
 .left-menu.private-icon {
   background-position: -29px -309px;
 }
+.mb-10{
+  margin-bottom: 10px !important;
+}
 .left-menu.preview-icon {
   background-position: -464px -256px;
 }
