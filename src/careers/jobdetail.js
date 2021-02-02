@@ -60,7 +60,7 @@ setLoading(false);
             <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobDetailObj.CreateDate}</Moment>
             </Paragraph>
-            <Paragraph className="f-14 text-primarygreen">
+            <Paragraph className="f-14">
               {jobDetailObj.EmployerName}
             </Paragraph>
             {jobDetailObj.Years !== '0' ? <p className="f-14 text-primary mb-12 job-req">
