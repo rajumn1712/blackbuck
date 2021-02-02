@@ -311,6 +311,9 @@ class Interests extends Component {
                     this.setFieldValue(value)
                   }
                   key={lstInterests}
+                  filterOption={(input, option) =>
+                    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
                 >
                   {interestsLu.map((item, index) => {
                     return (

@@ -612,6 +612,9 @@ const CourseComponent = ({ profile, history }) => {
                                                         onChange={(value) => handleChange('Categories', value)}
                                                         mode="multiple"
                                                         disabled={courseObject.CreatedDate}
+                                                        filterOption={(input, option) =>
+                                                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                        }
                                                     >
                                                         {CategoriesLu?.map((item, index) => {
                                                             return <Option value={item.BranchId} key={index}>{item.BranchName}</Option>

@@ -400,6 +400,9 @@ class CreateGroup extends Component {
                                                                 optionLabelProp="label"
                                                                 mode="multiple"
                                                                 getPopupContainer={() => document.querySelector('#inviteFrnd1')}
+                                                                filterOption={(input, option) =>
+                                                                    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                                }
                                                             >
                                                                 {FriendsList.map((item, index) => {
                                                                     return (
