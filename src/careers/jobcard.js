@@ -48,7 +48,9 @@ const JobCard = forwardRef((props,ref) => {
     
   };
 
-  const handleCancel = () => {
+  const handleCancel = (isSubmit) => {
+    if (isSubmit)
+      updateJobApplications(jobpostObj, 'Application')
     setIsModalVisible(false);
   };
 
@@ -117,6 +119,14 @@ const JobCard = forwardRef((props,ref) => {
   };
 
   const saveJobPost = async (job) => {
+    if (job.IsJobSaved) {
+      notify({
+        message: 'Job',
+        type: 'warning',
+        description: 'Already saved this job'
+      })
+      return;
+    }
     const object = {
       Id: uuidv4(),
       JobId: job.JobId,
@@ -125,6 +135,7 @@ const JobCard = forwardRef((props,ref) => {
     };
     const response = await saveUserJobPost(object);
     if (response.ok) {
+      updateJobApplications(job, 'SavedJob')
       notify({
         message: "Job",
         type: "success",
@@ -139,6 +150,15 @@ const JobCard = forwardRef((props,ref) => {
     }
   };
 
+  const updateJobApplications = (job, type) => {
+    let typeObj = { "SavedJob": "IsJobSaved", "Application": "IsApplied" }
+    allJobPosts.forEach(item => {
+      if (item.JobId === job.JobId) {
+        item[typeObj[type]] = true;
+      }
+    })
+    setAllJobPosts([...allJobPosts]);
+  }
   const renderJobPost = (jobpost, indx) => {
     return (
       <div className="post-card" key={indx} onScroll={handleScroll()}>
@@ -212,7 +232,7 @@ const JobCard = forwardRef((props,ref) => {
       <ApplyModal className="custom-popup"
         visible={isModalVisible}
         object={jobpostObj}
-        cancel={handleCancel}
+        cancel={(isSubmit)=>handleCancel(isSubmit)}
         formid="myJobCardFomid"
       />
     </div>
