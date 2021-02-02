@@ -197,7 +197,7 @@ const JobCard = forwardRef((props,ref) => {
                 {jobpost.Years !== '0' ? <Paragraph className="f-14 text-primary m-0">
                   {jobpost.Years} Yr's {jobpost.Months} M
               </Paragraph>:<Paragraph className="f-14 text-primary m-0">
-                  {jobpost.Months} Months
+              {jobpost.Months} {jobpost.Months === '1' ? 'Month' : 'Months'}
               </Paragraph>}
               </li>
               <li className=" f-14 text-primary ">

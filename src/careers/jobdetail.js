@@ -66,7 +66,7 @@ setLoading(false);
             {jobDetailObj.Years !== '0' ? <p className="f-14 text-primary mb-12 job-req">
               <span className="post-icons job mr-16"></span>{jobDetailObj.Years} Yr's {jobDetailObj.Months} M
             </p>:<p className="f-14 text-primary mb-12 job-req">
-              <span className="post-icons job mr-16"></span>{jobDetailObj.Months} Months
+              <span className="post-icons job mr-16"></span>{jobDetailObj.Months} {jobDetailObj.Months === '1' ? 'Month' : 'Months'}
             </p>}
             <p className="f-14 text-primary mb-12 job-req">
               <span className="post-icons role mr-16"></span>{jobDetailObj.SalaryRange}
