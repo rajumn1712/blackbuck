@@ -9,12 +9,10 @@ import user from '../../styles/images/user.jpg';
 import PremiumBadge from "../../styles/images/premiumbadge.svg";
 import MediaPreview from '../../group/MediaPreview';
 import { getMedia } from "../api/apiServer";
-import VisSenseFactory from "vissense";
 const { Option } = Select;
 const joingroup = <div className="join-grp-title">John Doe <span className="join-grp-txt">has Created a group name is</span> Mech Mantra</div>
 const { TabPane } = Tabs;
 const { Meta } = Card;
-const VisSense = VisSenseFactory(window);
 class Media extends Component {
     state = {
         Videos: [],
@@ -53,25 +51,15 @@ class Media extends Component {
             });
         }
     }
-    openFullview = (item, type, e) => {
-        if (e) {
-            const videoElements = document.querySelectorAll("video");
-            for (const i in videoElements) {
-                if (typeof videoElements[i] == "object") {
-                    this.enableVideoAutoPlay(videoElements[i]);
-                }
-            }
+    openFullview = (item, type, indx) => {
+        if (indx || indx === 0) {
+            const videoElements = document.getElementById("video" + indx);
+            setTimeout(function () {
+                videoElements.pause();
+            }, 500
+            )
         }
         this.mediaPreview.openFullview(item, type)
-    }
-    enableVideoAutoPlay(myVideo) {
-        var videoElementArea = VisSense(myVideo);
-        var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
-        monitorBuilder.on("hidden", function () {
-            myVideo.pause();
-        });
-        var videoVisibilityMonitor = monitorBuilder.build();
-        videoVisibilityMonitor.start();
     }
     componentDidMount() {
         window.addEventListener("scroll", this.handleScroll);
@@ -142,8 +130,8 @@ class Media extends Component {
                                             
                                             bordered={false}
                                             className="b-none"
-                                            cover={<div className="post-image" onClick={(e) => { this.openFullview(item, 'Video', e) }}>
-                                                <video className="obj-fit cus-video-h" width="100%" height="100%" controls>
+                                            cover={<div className="post-image">
+                                                <video onClick={(e) => { this.openFullview(item, 'Video', indx) }} className="obj-fit cus-video-h" width="100%" height="100%" controls id={`video${indx}`}>
                                                     <source src={item.ImageUrl} />
                                                 </video>
                                             </div>}
