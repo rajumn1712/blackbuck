@@ -986,12 +986,12 @@ class Postings extends Component {
           <a className="f-24 semibold" onClick={() => { window.open(post.Link, "_blank") }}>Join Live Session</a>
         </div>
       </div>
-      <div className="course-create p-12 d-flex justify-between">
+      <div className="course-create p-12 d-flex xs-flex-col justify-between">
         <div className="d-flex align-items-center">
           <Avatar src={post.Author !== null ? post.Author[0].Image : defaultUser} className="mr-8" />
           <p className="m-0 f-14">{post.Author !== null && `${post.Author[0]?.Firstname} ${post.Author[0]?.Lastname}`}</p>
         </div>
-        <div className="d-flex livecourse-date py-8 px-16">
+        <div className="livecourse-date py-8 px-16">
           <Moment className="f-16 semibold mr-16 text-primary" format={"DD/MM/YYYY HH:MM"}>{post.LiveDate}</Moment>
           <Moment className="f-16 semibold text-secondary" fromNow>{post.LiveDate}</Moment>
         </div>

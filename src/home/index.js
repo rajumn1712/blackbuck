@@ -28,14 +28,14 @@ class Home extends Component {
         return (
             <div className="main">
                 <Row gutter={16}>
-                    <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
+                    <Col xs={{ order: 1, span:24 }} sm={{order:1 , span:12}} md={8} lg={6} xl={5} xxl={5} >
                         <Identity />
-                        <Affix offsetTop={86}>
+                        <Affix offsetTop={86} className="xs-dnone" >
                             <Tags />
                             <Invite />
                         </Affix>
                     </Col>
-                    <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
+                    <Col xs={{ order: 2, span:24 }} sm={{order:2 , span:12}} md={16} lg={12} xl={12} xxl={12}  >
                         <Switch >
                             <Route path="/newsfeed" render={(props) => { return <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
@@ -50,14 +50,14 @@ class Home extends Component {
                             <Route path="/savedjobs" render={(props) => {
                                 return <JobCard postingsType={"savedjobs"} {...props} />
                             }} />
-                            <Route path="/jobdetail/:jobid" component={JobDetails}/>
+                            <Route path="/jobdetail/:jobid" component={JobDetails} />
                             {/* <Route path="/notifications" component={()=><CommingSoon />}/> */}
                             <Redirect path="" to="/newsfeed" />
                         </Switch>
                     </Col>
-                    <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
+                    <Col xs={{ order: 3, span:24 }} sm={{order:3 , span:12}} md={8} lg={6} xl={7} xxl={7}  >
                         <Groups />
-                        <Affix offsetTop={86} >
+                        <Affix offsetTop={86} className="xs-dnone">
                             <Ads />
                         </Affix>
                     </Col>
