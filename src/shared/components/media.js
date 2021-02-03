@@ -122,7 +122,7 @@ class Media extends Component {
                         <TabPane tab="Photos" key="1">
                             <Row gutter={[8, 8]} className="px-8">
                                 {Photos.length > 0 && Photos?.map((item, indx) => {
-                                    return <Col span={6}>
+                                    return <Col xs={24} md={12} lg={6}>
                                         <Card key={indx}
                                             bordered={false}
                                             className="b-none"
@@ -137,7 +137,7 @@ class Media extends Component {
                         <TabPane tab="Videos" key="2">
                             <Row gutter={[8, 8]} className="px-8">
                                 {Videos.length > 0 && Videos?.map((item, indx) => {
-                                    return <Col span={6} wrap>
+                                    return <Col xs={24} md={12} lg={6} wrap>
                                         <Card key={indx}
                                             
                                             bordered={false}
