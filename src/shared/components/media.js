@@ -9,10 +9,12 @@ import user from '../../styles/images/user.jpg';
 import PremiumBadge from "../../styles/images/premiumbadge.svg";
 import MediaPreview from '../../group/MediaPreview';
 import { getMedia } from "../api/apiServer";
+import VisSenseFactory from "vissense";
 const { Option } = Select;
 const joingroup = <div className="join-grp-title">John Doe <span className="join-grp-txt">has Created a group name is</span> Mech Mantra</div>
 const { TabPane } = Tabs;
 const { Meta } = Card;
+const VisSense = VisSenseFactory(window);
 class Media extends Component {
     state = {
         Videos: [],
@@ -51,12 +53,29 @@ class Media extends Component {
             });
         }
     }
-    openFullview = (item, type) => {
+    openFullview = (item, type, e) => {
+        if (e) {
+            const videoElements = document.querySelectorAll("video");
+            for (const i in videoElements) {
+                if (typeof videoElements[i] == "object") {
+                    this.enableVideoAutoPlay(videoElements[i]);
+                }
+            }
+        }
         this.mediaPreview.openFullview(item, type)
+    }
+    enableVideoAutoPlay(myVideo) {
+        var videoElementArea = VisSense(myVideo);
+        var monitorBuilder = VisSense.VisMon.Builder(videoElementArea);
+        monitorBuilder.on("hidden", function () {
+            myVideo.pause();
+        });
+        var videoVisibilityMonitor = monitorBuilder.build();
+        videoVisibilityMonitor.start();
     }
     componentDidMount() {
         window.addEventListener("scroll", this.handleScroll);
-        this.getMedia(this.props.groupData.GroupId, 'photos', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize);
+        this.getMedia(this.props.groupData.GroupId, 'photos', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize,"1");
     }
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll);
@@ -88,6 +107,10 @@ class Media extends Component {
             }
         });
     }
+    onTabClick = (index, tabkey) => {
+        if (index !== tabkey)
+            this.setState({ ...this.state, Photos: [], Videos: [] }, () => { this.getMedia(this.props.groupData.GroupId, index == 1 ? 'photos' : 'Video', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize, index) });
+    }
     render() {
         const { Videos, Photos, tabkey } = this.state;
         return (
@@ -95,7 +118,7 @@ class Media extends Component {
                 <Card title="Media" bordered={false}
                 // extra={<div><a className="f-14 px-16" href="#">Create Album</a><a className="pl-8 f-14" href="#">Add Photos/Video</a></div>}
                 >
-                    <Tabs defaultActiveKey={tabkey} className=" media-tabs" onTabClick={(index) => index == tabkey ? this.setState({ ...this.state, Photos: [], Videos: [] }, () => { this.getMedia(this.props.groupData.GroupId, index == 1 ? 'photos' : 'Video', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize) }) : ''}>
+                    <Tabs defaultActiveKey={tabkey} className=" media-tabs" onTabClick={(index)=>this.onTabClick(index,this.state.tabkey)}>
                         <TabPane tab="Photos" key="1">
                             <div className="">
                                 <Row>
@@ -122,8 +145,8 @@ class Media extends Component {
                                         {Videos.length > 0 && Videos?.map((item, indx) => {
                                             return <Col span={6}><Card key={indx}
                                                 hoverable
-                                                cover={<div className="video-post" >
-                                                    <video width="100%" onClick={() => this.openFullview(item, 'Video')} controls>
+                                                cover={<div className="post-image" onClick={(e) =>{this.openFullview(item, 'Video',e)}}>
+                                                    <video width="100%"  height="100%" controls>
                                                         <source src={item.ImageUrl} />
                                                     </video>
                                                 </div>}

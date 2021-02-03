@@ -105,7 +105,6 @@ class Groups extends Component {
   };
   newGroup = () => { };
   updateGroup(item) {
-    debugger
     let { data } = this.state;
     if (item.type === "Private") {
       for (const i in data) {
