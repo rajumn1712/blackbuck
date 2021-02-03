@@ -59,6 +59,15 @@ class Profile extends Component {
     tabkey: this.props?.match.params.tabkey,
     showDownload: false,
   };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.tabkey == this.props?.match?.params.tabkey) {
+      return;
+    } else {
+      let { tabkey } = this.state;
+      tabkey = nextProps.match.params.tabkey;
+      this.setState({ ...this.state, tabkey })
+    }
+  };
   isDataRefreshed = (refresh) => {
     if (refresh) this.friends.getFriends();
   };
@@ -258,6 +267,7 @@ class Profile extends Component {
               defaultActiveKey={tabkey}
               className="profile-tabs"
               onChange={this.handleTabChange}
+              key={tabkey}
             >
                         <TabPane tab="Profile" key="IsProfileTab">
                 <Route
@@ -317,7 +327,7 @@ class Profile extends Component {
                 />
               </TabPane>
               <TabPane tab="Groups" className="m-0" key="IsProfileGroupsTab">
-                <Route
+                            <Route
                   path="/profile/IsProfileGroupsTab"
                   render={() => {
                     return (
