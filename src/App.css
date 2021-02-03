@@ -2168,6 +2168,8 @@ textarea {
 .post-icons.apply-job {background-position: -64px -226px;}
 .job-tag{display: inline-block; margin-right: 8px;}
 .post-card .ant-card-actions .apply-job-btn{color: var(--primary) !important;}
+.b-none{border: none !important;}
+.cus-video-h{height: 186px;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }

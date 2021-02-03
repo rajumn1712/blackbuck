@@ -75,11 +75,11 @@ class Media extends Component {
     }
     componentDidMount() {
         window.addEventListener("scroll", this.handleScroll);
-        this.getMedia(this.props.groupData.GroupId, 'photos', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize,"1");
+        this.getMedia(this.props.groupData.GroupId, 'photos', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize, "1");
     }
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll);
-      }
+    }
     getMedia = (groupid, type, take, skip, index) => {
         this.setState({ ...this.state, loading: true });
         getMedia(groupid, type, take, skip).then(res => {
@@ -118,45 +118,40 @@ class Media extends Component {
                 <Card title="Media" bordered={false}
                 // extra={<div><a className="f-14 px-16" href="#">Create Album</a><a className="pl-8 f-14" href="#">Add Photos/Video</a></div>}
                 >
-                    <Tabs defaultActiveKey={tabkey} className=" media-tabs" onTabClick={(index)=>this.onTabClick(index,this.state.tabkey)}>
+                    <Tabs defaultActiveKey={tabkey} className=" media-tabs" onTabClick={(index) => this.onTabClick(index, this.state.tabkey)}>
                         <TabPane tab="Photos" key="1">
-                            <div className="">
-                                <Row>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className="m-8">
-                                        <Row >
-                                            {Photos.length > 0 && Photos?.map((item, indx) => {
-                                                return <Col span={6}><Card key={indx}
-                                                    hoverable
-                                                    cover={<img className="obj-fit" src={item.ImageUrl} onClick={() => this.openFullview(item, 'Photo')} />}
-                                                >
-                                                </Card></Col>
-                                            })
-                                            }
-                                            {Photos.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-                                        </Row>
-                                    </Col>
-
-                                </Row></div>
+                            <Row gutter={[8, 8]} className="px-8">
+                                {Photos.length > 0 && Photos?.map((item, indx) => {
+                                    return <Col span={6}>
+                                        <Card key={indx}
+                                            bordered={false}
+                                            className="b-none"
+                                            cover={<img className="obj-fit" src={item.ImageUrl} onClick={() => this.openFullview(item, 'Photo')} />}
+                                        >
+                                        </Card></Col>
+                                })
+                                }
+                                {Photos.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+                            </Row>
                         </TabPane>
                         <TabPane tab="Videos" key="2">
-                            <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className="m-8">
-                                    <Row gutter={24}>
-                                        {Videos.length > 0 && Videos?.map((item, indx) => {
-                                            return <Col span={6}><Card key={indx}
-                                                hoverable
-                                                cover={<div className="post-image" onClick={(e) =>{this.openFullview(item, 'Video',e)}}>
-                                                    <video width="100%"  height="100%" controls>
-                                                        <source src={item.ImageUrl} />
-                                                    </video>
-                                                </div>}
-                                            >
-                                            </Card></Col>
-                                        })
-                                        }
-                                        {Videos.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-                                    </Row>
-                                </Col>
+                            <Row gutter={[8, 8]} className="px-8">
+                                {Videos.length > 0 && Videos?.map((item, indx) => {
+                                    return <Col span={6} wrap>
+                                        <Card key={indx}
+                                            
+                                            bordered={false}
+                                            className="b-none"
+                                            cover={<div className="post-image" onClick={(e) => { this.openFullview(item, 'Video', e) }}>
+                                                <video className="obj-fit cus-video-h" width="100%" height="100%" controls>
+                                                    <source src={item.ImageUrl} />
+                                                </video>
+                                            </div>}
+                                        ></Card>
+                                    </Col>
+                                })
+                                }
+                                {Videos.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
                             </Row>
                         </TabPane>
                         {/* <TabPane tab="Albums" key="3">
