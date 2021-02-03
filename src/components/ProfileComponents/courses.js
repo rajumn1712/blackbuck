@@ -14,12 +14,15 @@ import Loader from "../../common/loader";
 import { connect } from "react-redux";
 import { lmsJoinCourse } from "../../lms/api";
 import { responsiveArray } from "antd/lib/_util/responsiveObserve";
+import defaultguser from "../../styles/images/default-cover.png";
 
 class Courses extends Component {
   state = {
     courses: [],
     loading: false,
-    size:0
+    size: 0,
+    page: 1,
+    pageSize: 5
   };
 
   componentDidMount() {
@@ -29,13 +32,21 @@ class Courses extends Component {
     this.setState({ ...this.state, loading: true });
     const getcourses = await (this.props?.loadUserCourse
       ? getUserCourses
-      : fetchCourseSuggestions)(this.props?.profile?.Id, 5, 1);
+      : fetchCourseSuggestions)(this.props?.profile?.Id, this.state.pageSize, (this.state.pageSize * this.state.page - this.state.pageSize));
     let { courses } = this.state;
     courses = courses.concat(getcourses.data);
     if (getcourses.ok) {
       this.setState({ courses, loading: false,size:getcourses.data.length });
     }
   }
+  loadCourses = (take) => {
+    let { page, pageSize } = this.state;
+    page = page + 1;
+    pageSize = take;
+    this.setState({ ...this.state, page, pageSize, loading: true }, () => {
+      this.getCourseSuggestions();
+    });
+  };
 
   handleCourseJoin = async (item) => {
     const obj = {
@@ -109,7 +120,7 @@ class Courses extends Component {
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
-                  avatar={<Avatar src={item.image} />}
+                  avatar={<Avatar src={(Array.isArray(item.image) ? item.image[0] : item.image) || defaultguser} />}
                   title={
                     <div className="d-flex align-items-center mr-16">
                       {(!this.props.IsHideAction && this.props.loadUserCourse) ? <Link to={"/course/" + item.id} title={item.name} className="text-primary text-overflow">{item.name}</Link> : <span className="overflow-text">{item.name}</span>}
@@ -155,7 +166,7 @@ class Courses extends Component {
           />
           {!this.props?.loadUserCourse && <div className="text-center">
               {size >= 5 && (
-                <a className="more-comments" onClick={() => this.getCourseSuggestions()}>
+                <a className="more-comments" onClick={() => this.loadCourses(5)}>
                   View more courses
                 </a>
               )}
