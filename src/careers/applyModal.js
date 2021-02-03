@@ -138,7 +138,7 @@ const ApplyModal = (props) => {
         jobApplication={};
           setJObApplication({...jobApplication})
           setLoading(false);
-          props.cancel();
+          props.cancel(true);
           notify({
               message:'Submit',
               description:'Job Application submitted successfully'

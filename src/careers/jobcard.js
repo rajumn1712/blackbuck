@@ -48,7 +48,9 @@ const JobCard = forwardRef((props,ref) => {
     
   };
 
-  const handleCancel = () => {
+  const handleCancel = (isSubmit) => {
+    if (isSubmit)
+      updateJobApplications(jobpostObj, 'Application')
     setIsModalVisible(false);
   };
 
@@ -117,6 +119,14 @@ const JobCard = forwardRef((props,ref) => {
   };
 
   const saveJobPost = async (job) => {
+    if (job.IsJobSaved) {
+      notify({
+        message: 'Job',
+        type: 'warning',
+        description: 'Already saved this job'
+      })
+      return;
+    }
     const object = {
       Id: uuidv4(),
       JobId: job.JobId,
@@ -125,6 +135,7 @@ const JobCard = forwardRef((props,ref) => {
     };
     const response = await saveUserJobPost(object);
     if (response.ok) {
+      updateJobApplications(job, 'SavedJob')
       notify({
         message: "Job",
         type: "success",
@@ -139,6 +150,15 @@ const JobCard = forwardRef((props,ref) => {
     }
   };
 
+  const updateJobApplications = (job, type) => {
+    let typeObj = { "SavedJob": "IsJobSaved", "Application": "IsApplied" }
+    allJobPosts.forEach(item => {
+      if (item.JobId === job.JobId) {
+        item[typeObj[type]] = true;
+      }
+    })
+    setAllJobPosts([...allJobPosts]);
+  }
   const renderJobPost = (jobpost, indx) => {
     return (
       <div className="post-card" key={indx} onScroll={handleScroll()}>
@@ -146,15 +166,15 @@ const JobCard = forwardRef((props,ref) => {
           bordered={true}
           className="job-card"
           actions={[
-            !showSavedLink && <a onClick={()=>saveJobPost(jobpost)}>
-              <span className="post-icons save-job"></span>Save Job
-          </a>,
             <Link to={`/jobdetail/${jobpost.JobId}`}>
               <span className="post-icons view-job mr-8"></span>View Details
           </Link>,
-            <a onClick={()=>showModal(jobpost)}>
+            <a className="apply-job-btn" onClick={()=>showModal(jobpost)}>
               <span className="post-icons apply-job"></span>Apply Now
-          </a>
+          </a>,
+          !showSavedLink && <a onClick={()=>saveJobPost(jobpost)}>
+          <span className="post-icons save-job"></span>Save Job
+      </a>,
           ]}
         >
           <div className="p-12">
@@ -174,9 +194,14 @@ const JobCard = forwardRef((props,ref) => {
             <ul className="d-flex m-0 pl-0 job-req justify-content-between">
               <li className="f-14 text-primary">
                 <span className="post-icons job mr-16"></span>
-                <Paragraph className="f-14 text-primary m-0">
+                {jobpost.Type === 'Job' && <Paragraph className="f-14 text-primary m-0">
+                  {jobpost.Years} Yr's
+              </Paragraph>}
+              {(jobpost.Type === 'Internship' && jobpost.Years !== '0') ? <Paragraph className="f-14 text-primary m-0">
                   {jobpost.Years} Yr's {jobpost.Months} M
-              </Paragraph>
+              </Paragraph>:jobpost.Type === 'Internship' &&<Paragraph className="f-14 text-primary m-0">
+              {jobpost.Months} {jobpost.Months === '1' ? 'Month' : 'Months'}
+              </Paragraph>}
               </li>
               <li className=" f-14 text-primary ">
                 <span className="post-icons role mr-16"></span>
@@ -192,7 +217,7 @@ const JobCard = forwardRef((props,ref) => {
               </li>
             </ul>
             <span className="job-ldate f-12 text-secondary px-8 py-4">
-              Last date |{" "}
+              Last date -{" "}
               <span className="semibold text-primary">
                 <Moment format="MM/DD/YYYY">{jobpost.EndDate}</Moment>
               </span>
@@ -210,7 +235,7 @@ const JobCard = forwardRef((props,ref) => {
       <ApplyModal className="custom-popup"
         visible={isModalVisible}
         object={jobpostObj}
-        cancel={handleCancel}
+        cancel={(isSubmit)=>handleCancel(isSubmit)}
         formid="myJobCardFomid"
       />
     </div>

@@ -189,38 +189,7 @@ const CMSComponent = (props) => {
                 form={form}
               >
             <Row gutter={8}>
-                <Col
-                  xs={24}
-                  sm={12}
-                  md={12}
-                  lg={10}
-                  xl={10}
-                  xxl={10}
-                >
-                  <Form.Item className="custom-fields"
-                        name="stateValue"
-                        rules={[{ required: (searchObj.cityValue?false:true), message: "State required" }]}>
-                   <Select
-                    showSearch
-                    placeholder="Search By State"
-                    allowClear
-                    optionFilterProp="children"
-                    value={searchObj.stateValue}
-                    filterOption={(input, option) =>
-                      option.children
-                        .toLowerCase()
-                        .indexOf(input.toLowerCase()) >= 0
-                    }
-                    onChange={(value) => {
-                      searchObj.stateValue = value;
-                      setSearchObj({ ...searchObj });
-                    }}
-                  >
-                    {statesList.map(statevalue => <Option key={statevalue.key} value={statevalue.name}>{statevalue.name}</Option>)}
-                  </Select>
-                  </Form.Item>
-                </Col>
-                <Col
+            <Col
                   xs={24}
                   sm={12}
                   md={12}
@@ -246,6 +215,37 @@ const CMSComponent = (props) => {
                         setSearchObj({ ...searchObj });
                       }}
                     />
+                  </Form.Item>
+                </Col>
+                <Col
+                  xs={24}
+                  sm={12}
+                  md={12}
+                  lg={10}
+                  xl={10}
+                  xxl={10}
+                >
+                  <Form.Item className="custom-fields state-search"
+                        name="stateValue"
+                        rules={[{ required: (searchObj.cityValue?false:true), message: "State required" }]}>
+                   <Select
+                    showSearch
+                    placeholder="Search By State"
+                    allowClear
+                    optionFilterProp="children"
+                    value={searchObj.stateValue}
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                    onChange={(value) => {
+                      searchObj.stateValue = value;
+                      setSearchObj({ ...searchObj });
+                    }}
+                  >
+                    {statesList.map(statevalue => <Option key={statevalue.key} value={statevalue.name}>{statevalue.name}</Option>)}
+                  </Select>
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={4} xl={4} xxl={4}>

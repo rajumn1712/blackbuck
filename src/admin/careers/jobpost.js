@@ -59,8 +59,8 @@ const PostingJob = ({profile,history}) => {
     }
 
     const bindEditableData = (obj)=>{
-        obj.StartDate = obj.StartDate ? moment(obj.StartDate).local() : "";
-        obj.EndDate = obj.EndDate ? moment(obj.EndDate).local() : "";
+        obj.StartDate = obj.StartDate ? moment(moment(new Date(obj.StartDate))) : "";
+        obj.EndDate = obj.EndDate ? moment(moment(new Date(obj.EndDate))) : "";
         setJobPostingObject({...obj});
         form.setFieldsValue({...obj});
         setLoading(false);
@@ -68,7 +68,9 @@ const PostingJob = ({profile,history}) => {
 
     const jobSave = async ()=>{
         setLoading(true);
-        jobPostingObject.CreateDate = jobPostingObject.CreateDate ? jobPostingObject.CreateDate : new Date();
+        jobPostingObject.CreateDate = jobPostingObject.CreateDate ? jobPostingObject.CreateDate : moment(new Date()).format();
+        jobPostingObject.StartDate = moment(jobPostingObject.StartDate).format();
+        jobPostingObject.EndDate = moment(jobPostingObject.EndDate).format();
         const saveresponse = await saveJobPost(jobPostingObject);
         if(saveresponse.ok){
             notify({ message: "Job", description: "Job saved successfully" });
@@ -258,14 +260,14 @@ const PostingJob = ({profile,history}) => {
                     </Col>}
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                       <label className="text-secondary d-block mb-4 semibold">
-                        Salary Range
+                        {jobPostingObject.Type === "Internship" ? 'Stipend' : 'Salary Range'}
                       </label>
                       <Form.Item
                         className="custom-fields"
                         name="SalaryRange"
                       >
                         <Input
-                          placeholder="Salary Range"
+                          placeholder={jobPostingObject.Type === "Internship" ? 'Stipend' : 'Salary Range'}
                           onChange={(value) => handleChange('SalaryRange', value)}
                           maxLength={150}
                           autoComplete="off"

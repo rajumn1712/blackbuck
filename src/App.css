@@ -1343,8 +1343,7 @@
 .custom-fields .ant-input,
 .custom-fields .ant-select,
 .custom-fields .ant-picker, 
-.custom-fields .ant-input-number-input , 
-.custom-fields .ant-select-selection-search-input{
+.custom-fields .ant-input-number-input, .custom-fields.state-search .ant-select-selection-search-input{
   min-height: 48px;
 }
 .custom-fields .ant-input-group .videoplybacktime:first-child .ant-input-number{
@@ -1649,6 +1648,9 @@ textarea {
 }
 .left-menu.private-icon {
   background-position: -29px -309px;
+}
+.mb-10{
+  margin-bottom: 10px !important;
 }
 .left-menu.preview-icon {
   background-position: -464px -256px;
@@ -2160,10 +2162,11 @@ textarea {
 .icon.edit-admin:hover{background-position: -810px -224px;}
 .icon.delete-admin{background-position: -838px -200px;}
 .icon.delete-admin:hover{background-position: -838px -226px;}
-.job-ldate{ background: var(--bghover); border-radius: 6px; display: inline-block;}
+.job-ldate{ background: var(--white);border: 1px dashed var(--border); border-radius: 6px; display: inline-block;}
 .post-icons.view-job {background-position: -5px -200px;}
-.post-icons.apply-job {background-position: -64px -200px;}
+.post-icons.apply-job {background-position: -64px -226px;}
 .job-tag{display: inline-block; margin-right: 8px;}
+.post-card .ant-card-actions .apply-job-btn{color: var(--primary) !important;}
 @media (max-width: 767px){
   .job-req{flex-wrap: wrap;}
   .job-card .ant-card-actions .post-icons{display: none;}
