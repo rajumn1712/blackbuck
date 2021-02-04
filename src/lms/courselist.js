@@ -56,7 +56,7 @@ class CourseList extends Component {
               </span>
               <span className="f-12 text-secondary">
                 <span className="grp-type-icon video-play" />
-                {recentList[0].videos} {`${recentList[0].videos === '1' ? 'Video' : 'Videos'}`}
+                {recentList[0].videos} {`${recentList[0].videos === 1 ? 'Video' : 'Videos'}`}
               </span>
             </div>
             <div className="mt-12 progres-bar d-flex">
