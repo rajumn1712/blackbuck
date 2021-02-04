@@ -5,29 +5,16 @@ import React, {
   useImperativeHandle,
 } from "react";
 import {
-  Button,
   Typography,
-  Statistic,
   Card,
-  Row,
-  Col,
-  Tag,
   Empty,
   Modal,
 } from "antd";
-import Identity from "../components/identity";
-import Ads from "../components/ads";
-import Postings from "../shared/postings";
-import BBScholars from "../shared/components/scholars";
-import Tags from "../components/ProfileComponents/tags";
-import { LikeOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
 import {
   allJobPostings,
-  deleteJobPost,
-  profileDetail,
-  saveUserJobPost,
-  setSystemAdmin,
+  deleteJobSavedPost,
+  saveUserJobPost
 } from "../shared/api/apiServer";
 import Loader from "../common/loader";
 import Moment from "react-moment";
@@ -182,7 +169,7 @@ const JobCard = forwardRef((props, ref) => {
     });
   };
   const confirmJObDelete = async (jobpost)=>{
-    const response = await deleteJobPost(jobpost.JobId);
+    const response = await deleteJobSavedPost(jobpost.JobId);
     if (response.ok) {
       allJobPosts = allJobPosts.filter((item) => jobpost.JobId !== item.JobId);
       setAllJobPosts([...allJobPosts]);

@@ -293,7 +293,7 @@ const getSavedJobPost = (user_id,take,skip)=>{
   return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
 }
 const deleteJobSavedPost = (id)=>{
-  return apiClient.post(CAREESRS_API + `deleteSavedJobPost/${id}`);
+  return apiClient.get(CAREESRS_API + `deleteSavedJobPost/${id}`);
 }
 const deleteJobPost = (id)=>{
   return apiClient.get(ADMIN_API + `deleteJobPost/${id}`);
