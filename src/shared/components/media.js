@@ -9,6 +9,7 @@ import user from '../../styles/images/user.jpg';
 import PremiumBadge from "../../styles/images/premiumbadge.svg";
 import MediaPreview from '../../group/MediaPreview';
 import { getMedia } from "../api/apiServer";
+import Loader from "../../common/loader";
 const { Option } = Select;
 const joingroup = <div className="join-grp-title">John Doe <span className="join-grp-txt">has Created a group name is</span> Mech Mantra</div>
 const { TabPane } = Tabs;
@@ -21,6 +22,7 @@ class Media extends Component {
         loadMore: true,
         page: 1,
         pageSize: 10,
+        loading: true
     }
     handleScroll = () => {
         const windowHeight =
@@ -100,9 +102,10 @@ class Media extends Component {
             this.setState({ ...this.state, Photos: [], Videos: [] }, () => { this.getMedia(this.props.groupData.GroupId, index == 1 ? 'photos' : 'Video', this.state.pageSize, this.state.page * this.state.pageSize - this.state.pageSize, index) });
     }
     render() {
-        const { Videos, Photos, tabkey } = this.state;
+        const { Videos, Photos, tabkey, loading } = this.state;
         return (
             <div className="custom-card">
+                {loading && <Loader className="loader-top-middle" />}
                 <Card title="Media" bordered={false}
                 // extra={<div><a className="f-14 px-16" href="#">Create Album</a><a className="pl-8 f-14" href="#">Add Photos/Video</a></div>}
                 >
@@ -127,7 +130,7 @@ class Media extends Component {
                                 {Videos.length > 0 && Videos?.map((item, indx) => {
                                     return <Col xs={24} md={12} lg={6} wrap>
                                         <Card key={indx}
-                                            
+
                                             bordered={false}
                                             className="b-none"
                                             cover={<div className="post-image">
