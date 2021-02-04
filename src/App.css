@@ -2183,4 +2183,5 @@ textarea {
   .xs-dnone{display: none !important;}
   .xs-flex-col{flex-direction: column;}
   .livecourse-date{margin-top: 8px;justify-content: space-between;}
+  .post-preview.ant-modal .ant-modal-body{padding: 15px;}
 }

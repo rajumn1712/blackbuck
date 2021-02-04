@@ -162,3 +162,10 @@ to{transform: translateY(0px);}
 .post-card .ant-card-meta-title,.post-card .ant-card-actions li a, .post-comment .ant-comment-content-author-name{color: var(--textprimary) !important;text-transform: capitalize;}
 .post-card .ant-card-meta-description, .post-desc, .post-comment .ant-comment-content-detail p, .post-comment .ant-comment-content-author-time{color: var(--textsecondary);}
 .post-card .ant-card-actions li a.focus, .post-tag .ant-tag, .ant-dropdown-menu li :hover a{color: var(--primary) !important;}
+
+@media (max-width:575px){
+    .post-preview.ant-modal .ant-modal-body{padding: 15px !important;}
+    .post-preview .post-preview-box .preview-image .ant-carousel .slick-slider .slick-track >div{height: calc(50vh - 30px);}
+    .post-preview .post-preview-box .preview-content{height: calc(50vh - 30px);border-top-right-radius:0;border-bottom-left-radius: 0.8rem;}
+    .post-card .ant-card-actions li a{padding: 8px 6px;}
+  }
