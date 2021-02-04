@@ -7,6 +7,7 @@ import {
   getJobApplications,
   jobApplicationCount,
 } from "../../shared/api/apiServer";
+import connectStateProps from "../../shared/stateConnect";
 
 const columns = [
   {
@@ -55,7 +56,7 @@ const columns = [
   },
 ];
 
-const JobApplications = () => {
+const JobApplications = ({profile}) => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -68,6 +69,7 @@ const JobApplications = () => {
   const allJObApplication = async (page, pageSize) => {
     setLoading(true);
     const response = await getJobApplications(
+      profile.Id,
       pageSize,
       pageSize * page - pageSize
     );
@@ -114,4 +116,4 @@ const JobApplications = () => {
   );
 };
 
-export default JobApplications;
+export default connectStateProps(JobApplications);

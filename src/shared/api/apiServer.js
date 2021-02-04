@@ -264,8 +264,8 @@ const getJobById = (user_id,id) => {
 const jobpostingsCount = () => {
   return apiClient.get(ADMIN_API + 'getJobPostingCount');
 }
-const getJobApplications = (take, skip) => {
-  return apiClient.get(ADMIN_API + `getJobApplications/${take}/${skip}`)
+const getJobApplications = (user_id,take, skip) => {
+  return apiClient.get(ADMIN_API + `getJobApplications/${user_id}/${take}/${skip}`)
 }
 const jobApplicationCount = () => {
   return apiClient.get(ADMIN_API + 'getJobApplicationCount');
