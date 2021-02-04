@@ -34,7 +34,7 @@ class ShareAction extends Component {
             whistiles: [],
             Comments: [],
             Loves: [],
-            Group: {
+            Group:object.Shares?.length==0?object.Group: {
                 GroupId: null,
                 GroupName: null,
                 GroupImage: null,
@@ -74,11 +74,12 @@ class ShareAction extends Component {
             whistiles: [],
             Comments: [],
             Loves: [],
-            Group: {
+            Group: object ? object.Group : {
                 GroupId: null,
                 GroupName: null,
                 GroupImage: null,
             },
+            PostType: object ? object.PostType : "",
             Shares: [],
             SharedUsers: this.props.post.SharedUsers ? this.props.post.SharedUsers.concat([user]) : [user]
         }
