@@ -83,17 +83,19 @@ class Courses extends Component {
     }
   };
   updateCourse(item) {
-    let { data } = this.state;
+    let { courses } = this.state;
     if (item.type === "Private") {
-      for (const i in data) {
-        let _item = data[i];
+      for (const i in courses) {
+        let _item = courses[i];
         if (_item.id === item.id) {
           _item.requestJoin = _item.requestJoin ? null : "request";
         }
       }
-      this.setState({ ...this.state, data });
+      this.setState({ ...this.state, courses });
     } else {
-      this.getCourseSuggestions(true);
+      let { courses } = this.state;
+      courses = courses.filter(ite => item.id !== ite.id);
+      this.setState({ ...this.state, courses });
     }
   }
 

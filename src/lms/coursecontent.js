@@ -78,6 +78,7 @@ class CourseContent extends Component {
     }
   }
   loadCourseDetails = async () => {
+    this.setState({...this.state,loading:true})
     const response = await fetchCourseDetails(
       this.props.match.params.id,
       this.props.profile?.Id
@@ -130,6 +131,7 @@ class CourseContent extends Component {
     }
   };
   getRecommendedVideos = async () => {
+    this.setState({...this.state,loading:true})
     const response = await getRecommendedVideos(
       this.props.match.params.id,
       this.state.page,
@@ -733,7 +735,7 @@ class CourseContent extends Component {
                     </Card>
                   )}
                   {courseDetails.IsMember && (
-                    <Card title="Recommended Video" bordered={false}>
+                    <Card title="Recommended Videos" bordered={false}>
                       <List
                         itemLayout="horizontal"
                         dataSource={recommendedVideos}
