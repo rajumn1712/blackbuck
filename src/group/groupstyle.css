@@ -256,6 +256,7 @@
 .icons.private-icon{background-position: -643px -256px;margin-top: 5px;margin-left: 5px;}
 .icons.visible-icon{background-position: -463px -254px;margin-top: 5px;margin-left: 5px;}
 .icons.hidden-icon{background-position: -674px -257px;margin-top: 5px;margin-left: 5px;}
+.left-menu.hidden-icon{background-position: -674px -257px;}
 .privacy-dropdown .ant-list-item-meta-avatar{background: #ccc;width: 30px;height: 30px;border-radius: 50%;margin-top: 5px;}
 .group-page .ant-card-bordered .ant-card-cover {margin-right: -2px;margin-left: -2px;}
 .group-member .ant-avatar-group{display: inline-block;}

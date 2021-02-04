@@ -45,7 +45,7 @@ const data = {
 
     "Hidden": {
         title: "Hidden",
-        img: "icons hidden-icon",
+        img: "left-menu hidden-icon",
         description: "Only members can find this group."
     }
     ,
