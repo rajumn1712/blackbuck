@@ -244,7 +244,7 @@ const getAllSystemGroups = (take, skip) => {
   return apiClient.get(ADMIN_API + `getAllSystemGroups/${take}/${skip}`);
 }
 const groupBlock = (obj) => {
-  return apiClient.get(ADMIN_API + `getAllSystemGroups`);
+  return apiClient.post(ADMIN_API + `saveGroupBlocked`,obj);
 }
 const joinGroupNew = (id, obj) => {
   return apiClient.post(LMS_API + "joinCourse/" + id, obj);
