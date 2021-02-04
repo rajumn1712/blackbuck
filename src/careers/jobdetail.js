@@ -72,7 +72,7 @@ setLoading(false);
               <span className="post-icons job mr-16"></span>{jobDetailObj.Months} {jobDetailObj.Months === '1' ? 'Month' : 'Months'}
             </p>}
             <p className="f-14 text-primary mb-12 job-req">
-              <span className="post-icons role mr-16"></span>{jobDetailObj.SalaryRange}
+              <span className="post-icons role mr-16"></span>{jobDetailObj.SalaryRange ? jobDetailObj.SalaryRange : "Not Disclosed"}
             </p>
             <p className="f-14 text-primary job-req d-flex">
               <span className="post-icons location mr-16"></span>
