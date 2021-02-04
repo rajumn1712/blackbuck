@@ -34,7 +34,7 @@ class ShareAction extends Component {
             whistiles: [],
             Comments: [],
             Loves: [],
-            Group: {
+            Group:object.Shares?.length==0?object.Group: {
                 GroupId: null,
                 GroupName: null,
                 GroupImage: null,
