@@ -192,15 +192,15 @@ class Notifications extends Component {
                         description={ <div>{item.CreatedDate && <div> <Moment fromNow>{item.CreatedDate}</Moment></div>}
                        
                         {this.props.type  && <div className="noti-button">
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen" onClick={() => this.handleAccept(item)}>Accept</span>}
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
+                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
+                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
                         </div>}
                     </div>}
 
                     />
                     {!this.props.type  && <div className="noti-button">
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen" onClick={() => this.handleAccept(item)}>Accept</span>}
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red" onClick={() => this.handleRemove(item)}>Remove</span>}
+                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
+                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
                     </div>}
                 </List.Item>
 
