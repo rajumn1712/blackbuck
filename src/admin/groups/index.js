@@ -84,6 +84,11 @@ const columnsGroups = [
             return <span>{admin.Firstname}{index !== record.adminUsers?.length - 1 && ", "}</span>
         })
     },
+    {
+        title: 'Status',
+        dataIndex: 'Status',
+        render: (text, record) => { return record.IsGroupBlocked ? 'Blocked' : 'Active' }
+    },
 ];
 const data = [
     {
@@ -134,16 +139,31 @@ const Groups = ({ profile }) => {
                 description: "Please select one record only",
                 message: "Selection",
             });
+            return;
         } {
-            groupBlock(selection[0].UserId).then((res) => {
+            groupBlock({ GroupId: selection[0].id, IsGroupBlocked: (selection[0].IsGroupBlocked ? false : true) }).then((res) => {
                 if (res.ok) {
+                    updateData(selection[0])
+                    setSelection([])
+                    setSelectedRowKeys([]);
                     notify({
-                        description: "Group  blocked successfully",
+                        description: `Group  ${selection[0].IsGroupBlocked ? 'blocked' : 'un blocked'} successfully`,
                         message: "Groups",
                     });
                 }
+                else {
+                    notify({ message: "Error", type: "error", description: "Something went wrong :)" });
+                }
             });
         }
+    }
+    const updateData = (item) => {
+        data.forEach(val => {
+            if (val.id == item.id) {
+                val.IsGroupBlocked = !item.IsGroupBlocked;
+            }
+        })
+        setData(data)
     }
     const onPageChange = (page, pageSize) => {
         setSelection([])
@@ -196,12 +216,12 @@ const Groups = ({ profile }) => {
         </div> */}
         <div className="custom-card">
             <Card className="px-12 pt-12"
-            >
-                {/* extra={<div>
-                <Tooltip placement="top" title="Block">
-                    <span className="left-menu block-icon mx-8"></span>
-                </Tooltip>
-            </div>} */}
+
+                extra={<div onClick={() => blockGroup()}>
+                    <Tooltip placement="top" title="Block / Un Block">
+                        <span className="left-menu block-icon mx-8"></span>
+                    </Tooltip>
+                </div>}>
                 {loading && <Loader className="loader-middle" />}
                 <Table
                     rowSelection={{

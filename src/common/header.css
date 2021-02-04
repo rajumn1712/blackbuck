@@ -5,7 +5,7 @@
     padding: 0 24px 0 16px !important;
     border-top: 2px solid var(--primary);
     height: 70px !important;
-    border-bottom: 1px solid  var(--border);
+    border-bottom: 1px solid var(--border);
     position: fixed;
     top: 0;
     width: 100vw;
@@ -53,7 +53,10 @@
     min-width: 40px;
     min-height: 30px !important;
 }
-.header-searchbar .ant-input-search-button .anticon.anticon-search{margin-top: 3px;}
+
+.header-searchbar .ant-input-search-button .anticon.anticon-search {
+    margin-top: 3px;
+}
 
 .main-header .menu-items {
     border-bottom: 0;
@@ -98,6 +101,9 @@
 .main-header .ant-menu-item {
     margin: 0 10px !important;
 }
+.main-header .ant-menu-item.m-profile-nav{
+    margin: 0 !important;
+}
 
 .main-header .ant-menu-item a.header-link {
     padding: 12px 11px 19px;
@@ -106,17 +112,17 @@
     transition: color 2s linear 1s !important;
     border: 1px solid var(--border);
 }
-.main-header .ant-menu-item a.avatar-menu{
+
+.main-header .ant-menu-item a.avatar-menu {
     border: 0;
 }
 
-.main-header .center-menu .ant-menu-item a.header-link:hover, .main-header .center-menu .ant-menu-item-selected a.header-link,
-.main-header .right-menu .ant-menu-item-selected a.header-link, .main-header .right-menu .ant-menu-item a.header-link:hover {
+.main-header .center-menu .ant-menu-item a.header-link:hover, .main-header .center-menu .ant-menu-item-selected a.header-link, .main-header .right-menu .ant-menu-item-selected a.header-link, .main-header .right-menu .ant-menu-item a.header-link:hover {
     background: var(--primary);
     border-color: var(--primary);
-
 }
-.profile-dropdown .ant-dropdown-menu-item a:hover,.profile-dropdown .ant-dropdown-menu-item a {
+
+.profile-dropdown .ant-dropdown-menu-item a:hover, .profile-dropdown .ant-dropdown-menu-item a {
     background: transparent !important;
     border-color: transparent !important;
     padding-top: 5px;
@@ -186,7 +192,12 @@
 .main-header .ant-menu-item a:hover .icons.notification-icon, .ant-menu-item-selected .icons.notification-icon {
     background-position: -207px -48px;
 }
-.notification-container{max-height: calc(100vh - 130px); overflow-y: auto;}
+
+.notification-container {
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+}
+
 .notification-count .ant-badge-count {
     background: var(--primary) !important;
     border-radius: 4px !important;
@@ -212,7 +223,8 @@
 .notification-dropdown {
     margin-top: 0px !important;
 }
-.notification-dropdown .ant-divider{
+
+.notification-dropdown .ant-divider {
     margin: 0 !important;
     margin-bottom: 4px !important;
 }
@@ -220,6 +232,7 @@
 .notification-dropdown.unread {
     font-weight: 500;
 }
+
 .profile-dropdown .ant-card-meta .ant-avatar-image, .notification-dropdown .ant-list-item-meta-avatar .ant-avatar-image, .messenger-drawer .ant-card-meta .ant-avatar-image {
     width: 50px;
     height: 50px;
@@ -269,7 +282,6 @@
 
 .profile-dropdown .ant-dropdown-menu-item a:hover {
     color: var(--primary);
-    
 }
 
 .profile-dropdown .ant-dropdown-menu-item>a>.anticon:first-child {
@@ -289,58 +301,69 @@
 .notification-dropdown .ant-list-split .ant-list-item {
     border-bottom: none !important;
 }
+
 .notification-dropdown .noti-dropdown-header h3 {
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 0;
 }
 
-.text-primarygreen{
+.text-primarygreen {
     color: var(--primary) !important;
 }
-.text-primary:hover{
+
+.text-primary:hover {
     color: var(--primaryhover);
 }
 
-.notification-list{
+.notification-list {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     max-width: 320px;
 }
+
 /* .notification-list .notification-image .ant-avatar-image{
     width: 45px;
     height: 45px;
     border-radius: 17px;
     margin-right: 12px;
 } */
-.notification-list .notification-image img{
+
+.notification-list .notification-image img {
     flex-shrink: 0;
 }
-.notification-list .notification-description p{
+
+.notification-list .notification-description p {
     margin: 0;
     font-size: 15px;
     line-height: 16px;
     white-space: normal;
 }
-.notification-list.unread .notification-description span{
+
+.notification-list.unread .notification-description span {
     color: var(--primary);
     font-size: 14px;
     line-height: 14px;
     font-weight: 400;
 }
-.notification-list.read{  
+
+.notification-list.read {
     color: #5D5D5D;
 }
-.notification-list.unread{
+
+.notification-list.unread {
     font-weight: 600;
 }
-.notification-list:hover{
+
+.notification-list:hover {
     background-color: var(--bghover);
 }
+
 .messenger-chat .ant-drawer-header, .messenger-chat .ant-drawer-body {
     padding: 16px;
 }
+
 .messenger-drawer .ant-card-meta {
     display: flex;
     align-items: center;
@@ -348,14 +371,15 @@
     margin-bottom: 8px;
 }
 
-.messenger-chat{
+.messenger-chat {
     width: auto !important;
 }
 
 .messenger-drawer .ant-card-meta-title {
     margin-bottom: 0 !important;
 }
-.messenger-drawer .ant-card-meta-title,.messenger-drawer .chat-description{
+
+.messenger-drawer .ant-card-meta-title, .messenger-drawer .chat-description {
     line-height: 1.4 !important;
 }
 
@@ -365,19 +389,23 @@
     text-overflow: ellipsis;
     margin-bottom: 0;
 }
-.messenger-chat .ant-drawer-footer{
+
+.messenger-chat .ant-drawer-footer {
     text-align: center !important;
-}   
-.ant-drawer-footer .messenger-footer{
+}
+
+.ant-drawer-footer .messenger-footer {
     color: var(--primary);
 }
-.ant-drawer-footer .messenger-footer:hover{
+
+.ant-drawer-footer .messenger-footer:hover {
     color: var(--primaryhover);
     text-decoration: underline !important;
-}   
-.messenger-chat .ant-drawer-title{
+}
+
+.messenger-chat .ant-drawer-title {
     font-size: 18px !important;
-}   
+}
 
 .icons.swap-icon {
     background-position: -3px -252px;
@@ -386,9 +414,11 @@
 .icons.settings-icon {
     background-position: -32px -252px;
 }
+
 .post-icons.settings-icon {
     background-position: -36px -254px;
 }
+
 .icons.globe-icon {
     background-position: -62px -252px;
 }
@@ -420,6 +450,18 @@
 }
 
 @media (max-width:575px) {
+    .mobile-main-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 2px solid var(--primary);
+        border-top: 1px solid var(--border);
+    }
+    .m-profile-nav{
+        margin-right: 0 !important;
+    }
     .desktop-navigation {
         display: none !important;
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip,Button } from 'antd'
+import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip, Button } from 'antd'
 import { Link, withRouter } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -9,7 +9,7 @@ import defaultUser from '../styles/images/defaultuser.jpg';
 import './header.css';
 import '../index.css';
 import { connect } from 'react-redux';
-import {fetchUserFriends, fetchNotificationCount} from '../shared/api/apiServer';
+import { fetchUserFriends, fetchNotificationCount } from '../shared/api/apiServer';
 import Notifications from '../components/notification';
 const { Meta } = Card;
 const { Search } = Input;
@@ -63,20 +63,20 @@ class HeaderComponent extends React.Component {
         if (prevProps.search_value != this.props.search_value) { this.setState({ ...this.state, search_value: this.props.search_value }); }
     }
     async handleNotifications(id) {
-                const notifications = <div className="notification-dropdown">
-                    <div className="noti-dropdown-header p-12 text-left">
-                        <h3>Notifications</h3>
-                    </div>
-                    <Divider className="my-0" />
-                    <div className="notification-container">
-                    <Notifications onRef={notification=>this.notification=notification} type="ddl"/>
-                    </div>
-                    <Divider className="my-0" />
-                   {(this.state.notificationsCount>10) && <div className="p-8 pt-4">
-                    <Link className="f-16 semibold text-primary p-8 d-block button-hover" to="/profile/IsProfileNotificationsTab">View all</Link>
-                    </div>}
-                    
-                </div>;
+        const notifications = <div className="notification-dropdown">
+            <div className="noti-dropdown-header p-12 text-left">
+                <h3>Notifications</h3>
+            </div>
+            <Divider className="my-0" />
+            <div className="notification-container">
+                <Notifications onRef={notification => this.notification = notification} type="ddl" />
+            </div>
+            <Divider className="my-0" />
+            {(this.state.notificationsCount > 10) && <div className="p-8 pt-4">
+                <Link className="f-16 semibold text-primary p-8 d-block button-hover" to="/profile/IsProfileNotificationsTab">View all</Link>
+            </div>}
+
+        </div>;
         this.setState({ ...this.state, notifications })
         this.getNotificationsCount(id)
 
@@ -152,9 +152,9 @@ class HeaderComponent extends React.Component {
                         </div>
                     </Col>
                     <Col span={8} justify="center">
-                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal" 
-                        defaultSelectedKeys={['newsfeed']}
-                        selectedKeys={[this.props.location.pathname]}>
+                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal"
+                            defaultSelectedKeys={['newsfeed']}
+                            selectedKeys={[this.props.location.pathname]}>
                             <Menu.Item key="/newsfeed" id="headerIcon">
                                 <Tooltip title="Home" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link to="/" className="header-link"><span className="icons home-icon"></span></Link>
@@ -185,7 +185,7 @@ class HeaderComponent extends React.Component {
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                            <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                         <Link className="header-link">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
@@ -195,7 +195,7 @@ class HeaderComponent extends React.Component {
                                     </Tooltip>
                                 </Dropdown>
                             </Menu.Item>}
-                            <Menu.Item key="">
+                            <Menu.Item key="" className="m-0">
                                 <Dropdown overlay={this.menu} trigger={['click']} getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link className="header-link" to="/" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
                                         <img src={this.props?.profile?.ProfilePic || defaultUser} />
@@ -208,28 +208,78 @@ class HeaderComponent extends React.Component {
                 </Row>
 
                 {/* Mobile Naviagtion */}
-                <Row className="mobile-navigation">
-                    <Col xs={16} span={8} justify="start"  >
-                        <div className="left-block">
-                            <Link to="/" className="logo-brand">
-                                <img src={Logo} alt="Blackbuck" width="60px" />
-                            </Link>
-                            <Search className="header-searchbar" placeholder="Search" onSearch={onSearch} />
-                        </div>
-                    </Col>
-                    <Col xs={8} span={8} >
-                        <Menu className="menu-items text-right right-menu" mode="horizontal" title="Blackbuck">
-                            <Menu.Item key="" >
-                                <Dropdown overlay={this.menu} trigger={['click']} >
-                                    <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
-                                        <img src={this.state.ProfilePic || defaultUser} />
-                                    </Link>
+                <div className="mobile-navigation">
+                    <Row className="">
+                        <Col xs={19} justify="start"  >
+                            <div className="left-block">
+                                <Link to="/" className="logo-brand">
+                                    <img src={Logo} alt="Blackbuck" width="60px" />
+                                </Link>
+                                {this.props?.profile?.IsOnBoardProcess && <Search onChange={(event) => {
+                                    const val = document.querySelector(".ant-input-search").querySelector(".ant-input").value;
+                                    this.setState({ ...this.state, search_value: val });
+                                }} value={this.state.search_value} className="header-searchbar" placeholder="Search" onSearch={(value) => {
+                                    this.setState({ ...this.state, search_value: value });
+                                    this.props.history.push("/search/" + value + "/Search")
+                                }} />}
+                            </div>
+                        </Col>
+                        <Col xs={5}>
+                            <Menu className="menu-items text-right right-menu" mode="horizontal" title="Blackbuck">
+                                <Menu.Item key="" className="m-profile-nav" >
+                                    <Dropdown overlay={this.menu} trigger={['click']} >
+                                        <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
+                                            <img src={this.state.ProfilePic || defaultUser} />
+                                        </Link>
+                                    </Dropdown>
+                                </Menu.Item>
+                            </Menu>
+                        </Col>
+                    </Row>
+                    <div className="mobile-main-nav">
+                        {this.props?.profile?.IsOnBoardProcess && <Menu className="menu-items center-menu text-center" mode="horizontal"
+                            defaultSelectedKeys={['newsfeed']}
+                            selectedKeys={[this.props.location.pathname]}>
+                            <Menu.Item key="/newsfeed" id="headerIcon">
+                                <Tooltip title="Home" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link to="/" className="header-link"><span className="icons home-icon"></span></Link>
+                                </Tooltip>
+                            </Menu.Item>
+                            {/* <Menu.Item key="about">
+                                <Tooltip title="Connections" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link to="/friends" className="header-link"><span className="icons social-icon"></span></Link>
+                                </Tooltip>
+                            </Menu.Item> */}
+                            <Menu.Item key="/cms">
+                                <Tooltip title="Careers" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link to="/cms" className="header-link"><span className="icons suitcase-icon" /></Link>
+                                </Tooltip>
+                            </Menu.Item>
+                            <Menu.Item key="/lms">
+                                <Tooltip title="LMS" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link to="/lms" className="header-link"><span className="icons lms-icon" /></Link>
+                                </Tooltip>
+                            </Menu.Item>
+                            <Menu.Item key="">
+                                <Tooltip title="Messages" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Link className="header-link" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
+                                </Tooltip>
+                            </Menu.Item>
+                            <Menu.Item key="">
+                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                    <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                        <Link className="header-link">
+                                            <Badge className="notification-count" count={this.state.notificationsCount} showZero>
+                                                <span className="icons notification-icon" />
+                                            </Badge>
+                                        </Link>
+                                    </Tooltip>
                                 </Dropdown>
                             </Menu.Item>
-                        </Menu>
-                    </Col>
+                        </Menu>}
+                    </div>
+                </div>
 
-                </Row>
                 {/* Mobile Naviagtion */}
                 <div className="">
                     <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true" footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>

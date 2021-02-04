@@ -15,9 +15,19 @@ import { connect } from "react-redux";
 
 const { Title, Paragraph } = Typography;
 const options = {
-  items: 3,
   dots: false,
-};
+  responsiveClass: true,
+  responsive: {
+      0: {
+          items: 2    
+      },
+
+      992: {
+          items: 3
+      }
+  }
+
+}
 class BBScholars extends Component {
   carouselRef;
   state = {
