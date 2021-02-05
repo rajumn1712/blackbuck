@@ -298,6 +298,9 @@ const deleteJobSavedPost = (id)=>{
 const deleteJobPost = (id)=>{
   return apiClient.get(ADMIN_API + `deleteJobPost/${id}`);
 }
+const getIsFriend = (id, fnd_user_id) => {
+  return apiClient.get(PROFILE_API + `CheckIsFriend/${id}/${fnd_user_id}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -383,5 +386,6 @@ export {
   saveUserJobPost,
   getSavedJobPost,
   deleteJobSavedPost,
-  deleteJobPost
+  deleteJobPost,
+  getIsFriend
 };

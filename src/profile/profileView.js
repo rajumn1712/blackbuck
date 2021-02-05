@@ -32,7 +32,8 @@ import VideoProfile from "../components/ProfileComponents/videoprofile";
 import Education from "../components/ProfileComponents/education";
 import Postings from "../shared/postings";
 import { connect } from "react-redux";
-import { profileDetail } from "../shared/api/apiServer";
+import { profileDetail, getIsFriend, cancelFriendRequest, sendFirendRequest } from "../shared/api/apiServer";
+import notify from '../shared/components/notification';
 import GroupsPage from "../shared/components/GroupsPage";
 import defaultUser from "../styles/images/defaultuser.jpg";
 import defaultCover from "../styles/images/defaultcover.png";
@@ -75,6 +76,8 @@ class ProfileView extends Component {
     profileData: {},
     disabled: false,
     visible: false,
+    IsFriend: "",
+    requestType: ""
   };
   uploadProps = {
     name: "file",
@@ -105,11 +108,20 @@ class ProfileView extends Component {
   }
 
   componentDidMount() {
+    this.checkWhetherFriendOrNot();
     profileDetail(this.props?.match?.params.userId).then((res) => {
       const profiledata = res.data[0].User;
       const navigations = res.data[0].ProfileItems;
       this.setState({ profileData: profiledata, navigations: navigations });
     });
+  }
+  checkWhetherFriendOrNot = () => {
+    getIsFriend(this.props.profile?.Id, this.props?.match?.params.userId).then(res => {
+      let { IsFriend, requestType } = this.state;
+      IsFriend = res.data[0]?.IsFriend;
+      requestType = res.data[0]?.type;
+      this.setState({ ...this.state, IsFriend, requestType });
+    })
   }
   showModal = () => {
     this.setState({
@@ -135,9 +147,33 @@ class ProfileView extends Component {
       block: "nearest",
     });
   };
+  addFriend = async (friend) => {
+    const obj = {
+      "UserId": this.props?.profile?.Id,
+      "Firstname": this.props?.profile?.FirstName,
+      "Lastname": this.props?.profile?.LastName,
+      "Image": this.state.profileData.ProfilePic,
+      "Email": this.props?.profile?.Email,
+      "Type": "request"
+    }
+    sendFirendRequest(this.props?.match?.params.userId, obj).then(() => {
+      let { requestType } = this.state;
+      requestType = "request";
+      this.setState({ ...this.state, requestType });
+      notify({ message: "Friend request", description: "Request sent successfully" });
+    })
+  }
+  cancelRequest = async () => {
+    const cancelResponse = await cancelFriendRequest(this.props?.profile?.Id, this.props?.match?.params.userId);
+    if (cancelResponse.ok) {
+      notify({ message: "Friend request", description: "Request cancelled" });
+    } else {
+      notify({ message: "Friend request", description: "Something went wrong:)", type: "error" });
+    }
+  }
 
   render() {
-    const { navigations, profileData, disabled, visible } = this.state;
+    const { navigations, profileData, disabled, visible, IsFriend, requestType } = this.state;
     return profileData ? (
       <div className="main">
         <Row gutter={16}>
@@ -203,8 +239,10 @@ class ProfileView extends Component {
                 />
               </div>
             </div>
+            {!IsFriend && !requestType && <Button type="primary" onClick={() => this.addFriend()}> Add Friend </Button>}
+            {!IsFriend && requestType && <Button type="primary" onClick={() => this.cancelRequest()}>Cancel Request</Button>}
             <Tabs defaultActiveKey="1" centered className="profile-tabs">
-            <TabPane tab="Profile" key="1">
+              <TabPane tab="Profile" key="1">
                 <Row gutter={16}>
                   {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
                                         <div className="left-rail">
@@ -303,7 +341,7 @@ class ProfileView extends Component {
               <TabPane tab="Groups" className="m-0" key="4">
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <GroupsPage userId={this.props.match.params.userId} IsHideAction={true}/>
+                    <GroupsPage userId={this.props.match.params.userId} IsHideAction={true} />
                   </Col>
                 </Row>
               </TabPane>
