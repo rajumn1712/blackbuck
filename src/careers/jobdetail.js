@@ -42,8 +42,13 @@ setLoading(false);
     }else{setIsModalVisible(true);}
   };
 
-  const handleCancel = () => {
+  const handleCancel = (isSubmit) => {
+    if (isSubmit) updateJobApplications();
     setIsModalVisible(false);
+  };
+  const updateJobApplications = () => {
+    jobDetailObj.IsApplied = true;
+    setJobDetailObj({...jobDetailObj});
   };
   return (
     <>
@@ -90,9 +95,11 @@ setLoading(false);
             style={{ borderTop: "1px solid var(--border)" }}
           >
             {/* <Button type="dashed">Save Job</Button> */}
-            <Button type="primary" className="ml-16" onClick={showModal}>
+            {jobDetailObj.IsApplied ? <a className="apply-job-btn">
+            <span></span>Applied
+          </a> : <Button type="primary" className="ml-16" onClick={showModal}>
               Apply Now
-            </Button>
+            </Button>}
           </div>
         </Card>
         <Card title="Job Description" bordered>
@@ -125,7 +132,7 @@ setLoading(false);
         <ApplyModal className="custom-popup"
           visible={isModalVisible}
           object={jobDetailObj}
-          cancel={handleCancel}
+          cancel={(isSubmit) => handleCancel(isSubmit)}
           formid="myJobFormID"
         />
         </div>

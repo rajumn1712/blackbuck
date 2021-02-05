@@ -196,7 +196,9 @@ const JobCard = forwardRef((props, ref) => {
             <Link to={`/jobdetail/${jobpost.JobId}`}>
               <span className="post-icons view-job mr-8"></span>View Details
             </Link>,
-            <a className="apply-job-btn" onClick={() => showModal(jobpost)}>
+            jobpost.IsApplied ? <a className="apply-job-btn">
+            <span className="post-icons apply-job"></span>Applied
+          </a> :<a className="apply-job-btn" onClick={() => showModal(jobpost)}>
               <span className="post-icons apply-job"></span>Apply Now
             </a>,
             !showSavedLink ? (
@@ -251,7 +253,7 @@ const JobCard = forwardRef((props, ref) => {
               <li className="f-14 text-primary">
                 <span className="post-icons location mr-16"></span>
                 <Paragraph className="f-14 text-primary m-0">
-                  {jobpost.Place}, {jobpost.City}, {jobpost.State}
+                  {jobpost.City}, {jobpost.State}
                 </Paragraph>
               </li>
             </ul>

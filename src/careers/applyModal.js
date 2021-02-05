@@ -157,7 +157,7 @@ const ApplyModal = (props) => {
       title={
         <div className="custom-modal-header">
           <h4>Apply Now</h4>
-          <a onClick={props.cancel}>
+          <a onClick={()=>props.cancel(false)}>
             <span className="close-icon" />
           </a>
         </div>
