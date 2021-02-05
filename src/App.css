@@ -2170,6 +2170,7 @@ textarea {
 .post-card .ant-card-actions .apply-job-btn{color: var(--primary) !important;}
 .b-none{border: none !important;}
 .cus-video-h{height: 186px;}
+.profile-requestbtns{position: absolute; right: 0; z-index: 1;padding-right: 16px;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }

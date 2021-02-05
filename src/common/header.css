@@ -102,7 +102,7 @@
     margin: 0 10px !important;
 }
 .main-header .ant-menu-item.m-profile-nav{
-    margin: 0 !important;
+    margin-right: 0 !important;
 }
 
 .main-header .ant-menu-item a.header-link {
@@ -192,6 +192,15 @@
 .main-header .ant-menu-item a:hover .icons.notification-icon, .ant-menu-item-selected .icons.notification-icon {
     background-position: -207px -48px;
 }
+
+.icons.search-icon {
+    background-position: -247px -6px;
+}
+
+.main-header .ant-menu-item a:hover .icons.search-icon, .ant-menu-item-selected .icons.search-icon {
+    background-position: -247px -48px;
+}
+
 
 .notification-container {
     max-height: calc(100vh - 130px);
@@ -426,6 +435,7 @@
 .icons.signout-icon {
     background-position: -91px -252px;
 }
+
 
 /* .profile-dropdown li a:hover .icons.swap-icon {
     background-position: -3px -279px;
