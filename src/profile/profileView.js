@@ -32,12 +32,13 @@ import VideoProfile from "../components/ProfileComponents/videoprofile";
 import Education from "../components/ProfileComponents/education";
 import Postings from "../shared/postings";
 import { connect } from "react-redux";
-import { profileDetail, getIsFriend, cancelFriendRequest, sendFirendRequest } from "../shared/api/apiServer";
+import { profileDetail, getIsFriend, cancelFriendRequest, sendFirendRequest, acceptFrienRequest } from "../shared/api/apiServer";
 import notify from '../shared/components/notification';
 import GroupsPage from "../shared/components/GroupsPage";
 import defaultUser from "../styles/images/defaultuser.jpg";
 import defaultCover from "../styles/images/defaultcover.png";
 import ImgCrop from "antd-img-crop";
+import { profileSuccess } from "../reducers/auth";
 const { Meta } = Card;
 const { Dragger } = Upload;
 
@@ -77,7 +78,8 @@ class ProfileView extends Component {
     disabled: false,
     visible: false,
     IsFriend: "",
-    requestType: ""
+    requestType: "",
+    IsYouSendRequest: false
   };
   uploadProps = {
     name: "file",
@@ -117,10 +119,11 @@ class ProfileView extends Component {
   }
   checkWhetherFriendOrNot = () => {
     getIsFriend(this.props.profile?.Id, this.props?.match?.params.userId).then(res => {
-      let { IsFriend, requestType } = this.state;
+      let { IsFriend, requestType, IsYouSendRequest } = this.state;
       IsFriend = res.data[0]?.IsFriend;
       requestType = res.data[0]?.type;
-      this.setState({ ...this.state, IsFriend, requestType });
+      IsYouSendRequest = res.data[0]?.IsYouSendRequest;
+      this.setState({ ...this.state, IsFriend, requestType, IsYouSendRequest });
     })
   }
   showModal = () => {
@@ -166,14 +169,61 @@ class ProfileView extends Component {
   cancelRequest = async () => {
     const cancelResponse = await cancelFriendRequest(this.props?.profile?.Id, this.props?.match?.params.userId);
     if (cancelResponse.ok) {
+      let { requestType } = this.state;
+      requestType = "";
+      this.setState({ ...this.state, requestType });
       notify({ message: "Friend request", description: "Request cancelled" });
     } else {
       notify({ message: "Friend request", description: "Something went wrong:)", type: "error" });
     }
   }
+  handleAccept = async (friend) => {
+    const obj = {
+      UserId: this.props?.profile?.Id,
+      Firstname: this.props?.profile?.FirstName,
+      Lastname: this.props?.profile?.LastName,
+      Image: this.props?.profile?.ProfilePic,
+      Email: this.props?.profile?.Email,
+      Type: "accept",
+      CreatedDate: new Date(),
+    };
+    acceptFrienRequest(
+      this.props.profile?.Id,
+      this.props?.match?.params.userId,
+      "accept",
+      obj
+    ).then(() => {
+      this.checkWhetherFriendOrNot();
+      message.success("Action Success");
+      this.props.profile.Friends = this.props.profile.Friends
+        ? this.props.profile.Friends + 1
+        : 1;
+      this.props.updateProfile(this.props.profile);
+    });
+  };
+
+  handleRemove = () => {
+    const obj = {
+      UserId: this.props?.profile?.Id,
+      Firstname: this.props?.profile?.FirstName,
+      Lastname: this.props?.profile?.LastName,
+      Image: null,
+      Email: this.props?.profile?.Email,
+      Type: "decline",
+    };
+    acceptFrienRequest(
+      this.props.profile?.Id,
+      this.props?.match?.params.userId,
+      "decline",
+      obj
+    ).then(() => {
+      this.checkWhetherFriendOrNot();
+      message.success("Action Success");
+    });
+  };
 
   render() {
-    const { navigations, profileData, disabled, visible, IsFriend, requestType } = this.state;
+    const { navigations, profileData, disabled, visible, IsFriend, requestType, IsYouSendRequest } = this.state;
     return profileData ? (
       <div className="main">
         <Row gutter={16}>
@@ -240,7 +290,9 @@ class ProfileView extends Component {
               </div>
             </div>
             {!IsFriend && !requestType && <Button type="primary" onClick={() => this.addFriend()}> Add Friend </Button>}
-            {!IsFriend && requestType && <Button type="primary" onClick={() => this.cancelRequest()}>Cancel Request</Button>}
+            {!IsFriend && requestType && IsYouSendRequest && <Button type="primary" onClick={() => this.cancelRequest()}>Cancel Request</Button>}
+            {!IsFriend && requestType && !IsYouSendRequest && <Button type="primary" onClick={() => this.handleAccept()}>Accept</Button>}
+            {!IsFriend && requestType && !IsYouSendRequest && <Button type="primary" onClick={() => this.handleRemove()}>Remove</Button>}
             <Tabs defaultActiveKey="1" centered className="profile-tabs">
               <TabPane tab="Profile" key="1">
                 <Row gutter={16}>
@@ -366,5 +418,12 @@ class ProfileView extends Component {
 const mapStateToProps = ({ oidc }) => {
   return { profile: oidc.profile };
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateProfile: (info) => {
+      dispatch(profileSuccess(info));
+    },
+  };
+};
 
-export default connect(mapStateToProps)(ProfileView);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);
