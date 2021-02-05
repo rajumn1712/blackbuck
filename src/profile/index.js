@@ -81,22 +81,21 @@ class Profile extends Component {
         "file",
         file,
         file.name +
-          `${this.state.isProfilePic ? "profile_" : "cover_"}${
-            this.props?.profile?.Id
-          }`
+        `${this.state.isProfilePic ? "profile_" : "cover_"}${this.props?.profile?.Id
+        }`
       );
       apiClient
         .post(process.env.REACT_APP_AUTHORITY + "/Home/UploadFile", formData)
         .then((res) => {
-          if(res.ok){
+          if (res.ok) {
             this.imageObject.ImageUrl = res.data[0];
             this.handleImageOk();
           }
-          else{
+          else {
             notify({
-              message:"Error",
-              description:'Something went wrong',
-              type:'error'
+              message: "Error",
+              description: 'Something went wrong',
+              type: 'error'
             })
           }
         });
@@ -169,7 +168,7 @@ class Profile extends Component {
     // if (this.state.loading) {
     //   return <Loader className="loader-top-middle" />;
     // }
-    
+
     return (
       <div className="main">
         <Row gutter={16}>
@@ -269,7 +268,7 @@ class Profile extends Component {
               onChange={this.handleTabChange}
               key={tabkey}
             >
-                        <TabPane tab="Profile" key="IsProfileTab">
+              <TabPane tab="Profile" key="IsProfileTab">
                 <Route
                   path="/profile/IsProfileTab"
                   render={() => {
@@ -278,7 +277,7 @@ class Profile extends Component {
                         {this.state.loading && (
                           <Loader className="loader-top-middle" />
                         )}
-                        <ProfileDetail id={this.props?.profile?.Id} onRef={(profiledetails)=>this.getDetails=profiledetails}/>
+                        <ProfileDetail id={this.props?.profile?.Id} onRef={(profiledetails) => this.getDetails = profiledetails} />
                       </div>
                     );
                   }}
@@ -327,7 +326,7 @@ class Profile extends Component {
                 />
               </TabPane>
               <TabPane tab="Groups" className="m-0" key="IsProfileGroupsTab">
-                            <Route
+                <Route
                   path="/profile/IsProfileGroupsTab"
                   render={() => {
                     return (
@@ -335,29 +334,17 @@ class Profile extends Component {
                         {/* <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                                         <Invite />
                                     </Col> */}
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Col span={24}>
                           <Tabs defaultActiveKey="1"
                             className="group-tabs sub-tab profile-tabs">
                             <TabPane tab="My Groups" key="1">
-                              <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                  <GroupsPage onRef={(courses) => (this.courses = courses)} />
-                                </Col>
-                              </Row>
+                              <GroupsPage onRef={(courses) => (this.courses = courses)} />
                             </TabPane>
                             <TabPane tab="Invite Groups" key="2">
-                              <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                  <Invite displayas={"Card"} />
-                                </Col>
-                              </Row>
+                              <Invite displayas={"Card"} />
                             </TabPane>
                             <TabPane tab="Suggested Groups" key="3">
-                              <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                  <Groups displayas={"Card"} />
-                                </Col>
-                              </Row>
+                              <Groups displayas={"Card"} />
                             </TabPane>
                           </Tabs>
                         </Col>
@@ -368,7 +355,7 @@ class Profile extends Component {
               </TabPane>
               <TabPane tab="Notifications" className="m-0" key="IsProfileNotificationsTab">
                 <Row gutter={16}>
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                  <Col span={24}>
                     <Notifications />
                   </Col>
                 </Row>

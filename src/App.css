@@ -1666,21 +1666,9 @@ textarea {
 .left-menu.private-icon:hover{background-position: -434px -284px;}
 .left-menu.preview-icon:hover{background-position: -464px -284px;}
 .left-menu.group-icon:hover{background-position: -527px -286px;} */
-.hobbies-card .ant-card-body,
-.group-member .ant-card-body {
-  padding: 12px;
-}
-.hobbies-card .tags {
-  min-height: auto;
-}
 .custom-popup .custom-card.bg-white {
   overflow: auto;
   height: 265px;
-}
-.interests-popup .ant-list-grid .ant-col > .ant-list-item {
-  padding: 6px;
-  margin: 12px;
-  display: flex;
 }
 .hobbies-card .ant-card-body,
 .group-member .ant-card-body {
@@ -2185,4 +2173,6 @@ textarea {
   .xs-flex-col{flex-direction: column;}
   .livecourse-date{margin-top: 8px;justify-content: space-between;}
   .post-preview.ant-modal .ant-modal-body{padding: 15px;}
+  .site-layout-content {margin-bottom: 70px;}
+  .interests-popup .ant-list-grid .ant-col > .ant-list-item{margin: 0px;}
 }
