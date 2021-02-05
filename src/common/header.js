@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip, Button } from 'antd'
+import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip, Button, Popover } from 'antd'
 import { Link, withRouter } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -210,22 +210,42 @@ class HeaderComponent extends React.Component {
                 {/* Mobile Naviagtion */}
                 <div className="mobile-navigation">
                     <Row className="">
-                        <Col xs={19} justify="start"  >
+                        <Col xs={6} justify="start"  >
                             <div className="left-block">
                                 <Link to="/" className="logo-brand">
                                     <img src={Logo} alt="Blackbuck" width="60px" />
                                 </Link>
-                                {this.props?.profile?.IsOnBoardProcess && <Search onChange={(event) => {
-                                    const val = document.querySelector(".ant-input-search").querySelector(".ant-input").value;
-                                    this.setState({ ...this.state, search_value: val });
-                                }} value={this.state.search_value} className="header-searchbar" placeholder="Search" onSearch={(value) => {
-                                    this.setState({ ...this.state, search_value: value });
-                                    this.props.history.push("/search/" + value + "/Search")
-                                }} />}
+
                             </div>
                         </Col>
-                        <Col xs={5}>
+                        <Col xs={18}>
                             <Menu className="menu-items text-right right-menu" mode="horizontal" title="Blackbuck">
+                                <Menu.Item key="">
+                                    <Popover placement="bottom" content={<div>
+                                        {this.props?.profile?.IsOnBoardProcess && <Search onChange={(event) => {
+                                            const val = document.querySelector(".ant-input-search").querySelector(".ant-input").value;
+                                            this.setState({ ...this.state, search_value: val });
+                                        }} value={this.state.search_value} className="header-searchbar" placeholder="Search" onSearch={(value) => {
+                                            this.setState({ ...this.state, search_value: value });
+                                            this.props.history.push("/search/" + value + "/Search")
+                                        }} />}
+                                    </div>} trigger="click">
+                                        <Link className="header-link">
+                                            <span className="icons search-icon" />
+                                        </Link>
+                                    </Popover>
+                                </Menu.Item>
+                                <Menu.Item key="">
+                                    <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                        <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                            <Link className="header-link">
+                                                <Badge className="notification-count" count={this.state.notificationsCount} showZero>
+                                                    <span className="icons notification-icon" />
+                                                </Badge>
+                                            </Link>
+                                        </Tooltip>
+                                    </Dropdown>
+                                </Menu.Item>
                                 <Menu.Item key="" className="m-profile-nav" >
                                     <Dropdown overlay={this.menu} trigger={['click']} >
                                         <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
@@ -265,17 +285,7 @@ class HeaderComponent extends React.Component {
                                     <Link className="header-link" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
                                 </Tooltip>
                             </Menu.Item>
-                            <Menu.Item key="">
-                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                        <Link className="header-link">
-                                            <Badge className="notification-count" count={this.state.notificationsCount} showZero>
-                                                <span className="icons notification-icon" />
-                                            </Badge>
-                                        </Link>
-                                    </Tooltip>
-                                </Dropdown>
-                            </Menu.Item>
+
                         </Menu>}
                     </div>
                 </div>
