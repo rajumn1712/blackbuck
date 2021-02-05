@@ -289,11 +289,15 @@ class ProfileView extends Component {
                 />
               </div>
             </div>
-            {!IsFriend && !requestType && <Button type="primary" onClick={() => this.addFriend()}> Add Friend </Button>}
-            {!IsFriend && requestType && IsYouSendRequest && <Button type="primary" onClick={() => this.cancelRequest()}>Cancel Request</Button>}
-            {!IsFriend && requestType && !IsYouSendRequest && <Button type="primary" onClick={() => this.handleAccept()}>Accept</Button>}
-            {!IsFriend && requestType && !IsYouSendRequest && <Button type="primary" onClick={() => this.handleRemove()}>Remove</Button>}
-            <Tabs defaultActiveKey="1" centered className="profile-tabs">
+            <div className="profile-requestbtns">
+              {!IsFriend && !requestType && <Button type="primary"  onClick={() => this.addFriend()}> Add Friend </Button>}
+              {!IsFriend && requestType && IsYouSendRequest && <Button type="default" onClick={() => this.cancelRequest()} className="addfrnd semibold">Cancel Request</Button>}
+              <div className="d-flex">
+                {!IsFriend && requestType && !IsYouSendRequest && <Button type="primary"  onClick={() => this.handleAccept()}>Accept</Button>}
+                {!IsFriend && requestType && !IsYouSendRequest && <Button type="default" onClick={() => this.handleRemove()} className="addfrnd semibold ml-8">Remove</Button>}
+              </div>
+            </div>
+            <Tabs defaultActiveKey="1" className="profile-tabs">
               <TabPane tab="Profile" key="1">
                 <Row gutter={16}>
                   {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} className="profile-tab">
@@ -398,6 +402,7 @@ class ProfileView extends Component {
                 </Row>
               </TabPane>
             </Tabs>
+
           </Col>
           <Col xs={24} sm={8} md={8} lg={7} xl={7}>
             {/* <FriendsSuggestioncard /> */}
