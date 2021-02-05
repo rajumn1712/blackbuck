@@ -214,9 +214,9 @@ const JobCard = forwardRef((props, ref) => {
                 <span className="post-title">{jobpost.Title}</span>
               </Link>
             </Title>
-            <Paragraph className="f-12 text-secondary">
+            {/* <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobpost.CreateDate}</Moment>
-            </Paragraph>
+            </Paragraph> */}
             <Paragraph className="f-12 mb-8">{jobpost.EmployerName}</Paragraph>
             <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
               {jobpost.Role}
