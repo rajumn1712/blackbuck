@@ -11,6 +11,7 @@ import Moment from "react-moment";
 import Loader from "../common/loader";
 import notify from "../shared/components/notification";
 import connectStateProps from "../shared/stateConnect";
+import Logo from '../styles/images/logo.svg';
 
 
 const { Title, Paragraph } = Typography;
@@ -59,15 +60,26 @@ setLoading(false);
       {loading && <Loader className="loader-top-middle" />}
         <Card>
           <div className="p-12">
-            <Title className="f-16 semibold text-primary mb-0">
+          <div className="job-card-title">
+              <div className="company-logo"> 
+                <img src={Logo} className="obj-fit" alt={jobDetailObj.EmployerName} />
+                {/* <span className="company-text">ZF</span> */}
+              </div>
+              <div> 
+              <Title className="f-16 semibold text-primary mb-0">
               {jobDetailObj.Title}
             </Title>
-            <Paragraph className="f-12 text-secondary">
+            {/* <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobDetailObj.CreateDate}</Moment>
-            </Paragraph>
+            </Paragraph> */}
             <Paragraph className="f-14">
               {jobDetailObj.EmployerName}
             </Paragraph>
+
+            </div>
+            </div>
+            
+            
             {jobDetailObj.Type === 'Job' && <p className="f-14 text-primary mb-12 job-req">
               <span className="post-icons job mr-16"></span>{jobDetailObj.Years} Yr's
             </p>}
