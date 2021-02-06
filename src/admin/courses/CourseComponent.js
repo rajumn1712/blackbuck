@@ -51,8 +51,9 @@ const CourseComponent = ({ profile, history }) => {
         "Type": "Course",
         "Author": [],
         "CourseType": "Content",
-        // "Date": "",
-        // "Link": "",
+        "Date": "",
+        "RefLinks": [],
+        "EndDate": "",
         "CreatedDate": "",
         "CategoryType": "LMS",
         "CourseVideo": [],
@@ -88,7 +89,6 @@ const CourseComponent = ({ profile, history }) => {
         ]
     };
     const LiveDatail = {
-        "Id": uuidv4(),
         "Date": "",
         "Link": "",
     }
@@ -329,6 +329,7 @@ const CourseComponent = ({ profile, history }) => {
             courseObject.Link = "";
             courseObject.UrlType = "";
             courseObject.LiveDetails = [];
+            courseObject.EndDate = "";
         }
         const result = await saveCourse(courseObject);
         if (result.ok) {
@@ -460,6 +461,7 @@ const CourseComponent = ({ profile, history }) => {
                     courseObject.UrlType = "";
                     courseObject.Date = "";
                     courseObject.Link = "";
+                    courseObject.EndDate = "";
                     courseObject.LiveDetails = [{
                         "Date": "",
                         "Link": "",
@@ -677,13 +679,38 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            {/* {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <label className="text-secondary d-block mb-4  required">Date</label>
-                                                <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
-                                                    <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                                <label className="text-secondary d-block mb-4  required">Start Date</label>
+                                                <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Start date required" }]}>
+                                                    <DatePicker placeholder="Course Start Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
+                                                        return (
+                                                            moment().add(-1, "days") >= current ||
+                                                            moment(
+                                                                courseObject.EndDate
+                                                                    ? courseObject.EndDate
+                                                                    : ""
+                                                            ).add(+1, "days") <= current
+                                                        );
+                                                    }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
-                                            } */}
+                                            }
+                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                                <label className="text-secondary d-block mb-4  required">End Date</label>
+                                                <Form.Item className="custom-fields" name="EndDate" rules={[{ required: true, message: "End date required" }]}>
+                                                    <DatePicker placeholder="Course End Date" onChange={(val) => { handleChange("EndDate", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
+                                                        return (
+                                                            moment().add(-1, "days") >= current ||
+                                                            moment(
+                                                                courseObject.Date
+                                                                    ? courseObject.Date
+                                                                    : ""
+                                                            ).add(-1, "days") >= current
+                                                        );
+                                                    }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                                </Form.Item>
+                                            </Col>
+                                            }
                                             {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
@@ -705,7 +732,7 @@ const CourseComponent = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             } */}
-                                                  {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                            {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4 semibold required ">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
@@ -876,6 +903,18 @@ const CourseComponent = ({ profile, history }) => {
                                                         </div>
                                                     ))}
                                                 </div>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <label className="text-secondary d-block mb-4  required">Reference Links</label>
+                                                <Form.Item className="custom-fields" name="RefLinks" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]}>
+                                                    <Select
+
+                                                        mode="tags"
+                                                        style={{ width: "100%" }}
+                                                        placeholder="Enter Links"
+                                                        onChange={(value) => handleChange('RefLinks', value)}
+                                                    ></Select>
+                                                </Form.Item>
                                             </Col>
 
                                         </Row>
