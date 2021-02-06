@@ -2160,6 +2160,9 @@ textarea {
 .job-card-title .company-logo,.job-card-title .company-logo .company-text{width: 45px;height: 45px;flex-shrink: 0;margin-right: 6px;display: flex;justify-content: center;align-items: center;border-radius: 4px;}
 .job-card-title .company-logo .company-text{box-shadow: inset 0 0 0 1px var(--primary-10);background: var(--primary-10) !important;text-transform: uppercase;font-size: 24px;
   font-weight: 600;color: var(--primary);}
+.lms-page .more-frnd-btn{right: 2px;}
+.lms-page .more-frnd-btn.left{left: 2px;}
+.course-list-item .ant-card-cover{position: relative;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }
