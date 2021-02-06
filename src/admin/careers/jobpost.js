@@ -192,7 +192,7 @@ const PostingJob = ({ profile, history }) => {
         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
           <Form
             initialValues={{ ...jobpostObj }}
-            onFinishFailed={() => {}}
+            onFinishFailed={() => { }}
             onFinish={() => jobSave()}
             scrollToFirstError={true}
             form={form}
@@ -211,7 +211,7 @@ const PostingJob = ({ profile, history }) => {
                 <div className="">
                   <Card>
                     <Row gutter={16}>
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <Col xs={24} sm={12}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           Title
                         </label>
@@ -230,7 +230,7 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col>
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <Col xs={24} sm={12}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           Employer Name
                         </label>
@@ -254,7 +254,7 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col>
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <Col xs={24} sm={12}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           Job Type
                         </label>
@@ -275,7 +275,7 @@ const PostingJob = ({ profile, history }) => {
                           </Select>
                         </Form.Item>
                       </Col>
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <Col xs={24} sm={12}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           Qualification
                         </label>
@@ -299,7 +299,7 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col>
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <Col xs={24} sm={12}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           Skills
                         </label>
@@ -321,7 +321,7 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col>
-                      <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                      <Col xs={24} sm={6}>
                         <label className="text-secondary d-block mb-4 semibold">
                           Years
                         </label>
@@ -348,7 +348,7 @@ const PostingJob = ({ profile, history }) => {
                         </Form.Item>
                       </Col>
                       {jobPostingObject.Type === "Internship" && (
-                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Col xs={24} sm={6}>
                           <label className="text-secondary d-block mb-4 semibold">
                             Months
                           </label>
@@ -375,7 +375,7 @@ const PostingJob = ({ profile, history }) => {
                           </Form.Item>
                         </Col>
                       )}
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <Col xs={24} sm={12}>
                         <label className="text-secondary d-block mb-4 semibold">
                           {jobPostingObject.Type === "Internship"
                             ? "Stipend"
@@ -397,12 +397,7 @@ const PostingJob = ({ profile, history }) => {
                         </Form.Item>
                       </Col>
                       <Col
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={12}
-                        xl={12}
-                        xxl={12}
+                        xs={24} sm={12}
                         className="custom-fields"
                       >
                         <label className="text-secondary d-block mb-4 semibold required">
@@ -435,16 +430,11 @@ const PostingJob = ({ profile, history }) => {
                         </Form.Item>
                       </Col>
                       <Col
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={12}
-                        xl={12}
-                        xxl={12}
+                        xs={24} sm={12}
                         className="custom-fields"
                       >
                         <label className="text-secondary d-block mb-4 semibold required">
-                        Apply Before
+                          Apply Before
                         </label>
                         <Form.Item
                           className="custom-fields"
@@ -489,7 +479,7 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col> */}
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <Col xs={24} sm={12}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           City
                         </label>
@@ -508,7 +498,7 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col>
-                      <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <Col xs={24} sm={12}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           State
                         </label>
@@ -528,12 +518,12 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col>
-                      <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                      <Col xs={24}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           Role
                         </label>
                         <Form.Item
-                          className="mb-0"
+                          className=""
                           name="Role"
                           rules={[
                             { required: true, message: "Role  required" },
@@ -550,43 +540,43 @@ const PostingJob = ({ profile, history }) => {
                       </Col>
                       <Col
                         xs={24}
-                        sm={24}
-                        md={24}
-                        lg={24}
-                        xl={24}
-                        xxl={24}
-                        className="ad-upload multi-select custom-fields"
+                        sm={12}
+                        className="multi-select custom-fields"
                       >
-                        <Dragger
-                          showUploadList={false}
-                          className="upload mb-16"
-                          {...uploadProps}
-                        >
-                          {fileUploading && (
-                            <Loader className="loader-top-middle" />
-                          )}
-                          <span className="sharebox-icons docs-upload mb-16"></span>
-                          <p className="ant-upload-text">Upload company logo</p>
-                        </Dragger>
-                        {uploadsources?.map((image, indx) => (
-                          <div key={indx} className="mb-16 mt-8 upload-preview">
-                            <Image
-                              className="objectfit-cover"
-                              src={image}
-                            />
-                            <a
-                              class="item-close"
-                              onClick={() => {
-                                uploadsources = [];
-                                setUploadSources([...uploadsources]);
-                              }}
-                            >
-                              <Tooltip title="Remove">
-                                <span className="close-icon"></span>
-                              </Tooltip>
-                            </a>
-                          </div>
-                        ))}
+                        <div className="upload-image">
+                          <Dragger
+                            showUploadList={false}
+                            className="upload mb-16"
+                            {...uploadProps}
+                          >
+                            {fileUploading && (
+                              <Loader className="loader-top-middle" />
+                            )}
+                            <span className="sharebox-icons docs-upload mb-16"></span>
+                            <p className="ant-upload-text  mt-8 mb-0">Upload company logo</p>
+                          </Dragger>
+                          {uploadsources?.map((image, indx) => (
+                            <div key={indx} className="mb-16 mt-8 upload-preview">
+                              <Image
+                                className="objectfit-cover"
+                                src={image}
+                              />
+                              <a
+                                class="item-close"
+                                onClick={() => {
+                                  uploadsources = [];
+                                  setUploadSources([...uploadsources]);
+                                }}
+                              >
+                                <Tooltip title="Remove">
+                                  <span className="close-icon"></span>
+                                </Tooltip>
+                              </a>
+                            </div>
+                          ))}
+
+                        </div>
+
                       </Col>
                     </Row>
                   </Card>
