@@ -1,10 +1,8 @@
-import { Col, Row } from "antd";
+import { Avatar, Card, Col, List, Row } from "antd";
 import React, { Component } from "react";
-import Moment from "react-moment";
 import { connect } from "react-redux";
 import Loader from "../common/loader";
 import About from "../components/ProfileComponents/about";
-import ChangePassword from "../components/ProfileComponents/changepassword";
 import Courses from "../components/ProfileComponents/courses";
 import Education from "../components/ProfileComponents/education";
 import Hobbies from "../components/ProfileComponents/hobbies";
@@ -12,9 +10,7 @@ import Interests from "../components/ProfileComponents/interests";
 import Intership from "../components/ProfileComponents/internships";
 import VideoProfile from "../components/ProfileComponents/videoprofile";
 import { profileSuccess } from "../reducers/auth";
-import { profileDetail } from "../shared/api/apiServer";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import { certifiedCourses, profileDetail } from "../shared/api/apiServer";
 import { store } from '../store';
 
 class ProfileDetail extends Component {
@@ -22,6 +18,7 @@ class ProfileDetail extends Component {
     profileData: {},
     loading: false,
     isDataRefresh: false,
+    certifiedProfileCourses:[]
   };
 
   componentDidMount() {
@@ -52,11 +49,21 @@ class ProfileDetail extends Component {
         profileData: profiledata,
         loading: false,
         isDataRefresh: true,
+      },()=>{
+        this.getCertifiedCourses();
       });
     });
   };
+  getCertifiedCourses = async ()=>{
+    let {certifiedProfileCourses} = this.state;
+    const response = await certifiedCourses(this.props?.id);
+    if(response.ok){
+      certifiedProfileCourses = response.data;
+      this.setState({...this.state,certifiedProfileCourses});
+    }
+  }
   render() {
-    const { profileData, loading, isDataRefresh } = this.state;
+    const { profileData, loading, isDataRefresh, certifiedProfileCourses } = this.state;
     return (
       <>
         {loading && <Loader className="loader-top-middle" />}
@@ -79,6 +86,7 @@ class ProfileDetail extends Component {
                   {isDataRefresh && (
                     <About
                       about={profileData}
+                      certifiedcourses={certifiedProfileCourses}
                       callback={(reload) =>
                         reload ? this.profielDetails() : null
                       }
@@ -139,6 +147,33 @@ class ProfileDetail extends Component {
                       }
                     />
                   )}
+                </div>
+                <div>
+                <div className="custom-card interests-popup">
+                <Card
+          title="Certified Courses"
+          bordered={false}
+        >
+          <List
+            className="p-12"
+            grid={{ gutter: 16,  xs: 1,  sm: 2,   md: 3, lg: 3,  xl: 3, xxl: 3,}}
+            itemLayout="horizontal"
+            dataSource={certifiedProfileCourses}
+            renderItem={(item) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.Image[0]} />}
+                  title={
+                    <div className="d-flex align-items-center" style={{cursor:'default'}}>
+                      <span className="overflow-text" style={{cursor:'default'}}>{item.CourseName}</span>
+                    </div>
+                  }
+                />
+              </List.Item>
+            )}
+          />
+        </Card>
+                </div>
                 </div>
                 <div>
                   <Courses loadUserCourse={true} />

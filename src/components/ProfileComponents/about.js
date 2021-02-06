@@ -175,11 +175,22 @@ class About extends Component {
                     </tr>
                     <tr>
                         <td >
-                            <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Certifications</h3>
+                            <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Internships</h3>
                             ${profileData.Internships?.map((internship, index) => {
                               return (
                                 `<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
                                   ${internship.CompanyName}-${internship.Duration}
+                                </p>`
+                              )})}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <h3 style="font-size: 22px;font-weight: 400; line-height: 26px; color:#ffffff;margin-bottom: 0.5em;">Certified Courses</h3>
+                            ${this.props.certifiedcourses?.map((course) => {
+                              return (
+                                `<p key={index} style="margin-bottom: 6px;color:#ffffff;margin-top: 0;line-height: 1.5715;font-size: 14px;">
+                                  ${course.CourseName}
                                 </p>`
                               )})}
                         </td>

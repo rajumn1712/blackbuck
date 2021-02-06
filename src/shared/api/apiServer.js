@@ -179,6 +179,9 @@ const unFriend = (user_id, friend_id) => {
 const fetchNotificationCount = (userId) => {
   return apiClient.get(PROFILE_API + `getNotificationsCount/${userId}`);
 };
+const certifiedCourses = (user_id)=>{
+  return apiClient.get(PROFILE_API + `getCertifiedCourses/${user_id}`);
+}
 const saveUserPassword = (object) => {
   return apiClient.post(process.env.REACT_APP_AUTHORITY + "/Account/ChangePassword", object);
 };
@@ -350,6 +353,7 @@ export {
   getNotifications,
   unFriend,
   fetchNotificationCount,
+  certifiedCourses,
   saveUserPassword,
   getAuthors,
   saveTopic,

@@ -62,7 +62,7 @@ class CourseCards extends Component {
       this.props.onRef(this);
   }
   loadCourses = async (key) => {
-    key = key == "1" ? "courses" : "recentCourses";
+    key = key == "1" ? "courses" : "courses";
     const _emptyKey = key == "1" ? "recentCourses" : "courses";
     this.setState({ ...this.state, [_emptyKey]: [], loading: true });
     const response = await fetchUserCourses(
@@ -388,26 +388,21 @@ class CourseCards extends Component {
             </Card>
           </TabPane>
           <TabPane tab="My Courses" key="2">
-            <Card bordered={false}>
+          <Card bordered={false}>
               <div className="px-12 pt-12 pb-8">
                 <Row gutter={16}>
-                  {this.state.recentCourses?.map((course, indx) => (
+                  {this.state.courses?.map((course, indx) => (
                     <Col key={indx} xs={24} md={12} lg={8}>
                       <Card
-                        className="card-item card-height mb-12"
+                        className="card-item"
                         cover={
                           <>
-                            <img
-                              alt="photography"
-                              src={course.image.length > 0 ? course.image : photography}
-                            />
-                            {course.CourseType === 'Live Session' && <span className="live-btn">LIVE</span>}
+                          <img
+                            alt="photography"
+                            src={course.image.length > 0 ? course.image : photography}
+                          />
+                          {course.CourseType === 'Live Session' && <span className="live-btn">LIVE</span>}
                           </>
-                        }
-                        actions={
-                          [
-                            // <Button>Join Course</Button>
-                          ]
                         }
                       >
                         <Meta
@@ -420,29 +415,31 @@ class CourseCards extends Component {
                             </Link>
                           }
                           description={
-                            <div>
-                              <Paragraph
-                                ellipsis={{ rows: 2 }}
-                                className="f-14 text-primary mb-8" style={{ height: '42px' }}
-                              >
-                                {course.description}
-                              </Paragraph>
-                              {course.CourseType === 'Content' && <div className="justify-content-between">
-                                <span className="mr-4 f-12 text-secondary">
-                                  {course.sections} Sections
+                            <div className="coursecard-cont">
+                              <div>
+                                <Paragraph
+                                  ellipsis={{ rows: 2 }}
+                                  className="f-14 text-primary mb-8" style={{height: '42px'}}
+                                >
+                                  {course.description}
+                                </Paragraph>
+                                {course.CourseType === 'Content' && <div className="justify-content-between">
+                                  <span className="mr-4 f-12 text-secondary">
+                                    {course.sections} Sections
                                   </span> |
                                   <span className="mx-4 f-12 text-secondary">
-                                  {course.videos} {`${course.videos === 1 ? 'Video' : 'Videos'}`}
-                                </span>|
+                                    {course.videos} {`${course.videos === 1 ? 'Video' : 'Videos'}`}
+                                  </span> |
                                   <span className="ml-4 f-12 text-secondary">
-                                  {course.members} Members
+                                    {course.members.concat(course.AdminUsers).length} Members
                                   </span>
-                              </div>}
-                              {course.CourseType === 'Live Session' && <div className="justify-content-between">
+                                </div>}
+                                {course.CourseType === 'Live Session' && <div className="justify-content-between">
                                 <span className="ml-4 f-12 text-secondary">
-                                  {course.members} Members
+                                    {course.members.concat(course.AdminUsers).length} Members
                                   </span>
-                              </div>}
+                                  </div>}
+                              </div>
                             </div>
                           }
                         />
