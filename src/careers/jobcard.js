@@ -22,6 +22,7 @@ import { uuidv4 } from "../utils";
 import notify from "../shared/components/notification";
 import connectStateProps from "../shared/stateConnect";
 import ApplyModal from "./applyModal";
+import Logo from '../styles/images/logo.svg';
 
 const { Title, Paragraph } = Typography;
 const JobCard = forwardRef((props, ref) => {
@@ -211,7 +212,13 @@ const JobCard = forwardRef((props, ref) => {
           ]}
         >
           <div className="p-12">
-            <Title className="f-16 semibold text-secondary mb-0">
+            <div className="job-card-title">
+              <div className="company-logo"> 
+                <img src={Logo} className="obj-fit" alt={jobpost.EmployerName} />
+                {/* <span className="company-text">ZF</span> */}
+              </div>
+              <div> 
+              <Title className="f-16 semibold text-secondary mb-0">
               <Link to={`/jobdetail/${jobpost.JobId}`}>
                 <span className="post-title">{jobpost.Title}</span>
               </Link>
@@ -220,6 +227,11 @@ const JobCard = forwardRef((props, ref) => {
               <Moment fromNow>{jobpost.CreateDate}</Moment>
             </Paragraph> */}
             <Paragraph className="f-12 mb-8">{jobpost.EmployerName}</Paragraph>
+
+            </div>
+            </div>
+            
+           
             <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
               {jobpost.Role}
             </Paragraph>

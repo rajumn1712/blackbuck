@@ -2156,6 +2156,10 @@ textarea {
 .b-none{border: none !important;}
 .cus-video-h{height: 186px;}
 .profile-requestbtns{position: absolute; right: 0; z-index: 1;padding-right: 16px;}
+.job-card-title{display: flex;}
+.job-card-title .company-logo,.job-card-title .company-logo .company-text{width: 45px;height: 45px;flex-shrink: 0;margin-right: 6px;display: flex;justify-content: center;align-items: center;border-radius: 4px;}
+.job-card-title .company-logo .company-text{box-shadow: inset 0 0 0 1px var(--primary-10);background: var(--primary-10) !important;text-transform: uppercase;font-size: 24px;
+  font-weight: 600;color: var(--primary);}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }
