@@ -39,11 +39,6 @@ import video from "../styles/images/default-video.jpg";
 import Loader from "../common/loader";
 import notify from "../shared/components/notification";
 const { Panel } = Collapse;
-const data = [
-  {
-    title: "A musical and visual delight! ",
-  },
-];
 const { Title, Paragraph } = Typography;
 class CourseContent extends Component {
   state = {
@@ -612,6 +607,25 @@ class CourseContent extends Component {
                       </div>
                     )}
                   </div>
+                </div>
+                <div className="custom-card">
+                <Card
+          title="Reference Links"
+          className="hobbies-card"
+          bordered={false}
+        >
+          {courseDetails.RefLinks?.length > 0 ? (
+            courseDetails.RefLinks?.map((link, index) => {
+              return (
+                link !== null && <a href={link} target="_blank" className="tags" key={index}>
+                  {link}
+                </a>
+              );
+            })
+          ) : (
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            )}
+        </Card>
                 </div>
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
