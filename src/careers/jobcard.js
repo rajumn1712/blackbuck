@@ -1,8 +1,6 @@
 import React, {
-  forwardRef,
   useEffect,
   useState,
-  useImperativeHandle,
 } from "react";
 import {
   Typography,
@@ -22,10 +20,9 @@ import { uuidv4 } from "../utils";
 import notify from "../shared/components/notification";
 import connectStateProps from "../shared/stateConnect";
 import ApplyModal from "./applyModal";
-import Logo from '../styles/images/logo.svg';
 
 const { Title, Paragraph } = Typography;
-const JobCard = forwardRef((props, ref) => {
+const JobCard = ((props) => {
   let page = 1;
   const pageSize = 5;
   let showSavedLink = window.location.href.indexOf("savedjobs") > -1;
@@ -55,12 +52,6 @@ const JobCard = forwardRef((props, ref) => {
     setIsModalVisible(false);
   };
 
-  useImperativeHandle(ref, () => ({
-    getAlert() {
-      getJobPostings(1, 5);
-    },
-  }));
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     if (props.refresh) {
@@ -87,7 +78,6 @@ const JobCard = forwardRef((props, ref) => {
       setLoading(false);
       loadMore = response.data.length === pageSize ? true : false;
       setLoadMore(loadMore);
-      console.log(loadMore);
     }
   };
   const handleScroll = () => {
@@ -189,7 +179,7 @@ const JobCard = forwardRef((props, ref) => {
   }
   const renderJobPost = (jobpost, indx) => {
     return (
-      <div className="post-card" key={indx} onScroll={handleScroll()}>
+      <div className="post-card" key={indx}>
         <Card
           bordered={true}
           className="job-card"
@@ -211,7 +201,9 @@ const JobCard = forwardRef((props, ref) => {
           </a>,
           ]}
         >
-          <div className="p-12">
+          <div className="p-12 cursor-pointer" onClick={()=>{
+        props.history.push(`/jobdetail/${jobpost.JobId}`)
+      }}>
             <div className="job-card-title">
               <div className="company-logo"> 
                 {jobpost.CompanyLogo && <img src={jobpost.CompanyLogo} className="obj-fit" alt={jobpost.EmployerName} />}

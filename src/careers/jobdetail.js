@@ -93,7 +93,7 @@ setLoading(false);
             </p>
             <p className="f-14 text-primary job-req d-flex">
               <span className="post-icons location mr-16"></span>
-             <p> {jobDetailObj.Place}, {jobDetailObj.City}, {jobDetailObj.State}</p>
+             <p> {jobDetailObj.City}, {jobDetailObj.State}</p>
             </p>
             <span className="job-ldate f-14 semibold text-secondary px-8 py-4">
               Apply before :{" "}
