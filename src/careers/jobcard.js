@@ -214,8 +214,8 @@ const JobCard = forwardRef((props, ref) => {
           <div className="p-12">
             <div className="job-card-title">
               <div className="company-logo"> 
-                <img src={Logo} className="obj-fit" alt={jobpost.EmployerName} />
-                {/* <span className="company-text">ZF</span> */}
+                {jobpost.CompanyLogo && <img src={jobpost.CompanyLogo} className="obj-fit" alt={jobpost.EmployerName} />}
+                {!jobpost.CompanyLogo && <span className="company-text">{jobpost.EmployerName.substring(0,2)}</span>}
               </div>
               <div> 
               <Title className="f-16 semibold text-secondary mb-0">
@@ -270,7 +270,7 @@ const JobCard = forwardRef((props, ref) => {
               </li>
             </ul>
             <span className="job-ldate f-12 text-secondary px-8 py-4">
-              Last date -{" "}
+              Apply Before -{" "}
               <span className="semibold text-primary">
                 <Moment format="MM/DD/YYYY">{jobpost.EndDate}</Moment>
               </span>

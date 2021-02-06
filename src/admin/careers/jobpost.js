@@ -7,7 +7,6 @@ import {
   Form,
   Image,
   Input,
-  List,
   Row,
   Select,
   Tooltip,
@@ -122,13 +121,9 @@ const PostingJob = ({ profile, history }) => {
     showUploadList: false,
     action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
     onChange: (info) => {
-      uploadsources = [];
-      setUploadSources([...uploadsources]);
       const { status } = info.file;
 
       if (status === "done") {
-        uploadsources.push(info.file.response[0]);
-        setUploadSources([...uploadsources]);
         jobPostingObject.CompanyLogo = info.file.response[0];
         setFileUplaod(false);
         notify({
@@ -555,26 +550,23 @@ const PostingJob = ({ profile, history }) => {
                             <span className="sharebox-icons docs-upload mb-16"></span>
                             <p className="ant-upload-text  mt-8 mb-0">Upload company logo</p>
                           </Dragger>
-                          {uploadsources?.map((image, indx) => (
-                            <div key={indx} className="mb-16 mt-8 upload-preview">
+                            {jobPostingObject.CompanyLogo && <div className="mb-16 mt-8 upload-preview">
                               <Image
                                 className="objectfit-cover"
-                                src={image}
+                                src={jobPostingObject.CompanyLogo}
                               />
                               <a
                                 class="item-close"
                                 onClick={() => {
-                                  uploadsources = [];
-                                  setUploadSources([...uploadsources]);
+                                  jobPostingObject.CompanyLogo = '';
+                                  setJobPostingObject({...jobPostingObject})
                                 }}
                               >
                                 <Tooltip title="Remove">
                                   <span className="close-icon"></span>
                                 </Tooltip>
                               </a>
-                            </div>
-                          ))}
-
+                            </div>}
                         </div>
 
                       </Col>

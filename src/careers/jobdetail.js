@@ -62,8 +62,8 @@ setLoading(false);
           <div className="p-12">
           <div className="job-card-title">
               <div className="company-logo"> 
-                <img src={Logo} className="obj-fit" alt={jobDetailObj.EmployerName} />
-                {/* <span className="company-text">ZF</span> */}
+                {jobDetailObj.CompanyLogo && <img src={jobDetailObj.CompanyLogo} className="obj-fit" alt={jobDetailObj.EmployerName} />}
+                {!jobDetailObj.CompanyLogo && <span className="company-text">{jobDetailObj.EmployerName?.substring(0,2)}</span>}
               </div>
               <div> 
               <Title className="f-16 semibold text-primary mb-0">
