@@ -2177,3 +2177,7 @@ textarea {
   .site-layout-content {margin-bottom: 70px;}
   .interests-popup .ant-list-grid .ant-col > .ant-list-item{margin: 0px;}
 }
+.add-livelinks{border: 1px solid #d9d9d9;border-radius: 0.8rem;padding:8px 20px 0 20px;background: #fafafa;}
+.add-livelinks .icons.add{position: absolute;left: -4px;top: 57%;transform: translateY(-50%);border-left: 0;border-radius: 50%;box-shadow: var(--boxshadow);background-color: var(--white);}
+.add-livelinks .close-icon{position: absolute;right: -4px;top: 54%;transform: translateY(-50%);border-radius: 50%;box-shadow: var(--boxshadow);background-color: var(--white);padding: 14px;
+  background-position: -400px -195px;}

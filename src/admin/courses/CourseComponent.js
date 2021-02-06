@@ -51,8 +51,8 @@ const CourseComponent = ({ profile, history }) => {
         "Type": "Course",
         "Author": [],
         "CourseType": "Content",
-        "Date": "",
-        "Link": "",
+        // "Date": "",
+        // "Link": "",
         "CreatedDate": "",
         "CategoryType": "LMS",
         "CourseVideo": [],
@@ -73,7 +73,13 @@ const CourseComponent = ({ profile, history }) => {
         ],
         "Tests": [],
         "Documents": [],
-        "UrlType": []
+        "UrlType": [],
+        "LiveDetails": [
+            {
+                "Date": "",
+                "Link": "",
+            }
+        ]
     }
     let postObject = {
         "GroupId": "",
@@ -81,6 +87,11 @@ const CourseComponent = ({ profile, history }) => {
         "Posts": [
         ]
     };
+    const LiveDatail = {
+        "Id": uuidv4(),
+        "Date": "",
+        "Link": "",
+    }
     const acceptTypesForTopic = {
         "Video": ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
         "Document": ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
@@ -218,6 +229,19 @@ const CourseComponent = ({ profile, history }) => {
             setLoading(false)
         }
     }
+    const addLiveDetails = () => {
+        courseObject.LiveDetails.push({ ...LiveDatail })
+        setCourseObject({ ...courseObject })
+    }
+    const deleteLiveDetails = (idx) => {
+        courseObject.LiveDetails.splice(idx, 1)
+        setCourseObject({ ...courseObject })
+    }
+    const handleLiveChange = (prop, val, index) => {
+        courseObject.LiveDetails[index][prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
+        setCourseObject({ ...courseObject })
+    }
+
     const bindCourseData = (obj) => {
         let ObjCourse = { ...obj }
         ObjCourse.Author = [];
@@ -299,11 +323,12 @@ const CourseComponent = ({ profile, history }) => {
             }
             courseObject.Tests.push({ ...Obj });
         })
-        courseObject.CourseSections = courseObject.CourseType == "Live Session" ? [] : courseObject.CourseSections;
+        // courseObject.CourseSections = courseObject.CourseType == "Live Session" ? [] : courseObject.CourseSections;
         if (courseObject.CourseType == "Content") {
             courseObject.Date = "";
             courseObject.Link = "";
             courseObject.UrlType = "";
+            courseObject.LiveDetails = [];
         }
         const result = await saveCourse(courseObject);
         if (result.ok) {
@@ -435,6 +460,10 @@ const CourseComponent = ({ profile, history }) => {
                     courseObject.UrlType = "";
                     courseObject.Date = "";
                     courseObject.Link = "";
+                    courseObject.LiveDetails = [{
+                        "Date": "",
+                        "Link": "",
+                    }];
                 }
             }
             else {
@@ -636,7 +665,7 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={courseObject.CourseType == "Live Session"?12:24} sm={courseObject.CourseType == "Live Session"?12:24} md={courseObject.CourseType == "Live Session"?12:24} lg={courseObject.CourseType == "Live Session"?12:24} xl={courseObject.CourseType == "Live Session"?12:24} xxl={courseObject.CourseType == "Live Session"?12:24} className="">
+                                            <Col xs={courseObject.CourseType == "Live Session" ? 12 : 24} sm={courseObject.CourseType == "Live Session" ? 12 : 24} md={courseObject.CourseType == "Live Session" ? 12 : 24} lg={courseObject.CourseType == "Live Session" ? 12 : 24} xl={courseObject.CourseType == "Live Session" ? 12 : 24} xxl={courseObject.CourseType == "Live Session" ? 12 : 24} className="">
                                                 <label className="text-secondary d-block mb-4 semibold  required">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
@@ -648,13 +677,13 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            {/* {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <label className="text-secondary d-block mb-4  required">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
-                                            }
+                                            } */}
                                             {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
@@ -669,13 +698,45 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>}
-                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                            {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4 semibold required ">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
                                                 </Form.Item>
                                             </Col>
-                                            }
+                                            } */}
+                                                  {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4 semibold required ">Link</label>
+                                                <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                    <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
+                                                </Form.Item>
+                                            </Col>
+                                            } */}
+                                            {courseObject.CourseType == "Live Session" && courseObject.LiveDetails?.map((live, index) => {
+                                                return <Col span={24} className="custom-fields" key={index}>
+                                                    <div className="add-livelinks">
+                                                        <div>
+                                                            <a onClick={() => addLiveDetails()} ><span className="icons add p-4" /></a>
+                                                            <Row gutter={8}>
+                                                                <Col xs={24} sm={24} md={8} className="custom-fields">
+                                                                    <label className="text-secondary d-block mb-4 semibold required ">Date</label>
+                                                                    <Form.Item className="custom-fields" name={[index, "Date"]} rules={[{ required: true, message: "Date required" }]}>
+                                                                        <DatePicker value={live.Date} placeholder="Course Date" onChange={(val) => { handleLiveChange("Date", val, index) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                                                    </Form.Item>
+                                                                </Col>
+                                                                <Col xs={24} sm={24} md={16} className="">
+                                                                    <label className="text-secondary d-block mb-4 semibold required ">Link</label>
+                                                                    <Form.Item className="custom-fields" name={[index, "Link"]} rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                                        <Input placeholder="Meeting Link" value={live.Link} onChange={(value) => handleLiveChange("Link", value, index)} />
+                                                                    </Form.Item>
+                                                                </Col>
+
+                                                            </Row>
+                                                            <a onClick={() => deleteLiveDetails(index)} ><span className="close-icon" /></a>
+                                                        </div>
+                                                    </div>
+                                                </Col>
+                                            })}
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -868,8 +929,8 @@ const CourseComponent = ({ profile, history }) => {
                                             </Col>
                                         </Row>
                                     </div>
-                                    {courseObject.CourseType == "Content" && <div className="create-course mt-16">
-                                        {courseObject.CourseType == "Content" && <div>
+                                    <div className="create-course mt-16">
+                                        <div>
                                             {courseObject.CourseSections?.length == 0 && <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>}
                                             {courseObject.CourseSections?.map((item, index) => {
                                                 return <div> <div className="lecture-collapse mb-16" key={index}>
@@ -964,10 +1025,10 @@ const CourseComponent = ({ profile, history }) => {
                                                     }
                                                 </div>
                                             })}
-                                        </div>}
+                                        </div>
 
                                     </div>
-                                    }
+
                                     <div className="card-background mt-16">
                                         <span className="text-left">
                                             <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
@@ -1012,7 +1073,7 @@ const CourseComponent = ({ profile, history }) => {
                                 <label className="text-secondary d-block mb-4  required">Content Type</label>
                                 <Form.Item name="TopicType" rules={[{ required: true, message: "Content Type  required" }]} >
                                     <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}
-                                    getPopupContainer={() => document.querySelector('#type')}>
+                                        getPopupContainer={() => document.querySelector('#type')}>
                                         <Option value="Video">Video</Option>
                                         <Option value="Document">Document</Option>
                                     </Select>
