@@ -759,7 +759,7 @@ const CourseComponent = ({ profile, history }) => {
                                                                 </Col>
 
                                                             </Row>
-                                                            <a onClick={() => deleteLiveDetails(index)} ><span className="close-icon" /></a>
+                                                            {courseObject.LiveDetails?.length > 1 && <a onClick={() => deleteLiveDetails(index)} ><span className="close-icon" /></a>}
                                                         </div>
                                                     </div>
                                                 </Col>
@@ -906,7 +906,12 @@ const CourseComponent = ({ profile, history }) => {
                                             </Col>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <label className="text-secondary d-block mb-4  required">Reference Links</label>
-                                                <Form.Item className="custom-fields" name="RefLinks" rules={[{ required: true, type: "url", message: "This field must be a valid url." }]}>
+                                                <Form.Item className="custom-fields" name="RefLinks" rules={[{
+                                                    required: true,
+                                                    type: 'array',
+                                                    defaultField: { type: 'url', message: 'This field must be a valid url.' }
+                                                }]
+                                                }>
                                                     <Select
 
                                                         mode="tags"
