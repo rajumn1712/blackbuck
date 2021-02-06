@@ -108,7 +108,9 @@ setLoading(false);
           >
             {/* <Button type="dashed">Save Job</Button> */}
             {jobDetailObj.IsApplied ? <a className="apply-job-btn">
-            <span></span>Applied
+            <Button type="default" className="ml-16 secondary-btn" >
+            Applied
+            </Button>
           </a> : <Button type="primary" className="ml-16" onClick={showModal}>
               Apply Now
             </Button>}
