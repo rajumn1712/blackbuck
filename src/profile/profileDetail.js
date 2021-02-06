@@ -44,6 +44,7 @@ class ProfileDetail extends Component {
       this.props.profile.Internships = profiledata.Internships.length;
       this.props.profile.Groups = profiledata.Groups ? profiledata.Groups : 0;
       this.props.profile.Posts = profiledata.Posts ? profiledata.Posts : 0;
+      this.props.profile.Friends = profiledata.Friend ? profiledata.Friend : 0;
       this.props.profile.BranchName = profiledata.College ? (profiledata.College.BranchName ? profiledata.College.BranchName : "") : "";
       this.props.updateProfile(this.props.profile);
       this.setState({

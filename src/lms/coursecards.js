@@ -101,8 +101,8 @@ class CourseCards extends Component {
                                     {course.sections} Sections
                                   </span> |
                                   <span className="mx-4 f-12 text-secondary">
-                                    {course.videos} Videos
-                                  </span>|
+                                    {course.videos} {`${course.videos === 1 ? 'Video' : 'Videos'}`}
+                                  </span> |
                                   <span className="ml-4 f-12 text-secondary">
                                     {course.members.concat(course.AdminUsers).length} Members
                                   </span>
@@ -204,7 +204,7 @@ class CourseCards extends Component {
                                     {course.sections} Sections
                                   </span> |
                                   <span className="mx-4 f-12 text-secondary">
-                                    {course.videos} Videos
+                                    {course.videos} {`${course.videos === 1 ? 'Video' : 'Videos'}`}
                                   </span>|
                                   <span className="ml-4 f-12 text-secondary">
                                     {course.members} Members

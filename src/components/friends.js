@@ -146,7 +146,7 @@ class Friends extends Component {
               <List.Item style={{display: 'flex', alignItems: 'center'}}>
                 <List.Item.Meta
                   avatar={
-                    <Link to={"/profileview/" + item.UserId}>
+                    <Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>
                       <Avatar
                         className="request-image"
                         src={item.Image || defaultUser}
@@ -155,9 +155,9 @@ class Friends extends Component {
                   }
                   title={
                     <div className="d-flex align-items-center">
-                      <Link to={"/profileview/" + item.UserId}>
+                      <Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>
                         <span className="overflow-text post-title">
-                          <Link className="overflow-text post-title" to={"/profileview/" + item.UserId}> {item.Firstname}</Link>
+                          <Link className="overflow-text post-title" to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}> {item.Firstname}</Link>
                         </span>
                       </Link>
                     </div>
@@ -175,7 +175,7 @@ class Friends extends Component {
                         >
                           {item.MutualFriends?.map((friend, index) => {
                             return (
-                              <Link to={"/profileview/" + friend.UserId}>   <Avatar
+                              <Link to={this.props.profile.Id === friend.UserId ? "/profile/IsProfileTab" : "/profileview/" + friend.UserId}>   <Avatar
                                 key={index}
                                 src={friend.Image || defaultUser}
                               />

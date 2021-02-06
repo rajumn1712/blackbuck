@@ -125,7 +125,8 @@ class CreateGroup extends Component {
             }],
             CreatedDate: groupObject.CreatedDate ? new Date(groupObject.CreatedDate) : new Date(),
             Members: [],
-            Categories:[]
+            Categories:[],
+            CourseSections:[]
         };
     };
     handleBeforUpload = (file) => {

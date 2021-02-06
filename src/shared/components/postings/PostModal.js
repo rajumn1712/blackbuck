@@ -199,7 +199,7 @@ class PostCardModal extends Component {
                                     }
                                     actions={[<EmojiAction key="emoji" IsUserLikes={post.IsUserLikes} mystate={post} clickedEvent={(event, name) => this.props.handleActions(event, name, post)} />,
                                     <CommentAction key="comment" clickedEvent={() => this.showComment(post)} />,
-                                    <ShareAction post={post} key="share" url={`http://blackbuck.me/blackbuck.uat/post_view/${post.id}`} imgUrl={post.image} />
+                                    <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post_view/${post.id}`} imgUrl={post.image} />
                                     ]}
                                 >
                                     <div className="">

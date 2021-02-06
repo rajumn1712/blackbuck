@@ -13,6 +13,7 @@ import '../../src/profile/profilestyle.css';
 import JobPostings from './careers/jobpostings';
 import JobApplications from './careers/jobapplications';
 import PostingJob from './careers/jobpost';
+import '../App.css';
 
 const { Meta } = Card;
 const { SubMenu } = Menu;

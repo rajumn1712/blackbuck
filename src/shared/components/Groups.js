@@ -105,7 +105,6 @@ class Groups extends Component {
   };
   newGroup = () => { };
   updateGroup(item) {
-    debugger
     let { data } = this.state;
     if (item.type === "Private") {
       for (const i in data) {
@@ -170,11 +169,11 @@ class Groups extends Component {
   };
   render() {
     const { visible, size, loading } = this.state;
-    return this.props.displayas ? (<Row gutter={16} className="group-page m-0">
+    return this.props.displayas ? (<Row gutter={16} className="group-page m-0 mb-6">
       {this.state.data.length > 0 &&
         this.state.data?.map((group, index) => {
           return (
-            <Col className="mb-12" md={12} lg={8} xl={8} xxl={6}>
+            <Col className="mb-12" xs={24} md={12} lg={8} xl={8} xxl={6}>
               {group.type === "Private" && <div style={{ position: "absolute", right: 8, top: 140, width: 30, height: 30, backgroundColor: 'var(--white)', zIndex: 9, borderTopLeftRadius: '0.4rem', borderBottomLeftRadius: '0.4rem', textAlign: 'center', paddingLeft: 3, paddingTop: 3 }}>
                 <span class="icons-small lock-icon" style={{ transform: 'scale(1.6)' }}></span>
               </div>}

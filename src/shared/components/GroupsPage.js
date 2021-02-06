@@ -196,13 +196,13 @@ class GroupsPage extends Component {
     const { Groups, visible, loading } = this.state;
     const {IsHideAction}=this.props;
     return (
-      <div className="group-page p-12 pb-0">
+      <div className="group-page p-12 pb-0 mb-6">
         {loading && <Loader className="loader-top-middle" />}
         <Row gutter={16} className="">
           {Groups.length > 0 &&
             Groups?.map((group, index) => {
               return (
-                <Col className="mb-12" md={12} lg={8} xl={8} xxl={6}>
+                <Col className="mb-12" xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Card
                     key={index}
                     cover={

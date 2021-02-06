@@ -1,17 +1,20 @@
-import React, { forwardRef, useEffect, useState, useImperativeHandle } from "react";
-import { Button, Typography, Statistic, Card, Row, Col, Tag, Empty } from "antd";
-import Identity from "../components/identity";
-import Ads from "../components/ads";
-import Postings from "../shared/postings";
-import BBScholars from "../shared/components/scholars";
-import Tags from "../components/ProfileComponents/tags";
-import { LikeOutlined } from "@ant-design/icons";
+import React, {
+  forwardRef,
+  useEffect,
+  useState,
+  useImperativeHandle,
+} from "react";
+import {
+  Typography,
+  Card,
+  Empty,
+  Modal,
+} from "antd";
 import { Link, withRouter } from "react-router-dom";
 import {
   allJobPostings,
-  profileDetail,
-  saveUserJobPost,
-  setSystemAdmin,
+  deleteJobSavedPost,
+  saveUserJobPost
 } from "../shared/api/apiServer";
 import Loader from "../common/loader";
 import Moment from "react-moment";
@@ -19,57 +22,54 @@ import { uuidv4 } from "../utils";
 import notify from "../shared/components/notification";
 import connectStateProps from "../shared/stateConnect";
 import ApplyModal from "./applyModal";
+import Logo from '../styles/images/logo.svg';
 
 const { Title, Paragraph } = Typography;
-const JobCard = forwardRef((props,ref) => {
+const JobCard = forwardRef((props, ref) => {
   let page = 1;
   const pageSize = 5;
-  let showSavedLink = window.location.href.indexOf('savedjobs') > -1
+  let showSavedLink = window.location.href.indexOf("savedjobs") > -1;
   let [allJobPosts, setAllJobPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   let [loadMore, setLoadMore] = useState(true);
-  let [jobpostObj,setJobPostObj] = useState({});
+  let [jobpostObj, setJobPostObj] = useState({});
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = (jobpost) => {
-    if(jobpost.IsApplied){
+    if (jobpost.IsApplied) {
       notify({
-        message:'Job',
-        type:'warning',
-        description:'Already applied to this job'
-      })
-      
-    }else{
+        message: "Job",
+        type: "warning",
+        description: "Already applied to this job",
+      });
+    } else {
       jobpostObj = jobpost;
-      setJobPostObj({...jobpostObj})
+      setJobPostObj({ ...jobpostObj });
       setIsModalVisible(true);
     }
-    
   };
 
   const handleCancel = (isSubmit) => {
-    if (isSubmit)
-      updateJobApplications(jobpostObj, 'Application')
+    if (isSubmit) updateJobApplications(jobpostObj, "Application");
     setIsModalVisible(false);
   };
 
   useImperativeHandle(ref, () => ({
     getAlert() {
-      getJobPostings(1,5)
-    }
+      getJobPostings(1, 5);
+    },
   }));
 
-  useEffect(() => {     
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     if (props.refresh) {
       allJobPosts = [];
       setAllJobPosts([...allJobPosts]);
     }
     getJobPostings(page, pageSize);
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [props.refresh]);
-
 
   const getJobPostings = async (pageNo, pagesize) => {
     setLoading(true);
@@ -121,10 +121,10 @@ const JobCard = forwardRef((props,ref) => {
   const saveJobPost = async (job) => {
     if (job.IsJobSaved) {
       notify({
-        message: 'Job',
-        type: 'warning',
-        description: 'Already saved this job'
-      })
+        message: "Job",
+        type: "warning",
+        description: "Already saved this job",
+      });
       return;
     }
     const object = {
@@ -135,7 +135,7 @@ const JobCard = forwardRef((props,ref) => {
     };
     const response = await saveUserJobPost(object);
     if (response.ok) {
-      updateJobApplications(job, 'SavedJob')
+      updateJobApplications(job, "SavedJob");
       notify({
         message: "Job",
         type: "success",
@@ -151,13 +151,41 @@ const JobCard = forwardRef((props,ref) => {
   };
 
   const updateJobApplications = (job, type) => {
-    let typeObj = { "SavedJob": "IsJobSaved", "Application": "IsApplied" }
-    allJobPosts.forEach(item => {
+    let typeObj = { SavedJob: "IsJobSaved", Application: "IsApplied" };
+    allJobPosts.forEach((item) => {
       if (item.JobId === job.JobId) {
         item[typeObj[type]] = true;
       }
-    })
+    });
     setAllJobPosts([...allJobPosts]);
+  };
+  const deleteJob = (jobpost) => {
+    Modal.confirm({
+      title: "Confirm",
+      icon: "",
+      content: "Are you sure want to delete saved job?",
+      okText: "Ok",
+      cancelText: "Cancel",
+      onOk: () => confirmJObDelete(jobpost),
+    });
+  };
+  const confirmJObDelete = async (jobpost)=>{
+    const response = await deleteJobSavedPost(jobpost.JobId);
+    if (response.ok) {
+      allJobPosts = allJobPosts.filter((item) => jobpost.JobId !== item.JobId);
+      setAllJobPosts([...allJobPosts]);
+      notify({
+        message: "Delete",
+        type: "success",
+        description: "Saved job deleted successfully",
+      });
+    } else {
+      notify({
+        message: "Delete",
+        type: "error",
+        description: "Something went wrong",
+      });
+    }
   }
   const renderJobPost = (jobpost, indx) => {
     return (
@@ -168,51 +196,76 @@ const JobCard = forwardRef((props,ref) => {
           actions={[
             <Link to={`/jobdetail/${jobpost.JobId}`}>
               <span className="post-icons view-job mr-8"></span>View Details
-          </Link>,
-            <a className="apply-job-btn" onClick={()=>showModal(jobpost)}>
+            </Link>,
+            jobpost.IsApplied ? <a className="apply-job-btn">
+            <span className="post-icons apply-job"></span>Applied
+          </a> :<a className="apply-job-btn" onClick={() => showModal(jobpost)}>
               <span className="post-icons apply-job"></span>Apply Now
+            </a>,
+            !showSavedLink ? (
+              <a onClick={() => saveJobPost(jobpost)}>
+                <span className="post-icons save-job"></span>Save Job
+              </a>
+            ):<a onClick={() => deleteJob(jobpost)}>
+            <span className="post-icons delete-icon"></span>Delete
           </a>,
-          !showSavedLink && <a onClick={()=>saveJobPost(jobpost)}>
-          <span className="post-icons save-job"></span>Save Job
-      </a>,
           ]}
         >
           <div className="p-12">
-            <Title className="f-16 semibold text-secondary mb-0">
+            <div className="job-card-title">
+              <div className="company-logo"> 
+                <img src={Logo} className="obj-fit" alt={jobpost.EmployerName} />
+                {/* <span className="company-text">ZF</span> */}
+              </div>
+              <div> 
+              <Title className="f-16 semibold text-secondary mb-0">
               <Link to={`/jobdetail/${jobpost.JobId}`}>
-                <span className="post-title">{jobpost.Title}</span></Link>
+                <span className="post-title">{jobpost.Title}</span>
+              </Link>
             </Title>
-            <Paragraph className="f-12 text-secondary">
+            {/* <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobpost.CreateDate}</Moment>
-            </Paragraph>
-            <Paragraph className="f-12 mb-8">
-              {jobpost.EmployerName}
-            </Paragraph>
+            </Paragraph> */}
+            <Paragraph className="f-12 mb-8">{jobpost.EmployerName}</Paragraph>
+
+            </div>
+            </div>
+            
+           
             <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
               {jobpost.Role}
             </Paragraph>
             <ul className="d-flex m-0 pl-0 job-req justify-content-between">
               <li className="f-14 text-primary">
                 <span className="post-icons job mr-16"></span>
-                {jobpost.Type === 'Job' && <Paragraph className="f-14 text-primary m-0">
-                  {jobpost.Years} Yr's
-              </Paragraph>}
-              {(jobpost.Type === 'Internship' && jobpost.Years !== '0') ? <Paragraph className="f-14 text-primary m-0">
-                  {jobpost.Years} Yr's {jobpost.Months} M
-              </Paragraph>:jobpost.Type === 'Internship' &&<Paragraph className="f-14 text-primary m-0">
-              {jobpost.Months} {jobpost.Months === '1' ? 'Month' : 'Months'}
-              </Paragraph>}
+                {jobpost.Type === "Job" && (
+                  <Paragraph className="f-14 text-primary m-0">
+                    {jobpost.Years} Yr's
+                  </Paragraph>
+                )}
+                {jobpost.Type === "Internship" && jobpost.Years !== "0" ? (
+                  <Paragraph className="f-14 text-primary m-0">
+                    {jobpost.Years} Yr's {jobpost.Months} M
+                  </Paragraph>
+                ) : (
+                  jobpost.Type === "Internship" && (
+                    <Paragraph className="f-14 text-primary m-0">
+                      {jobpost.Months}{" "}
+                      {jobpost.Months === "1" ? "Month" : "Months"}
+                    </Paragraph>
+                  )
+                )}
               </li>
               <li className=" f-14 text-primary ">
                 <span className="post-icons role mr-16"></span>
                 <Paragraph className="f-14 text-primary m-0">
-                {jobpost.SalaryRange ? jobpost.SalaryRange : 'Not Disclosed'}
+                  {jobpost.SalaryRange ? jobpost.SalaryRange : "Not Disclosed"}
                 </Paragraph>
               </li>
               <li className="f-14 text-primary">
                 <span className="post-icons location mr-16"></span>
                 <Paragraph className="f-14 text-primary m-0">
-                  {jobpost.Place}, {jobpost.City}, {jobpost.State}
+                  {jobpost.City}, {jobpost.State}
                 </Paragraph>
               </li>
             </ul>
@@ -232,10 +285,11 @@ const JobCard = forwardRef((props,ref) => {
       {allJobPosts?.map((jobpost, indx) => renderJobPost(jobpost, indx))}
       {loading && <Loader className="loader-top-middle" />}
       {allJobPosts.length == 0 && <Empty />}
-      <ApplyModal className="custom-popup"
+      <ApplyModal
+        className="custom-popup"
         visible={isModalVisible}
         object={jobpostObj}
-        cancel={(isSubmit)=>handleCancel(isSubmit)}
+        cancel={(isSubmit) => handleCancel(isSubmit)}
         formid="myJobCardFomid"
       />
     </div>

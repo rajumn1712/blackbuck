@@ -57,7 +57,7 @@ class Help extends Component {
                         <h3 className="sub-title">
                             Help by category
                         </h3>
-                        <Row gutter={8}>
+                        <Row gutter={[8 , 8]}>
                             <Col xs={24} md={12} lg={8}>
                                 <div className="helpcards">
                                 <h3>Contact</h3>

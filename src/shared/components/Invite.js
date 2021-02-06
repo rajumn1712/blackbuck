@@ -96,7 +96,7 @@ class Invite extends Component {
     }
     render() {
         let { invitations } = this.state;
-        return this.props.displayas ? (<div className="group-page p-12">
+        return this.props.displayas ? (<div className="group-page p-12 mb-6">
             <Row gutter={16}>
                 {invitations.map((invitation, index) => {
                     return <Col md={24} lg={8} xl={8} xxl={6} key={index} className="mb-8">
@@ -112,16 +112,12 @@ class Invite extends Component {
                                     <Button type="danger" onClick={() => this.acceptInvite('decline', invitation)}>Decline</Button>
                                 </div>
                             </div>
-
-
                         </Card>
                         </div>
                     </Col>
                 })}
-                {invitations.length == 0 &&
-                    <Card>
+                {invitations.length == 0 &&           
                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                    </Card>
                 }
             </Row>
         </div>) : (

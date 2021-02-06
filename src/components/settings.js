@@ -106,7 +106,7 @@ class Settings extends React.Component {
         });
     };
 
-    
+
     handleOk = () => {
         this.setState({ loading: true });
         setTimeout(() => {
@@ -152,7 +152,7 @@ class Settings extends React.Component {
                         <Col xs={24} sm={12} md={16} lg={18} xl={18} xxl={18}>
                             <Card title="Change password" className="settings-card mb-12" >
                                 <Row gutter={12}>
-                                    <Col xs={24} sm={24}>
+                                    <Col span={24}>
                                         <ChangePassword />
                                     </Col>
                                 </Row>
@@ -189,7 +189,7 @@ class Settings extends React.Component {
                             </Card>
                             <Card title="Twofactor Authentication" className="settings-card mb-12" >
                                 <Row gutter={12}>
-                                    <Col xs={24} sm={24}>
+                                    <Col span={24}>
                                         <List
                                             itemLayout="horizontal"
                                             dataSource={data}
@@ -200,16 +200,13 @@ class Settings extends React.Component {
                                                         title={<a className="f-18 count-link" href="">{item.title}</a>}
                                                         description="This extra step shows it’s really you trying to sign in."
                                                     />
-                                                   <div id="radioBtn" class="btn-group">
+                                                    <div id="radioBtn" class="btn-group">
                                                         <Button size="small" className="radious-right notActive">Enable</Button>
                                                         <Button size="small" type="primary" className="radious-left active">Disable </Button>
                                                     </div>
                                                 </List.Item>
                                             )}
-                                            
                                         />
-                                        
-
                                     </Col>
                                 </Row>
                             </Card>

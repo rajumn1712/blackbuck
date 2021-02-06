@@ -12,6 +12,27 @@ import 'react-owl-carousel2/src/owl.theme.default.css'
 import Loader from '../../common/loader';
 import Sharebox from '../../components/SavePostBox/sharebox';
 const { Title, Paragraph } = Typography;
+const options = {
+    responsiveClass: true,
+    responsive: {
+        0: {
+            items: 2    
+        },
+
+        575: {
+            items: 2
+        },
+
+        768: {
+            items: 2
+        },
+
+        992: {
+            items: 3
+        }
+    }
+
+}
 class FriendSuggestions extends Component {
     carouselRef;
     className = ["one", "two", "three"]
@@ -57,7 +78,7 @@ class FriendSuggestions extends Component {
             "UserId": this.props?.profile?.Id,
             "Firstname": this.props?.profile?.FirstName,
             "Lastname": this.props?.profile?.LastName,
-            "Image": friend.Image,
+            "Image": this.props?.profile?.ProfilePic,
             "Email": this.props?.profile?.Email,
             "Type": "request"
         }
@@ -112,7 +133,7 @@ class FriendSuggestions extends Component {
                     <Sharebox dataRefreshed={() => { }} />
                     <Row gutter={8} >
 
-                        {this.state.friends.map((friend, index) => <Col lg={8}>
+                        {this.state.friends.map((friend, index) => <Col xs={12} md={8} lg={8}>
                             <div className="frnds-list-item m-0 mb-8" key={index}>
                                 <div className="frnds-img ">
                                     <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
@@ -144,7 +165,7 @@ class FriendSuggestions extends Component {
                 <Row gutter={8}>
                     <div className="friends">
                         {this.state.friends.length > 4 && <><Link className="more-frnd-btn left" onClick={() => { this.carouselRef.prev() }}><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link></>}
-                        <OwlCarousel items={3} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${this.state.friends.length}`}>
+                        <OwlCarousel items={3} options={options} autoWidth={true} ref={(ref) => this.carouselRef = ref} key={`carousel_${this.state.friends.length}`}>
                             {this.state.friends.map((friend, index) => <div className="frnds-list-item" key={index}>
                                 <div className="frnds-img">
                                     <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>

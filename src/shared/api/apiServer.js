@@ -85,7 +85,7 @@ const fetchInterestsLu = (take, skip) => {
 };
 const fetchCourseSuggestions = (user_id, take, skip) => {
   return apiClient.get(
-    PROFILE_API + `getCourseSuggestions/${user_id}/${take}/${take * skip - skip}`
+    PROFILE_API + `getCourseSuggestions/${user_id}/${take}/${skip}`
   );
 };
 const usercourseSuggestions = (user_id, take, skip) => {
@@ -244,7 +244,7 @@ const getAllSystemGroups = (take, skip) => {
   return apiClient.get(ADMIN_API + `getAllSystemGroups/${take}/${skip}`);
 }
 const groupBlock = (obj) => {
-  return apiClient.get(ADMIN_API + `getAllSystemGroups`);
+  return apiClient.post(ADMIN_API + `saveGroupBlocked`,obj);
 }
 const joinGroupNew = (id, obj) => {
   return apiClient.post(LMS_API + "joinCourse/" + id, obj);
@@ -264,8 +264,8 @@ const getJobById = (user_id,id) => {
 const jobpostingsCount = () => {
   return apiClient.get(ADMIN_API + 'getJobPostingCount');
 }
-const getJobApplications = (take, skip) => {
-  return apiClient.get(ADMIN_API + `getJobApplications/${take}/${skip}`)
+const getJobApplications = (user_id,take, skip) => {
+  return apiClient.get(ADMIN_API + `getJobApplications/${user_id}/${take}/${skip}`)
 }
 const jobApplicationCount = () => {
   return apiClient.get(ADMIN_API + 'getJobApplicationCount');
@@ -293,10 +293,13 @@ const getSavedJobPost = (user_id,take,skip)=>{
   return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
 }
 const deleteJobSavedPost = (id)=>{
-  return apiClient.post(CAREESRS_API + `deleteSavedJobPost/${id}`);
+  return apiClient.get(CAREESRS_API + `deleteSavedJobPost/${id}`);
 }
 const deleteJobPost = (id)=>{
   return apiClient.get(ADMIN_API + `deleteJobPost/${id}`);
+}
+const getIsFriend = (id, fnd_user_id) => {
+  return apiClient.get(PROFILE_API + `CheckIsFriend/${id}/${fnd_user_id}`);
 }
 export {
   getFriendSuggestions,
@@ -383,5 +386,6 @@ export {
   saveUserJobPost,
   getSavedJobPost,
   deleteJobSavedPost,
-  deleteJobPost
+  deleteJobPost,
+  getIsFriend
 };

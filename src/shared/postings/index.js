@@ -70,7 +70,6 @@ class Postings extends Component {
     this.loadPosts();
   }
   componentWillUnmount() {
-    debugger
     window.removeEventListener("scroll", this.handleScroll);
     if (window.location.href.indexOf('search') < 0) {
       this.props.updateSearch()
@@ -558,7 +557,7 @@ class Postings extends Component {
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
       {post.PostType === "Course" ? this.renderCourseCard(post) : <Card
-        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, null, false, post.PostType)}
+        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false), post.PostType)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">
@@ -986,12 +985,12 @@ class Postings extends Component {
           <a className="f-24 semibold" onClick={() => { window.open(post.Link, "_blank") }}>Join Live Session</a>
         </div>
       </div>
-      <div className="course-create p-12 d-flex justify-between">
+      <div className="course-create p-12 d-flex xs-flex-col justify-between">
         <div className="d-flex align-items-center">
           <Avatar src={post.Author !== null ? post.Author[0].Image : defaultUser} className="mr-8" />
           <p className="m-0 f-14">{post.Author !== null && `${post.Author[0]?.Firstname} ${post.Author[0]?.Lastname}`}</p>
         </div>
-        <div className="d-flex livecourse-date py-8 px-16">
+        <div className="livecourse-date py-8 px-16">
           <Moment className="f-16 semibold mr-16 text-primary" format={"DD/MM/YYYY HH:MM"}>{post.LiveDate}</Moment>
           <Moment className="f-16 semibold text-secondary" fromNow>{post.LiveDate}</Moment>
         </div>

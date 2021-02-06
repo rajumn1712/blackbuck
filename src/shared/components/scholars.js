@@ -15,9 +15,19 @@ import { connect } from "react-redux";
 
 const { Title, Paragraph } = Typography;
 const options = {
-  items: 3,
   dots: false,
-};
+  responsiveClass: true,
+  responsive: {
+      0: {
+          items: 2    
+      },
+
+      992: {
+          items: 3
+      }
+  }
+
+}
 class BBScholars extends Component {
   carouselRef;
   state = {
@@ -96,7 +106,8 @@ class BBScholars extends Component {
                   <div className="scholar-badge p-4">
                     {scholor.IsScholor && <img src={scholarBadge} />}
                   </div>
-                  <Link to="">
+                  <Link to={scholor.UserId === this.props?.profile.Id ? "/profile/IsProfileTab"
+                        : "/profileview/" + scholor.UserId}>
                     <img src={scholor.Image || defaultUser} width="100%" height="100%" />
                   </Link>
                 </div>
@@ -143,7 +154,8 @@ class BBScholars extends Component {
                   <div className="scholar-badge p-4">
                     {scholor.IsScholor && <img src={scholarBadge} />}
                   </div>
-                  <Link to="">
+                  <Link to={scholor.UserId === this.props?.profile.Id ? "/profile/IsProfileTab"
+                        : "/profileview/" + scholor.UserId}>
                     <img src={scholor.Image || defaultUser} width="100%" height="100%" />
                   </Link>
                 </div>

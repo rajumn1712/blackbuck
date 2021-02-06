@@ -779,7 +779,7 @@ class Group extends Component {
               <TabPane tab="Posts" key="1">
                 <Row gutter={16}>
                   {groupData ?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Affix offsetTop={86}>
+                    <Affix offsetTop={86} className="xs-dnone">
                       <Tags />
                       <PrivateInvite />
                     </Affix>
@@ -787,7 +787,7 @@ class Group extends Component {
                   }
                   {
                     groupData ?.IsGroupMember && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                      <Affix offsetTop={86}>
+                      <Affix offsetTop={86} className="xs-dnone">
                         <Tags />
                         <Invite />
                       </Affix>
@@ -795,7 +795,7 @@ class Group extends Component {
                   }
                   {
                     !groupData ?.IsGroupMember && !groupData ?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                      <Affix offsetTop={86}>
+                      <Affix offsetTop={86} className="xs-dnone">
                         <Tags />
                         <Invite />
                       </Affix>

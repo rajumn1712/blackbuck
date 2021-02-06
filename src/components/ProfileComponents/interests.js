@@ -264,7 +264,7 @@ class Interests extends Component {
         >
           <List
             className="p-12"
-            grid={{ gutter: 16, column: 3 }}
+            grid={{ gutter: 16,  xs: 1,  sm: 2,   md: 3, lg: 3,  xl: 3, xxl: 3,}}
             itemLayout="horizontal"
             dataSource={interests}
             renderItem={(item) => (

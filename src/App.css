@@ -942,7 +942,7 @@
 .w-300 {
   width: 300px !important;
 }
-.change-text{width: 300px;text-align: right;margin: 10px;}
+
 .custom-card .list-link {
   color: var(--primary);
   margin-left: 3px;
@@ -1337,6 +1337,7 @@
   margin-bottom: 3px !important;
   text-transform: capitalize;
 }
+.change-text{text-align: right;margin-right: 12px;margin-bottom: 12px !important;}
 .custom-fields {
   margin-bottom: 16px !important;
 }
@@ -1515,9 +1516,6 @@
   height: 40px;
   line-height: 36px;
 }
-.ant-upload.ant-upload-drag .ant-upload {
-  padding: 24px 0 !important;
-}
 @media (min-width: 576px) {
   .custom-popup,
   .ant-modal {
@@ -1665,21 +1663,9 @@ textarea {
 .left-menu.private-icon:hover{background-position: -434px -284px;}
 .left-menu.preview-icon:hover{background-position: -464px -284px;}
 .left-menu.group-icon:hover{background-position: -527px -286px;} */
-.hobbies-card .ant-card-body,
-.group-member .ant-card-body {
-  padding: 12px;
-}
-.hobbies-card .tags {
-  min-height: auto;
-}
 .custom-popup .custom-card.bg-white {
   overflow: auto;
   height: 265px;
-}
-.interests-popup .ant-list-grid .ant-col > .ant-list-item {
-  padding: 6px;
-  margin: 12px;
-  display: flex;
 }
 .hobbies-card .ant-card-body,
 .group-member .ant-card-body {
@@ -2118,7 +2104,7 @@ textarea {
 .live-btn-hover{position: absolute; top: 0; right: 0; bottom: 0; left: 0;background: var(--black-50); justify-content: center;visibility: hidden; transition: 0.3s ease-in-out;}
 .live-btn-hover a{border: 1px solid var(--white); color: var(--white); display: inline-block; padding: 12px 24px; border-radius: 0.4rem; background: var(--black-80)}
 .post-card:hover .live-btn-hover{visibility: visible;}
-.livecourse-date{background: var(--white);border-radius: 0.4rem; border: 1px dashed var(--border);}
+.livecourse-date{display:flex;background: var(--white);border-radius: 0.4rem; border: 1px dashed var(--border);}
 /* .playicons.goto-meeting{background-position: -754px -111px;}
 .playicons.zoom{background-position: -842px -112px;}
 .playicons.others-meeting{background-position: -799px -111px;} */
@@ -2167,8 +2153,27 @@ textarea {
 .post-icons.apply-job {background-position: -64px -226px;}
 .job-tag{display: inline-block; margin-right: 8px;}
 .post-card .ant-card-actions .apply-job-btn{color: var(--primary) !important;}
+.b-none{border: none !important;}
+.cus-video-h{height: 186px;}
+.profile-requestbtns{position: absolute; right: 0; z-index: 1;padding-right: 16px;}
+.job-card-title{display: flex;}
+.job-card-title .company-logo,.job-card-title .company-logo .company-text{width: 45px;height: 45px;flex-shrink: 0;margin-right: 6px;display: flex;justify-content: center;align-items: center;border-radius: 4px;}
+.job-card-title .company-logo .company-text{box-shadow: inset 0 0 0 1px var(--primary-10);background: var(--primary-10) !important;text-transform: uppercase;font-size: 24px;
+  font-weight: 600;color: var(--primary);}
+@media (max-width: 991px){
+  .change-text{text-align: left;margin-bottom: 0;}
+}
 @media (max-width: 767px){
   .job-req{flex-wrap: wrap;}
   .job-card .ant-card-actions .post-icons{display: none;}
   .job-card .ant-card-actions li:not(:last-child) a {border-right: 1px solid var(--line);}
+}
+
+@media (max-width:575px){
+  .xs-dnone{display: none !important;}
+  .xs-flex-col{flex-direction: column;}
+  .livecourse-date{margin-top: 8px;justify-content: space-between;}
+  .post-preview.ant-modal .ant-modal-body{padding: 15px;}
+  .site-layout-content {margin-bottom: 70px;}
+  .interests-popup .ant-list-grid .ant-col > .ant-list-item{margin: 0px;}
 }
