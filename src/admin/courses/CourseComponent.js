@@ -77,6 +77,7 @@ const CourseComponent = ({ profile, history }) => {
         "UrlType": [],
         "LiveDetails": [
             {
+                "Id": uuidv4(),
                 "Date": "",
                 "Link": "",
             }
@@ -231,6 +232,7 @@ const CourseComponent = ({ profile, history }) => {
         }
     }
     const addLiveDetails = () => {
+        LiveDatail.Id = uuidv4();
         courseObject.LiveDetails.push({ ...LiveDatail })
         setCourseObject({ ...courseObject })
     }
@@ -342,7 +344,7 @@ const CourseComponent = ({ profile, history }) => {
         if (courseObject.DupCategoeries?.length > 0) {
             courseObject.Categories = courseObject.DupCategoeries;
         }
-        courseObject.Type = courseObject.Categories[0].Name;
+        courseObject.Type = 'Course';
         const result = await saveCourse(courseObject);
         if (result.ok) {
             setLoading(false)
@@ -475,6 +477,7 @@ const CourseComponent = ({ profile, history }) => {
                     courseObject.Link = "";
                     courseObject.EndDate = "";
                     courseObject.LiveDetails = [{
+                        "Id": uuidv4(),
                         "Date": "",
                         "Link": "",
                     }];
@@ -487,7 +490,7 @@ const CourseComponent = ({ profile, history }) => {
                         if (item == (prop == "Categories" ? obj.GroupId : obj.UserId)) {
                             let Object = prop == "Categories" ? {
                                 "GroupId": obj.GroupId,
-                                "Name": obj.BranchName,
+                                "Name": obj.GroupName,
                             } : {
                                     "UserId": obj.UserId,
                                     "Firstname": obj.Firstname,
@@ -767,14 +770,14 @@ const CourseComponent = ({ profile, history }) => {
                                                             <Row gutter={8}>
                                                                 <Col xs={24} sm={24} md={8} className="custom-fields">
                                                                     <label className="text-secondary d-block mb-4 semibold required ">Date</label>
-                                                                    <Form.Item className="custom-fields" name={[index, "Date"]} rules={[{ required: true, message: "Date required" }]}>
-                                                                        <DatePicker value={live.Date} placeholder="Course Date" onChange={(val) => { handleLiveChange("Date", val, index) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                                                    <Form.Item initialValue={live.Date ? live.Date : ""} className="custom-fields" name={[live.Id, "Date"]} rules={[{ required: true, message: "Date required" }]}>
+                                                                        <DatePicker placeholder="Course Date" onChange={(val) => { handleLiveChange("Date", val, index) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                                     </Form.Item>
                                                                 </Col>
                                                                 <Col xs={24} sm={24} md={16} className="">
                                                                     <label className="text-secondary d-block mb-4 semibold required ">Link</label>
-                                                                    <Form.Item className="custom-fields" name={[index, "Link"]} rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
-                                                                        <Input placeholder="Meeting Link" value={live.Link} onChange={(value) => handleLiveChange("Link", value, index)} />
+                                                                    <Form.Item initialValue={live.Link ? live.Link : ""} className="custom-fields" name={[live.Id, "Link"]} rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                                        <Input placeholder="Meeting Link" onChange={(value) => handleLiveChange("Link", value, index)} />
                                                                     </Form.Item>
                                                                 </Col>
 
