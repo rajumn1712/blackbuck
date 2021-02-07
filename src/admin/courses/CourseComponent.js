@@ -80,7 +80,8 @@ const CourseComponent = ({ profile, history }) => {
                 "Date": "",
                 "Link": "",
             }
-        ]
+        ],
+        "DupCategoeries": []
     }
     let postObject = {
         "GroupId": "",
@@ -250,10 +251,16 @@ const CourseComponent = ({ profile, history }) => {
             ObjCourse.Author.push(item.UserId)
         });
         obj.Categories.forEach(item => {
-            ObjCourse.Categories.push(item.BranchId)
+            ObjCourse.Categories.push(item.GroupId)
         });
         obj.Date = obj.Date ? moment(obj.Date).local() : "";
         ObjCourse.Date = ObjCourse.Date ? moment(ObjCourse.Date).local() : "";
+        obj.EndDate = obj.EndDate ? moment(obj.EndDate).local() : "";
+        ObjCourse.EndDate = ObjCourse.EndDate ? moment(ObjCourse.EndDate).local() : "";
+        ObjCourse.LiveDetails.forEach(item => {
+            item.Date = item.Date ? moment(item.Date).local() : "";
+        });
+        ObjCourse.Categories = ObjCourse.Categories?.length == 4 ? ["All"] : ObjCourse.Categories;
         setCourseObject({ ...obj });
         form.setFieldsValue({ ...ObjCourse });
     }
@@ -332,7 +339,7 @@ const CourseComponent = ({ profile, history }) => {
             courseObject.EndDate = "";
         }
         if (courseObject.DupCategoeries?.length > 0) {
-            courseObject.Categoeries = courseObject.DupCategoeries;
+            courseObject.Categories = courseObject.DupCategoeries;
         }
         const result = await saveCourse(courseObject);
         if (result.ok) {
@@ -491,8 +498,10 @@ const CourseComponent = ({ profile, history }) => {
                         }
                     });
                 });
-                if (val == "All")
+                if (val.indexOf("All") > -1) {
                     courseObject.DupCategoeries = CategoriesLu;
+                    form.setFieldsValue({ Categories: ["All"] })
+                }
                 else {
                     courseObject.DupCategoeries = [];
                 }
@@ -657,7 +666,7 @@ const CourseComponent = ({ profile, history }) => {
                                                     >
                                                         <Option value="All">All</Option>
                                                         {CategoriesLu?.map((item, index) => {
-                                                            return <Option value={item.GroupId} key={index}>{item.GroupName}</Option>
+                                                            return <Option value={item.GroupId} key={index} disabled={courseObject.DupCategoeries?.length > 0 || courseObject.Categories?.length > 0}>{item.GroupName}</Option>
                                                         })}
                                                     </Select>
                                                 </Form.Item>
@@ -698,7 +707,7 @@ const CourseComponent = ({ profile, history }) => {
                                                                 courseObject.EndDate
                                                                     ? courseObject.EndDate
                                                                     : ""
-                                                            ).add(+1, "days") <= current
+                                                            ).add(+1, "days") < current
                                                         );
                                                     }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
