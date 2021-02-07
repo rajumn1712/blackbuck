@@ -56,6 +56,9 @@ const userRecentWatchedCourse = (user_id)=>{
 const getRecommendedVideos = (course_id,pageNo,pageSize)=>{
   return apiClient.get(LMS_REMOTE + `getRecommendedVideos/${course_id}/${pageSize}/${pageNo * pageSize - pageSize}`)
 }
+const getAllLMS = ()=>{
+  return apiClient.get(LMS_REMOTE + '/getLiveSessions/30/0');
+}
 export {
   fetchUserCourses,
   fetchCourseSuggestions,
@@ -70,5 +73,6 @@ export {
   getCertifiedFlags,
   getUserWatchedVideos,
   userRecentWatchedCourse,
-  getRecommendedVideos
+  getRecommendedVideos,
+  getAllLMS
 };
