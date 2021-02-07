@@ -241,6 +241,7 @@ const CourseComponent = ({ profile, history }) => {
     const handleLiveChange = (prop, val, index) => {
         courseObject.LiveDetails[index][prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
         setCourseObject({ ...courseObject })
+        setIsCourseChanged(true)
     }
 
     const bindCourseData = (obj) => {
@@ -341,6 +342,7 @@ const CourseComponent = ({ profile, history }) => {
         if (courseObject.DupCategoeries?.length > 0) {
             courseObject.Categories = courseObject.DupCategoeries;
         }
+        courseObject.Type = courseObject.Categories[0].Name;
         const result = await saveCourse(courseObject);
         if (result.ok) {
             setLoading(false)
