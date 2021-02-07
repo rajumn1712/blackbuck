@@ -5,7 +5,7 @@ import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload
 import { uuidv4 } from '../../utils';
 import moment from 'moment';
 import notify from '../../shared/components/notification';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete, getPublishedObject } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete, getPublishedObject, getCategories } from '../../shared/api/apiServer';
 import Loader from "../../common/loader";
 import Title from 'antd/lib/typography/Title';
 const { Dragger } = Upload;
@@ -121,7 +121,7 @@ const CourseComponent = ({ profile, history }) => {
         }
     }, []);
     const fetchBranches = async () => {
-        const branchResponse = await getCollegeBranches();
+        const branchResponse = await getCategories();
         if (branchResponse.ok) {
             setCategoriesLu(branchResponse.data);
         } else {
@@ -331,6 +331,9 @@ const CourseComponent = ({ profile, history }) => {
             courseObject.LiveDetails = [];
             courseObject.EndDate = "";
         }
+        if (courseObject.DupCategoeries?.length > 0) {
+            courseObject.Categoeries = courseObject.DupCategoeries;
+        }
         const result = await saveCourse(courseObject);
         if (result.ok) {
             setLoading(false)
@@ -472,9 +475,9 @@ const CourseComponent = ({ profile, history }) => {
                 courseObject[prop] = [];
                 (prop == "Categories" ? val : [val]).forEach(item => {
                     (prop == "Categories" ? CategoriesLu : AuthorsLu).forEach(obj => {
-                        if (item == (prop == "Categories" ? obj.BranchId : obj.UserId)) {
+                        if (item == (prop == "Categories" ? obj.GroupId : obj.UserId)) {
                             let Object = prop == "Categories" ? {
-                                "BranchId": obj.BranchId,
+                                "GroupId": obj.GroupId,
                                 "Name": obj.BranchName,
                             } : {
                                     "UserId": obj.UserId,
@@ -488,6 +491,11 @@ const CourseComponent = ({ profile, history }) => {
                         }
                     });
                 });
+                if (val == "All")
+                    courseObject.DupCategoeries = CategoriesLu;
+                else {
+                    courseObject.DupCategoeries = [];
+                }
             }
             setCourseObject({ ...courseObject })
             form.setFieldsValue({ UrlType: courseObject.UrlType, Date: courseObject.Date, Link: courseObject.Link })
@@ -647,8 +655,9 @@ const CourseComponent = ({ profile, history }) => {
                                                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                                         }
                                                     >
+                                                        <Option value="All">All</Option>
                                                         {CategoriesLu?.map((item, index) => {
-                                                            return <Option value={item.BranchId} key={index}>{item.BranchName}</Option>
+                                                            return <Option value={item.GroupId} key={index}>{item.GroupName}</Option>
                                                         })}
                                                     </Select>
                                                 </Form.Item>

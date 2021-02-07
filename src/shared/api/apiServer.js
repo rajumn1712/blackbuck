@@ -304,6 +304,9 @@ const deleteJobPost = (id)=>{
 const getIsFriend = (id, fnd_user_id) => {
   return apiClient.get(PROFILE_API + `CheckIsFriend/${id}/${fnd_user_id}`);
 }
+const getCategories = () => {
+  return apiClient.get(LMS_API + `getCategoriesLu`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -391,5 +394,6 @@ export {
   getSavedJobPost,
   deleteJobSavedPost,
   deleteJobPost,
-  getIsFriend
+  getIsFriend,
+  getCategories
 };
