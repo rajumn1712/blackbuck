@@ -62,10 +62,10 @@ class CourseCards extends Component {
         this.props.profile.Id,
         this.state.page,
         this.state.pageSize,
-        key
+        'courses'
       );
       if (response.ok) {
-        this.setState({ ...this.state, [key]: response.data, loading: false });
+        this.setState({ ...this.state, courses: response.data, loading: false });
       } else {
         this.setState({ ...this.state, loading: false });
       }
