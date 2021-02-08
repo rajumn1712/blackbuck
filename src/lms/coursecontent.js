@@ -38,6 +38,7 @@ import ShowMoreText from "react-show-more-text";
 import video from "../styles/images/default-video.jpg";
 import Loader from "../common/loader";
 import notify from "../shared/components/notification";
+import { filter } from "lodash";
 const { Panel } = Collapse;
 const { Title, Paragraph } = Typography;
 class CourseContent extends Component {
@@ -237,6 +238,15 @@ class CourseContent extends Component {
       this.loadCourseDetails();
     }
   };
+  joinSession = (e,coursedetails)=>{
+    e.stopPropagation();
+    const filterObject = coursedetails.LiveDetails.filter(item=>{
+      return new Date(item.Date) === new Date()
+    });
+    if(filterObject.length > 0){
+      window.open(filterObject[0].Link);
+    }
+  }
   handleScroll = () => {
     const windowHeight =
       "innerHeight" in window
@@ -320,8 +330,7 @@ class CourseContent extends Component {
                                       type="dashed"
                                       key="console"
                                       onClick={(e) => {
-                                        e.stopPropagation();
-                                        window.open(courseDetails.Link);
+                                        this.joinSession(e,courseDetails)
                                       }}
                                     >
                                       Join Session
@@ -360,8 +369,7 @@ class CourseContent extends Component {
                                       type="dashed"
                                       key="console"
                                       onClick={(e) => {
-                                        e.stopPropagation();
-                                        window.open(courseDetails.Link);
+                                        this.joinSession(e,courseDetails)
                                       }}
                                     >
                                       Join Session
@@ -400,8 +408,7 @@ class CourseContent extends Component {
                                       type="dashed"
                                       key="console"
                                       onClick={(e) => {
-                                        e.stopPropagation();
-                                        window.open(courseDetails.Link);
+                                        this.joinSession(e,courseDetails)
                                       }}
                                     >
                                       Join Session

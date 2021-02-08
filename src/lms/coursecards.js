@@ -97,7 +97,7 @@ class CourseCards extends Component {
           <TabPane tab="All" key="1">
             <Card bordered={false} title="Live/Ongoing">
               <div className="px-12 pt-12 pb-8">
-                <Link
+                {this.state.allCourses['OnGoing']?.length > 4 && <><Link
                   className="more-frnd-btn left"
                   onClick={(e) => {
                     e.preventDefault();
@@ -114,7 +114,7 @@ class CourseCards extends Component {
                   }}
                 >
                   <span className="icon right-arrow mr-0"></span>
-                </Link>
+                </Link></>}
                 <OwlCarousel items={3} options={options} autoWidth={true} ref={this.OnGoingSlider} key={`carousel_${this.state.allCourses['OnGoing']?.length}`}>
                   {this.state.allCourses['OnGoing']?.map((course, indx) => (
                     <div className="course-list-item" key={indx}>
@@ -183,11 +183,11 @@ class CourseCards extends Component {
               </div>
               {this.state.loading && <Loader className="loader-top-middle" />}
               {!this.state.loading &&
-                this.state.allCourses['OnGoing'].length === 0 && <Empty />}
+                this.state.allCourses['OnGoing']?.length === 0 && <Empty />}
             </Card>
             <Card bordered={false} title="Upcoming Courses">
               <div className="px-12 pt-12 pb-8">
-                <Link
+                {this.state.allCourses['Previous']?.length > 4 && <><Link
                   className="more-frnd-btn left"
                   onClick={(e) => {
                     e.preventDefault();
@@ -204,7 +204,7 @@ class CourseCards extends Component {
                   }}
                 >
                   <span className="icon right-arrow mr-0"></span>
-                </Link>
+                </Link></>}
                 <OwlCarousel items={3} options={options} autoWidth={true} ref={this.PreviousSlider} key={`carousel_${this.state.allCourses['Previous']?.length}`}>
                   {this.state.allCourses['Previous']?.map((course, indx) => (
                     <div className="course-list-item" key={indx}>
@@ -273,11 +273,11 @@ class CourseCards extends Component {
               </div>
               {this.state.loading && <Loader className="loader-top-middle" />}
               {!this.state.loading &&
-                this.state.allCourses['Previous'].length === 0 && <Empty />}
+                this.state.allCourses['Previous']?.length === 0 && <Empty />}
             </Card>
             <Card bordered={false} title="Previous Courses">
               <div className="px-12 pt-12 pb-8">
-                <Link
+                {this.state.allCourses['Upcoming']?.length > 4 && <><Link
                   className="more-frnd-btn left"
                   onClick={(e) => {
                     e.preventDefault();
@@ -294,7 +294,7 @@ class CourseCards extends Component {
                   }}
                 >
                   <span className="icon right-arrow mr-0"></span>
-                </Link>
+                </Link></>}
                 <OwlCarousel items={3} options={options} autoWidth={true} ref={this.UpcomingSlider} key={`carousel_${this.state.allCourses['Upcoming']?.length}`}>
                   {this.state.allCourses['Upcoming']?.map((course, indx) => (
                     <div className="course-list-item" key={indx}>
@@ -363,7 +363,7 @@ class CourseCards extends Component {
               </div>
               {this.state.loading && <Loader className="loader-top-middle" />}
               {!this.state.loading &&
-                this.state.allCourses['Upcoming'].length === 0 && <Empty />}
+                this.state.allCourses['Upcoming']?.length === 0 && <Empty />}
             </Card>
           </TabPane>
           <TabPane tab="My Courses" key="2">
