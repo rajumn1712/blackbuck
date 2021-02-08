@@ -1,7 +1,6 @@
 import { Card, Col, Row, Tabs, Empty, Typography, Avatar, Tooltip } from "antd";
 import React, { Component, createRef } from "react";
 import photography from "../styles/images/default-cover.png";
-import defaultUser from "../styles/images/defaultuser.jpg";
 import { Link } from "react-router-dom";
 import { fetchUserCourses, getAllLMS } from "./api";
 import { connect } from "react-redux";

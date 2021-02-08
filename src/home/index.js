@@ -15,6 +15,7 @@ import FriendSuggestion from '../shared/components/friendSuggestion';
 import BBScholars from '../shared/components/scholars';
 import JobCard from '../careers/jobcard';
 import JobDetails from '../careers/jobdetail';
+import UpcomingCourses from '../lms/upcomingCourses';
 const PostingsComponent = ({ sharebox, friendsSuggestions, postingsType, ...rest }) => {
     return <Postings sharebox={sharebox} friendsSuggestions={friendsSuggestions} postingsType={postingsType} {...rest} />
 }
@@ -32,7 +33,8 @@ class Home extends Component {
                         <Identity />
                         <Affix offsetTop={86} className="xs-dnone" >
                             <Tags />
-                            <Invite />
+                            <UpcomingCourses/>
+                            {/* <Invite /> */}
                         </Affix>
                     </Col>
                     <Col xs={{ order: 2, span:24 }} sm={{order:2 , span:12}} md={16} lg={12} xl={12} xxl={12}  >
