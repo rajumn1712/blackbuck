@@ -11,7 +11,7 @@ import {
   Tooltip,
   Typography,
   Divider,
-  Button
+  Button,
 } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
@@ -53,7 +53,7 @@ class CourseContent extends Component {
     Members: [],
     size: 10,
     page: 1,
-    pageSize:1,
+    pageSize: 1,
     recommendedVideos: [],
     selectedTopicid: null,
     loadMore: true,
@@ -67,19 +67,22 @@ class CourseContent extends Component {
   }
   componentDidUpdate(previewProps) {
     if (previewProps.match.params.id != this.props.match.params.id) {
-      this.setState({...this.state,recommendedVideos: []},()=>{
+      this.setState({ ...this.state, recommendedVideos: [] }, () => {
         this.loadCourseDetails();
-      })
+      });
     }
   }
   loadCourseDetails = async () => {
-    this.setState({...this.state,loading:true})
+    this.setState({ ...this.state, loading: true });
     const response = await fetchCourseDetails(
       this.props.match.params.id,
       this.props.profile?.Id
     );
     if (response.ok) {
       this.getUserWatchedVideos();
+      response.data[0].LiveDetails = response.data[0].LiveDetails.filter((item) => {
+        return new Date(item.Date) <= new Date();
+      });
       this.setState(
         {
           ...this.state,
@@ -95,15 +98,15 @@ class CourseContent extends Component {
           }
         }
       );
-    }else{
-      this.setState({...this.state,loading:false},()=>{
+    } else {
+      this.setState({ ...this.state, loading: false }, () => {
         notify({
-          message:'Error',
-          type:'error',
-  
-          description:'Something went wrong'
-        })
-      })
+          message: "Error",
+          type: "error",
+
+          description: "Something went wrong",
+        });
+      });
     }
   };
   showMore = () => {
@@ -119,21 +122,21 @@ class CourseContent extends Component {
       this.state.pageSize,
       this.state.size
     );
-    let {Members} = this.state;
-    Members = Members.concat(response.data)
+    let { Members } = this.state;
+    Members = Members.concat(response.data);
     if (response.ok) {
       this.setState({ ...this.state, Members });
     }
   };
   getRecommendedVideos = async () => {
-    this.setState({...this.state,loading:true})
+    this.setState({ ...this.state, loading: true });
     const response = await getRecommendedVideos(
       this.props.match.params.id,
       this.state.page,
       this.state.size
     );
-    let {recommendedVideos} = this.state;
-    recommendedVideos = recommendedVideos.concat(response.data)
+    let { recommendedVideos } = this.state;
+    recommendedVideos = recommendedVideos.concat(response.data);
     if (response.ok) {
       this.setState({
         ...this.state,
@@ -141,15 +144,15 @@ class CourseContent extends Component {
         loading: false,
         loadMore: response.data.length === this.state.size,
       });
-    }else{
-      this.setState({...this.state,loading:false},()=>{
+    } else {
+      this.setState({ ...this.state, loading: false }, () => {
         notify({
-          message:'Error',
-          type:'error',
-  
-          description:'Something went wrong'
-        })
-      })
+          message: "Error",
+          type: "error",
+
+          description: "Something went wrong",
+        });
+      });
     }
   };
   getUserWatchedVideos = async () => {
@@ -237,15 +240,7 @@ class CourseContent extends Component {
       this.loadCourseDetails();
     }
   };
-  joinSession = (e,coursedetails)=>{
-    e.stopPropagation();
-    const filterObject = coursedetails.LiveDetails.filter(item=>{
-      return moment(new Date(item.Date)).format('YYYY-MM-DDT00:00:00') === moment(new Date()).format('YYYY-MM-DDT00:00:00')
-    });
-    if(filterObject.length > 0){
-      window.open(filterObject[0].Link);
-    }
-  }
+
   handleScroll = () => {
     const windowHeight =
       "innerHeight" in window
@@ -300,122 +295,143 @@ class CourseContent extends Component {
                         <div className="px-12">
                           <div className="custom-card mb-16">
                             {/* Gotomeeting */}
-                            {courseDetails.UrlType === "GotoMeeting" && (
-                              <Card className="start-gotomeeting">
-                                <Row align="middle" className="p-16">
-                                  <Col
-                                    xs={18}
-                                    sm={18}
-                                    md={18}
-                                    lg={18}
-                                    xl={18}
-                                    xxl={18}
-                                    className="pr-16"
+                            {courseDetails.UrlType === "GotoMeeting" &&
+                              courseDetails.LiveDetails?.map((course, indx) => {
+                                return (
+                                  <>
+                                  <span>{moment(course.Date).format('LLL')}</span>
+                                  <Card
+                                    className="start-gotomeeting"
+                                    key={indx}
                                   >
-                                    <div>
-                                      <img src={gotomeeting} />
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    xs={6}
-                                    sm={6}
-                                    md={6}
-                                    lg={6}
-                                    xl={6}
-                                    xxl={6}
-                                    className="text-right"
-                                  >
-                                    <Button
-                                      type="dashed"
-                                      key="console"
-                                      onClick={(e) => {
-                                        this.joinSession(e,courseDetails)
-                                      }}
-                                    >
-                                      Join Session
-                                    </Button>
-                                  </Col>
-                                </Row>
-                              </Card>
-                            )}
+                                    <Row align="middle" className="p-16">
+                                      <Col
+                                        xs={18}
+                                        sm={18}
+                                        md={18}
+                                        lg={18}
+                                        xl={18}
+                                        xxl={18}
+                                        className="pr-16"
+                                      >
+                                        <div>
+                                          <img src={gotomeeting} />
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        xs={6}
+                                        sm={6}
+                                        md={6}
+                                        lg={6}
+                                        xl={6}
+                                        xxl={6}
+                                        className="text-right"
+                                      >
+                                        <Button
+                                          type="dashed"
+                                          key="console"
+                                          disabled={new Date(course.Date) < new Date()}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            window.open(course.Link);
+                                          }}
+                                        >
+                                          Join Session
+                                        </Button>
+                                      </Col>
+                                    </Row>
+                                  </Card>
+                                  </>
+                                );
+                              })}
                             {/* Zoom */}
-                            {courseDetails.UrlType === "Zoom" && (
-                              <Card className="start-zoom">
-                                <Row align="middle" className="p-16">
-                                  <Col
-                                    xs={18}
-                                    sm={18}
-                                    md={18}
-                                    lg={18}
-                                    xl={18}
-                                    xxl={18}
-                                    className="pr-16"
-                                  >
-                                    <div>
-                                      <img src={zoom} />
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    xs={6}
-                                    sm={6}
-                                    md={6}
-                                    lg={6}
-                                    xl={6}
-                                    xxl={6}
-                                    className="text-right"
-                                  >
-                                    <Button
-                                      type="dashed"
-                                      key="console"
-                                      onClick={(e) => {
-                                        this.joinSession(e,courseDetails)
-                                      }}
+                            {courseDetails.UrlType === "Zoom" &&
+                              courseDetails.LiveDetails?.map((course, indx) => {
+                                return <>
+                                <span>{moment(course.Date).format('LLL')}</span>
+                                <Card className="start-zoom" key={indx}>
+                                  <Row align="middle" className="p-16">
+                                    <Col
+                                      xs={18}
+                                      sm={18}
+                                      md={18}
+                                      lg={18}
+                                      xl={18}
+                                      xxl={18}
+                                      className="pr-16"
                                     >
-                                      Join Session
-                                    </Button>
-                                  </Col>
-                                </Row>
-                              </Card>
-                            )}
+                                      <div>
+                                        <img src={zoom} />
+                                      </div>
+                                    </Col>
+                                    <Col
+                                      xs={6}
+                                      sm={6}
+                                      md={6}
+                                      lg={6}
+                                      xl={6}
+                                      xxl={6}
+                                      className="text-right"
+                                    >
+                                      <Button
+                                        type="dashed"
+                                        key="console"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          window.open(course.Link);
+                                        }}
+                                      >
+                                        Join Session
+                                      </Button>
+                                    </Col>
+                                  </Row>
+                                </Card>
+                                </>
+                              })}
                             {/* Others */}
-                            {courseDetails.UrlType === "Others" && (
-                              <Card className="start-others">
-                                <Row align="middle" className="p-16">
-                                  <Col
-                                    xs={18}
-                                    sm={18}
-                                    md={18}
-                                    lg={18}
-                                    xl={18}
-                                    xxl={18}
-                                    className="pr-16"
-                                  >
-                                    <div>
-                                      <img src={others} />
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    xs={6}
-                                    sm={6}
-                                    md={6}
-                                    lg={6}
-                                    xl={6}
-                                    xxl={6}
-                                    className="text-right"
-                                  >
-                                    <Button
-                                      type="dashed"
-                                      key="console"
-                                      onClick={(e) => {
-                                        this.joinSession(e,courseDetails)
-                                      }}
+                            {courseDetails.UrlType === "Others" &&
+                              courseDetails.LiveDetails?.map((course, indx) => {
+                                return <>
+                                <span>{moment(course.Date).format('LLL')}</span>
+                                <Card className="start-others" key={indx}>
+                                  <Row align="middle" className="p-16">
+                                    <Col
+                                      xs={18}
+                                      sm={18}
+                                      md={18}
+                                      lg={18}
+                                      xl={18}
+                                      xxl={18}
+                                      className="pr-16"
                                     >
-                                      Join Session
-                                    </Button>
-                                  </Col>
-                                </Row>
-                              </Card>
-                            )}
+                                      <div>
+                                        <img src={others} />
+                                      </div>
+                                    </Col>
+                                    <Col
+                                      xs={6}
+                                      sm={6}
+                                      md={6}
+                                      lg={6}
+                                      xl={6}
+                                      xxl={6}
+                                      className="text-right"
+                                    >
+                                      <Button
+                                        type="dashed"
+                                        key="console"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          window.open(course.Link);
+                                        }}
+                                      >
+                                        Join Session
+                                      </Button>
+                                    </Col>
+                                  </Row>
+                                </Card>
+                                </>
+                              })}
                           </div>
                         </div>
                       )}
@@ -614,23 +630,30 @@ class CourseContent extends Component {
                     )}
                   </div>
                 </div>
-                {courseDetails.RefLinks?.length > 0 && <div className="custom-card">
-                <Card
-          title="Reference Links"
-          className="hobbies-card"
-          bordered={false}
-        >
-          
-            {courseDetails.RefLinks?.map((link, index) => {
-              return (
-                link !== null && <a href={link} target="_blank" className="tags" key={index}>
-                  {link}
-                </a>
-              );
-            })}
-          
-        </Card>
-                </div>}
+                {courseDetails.RefLinks?.length > 0 && (
+                  <div className="custom-card">
+                    <Card
+                      title="Reference Links"
+                      className="hobbies-card"
+                      bordered={false}
+                    >
+                      {courseDetails.RefLinks?.map((link, index) => {
+                        return (
+                          link !== null && (
+                            <a
+                              href={link}
+                              target="_blank"
+                              className="tags"
+                              key={index}
+                            >
+                              {link}
+                            </a>
+                          )
+                        );
+                      })}
+                    </Card>
+                  </div>
+                )}
                 <Row gutter={16}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {!this.state.loading && courseDetails.IsMember && (
