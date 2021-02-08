@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUpcomingCourses } from '../shared/api/apiServer';
+import { getCoursesByType } from '../shared/api/apiServer';
 import defaultguser from "../styles/images/default-cover.png";
 import { Avatar, Card, List } from 'antd';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ const UpcomingCourses = ()=>{
 
     const upcomingcourses = async ()=>{
         setLoading(true)
-        const response = await getUpcomingCourses();
+        const response = await getCoursesByType('upcoming',2,0);
         if(response.ok){
             courses = response.data;
             setCourses([...courses]);

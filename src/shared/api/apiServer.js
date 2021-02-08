@@ -307,8 +307,13 @@ const getIsFriend = (id, fnd_user_id) => {
 const getCategories = () => {
   return apiClient.get(LMS_API + `getCategoriesLu`);
 }
-const getUpcomingCourses = ()=>{
-  return apiClient.get(PROFILE_API + 'getUpcomingCourses/5/0')
+const getCoursesByType = (type,take,skip)=>{
+  const methods = {
+    'ongoing':'getOngoingCourses',
+    'upcoming':'getUpcomingCourses',
+    'previous':'getPreviousCourses'
+  }
+  return apiClient.get(PROFILE_API + `${methods[type]}/${take}/${skip}`)
 }
 export {
   getFriendSuggestions,
@@ -399,5 +404,5 @@ export {
   deleteJobPost,
   getIsFriend,
   getCategories,
-  getUpcomingCourses
+  getCoursesByType
 };

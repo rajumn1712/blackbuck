@@ -11,8 +11,7 @@ import {
   Tooltip,
   Typography,
   Divider,
-  Button,
-  Image,
+  Button
 } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import "../index.css";
@@ -38,7 +37,7 @@ import ShowMoreText from "react-show-more-text";
 import video from "../styles/images/default-video.jpg";
 import Loader from "../common/loader";
 import notify from "../shared/components/notification";
-import { filter } from "lodash";
+
 const { Panel } = Collapse;
 const { Title, Paragraph } = Typography;
 class CourseContent extends Component {
@@ -241,7 +240,7 @@ class CourseContent extends Component {
   joinSession = (e,coursedetails)=>{
     e.stopPropagation();
     const filterObject = coursedetails.LiveDetails.filter(item=>{
-      return new Date(item.Date) === new Date()
+      return moment(new Date(item.Date)).format('YYYY-MM-DDT00:00:00') === moment(new Date()).format('YYYY-MM-DDT00:00:00')
     });
     if(filterObject.length > 0){
       window.open(filterObject[0].Link);

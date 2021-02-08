@@ -1,14 +1,15 @@
-import { Card, Col, Row, Tabs, Empty, Typography, Avatar, Tooltip } from "antd";
+import { Card, Col, Row, Tabs, Empty, Typography } from "antd";
 import React, { Component, createRef } from "react";
 import photography from "../styles/images/default-cover.png";
 import { Link } from "react-router-dom";
-import { fetchUserCourses, getAllLMS } from "./api";
+import { fetchUserCourses } from "./api";
 import { connect } from "react-redux";
 import Loader from "../common/loader";
 import OwlCarousel from "react-owl-carousel2";
 import "react-owl-carousel2/src/owl.carousel.css";
 import "react-owl-carousel2/src/owl.theme.default.css";
 import Moment from "react-moment";
+import AllCourses from "./allCourses";
 
 const { Meta } = Card;
 const { TabPane } = Tabs;
@@ -69,18 +70,18 @@ class CourseCards extends Component {
         this.setState({ ...this.state, loading: false });
       }
     }else{
-      const response = await getAllLMS();
-      if(response.ok){
-        let {allCourses} = this.state;
-        allCourses = response.data.reduce((list,object)=>{
-          list[object.Type] = list[object.Type] || [];
-          list[object.Type].push(object);
-          return list;
-        },{});
-        this.setState({ ...this.state, allCourses, loading: false });
-      }else{
-        this.setState({ ...this.state, loading: false });
-      }
+      // const response = await getAllLMS();
+      // if(response.ok){
+      //   let {allCourses} = this.state;
+      //   allCourses = response.data.reduce((list,object)=>{
+      //     list[object.Type] = list[object.Type] || [];
+      //     list[object.Type].push(object);
+      //     return list;
+      //   },{});
+      //   this.setState({ ...this.state, allCourses, loading: false });
+      // }else{
+      //   this.setState({ ...this.state, loading: false });
+      // }
     }
     
   };
@@ -95,7 +96,10 @@ class CourseCards extends Component {
           }}
         >
           <TabPane tab="All" key="1">
-            <Card bordered={false} title="Live/Ongoing">
+            <AllCourses type="ongoing" title="Live/OnGoing"/>
+            <AllCourses type="upcoming" title="UpComing"/>
+            <AllCourses type="previous" title="Previous"/>
+            {/* <Card bordered={false} title="Live/Ongoing">
               <div className="px-12 pt-12 pb-8">
                 {this.state.allCourses['OnGoing']?.length > 4 && <><Link
                   className="more-frnd-btn left"
@@ -364,7 +368,7 @@ class CourseCards extends Component {
               {this.state.loading && <Loader className="loader-top-middle" />}
               {!this.state.loading &&
                 this.state.allCourses['Upcoming']?.length === 0 && <Empty />}
-            </Card>
+            </Card> */}
           </TabPane>
           <TabPane tab="My Courses" key="2">
             <Card bordered={false}>
