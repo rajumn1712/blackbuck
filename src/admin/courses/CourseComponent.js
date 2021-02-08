@@ -82,7 +82,8 @@ const CourseComponent = ({ profile, history }) => {
                 "Link": "",
             }
         ],
-        "DupCategoeries": []
+        "DupCategoeries": [],
+        "SpecialCategory": []
     }
     let postObject = {
         "GroupId": "",
@@ -344,7 +345,7 @@ const CourseComponent = ({ profile, history }) => {
         if (courseObject.DupCategoeries?.length > 0) {
             courseObject.Categories = courseObject.DupCategoeries;
         }
-        courseObject.Type = 'Course';
+        courseObject.SpecialCategory = courseObject.DupCategoeries.length > 0 ? "All" : courseObject.Categories.map(item => item.Name)
         const result = await saveCourse(courseObject);
         if (result.ok) {
             setLoading(false)
@@ -476,6 +477,9 @@ const CourseComponent = ({ profile, history }) => {
                     courseObject.Date = "";
                     courseObject.Link = "";
                     courseObject.EndDate = "";
+                    courseObject.LiveDetails = [];
+                }
+                else if (courseObject[prop] == "Live Session") {
                     courseObject.LiveDetails = [{
                         "Id": uuidv4(),
                         "Date": "",
@@ -671,7 +675,7 @@ const CourseComponent = ({ profile, history }) => {
                                                     >
                                                         <Option value="All">All</Option>
                                                         {CategoriesLu?.map((item, index) => {
-                                                            return <Option value={item.GroupId} key={index} disabled={courseObject.DupCategoeries?.length > 0 || courseObject.Categories?.length > 0}>{item.GroupName}</Option>
+                                                            return <Option value={item.GroupId} key={index} disabled={courseObject.DupCategoeries?.length > 0}>{item.GroupName}</Option>
                                                         })}
                                                     </Select>
                                                 </Form.Item>
