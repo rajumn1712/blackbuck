@@ -43,7 +43,7 @@ import { uuidv4 } from "../../utils";
 import VisSenseFactory from "vissense";
 import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
-import { joinGroupNew } from "../api/apiServer";
+import { joinGroupNew, getIsFriend, sendFirendRequest } from "../api/apiServer";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -65,6 +65,9 @@ class Postings extends Component {
     descriptionSelection: [],
     object: {},
     postEditData: {},
+    IsYouSendRequest: false,
+    IsFriend: false,
+    RequestType: null
   };
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
@@ -290,10 +293,36 @@ class Postings extends Component {
           });
         }
         break;
+      case "Add Friend":
+        this.addFriend(post);
+        break;
       default:
         break;
     }
   };
+  addFriend = async (post) => {
+    const obj = {
+      "UserId": this.props?.profile?.Id,
+      "Firstname": this.props?.profile?.FirstName,
+      "Lastname": this.props?.profile?.LastName,
+      "Image": this.props?.profile?.ProfilePic,
+      "Email": this.props?.profile?.Email,
+      "Type": "request"
+    }
+    sendFirendRequest(post?.userdetails.UserId, obj).then(() => {
+      this.checkWhetherFriendOrNot(post)
+      notify({ message: "Friend request", description: "Request sent successfully" });
+    })
+  }
+  checkWhetherFriendOrNot = (post) => {
+    getIsFriend(this.props.profile?.Id, post?.userdetails.UserId).then(res => {
+      let { IsFriend, IsYouSendRequest, RequestType } = this.state;
+      IsFriend = res.data[0]?.IsFriend;
+      IsYouSendRequest = res.data[0]?.IsYouSendRequest;
+      RequestType = res.data[0]?.type
+      this.setState({ ...this.state, IsFriend, IsYouSendRequest, RequestType });
+    })
+  }
   editPost = (post) => {
     this.sharebox.editPost(JSON.parse(JSON.stringify(post)));
     //json added for deep copy
@@ -475,7 +504,7 @@ class Postings extends Component {
       });
     }
   };
-  fetchCardActions = (user) => {
+  fetchCardActions = (user, fndDetail) => {
     const ownerActions = [
       {
         action: "Edit",
@@ -521,12 +550,21 @@ class Postings extends Component {
         },
       ];
     }
-    const result =
+    let result =
       user.UserId === this.props.profile.Id
         ? ownerActions.concat(actionsList)
         : this.props.postingsType === "group" && this.props.groupData?.IsAdmin
           ? groupActions.concat(actionsList)
           : actionsList;
+    if (user.UserId !== this.props.profile.Id) {
+      result = fndDetail && !fndDetail.IsFriend ? ((fndDetail.IsYouSendRequest && fndDetail.RequestType) ? result.concat([{
+        subTitle: "Request Sent",
+      }]) : result.concat([{
+        action: "Add Friend",
+        icons: "post-icons addfriend-icon",
+        subTitle: "To send friend request",
+      }])) : result;
+    }
     return result;
   };
   deletePost = (post) => {
@@ -565,14 +603,16 @@ class Postings extends Component {
     }
   };
   renderShareCard = (post) => {
+    let { IsFriend, IsYouSendRequest, RequestType } = this.state;
     return <Card title={this.titleAvatar(post.userdetails, post.date, true, post.Shares[0], false, post.PostType)}
       bordered={true}
       extra={
         <SideAction
+          checkFriend={() => this.checkWhetherFriendOrNot(post)}
           clickedEvent={(event, name) =>
             this.handleEvent(event, name, post)
           }
-          actionsList={this.fetchCardActions(post.userdetails)}
+          actionsList={(IsFriend || IsYouSendRequest || RequestType) ? this.fetchCardActions(post.userdetails, { IsFriend: IsFriend, IsYouSendRequest: IsYouSendRequest, RequestType: RequestType }) : this.fetchCardActions(post.userdetails)}
         />
       }
       actions={[
@@ -786,15 +826,17 @@ class Postings extends Component {
     </Card>
   }
   renderCommonCard = (post) => {
+    let { IsFriend, IsYouSendRequest, RequestType } = this.state;
     return <Card
       title={this.titleAvatar(post.userdetails, post.date, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false), post.PostType)}
       bordered={true}
       extra={
         <SideAction
+          checkFriend={() => this.checkWhetherFriendOrNot(post)}
           clickedEvent={(event, name) =>
             this.handleEvent(event, name, post)
           }
-          actionsList={this.fetchCardActions(post.userdetails)}
+          actionsList={(IsFriend || IsYouSendRequest || RequestType) ? this.fetchCardActions(post.userdetails, { IsFriend: IsFriend, IsYouSendRequest: IsYouSendRequest, RequestType: RequestType }) : this.fetchCardActions(post.userdetails)}
         />
       }
       actions={[

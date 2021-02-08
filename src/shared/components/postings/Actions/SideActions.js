@@ -35,7 +35,8 @@ class SideAction extends Component {
     );
 
     return (
-      <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
+      <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight"
+        onClick={(event) => { if (this.props.checkFriend) this.props.checkFriend(event) }}>
         <a className="ant-dropdown-link">
           <span
             className={`post-icons ${this.props.horclass ? this.props.horclass : "h-more-icon"
