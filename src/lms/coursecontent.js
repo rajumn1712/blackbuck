@@ -330,7 +330,7 @@ class CourseContent extends Component {
                                         <Button
                                           type="dashed"
                                           key="console"
-                                          disabled={new Date(course.Date) < new Date()}
+                                          disabled={new Date(course.Date) <= new Date()}
                                           onClick={(e) => {
                                             e.stopPropagation();
                                             window.open(course.Link);
@@ -376,7 +376,7 @@ class CourseContent extends Component {
                                       <Button
                                         type="dashed"
                                         key="console"
-                                        disabled={new Date(course.Date) < new Date()}
+                                        disabled={new Date(course.Date) <= new Date()}
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           window.open(course.Link);
@@ -421,7 +421,7 @@ class CourseContent extends Component {
                                       <Button
                                         type="dashed"
                                         key="console"
-                                        disabled={new Date(course.Date) < new Date()}
+                                        disabled={new Date(course.Date) <= new Date()}
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           window.open(course.Link);
