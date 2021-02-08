@@ -319,6 +319,8 @@ const CourseComponent = ({ profile, history }) => {
         }
         courseObject.Tests = [];
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
+        courseObject.Date = courseObject.Date ? moment(courseObject.Date).format() : courseObject.Date;
+        courseObject.EndDate = courseObject.EndDate ? moment(courseObject.EndDate).format() : courseObject.EndDate;
         courseObject.CourseSections = courseObject.CourseSections.filter(item => {
             if (item.SectionName) {
                 item.IsSaved = true;
@@ -347,6 +349,9 @@ const CourseComponent = ({ profile, history }) => {
             courseObject.Categories = courseObject.DupCategoeries;
         }
         courseObject.SpecialCategory = courseObject.DupCategoeries.length > 0 ? "All" : courseObject.Categories.map(item => item.GroupName)
+        courseObject.LiveDetails.forEach(item => {
+            item.Date = item.Date ? moment(item.Date).format() : item.Date;
+        })
         const result = await saveCourse(courseObject);
         if (result.ok) {
             setLoading(false)
@@ -365,7 +370,7 @@ const CourseComponent = ({ profile, history }) => {
         setLoading(true)
         postObject.GroupId = courseObject.GroupId;
         postObject.IsPublish = true;
-        postObject.PublishDate =  new Date() ;
+        postObject.PublishDate = new Date();
         postObject.Posts = [];
         if (!courseObject.IsPublish) {
             courseObject.Categories.forEach(item => {
