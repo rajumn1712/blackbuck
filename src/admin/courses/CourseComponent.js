@@ -70,6 +70,7 @@ const CourseComponent = ({ profile, history }) => {
         "Members": [],
         "Invitations": [],
         "IsPublish": false,
+        "PublishDate": new Date(),
         "CourseSections": [
         ],
         "Tests": [],
@@ -345,7 +346,7 @@ const CourseComponent = ({ profile, history }) => {
         if (courseObject.DupCategoeries?.length > 0) {
             courseObject.Categories = courseObject.DupCategoeries;
         }
-        courseObject.SpecialCategory = courseObject.DupCategoeries.length > 0 ? "All" : courseObject.Categories.map(item => item.Name)
+        courseObject.SpecialCategory = courseObject.DupCategoeries.length > 0 ? "All" : courseObject.Categories.map(item => item.GroupName)
         const result = await saveCourse(courseObject);
         if (result.ok) {
             setLoading(false)
@@ -364,6 +365,7 @@ const CourseComponent = ({ profile, history }) => {
         setLoading(true)
         postObject.GroupId = courseObject.GroupId;
         postObject.IsPublish = true;
+        postObject.PublishDate =  new Date() ;
         postObject.Posts = [];
         if (!courseObject.IsPublish) {
             courseObject.Categories.forEach(item => {
@@ -494,7 +496,8 @@ const CourseComponent = ({ profile, history }) => {
                         if (item == (prop == "Categories" ? obj.GroupId : obj.UserId)) {
                             let Object = prop == "Categories" ? {
                                 "GroupId": obj.GroupId,
-                                "Name": obj.GroupName,
+                                "GroupName": obj.GroupName,
+                                "GroupImage": obj.GroupImage
                             } : {
                                     "UserId": obj.UserId,
                                     "Firstname": obj.Firstname,
