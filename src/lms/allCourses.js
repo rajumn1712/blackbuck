@@ -15,9 +15,12 @@ const AllCourses = (props)=>{
 
     const [loading,setLoading] = useState(false);
     let [courses,setCourses] = useState([]);
+    let [loadMore, setLoadMore] = useState(true);
 
     useEffect(()=>{
+        window.addEventListener("scroll", handleScroll);
         loadCoursesByType(page,size);
+        return () => window.removeEventListener("scroll", handleScroll);
     },[]);
 
     const loadCoursesByType = async (pageNo,pagesize)=>{
@@ -25,10 +28,38 @@ const AllCourses = (props)=>{
         const response = await getCoursesByType((props.type || props.path.replace(/\\|\//g,'')),pagesize,pagesize * pageNo - pagesize);
         if(response.ok){
             courses = courses.concat(response.data);
+            loadMore = response.data.length === size ? true : false;
             setCourses([...courses]);
             setLoading(false);
         }
     }
+    const handleScroll = () => {
+        const windowHeight =
+          "innerHeight" in window
+            ? window.innerHeight
+            : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(
+          body.scrollHeight,
+          body.offsetHeight,
+          html.clientHeight,
+          html.scrollHeight,
+          html.offsetHeight
+        );
+        const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+        if (windowBottom >= docHeight) {
+            loadMoreCourses();
+        } else {
+        }
+      };
+      const loadMoreCourses = (e) => {
+        if (loadMore && !loading && !props.type) {
+          page += 1;
+          setLoading(true);
+          loadCoursesByType(page, 10);
+        }
+      };
     return(
         <Card bordered={false} title={props.title} extra={
             props.type && <Link to={`${props.type}`}>View all</Link>
