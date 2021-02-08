@@ -152,9 +152,9 @@ class CourseCards extends Component {
                           }
                           description={
                             <div className="coursecard-cont">
-                              <Paragraph className="job-ldate f-14 semibold text-secondary px-8 py-4">
-                                    Starts On :{" "}
-                                    <span className="semibold text-primary f-16">
+                              <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                                    Starts On{" "}
+                                    <span className="semibold text-primary f-16 d-block">
                                       <Moment format="MM/DD/YYYY">
                                         {course.startDate}
                                       </Moment>
@@ -242,9 +242,9 @@ class CourseCards extends Component {
                           }
                           description={
                             <div className="coursecard-cont">
-                              <Paragraph className="job-ldate f-14 semibold text-secondary px-8 py-4">
-                                    Starts On :{" "}
-                                    <span className="semibold text-primary f-16">
+                              <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                                    Starts On{" "}
+                                    <span className="semibold text-primary f-16 d-block">
                                       <Moment format="MM/DD/YYYY">
                                         {course.startDate}
                                       </Moment>
@@ -332,9 +332,9 @@ class CourseCards extends Component {
                           }
                           description={
                             <div className="coursecard-cont">
-                              <Paragraph className="job-ldate f-14 semibold text-secondary px-8 py-4">
-                                    Starts On :{" "}
-                                    <span className="semibold text-primary f-16">
+                              <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                                    Starts On{" "}
+                                    <span className="semibold text-primary f-16 d-block">
                                       <Moment format="MM/DD/YYYY">
                                         {course.startDate}
                                       </Moment>
@@ -407,9 +407,9 @@ class CourseCards extends Component {
                             <div className="coursecard-cont">
                               <div>
                                 {course.CourseType === "Live Session" && (
-                                  <Paragraph className="job-ldate f-14 semibold text-secondary px-8 py-4">
-                                    Starts On :{" "}
-                                    <span className="semibold text-primary f-16">
+                                  <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                                    Starts On{" "}
+                                    <span className="semibold text-primary f-16 d-block">
                                       <Moment format="MM/DD/YYYY">
                                         {course.LiveDate}
                                       </Moment>
@@ -417,9 +417,9 @@ class CourseCards extends Component {
                                   </Paragraph>
                                 )}
                                 {course.CourseType === "Content" && (
-                                  <Paragraph className="job-ldate f-14 semibold text-secondary px-8 py-4">
-                                    Created On :{" "}
-                                    <span className="semibold text-primary f-16">
+                                  <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                                    Created On{" "}
+                                    <span className="semibold text-primary f-16 d-block">
                                       <Moment format="MM/DD/YYYY">
                                         {course.CreatedDate}
                                       </Moment>

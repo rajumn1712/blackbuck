@@ -26,6 +26,7 @@ import {
   getPosts,
   saveActions,
   saveUserPosts,
+  reportContent
 } from "../api/postsApi";
 import FriendSuggestions from "../components/friendSuggestion";
 import ShareBox from "../../components/SavePostBox/sharebox";
@@ -261,6 +262,34 @@ class Postings extends Component {
           });
         }
         break;
+      case "Report Post":
+        const object = {
+          ReportId: uuidv4(),
+          ReferenceId: post.id,
+          ReportUsers: [{
+            "UserId": this.props?.profile?.Id,
+            "Firstname": this.props?.profile?.FirstName,
+            "Lastname": this.props?.profile?.LastName,
+            "Email": this.props?.profile?.Email,
+            "Image": this.props?.profile?.ProfilePic
+          }],
+          CreatedDate: new Date(),
+          ReportType: "Posts"
+        };
+        const reportResponse = await reportContent(object);
+        if (reportResponse.ok) {
+          notify({
+            description: "Post reported successfully",
+            message: "Post Report",
+          });
+        } else {
+          notify({
+            description: "Something went wrong'",
+            message: "Error",
+            type: "error",
+          });
+        }
+        break;
       default:
         break;
     }
@@ -471,6 +500,11 @@ class Postings extends Component {
         action: "Save Post",
         icons: "post-icons savepost-icon",
         subTitle: "Save this item for later",
+      },
+      {
+        action: "Report Post",
+        icons: "post-icons report-icon",
+        subTitle: "Report this item",
       },
       // {
       //   action: "Turn on Notifications",
