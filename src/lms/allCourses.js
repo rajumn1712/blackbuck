@@ -60,15 +60,20 @@ const AllCourses = (props) => {
       loadCoursesByType(page, 10);
     }
   };
+  const methods = {
+    'ongoing':'Live/OnGoing Courses',
+    'upcoming':'UpComing Courses',
+    'previous':'Previous Courses'
+  }
   return (
-    <div className="main">
-      <Card bordered={false}  title={props.title || "Upcoming courses"} extra={
+    <div className={props.type ? 'main':''}>
+      <Card bordered={false}  title={props.title || methods[props.path.replace(/\\|\//g, '')]} extra={
         props.type && <Link to={`${props.type}`}>View all</Link>
       }>
         <div className="px-12 pt-12 pb-8">
           <Row gutter={16}>
             {courses?.map((course, indx) => (
-              <Col key={indx} xs={24} md={12} lg={8}
+              <Col key={indx} xs={24} md={props.type ? 12 : 8} lg={props.type ? 8 : 6}
               //  md={8} lg={6} 
               >
                 <Card

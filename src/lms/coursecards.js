@@ -96,9 +96,9 @@ class CourseCards extends Component {
           }}
         >
           <TabPane tab="All" key="1">
-            <AllCourses type="ongoing" title="Live/OnGoing"/>
-            <AllCourses type="upcoming" title="UpComing"/>
-            <AllCourses type="previous" title="Previous"/>
+            <AllCourses type="ongoing" title="Live/OnGoing Courses"/>
+            <AllCourses type="upcoming" title="UpComing Courses"/>
+            <AllCourses type="previous" title="Previous Courses"/>
             {/* <Card bordered={false} title="Live/Ongoing">
               <div className="px-12 pt-12 pb-8">
                 {this.state.allCourses['OnGoing']?.length > 4 && <><Link
