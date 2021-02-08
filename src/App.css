@@ -2163,6 +2163,8 @@ textarea {
 .lms-page .more-frnd-btn{right: 2px;}
 .lms-page .more-frnd-btn.left{left: 2px;}
 .course-list-item .ant-card-cover{position: relative;}
+.ant-menu-vertical .ant-menu-submenu-selected, .ant-menu-vertical-left .ant-menu-submenu-selected, .ant-menu-vertical-right .ant-menu-submenu-selected,.ant-pagination-item-active a{color: var(--primary)!important;}
+.ant-pagination-item-active{border-color: var(--primary) !important;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }
