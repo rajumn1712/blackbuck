@@ -928,8 +928,8 @@ const CourseComponent = ({ profile, history }) => {
                                                 </div>
                                             </Col>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <label className="text-secondary d-block mb-4  required">Reference Links</label>
-                                                <Form.Item className="custom-fields" name="RefLinks" rules={[{
+                                                <label className="text-secondary d-block mb-4 required">Reference Links</label>
+                                                <Form.Item className="custom-fields custom-multiselect" name="RefLinks" rules={[{
                                                     required: true,
                                                     type: 'array',
                                                     defaultField: { type: 'url', message: 'This field must be a valid url.' }

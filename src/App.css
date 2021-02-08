@@ -2165,6 +2165,9 @@ textarea {
 .course-list-item .ant-card-cover{position: relative;}
 .ant-menu-vertical .ant-menu-submenu-selected, .ant-menu-vertical-left .ant-menu-submenu-selected, .ant-menu-vertical-right .ant-menu-submenu-selected,.ant-pagination-item-active a{color: var(--primary)!important;}
 .ant-pagination-item-active{border-color: var(--primary) !important;}
+.custom-multiselect .ant-select-selector .ant-select-selection-item{line-height: normal !important;}
+.custom-multiselect .ant-select-selection-item-remove{display: flex;align-items: center;justify-content: center;}
+.custom-multiselect .ant-select-selector{overflow: overlay;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }
