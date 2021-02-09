@@ -202,7 +202,7 @@ class Courses extends Component {
                                 return <Col xs={24} md={8} lg={6}>
                                     <Card key={index}
                                         className="card-item"
-                                        cover={<img alt="photography" src={course.Image?.[0] || defaultguser} />}
+                                        cover={<img alt="photography" className="cursor-pointer" src={course.Image?.[0] || defaultguser} onClick={() => { this.props.history.push("/admin/course/" + course.Id) }}/>}
                                         actions={[
                                             <Link className="text-red card-item-button-red" onClick={() => this.deleteCourse(course)}>Delete</Link>
                                         ]}
