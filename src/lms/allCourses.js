@@ -107,8 +107,8 @@ const AllCourses = (props) => {
                       <div className="coursecard-cont">
                         <div>
                           {course.CourseType === "Live Session" && (
-                            <Paragraph className="f-12 semibold text-secondary text-uppercase">
-                              Starts On :{" "}
+                            <Paragraph className="f-12 text-secondary">
+                              Starts on :{" "}
                               <span className="semibold text-primary f-16 d-block">
                                 <Moment format="MM/DD/YYYY">
                                   {course.LiveDate}
@@ -117,8 +117,8 @@ const AllCourses = (props) => {
                             </Paragraph>
                           )}
                           {course.CourseType === "Content" && (
-                            <Paragraph className="f-12 semibold text-secondary text-uppercase">
-                              Created On :{" "}
+                            <Paragraph className="f-12  text-secondary">
+                              Created on :{" "}
                               <span className="semibold text-primary f-16 d-block">
                                 <Moment format="MM/DD/YYYY">
                                   {course.CreatedDate}
