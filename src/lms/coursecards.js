@@ -44,14 +44,19 @@ class CourseCards extends Component {
   state = {
     courses: [],
     recentCourses: [],
-    loading: true,
+    loadMore:true,
+    loading: false,
     page: 1,
-    pageSize: 50,
+    pageSize: 5,
     allCourses: {}
   };
   componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
     this.loadCourses("1");
     if (this.props.onRef) this.props.onRef(this);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
   loadCourses = async (key) => {
     // key = key == "1" ? "recentCourses" : "courses";
@@ -64,8 +69,13 @@ class CourseCards extends Component {
         this.state.pageSize,
         'courses'
       );
+      let {courses} = this.state;
+      courses = courses.concat(response.data);
       if (response.ok) {
-        this.setState({ ...this.state, courses: response.data, loading: false });
+        this.setState({ ...this.state, 
+          courses,
+          loading: false,
+          loadMore: response.data.length === this.state.pageSize });
       } else {
         this.setState({ ...this.state, loading: false });
       }
@@ -85,6 +95,35 @@ class CourseCards extends Component {
     }
 
   };
+  handleScroll = () => {
+    const windowHeight =
+      "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    const windowBottom = Math.ceil(windowHeight + window.pageYOffset);
+    if (windowBottom >= docHeight) {
+      this.loadMore();
+    } else {
+    }
+  };
+  loadMore() {
+    if (this.state.loadMore && !this.state.loading) {
+      let { page } = this.state;
+      page += 1;
+      this.setState({ ...this.state, page, loading: true }, () => {
+        this.loadCourses('2');
+      });
+    }
+  }
   render() {
     return (
       <div className="custom-card lms-page">
@@ -471,7 +510,7 @@ class CourseCards extends Component {
                 ))}
               </div>
               {this.state.loading && <Loader className="loader-top-middle" />}
-              {!this.state.loading &&
+              {this.state.loading &&
                 this.state.courses.length === 0 &&
                 this.state.recentCourses.length === 0 && <Empty />}
            
