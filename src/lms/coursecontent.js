@@ -341,7 +341,7 @@ class CourseContent extends Component {
                                       </Col>
                                     </Row>
                                   </Card>
-                                  </>
+                                  </> 
                                 );
                               })}
                             {/* Zoom */}
