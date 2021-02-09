@@ -197,11 +197,34 @@ const AllCourses = (props) => {
                             >
                               {course.description}
                             </Paragraph>
-                            <div className="justify-content-between">
-                              <span className="ml-4 f-12 text-secondary">
-                                {course.members} Members
-                              </span>
-                            </div>
+                            {course.CourseType === "Content" && (
+                              <div className="justify-content-between">
+                                <span className="mr-4 f-12 text-secondary">
+                                  {course.sections} Sections
+                                </span>{" "}
+                                |
+                                <span className="mx-4 f-12 text-secondary">
+                                  {course.videos}{" "}
+                                  {`${
+                                    course.videos === 1 ? "Video" : "Videos"
+                                  }`}
+                                </span>{" "}
+                                |
+                                <span className="ml-4 f-12 text-secondary">
+                                  {
+                                    course.members
+                                  }{" "}
+                                  Members
+                                </span>
+                              </div>
+                            )}
+                            {course.CourseType === "Live Session" && (
+                              <div className="justify-content-between">
+                                <span className="ml-4 f-12 text-secondary">
+                                  {course.members} Members
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       }
@@ -301,8 +324,7 @@ const AllCourses = (props) => {
                                 |
                                 <span className="ml-4 f-12 text-secondary">
                                   {
-                                    course.members.concat(course.AdminUsers)
-                                      .length
+                                    course.members
                                   }{" "}
                                   Members
                                 </span>
