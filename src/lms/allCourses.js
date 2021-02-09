@@ -89,7 +89,7 @@ const AllCourses = (props) => {
     'previous':'Previous Courses'
   }
   return (
-    <div className={props.type ? 'main':'card-scroll'}>
+    <div className={props.type ?'':'main'}>
         {props.type &&  <Card bordered={false} title={props.title} extra={
         <Link to={`${props.type}`}>View all</Link>
       }>
