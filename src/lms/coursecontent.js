@@ -81,7 +81,7 @@ class CourseContent extends Component {
     if (response.ok) {
       this.getUserWatchedVideos();
       response.data[0].LiveDetails = response.data[0].LiveDetails.filter((item) => {
-        return new Date(item.Date) == new Date();
+        return moment(new Date(item.Date)).format('YYYY-MM-DDT00:00:00') == moment(new Date()).format('YYYY-MM-DDT00:00:00');
       });
       this.setState(
         {
