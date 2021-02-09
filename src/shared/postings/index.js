@@ -315,13 +315,14 @@ class Postings extends Component {
     })
   }
   checkWhetherFriendOrNot = (post) => {
-    getIsFriend(this.props.profile?.Id, post?.userdetails.UserId).then(res => {
-      let { IsFriend, IsYouSendRequest, RequestType } = this.state;
-      IsFriend = res.data[0]?.IsFriend;
-      IsYouSendRequest = res.data[0]?.IsYouSendRequest;
-      RequestType = res.data[0]?.type
-      this.setState({ ...this.state, IsFriend, IsYouSendRequest, RequestType });
-    })
+    if (post.userdetails.UserId)
+      getIsFriend(this.props.profile?.Id, post?.userdetails.UserId).then(res => {
+        let { IsFriend, IsYouSendRequest, RequestType } = this.state;
+        IsFriend = res.data[0]?.IsFriend;
+        IsYouSendRequest = res.data[0]?.IsYouSendRequest;
+        RequestType = res.data[0]?.type
+        this.setState({ ...this.state, IsFriend, IsYouSendRequest, RequestType });
+      })
   }
   editPost = (post) => {
     this.sharebox.editPost(JSON.parse(JSON.stringify(post)));
@@ -556,7 +557,7 @@ class Postings extends Component {
         : this.props.postingsType === "group" && this.props.groupData?.IsAdmin
           ? groupActions.concat(actionsList)
           : actionsList;
-    if (user.UserId !== this.props.profile.Id) {
+    if (user.UserId !== this.props.profile.Id && user.UserId) {
       result = fndDetail && !fndDetail.IsFriend ? ((fndDetail.IsYouSendRequest && fndDetail.RequestType) ? result.concat([{
         action: "Request Sent",
         icons: "post-icons requestsent-grey",
