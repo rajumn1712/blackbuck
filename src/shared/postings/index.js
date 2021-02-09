@@ -558,10 +558,12 @@ class Postings extends Component {
           : actionsList;
     if (user.UserId !== this.props.profile.Id) {
       result = fndDetail && !fndDetail.IsFriend ? ((fndDetail.IsYouSendRequest && fndDetail.RequestType) ? result.concat([{
-        subTitle: "Request Sent",
+        action: "Request Sent",
+        icons: "post-icons requestsent-grey",
+        subTitle: "Friend Request Sent",
       }]) : result.concat([{
         action: "Add Friend",
-        icons: "post-icons addfriend-icon",
+        icons: "post-icons addfriend-icon-grey",
         subTitle: "To send friend request",
       }])) : result;
     }

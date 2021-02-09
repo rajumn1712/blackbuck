@@ -49,6 +49,7 @@ a:hover,a:active{color: var(--primaryhover) !important;}
 .friends-list.two .friends-list--name{background: linear-gradient(to top, rgba(112, 165, 113, 1), rgba(112, 165, 113, 0));}
 .friends-list img {object-fit: cover;}
 .post-icons.addfriend-icon{background-position:-433px -226px;}
+.post-icons.addfriend-icon-grey {background-position: -433px -201px;}
 .friends-list--name {position: absolute; left: 0; right: 0; bottom: 0; text-align: center; top: 60%;
 background: linear-gradient(to top, rgba(18, 66, 128, 1), rgba(18, 66, 128, 0));
 font-size: 14px; display: flex; justify-content: flex-end; flex-direction: column; align-items: center;padding: 8px;}
