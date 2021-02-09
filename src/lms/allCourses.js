@@ -5,9 +5,32 @@ import photography from "../styles/images/default-cover.png";
 import { Link, withRouter } from "react-router-dom";
 import Moment from "react-moment";
 import Loader from "../common/loader";
+import OwlCarousel from "react-owl-carousel2";
 
 const { Paragraph } = Typography;
 const { Meta } = Card;
+
+const options = {
+    margin: 10,
+    responsiveClass: true,
+    responsive: {
+      0: {
+        items: 2,
+      },
+  
+      575: {
+        items: 2,
+      },
+  
+      768: {
+        items: 3,
+      },
+  
+      992: {
+        items: 3,
+      },
+    },
+  };
 
 const AllCourses = (props) => {
   let page = 1;
@@ -66,8 +89,82 @@ const AllCourses = (props) => {
     'previous':'Previous Courses'
   }
   return (
-    <div className={props.type ? 'main':''}>
-      <Card bordered={false}  title={props.title || methods[props.path.replace(/\\|\//g, '')]} extra={
+    <div className={props.type ? 'main':'card-scroll'}>
+        {props.type &&  <Card bordered={false} title={props.title} extra={
+        <Link to={`${props.type}`}>View all</Link>
+      }>
+              <div className="px-12 pt-12 pb-8">
+                <OwlCarousel items={3} options={options} autoWidth={true} key={`carousel_${courses?.length}`}>
+                  {courses?.map((course, indx) => (
+                    <div className="course-list-item" key={indx}>
+                      <Card
+                        bordered={false}
+                        className="card-item"
+                        cover={
+                          <>
+                            <img
+                              alt="photography"
+                              src={
+                                course.image.length > 0
+                                  ? course.image
+                                  : photography
+                              }
+                            />
+                            {course.CourseType === "Live Session" && (
+                              <span className="live-btn">LIVE</span>
+                            )}
+                          </>
+                        }
+                      >
+                        <Meta
+                          title={
+                            <Link
+                              to={"course/" + course.id}
+                              className="text-primary"
+                            >
+                              {course.name}
+                            </Link>
+                          }
+                          description={
+                            <div className="coursecard-cont">
+                              <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                                    Starts On{" "}
+                                    <span className="semibold text-primary f-16 d-block">
+                                      <Moment format="MM/DD/YYYY">
+                                        {course.startDate}
+                                      </Moment>
+                                    </span>
+                                  </Paragraph>
+                              <div>
+                                <Paragraph
+                                  ellipsis={{ rows: 2 }}
+                                  className="f-14 text-primary mb-8"
+                                  style={{ height: "42px" }}
+                                >
+                                  {course.description}
+                                </Paragraph>
+                                <div className="justify-content-between">
+                                    <span className="ml-4 f-12 text-secondary">
+                                      {
+                                        course.members
+                                      }{" "}
+                                      Members
+                                    </span>
+                                  </div>
+                              </div>
+                            </div>
+                          }
+                        />
+                      </Card>
+                    </div>
+                  ))}
+                </OwlCarousel>
+              </div>
+              {loading && <Loader className="loader-top-middle" />}
+              {!loading &&
+                courses?.length === 0 && <Empty />}
+            </Card>}
+      {!props.type && <Card bordered={false}  title={props.title || methods[props.path.replace(/\\|\//g, '')]} extra={
         props.type && <Link to={`${props.type}`}>View all</Link>
       }>
         <div className="px-12 pt-12 pb-8">
@@ -107,8 +204,8 @@ const AllCourses = (props) => {
                       <div className="coursecard-cont">
                         <div>
                           {course.CourseType === "Live Session" && (
-                            <Paragraph className="f-12 text-secondary">
-                              Starts on :{" "}
+                            <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                              Starts On :{" "}
                               <span className="semibold text-primary f-16 d-block">
                                 <Moment format="MM/DD/YYYY">
                                   {course.LiveDate}
@@ -117,8 +214,8 @@ const AllCourses = (props) => {
                             </Paragraph>
                           )}
                           {course.CourseType === "Content" && (
-                            <Paragraph className="f-12  text-secondary">
-                              Created on :{" "}
+                            <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                              Created On :{" "}
                               <span className="semibold text-primary f-16 d-block">
                                 <Moment format="MM/DD/YYYY">
                                   {course.CreatedDate}
@@ -176,7 +273,7 @@ const AllCourses = (props) => {
         {loading && <Loader className="loader-top-middle" />}
         {!loading &&
           courses.length === 0 && <Empty />}
-      </Card>
+      </Card>}
     </div>
   )
 }

@@ -81,7 +81,7 @@ class CourseContent extends Component {
     if (response.ok) {
       this.getUserWatchedVideos();
       response.data[0].LiveDetails = response.data[0].LiveDetails.filter((item) => {
-        return new Date(item.Date) <= new Date();
+        return new Date(item.Date) == new Date();
       });
       this.setState(
         {
@@ -330,7 +330,7 @@ class CourseContent extends Component {
                                         <Button
                                           type="dashed"
                                           key="console"
-                                          disabled={new Date(course.Date) <= new Date()}
+                                          disabled={new Date(course.Date) >= new Date()}
                                           onClick={(e) => {
                                             e.stopPropagation();
                                             window.open(course.Link);
@@ -376,7 +376,7 @@ class CourseContent extends Component {
                                       <Button
                                         type="dashed"
                                         key="console"
-                                        disabled={new Date(course.Date) <= new Date()}
+                                        disabled={new Date(course.Date) >= new Date()}
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           window.open(course.Link);
@@ -421,7 +421,7 @@ class CourseContent extends Component {
                                       <Button
                                         type="dashed"
                                         key="console"
-                                        disabled={new Date(course.Date) <= new Date()}
+                                        disabled={new Date(course.Date) >= new Date()}
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           window.open(course.Link);
