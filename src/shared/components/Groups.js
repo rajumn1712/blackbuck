@@ -169,7 +169,7 @@ class Groups extends Component {
   };
   render() {
     const { visible, size, loading } = this.state;
-    return this.props.displayas ? (<Row gutter={16} className="group-page m-0 mb-6">
+    return this.props.displayas ? (<div className="group-page m-0 mb-6"><Row gutter={16} className="">
       {this.state.data.length > 0 &&
         this.state.data?.map((group, index) => {
           return (
@@ -254,7 +254,7 @@ class Groups extends Component {
           );
         })}
       {this.state.data.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-    </Row>) : (
+    </Row></div>) : (
         <div className="custom-card sub-text card-scroll">
           <Card
             title="Groups"

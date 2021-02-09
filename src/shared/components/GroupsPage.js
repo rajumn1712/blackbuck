@@ -204,6 +204,7 @@ class GroupsPage extends Component {
               return (
                 <Col className="mb-12" xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Card
+                    className="h-100p"
                     key={index}
                     cover={
                       // <Link

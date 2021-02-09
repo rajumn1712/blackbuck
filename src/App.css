@@ -2174,6 +2174,7 @@ textarea {
 .card-item.vertical-card .ant-card-cover img {height: 180px;object-fit: cover;object-position: center;border-radius: 0.8rem 0 0 0.8rem;}
 .zoomcard-date{background: var(--green);color: var(--white);    padding: 8px 10px 14px;border-radius: 0.4rem 0.4rem 0 0;line-height: 26px;}
 .course-list-item .ant-card .ant-card-cover{border: 0 !important;}
+.h-100p{height: 100%;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }
