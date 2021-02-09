@@ -13,6 +13,8 @@ const { Meta } = Card;
 const options = {
     margin: 10,
     responsiveClass: true,
+    mouseDrag:true,
+    dots:false,
     responsive: {
       0: {
         items: 2,
@@ -94,7 +96,7 @@ const AllCourses = (props) => {
         <Link to={`${props.type}`}>View all</Link>
       }>
               <div className="px-12 pt-12 pb-8">
-                <OwlCarousel items={3} options={options} autoWidth={true} key={`carousel_${courses?.length}`}>
+                <OwlCarousel options={options} autoWidth={true} key={`carousel_${courses?.length}`}>
                   {courses?.map((course, indx) => (
                     <div className="course-list-item" key={indx}>
                       <Card
