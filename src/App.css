@@ -29,7 +29,7 @@
   padding: 5px 15px;
 }
 .ant-btn-primary:hover {
-  background-color: #20838c !important;
+  background-color: var(--primaryhover) !important;
 }
 .ant-menu-item a:hover,
 .ant-menu-item-selected a,
@@ -447,7 +447,7 @@
   justify-content: space-between;
 }
 .share-popup .ant-modal-footer {
-  background: #f9f9f9;
+  background: var(--grey);
   border-top: 0;
   border-radius: 10px;
 }
@@ -606,7 +606,7 @@
 }
 .docs .ant-list-item {
   min-width: calc(50% - 8px);
-  background: #f9f9f9;
+  background: var(--grey);
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #eaf2fd;
@@ -768,7 +768,7 @@
 }
 .docs .ant-list-item {
   min-width: calc(50% - 8px);
-  background: #f9f9f9;
+  background: var(--grey);
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #eaf2fd;
@@ -845,7 +845,7 @@
   color: var(--black);
 }
 .justify-content-around .ant-list-item-meta {
-  background: #f9f9f9;
+  background: var(--grey);
   border-radius: 5px;
 }
 .ant-input:focus,
@@ -1064,7 +1064,7 @@
 }
 .list-remove,
 .list-remove:hover {
-  color: #ff0000 !important;
+  color: var(--red) !important;
   font-weight: 500;
 }
 .requests .ant-row .ant-col {
@@ -1089,7 +1089,7 @@
   padding: 12px !important;
 }
 .group-page .ant-card-actions {
-  color: #f9f9f9;
+  color: var(--grey);
 }
 .list-request {
   display: inherit;
@@ -1306,7 +1306,7 @@
   display: block;
 }
 .modal-interest .ant-modal-body {
-  background-color: #f9f9f9;
+  background-color: var(--grey);
   padding: 0 !important;
 }
 .modal-interest .modal-search .ant-select-selector .ant-select-selection-item, .lh-24 .ant-select-selector .ant-select-selection-item .ant-select-selection-item-content, .lh-24 .ant-select-selector .ant-select-selection-item .ant-select-selection-item-remove{
@@ -1460,7 +1460,7 @@
 }
 .hobbies-tag .ant-tag {
   color: var(--black);
-  font-size: 14px;
+  font-size: var(--f-14);
 }
 .hobbies-tag .ant-tag-close-icon {
   color: var(--black) !important;
@@ -1482,7 +1482,7 @@
   background: rgba(0, 0, 0, 0.06);
 }
 .sub-text .ant-list-item-meta-description {
-  font-size: 12px;
+  font-size: var(--f-12);
 }
 .display-flex {
   display: flex;
@@ -1641,7 +1641,7 @@ textarea {
 .profile-tabs .ant-tabs-extra-content .profile-download {
   border: none;
   margin-right: 12px;
-  font-size: 12px !important;
+  font-size: var(--f-12) !important;
   color: var(--primary);
 }
 .left-menu.private-icon {
@@ -1709,7 +1709,7 @@ textarea {
 .intro-subtitle {
   text-align: left;
   color: var(--textprimary);
-  font-size: 12px;
+  font-size:var(--f-12);
 }
 .intro-title h2,
 .intro-subtitle h2 {
@@ -1737,7 +1737,7 @@ textarea {
 .intro4 .intro-check .ant-checkbox{position: absolute;right: -1px;top: -1px;}
 .onboard-process .intro-image{max-height: 100px;}
 .intro4 .ant-checkbox-wrapper-checked.intro-check {
-  background-color: #f9f9f9;
+  background-color: var(--grey);
   border-color: var(--primary);
 }
 .intro3 .group-page {
@@ -1897,7 +1897,7 @@ textarea {
   overflow: hidden;
   color: var(--textprimary);
   font-weight: 500;
-  font-size: 16px;
+  font-size: var(--f-16);
   white-space: nowrap;
   text-overflow: ellipsis;
   text-transform: capitalize;
@@ -1924,7 +1924,7 @@ textarea {
   margin-top: 6px;
   color: var(--textprimary);
   line-height: 20px;
-  font-size: 16px;
+  font-size: var(--f-16);
   margin-bottom: 2px !important;
 }
 .notifications .ant-list-item{
@@ -1940,7 +1940,7 @@ textarea {
   border-radius: 0.8rem 0.8rem 0 0;
 }
 .notifications .ant-list-item.unread {
-  background-color: #f9f9f9;
+  background-color: var(--grey);
 }
 .notifications .ant-list-item.read {
   background-color: var(--white);
@@ -1986,7 +1986,7 @@ textarea {
 .text-capiatlize{text-transform: capitalize;}
 .fullprofilelink{
   margin-top: 8px!important;
-  font-size: 14px;
+  font-size: var(--f-14);
   font-weight: 500;
   color: var(--textprimary);
   display: none;
@@ -2028,7 +2028,7 @@ textarea {
 .custom_tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--primary);}
 .custom_tabs .ant-tabs-ink-bar, .start-course{background: var(--primary) !important;}
 .start-gotomeeting{background: #f68d2d !important;}
-.start-zoom{background: #5082c3 !important;}
+.start-zoom{background: #5082c3 !important;margin-bottom: 16px !important;}
 .start-others{background: var(--primary) !important;}
 .admin-kpi-card{border: 1px solid var(--line) !important; border-radius: 0.8rem !important;}
 .ant-input-group-wrapper.header-searchbar {display: initial;}
@@ -2039,7 +2039,7 @@ textarea {
 .course-content .ant-collapse-content-box{padding: 0 !important;background: var(--white);}
 .card-background{background: #ffff;border-radius: 0.8rem;padding: 12px;}
 /* .course-card .ant-card{border-radius: 0 !important;} */
-.progres-bar .ant-progress-text{font-size: 12px;margin-left: 3px;}
+.progres-bar .ant-progress-text{font-size: var(--f-12);margin-left: 3px;}
 .lms-video{background: var(--white); border-radius: 0.8rem;}
 .lms-video video{width: 100%;height: 100%;display: block;}
 .grp-type-icon.video-play{background-position:-240px -396px;}
@@ -2172,6 +2172,7 @@ textarea {
 .card-item.vertical-card {display: flex;}
 .card-item.vertical-card .ant-card-cover{border: 0 !important;width: 30%;position: relative;margin: 0;transform: translateY(0px) !important;}
 .card-item.vertical-card .ant-card-cover img {height: 180px;object-fit: cover;object-position: center;border-radius: 0.8rem 0 0 0.8rem;}
+.zoomcard-date{background: var(--green);color: var(--white);    padding: 8px 10px 14px;border-radius: 0.4rem 0.4rem 0 0;line-height: 26px;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }

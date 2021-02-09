@@ -293,7 +293,7 @@ class CourseContent extends Component {
                     <Carousel>
                       {courseDetails.CourseType === "Live Session" && (
                         <div className="px-12">
-                          <div className="custom-card mb-16">
+                          <div className="custom-card mb-16 mt-8">
                             {/* Gotomeeting */}
                             {courseDetails.UrlType === "GotoMeeting" &&
                               courseDetails.LiveDetails?.map((course, indx) => {
@@ -348,9 +348,9 @@ class CourseContent extends Component {
                             {courseDetails.UrlType === "Zoom" &&
                               courseDetails.LiveDetails?.map((course, indx) => {
                                 return <>
-                                <span>{moment(course.Date).format('LLL')}</span>
-                                <Card className="start-zoom" key={indx}>
-                                  <Row align="middle" className="p-16">
+                                <span className="zoomcard-date">{moment(course.Date).format('LLL')}</span>
+                                <Card className="start-zoom" style={{marginBottom:'24'}} key={indx}>
+                                  <Row align="middle" className="p-16 ">
                                     <Col
                                       xs={18}
                                       sm={18}
