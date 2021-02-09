@@ -138,6 +138,10 @@ class CourseCards extends Component {
             <AllCourses type="ongoing" title="Live/OnGoing Courses" />
             <AllCourses type="upcoming" title="UpComing Courses" />
             <AllCourses type="previous" title="Previous Courses" />
+            <AllCourses type="mockinterviews" title="Mock Interviews" />
+            <AllCourses type="webinars" title="Webinar's" />
+            <AllCourses type="workshops" title="Workshops" />
+            <AllCourses type="courseslive" title="Courses" />
             {/* <Card bordered={false} title="Live/Ongoing">
               <div className="px-12 pt-12 pb-8">
                 {this.state.allCourses['OnGoing']?.length > 4 && <><Link

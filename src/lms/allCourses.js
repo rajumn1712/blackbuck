@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { getCoursesByType } from '../shared/api/apiServer';
 import { Card, Col, Row, Empty, Typography } from "antd";
 import photography from "../styles/images/default-cover.png";
 import { Link, withRouter } from "react-router-dom";
 import Moment from "react-moment";
 import Loader from "../common/loader";
 import OwlCarousel from "react-owl-carousel2";
+import { getByCourseType,getCoursesByType } from './api';
 
 const { Paragraph } = Typography;
 const { Meta } = Card;
+
+const normalCourses=['ongoing','upcoming','previous'];
 
 const options = {
     margin: 10,
@@ -50,11 +52,12 @@ const AllCourses = (props) => {
 
   const loadCoursesByType = async (pageNo, pagesize) => {
     setLoading(true);
-    const response = await getCoursesByType((props.type || props.path.replace(/\\|\//g, '')), pagesize, pagesize * pageNo - pagesize);
+    const response = await (normalCourses.indexOf(props.type || props.path.replace(/\\|\//g, '')) > -1 ? getCoursesByType : getByCourseType)((props.type || props.path.replace(/\\|\//g, '')), pagesize, pagesize * pageNo - pagesize);
     if (response.ok) {
       courses = courses.concat(response.data);
       loadMore = response.data.length === size ? true : false;
       setCourses([...courses]);
+      setLoadMore(loadMore);
       setLoading(false);
     }
   }
@@ -88,8 +91,22 @@ const AllCourses = (props) => {
   const methods = {
     'ongoing':'Live/OnGoing Courses',
     'upcoming':'UpComing Courses',
-    'previous':'Previous Courses'
+    'previous':'Previous Courses',
+    'mockinterviews':'Mock Interviews',
+    'webinars':`Webinar's`,
+    'workshops':'Workshops',
+    'courseslive':'Courses'
   }
+
+//   const owl = document.querySelector('.owl-carousel');
+// owl.on('mousewheel', '.owl-stage', function(e) {
+//    if (e.originalEvent.deltaY > 0) {
+//       owl.trigger('next.owl');
+//    } else {
+//       owl.trigger('prev.owl');
+//    }
+//    e.preventDefault();
+// });
   return (
     <div className={props.type ?'':'main'}>
         {props.type &&  <Card bordered={false} title={props.title} extra={

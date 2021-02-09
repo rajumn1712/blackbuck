@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCoursesByType } from '../shared/api/apiServer';
+import { getCoursesByType } from './api';
 import defaultguser from "../styles/images/default-cover.png";
 import { Avatar, Card, List } from 'antd';
 import { Link } from 'react-router-dom';
