@@ -14,6 +14,7 @@ const options = {
     margin: 10,
     responsiveClass: true,
     mouseDrag:true,
+    touchDrag:true,
     dots:false,
     responsive: {
       0: {
@@ -91,7 +92,7 @@ const AllCourses = (props) => {
     'previous':'Previous Courses'
   }
   return (
-    <div className={props.type ?'':'main'}>
+    <div className={props.type ?'':'main custom-card'}>
         {props.type &&  <Card bordered={false} title={props.title} extra={
         <Link to={`${props.type}`}>View all</Link>
       }>
