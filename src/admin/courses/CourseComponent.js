@@ -515,12 +515,14 @@ const CourseComponent = ({ profile, history }) => {
                         }
                     });
                 });
-                if (val.indexOf("All") > -1) {
-                    courseObject.DupCategoeries = CategoriesLu;
-                    form.setFieldsValue({ Categories: ["All"] })
-                }
-                else {
-                    courseObject.DupCategoeries = [];
+                if (prop == "Categories") {
+                    if (val.indexOf("All") > -1) {
+                        courseObject.DupCategoeries = CategoriesLu;
+                        form.setFieldsValue({ Categories: ["All"] })
+                    }
+                    else {
+                        courseObject.DupCategoeries = [];
+                    }
                 }
             }
             setCourseObject({ ...courseObject })
