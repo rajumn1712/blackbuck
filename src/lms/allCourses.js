@@ -141,7 +141,7 @@ const AllCourses = (props) => {
               key={`carousel_${courses?.length}`}
             >
               {courses?.map((course, indx) => (
-                <div className="course-list-item" key={indx} onWheel={(e) => handleWheel(e)}>
+                <div className="course-list-item" key={indx}>
                   <Card
                     bordered={false}
                     className="card-item"

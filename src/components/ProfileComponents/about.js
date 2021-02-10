@@ -55,9 +55,9 @@ class About extends Component {
       this.props.about.Address.length > 0
         ? { ...this.props.about.Address[0] }
         : {
-          PlatNo: "",
+          // PlatNo: "",
           Street: "",
-          Address: "",
+          // Address: "",
           City: "",
           State: "",
           Country: "",
@@ -106,9 +106,9 @@ class About extends Component {
           AddressId: this.state.address.AddressId
             ? this.state.address.AddressId
             : uuidv4(),
-          PlatNo: values["PlatNo"],
+          // PlatNo: values["PlatNo"],
           Street: values["Street"],
-          Address: values["Address"],
+          // Address: values["Address"],
           City: values["City"],
           State: values["State"],
           Country: values["Country"],
@@ -411,10 +411,10 @@ class About extends Component {
                         </span>
                       </Form.Item>
                     </Col>
-                    <Col xs={24} sm={12}>
+                    {/* <Col xs={24} sm={12}>
                       <Form.Item
-                        label="Plot No"
-                        name="Plot No"
+                        label="House No"
+                        name="House No"
                         rules={[{ required: true }]}
                         className="custom-fields"
                       >
@@ -427,7 +427,7 @@ class About extends Component {
                           <ErrorMessage name="PlatNo" />
                         </span>
                       </Form.Item>
-                    </Col>
+                    </Col> */}
                     <Col xs={24} sm={12}>
                       <Form.Item
                         label="Street Name"
@@ -445,7 +445,7 @@ class About extends Component {
                         </span>
                       </Form.Item>
                     </Col>
-                    <Col xs={24}>
+                    {/* <Col xs={24}>
                       <Form.Item
                         label="Address"
                         name="Address"
@@ -461,7 +461,7 @@ class About extends Component {
                           <ErrorMessage name="Address" />
                         </span>
                       </Form.Item>
-                    </Col>
+                    </Col> */}
                     <Col xs={24} sm={12}>
                       <Form.Item
                         label="City"
