@@ -39,22 +39,10 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
                 userCreated: profile?.Id
             })
     }
-    const _sendMessage = (text) => {
-        if (text.length > 0) {
-            this.setState({
-                messageList: [...this.state.messageList, {
-                    author: 'them',
-                    type: 'text',
-                    data: { text }
-                }]
-            })
-
-        }
-    }
     useEffect(() => {
         const unsubscribe = db.collection("chat").doc(profile?.Id).collection("messages")
             .orderBy("createdAt")
-            .where("user_id","==",agentProfile?.UserId)
+            .where("user_id", "==", agentProfile?.UserId)
             .limit(100)
             .onSnapshot(querySnapShot => {
                 const data = querySnapShot.docs.map(doc => {
