@@ -12,7 +12,7 @@ import { hasChanged, uuidv4 } from "../utils";
 import Loader from "../common/loader";
 import defaultCover from '../styles/images/defaultcover.png'
 import defaultguser from '../styles/images/default-cover.png';
-const indianCitiesDatabase = require('indian-cities-database');
+import  indianCitiesDatabase  from 'indian-cities-database';
 var cities = indianCitiesDatabase.cities;
 let cityValues = cities.map(item => item.city);
 const { Option } = Select;
