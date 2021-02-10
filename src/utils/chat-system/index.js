@@ -18,7 +18,6 @@ const db = firebase.firestore();
 const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
     const [messageList, setMessageList] = useState([]);
     const _onMessageWasSent = (message) => {
-        // setMessageList([...messageList, { ...message }])
         db.collection("chat").doc(profile?.Id).collection("messages")
             .add({
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
