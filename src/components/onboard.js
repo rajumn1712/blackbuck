@@ -206,8 +206,8 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} md={12} className="custom-fields">
-                                        <Form.Item label="Date of joining" name="DateOfJoining" rules={[{ required: true, message: "Date of joining required" }]}>
-                                            <DatePicker defaultValue={initialValues.College.DateOfJoining} onChange={(val) => { handleChange("DateOfJoining", val) }} format="DD/MM/YYYY" />
+                                        <Form.Item label="Year of joining" name="DateOfJoining" rules={[{ required: true, message: "Year of joining required" }]}>
+                                            <DatePicker defaultValue={initialValues.College.DateOfJoining} onChange={(val) => { handleChange("DateOfJoining", val) }} picker="year" />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} md={12} className="custom-fields">
@@ -215,7 +215,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                             type: "date", validator: async (rule, value, callback) => {
                                                 if (value && initialValues.College.DateOfJoining) {
                                                     if (new Date(value).getFullYear() <= new Date(initialValues.College.DateOfJoining).getFullYear()) {
-                                                        throw new Error("Passing out year should be greater than Date Of Joining")
+                                                        throw new Error("Passing out year should be greater than Year Of Joining")
                                                     } else {
                                                         callback();
                                                     }
@@ -237,7 +237,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} className="custom-fields multi-select">
-                                        <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one course" }]}>
+                                        <Form.Item label="Choose your courses" name="Subjects" rules={[{ required: true, message: "Please select at least one course" }]}>
                                             <Select loading={loaders.subjects} mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" onChange={onSubjectsSelection} filterOption={(input, option) =>
                                                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                             }>

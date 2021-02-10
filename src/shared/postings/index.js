@@ -1059,9 +1059,9 @@ class Postings extends Component {
     }
     return <>{post.CourseType === "Live Session" ? <div className="livecourse-card mx-16">
       <div className="p-relative">
-        <img onClick={() => { window.open(`/course/${post.CourseId}`, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
+        <img onClick={() => { window.open(process.env.REACT_APP_HOSTURL+`course/${post.CourseId}`, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
         <div className="live-btn-hover d-flex align-items-center">
-          <a className="f-24 semibold" onClick={() => { window.open(`/course/${post.CourseId}`, "_blank") }}>Join Live Session</a>
+          <a className="f-24 semibold" onClick={() => { window.open(process.env.REACT_APP_HOSTURL+`course/${post.CourseId}`, "_blank") }}>Join Live Session</a>
         </div>
       </div>
       <div className="course-create p-12 d-flex xs-flex-col justify-between">

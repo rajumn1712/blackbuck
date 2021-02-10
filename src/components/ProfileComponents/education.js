@@ -114,8 +114,8 @@ class Education extends Component {
         Name: values.Name,
         Degree: values.Degree,
         AcademicYear: values.AcademicYear,
-        StartDate: values.AcademicYear[0]._d,
-        EndDate: values.AcademicYear[1]._d,
+        StartDate: values.AcademicYear[0]._d.getUTCFullYear(),
+        EndDate: values.AcademicYear[1]._d.getUTCFullYear(),
         Location: values.Location,
         MarksGrade: values.MarksGrade,
         File: this.state.educationObj.uploadsources,
@@ -259,8 +259,9 @@ class Education extends Component {
                       <span style={{ color: "var(--textprimary)" }}>
                         {item.Degree}
                       </span>{" "}
-                      <Moment format="YYYY/MM/DD">{item.StartDate}</Moment> -{" "}
-                      <Moment format="YYYY/MM/DD">{item.EndDate}</Moment>{" "}
+                      {item.StartDate} -{" "} {item.EndDate}
+                      {/* <Moment format="YYYY/MM/DD">{item.StartDate}</Moment> -{" "}
+                      <Moment format="YYYY/MM/DD">{item.EndDate}</Moment>{" "} */}
                       <div
                         style={{
                           color: "var(--textprimary)",
@@ -401,6 +402,7 @@ class Education extends Component {
                               <RangePicker
                                 // disabledDate={this.disabledDate}
                                 name="AcademicYear"
+                                picker="year"
                                 value={values.AcademicYear}
                                 onChange={(value) =>
                                   setFieldValue("AcademicYear", value)

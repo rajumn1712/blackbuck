@@ -55,16 +55,16 @@ class Intership extends Component {
     internships: this.props.internships,
     internshipsObj: {
       InternshipId: "",
-      CompanyLogo: "",
+      // CompanyLogo: "",
       uploadsources: [],
     },
     initialValues: {
       CompanyName: "",
-      ShortName: "",
+      // ShortName: "",
       Location: "",
       Duration: "",
     },
-    duration: ["30 days", "45 days", "2 months", "3 months", "6 months"],
+    duration: ["30 days", "45 days", "2 months", "3 months","4 months","5 months", "6 months"],
     visible: false,
     fileUploading: false,
     fileUpload: false,
@@ -78,8 +78,8 @@ class Intership extends Component {
           ? this.state.internshipsObj.InternshipId
           : uuidv4(),
         CompanyName: values.CompanyName,
-        ShortName: values.ShortName,
-        CompanyLogo: this.state.internshipsObj.CompanyLogo,
+        // ShortName: values.ShortName,
+        // CompanyLogo: this.state.internshipsObj.CompanyLogo,
         Location: values.Location,
         Duration: values.Duration,
         Certificate: this.state.internshipsObj.uploadsources,
@@ -211,20 +211,20 @@ class Intership extends Component {
     if (isedit) {
       const { CompanyName, ShortName, Location, Duration } = internship;
       internshipsObj.InternshipId = internship.InternshipId;
-      internshipsObj.CompanyLogo = internship.CompanyLogo;
+      // internshipsObj.CompanyLogo = internship.CompanyLogo;
       internshipsObj.uploadsources = internship.Certificate
         ? [...internship.Certificate]
         : [];
       Object.assign(initialValues, {
         CompanyName,
-        ShortName,
+        // ShortName,
         Location,
         Duration,
       });
     } else {
       initialValues = {
         CompanyName: "",
-        ShortName: "",
+        // ShortName: "",
         Location: "",
         Duration: "",
       };
@@ -272,7 +272,7 @@ class Intership extends Component {
             visible: false,
             internshipsObj: {
               InternshipId: "",
-              CompanyLogo: "",
+              // CompanyLogo: "",
               uploadsources: [],
             },
           },
@@ -296,12 +296,12 @@ class Intership extends Component {
       visible: false,
       internshipsObj: {
         InternshipId: "",
-        CompanyLogo: "",
+        // CompanyLogo: "",
         uploadsources: [],
       },
       initialValues: {
         CompanyName: "",
-        ShortName: "",
+        // ShortName: "",
         Location: "",
         Duration: "",
       },
@@ -358,7 +358,7 @@ class Intership extends Component {
                     )}
                   </div>
                   <div className="intern-cardbody">
-                    <div
+                    {/* <div
                       className={
                         item.CompanyLogo ? "internlogo" : "defaultlogo"
                       }
@@ -366,9 +366,9 @@ class Intership extends Component {
                       {item.CompanyLogo ? (
                         <img src={item.CompanyLogo} />
                       ) : (
-                        item.ShortName?.substring(0,2)
+                        item.ShortName.substring(0,2)
                       )}
-                    </div>
+                    </div> */}
                     <h4 className="title">{item.CompanyName}</h4>
                     <p className="description">
                       <span className="afterline mr-16">{item.Location}</span>
@@ -427,7 +427,7 @@ class Intership extends Component {
                           </span>
                         </Form.Item>
                       </Col>
-                      <Col xs={24}>
+                      {/* <Col xs={24}>
                         <Form.Item
                           label="Short Name"
                           name="Short Name"
@@ -443,7 +443,7 @@ class Intership extends Component {
                             <ErrorMessage name="ShortName" />
                           </span>
                         </Form.Item>
-                      </Col>
+                      </Col> */}
                       <Col xs={24} md={12}>
                         <Form.Item
                           label="Place"
@@ -491,7 +491,7 @@ class Intership extends Component {
                         </Form.Item>
                       </Col>
 
-                      <Col xs={24} md={12} className="mb-16">
+                      {/* <Col xs={24} md={12} className="mb-16">
                         <Dragger
                           className="upload"
                           {...this.uploadProps}
@@ -510,8 +510,8 @@ class Intership extends Component {
                             Upload Logo
                           </p>
                         </Dragger>
-                      </Col>
-                      <Col xs={24} md={12} className="mb-16">
+                      </Col> */}
+                      <Col xs={24} md={24} className="mb-16">
                         <Dragger
                           className="upload"
                           {...this.uploadfileProps}
@@ -533,7 +533,7 @@ class Intership extends Component {
                       </Col>
 
                       <Col xs={24}>
-                        <div className="mb-16 upload-preview">
+                        {/* <div className="mb-16 upload-preview">
                           <Image src={internshipsObj.CompanyLogo} />
                           <a
                             class="item-close"
@@ -553,7 +553,7 @@ class Intership extends Component {
                               </Tooltip>
                             )}
                           </a>
-                        </div>
+                        </div> */}
                         <div className="docs about-icons education">
                           <List
                             itemLayout="horizontal"
