@@ -718,15 +718,22 @@ const CourseComponent = ({ profile, history }) => {
                                             </Col>
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <label className="text-secondary d-block mb-4  required">Start Date</label>
-                                                <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Start date required" }]}>
+                                                <Form.Item className="custom-fields" name="Date" rules={[{
+                                                    required: true, message: "Start date required"
+                                                }, {
+                                                    type: "date", validator: async (rule, value, callback) => {
+                                                        if (value && courseObject.EndDate) {
+                                                            if (new Date(value) > new Date(courseObject.EndDate)) {
+                                                                throw new Error("Start Date should grater than end date")
+                                                            } else {
+                                                                callback();
+                                                            }
+                                                        }
+                                                    }
+                                                }]}>
                                                     <DatePicker placeholder="Course Start Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
                                                         return (
-                                                            moment().add(-1, "days") >= current ||
-                                                            moment(
-                                                                courseObject.EndDate
-                                                                    ? courseObject.EndDate
-                                                                    : ""
-                                                            ).add(+1, "days") < current
+                                                            moment().add(-1, "days") >= current
                                                         );
                                                     }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
@@ -734,15 +741,22 @@ const CourseComponent = ({ profile, history }) => {
                                             }
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <label className="text-secondary d-block mb-4  required">End Date</label>
-                                                <Form.Item className="custom-fields" name="EndDate" rules={[{ required: true, message: "End date required" }]}>
+                                                <Form.Item className="custom-fields" name="EndDate" rules={[{
+                                                    required: true, message: "End date required"
+                                                }, {
+                                                    type: "date", validator: async (rule, value, callback) => {
+                                                        if (value && courseObject.Date) {
+                                                            if (new Date(value) < new Date(courseObject.Date)) {
+                                                                throw new Error("End Date should later than start date")
+                                                            } else {
+                                                                callback();
+                                                            }
+                                                        }
+                                                    }
+                                                }]}>
                                                     <DatePicker placeholder="Course End Date" onChange={(val) => { handleChange("EndDate", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
                                                         return (
-                                                            moment().add(-1, "days") >= current ||
-                                                            moment(
-                                                                courseObject.Date
-                                                                    ? courseObject.Date
-                                                                    : ""
-                                                            ).add(-1, "days") >= current
+                                                            moment().add(-1, "days") >= current
                                                         );
                                                     }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
