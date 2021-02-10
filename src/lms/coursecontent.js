@@ -290,163 +290,7 @@ class CourseContent extends Component {
                     >
                       {this.state.courseDetails.GroupName}
                     </Title>
-                      {courseDetails.CourseType === "Live Session" && (
-                        <>
-                            {/* Gotomeeting */}
-                            {courseDetails.UrlType === "GotoMeeting" &&
-                              courseDetails.LiveDetails?.map((course, indx) => {
-                                return (
-                                  <div className="px-12">
-                          <div className="custom-card mb-16 mt-8">
-                                  <Carousel>
-                                  <span>{moment(course.Date).format('LLL')}</span>
-                                  <Card
-                                    className="start-gotomeeting"
-                                    key={indx}
-                                  >
-                                    <Row align="middle" className="p-16">
-                                      <Col
-                                        xs={18}
-                                        sm={18}
-                                        md={18}
-                                        lg={18}
-                                        xl={18}
-                                        xxl={18}
-                                        className="pr-16"
-                                      >
-                                        <div>
-                                          <img src={gotomeeting} />
-                                        </div>
-                                      </Col>
-                                      <Col
-                                        xs={6}
-                                        sm={6}
-                                        md={6}
-                                        lg={6}
-                                        xl={6}
-                                        xxl={6}
-                                        className="text-right"
-                                      >
-                                        <Button
-                                          type="dashed"
-                                          key="console"
-                                          disabled={new Date(course.Date) >= new Date()}
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            window.open(course.Link);
-                                          }}
-                                        >
-                                          Join Session
-                                        </Button>
-                                      </Col>
-                                    </Row>
-                                  </Card>
-                                  </Carousel>
-                               </div>
-                               </div>
-                                );
-                              })}
-                            {/* Zoom */}
-                            {courseDetails.UrlType === "Zoom" &&
-                              courseDetails.LiveDetails?.map((course, indx) => {
-                                return <div className="px-12">
-                                <div className="custom-card mb-16 mt-8">
-                                <Carousel>
-                                <span className="zoomcard-date">{moment(course.Date).format('LLL')}</span>
-                                <Card className="start-zoom" style={{marginBottom:'24'}} key={indx}>
-                                  <Row align="middle" className="p-16 ">
-                                    <Col
-                                      xs={18}
-                                      sm={18}
-                                      md={18}
-                                      lg={18}
-                                      xl={18}
-                                      xxl={18}
-                                      className="pr-16"
-                                    >
-                                      <div>
-                                        <img src={zoom} />
-                                      </div>
-                                    </Col>
-                                    <Col
-                                      xs={6}
-                                      sm={6}
-                                      md={6}
-                                      lg={6}
-                                      xl={6}
-                                      xxl={6}
-                                      className="text-right"
-                                    >
-                                      <Button
-                                        type="dashed"
-                                        key="console"
-                                        disabled={new Date(course.Date) >= new Date()}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          window.open(course.Link);
-                                        }}
-                                      >
-                                        Join Session
-                                      </Button>
-                                    </Col>
-                                  </Row>
-                                </Card>
-                                </Carousel>
-                              </div>
-                              </div>
-                              })}
-                            {/* Others */}
-                            {courseDetails.UrlType === "Others" &&
-                              courseDetails.LiveDetails?.map((course, indx) => {
-                                return <div className="px-12">
-                                <div className="custom-card mb-16 mt-8">
-                                <Carousel>
-                                <span>{moment(course.Date).format('LLL')}</span>
-                                <Card className="start-others" key={indx}>
-                                  <Row align="middle" className="p-16">
-                                    <Col
-                                      xs={18}
-                                      sm={18}
-                                      md={18}
-                                      lg={18}
-                                      xl={18}
-                                      xxl={18}
-                                      className="pr-16"
-                                    >
-                                      <div>
-                                        <img src={others} />
-                                      </div>
-                                    </Col>
-                                    <Col
-                                      xs={6}
-                                      sm={6}
-                                      md={6}
-                                      lg={6}
-                                      xl={6}
-                                      xxl={6}
-                                      className="text-right"
-                                    >
-                                      <Button
-                                        type="dashed"
-                                        key="console"
-                                        disabled={new Date(course.Date) >= new Date()}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          window.open(course.Link);
-                                        }}
-                                      >
-                                        Join Session
-                                      </Button>
-                                    </Col>
-                                  </Row>
-                                </Card>
-                                </Carousel>
-                              </div>
-                              </div>
-                              })}
-                              </>
-                      )}
-                      {(courseDetails.CourseType === "Content" || courseDetails.CourseType === "Live Session") && (
+                    {(courseDetails.CourseType === "Content" || courseDetails.CourseType === "Live Session") && (
                         <Carousel>
                           {!this.state.IsRenderType && this.state.selectedVideo && (
                             <div className="lms-video" id="video_player">
@@ -552,7 +396,162 @@ class CourseContent extends Component {
                           )}
                         </Carousel>
                       )}
-                    
+                      {courseDetails.CourseType === "Live Session" && (
+                        <>
+                            {/* Gotomeeting */}
+                            {courseDetails.UrlType === "GotoMeeting" &&
+                              courseDetails.LiveDetails?.map((course, indx) => {
+                                return (
+                                  <Carousel>
+                                  <div className="px-12">
+                          <div className="custom-card mb-16 mt-8">
+                                  <span>{moment(course.Date).format('LLL')}</span>
+                                  <Card
+                                    className="start-gotomeeting"
+                                    key={indx}
+                                  >
+                                    <Row align="middle" className="p-16">
+                                      <Col
+                                        xs={18}
+                                        sm={18}
+                                        md={18}
+                                        lg={18}
+                                        xl={18}
+                                        xxl={18}
+                                        className="pr-16"
+                                      >
+                                        <div>
+                                          <img src={gotomeeting} />
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        xs={6}
+                                        sm={6}
+                                        md={6}
+                                        lg={6}
+                                        xl={6}
+                                        xxl={6}
+                                        className="text-right"
+                                      >
+                                        <Button
+                                          type="dashed"
+                                          key="console"
+                                          disabled={new Date(course.Date) >= new Date()}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            window.open(course.Link);
+                                          }}
+                                        >
+                                          Join Session
+                                        </Button>
+                                      </Col>
+                                    </Row>
+                                  </Card>
+                               </div>
+                               </div>
+                               </Carousel>
+                                );
+                              })}
+                            {/* Zoom */}
+                            {courseDetails.UrlType === "Zoom" &&
+                              courseDetails.LiveDetails?.map((course, indx) => {
+                                return <Carousel>
+                                <div className="px-12">
+                                <div className="custom-card mb-16 mt-8">
+                                <span className="zoomcard-date">{moment(course.Date).format('LLL')}</span>
+                                <Card className="start-zoom" style={{marginBottom:'24'}} key={indx}>
+                                  <Row align="middle" className="p-16 ">
+                                    <Col
+                                      xs={18}
+                                      sm={18}
+                                      md={18}
+                                      lg={18}
+                                      xl={18}
+                                      xxl={18}
+                                      className="pr-16"
+                                    >
+                                      <div>
+                                        <img src={zoom} />
+                                      </div>
+                                    </Col>
+                                    <Col
+                                      xs={6}
+                                      sm={6}
+                                      md={6}
+                                      lg={6}
+                                      xl={6}
+                                      xxl={6}
+                                      className="text-right"
+                                    >
+                                      <Button
+                                        type="dashed"
+                                        key="console"
+                                        disabled={new Date(course.Date) >= new Date()}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          window.open(course.Link);
+                                        }}
+                                      >
+                                        Join Session
+                                      </Button>
+                                    </Col>
+                                  </Row>
+                                </Card>
+                              </div>
+                              </div>
+                              </Carousel>
+                              })}
+                            {/* Others */}
+                            {courseDetails.UrlType === "Others" &&
+                              courseDetails.LiveDetails?.map((course, indx) => {
+                                return <Carousel>
+                                <div className="px-12">
+                                <div className="custom-card mb-16 mt-8">
+                                <span>{moment(course.Date).format('LLL')}</span>
+                                <Card className="start-others" key={indx}>
+                                  <Row align="middle" className="p-16">
+                                    <Col
+                                      xs={18}
+                                      sm={18}
+                                      md={18}
+                                      lg={18}
+                                      xl={18}
+                                      xxl={18}
+                                      className="pr-16"
+                                    >
+                                      <div>
+                                        <img src={others} />
+                                      </div>
+                                    </Col>
+                                    <Col
+                                      xs={6}
+                                      sm={6}
+                                      md={6}
+                                      lg={6}
+                                      xl={6}
+                                      xxl={6}
+                                      className="text-right"
+                                    >
+                                      <Button
+                                        type="dashed"
+                                        key="console"
+                                        disabled={new Date(course.Date) >= new Date()}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          window.open(course.Link);
+                                        }}
+                                      >
+                                        Join Session
+                                      </Button>
+                                    </Col>
+                                  </Row>
+                                </Card>
+                              </div>
+                              </div>
+                              </Carousel>
+                              })}
+                              </>
+                      )}
                   </div>
                   <div className="py-12">
                     <div className="px-12">
