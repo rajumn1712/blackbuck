@@ -134,6 +134,7 @@ class About extends Component {
       Lastname:values.Lastname,
       CollegeId:values.CollegeId,
       CollegeName:this.state.colleges.filter(item => item.CollegeId === values.CollegeId)[0].CollegeName,
+      IsNameModified : (this.props.about.Firstname === values.Firstname && this.props.about.Lastname === values.Lastname) ? false : true,
       Address: [
         {
           AddressId: this.state.address.AddressId
