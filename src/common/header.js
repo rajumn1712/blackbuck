@@ -11,6 +11,7 @@ import '../index.css';
 import { connect } from 'react-redux';
 import { fetchUserFriends, fetchNotificationCount } from '../shared/api/apiServer';
 import Notifications from '../components/notification';
+import ChatSystem from '../utils/chat-system';
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
@@ -27,10 +28,7 @@ class HeaderComponent extends React.Component {
         ProfilePic: "",
         friends: [],
         showMessenger: false,
-        agentProfile: {
-            imageUrl: null,
-            teamName: null
-        },
+        agentProfile: null,
         notifications: null,
         notificationsCount: 0,
         search_value: this.props.search_value
@@ -130,7 +128,9 @@ class HeaderComponent extends React.Component {
         </Menu >)
     }
     showChatWindow = (user) => {
-        this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image, teamName: user.Firstname } })
+        this.setState({ ...this.state, agentProfile: null }, () => {
+            this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image || defaultUser, teamName: user.Firstname, UserId: user.UserId } })
+        })
     }
     render() {
         const { visible } = this.state;
@@ -297,12 +297,12 @@ class HeaderComponent extends React.Component {
                         <div className="messenger-drawer">
                             {this.state.friends?.map((friend, indx) => <Link key={indx} onClick={() => this.showChatWindow(friend)}>
                                 <Meta
-                                    avatar={<Avatar src={friend.Image} />}
+                                    avatar={<Avatar src={friend.Image || defaultUser} />}
                                     title={friend.Firstname}
                                     description={<p className="chat-description">{friend.Email}</p>}
                                 />
                             </Link>)}
-                            {/* <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, isOpen: false }) }} /> */}
+                            {this.state.agentProfile != null && <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, showMessenger: false }) }} />}
                         </div>
                     </Drawer>
                 </div>
