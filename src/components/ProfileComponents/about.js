@@ -1,21 +1,28 @@
 import React, { Component, createRef } from "react";
-import { Card, Divider, Row, Col, Form, Input, Tooltip, Button } from "antd";
+import { Card, Divider, Row, Col, Form, Input, Tooltip, Button, Avatar, Select } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
 import "../../App.css";
 import CommonModal from "./CommonModal";
 import { ErrorMessage, Field, Formik } from "formik";
-import { saveAboutMe } from "../../shared/api/apiServer";
+import { getColleges, saveAboutMe } from "../../shared/api/apiServer";
 import { hasChanged, uuidv4 } from "../../utils";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import notify from "../../shared/components/notification";
 import Loader from "../../common/loader";
 import { apiClient } from "../../shared/api/clients";
 import moment from 'moment';
+import { connect } from "react-redux";
+import { profileSuccess } from "../../reducers/auth";
+
+const { Option } = Select;
 
 class About extends Component {
   state = {
+    Firstname:this.props.about.Firstname,
+      Lastname:this.props.about.Lastname,
+      CollegeId:this.props.about.College.CollegeId,
     PhoneNumber: this.props.about.PhoneNumber
       ? this.props.about.PhoneNumber
       : "",
@@ -25,6 +32,7 @@ class About extends Component {
     address: {},
     visible: false,
     loading: false,
+    colleges:[]
   };
 
   handleValidate = (values) => {
@@ -50,6 +58,7 @@ class About extends Component {
   };
   showModal = (e) => {
     e.preventDefault();
+    this.fetchColleges();
     let editObject = { ...this.state };
     editObject.address =
       this.props.about.Address.length > 0
@@ -66,6 +75,9 @@ class About extends Component {
     editObject.address = Object.assign(editObject.address, {
       PhoneNumber: editObject.PhoneNumber,
       AboutMe: editObject.AboutMe,
+      Firstname:editObject.Firstname,
+      Lastname:editObject.Lastname,
+      CollegeId:editObject.CollegeId
     });
 
     this.setState({
@@ -74,10 +86,27 @@ class About extends Component {
     });
   };
 
+  fetchColleges = async ()=>{
+    this.setState({...this.state,loading:true})
+        const collegeResponse = await getColleges();
+        if (collegeResponse.ok) {
+            let {colleges} = this.state;
+            colleges = collegeResponse.data;
+            this.setState({...this.state,colleges,loading:false})
+        } else {
+          this.setState({...this.state,loading:false})
+            notify({ message: "Error", type: "error", description: "Something went wrong :)" })
+        }
+  }
+
   handleOk = () => {
     this.formRef.current.handleSubmit();
     if (!hasChanged(this.formRef.current.values)) {
-      this.setState({ ...this.state, loading: true });
+      this.setState({ ...this.state, loading: true },()=>{
+        this.props.profile.FirstName = this.formRef.current.values.Firstname;
+        this.props.profile.LastName = this.formRef.current.values.Lastname;
+        this.props.updateProfile(this.props.profile);
+      });
       const saveObj = this.createSaveObj(this.formRef.current.values);
       saveAboutMe(saveObj).then((res) => {
         this.setState(
@@ -101,6 +130,10 @@ class About extends Component {
       UserId: this.props.about.UserId,
       Aboutme: values.AboutMe,
       PhoneNumber: values.PhoneNumber,
+      Firstname:values.Firstname,
+      Lastname:values.Lastname,
+      CollegeId:values.CollegeId,
+      CollegeName:this.state.colleges.filter(item => item.CollegeId === values.CollegeId)[0].CollegeName,
       Address: [
         {
           AddressId: this.state.address.AddressId
@@ -299,6 +332,7 @@ class About extends Component {
       visible,
       address,
       loading,
+      colleges
     } = this.state;
 
     return (
@@ -410,6 +444,47 @@ class About extends Component {
                           <ErrorMessage name="AboutMe" />
                         </span>
                       </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={12}>
+                      <Form.Item
+                        label="First Name"
+                        name="First Name"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
+                        <Field
+                          className="ant-input"
+                          value={values?.Firstname}
+                          name="Firstname"
+                        />
+                        <span className="validateerror">
+                          <ErrorMessage name="Firstname" />
+                        </span>
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={12}>
+                      <Form.Item
+                        label="Last Name"
+                        name="Last Name"
+                        rules={[{ required: true }]}
+                        className="custom-fields"
+                      >
+                        <Field
+                          className="ant-input"
+                          value={values?.Lastname}
+                          name="Lastname"
+                        />
+                        <span className="validateerror">
+                          <ErrorMessage name="Lastname" />
+                        </span>
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24}>
+                    <Form.Item className="custom-fields" label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }]}>
+                                            <Select defaultValue={values.CollegeId} placeholder="Select a college" onChange={(val) => setFieldValue("Country", val)}>
+                                                {colleges?.map((college, indx) => <Option value={college?.CollegeId}><Avatar src={college.Image} />{college?.CollegeName}</Option>)}
+                                            </Select>
+                                        </Form.Item>
                     </Col>
                     {/* <Col xs={24} sm={12}>
                       <Form.Item
@@ -560,7 +635,7 @@ class About extends Component {
                         </span>
                       </Form.Item>
                     </Col>
-                    <Col xs={24} sm={24}>
+                    <Col xs={24} sm={12}>
                       <Form.Item
                         label="Phone Number"
                         name="Phone Number"
@@ -600,4 +675,17 @@ class About extends Component {
     );
   }
 }
-export default About;
+const mapStateToProps = ({ oidc }) => {
+  return { profile: oidc.profile };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateProfile: (info) => {
+      dispatch(profileSuccess(info));
+    },
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(About);

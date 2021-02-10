@@ -290,15 +290,15 @@ class CourseContent extends Component {
                     >
                       {this.state.courseDetails.GroupName}
                     </Title>
-                    <Carousel>
                       {courseDetails.CourseType === "Live Session" && (
-                        <div className="px-12">
-                          <div className="custom-card mb-16 mt-8">
+                        <>
                             {/* Gotomeeting */}
                             {courseDetails.UrlType === "GotoMeeting" &&
                               courseDetails.LiveDetails?.map((course, indx) => {
                                 return (
-                                  <>
+                                  <div className="px-12">
+                          <div className="custom-card mb-16 mt-8">
+                                  <Carousel>
                                   <span>{moment(course.Date).format('LLL')}</span>
                                   <Card
                                     className="start-gotomeeting"
@@ -341,13 +341,17 @@ class CourseContent extends Component {
                                       </Col>
                                     </Row>
                                   </Card>
-                                  </> 
+                                  </Carousel>
+                               </div>
+                               </div>
                                 );
                               })}
                             {/* Zoom */}
                             {courseDetails.UrlType === "Zoom" &&
                               courseDetails.LiveDetails?.map((course, indx) => {
-                                return <>
+                                return <div className="px-12">
+                                <div className="custom-card mb-16 mt-8">
+                                <Carousel>
                                 <span className="zoomcard-date">{moment(course.Date).format('LLL')}</span>
                                 <Card className="start-zoom" style={{marginBottom:'24'}} key={indx}>
                                   <Row align="middle" className="p-16 ">
@@ -387,12 +391,16 @@ class CourseContent extends Component {
                                     </Col>
                                   </Row>
                                 </Card>
-                                </>
+                                </Carousel>
+                              </div>
+                              </div>
                               })}
                             {/* Others */}
                             {courseDetails.UrlType === "Others" &&
                               courseDetails.LiveDetails?.map((course, indx) => {
-                                return <>
+                                return <div className="px-12">
+                                <div className="custom-card mb-16 mt-8">
+                                <Carousel>
                                 <span>{moment(course.Date).format('LLL')}</span>
                                 <Card className="start-others" key={indx}>
                                   <Row align="middle" className="p-16">
@@ -432,14 +440,15 @@ class CourseContent extends Component {
                                     </Col>
                                   </Row>
                                 </Card>
-                                </>
+                                </Carousel>
+                              </div>
+                              </div>
                               })}
-                          </div>
-                        </div>
+                              </>
                       )}
-                      {courseDetails.CourseType === "Content" && (
-                        <>
-                          {!this.state.IsRenderType && (
+                      {(courseDetails.CourseType === "Content" || courseDetails.CourseType === "Live Session") && (
+                        <Carousel>
+                          {!this.state.IsRenderType && this.state.selectedVideo && (
                             <div className="lms-video" id="video_player">
                               <div className="video-container">
                                 <video
@@ -541,9 +550,9 @@ class CourseContent extends Component {
                               />
                             </div>
                           )}
-                        </>
+                        </Carousel>
                       )}
-                    </Carousel>
+                    
                   </div>
                   <div className="py-12">
                     <div className="px-12">
