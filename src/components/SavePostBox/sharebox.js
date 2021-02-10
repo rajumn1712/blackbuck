@@ -606,7 +606,7 @@ class ShareBox extends Component {
     let text = e.item ? (e.item.node.innerText ? e.item.node.innerText : '') : e;
     let { groupLu, collegeLu ,GroupName} = this.state;
     this.postObject.PostType = text
-    this.setState({ ...this.state, ddlValue: text ,GroupName:(IsMenu?"":GroupName)}, () => {
+    this.setState({ ...this.state, ddlValue: text ,GroupName: (IsMenu ? "" : GroupName) }, () => {
       if (text == 'Groups') {
         if (groupLu.length === 0)
           fetchUserGroups(
@@ -681,8 +681,8 @@ class ShareBox extends Component {
     const tagChild = tags?.map(this.forMap);
     const menu = (
       <Menu className="custom-dropdown more-opt">
-        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e,true)}><span className="grp-type-icon public"></span> Public</Menu.Item>
-        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e,true)}><span className="grp-type-icon friends"></span> Friends</Menu.Item>
+        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e, true)}><span className="grp-type-icon public"></span> Public</Menu.Item>
+        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e, true)}><span className="grp-type-icon friends"></span> Friends</Menu.Item>
         {/* <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon college"></span> College</Menu.Item> */}
         {!this.props.groupData && <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon groups"></span> Groups</Menu.Item>}
       </Menu>
@@ -697,7 +697,7 @@ class ShareBox extends Component {
           description={
             <div className="mb-0 text-capitalize" id="typeLu">
               {!this.props.groupData && <Dropdown overlay={menu} trigger={["click"]}
-              getPopupContainer={() => document.querySelector('#typeLu')}>
+                getPopupContainer={() => document.querySelector('#typeLu')}>
                 <div
                   className="post-privacy"
                   style={{ color: "#9B9B9B", fontSize: 12 }}
@@ -707,7 +707,7 @@ class ShareBox extends Component {
                   <span className="grp-type-icon down ml-4"></span>
                 </div>
               </Dropdown>
-          }
+              }
               {this.props.groupData &&
                 this.props.groupData.GroupName
               }
@@ -735,7 +735,13 @@ class ShareBox extends Component {
 
     return (
       <div className="share-box">
-        <ul className="justify-content-around mb-0">
+        <Input
+          className="share-input"
+          placeholder="Start a post"
+          prefix={<span className="icon sharepost-icon"
+            onClick={() => this.openpopup(menu.Id)} />}
+        />
+        {/* <ul className="justify-content-around mb-0">
           {postsmenu.map((menu) => {
             return (
               <li key={menu.Id}>
@@ -749,7 +755,7 @@ class ShareBox extends Component {
               </li>
             );
           })}
-        </ul>
+        </ul> */}
         <Modal
           className="share-popup"
           title={
@@ -887,6 +893,13 @@ class ShareBox extends Component {
               </Tag>
             )}
           </div>
+          <ul className="share-list">
+            <li><span className="sharebox-icons photo-icon"></span></li>
+            <li><span className="sharebox-icons video-icon"></span></li>
+            <li><span className="sharebox-icons gif-icon"></span> </li>
+            <li><span className="sharebox-icons audio-icon"></span></li>
+            <li><span className="sharebox-icons document-icon"></span></li>
+          </ul>
         </Modal>
       </div>
     );

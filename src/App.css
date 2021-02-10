@@ -76,6 +76,13 @@
   background: var(--white);
   border: 1px solid var(--line);
 }
+.cms-box {
+  border-radius: 0.8rem;
+  text-align: center;
+  margin-bottom: 8px;
+  background: var(--white);
+  border: 1px solid var(--line);
+}
 .sharebox-icons,
 .doc-icons {
   width: 45px;
@@ -2175,6 +2182,20 @@ textarea {
 .zoomcard-date{background: var(--green);color: var(--white);    padding: 8px 10px 14px;border-radius: 0.4rem 0.4rem 0 0;line-height: 26px;}
 .course-list-item .ant-card .ant-card-cover{border: 0 !important;}
 .h-100p{height: 100%;}
+.icon.sharepost-icon{ width: 20px; height: 20px;display: inline-block; vertical-align: middle;background: url(styles/images/icons.svg) no-repeat;background-position: -330px -8px ;}
+.share-list{display: flex;list-style-type: none;padding-left: 0;justify-content: center;margin: auto;}
+.sharebox-icons {width: 26px;height: 26px;vertical-align: initial;display: inline-block;vertical-align: middle;background: url(styles/images/icons.svg) no-repeat;}
+.share-box{border-radius: 40px;}
+.share-box .share-input{padding: 12px 16px;border-radius: 40px;display: flex;align-items: end;}
+.share-list li{width: 50px;height: 50px;border: 1px solid var(--border); display: flex; justify-content: center;align-items: center;border-radius: 50%;margin-right: 8px;}
+.share-list li:last-child{margin-right: 0;}
+.share-list li:hover{background: #f9f9f9;}
+.sharebox-icons.text-icon {background-position: -16px -107px;}
+.sharebox-icons.photo-icon {background-position:-72px -107px;}
+.sharebox-icons.audio-icon {background-position: -133px -107px;}
+.sharebox-icons.document-icon {background-position: -189px -107px;}
+.sharebox-icons.gif-icon {background-position: -246px -107px;}
+.sharebox-icons.video-icon {background-position: -307px -107px;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }
