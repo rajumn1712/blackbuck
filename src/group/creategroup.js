@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Row, Col, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Select } from 'antd';
+import { Row, Col, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Select,AutoComplete } from 'antd';
 import './groupstyle.css';
 import CommonModal from '../components/ProfileComponents/CommonModal';
 import { saveGroup, fetchUserFriends, editGroup } from '../shared/api/apiServer';
@@ -12,6 +12,9 @@ import { hasChanged, uuidv4 } from "../utils";
 import Loader from "../common/loader";
 import defaultCover from '../styles/images/defaultcover.png'
 import defaultguser from '../styles/images/default-cover.png';
+const indianCitiesDatabase = require('indian-cities-database');
+var cities = indianCitiesDatabase.cities;
+let cityValues = cities.map(item => item.city);
 const { Option } = Select;
 
 class CreateGroup extends Component {
@@ -446,16 +449,28 @@ class CreateGroup extends Component {
                                                         </Form.Item>
                                                     </Col>
                                                     }
-                                                    <Col xs={24}>
-                                                        <Form.Item label="Location" className="custom-fields" name="Location" rules={[{ required: true }]}>
-                                                            <Field
-                                                                className="ant-input"
+                                                    <Col xs={24} id="Loc">
+                                                        <Form.Item label="Location" className="custom-fields" name="Location" rules={[{ required: true, type: "array" }]}>
+                                                            <AutoComplete
                                                                 name="Location"
                                                                 value={values.Location}
-                                                                placeholder="Add a Location to your group"
-                                                                autocomplete="off"
-                                                                maxlength={100}
-                                                            />
+                                                                placeholder={"Add a Location to your group"}
+                                                                onChange={(value) =>
+                                                                    setFieldValue("Location", value)
+                                                                }
+                                                                getPopupContainer={() => document.querySelector('#Loc')}
+                                                                filterOption={(input, option) =>
+                                                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                                }
+                                                            >
+                                                                {cityValues.map((item, index) => {
+                                                                    return (
+                                                                        <Option key={index} value={item}>
+                                                                            {item}
+                                                                        </Option>
+                                                                    );
+                                                                })}
+                                                            </AutoComplete>
                                                             <span className="validateerror">
                                                                 <ErrorMessage name="Location" />
                                                             </span>
