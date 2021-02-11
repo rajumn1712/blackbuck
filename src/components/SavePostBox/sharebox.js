@@ -137,9 +137,9 @@ class ShareBox extends Component {
       PostId: object ? object.id : uuidv4(),
       Type: "Text",
       PostType: object ? object.PostType : this.state.ddlValue,
-      Message: object ? object.meassage : "",
-      Title: object ? object.title : "",
-      IsAnonymous: object ? object.IsAnonymous : false,
+      Message: object ? object.meassage : this.state.post.Message,
+      Title: object ? object.title : this.state.post.Title,
+      IsAnonymous: object ? object.IsAnonymous : this.state.post.IsAnonymous,
       ImageUrl: object ? (object.image ? object.image : null) : null,
       CreatedDate: object ? new Date(object.date) : null,
       UserDetails: {
@@ -285,7 +285,7 @@ class ShareBox extends Component {
     });
   };
   renderByClickIcon = (modal)=>{
-      this.clearData();
+      this.clearData(modal);
     this.postObject = this.createObject();
     this.postObject.Type = modal === "Images" ? "Image" : modal;
     this.postObject.dupType = modal === "Images" ? "Image" : modal;
@@ -354,13 +354,12 @@ class ShareBox extends Component {
       GroupName: ""
     });
   };
-  clearData = () => {
-    let { post } = this.state;
+  clearData = (modal) => {
+    const compareValue = modal === "Images" ? "Image" : 'Docs';
     this.setState({
       ...this.state,
-      post,
       errors: null,
-      uploadSources: []
+      uploadSources: this.postObject.Type === compareValue ? this.state.uploadSources : []
     });
   };
   handleCancel = (e) => {
