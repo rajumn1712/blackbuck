@@ -82,24 +82,24 @@ const postsmenu = [
 
 const NewPostMenu = [
   {
-    CssSprite:'sharebox-icons photo-icon',
-    Id:'Images'
+    CssSprite: 'sharebox-icons photo-icon',
+    Id: 'Images'
   },
   {
-    CssSprite:'sharebox-icons video-icon',
-    Id:'Video'
+    CssSprite: 'sharebox-icons video-icon',
+    Id: 'Video'
   },
   {
-    CssSprite:'sharebox-icons gif-icon',
-    Id:'Gif'
+    CssSprite: 'sharebox-icons gif-icon',
+    Id: 'Gif'
   },
   {
-    CssSprite:'sharebox-icons audio-icon',
-    Id:'Audio'
+    CssSprite: 'sharebox-icons audio-icon',
+    Id: 'Audio'
   },
   {
-    CssSprite:'sharebox-icons document-icon',
-    Id:'Docs'
+    CssSprite: 'sharebox-icons document-icon',
+    Id: 'Docs'
   }
 ];
 const fileTypes = {
@@ -284,8 +284,8 @@ class ShareBox extends Component {
       }
     });
   };
-  renderByClickIcon = (modal)=>{
-      this.clearUploaddata();
+  renderByClickIcon = (modal) => {
+    this.clearUploaddata();
     this.postObject = this.createObject();
     this.postObject.Type = modal === "Images" ? "Image" : modal;
     this.postObject.dupType = modal === "Images" ? "Image" : modal;
@@ -581,11 +581,11 @@ class ShareBox extends Component {
   disablePostBtn = () => {
     return ((!this.postObject?.ImageUrl || (this.state.uploadSources.length == 0)) && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
   };
-  setDdlValue = (e,IsMenu) => {
+  setDdlValue = (e, IsMenu) => {
     let text = e.item ? (e.item.node.innerText ? e.item.node.innerText : '') : e;
-    let { groupLu, collegeLu ,GroupName} = this.state;
+    let { groupLu, collegeLu, GroupName } = this.state;
     this.postObject.PostType = text
-    this.setState({ ...this.state, ddlValue: text ,GroupName: (IsMenu ? "" : GroupName) }, () => {
+    this.setState({ ...this.state, ddlValue: text, GroupName: (IsMenu ? "" : GroupName) }, () => {
       if (text == 'Groups') {
         if (groupLu.length === 0)
           fetchUserGroups(
@@ -714,13 +714,10 @@ class ShareBox extends Component {
 
     return (
       <div className="share-box">
-        <Input
-          className="share-input"
-          placeholder="Start a post"
-          onClick={() => this.openpopup('Text')}
-          prefix={<span className="icon sharepost-icon"
-            onClick={() => this.openpopup('Text')} />}
-        />
+        <div className="share-input" onClick={() => this.openpopup('Text')}>
+          <span className="icon sharepost-icon" />
+          <span >Start a post</span>
+        </div>
         {/* <ul className="justify-content-around mb-0">
           {postsmenu.map((menu) => {
             return (
@@ -874,20 +871,20 @@ class ShareBox extends Component {
           </div>
           {this.renderUploadType(modal)}
           {!isEdit && <ul className="share-list">
-            {NewPostMenu.map(menu=>{
+            {NewPostMenu.map(menu => {
               return <Dragger
-              key={menu.Id}
-              className="upload"
-              {...this.uploadProps}
-              accept={fileTypes[menu.Id]}
-  multiple={menu.Id === "Images" || menu.Id === "Docs" ? true : false}
-              onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
-              showUploadList={false}
-              beforeUpload={()=>this.renderByClickIcon(menu.Id)}
-            > 
-              <li>
-                <span className={menu.CssSprite}></span>
-              </li>
+                key={menu.Id}
+                className="upload"
+                {...this.uploadProps}
+                accept={fileTypes[menu.Id]}
+                multiple={menu.Id === "Images" || menu.Id === "Docs" ? true : false}
+                onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
+                showUploadList={false}
+                beforeUpload={() => this.renderByClickIcon(menu.Id)}
+              >
+                <li>
+                  <span className={menu.CssSprite}></span>
+                </li>
               </Dragger>
             })}
           </ul>}
