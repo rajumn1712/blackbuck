@@ -284,8 +284,8 @@ class ShareBox extends Component {
       }
     });
   };
-  renderByClickIcon = (modal) => {
-    this.clearUploaddata();
+  renderByClickIcon = (modal)=>{
+      this.clearData();
     this.postObject = this.createObject();
     this.postObject.Type = modal === "Images" ? "Image" : modal;
     this.postObject.dupType = modal === "Images" ? "Image" : modal;
@@ -341,17 +341,26 @@ class ShareBox extends Component {
   };
   clearUploaddata = () => {
     let { post } = this.state;
-    // post.IsAnonymous = false;
-    // post.Message = "";
-    // post.Title = "";
+    post.IsAnonymous = false;
+    post.Message = "";
+    post.Title = "";
     this.setState({
       ...this.state,
       post,
       errors: null,
-      // tags: [],
+      tags: [],
       uploadSources: [],
       ddlValue: "Public",
       GroupName: ""
+    });
+  };
+  clearData = () => {
+    let { post } = this.state;
+    this.setState({
+      ...this.state,
+      post,
+      errors: null,
+      uploadSources: []
     });
   };
   handleCancel = (e) => {
@@ -427,7 +436,7 @@ class ShareBox extends Component {
           {this.state.uploadSources?.map((image, indx) => (
             <div key={indx} className="mb-16 upload-preview">
               <Image src={image} />
-              <a
+              {!this.state.isEdit && <a
                 class="item-close"
                 onClick={() => {
                   let { uploadSources } = this.state;
@@ -439,7 +448,7 @@ class ShareBox extends Component {
                 <Tooltip title="Remove">
                   <span className="close-icon"></span>
                 </Tooltip>
-              </a>
+              </a>}
             </div>
           ))}
         </div>
@@ -452,7 +461,7 @@ class ShareBox extends Component {
               <video width="100%" controls>
                 <source src={image} />
               </video>
-              <a
+              {!this.state.isEdit && <a
                 class="item-close"
                 onClick={() => {
                   this.postObject.ImageUrl = [];
@@ -463,7 +472,7 @@ class ShareBox extends Component {
                 <Tooltip title="Remove">
                   <span className="close-icon"></span>
                 </Tooltip>
-              </a>
+              </a>}
             </div>
           ))}
         </div>
@@ -478,7 +487,7 @@ class ShareBox extends Component {
                 onPlay={(e) => console.log("onPlay")}
                 layout="horizontal-reverse"
               />
-              <a
+              {!this.state.isEdit && <a
                 class="item-close"
                 onClick={() => {
                   this.postObject.ImageUrl = [];
@@ -490,7 +499,7 @@ class ShareBox extends Component {
                 <Tooltip title="Remove">
                   <span className="close-icon"></span>
                 </Tooltip>
-              </a>
+              </a>}
             </div>
           ))}
         </div>
@@ -514,7 +523,7 @@ class ShareBox extends Component {
                       <div className="file-size f-12">{item.fileSize}</div>
                     }
                   />
-                  <a
+                  {!this.state.isEdit && <a
                     class="item-close"
                     onClick={() => {
                       let { uploadSources } = this.state;
@@ -526,7 +535,7 @@ class ShareBox extends Component {
                     <Tooltip title="Remove">
                       <span className="close-icon"></span>
                     </Tooltip>
-                  </a>
+                  </a>}
                 </List.Item>
               )}
             />
@@ -539,7 +548,7 @@ class ShareBox extends Component {
           {this.state.uploadSources?.map((image, indx) => (
             <div key={indx} className="mb-16 upload-preview">
               <Image src={image} />
-              <a
+              {!this.state.isEdit && <a
                 class="item-close"
                 onClick={() => {
                   this.postObject.ImageUrl = [];
@@ -550,7 +559,7 @@ class ShareBox extends Component {
                 <Tooltip title="Remove">
                   <span className="close-icon"></span>
                 </Tooltip>
-              </a>
+              </a>}
             </div>
           ))}
         </div>
@@ -873,18 +882,17 @@ class ShareBox extends Component {
           {!isEdit && <ul className="share-list">
             {NewPostMenu.map(menu => {
               return <Dragger
-                key={menu.Id}
-                className="upload"
-                {...this.uploadProps}
-                accept={fileTypes[menu.Id]}
-                multiple={menu.Id === "Images" || menu.Id === "Docs" ? true : false}
-                onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
-                showUploadList={false}
-                beforeUpload={() => this.renderByClickIcon(menu.Id)}
-              >
-                <li>
-                  <span className={menu.CssSprite}></span>
-                </li>
+              key={menu.Id}
+              className="upload"
+              {...this.uploadProps}
+              accept={fileTypes[menu.Id]}
+  multiple={menu.Id === "Images" || menu.Id === "Docs" ? true : false}
+              onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
+              showUploadList={false}
+            > 
+              <li onClick={()=>this.renderByClickIcon(menu.Id)}>
+                <span className={menu.CssSprite}></span>
+              </li>
               </Dragger>
             })}
           </ul>}
