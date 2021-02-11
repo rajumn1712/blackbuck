@@ -221,7 +221,7 @@ class GroupsPage extends Component {
                        src={group.image || defaultguser}
                      />
                     }
-                    actions={!group.IsGroupAdmin && !group.isSystem && !IsHideAction? [
+                    actions={!group.IsGroupAdmin  && !IsHideAction? [
                       <Link className="list-link f-14" onClick={() => this.leaveGroup(group)}>
                         Leave Group
                       </Link>,
