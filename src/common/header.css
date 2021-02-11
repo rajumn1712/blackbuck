@@ -29,7 +29,7 @@
 }
 
 .header-searchbar .ant-input-group {
-    border-radius: 0.8rem;
+    border-radius: var(--border-radius);
     border: 1px solid var(--border);
 }
 
@@ -108,7 +108,7 @@
 .main-header .ant-menu-item a.header-link {
     padding: 12px 11px 19px;
     background: var(--white);
-    border-radius: 0.8rem;
+    border-radius: var(--border-radius);
     transition: color 2s linear 1s !important;
     border: 1px solid var(--border);
 }
@@ -266,7 +266,7 @@
 }
 
 .profile-dropdown .account-holder .ant-card-meta-detail .ant-card-meta-description {
-    font-size: 14px;
+    font-size: var(--f-14);
     line-height: 16px;
     font-weight: 400;
 }
@@ -352,7 +352,7 @@
 
 .notification-list.unread .notification-description span {
     color: var(--primary);
-    font-size: 14px;
+    font-size: var(--f-14);
     line-height: 14px;
     font-weight: 400;
 }
@@ -362,7 +362,7 @@
 }
 
 .notification-list.unread {
-    font-weight: 600;
+    font-weight: var(--fw-600);
 }
 
 .notification-list:hover {
