@@ -387,7 +387,7 @@
   font-size: var(--f-24);
   color: var(--primary);
   font-weight: var(--fw-600);
-  border-radius:var(--border-radius) !important;
+  border-radius:50% !important;
   border: 1px solid var(--line);
 }
 .invite-card p {
@@ -1099,7 +1099,7 @@
   width: 25px !important;
   height: 25px !important;
   line-height: 20px;
-  border-radius:var(--border-radius) !important;
+  border-radius:50% !important;
   margin-left: -5px;
 }
 .list-request .ant-avatar-string {
@@ -1629,7 +1629,7 @@ textarea {
 .messenger-drawer .ant-card-meta .ant-avatar-image,
 .profile-dropdown .ant-card-meta .ant-avatar-image,
 .addpost-user .ant-card-meta-avatar .ant-avatar-image {
-  border-radius:var(--border-radius) !important;
+  border-radius: 50% !important;
   border: 1px solid var(--line);
 }
 .notification-image .ant-avatar{width: 50px !important;height: 50px !important;margin-right: 12px;}
@@ -1917,7 +1917,7 @@ textarea {
 .notifications .ant-list-item .ant-avatar-image {
   width: 60px;
   height: 60px;
-  border-radius:var(--border-radius) !important;
+  border-radius:50% !important;
   border: 1px solid var(--line);
 }
 .notifications ul li .ant-list-item-meta-title {
@@ -1947,7 +1947,7 @@ textarea {
 }
 .noti-dropdown .ant-list-item.read{display: block;}
 .rc-virtual-list .ant-avatar-image ,.onboard-process .ant-avatar-image{
-  border-radius:var(--border-radius) !important;
+  border-radius:50% !important;
 }
 .frnds-scroll .ant-avatar{width: 40px !important;height: 40px !important;;}
 .anticon {
@@ -2156,10 +2156,9 @@ textarea {
 .cus-video-h{height: 186px;}
 .profile-requestbtns{position: absolute; right: 0; z-index: 1;padding-right: 16px;}
 .job-card-title{display: flex;}
-.job-card-title .company-logo,.job-card-title .company-logo .company-text{width: 45px;height: 45px;flex-shrink: 0;margin-right: 6px;display: flex;justify-content: center;align-items: center;border-radius: 4px;}
-.job-card-title .company-logo .company-text{box-shadow: inset 0 0 0 1px var(--primary-10);background: var(--primary-10) !important;text-transform: uppercase;font-size: var(--f-24);
-  font-weight: var(--fw-600);color: var(--primary);}
-.job-card-title .company-logo img{object-fit: fill;width: 100%;height: 100%;}
+.job-card-title .company-logo{width: 45px;height: 45px;flex-shrink: 0;margin-right: 6px;display: flex;justify-content: center;align-items: center;border-radius: 4px;padding: 5px;border: 1px solid var(--line)}
+.job-card-title .company-logo .company-text{width: 45px;height: 45px; flex-shrink: 0; box-shadow: inset 0 0 0 1px var(--primary-10); background: var(--primary-10) !important; text-transform: uppercase; font-size: var(--f-24); font-weight: var(--fw-600); color: var(--primary); display: flex; justify-content: center;align-items: center;}
+.job-card-title .company-logo img{object-fit: contain;width: 100%;}
 .lms-page .more-frnd-btn{right: 2px;}
 .lms-page .more-frnd-btn.left{left: 2px;}
 .course-list-item .ant-card-cover{position: relative;}
