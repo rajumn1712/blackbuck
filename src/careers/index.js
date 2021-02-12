@@ -181,7 +181,7 @@ const CMSComponent = (props) => {
           </Affix>
         </Col>
         <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
-          <div className="share-box px-16 pt-16 text-left">
+          <div className="cms-box px-16 pt-16 text-left">
           <Form
                 initialValues={{ ...searchjob }}
                 onFinishFailed={() => {}}

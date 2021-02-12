@@ -79,6 +79,37 @@ const postsmenu = [
     Id: "Video",
   },
 ];
+
+const NewPostMenu = [
+  {
+    CssSprite: 'sharebox-icons photo-icon',
+    Id: 'Images'
+  },
+  {
+    CssSprite: 'sharebox-icons video-icon',
+    Id: 'Video'
+  },
+  {
+    CssSprite: 'sharebox-icons gif-icon',
+    Id: 'Gif'
+  },
+  {
+    CssSprite: 'sharebox-icons audio-icon',
+    Id: 'Audio'
+  },
+  {
+    CssSprite: 'sharebox-icons document-icon',
+    Id: 'Docs'
+  }
+];
+const fileTypes = {
+  Images: ".jpg,.jpeg,.png",
+  Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
+  Audio: ".mp3,.aac,.wma,.wav,.flac,.m4a",
+  Gif: ".gif",
+  Docs:
+    ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
+};
 class ShareBox extends Component {
   postObject;
   state = {
@@ -106,9 +137,9 @@ class ShareBox extends Component {
       PostId: object ? object.id : uuidv4(),
       Type: "Text",
       PostType: object ? object.PostType : this.state.ddlValue,
-      Message: object ? object.meassage : "",
-      Title: object ? object.title : "",
-      IsAnonymous: object ? object.IsAnonymous : false,
+      Message: object ? object.meassage : this.state.post.Message,
+      Title: object ? object.title : this.state.post.Title,
+      IsAnonymous: object ? object.IsAnonymous : this.state.post.IsAnonymous,
       ImageUrl: object ? (object.image ? object.image : null) : null,
       CreatedDate: object ? new Date(object.date) : null,
       UserDetails: {
@@ -253,6 +284,15 @@ class ShareBox extends Component {
       }
     });
   };
+  renderByClickIcon = (modal)=>{
+      this.clearData(modal);
+    this.postObject = this.createObject();
+    this.postObject.Type = modal === "Images" ? "Image" : modal;
+    this.postObject.dupType = modal === "Images" ? "Image" : modal;
+    this.setState({ modal: modal }, () => {
+      this.renderUploadType(modal);
+    });
+  }
   popupOk = async (e) => {
     this.postObject.CreatedDate = this.postObject.CreatedDate
       ? this.postObject.CreatedDate
@@ -312,6 +352,14 @@ class ShareBox extends Component {
       uploadSources: [],
       ddlValue: "Public",
       GroupName: ""
+    });
+  };
+  clearData = (modal) => {
+    const compareValue = modal === "Images" ? "Image" : 'Docs';
+    this.setState({
+      ...this.state,
+      errors: null,
+      uploadSources: this.postObject.Type === compareValue ? this.state.uploadSources : []
     });
   };
   handleCancel = (e) => {
@@ -396,7 +444,7 @@ class ShareBox extends Component {
       Text: <div></div>,
       Images: (
         <div>
-          <Dragger
+          {this.state.isEdit && <Dragger
             className="upload"
             {...this.uploadProps}
             onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
@@ -404,7 +452,7 @@ class ShareBox extends Component {
           >
             <span className="sharebox-icons photo-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Image</p>
-          </Dragger>
+          </Dragger>}
           {this.state.fileUploading && <Loader className="loader-top-middle" />}
           {this.state.uploadSources?.map((image, indx) => (
             <div key={indx} className="mb-16 upload-preview">
@@ -428,7 +476,7 @@ class ShareBox extends Component {
       ),
       Video: (
         <div>
-          <Dragger
+          {this.state.isEdit && <Dragger
             className="upload"
             {...this.uploadProps}
             onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
@@ -437,7 +485,7 @@ class ShareBox extends Component {
           >
             <span className="sharebox-icons video-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
-          </Dragger>
+          </Dragger>}
           {this.state.fileUploading && <Loader className="loader-top-middle" />}
           {this.state.uploadSources?.map((image, indx) => (
             <div key={indx} className="mb-16 upload-preview">
@@ -462,7 +510,7 @@ class ShareBox extends Component {
       ),
       Audio: (
         <div>
-          <Dragger
+          {this.state.isEdit && <Dragger
             className="upload"
             {...this.uploadProps}
             onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
@@ -471,7 +519,7 @@ class ShareBox extends Component {
           >
             <span className="sharebox-icons audio-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Audio</p>
-          </Dragger>
+          </Dragger>}
           {this.state.fileUploading && <Loader className="loader-top-middle" />}
           {this.state.uploadSources?.map((image, indx) => (
             <div key={indx} className="mb-16 upload-preview">
@@ -499,7 +547,7 @@ class ShareBox extends Component {
       ),
       Docs: (
         <div>
-          <Dragger
+          {this.state.isEdit && <Dragger
             className="upload"
             {...this.uploadProps}
             onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
@@ -507,7 +555,7 @@ class ShareBox extends Component {
           >
             <span className="sharebox-icons docs-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Documents</p>
-          </Dragger>
+          </Dragger>}
           {this.state.fileUploading && <Loader className="loader-top-middle" />}
           <div className="docs mb-16">
             <List
@@ -546,7 +594,7 @@ class ShareBox extends Component {
       ),
       Gif: (
         <div>
-          <Dragger
+          {this.state.isEdit && <Dragger
             className="upload"
             {...this.uploadProps}
             onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
@@ -555,7 +603,7 @@ class ShareBox extends Component {
           >
             <span className="sharebox-icons gif-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Gif</p>
-          </Dragger>
+          </Dragger>}
           {this.state.fileUploading && <Loader className="loader-top-middle" />}
           {this.state.uploadSources?.map((image, indx) => (
             <div key={indx} className="mb-16 upload-preview">
@@ -602,11 +650,11 @@ class ShareBox extends Component {
   disablePostBtn = () => {
     return ((!this.postObject?.ImageUrl || (this.state.uploadSources.length == 0)) && !this.postObject?.Message) || ((this.state.ddlValue == "Groups" ? (!this.postObject.Group.GroupId) : (this.state.ddlValue == "College" ? !this.postObject.CollegeId : false)));
   };
-  setDdlValue = (e,IsMenu) => {
+  setDdlValue = (e, IsMenu) => {
     let text = e.item ? (e.item.node.innerText ? e.item.node.innerText : '') : e;
-    let { groupLu, collegeLu ,GroupName} = this.state;
+    let { groupLu, collegeLu, GroupName } = this.state;
     this.postObject.PostType = text
-    this.setState({ ...this.state, ddlValue: text ,GroupName:(IsMenu?"":GroupName)}, () => {
+    this.setState({ ...this.state, ddlValue: text, GroupName: (IsMenu ? "" : GroupName) }, () => {
       if (text == 'Groups') {
         if (groupLu.length === 0)
           fetchUserGroups(
@@ -681,8 +729,8 @@ class ShareBox extends Component {
     const tagChild = tags?.map(this.forMap);
     const menu = (
       <Menu className="custom-dropdown more-opt">
-        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e,true)}><span className="grp-type-icon public"></span> Public</Menu.Item>
-        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e,true)}><span className="grp-type-icon friends"></span> Friends</Menu.Item>
+        <Menu.Item key="0" onClick={(e) => this.setDdlValue(e, true)}><span className="grp-type-icon public"></span> Public</Menu.Item>
+        <Menu.Item key="2" onClick={(e) => this.setDdlValue(e, true)}><span className="grp-type-icon friends"></span> Friends</Menu.Item>
         {/* <Menu.Item key="3" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon college"></span> College</Menu.Item> */}
         {!this.props.groupData && <Menu.Item key="4" onClick={(e) => this.setDdlValue(e)}><span className="grp-type-icon groups"></span> Groups</Menu.Item>}
       </Menu>
@@ -697,7 +745,7 @@ class ShareBox extends Component {
           description={
             <div className="mb-0 text-capitalize" id="typeLu">
               {!this.props.groupData && <Dropdown overlay={menu} trigger={["click"]}
-              getPopupContainer={() => document.querySelector('#typeLu')}>
+                getPopupContainer={() => document.querySelector('#typeLu')}>
                 <div
                   className="post-privacy"
                   style={{ color: "#9B9B9B", fontSize: 12 }}
@@ -707,7 +755,7 @@ class ShareBox extends Component {
                   <span className="grp-type-icon down ml-4"></span>
                 </div>
               </Dropdown>
-          }
+              }
               {this.props.groupData &&
                 this.props.groupData.GroupName
               }
@@ -735,7 +783,11 @@ class ShareBox extends Component {
 
     return (
       <div className="share-box">
-        <ul className="justify-content-around mb-0">
+        <div className="share-input" onClick={() => this.openpopup('Text')}>
+          <span className="icon sharepost-icon" />
+          <span >Start a post</span>
+        </div>
+        {/* <ul className="justify-content-around mb-0">
           {postsmenu.map((menu) => {
             return (
               <li key={menu.Id}>
@@ -749,7 +801,7 @@ class ShareBox extends Component {
               </li>
             );
           })}
-        </ul>
+        </ul> */}
         <Modal
           className="share-popup"
           title={
@@ -820,7 +872,6 @@ class ShareBox extends Component {
               })}
             </Select></div>} */}
           <div className="upload-image">
-            {this.renderUploadType(modal)}
             <form>
               <div className="title-img">
                 <TextArea
@@ -887,6 +938,24 @@ class ShareBox extends Component {
               </Tag>
             )}
           </div>
+          {this.renderUploadType(modal)}
+          {!this.state.isEdit && <ul className="share-list">
+            {NewPostMenu.map(menu => {
+              return <Dragger
+              key={menu.Id}
+              className="upload"
+              {...this.uploadProps}
+              accept={fileTypes[menu.Id]}
+  multiple={menu.Id === "Images" || menu.Id === "Docs" ? true : false}
+              onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
+              showUploadList={false}
+            > 
+              <li onClick={()=>this.renderByClickIcon(menu.Id)}>
+                <span className={menu.CssSprite}></span>
+              </li>
+              </Dragger>
+            })}
+          </ul>}
         </Modal>
       </div>
     );
