@@ -2060,7 +2060,7 @@ textarea {
 /* .card-height{height: 384px;} */
 .flot-left .ant-collapse-extra{float: left !important;}
 .panel-subtext{font-size: var(--f-12);color: rgba(0, 0, 0, 0.45);}
-.height-scroll{min-height: calc(100vh - 150px); overflow: auto;}
+.height-scroll{max-height: calc(100vh - 150px); overflow: auto;}
 .button-hover:hover{background: rgba(0, 0, 0, 0.05);}
 .lms-video video:focus{outline: none;}
 .hideempty .ant-list-empty-text{display: none;}
