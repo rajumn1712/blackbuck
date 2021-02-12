@@ -367,14 +367,14 @@ class Education extends Component {
                     rules={[{ required: true,message:'Academic Year required' }]}
                     className="custom-fields education-date"
                   >
-                    <Input.Group>
+                    {/* <Input.Group> */}
                       <RangePicker
                         // disabledDate={this.disabledDate}
                         picker="year"
                         value={initialValues.AcademicYear}
                         onChange={(value) => this.handleChange("AcademicYear", value)}
                       />
-                    </Input.Group>
+                    {/* </Input.Group> */}
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={12}>
