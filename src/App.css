@@ -202,35 +202,35 @@
 }
 .share-box ul li:hover .sharebox-icons.photo-icon,
 .sharebox-icons.photo-upload {
-  background-position: -63px -149px;
+  background-position: -73px -156px;
 }
 .sharebox-icons.audio-icon {
   background-position: -124px -99px;
 }
 .share-box ul li:hover .sharebox-icons.audio-icon,
 .sharebox-icons.audio-upload {
-  background-position: -124px -147px;
+  background-position: -135px -156px;
 }
 .sharebox-icons.document-icon {
   background-position: -180px -97px;
 }
 .share-box ul li:hover .sharebox-icons.document-icon,
 .sharebox-icons.docs-upload {
-  background-position: -180px -146px;
+  background-position: -191px -156px;
 }
 .sharebox-icons.gif-icon {
   background-position: -236px -99px;
 }
 .share-box ul li:hover .sharebox-icons.gif-icon,
 .sharebox-icons.gif-upload {
-  background-position: -236px -147px;
+  background-position: -247px -156px;
 }
 .sharebox-icons.video-icon {
   background-position: -297px -100px;
 }
 .share-box ul li:hover .sharebox-icons.video-icon,
 .sharebox-icons.video-upload {
-  background-position: -297px -149px;
+  background-position: -308px -156px;
 }
 .post-icons.download-icon {
   background-position: -378px -281px;
@@ -2156,7 +2156,8 @@ textarea {
 .icon.edit-admin:hover{background-position: -810px -224px;}
 .icon.delete-admin{background-position: -838px -200px;}
 .icon.delete-admin:hover{background-position: -838px -226px;}
-.job-ldate{ background: var(--white);border: 1px dashed var(--border); border-radius: 6px; display: inline-block;}
+.job-ldate{ background: var(--bodybg);padding: 10px;border: 1px dashed var(--border); border-radius: 6px; display: inline-block;}
+.job-ldate span{background: var(--white);padding: 4px 8px;margin-left: 5px;border-radius: 0.8rem;}
 .post-icons.view-job {background-position: -5px -200px;}
 .post-icons.apply-job {background-position: -64px -226px;}
 .job-tag{display: inline-block; margin-right: 8px;}
@@ -2200,7 +2201,8 @@ textarea {
 .sharebox-icons.document-icon {background-position: -189px -107px;}
 .sharebox-icons.gif-icon {background-position: -246px -107px;}
 .sharebox-icons.video-icon {background-position: -307px -107px;}
-
+.cms-search {padding-left: 8px !important;padding-right: 8px !important;height: 46px !important;}
+.icons.search-icon-white{background-position: -247px -50px;}
 
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}

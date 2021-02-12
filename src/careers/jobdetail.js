@@ -95,9 +95,9 @@ setLoading(false);
               <span className="post-icons location mr-16"></span>
              <p> {jobDetailObj.City}, {jobDetailObj.State}</p>
             </p>
-            <span className="job-ldate f-14 semibold text-secondary px-8 py-4">
-              Apply before :{" "}
-              <span className="semibold text-primary f-16">
+            <span className="job-ldate semibold text-secondary px-8 py-4">
+              Apply before {" "}
+              <span className="semibold text-primary">
                 <Moment format="MM/DD/YYYY">{jobDetailObj.EndDate}</Moment>
               </span>
             </span>

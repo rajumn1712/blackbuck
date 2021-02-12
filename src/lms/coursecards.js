@@ -1,7 +1,7 @@
 import { Card, Col, Row, Tabs, Empty, Typography } from "antd";
 import React, { Component, createRef } from "react";
 import photography from "../styles/images/default-cover.png";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { fetchUserCourses } from "./api";
 import { connect } from "react-redux";
 import Loader from "../common/loader";
@@ -148,6 +148,7 @@ class CourseCards extends Component {
                 {this.state.courses?.map((course, indx) => (
                   <Card
                     className="card-item vertical-card"
+                    onClick={()=>{this.props.history.push("course/" + course.id)}}
                     cover={
                       <>
                         <img
@@ -167,7 +168,7 @@ class CourseCards extends Component {
                     <Meta
                       title={
                         <Link
-                          to={"course/" + course.id}
+                          to=""
                           className="text-primary"
                         >
                           {course.name}
@@ -176,10 +177,17 @@ class CourseCards extends Component {
                       description={
                         <div className="coursecard-cont">
                           <div>
+                          <Paragraph
+                              ellipsis={{ rows: 2 }}
+                              className="f-14 text-primary mb-8"
+                              style={{ height: "42px" }}
+                            >
+                              {course.description}
+                            </Paragraph>
                             {course.CourseType === "Live Session" && (
-                              <Paragraph className="f-12 text-secondary ">
+                              <Paragraph className="job-ldate f-12 text-secondary ">
                                 Starts on{" "}
-                                <span className="semibold text-primary f-16 d-block">
+                                <span className="semibold text-primary f-14">
                                   <Moment format="MM/DD/YYYY">
                                     {course.LiveDate}
                                   </Moment>
@@ -187,22 +195,16 @@ class CourseCards extends Component {
                               </Paragraph>
                             )}
                             {course.CourseType === "Content" && (
-                              <Paragraph className="f-12 text-secondary">
+                              <Paragraph className="job-ldate f-12 text-secondary">
                                 Created on{" "}
-                                <span className="semibold text-primary f-16 d-block">
+                                <span className="semibold text-primary f-14">
                                   <Moment format="MM/DD/YYYY">
                                     {course.CreatedDate}
                                   </Moment>
                                 </span>
                               </Paragraph>
                             )}
-                            <Paragraph
-                              ellipsis={{ rows: 2 }}
-                              className="f-14 text-primary mb-8"
-                              style={{ height: "42px" }}
-                            >
-                              {course.description}
-                            </Paragraph>
+                            
                             {course.CourseType === "Content" && (
                               <div className="justify-content-between">
                                 <span className="mr-4 f-12 text-secondary">
@@ -256,4 +258,4 @@ class CourseCards extends Component {
 const mapStateToProps = ({ oidc }) => {
   return { profile: oidc.profile };
 };
-export default connect(mapStateToProps)(CourseCards);
+export default connect(mapStateToProps)(withRouter(CourseCards));

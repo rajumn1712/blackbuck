@@ -18,7 +18,7 @@ const options = {
   dots: false,
   responsive: {
     0: {
-      items: 2,
+      items: 1,
     },
 
     575: {
@@ -162,6 +162,7 @@ const AllCourses = (props) => {
                   <Card
                     bordered={false}
                     className="card-item"
+                    onClick={()=>{props.history.push("course/" + course.id)}}
                     cover={
                       <>
                         <img
@@ -179,7 +180,7 @@ const AllCourses = (props) => {
                     <Meta
                       title={
                         <Link
-                          to={"course/" + course.id}
+                          to=""
                           className="text-primary"
                         >
                           {course.name}
@@ -187,19 +188,26 @@ const AllCourses = (props) => {
                       }
                       description={
                         <div className="coursecard-cont">
+                          <Paragraph
+                              ellipsis={{ rows: 2 }}
+                              className="f-14 text-primary mb-8"
+                              style={{ height: "42px" }}
+                            >
+                              {course.description}
+                            </Paragraph>
                           {course.startDate ? (
-                            <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                            <Paragraph className="job-ldate f-12 semibold text-secondary">
                               Starts On{" "}
-                              <span className="semibold text-primary f-16 d-block">
+                              <span className="semibold text-primary f-14">
                                 <Moment format="MM/DD/YYYY">
                                   {course.startDate}
                                 </Moment>
                               </span>
                             </Paragraph>
                           ) : (
-                            <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                            <Paragraph className="job-ldate f-12 semibold text-secondary">
                               Created On{" "}
-                              <span className="semibold text-primary f-16 d-block">
+                              <span className="semibold text-primary f-14">
                                 <Moment format="MM/DD/YYYY">
                                   {course.CreatedDate}
                                 </Moment>
@@ -207,13 +215,7 @@ const AllCourses = (props) => {
                             </Paragraph>
                           )}
                           <div>
-                            <Paragraph
-                              ellipsis={{ rows: 2 }}
-                              className="f-14 text-primary mb-8"
-                              style={{ height: "42px" }}
-                            >
-                              {course.description}
-                            </Paragraph>
+                            
                             {course.CourseType === "Content" && (
                               <div className="justify-content-between">
                                 <span className="mr-4 f-12 text-secondary">
@@ -273,6 +275,7 @@ const AllCourses = (props) => {
                 >
                   <Card
                     className="card-item custom-card"
+                    onClick={()=>{props.history.push("course/" + course.id)}}
                     cover={
                       <>
                         <img
@@ -299,10 +302,17 @@ const AllCourses = (props) => {
                       description={
                         <div className="coursecard-cont">
                           <div>
+                          <Paragraph
+                              ellipsis={{ rows: 2 }}
+                              className="f-14 text-primary mb-8"
+                              style={{ height: "42px" }}
+                            >
+                              {course.description}
+                            </Paragraph>
                             {course.CourseType === "Live Session" && (
-                              <Paragraph className="f-12 semibold text-secondary text-uppercase">
-                                Starts On :{" "}
-                                <span className="semibold text-primary f-16 d-block">
+                              <Paragraph className="job-ldate f-12 semibold text-secondary">
+                                Starts On {" "}
+                                <span className="semibold text-primary f-14">
                                   <Moment format="MM/DD/YYYY">
                                     {course.LiveDate}
                                   </Moment>
@@ -310,22 +320,16 @@ const AllCourses = (props) => {
                               </Paragraph>
                             )}
                             {course.CourseType === "Content" && (
-                              <Paragraph className="f-12 semibold text-secondary text-uppercase">
-                                Created On :{" "}
-                                <span className="semibold text-primary f-16 d-block">
+                              <Paragraph className="job-ldate f-12 semibold text-secondary">
+                                Created On {" "}
+                                <span className="semibold text-primary f-14">
                                   <Moment format="MM/DD/YYYY">
                                     {course.CreatedDate}
                                   </Moment>
                                 </span>
                               </Paragraph>
                             )}
-                            <Paragraph
-                              ellipsis={{ rows: 2 }}
-                              className="f-14 text-primary mb-8"
-                              style={{ height: "42px" }}
-                            >
-                              {course.description}
-                            </Paragraph>
+                            
                             {course.CourseType === "Content" && (
                               <div className="justify-content-between">
                                 <span className="mr-4 f-12 text-secondary">
