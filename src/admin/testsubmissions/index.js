@@ -19,6 +19,7 @@ const { Title } = Typography;
 
 
 const TestSubmissions = ({ profile }) => {
+  const [loading, setLoading] = useState(false);
   const columns = [
     {
       title: 'Name',
@@ -66,10 +67,15 @@ const TestSubmissions = ({ profile }) => {
     getTestSubmissions(1, 20);
   }, []);
   const getTestSubmissions = async (page, pageSize) => {
+    setLoading(true);
     const response = await getSubmissions(profile?.Id, pageSize, ((pageSize * page) - pageSize));
     if (response.ok) {
       let data = response.data;
       setData(data);
+      setLoading(false);
+    }
+    else {
+      setLoading(false);
     }
 
   }
@@ -89,7 +95,7 @@ const TestSubmissions = ({ profile }) => {
       <Title className="f-18 text-primary semibold">Test Submissions</Title>
       <div className="custom-card">
         <Card className="p-12 custom-fields">
-          <Table columns={columns} dataSource={data} size="small" bordered={true} pagination={{ position: ["bottomCenter"], total: data?.length }} />
+          <Table loading={loading} columns={columns} dataSource={data} size="small" bordered={true} pagination={{ position: ["bottomCenter"], total: data?.length }} />
         </Card>
       </div>
     </>
