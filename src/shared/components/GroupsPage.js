@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, Avatar, Col, Row, Typography, Empty } from "antd";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { store } from "../../store";
 import { connect } from "react-redux";
 import connectStateProps from "../stateConnect";
@@ -202,7 +202,7 @@ class GroupsPage extends Component {
           {Groups.length > 0 &&
             Groups?.map((group, index) => {
               return (
-                <Col className="mb-12" xs={24} md={12} lg={8} xl={8} xxl={6}>
+                <Col className={!IsHideAction ? "mb-12 cursor-pointer" : "mb-12"} xs={24} md={12} lg={8} xl={8} xxl={6} onClick={!IsHideAction ? () => this.props.history.push("/groupview/" + group.id) : ''}>
                   <Card
                     className="h-100p"
                     key={index}
@@ -222,7 +222,7 @@ class GroupsPage extends Component {
                      />
                     }
                     actions={!group.IsGroupAdmin  && !IsHideAction? [
-                      <Link className="list-link f-14" onClick={() => this.leaveGroup(group)}>
+                      <Link className="list-link f-14" onClick={(event) => { event.stopPropagation(); this.leaveGroup(group) }}>
                         Leave Group
                       </Link>,
                     ] : ""}
@@ -260,7 +260,7 @@ class GroupsPage extends Component {
                     />
                   </Card>
                   {group.IsGroupAdmin && !IsHideAction&& (
-                    <span className="card-options-right">
+                    <span className="card-options-right" onClick={(event) => { event.stopPropagation() }}>
                       <SideAction
                         horclass="icons more"
                         clickedEvent={(event, name) =>
@@ -307,4 +307,4 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(GroupsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GroupsPage));
