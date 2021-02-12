@@ -2200,7 +2200,8 @@ textarea {
 .sharebox-icons.document-icon {background-position: -189px -107px;}
 .sharebox-icons.gif-icon {background-position: -246px -107px;}
 .sharebox-icons.video-icon {background-position: -307px -107px;}
-
+.cms-search {padding-left: 8px !important;padding-right: 8px !important;height: 47px !important;}
+.icons.search-icon-white{background-position: -247px -50px;}
 
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
