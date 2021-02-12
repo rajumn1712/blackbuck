@@ -248,7 +248,7 @@ class CreateGroup extends Component {
         return <div>
             <List.Item>
                 <List.Item.Meta className="privacy-dropdown sample-check"
-                    avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="select-image" src={item.Image || defaultUser} />}
+                    avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="invite-dropdown" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
                     description={item.Description ? <div className="f-12" style={{wordBreak: 'break-word',whiteSpace: 'pre-wrap'}}>{item.Description}</div> : ''}
                 />
@@ -391,7 +391,7 @@ class CreateGroup extends Component {
                                                     <Col xs={12} id="inviteFrnd1">
                                                         <Form.Item
                                                             label="Invite Friends (optional)"
-                                                            className="custom-fields multi-select custom-select "
+                                                            className="custom-fields multi-select custom-select"
                                                             placeholder="Select Invitee"
                                                         >
                                                             <Select 
