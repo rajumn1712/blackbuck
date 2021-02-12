@@ -162,6 +162,7 @@ const AllCourses = (props) => {
                   <Card
                     bordered={false}
                     className="card-item"
+                    onClick={()=>{props.history.push("course/" + course.id)}}
                     cover={
                       <>
                         <img
@@ -273,6 +274,7 @@ const AllCourses = (props) => {
                 >
                   <Card
                     className="card-item custom-card"
+                    onClick={()=>{props.history.push("course/" + course.id)}}
                     cover={
                       <>
                         <img

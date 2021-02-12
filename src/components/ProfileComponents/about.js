@@ -22,7 +22,7 @@ class About extends Component {
   state = {
     Firstname:this.props.about.Firstname,
       Lastname:this.props.about.Lastname,
-      CollegeId:this.props.about.College.CollegeId,
+      CollegeId:this.props.about?.College?.CollegeId,
     PhoneNumber: this.props.about.PhoneNumber
       ? this.props.about.PhoneNumber
       : "",
