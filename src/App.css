@@ -936,9 +936,7 @@
   margin-bottom: 3px;
   color: var(--textprimary);
 }
-.custom-card .ant-list-item .overflow-text {
-  cursor: pointer;
-}
+
 .overflow-text {
   white-space: nowrap;
   overflow: hidden;
