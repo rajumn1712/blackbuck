@@ -180,7 +180,7 @@ const AllCourses = (props) => {
                     <Meta
                       title={
                         <Link
-                          to={"course/" + course.id}
+                          to=""
                           className="text-primary"
                         >
                           {course.name}

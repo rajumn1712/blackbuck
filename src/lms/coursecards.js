@@ -1,7 +1,7 @@
 import { Card, Col, Row, Tabs, Empty, Typography } from "antd";
 import React, { Component, createRef } from "react";
 import photography from "../styles/images/default-cover.png";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { fetchUserCourses } from "./api";
 import { connect } from "react-redux";
 import Loader from "../common/loader";
@@ -148,6 +148,7 @@ class CourseCards extends Component {
                 {this.state.courses?.map((course, indx) => (
                   <Card
                     className="card-item vertical-card"
+                    onClick={()=>{this.props.history.push("course/" + course.id)}}
                     cover={
                       <>
                         <img
@@ -167,7 +168,7 @@ class CourseCards extends Component {
                     <Meta
                       title={
                         <Link
-                          to={"course/" + course.id}
+                          to=""
                           className="text-primary"
                         >
                           {course.name}
@@ -256,4 +257,4 @@ class CourseCards extends Component {
 const mapStateToProps = ({ oidc }) => {
   return { profile: oidc.profile };
 };
-export default connect(mapStateToProps)(CourseCards);
+export default connect(mapStateToProps)(withRouter(CourseCards));
