@@ -295,8 +295,9 @@ class CourseContent extends Component {
                           {!this.state.IsRenderType && this.state.selectedVideo && (
                             <div className="lms-video" id="video_player">
                               <div className="video-container">
-                                <video
-                                  controls="false"
+                                <video width="100%"
+                                  controls
+                                  controlsList="nodownload"
                                   class="video"
                                   key={this.state.selectedVideo}
                                 >
@@ -309,8 +310,9 @@ class CourseContent extends Component {
                             <div className="lms-video " id="video_player">
                               {this.state.IsVideoSource == "Upload" && (
                                 <div className="video-container">
-                                  <video
+                                  <video width="100%"
                                     controls
+                                    controlsList="nodownload"
                                     key={this.state.selectedVideo}
                                     class="video"
                                   >

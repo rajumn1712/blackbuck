@@ -135,7 +135,7 @@ class VideoProfile extends Component {
           className="pfvideocard"
           cover={
             video ? (
-              <video width="100%" controls src={video}></video>
+              <video width="100%" controls controlsList="nodownload" src={video}></video>
             ) : (
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )
@@ -176,7 +176,7 @@ class VideoProfile extends Component {
             </Dragger>
             {inputValue && (
               <div className="mb-16 upload-preview">
-                <video width="100%" controls>
+                <video width="100%" controls controlsList="nodownload">
                   <source src={inputValue} />
                 </video>
                 <a

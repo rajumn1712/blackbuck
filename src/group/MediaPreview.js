@@ -140,7 +140,7 @@ class MediaPreview extends Component {
         const _result = {
             Video: () => {
                 return <div className="video-post" >
-                    <video controls>
+                    <video controls controlsList="nodownload">
                         <source src={imageObj} />
                     </video>
                 </div>
