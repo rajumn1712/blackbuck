@@ -202,35 +202,35 @@
 }
 .share-box ul li:hover .sharebox-icons.photo-icon,
 .sharebox-icons.photo-upload {
-  background-position: -63px -149px;
+  background-position: -73px -156px;
 }
 .sharebox-icons.audio-icon {
   background-position: -124px -99px;
 }
 .share-box ul li:hover .sharebox-icons.audio-icon,
 .sharebox-icons.audio-upload {
-  background-position: -124px -147px;
+  background-position: -135px -156px;
 }
 .sharebox-icons.document-icon {
   background-position: -180px -97px;
 }
 .share-box ul li:hover .sharebox-icons.document-icon,
 .sharebox-icons.docs-upload {
-  background-position: -180px -146px;
+  background-position: -191px -156px;
 }
 .sharebox-icons.gif-icon {
   background-position: -236px -99px;
 }
 .share-box ul li:hover .sharebox-icons.gif-icon,
 .sharebox-icons.gif-upload {
-  background-position: -236px -147px;
+  background-position: -247px -156px;
 }
 .sharebox-icons.video-icon {
   background-position: -297px -100px;
 }
 .share-box ul li:hover .sharebox-icons.video-icon,
 .sharebox-icons.video-upload {
-  background-position: -297px -149px;
+  background-position: -308px -156px;
 }
 .post-icons.download-icon {
   background-position: -378px -281px;
