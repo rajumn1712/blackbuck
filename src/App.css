@@ -2156,7 +2156,8 @@ textarea {
 .icon.edit-admin:hover{background-position: -810px -224px;}
 .icon.delete-admin{background-position: -838px -200px;}
 .icon.delete-admin:hover{background-position: -838px -226px;}
-.job-ldate{ background: var(--white);border: 1px dashed var(--border); border-radius: 6px; display: inline-block;}
+.job-ldate{ background: var(--bodybg);padding: 10px;border: 1px dashed var(--border); border-radius: 6px; display: inline-block;}
+.job-ldate span{background: var(--white);padding: 4px 8px;margin-left: 5px;border-radius: 0.8rem;}
 .post-icons.view-job {background-position: -5px -200px;}
 .post-icons.apply-job {background-position: -64px -226px;}
 .job-tag{display: inline-block; margin-right: 8px;}
@@ -2200,7 +2201,7 @@ textarea {
 .sharebox-icons.document-icon {background-position: -189px -107px;}
 .sharebox-icons.gif-icon {background-position: -246px -107px;}
 .sharebox-icons.video-icon {background-position: -307px -107px;}
-.cms-search {padding-left: 8px !important;padding-right: 8px !important;height: 47px !important;}
+.cms-search {padding-left: 8px !important;padding-right: 8px !important;height: 46px !important;}
 .icons.search-icon-white{background-position: -247px -50px;}
 
 @media (max-width: 991px){

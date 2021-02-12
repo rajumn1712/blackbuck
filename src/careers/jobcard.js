@@ -210,7 +210,7 @@ const JobCard = ((props) => {
                 {!jobpost.CompanyLogo && <span className="company-text">{jobpost.EmployerName.substring(0,2)}</span>}
               </div>
               <div> 
-              <Title className="f-16 semibold text-secondary mb-0">
+              <Title className="f-16 semibold text-secondary mb-0 ">
               <Link to={`/jobdetail/${jobpost.JobId}`}>
                 <span className="post-title">{jobpost.Title}</span>
               </Link>
@@ -218,7 +218,7 @@ const JobCard = ((props) => {
             {/* <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobpost.CreateDate}</Moment>
             </Paragraph> */}
-            <Paragraph className="f-12 mb-8">{jobpost.EmployerName}</Paragraph>
+            <Paragraph className="f-12 mb-8" >{jobpost.EmployerName}</Paragraph>
 
             </div>
             </div>
@@ -261,8 +261,8 @@ const JobCard = ((props) => {
                 </Paragraph>
               </li>
             </ul>
-            <span className="job-ldate f-12 text-secondary px-8 py-4">
-              Apply Before -{" "}
+            <span className="job-ldate semibold f-12 text-secondary">
+              Apply Before {" "}
               <span className="semibold text-primary">
                 <Moment format="MM/DD/YYYY">{jobpost.EndDate}</Moment>
               </span>
