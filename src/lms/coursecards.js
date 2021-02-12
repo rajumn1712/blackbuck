@@ -176,10 +176,17 @@ class CourseCards extends Component {
                       description={
                         <div className="coursecard-cont">
                           <div>
+                          <Paragraph
+                              ellipsis={{ rows: 2 }}
+                              className="f-14 text-primary mb-8"
+                              style={{ height: "42px" }}
+                            >
+                              {course.description}
+                            </Paragraph>
                             {course.CourseType === "Live Session" && (
-                              <Paragraph className="f-12 text-secondary ">
+                              <Paragraph className="job-ldate f-12 text-secondary ">
                                 Starts on{" "}
-                                <span className="semibold text-primary f-16 d-block">
+                                <span className="semibold text-primary f-14">
                                   <Moment format="MM/DD/YYYY">
                                     {course.LiveDate}
                                   </Moment>
@@ -187,22 +194,16 @@ class CourseCards extends Component {
                               </Paragraph>
                             )}
                             {course.CourseType === "Content" && (
-                              <Paragraph className="f-12 text-secondary">
+                              <Paragraph className="job-ldate f-12 text-secondary">
                                 Created on{" "}
-                                <span className="semibold text-primary f-16 d-block">
+                                <span className="semibold text-primary f-14">
                                   <Moment format="MM/DD/YYYY">
                                     {course.CreatedDate}
                                   </Moment>
                                 </span>
                               </Paragraph>
                             )}
-                            <Paragraph
-                              ellipsis={{ rows: 2 }}
-                              className="f-14 text-primary mb-8"
-                              style={{ height: "42px" }}
-                            >
-                              {course.description}
-                            </Paragraph>
+                            
                             {course.CourseType === "Content" && (
                               <div className="justify-content-between">
                                 <span className="mr-4 f-12 text-secondary">
