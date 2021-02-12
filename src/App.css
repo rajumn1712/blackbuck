@@ -85,6 +85,14 @@
   vertical-align: middle;
   background: url(styles/images/icons.svg) no-repeat;
 }
+
+.cms-box {
+  border-radius: 0.8rem;
+  text-align: center;
+  margin-bottom: 8px;
+  background: var(--white);
+  border: 1px solid var(--line);
+}
 .left-rail .profile-card {
   display: flex;
   flex-direction: column;
