@@ -189,18 +189,18 @@ const AllCourses = (props) => {
                       description={
                         <div className="coursecard-cont">
                           {course.startDate ? (
-                            <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                            <Paragraph className="f-12 semibold text-secondary">
                               Starts On{" "}
-                              <span className="semibold text-primary f-16 d-block">
+                              <span className="semibold text-primary f-14 d-block">
                                 <Moment format="MM/DD/YYYY">
                                   {course.startDate}
                                 </Moment>
                               </span>
                             </Paragraph>
                           ) : (
-                            <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                            <Paragraph className="f-12 semibold text-secondary">
                               Created On{" "}
-                              <span className="semibold text-primary f-16 d-block">
+                              <span className="semibold text-primary f-14 d-block">
                                 <Moment format="MM/DD/YYYY">
                                   {course.CreatedDate}
                                 </Moment>
@@ -302,9 +302,9 @@ const AllCourses = (props) => {
                         <div className="coursecard-cont">
                           <div>
                             {course.CourseType === "Live Session" && (
-                              <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                              <Paragraph className="f-12 semibold text-secondary">
                                 Starts On :{" "}
-                                <span className="semibold text-primary f-16 d-block">
+                                <span className="semibold text-primary f-14 d-block">
                                   <Moment format="MM/DD/YYYY">
                                     {course.LiveDate}
                                   </Moment>
@@ -312,9 +312,9 @@ const AllCourses = (props) => {
                               </Paragraph>
                             )}
                             {course.CourseType === "Content" && (
-                              <Paragraph className="f-12 semibold text-secondary text-uppercase">
+                              <Paragraph className="f-12 semibold text-secondary">
                                 Created On :{" "}
-                                <span className="semibold text-primary f-16 d-block">
+                                <span className="semibold text-primary f-14 d-block">
                                   <Moment format="MM/DD/YYYY">
                                     {course.CreatedDate}
                                   </Moment>
