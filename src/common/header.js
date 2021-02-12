@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { fetchUserFriends, fetchNotificationCount } from '../shared/api/apiServer';
 import Notifications from '../components/notification';
 import ChatSystem from '../utils/chat-system';
+import firebase from '../utils/firebase';
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
@@ -34,18 +35,46 @@ class HeaderComponent extends React.Component {
         search_value: this.props.search_value
     };
 
-    showDrawer = async () => {
+    showDrawer = async (openChat, user) => {
         const friendsRes = await fetchUserFriends(this.props.profile?.Id)
         this.setState({
             visible: true,
             friends: friendsRes.data
+        }, () => {
+            if (openChat == true) {
+                this.showChatWindow(user);
+            }
         });
     };
     componentDidMount() {
+        let initialState = true;
+        this.chatSubscription = firebase.firestore().collection('chat').doc(this.props?.profile?.Id).collection("notifications")
+            .onSnapshot(snapshot => {
+                let data;
+                if (initialState) {
+                    initialState = false;
+                } else {
+                    snapshot.docChanges().forEach(change => {
+                        if (change.type == "added") {
+                            data = change.doc.data();
+                        }
+                    })
+                    if (data) {
+                        notification.open({
+                            message: "You've new message",
+                            description: '"' + data?.message + '"' + " from " + data?.name,
+                            icon: <Avatar src={data.image} />,
+                            onClick: () => {
+                                this.showDrawer(true, { Firstname: data?.name, Image: data.image, UserId: data.from })
+                            }
+                        })
+                    }
+                }
+            });
         const storeState = store.getState();
         const { FirstName, LastName, Email, ProfilePic, Id } = storeState.oidc?.profile || {};
         this.handleNotifications(Id);
-        this.setState({ FirstName, LastName, Email, ProfilePic});
+        this.setState({ FirstName, LastName, Email, ProfilePic });
         store.subscribe(async () => {
             const state = store.getState();
             if (state.oidc?.profile) {
@@ -57,6 +86,9 @@ class HeaderComponent extends React.Component {
     }
     componentDidUpdate(prevProps) {
         if (prevProps.search_value != this.props.search_value) { this.setState({ ...this.state, search_value: this.props.search_value }); }
+    }
+    componentWillUnmount() {
+        this.chatSubscription();
     }
     async handleNotifications(id) {
         const notifications = <div className="notification-dropdown">
@@ -294,13 +326,13 @@ class HeaderComponent extends React.Component {
                         <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
                         <div className="messenger-drawer">
                             {this.state.friends?.map((friend, indx) => <Link key={indx} onClick={() => this.showChatWindow(friend)}>
-                                <Meta
+                                <Meta style={this.state.agentProfile?.UserId === friend.UserId ? { background: "lightgrey" } : {}}
                                     avatar={<Avatar src={friend.Image || defaultUser} />}
                                     title={friend.Firstname}
                                     description={<p className="chat-description">{friend.Email}</p>}
                                 />
                             </Link>)}
-                             <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, showMessenger: false }) }} onNotificationSelect = {(user)=>{}} />
+                            <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, showMessenger: false }) }} onNotificationSelect={(user) => { }} />
                         </div>
                     </Drawer>
                 </div>

@@ -16,7 +16,7 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
                 fromPhoto: profile?.ProfilePic,
                 toPhoto: agentProfile?.imageUrl,
                 userCreated: profile?.Id
-            })
+            });
         db.collection("chat").doc(agentProfile?.UserId).collection("messages")
             .add({
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -26,7 +26,14 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
                 fromPhoto: profile?.ProfilePic,
                 toPhoto: agentProfile?.imageUrl,
                 userCreated: profile?.Id
-            })
+            });
+        db.collection('chat').doc(agentProfile?.UserId).collection("notifications").add({
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            message:message.data.text,
+            image: profile?.ProfilePic,
+            name: profile?.FirstName + " " + profile?.LastName,
+            from:profile?.Id
+        });
     }
     useEffect(() => {
         if (agentProfile) {
@@ -46,7 +53,7 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
     }, [agentProfile])
     return <div>
         <Launcher
-            agentProfile={agentProfile||{}}
+            agentProfile={agentProfile || {}}
             onMessageWasSent={_onMessageWasSent}
             messageList={messageList}
             isOpen={isOpen}

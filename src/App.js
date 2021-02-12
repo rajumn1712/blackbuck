@@ -28,6 +28,8 @@ function App() {
       return pushMessages.getToken();
     }).then(token => {
       // console.log(token)
+    }).catch(err=>{
+      console.log(err)
     })
   }, []);
 
