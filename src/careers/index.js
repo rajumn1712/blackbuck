@@ -201,12 +201,12 @@ const CMSComponent = (props) => {
                     rules={[
                       {
                         required: (searchObj.stateValue ? false : true),
-                        message: "City required",
+                        message: "Title,Company, or City required",
                       },
                     ]}
                   >
                     <Input
-                      placeholder="Search By City"
+                      placeholder="Search By Title,Company, or City"
                       name="cityValue"
                       onChange={(e) => {
                         searchObj.cityValue = e.currentTarget.value;

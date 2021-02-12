@@ -460,10 +460,10 @@ class ShareBox extends Component {
               <a
                 class="item-close"
                 onClick={() => {
-                  let { uploadSources } = this.state;
+                  let uploadSources  = [...this.state.uploadSources];
                   uploadSources.splice(indx, 1);
                   this.postObject.ImageUrl.splice(indx, 1);
-                  this.setState({ ...this.state, uploadSources });
+                  this.setState({ ...this.state, uploadSources:uploadSources });
                 }}
               >
                 <Tooltip title="Remove">
@@ -576,10 +576,10 @@ class ShareBox extends Component {
                   <a
                     class="item-close"
                     onClick={() => {
-                      let { uploadSources } = this.state;
-                      uploadSources.splice(indx, 1);
-                      this.postObject.ImageUrl.splice(indx, 1);
-                      this.setState({ ...this.state, uploadSources });
+                      let uploadSources  = [...this.state.uploadSources];
+                  uploadSources.splice(indx, 1);
+                  this.postObject.ImageUrl.splice(indx, 1);
+                  this.setState({ ...this.state, uploadSources:uploadSources });
                     }}
                   >
                     <Tooltip title="Remove">
