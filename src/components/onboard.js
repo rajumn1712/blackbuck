@@ -196,7 +196,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                         <div className="intro2 pb-0">
                             <Form layout="vertical" initialValues={initialValues.College} onFinishFailed={onFinishFailed} onFinish={(values) => next(values)}>
                                 <Row gutter={16}>
-                                    <Col xs={24} className="custom-fields custom-multiselect">
+                                    <Col xs={24} className="custom-fields custom-multiselect onboard-clg-input">
                                         <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }, {
                                             validator: (rule, value, callback) => {
                                                 if (value) {
