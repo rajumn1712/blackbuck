@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip, Button, Popover } from 'antd'
+import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip, Button, Popover, notification } from 'antd'
 import { Link, withRouter } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -21,7 +21,7 @@ const logout = () => {
     userManager.signoutRedirect()
 }
 class HeaderComponent extends React.Component {
-
+    chatSubscription;
     state = {
         visible: false, placement: 'left', FirstName: "",
         Email: "",
@@ -45,7 +45,7 @@ class HeaderComponent extends React.Component {
         const storeState = store.getState();
         const { FirstName, LastName, Email, ProfilePic, Id } = storeState.oidc?.profile || {};
         this.handleNotifications(Id);
-        this.setState({ FirstName, LastName, Email, ProfilePic });
+        this.setState({ FirstName, LastName, Email, ProfilePic});
         store.subscribe(async () => {
             const state = store.getState();
             if (state.oidc?.profile) {
@@ -54,8 +54,6 @@ class HeaderComponent extends React.Component {
                 this.setState({ FirstName, LastName, Email, ProfilePic })
             }
         });
-
-
     }
     componentDidUpdate(prevProps) {
         if (prevProps.search_value != this.props.search_value) { this.setState({ ...this.state, search_value: this.props.search_value }); }
@@ -302,7 +300,7 @@ class HeaderComponent extends React.Component {
                                     description={<p className="chat-description">{friend.Email}</p>}
                                 />
                             </Link>)}
-                            {this.state.agentProfile != null && <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, showMessenger: false }) }} />}
+                             <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, showMessenger: false }) }} onNotificationSelect = {(user)=>{}} />
                         </div>
                     </Drawer>
                 </div>

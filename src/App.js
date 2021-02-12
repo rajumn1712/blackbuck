@@ -10,10 +10,12 @@ import { userManager } from './shared/authentication/auth';
 import { Provider } from 'react-redux';
 import LayoutComponent from './common/layout';
 import Loader from './common/loader';
+import firebase from './utils/firebase'
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     }
@@ -21,12 +23,17 @@ function App() {
     loadUser(store, userManager).then((user) => {
       setLoading(false);
     });
+    const pushMessages = firebase.messaging();
+    pushMessages.requestPermission().then(value => {
+      return pushMessages.getToken();
+    }).then(token => {
+      // console.log(token)
+    })
   }, []);
 
   return (
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
-
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Suspense fallback={<div>Loading...</div>}>
             {loading ? <Loader className="loader-top-middle" /> : <LayoutComponent />}
