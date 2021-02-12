@@ -15,7 +15,6 @@ const normalCourses = ["ongoing", "upcoming", "previous"];
 const options = {
   margin: 10,
   responsiveClass: true,
-  mouseDrag: true,
   dots: false,
   responsive: {
     0: {
@@ -134,6 +133,24 @@ const AllCourses = (props) => {
           extra={<Link to={`${props.type}`}>View all</Link>}
         >
           <div className="px-12 pt-12 pb-8">
+          {courses.length > 4 && <><Link
+                  className="more-frnd-btn left"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    slider.current.prev();
+                  }}
+                >
+                  <span className="icon left-arrow mr-0"></span>
+                </Link>
+                <Link
+                  className="more-frnd-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    slider.current.next();
+                  }}
+                >
+                  <span className="icon right-arrow mr-0"></span>
+                </Link></>}
             <OwlCarousel
               options={options}
               ref={slider}
