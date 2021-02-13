@@ -161,7 +161,7 @@ class Notifications extends Component {
     };
     updateNotifications = (item, type) => {
         let { typeData } = this.state;
-        typeData = typeData.filter(obj => {
+         typeData.filter(obj => {
             if (item.NotificationId == obj.NotificationId) {
                 obj.IsRead = true;
                 obj.RequestType = type;
