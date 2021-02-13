@@ -32,8 +32,9 @@
 .post-icons.more-icon{background-position: -235px -200px;}
 .post-icons.h-more-icon{background-position: -555px -200px;}
 .post-icons.send-icon{background-position: -265px -226px;}
-.post-icons.sharenow-icon{background-position: -294px -200px;}
-.post-icons.copylink-icon{background-position: -324px -200px;}
+.post-icons.timeline-icon{background-position: -145px -306px;}
+.post-icons.sharenow-icon{background-position: -324px -200px;}
+.post-icons.copylink-icon{background-position: -294px -200px;}
 .post-icons.edit-icon{background-position: -64px -200px;}
 .post-icons.add-admin{background-position: -54px -308px;}
 .post-icons.notify-icon{background-position: -124px -200px;}
@@ -127,8 +128,9 @@ to{transform: translateY(0px);}
 .share-pop .ant-menu-item:hover, .share-pop .ant-menu-item-selected{background: var(--bghover); border-radius: 4px; color: var(--primary)}
 .share-pop .ant-menu-item svg, .share-pop .ant-menu-item span{margin-right: 12px;}
 .ant-popover-inner{border-radius: 8px;}
-.share-pop li:hover .post-icons.sharenow-icon{background-position: -294px -226px;}
-.share-pop li:hover .post-icons.copylink-icon{background-position: -324px -226px;}
+.share-pop li:hover .post-icons.timeline-icon{background-position: -145px -334px;}
+.share-pop li:hover .post-icons.sharenow-icon{background-position: -324px -226px;}
+.share-pop li:hover .post-icons.copylink-icon{background-position: -294px -226px;}
 .counter-icon{width: 20px;height: 20px;display: inline-block;vertical-align: bottom; background: url(../../styles/images/icons.svg) no-repeat; border-radius: 50%;}
 .counter-icon.likes {background-position: -593px -200px;}
 .counter-icon.loves {background-position: -620px -200px;}

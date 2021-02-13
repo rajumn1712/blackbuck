@@ -1928,10 +1928,9 @@ textarea {
   border: 1px solid var(--line);
 }
 .notifications ul li .ant-list-item-meta-title {
-  margin-top: 6px;
   color: var(--textprimary);
-  line-height: 20px;
-  font-size: var(--f-16);
+  line-height: 18px;
+  font-size: var(--f-14);
   margin-bottom: 2px !important;
 }
 .notifications .ant-list-item{
@@ -1948,6 +1947,10 @@ textarea {
 }
 .notifications .ant-list-item.unread {
   background-color: var(--grey);
+}
+.notifications .ant-list-item.read .ant-list-item-meta-title span {
+  color: var(--textsecondary) !important;
+  font-weight: 400;
 }
 .notifications .ant-list-item.read {
   background-color: var(--white);
@@ -2066,6 +2069,7 @@ textarea {
 .hideempty .ant-list-empty-text{display: none;}
 .noti-dropdown .notifications{border: 0 !important;}
 .noti-dropdown .noti-text{white-space: normal;overflow: break-word;text-align: left;}
+.noti-text a{color: var(--primary) !important;}
 .noti-dropdown .ant-list-item-meta-description{text-align: left;}
 .card-background .ant-list-item{padding: 12px 16px;}
 /* .notification-full .ant-list-item-meta-content{display: flex; justify-content: space-between;} */

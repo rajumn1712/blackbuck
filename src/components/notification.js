@@ -173,9 +173,9 @@ class Notifications extends Component {
     }
     getTitle = (item) => {
         const messages = {
-            Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span className="fw-400">sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
-            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span className="fw-400">sent you a friend request</span></div>,
-            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span className="fw-400">commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={()=>readNotification(item.NotificationId)}>{`"${item.Comment}"`}</Link> </div>
+            Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span>sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
+            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span>sent you a friend request</span></div>,
+            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span>commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={()=>readNotification(item.NotificationId)}>{`"${item.Comment}"`}</Link> </div>
         }
         return messages[item.Type]
     }
