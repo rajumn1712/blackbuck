@@ -21,7 +21,13 @@ class ShareAction extends Component {
     }
     handleShare = async (isGroup) => {
         const object = { ...this.props.post }
-        const mainUSer = { ...this.props.post.userdetails, PostId: object.id, CreatedDate: object.date };
+        const mainUSer = {
+            ...this.props.post.userdetails, PostId: object.id, CreatedDate: object.date, groupDetails: isGroup ? (object.Shares?.length == 0 ? object.Group : {
+                GroupId: null,
+                GroupName: null,
+                GroupImage: null,
+            }) : null
+        }
         const _saveObject = {
             PostId: uuidv4(),
             Type: object.type,
@@ -145,9 +151,9 @@ class ShareAction extends Component {
                     <Menu.Item key="5" onClick={() => this.handleShare()}>
                         <span className="post-icons sharenow-icon"></span>&nbsp;Share in  our timeline
                 </Menu.Item>
-                    {/* <Menu.Item key="6" onClick={() => this.handleShareGroup()}>
+                  <Menu.Item key="6" onClick={() => this.handleShareGroup()}>
                         <span className="post-icons sharenow-icon"></span>&nbsp;Share to a group
-                </Menu.Item> */}
+                </Menu.Item> 
                 <CopyToClipboard text={this.props.url} onCopy={() => notify({ message: "Copied to clipboard" })}>
                     <Menu.Item key="6" onClick={() => this.setState({ visible: false })}>
 

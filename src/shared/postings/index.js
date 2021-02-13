@@ -200,7 +200,7 @@ class Postings extends Component {
             : "/profileview/" + user?.UserId
         }
       ><span className="post-title">{user?.Firstname}</span></Link>{post_type === "Course" && " Added a course"}{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
-        to={"/groupview/" + mainUser?.GroupId}
+          to={"/groupview/" + (mainUser.groupDetails ?( mainUser.groupDetails.GroupId) : mainUser?.GroupId)}
       ><span className="post-title">{mainUser?.Firstname}</span></Link></>}</span>,
       normal: <span className="overflow-text text-secondary"> <Link
         to={
@@ -634,7 +634,7 @@ class Postings extends Component {
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
       {post.PostType === "Course" ? this.renderCourseCard(post) : <Card
-        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false), post.PostType)}
+        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, { ...post.Shares[0]?.groupDetails?post.Shares[0]?.groupDetails:post.Group, Firstname:post.Shares[0]?.groupDetails?post.Shares[0]?.groupDetails?.GroupName:post.Group?.GroupName }, (post.Group?.GroupId ? true : false), post.PostType)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">
