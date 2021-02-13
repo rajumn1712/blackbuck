@@ -645,7 +645,18 @@ class About extends Component {
                 <Form.Item
                   label="Pin Code"
                   name="PinCode"
-                  rules={[{ required: true, message: "Pin Code required" }]}
+                  rules={[{ required: true, message: "Pin Code required" },
+                  { validator:(rule,value,callback)=>{
+                    if(value){
+                      if(!Number(value)){
+                        callback('Only Numbers allowed')
+                      }
+                    }else{
+                      callback()
+                    }
+                    return;
+                  }}
+                ]}
                   className="custom-fields"
                 >
                   <Input
@@ -653,18 +664,7 @@ class About extends Component {
                     placeholder="Pin Code"
                     name="PinCode"
                     maxlength="6"
-                    onKeyPress={(e) => {
-                      const specialCharRegex = new RegExp(
-                        "[0-9 ,-]"
-                      );
-                      const pressedKey = String.fromCharCode(
-                        !e.charCode ? e.which : e.charCode
-                      );
-                      if (!specialCharRegex.test(pressedKey)) {
-                        e.preventDefault();
-                        return false;
-                      }
-                    }}
+                    onChange={(value) => this.handleChange("PinCode", value)}
                   />
                 </Form.Item>
               </Col>
@@ -672,25 +672,25 @@ class About extends Component {
                 <Form.Item
                   label="Phone Number"
                   name="PhoneNumber"
-                  rules={[{ required: true,message:'Phone Number required' }]}
+                  rules={[{ required: true,message:'Phone Number required' },
+                  { validator:(rule,value,callback)=>{
+                    if(value){
+                      if(!Number(value)){
+                        callback('Only Numbers allowed')
+                      }
+                    }else{
+                      callback()
+                    }
+                    return;
+                  }}
+                ]}
                   className="custom-fields"
                 >
                   <Input
                     className="ant-input"
                     placeholder="Phone Number"
                     maxlength="15"
-                    onKeyPress={(e) => {
-                      const specialCharRegex = new RegExp(
-                        "[0-9 ,-]"
-                      );
-                      const pressedKey = String.fromCharCode(
-                        !e.charCode ? e.which : e.charCode
-                      );
-                      if (!specialCharRegex.test(pressedKey)) {
-                        e.preventDefault();
-                        return false;
-                      }
-                    }}
+                    onChange={(value) => this.handleChange("PhoneNumber", value)}
                   />
                 </Form.Item>
               </Col>

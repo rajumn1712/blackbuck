@@ -434,24 +434,25 @@ class Education extends Component {
                       name="MarksGrade"
                       rules={[
                         { required: true, message: "Marks Grade required" },
+                        { validator:(rule,value,callback)=>{
+                          if(value){
+                            if(!Number(value)){
+                              callback('Only Numbers allowed')
+                            }
+                          }else{
+                            callback()
+                          }
+                          return;
+                        }}
                       ]}
                       className="custom-fields"
                     >
                       <Input
                         className="ant-input"
                         placeholder="Marks Grade"
-                        onKeyPress={(e) => {
-                          const specialCharRegex = new RegExp(
-                            "[0-9 ,-]"
-                          );
-                          const pressedKey = String.fromCharCode(
-                            !e.charCode ? e.which : e.charCode
-                          );
-                          if (!specialCharRegex.test(pressedKey)) {
-                            e.preventDefault();
-                            return false;
-                          }
-                        }}
+                        onChange={(value) =>
+                          this.handleChange("MarksGrade", value)
+                        }
                       />
                     </Form.Item>
                   </Col>
