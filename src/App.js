@@ -15,7 +15,6 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
     }
@@ -30,6 +29,9 @@ function App() {
       // console.log(token)
     }).catch(err=>{
       console.log(err)
+    })
+    pushMessages.onMessage(payload=>{
+      // alert(JSON.stringify(payload))
     })
   }, []);
 

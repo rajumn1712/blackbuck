@@ -3,6 +3,7 @@ import connectStateProps from '../../shared/stateConnect'
 import { Launcher } from 'react-chat-window'
 import './chat.css'
 import firebase from '../firebase';
+import { cloudMessaging } from '../../shared/api/clients';
 const db = firebase.firestore();
 const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
     const [messageList, setMessageList] = useState([]);
@@ -29,11 +30,25 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
             });
         db.collection('chat').doc(agentProfile?.UserId).collection("notifications").add({
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            message:message.data.text,
+            message: message.data.text,
             image: profile?.ProfilePic,
             name: profile?.FirstName + " " + profile?.LastName,
-            from:profile?.Id
+            from: profile?.Id
         });
+        cloudMessaging.post("fcm/send", {
+            // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            data: {
+                title: message.data.text,
+                image: profile?.ProfilePic,
+                message: profile?.FirstName + " " + profile?.LastName
+            },
+            to: "duQMBVfCbG4zmQwGiDaN4A:APA91bFkmeyrwyjP3xh-hc4TwW_aAWSaxLYmsTpGGe3HQlkKtu0WwT76aqTfOCrqbzS2x0xUGyk78v2ZQxW2N1Ahh_Z8eyKJb1X1gnUKepFo2Lw9vQsJiAxhT1sfJkhoenPa5Rj0kV-F"
+            // from: profile?.Id
+        }).then(res => {
+            debugger
+        }).catch(err => {
+            debugger
+        })
     }
     useEffect(() => {
         if (agentProfile) {
