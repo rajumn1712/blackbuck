@@ -383,7 +383,7 @@ class Postings extends Component {
       Video: () => {
         return (
           <div className="video-post cursor-pointer">
-            <video width="100%" controls muted>
+            <video width="100%" controls controlsList="nodownload" muted>
               <source src={imageObj} />
             </video>
             {/* <div className="play"></div> */}
@@ -1076,7 +1076,7 @@ class Postings extends Component {
         {/* <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Join Live</Button> */}
       </div>
     </div> : <div className="livecourse-card mx-16">
-        {post.type === "Video" && <video width="100%" controls muted className="coursevideo-card">
+        {post.type === "Video" && <video width="100%" controls controlsList="nodownload" muted className="coursevideo-card">
           <source src={post.image[0]} />
         </video>}
         <div className="course-create p-12">

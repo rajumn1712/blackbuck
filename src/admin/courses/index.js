@@ -925,7 +925,7 @@ const AdminCourses = ({ profile, history }) => {
                                                     {fileVideoUploading && <Loader className="loader-top-middle" />}
                                                     {courseObject.CourseVideo?.map((image, indx) => (
                                                         <div key={indx} className="mb-16 mt-8 upload-preview">
-                                                            <video width="100%" controls>
+                                                            <video width="100%" controls controlsList="nodownload">
                                                                 <source src={image} />
                                                             </video>
                                                             <a
@@ -1016,7 +1016,7 @@ const AdminCourses = ({ profile, history }) => {
                                                                 >
                                                                     <Panel header={<>{topic.TopicType == "Video" && topicTitle}{topic.TopicType == "Document" && docTitle}{topic.VideoName ? topic.VideoName : topic.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.TopicType == "Video" && topic.Duration}</div>}>
                                                                         {topic.TopicType == "Video" && <div className="d-flex">
-                                                                            {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
+                                                                            {topic.VideoSource == "Upload" && <video width="280" controls controlsList="nodownload"><source src={topic.VideoUrl} /></video>}
                                                                             {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
                                                                             {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
                                                                             <div className="ml-16">
@@ -1171,7 +1171,7 @@ const AdminCourses = ({ profile, history }) => {
                             {fileUploading && topicObj.TopicType == "Video" && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.TopicType == "Video" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 mt-8 upload-preview">
-                                    <video width="100%" controls onLoadedMetadata={e => {
+                                    <video width="100%" controls controlsList="nodownload" onLoadedMetadata={e => {
                                         setIsVideoLoded(true)
                                         topicObj.Sec = e.target.duration ? e.target.duration : 0;
                                         setTopicObj({ ...topicObj })

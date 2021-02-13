@@ -107,7 +107,7 @@ class PostCardModal extends Component {
         const _result = {
             Video: () => {
                 return <div className="video-post" >
-                    <video width="100%" controls>
+                    <video width="100%" controls controlsList="nodownload">
                         <source src={imageObj} />
                     </video>
                 </div>

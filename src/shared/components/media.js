@@ -134,7 +134,7 @@ class Media extends Component {
                                             bordered={false}
                                             className="b-none"
                                             cover={<div className="post-image">
-                                                <video onClick={(e) => { this.openFullview(item, 'Video', indx) }} className="obj-fit cus-video-h" width="100%" height="100%" controls id={`video${indx}`}>
+                                                <video onClick={(e) => { this.openFullview(item, 'Video', indx) }} className="obj-fit cus-video-h" width="100%" height="100%" controls controlsList="nodownload" id={`video${indx}`}>
                                                     <source src={item.ImageUrl} />
                                                 </video>
                                             </div>}

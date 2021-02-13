@@ -489,7 +489,7 @@ class ShareBox extends Component {
           {this.state.fileUploading && <Loader className="loader-top-middle" />}
           {this.state.uploadSources?.map((image, indx) => (
             <div key={indx} className="mb-16 upload-preview">
-              <video width="100%" controls>
+              <video width="100%" controls controlsList="nodownload">
                 <source src={image} />
               </video>
               <a
