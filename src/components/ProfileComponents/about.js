@@ -530,24 +530,18 @@ class About extends Component {
                   className="custom-fields custom-multiselect onboard-clg-input"
                   label="College/University Name"
                   name="CollegeId"
-                  rules={[
-                    {
-                      required: true,
-                      message: "College / University name required",
-                      validator: (rule, value, callback) => {
+                  rules={[{ required: true, message: "College / University name required" }, {
+                    validator: (rule, value, callback) => {
                         if (value) {
-                          if (value.length > 1) {
-                            callback(
-                              "Please select only one College/University"
-                            );
-                          } else if (value.length <= 1) {
-                            callback();
-                          }
+                            if (value.length > 1) {
+                                callback("Please select only one College/University")
+                            } else if (value.length <= 1) {
+                                callback();
+                            }
                         }
                         return;
-                      },
-                    },
-                  ]}
+                    }
+                }]}
                 >
                   <Select
                     mode={"tags"}
