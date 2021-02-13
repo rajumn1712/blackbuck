@@ -6,7 +6,8 @@ import Moment from "react-moment";
 import {
     getNotifications,
     acceptFrienRequest,
-    acceptDeclineInvitations
+    acceptDeclineInvitations,
+    readNotification
 } from "../shared/api/apiServer";
 import notify from '../shared/components/notification';
 import { Link, withRouter } from 'react-router-dom';
@@ -82,6 +83,7 @@ class Notifications extends Component {
                 }
             }
             acceptDeclineInvitations(object).then(res => {
+                readNotification(friend.NotificationId);
                 this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
                 this.props.updateProfile(this.props.profile);
                 this.updateNotifications(friend);
@@ -105,6 +107,7 @@ class Notifications extends Component {
                 obj
             ).then(() => {
                 message.success("Action Success");
+                readNotification(friend.NotificationId);
                 this.updateNotifications(friend);
                 this.props.profile.Friends = this.props.profile.Friends
                     ? this.props.profile.Friends + 1
@@ -128,6 +131,7 @@ class Notifications extends Component {
                 }
             }
             acceptDeclineInvitations(object).then(res => {
+                readNotification(friend.NotificationId);
                 this.updateNotifications(friend);
                 this.props.updateProfile(this.props.profile);
                 notify({ placement: 'bottomLeft', message: 'Invite', description: `Request declined successfully.` });
@@ -148,6 +152,7 @@ class Notifications extends Component {
                 "decline",
                 obj
             ).then(() => {
+                readNotification(friend.NotificationId);
                 this.updateNotifications(friend);
                 this.props.updateProfile(this.props.profile);
                 message.success("Action Success");
@@ -168,9 +173,9 @@ class Notifications extends Component {
     }
     getTitle = (item) => {
         const messages = {
-            Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
-            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">sent you a friend request</span></div>,
-            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">commented on your post</span>  <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </div>
+            Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span className="fw-400">sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
+            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span className="fw-400">sent you a friend request</span></div>,
+            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={()=>readNotification(item.NotificationId)}>{item.Firstname}</Link> <span className="fw-400">commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={()=>readNotification(item.NotificationId)}>{`"${item.Comment}"`}</Link> </div>
         }
         return messages[item.Type]
     }

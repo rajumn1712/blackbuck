@@ -179,7 +179,7 @@ const unFriend = (user_id, friend_id) => {
 const fetchNotificationCount = (userId) => {
   return apiClient.get(PROFILE_API + `getNotificationsCount/${userId}`);
 };
-const certifiedCourses = (user_id)=>{
+const certifiedCourses = (user_id) => {
   return apiClient.get(PROFILE_API + `getCertifiedCourses/${user_id}`);
 }
 const saveUserPassword = (object) => {
@@ -247,7 +247,7 @@ const getAllSystemGroups = (take, skip) => {
   return apiClient.get(ADMIN_API + `getAllSystemGroups/${take}/${skip}`);
 }
 const groupBlock = (obj) => {
-  return apiClient.post(ADMIN_API + `saveGroupBlocked`,obj);
+  return apiClient.post(ADMIN_API + `saveGroupBlocked`, obj);
 }
 const joinGroupNew = (id, obj) => {
   return apiClient.post(LMS_API + "joinCourse/" + id, obj);
@@ -261,13 +261,13 @@ const saveJobPost = (obj) => {
 const getJobPostings = (user_id, take, skip) => {
   return apiClient.get(ADMIN_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
 }
-const getJobById = (user_id,id) => {
+const getJobById = (user_id, id) => {
   return apiClient.get(ADMIN_API + `getJobPostById/${user_id}/${id}`)
 }
 const jobpostingsCount = () => {
   return apiClient.get(ADMIN_API + 'getJobPostingCount');
 }
-const getJobApplications = (user_id,take, skip) => {
+const getJobApplications = (user_id, take, skip) => {
   return apiClient.get(ADMIN_API + `getJobApplications/${user_id}/${take}/${skip}`)
 }
 const jobApplicationCount = () => {
@@ -276,29 +276,29 @@ const jobApplicationCount = () => {
 const getScholorUsers = (take, skip) => {
   return apiClient.get(ADMIN_API + `getScholorUsers/${take}/${skip}`);
 }
-const allJobPostings = (user_id,take,skip,type,state,city)=>{
-  if(type==='jobsearch'&&(state||city)){
+const allJobPostings = (user_id, take, skip, type, state, city) => {
+  if (type === 'jobsearch' && (state || city)) {
     return apiClient.get(CAREESRS_API + `getSearchJobPostings/${user_id}/${state ? state : null}/${city ? city : null}/${take}/${skip}`)
-  }else if(type === 'savedjobs'){
+  } else if (type === 'savedjobs') {
     return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
   }
-  else{
+  else {
     return apiClient.get(CAREESRS_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
   }
 }
-const saveApplicationJob = (obj)=>{
-  return apiClient.post(CAREESRS_API + 'saveJobApplication',obj);
+const saveApplicationJob = (obj) => {
+  return apiClient.post(CAREESRS_API + 'saveJobApplication', obj);
 }
-const saveUserJobPost = (obj)=>{
-  return apiClient.post(CAREESRS_API + 'savedJobPosts',obj);
+const saveUserJobPost = (obj) => {
+  return apiClient.post(CAREESRS_API + 'savedJobPosts', obj);
 }
-const getSavedJobPost = (user_id,take,skip)=>{
+const getSavedJobPost = (user_id, take, skip) => {
   return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
 }
-const deleteJobSavedPost = (id)=>{
+const deleteJobSavedPost = (id) => {
   return apiClient.get(CAREESRS_API + `deleteSavedJobPost/${id}`);
 }
-const deleteJobPost = (id)=>{
+const deleteJobPost = (id) => {
   return apiClient.get(ADMIN_API + `deleteJobPost/${id}`);
 }
 const getIsFriend = (id, fnd_user_id) => {
@@ -306,6 +306,12 @@ const getIsFriend = (id, fnd_user_id) => {
 }
 const getCategories = () => {
   return apiClient.get(LMS_API + `getCategoriesLu`);
+}
+const saveNotification = (obj) => {
+  return apiClient.post(PROFILE_API + `saveNotification`, obj);
+}
+const readNotification = (id) => {
+  return apiClient.get(PROFILE_API + `notificationRead/${id}`);
 }
 export {
   getFriendSuggestions,
@@ -395,5 +401,7 @@ export {
   deleteJobSavedPost,
   deleteJobPost,
   getIsFriend,
-  getCategories
+  getCategories,
+  saveNotification,
+  readNotification
 };
