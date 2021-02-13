@@ -167,6 +167,9 @@ class Notifications extends Component {
                 obj.RequestType = type;
             }
         });
+        if (this.props.onCount) {
+            this.props.onCount();
+        }
         this.setState({ ...this.state, typeData });
     }
     changeTab = (index) => {

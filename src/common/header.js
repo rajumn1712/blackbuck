@@ -97,7 +97,7 @@ class HeaderComponent extends React.Component {
             </div>
             <Divider className="my-0" />
             <div className="notification-container">
-                <Notifications onRef={notification => this.notification = notification} type="ddl" />
+                <Notifications onRef={notification => this.notification = notification} type="ddl" onCount={()=>this.getNotificationsCount()}/>
             </div>
             <Divider className="my-0" />
             {/* {(this.state.notificationsCount > 10) && <div className="p-8 pt-4">
@@ -215,7 +215,7 @@ class HeaderComponent extends React.Component {
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                <Dropdown overlay={this.state.notifications?this.state.notifications:<div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visible) => { if (!visible) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
                                     <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                         <Link className="header-link">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
