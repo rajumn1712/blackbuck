@@ -194,13 +194,13 @@ class Notifications extends Component {
                     <List.Item.Meta
                         avatar={<Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}><Avatar src={item.Image || defaultUser} /></Link>}
                         title={<>{this.getTitle(item)}</>}
-                        description={<div>{item.CreatedDate && <div> <Moment fromNow>{item.CreatedDate}</Moment></div>}
+                        description={<div>{item.CreatedDate && <div className="f-12 text-secondary"><Moment fromNow>{item.CreatedDate}</Moment></div>}
 
                             {this.props.type && item.RequestType == "request" && <div className="noti-button">
                                 {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
                                 {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
                             </div>}
-                            {(item.RequestType == "accepted" || item.RequestType == "declined") && <span className="fw-400">Request {item.RequestType}</span>}
+                            {(item.RequestType == "accepted" || item.RequestType == "declined") && <span className="fw-400 text-secondary f-14">Request {item.RequestType}</span>}
                         </div>}
 
                     />
