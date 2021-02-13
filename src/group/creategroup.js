@@ -231,7 +231,7 @@ class CreateGroup extends Component {
                     }
                     notificationArray.push(notificationObj);
                 })
-                saveNotification(notificationArray).then(res => {
+                saveNotification({ "Notifications": notificationArray}).then(res => {
 
                 });
                 this.setState({ ...this.state, loading: false });

@@ -183,7 +183,7 @@ class Notifications extends Component {
         const messages = {
             Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
             Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span></div>,
-            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={() => readNotification(item.NotificationId, null)}>{item.Firstname}</Link> <span>commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={() => readNotification(item.NotificationId, null)}>{`"${item.Comment}"`}</Link> </div>
+            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{item.Firstname}</Link> <span>commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{`"${item.Comment}"`}</Link> </div>
         }
         return messages[item.Type]
     }

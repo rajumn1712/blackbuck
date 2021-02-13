@@ -215,7 +215,7 @@ class HeaderComponent extends React.Component {
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Dropdown overlay={this.state.notifications?this.state.notifications:<div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visible) => { if (!visible) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
+                                <Dropdown overlay={this.state.notifications?this.state.notifications:<div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visibleDdl) => { if (!visibleDdl) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
                                     <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                         <Link className="header-link">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
