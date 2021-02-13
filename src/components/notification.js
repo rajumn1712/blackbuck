@@ -204,7 +204,7 @@ class Notifications extends Component {
                         </div>}
 
                     />
-                    {!this.props.type && <div className="noti-button">
+                    {!this.props.type && item.RequestType =="request" && <div className="noti-button">
                         {(item.Type == "Invitations" || item.Type == "Friends") && item.RequestType == "request" && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
                         {(item.Type == "Invitations" || item.Type == "Friends") && item.RequestType == "request" && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
                         {(item.RequestType == "accepted" || item.RequestType == "declined") && <span className="fw-400">Request {item.RequestType}</span>}
