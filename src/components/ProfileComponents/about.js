@@ -36,7 +36,7 @@ class About extends Component {
   state = {
     Firstname: this.props.about.Firstname,
     Lastname: this.props.about.Lastname,
-    CollegeId: this.props.about?.College?.CollegeId,
+    CollegeId: [],
     PhoneNumber: this.props.about.PhoneNumber
       ? this.props.about.PhoneNumber
       : "",
@@ -51,11 +51,6 @@ class About extends Component {
 
   handleValidate = (values) => {
     let errors = {};
-    // if (!value.Email) {
-    //     errors.Email = "Required!";
-    // } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.Email)) {
-    //     errors.Email = "Invalid email address!";
-    // }
     for (var key in values) {
       if (!values[key]) {
         errors[key] = "is required";
@@ -91,9 +86,10 @@ class About extends Component {
       AboutMe: editObject.AboutMe,
       Firstname: editObject.Firstname,
       Lastname: editObject.Lastname,
-      CollegeId: editObject.CollegeId,
+      CollegeId: [],
       CollegeName: null,
     });
+    editObject.address.CollegeId.push(this.props.about?.College?.CollegeId);
 
     this.setState({
       visible: true,
@@ -125,8 +121,8 @@ class About extends Component {
       this.props.updateProfile(this.props.profile);
     });
     const saveObj = this.createSaveObj(values);
-    const response = await saveAboutMe(saveObj)
-    if(response.ok) {
+    const response = await saveAboutMe(saveObj);
+    if (response.ok) {
       this.setState(
         {
           loading: false,
@@ -140,25 +136,31 @@ class About extends Component {
           this.props.callback(true);
         }
       );
-    }else{
-      this.setState({loading:false},()=>{
+    } else {
+      this.setState({ loading: false }, () => {
         notify({
           description: "Something went wrong",
           message: "Error",
-          type:'error'
-        })
-      })
-     
+          type: "error",
+        });
+      });
     }
   };
   createSaveObj = (values) => {
+    if(!this.state.address.CollegeName){
+      let {address} = this.state;
+    address.CollegeName = this.state.colleges?.filter(
+      (item) => item.CollegeId === this.props.about?.College?.CollegeId
+    )[0].CollegeName;
+    this.setState({...this.state,address});
+    }
     const saveObj = {
       UserId: this.props.about.UserId,
       Aboutme: values.AboutMe,
       PhoneNumber: values.PhoneNumber,
       Firstname: values.Firstname,
       Lastname: values.Lastname,
-      CollegeId: values.CollegeId,
+      CollegeId: Array.isArray(values.CollegeId) ? values.CollegeId[0]:values.CollegeId,
       CollegeName: this.state.address.CollegeName,
       IsNameModified:
         this.props.about.Firstname === values.Firstname &&
@@ -364,17 +366,16 @@ class About extends Component {
   handleChange = (prop, val, option) => {
     let initialValues = { ...this.state.address };
     if (prop === "CollegeId") {
-      initialValues[prop] = option[0]?.value ? option[0]?.value : 'null';
+      initialValues[prop] = option[0]?.value ? option[0]?.value : "null";
       initialValues.CollegeName = option[0]?.value ? option[0]?.name : val[0];
-    } 
-    else {
+    } else {
       initialValues[prop] = val
-      ? val.currentTarget
-        ? val.currentTarget.value
-        : val
-      : "";
+        ? val.currentTarget
+          ? val.currentTarget.value
+          : val
+        : "";
     }
-    
+
     this.setState({ ...this.state, address: initialValues });
   };
 
@@ -530,18 +531,26 @@ class About extends Component {
                   className="custom-fields custom-multiselect onboard-clg-input"
                   label="College/University Name"
                   name="CollegeId"
-                  rules={[{ required: true, message: "College / University name required" }, {
-                    validator: (rule, value, callback) => {
+                  rules={[
+                    {
+                      required: true,
+                      message: "College / University name required",
+                    },
+                    {
+                      validator: (rule, value, callback) => {
                         if (value) {
-                            if (value.length > 1) {
-                                callback("Please select only one College/University")
-                            } else if (value.length <= 1) {
-                                callback();
-                            }
+                          if (value.length > 1) {
+                            callback(
+                              "Please select only one College/University"
+                            );
+                          } else if (value.length <= 1) {
+                            callback();
+                          }
                         }
                         return;
-                    }
-                }]}
+                      },
+                    },
+                  ]}
                 >
                   <Select
                     mode={"tags"}
@@ -556,7 +565,13 @@ class About extends Component {
                     }
                   >
                     {colleges?.map((college, indx) => (
-                      <Option name={college?.CollegeName} value={college?.CollegeId}><Avatar src={college.Image} />{college?.CollegeName}</Option>
+                      <Option
+                        name={college?.CollegeName}
+                        value={college?.CollegeId}
+                      >
+                        <Avatar src={college.Image} />
+                        {college?.CollegeName}
+                      </Option>
                     ))}
                   </Select>
                 </Form.Item>
@@ -616,10 +631,10 @@ class About extends Component {
                   <CountryDropdown
                     value={address?.Country}
                     onChange={(value) => {
-                      let initialValues = {...this.state.address}
-                      initialValues.Country = value
-                      initialValues.State = ""
-                      this.setState({...this.state,address:initialValues})
+                      let initialValues = { ...this.state.address };
+                      initialValues.Country = value;
+                      initialValues.State = "";
+                      this.setState({ ...this.state, address: initialValues });
                     }}
                   />
                 </Form.Item>
@@ -645,17 +660,18 @@ class About extends Component {
                 <Form.Item
                   label="Pin Code"
                   name="PinCode"
-                  rules={[{ required: true, message: "Pin Code required" },
-                  () => ({
-                    validator(_, value) {
-                      if (Number(value)) {
-                        return Promise.resolve();
-                      }else if(!Number(value)){
-                        return Promise.reject('Only Numbers allowed');
-                      }
-                    },
-                  }),
-                ]}
+                  rules={[
+                    { required: true, message: "Pin Code required" },
+                    () => ({
+                      validator(_, value) {
+                        if (Number(value)) {
+                          return Promise.resolve();
+                        } else if (!Number(value)) {
+                          return Promise.reject("Only Numbers allowed");
+                        }
+                      },
+                    }),
+                  ]}
                   className="custom-fields"
                 >
                   <Input
@@ -671,24 +687,27 @@ class About extends Component {
                 <Form.Item
                   label="Phone Number"
                   name="PhoneNumber"
-                  rules={[{ required: true,message:'Phone Number required' },
-                  () => ({
-                    validator(_, value) {
-                      if (Number(value)) {
-                        return Promise.resolve();
-                      }else if(!Number(value)){
-                        return Promise.reject('Only Numbers allowed');
-                      }
-                    },
-                  }),
-                ]}
+                  rules={[
+                    { required: true, message: "Phone Number required" },
+                    () => ({
+                      validator(_, value) {
+                        if (Number(value)) {
+                          return Promise.resolve();
+                        } else if (!Number(value)) {
+                          return Promise.reject("Only Numbers allowed");
+                        }
+                      },
+                    }),
+                  ]}
                   className="custom-fields"
                 >
                   <Input
                     className="ant-input"
                     placeholder="Phone Number"
                     maxlength="15"
-                    onChange={(value) => this.handleChange("PhoneNumber", value)}
+                    onChange={(value) =>
+                      this.handleChange("PhoneNumber", value)
+                    }
                   />
                 </Form.Item>
               </Col>

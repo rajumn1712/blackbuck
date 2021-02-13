@@ -81,7 +81,7 @@ class Postings extends Component {
 
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.match?.params.key !== this.props.match?.params.key) {
+    if (prevProps.match?.params.key !== this.props.match?.params.key || prevProps.id !== this.props.id) {
       this.setState({ ...this.state, page: 1, allPosts: [] }, () => {
         this.loadPosts();
       })
