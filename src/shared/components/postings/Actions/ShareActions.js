@@ -149,11 +149,11 @@ class ShareAction extends Component {
                 </Menu.Item>
                 <Menu.Divider />
                     <Menu.Item key="5" onClick={() => this.handleShare()}>
-                        <span className="post-icons timeline-icon"></span>&nbsp;Share in  our timeline
+                        <span className="post-icons timeline-icon"></span>&nbsp;Share Now
                 </Menu.Item>
-                  <Menu.Item key="6" onClick={() => this.handleShareGroup()}>
+                  {/* <Menu.Item key="6" onClick={() => this.handleShareGroup()}>
                         <span className="post-icons sharenow-icon"></span>&nbsp;Share to a group
-                </Menu.Item> 
+                </Menu.Item>  */}
                 <CopyToClipboard text={this.props.url} onCopy={() => notify({ message: "Copied to clipboard" })}>
                     <Menu.Item key="6" onClick={() => this.setState({ visible: false })}>
 
