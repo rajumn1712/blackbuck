@@ -114,8 +114,8 @@ class Education extends Component {
         Name: values.Name,
         Degree: values.Degree,
         AcademicYear: values.AcademicYear,
-        StartDate: moment(values.AcademicYear[0]._d).format('YYYY'),
-        EndDate: moment(values.AcademicYear[1]._d).format('YYYY'),
+        StartDate: moment(values.AcademicYear[0]._d).format("YYYY"),
+        EndDate: moment(values.AcademicYear[1]._d).format("YYYY"),
         Location: values.Location,
         MarksGrade: values.MarksGrade,
         File: this.state.educationObj.uploadsources,
@@ -124,23 +124,25 @@ class Education extends Component {
     };
   };
   saveEducation = (values) => {
-      this.setState({ ...this.state, loading: true });
-      const saveObj = this.createObject(values);
-      saveEducation(saveObj).then((res) => {
-        this.setState(
-          {
-            loading: false,
-            visible: false,
-          },
-          () => {
-            notify({
-              description: `Education ${this.state.isEdit ? 'Edited' : 'saved'} successfully`,
-              message: "Education",
-            });
-            this.props.callback(true);
-          }
-        );
-      });
+    this.setState({ ...this.state, loading: true });
+    const saveObj = this.createObject(values);
+    saveEducation(saveObj).then((res) => {
+      this.setState(
+        {
+          loading: false,
+          visible: false,
+        },
+        () => {
+          notify({
+            description: `Education ${
+              this.state.isEdit ? "Edited" : "saved"
+            } successfully`,
+            message: "Education",
+          });
+          this.props.callback(true);
+        }
+      );
+    });
   };
   handleCancel = (e) => {
     this.formRef.current.resetFields();
@@ -210,23 +212,18 @@ class Education extends Component {
     this.setState({ educationObj: educationObj });
   };
   handleChange = (prop, val) => {
-    let initialValues = {...this.state.initialValues}
+    let initialValues = { ...this.state.initialValues };
     initialValues[prop] = val
       ? val.currentTarget
         ? val.currentTarget.value
         : val
       : "";
-    this.setState({...this.state,initialValues:initialValues})
+    this.setState({ ...this.state, initialValues: initialValues });
   };
   render() {
     const { user } = store.getState().oidc;
 
-    const {
-      education,
-      visible,
-      initialValues,
-      EducationTypeLu,
-    } = this.state;
+    const { education, visible, initialValues, EducationTypeLu } = this.state;
     return (
       <div className="custom-card profile-card">
         <Card
@@ -264,7 +261,7 @@ class Education extends Component {
                       <span style={{ color: "var(--textprimary)" }}>
                         {item.Degree}
                       </span>{" "}
-                      {item.StartDate} -{" "} {item.EndDate}
+                      {item.StartDate} - {item.EndDate}
                       {/* <Moment format="YYYY/MM/DD">{item.StartDate}</Moment> -{" "}
                       <Moment format="YYYY/MM/DD">{item.EndDate}</Moment>{" "} */}
                       <div
@@ -296,129 +293,170 @@ class Education extends Component {
           title="Education"
           cancel={this.handleCancel}
           saved={() => {
-            this.formRef.current.validateFields()
-              .then((values) => {
-                this.formRef.current.resetFields();
-                this.saveEducation(values)
-              })
+            this.formRef.current.validateFields().then((values) => {
+              this.formRef.current.resetFields();
+              this.saveEducation(values);
+            });
           }}
         >
           <div className="">
             {this.state.loading && <Loader className="loader-top-middle" />}
             {visible && (
-              <Form layout="vertical" initialValues={initialValues} ref={this.formRef}>
-              <Row gutter={16}>
-                <Col xs={24} sm={24}>
-                  <Form.Item
-                    label="Education Type"
-                    name="EducationType"
-                    rules={[{ required: true,message:"Education Type required" }]}
-                    className="custom-fields custom-select"
-                  >
-                    <Select
-                      defaultValue=""
-                      onChange={(value) => this.handleChange("EducationType", value)}
+              <Form
+                layout="vertical"
+                initialValues={initialValues}
+                ref={this.formRef}
+              >
+                <Row gutter={16}>
+                  <Col xs={24} sm={24}>
+                    <Form.Item
+                      label="Education Type"
+                      name="EducationType"
+                      rules={[
+                        { required: true, message: "Education Type required" },
+                      ]}
+                      className="custom-fields custom-select"
                     >
-                      <Option value="">Select Type</Option>
-                      {EducationTypeLu.map((item, index) => {
-                        return (
-                          <Option key={index} value={item}>
-                            {item}
-                          </Option>
-                        );
-                      })}
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={24}>
-                  <Form.Item
-                    label={initialValues.EducationType === 'School' ? 'School Name' : 'College/University Name'}
-                    name="Name"
-                    rules={[{ required: true,message:`${initialValues.EducationType} required` }]}
-                    className="custom-fields"
-                  >
-                    <Input
-                      className="ant-input"
-                      placeholder="Name"
+                      <Select
+                        defaultValue=""
+                        onChange={(value) =>
+                          this.handleChange("EducationType", value)
+                        }
+                      >
+                        <Option value="">Select Type</Option>
+                        {EducationTypeLu.map((item, index) => {
+                          return (
+                            <Option key={index} value={item}>
+                              {item}
+                            </Option>
+                          );
+                        })}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={24}>
+                    <Form.Item
+                      label={
+                        initialValues.EducationType === "School"
+                          ? "School Name"
+                          : "College/University Name"
+                      }
                       name="Name"
-                      onChange={(value) => this.handleChange("Name", value)}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={24}>
-                  <Form.Item
-                    label="Degree"
-                    name="Degree"
-                    rules={[{ required: true,message:'Degree required' }]}
-                    className="custom-fields"
-                  >
-                    <Input
-                      className="ant-input"
-                      placeholder="Degree"
+                      rules={[
+                        {
+                          required: true,
+                          message: `School/College Name required`,
+                        },
+                      ]}
+                      className="custom-fields"
+                    >
+                      <Input
+                        className="ant-input"
+                        placeholder="Name"
+                        name="Name"
+                        onChange={(value) => this.handleChange("Name", value)}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={24}>
+                    <Form.Item
+                      label="Degree"
                       name="Degree"
-                      onChange={(value) => this.handleChange("Degree", value)}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={24}>
-                  <Form.Item
-                    label="Academic Year"
-                    name="AcademicYear"
-                    rules={[{ required: true,message:'Academic Year required' }]}
-                    className="custom-fields education-date"
-                  >
-                    {/* <Input.Group> */}
+                      rules={[{ required: true, message: "Degree required" }]}
+                      className="custom-fields"
+                    >
+                      <Input
+                        className="ant-input"
+                        placeholder="Degree"
+                        name="Degree"
+                        onChange={(value) => this.handleChange("Degree", value)}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={24}>
+                    <Form.Item
+                      label="Academic Year"
+                      name="AcademicYear"
+                      rules={[
+                        { required: true, message: "Academic Year required" },
+                      ]}
+                      className="custom-fields education-date"
+                    >
+                      {/* <Input.Group> */}
                       <RangePicker
                         // disabledDate={this.disabledDate}
                         picker="year"
                         value={initialValues.AcademicYear}
-                        onChange={(value) => this.handleChange("AcademicYear", value)}
-                      />
-                    {/* </Input.Group> */}
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Form.Item
-                    label={`Place of ${initialValues.EducationType === 'School' ? 'School' : 'College/University'}`}
-                    name="Location"
-                    rules={[{ required: true,message:`Place of ${initialValues.EducationType === 'School' ? 'School' : 'College/University'} required` }]}
-                    className="custom-fields"
-                  >
-                    <Input
-                      className="ant-input"
-                      placeholder={`Place of ${initialValues.EducationType === 'School' ? 'School' : 'College/University'}`}
-                      name="Location"
-                      onChange={(value) => this.handleChange("Location", value)}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Form.Item
-                    label="Marks Grade"
-                    name="MarksGrade"
-                    rules={[{ required: true,message:'Marks Grade required' }]}
-                    className="custom-fields"
-                  >
-                    <Input
-                      className="ant-input"
-                      placeholder="Marks Grade"
-                      onChange={(e) => {
-                        if (/^[0-9\b]+$/.test(e.target.value)) {
-                          let initialValues = { ...this.state.initialValues };
-                          initialValues.MarksGrade = e.target.value;
-                          this.setState({
-                            ...this.state,
-                            initialValues: initialValues,
-                          });
-                        } else {
-                          e.preventDefault();
+                        onChange={(value) =>
+                          this.handleChange("AcademicYear", value)
                         }
-                      }}
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form>
+                      />
+                      {/* </Input.Group> */}
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Form.Item
+                      label={`Place of ${
+                        initialValues.EducationType === "School"
+                          ? "School"
+                          : "College/University"
+                      }`}
+                      name="Location"
+                      rules={[
+                        {
+                          required: true,
+                          message: `Place of ${
+                            initialValues.EducationType === "School"
+                              ? "School"
+                              : "College/University"
+                          } required`,
+                        },
+                      ]}
+                      className="custom-fields"
+                    >
+                      <Input
+                        className="ant-input"
+                        placeholder={`Place of ${
+                          initialValues.EducationType === "School"
+                            ? "School"
+                            : "College/University"
+                        }`}
+                        name="Location"
+                        onChange={(value) =>
+                          this.handleChange("Location", value)
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Form.Item
+                      label="Marks Grade"
+                      name="MarksGrade"
+                      rules={[
+                        { required: true, message: "Marks Grade required" },
+                      ]}
+                      className="custom-fields"
+                    >
+                      <Input
+                        className="ant-input"
+                        placeholder="Marks Grade"
+                        onKeyPress={(e) => {
+                          const specialCharRegex = new RegExp(
+                            "[0-9 ,-]"
+                          );
+                          const pressedKey = String.fromCharCode(
+                            !e.charCode ? e.which : e.charCode
+                          );
+                          if (!specialCharRegex.test(pressedKey)) {
+                            e.preventDefault();
+                            return false;
+                          }
+                        }}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             )}
           </div>
         </CommonModal>

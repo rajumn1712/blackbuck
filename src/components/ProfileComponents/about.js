@@ -118,14 +118,15 @@ class About extends Component {
     }
   };
 
-  handleOk = (values) => {
+  handleOk = async (values) => {
     this.setState({ ...this.state, loading: true }, () => {
       this.props.profile.FirstName = values.Firstname;
       this.props.profile.LastName = values.Lastname;
       this.props.updateProfile(this.props.profile);
     });
     const saveObj = this.createSaveObj(values);
-    saveAboutMe(saveObj).then((res) => {
+    const response = await saveAboutMe(saveObj)
+    if(response.ok) {
       this.setState(
         {
           loading: false,
@@ -139,7 +140,16 @@ class About extends Component {
           this.props.callback(true);
         }
       );
-    });
+    }else{
+      this.setState({loading:false},()=>{
+        notify({
+          description: "Something went wrong",
+          message: "Error",
+          type:'error'
+        })
+      })
+     
+    }
   };
   createSaveObj = (values) => {
     const saveObj = {
@@ -354,7 +364,7 @@ class About extends Component {
   handleChange = (prop, val, option) => {
     let initialValues = { ...this.state.address };
     if (prop === "CollegeId") {
-      initialValues[prop] = option[0]?.value ? option[0]?.value : null;
+      initialValues[prop] = option[0]?.value ? option[0]?.value : 'null';
       initialValues.CollegeName = option[0]?.value ? option[0]?.name : val[0];
     } 
     else {
@@ -649,16 +659,16 @@ class About extends Component {
                     placeholder="Pin Code"
                     name="PinCode"
                     maxlength="6"
-                    onChange={(e) => {
-                      if (/^[0-9\b]+$/.test(e.target.value)) {
-                        let initialValues = { ...this.state.address };
-                        initialValues.PinCode = e.target.value;
-                        this.setState({
-                          ...this.state,
-                          address: initialValues,
-                        });
-                      } else {
+                    onKeyPress={(e) => {
+                      const specialCharRegex = new RegExp(
+                        "[0-9 ,-]"
+                      );
+                      const pressedKey = String.fromCharCode(
+                        !e.charCode ? e.which : e.charCode
+                      );
+                      if (!specialCharRegex.test(pressedKey)) {
                         e.preventDefault();
+                        return false;
                       }
                     }}
                   />
@@ -675,16 +685,16 @@ class About extends Component {
                     className="ant-input"
                     placeholder="Phone Number"
                     maxlength="15"
-                    onChange={(e) => {
-                      if (/^[0-9\b]+$/.test(e.target.value)) {
-                        let initialValues = { ...this.state.address };
-                        initialValues.PhoneNumber = e.target.value;
-                        this.setState({
-                          ...this.state,
-                          address: initialValues,
-                        });
-                      } else {
+                    onKeyPress={(e) => {
+                      const specialCharRegex = new RegExp(
+                        "[0-9 ,-]"
+                      );
+                      const pressedKey = String.fromCharCode(
+                        !e.charCode ? e.which : e.charCode
+                      );
+                      if (!specialCharRegex.test(pressedKey)) {
                         e.preventDefault();
+                        return false;
                       }
                     }}
                   />
