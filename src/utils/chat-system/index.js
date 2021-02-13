@@ -74,6 +74,7 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
             isOpen={isOpen}
             handleClick={handleClick}
             mute={true}
+            showEmoji={false}
         />
     </div>
 }

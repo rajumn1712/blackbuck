@@ -322,8 +322,8 @@ class HeaderComponent extends React.Component {
 
                 {/* Mobile Naviagtion */}
                 <div className="">
-                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true" footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
-                        <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
+                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true">
+                        {/* <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} /> */}
                         <div className="messenger-drawer">
                             {this.state.friends?.map((friend, indx) => <Link key={indx} onClick={() => this.showChatWindow(friend)}>
                                 <Meta style={this.state.agentProfile?.UserId === friend.UserId ? { background: "lightgrey" } : {}}
