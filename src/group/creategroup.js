@@ -226,7 +226,7 @@ class CreateGroup extends Component {
                         "Lastname": this.props?.profile?.LastName,
                         "Image": this.props?.profile?.ProfilePic,
                         "Email": this.props?.profile?.Email,
-                        "Type": "Invitations",
+                        "NotificationType": "Invitations",
                         "CreatedDate": new Date(),
                     }
                     notificationArray.push(notificationObj);

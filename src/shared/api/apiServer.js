@@ -310,8 +310,8 @@ const getCategories = () => {
 const saveNotification = (obj) => {
   return apiClient.post(PROFILE_API + `saveNotification`, obj);
 }
-const readNotification = (id) => {
-  return apiClient.get(PROFILE_API + `notificationRead/${id}`);
+const readNotification = (id, type) => {
+  return apiClient.get(PROFILE_API + `notificationRead/${id}/${type}`);
 }
 export {
   getFriendSuggestions,

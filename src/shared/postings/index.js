@@ -307,7 +307,8 @@ class Postings extends Component {
       "Lastname": this.props?.profile?.LastName,
       "Image": this.props?.profile?.ProfilePic,
       "Email": this.props?.profile?.Email,
-      "Type": "request"
+      "Type": "request",
+      "CreatedDate":new Date()
     }
     sendFirendRequest(post?.userdetails.UserId, obj).then(() => {
       this.checkWhetherFriendOrNot(post)

@@ -157,7 +157,8 @@ class ProfileView extends Component {
       "Lastname": this.props?.profile?.LastName,
       "Image": this.props?.profile?.ProfilePic,
       "Email": this.props?.profile?.Email,
-      "Type": "request"
+      "Type": "request",
+      "CreatedDate":new Date()
     }
     sendFirendRequest(this.props?.match?.params.userId, obj).then(() => {
       let { requestType } = this.state;

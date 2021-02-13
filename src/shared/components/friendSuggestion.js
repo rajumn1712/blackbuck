@@ -80,7 +80,8 @@ class FriendSuggestions extends Component {
             "Lastname": this.props?.profile?.LastName,
             "Image": this.props?.profile?.ProfilePic,
             "Email": this.props?.profile?.Email,
-            "Type": "request"
+            "Type": "request",
+            "CreatedDate":new Date()
         }
         sendFirendRequest(friend.UserId, obj).then(() => {
             this.updateFriendSuggestions(friend.UserId, "Type", "request");
