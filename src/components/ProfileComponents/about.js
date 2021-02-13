@@ -646,16 +646,15 @@ class About extends Component {
                   label="Pin Code"
                   name="PinCode"
                   rules={[{ required: true, message: "Pin Code required" },
-                  { validator:(rule,value,callback)=>{
-                    if(value){
-                      if(!Number(value)){
-                        callback('Only Numbers allowed')
+                  () => ({
+                    validator(_, value) {
+                      if (Number(value)) {
+                        return Promise.resolve();
+                      }else if(!Number(value)){
+                        return Promise.reject('Only Numbers allowed');
                       }
-                    }else{
-                      callback()
-                    }
-                    return;
-                  }}
+                    },
+                  }),
                 ]}
                   className="custom-fields"
                 >
@@ -673,16 +672,15 @@ class About extends Component {
                   label="Phone Number"
                   name="PhoneNumber"
                   rules={[{ required: true,message:'Phone Number required' },
-                  { validator:(rule,value,callback)=>{
-                    if(value){
-                      if(!Number(value)){
-                        callback('Only Numbers allowed')
+                  () => ({
+                    validator(_, value) {
+                      if (Number(value)) {
+                        return Promise.resolve();
+                      }else if(!Number(value)){
+                        return Promise.reject('Only Numbers allowed');
                       }
-                    }else{
-                      callback()
-                    }
-                    return;
-                  }}
+                    },
+                  }),
                 ]}
                   className="custom-fields"
                 >

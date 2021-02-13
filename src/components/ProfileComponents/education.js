@@ -434,16 +434,15 @@ class Education extends Component {
                       name="MarksGrade"
                       rules={[
                         { required: true, message: "Marks Grade required" },
-                        { validator:(rule,value,callback)=>{
-                          if(value){
-                            if(!Number(value)){
-                              callback('Only Numbers allowed')
+                        () => ({
+                          validator(_, value) {
+                            if (Number(value)) {
+                              return Promise.resolve();
+                            }else if(!Number(value)){
+                              return Promise.reject('Only Numbers allowed');
                             }
-                          }else{
-                            callback()
-                          }
-                          return;
-                        }}
+                          },
+                        }),
                       ]}
                       className="custom-fields"
                     >
