@@ -11,6 +11,8 @@ import { Provider } from 'react-redux';
 import LayoutComponent from './common/layout';
 import Loader from './common/loader';
 import firebase from './utils/firebase'
+import { notification } from 'antd';
+import Avatar from 'antd/lib/avatar/avatar';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -26,12 +28,14 @@ function App() {
     pushMessages.requestPermission().then(value => {
       return pushMessages.getToken();
     }).then(token => {
-      // console.log(token)
-    }).catch(err=>{
+      const state = store.getState();
+      if (token && state?.oidc?.profile?.Id) {
+        firebase.firestore().collection("devices").doc(state?.oidc?.profile?.Id).collection("tokens").add({
+          token
+        });
+      }
+    }).catch(err => {
       console.log(err)
-    })
-    pushMessages.onMessage(payload=>{
-      // alert(JSON.stringify(payload))
     })
   }, []);
 

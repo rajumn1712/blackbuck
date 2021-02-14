@@ -7,6 +7,7 @@ import { cloudMessaging } from '../../shared/api/clients';
 const db = firebase.firestore();
 const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
     const [messageList, setMessageList] = useState([]);
+    const [userDevice, setUserDevice] = useState("")
     const _onMessageWasSent = (message) => {
         db.collection("chat").doc(profile?.Id).collection("messages")
             .add({
@@ -35,23 +36,39 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
             name: profile?.FirstName + " " + profile?.LastName,
             from: profile?.Id
         });
-        cloudMessaging.post("fcm/send", {
-            // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            data: {
-                title: message.data.text,
-                image: profile?.ProfilePic,
-                message: profile?.FirstName + " " + profile?.LastName
-            },
-            to: "duQMBVfCbG4zmQwGiDaN4A:APA91bFkmeyrwyjP3xh-hc4TwW_aAWSaxLYmsTpGGe3HQlkKtu0WwT76aqTfOCrqbzS2x0xUGyk78v2ZQxW2N1Ahh_Z8eyKJb1X1gnUKepFo2Lw9vQsJiAxhT1sfJkhoenPa5Rj0kV-F"
-            // from: profile?.Id
-        }).then(res => {
-            debugger
-        }).catch(err => {
-            debugger
-        })
+        if (userDevice) {
+            cloudMessaging.post("fcm/send", {
+                notification:{
+                    title: "Blackbuck",
+                    icon: "https://theblackbucks.com/assets-new/img/logo.png",
+                    body: "You have new message from " + profile?.FirstName + " " + profile?.LastName
+                },
+                data: {
+                    title: "Blackbuck",
+                    image: 'https://theblackbucks.com/assets-new/img/logo.png',
+                    icon: "https://theblackbucks.com/assets-new/img/logo.png",
+                    message: "You have new message from " + profile?.FirstName + " " + profile?.LastName
+                },
+                to: userDevice
+            }).then(res => {
+
+            }).catch(err => {
+                console.log(err)
+            })
+        }
     }
     useEffect(() => {
+
         if (agentProfile) {
+            db.collection("devices").doc(agentProfile?.UserId).collection("tokens")
+                .get().then(snap => {
+                    const data = snap.docs.map(item => {
+                        return item.data();
+                    });
+                    if (data.length > 0) {
+                        setUserDevice(data[data.length - 1].token);
+                    }
+                });
             const unsubscribe = db.collection("chat").doc(profile?.Id).collection("messages")
                 .orderBy("createdAt")
                 .where("user_id", "==", agentProfile?.UserId)
