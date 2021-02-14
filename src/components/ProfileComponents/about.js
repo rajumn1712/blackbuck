@@ -89,11 +89,14 @@ class About extends Component {
       CollegeId: [],
       CollegeName: null,
     });
-    editObject.address.CollegeId.push(this.props.about?.College?.CollegeId);
-
+    editObject.address.CollegeId.push((this.props.about?.College?.CollegeId) ? (this.props.about?.College?.CollegeId) : (this.props.about?.College?.CollegeName));
+    let { address } = this.state;
+    address = { ...editObject.address }
+    address.CollegeId = editObject.address.CollegeId;
     this.setState({
-      visible: true,
-      address: editObject.address,
+      ...this.state, address: address
+    }, () => {
+      this.setState({ visible: true });
     });
   };
 
@@ -366,7 +369,7 @@ class About extends Component {
   handleChange = (prop, val, option) => {
     let initialValues = { ...this.state.address };
     if (prop === "CollegeId") {
-      initialValues[prop] = option[0]?.value ? option[0]?.value : "null";
+      initialValues[prop] = option[0]?.value ? option[0]?.value : null;
       initialValues.CollegeName = option[0]?.value ? option[0]?.name : val[0];
     } else {
       initialValues[prop] = val
@@ -480,7 +483,7 @@ class About extends Component {
           }}
         >
           {loading && <Loader className="loader-top-middle" />}
-          <Form layout="vertical" initialValues={address} ref={this.formRef}>
+        {visible &&  <Form layout="vertical" initialValues={address} ref={this.formRef}>
             <Row gutter={16}>
               <Col xs={24} className="mb-16">
                 <Form.Item
@@ -526,9 +529,8 @@ class About extends Component {
                   />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24}>
+              <Col xs={24} sm={24} className="custom-fields custom-multiselect about-clg-input">
                 <Form.Item
-                  className="custom-fields custom-multiselect onboard-clg-input"
                   label="College/University Name"
                   name="CollegeId"
                   rules={[
@@ -558,7 +560,7 @@ class About extends Component {
                     filterOption={(input, option) =>
                       this.getFilter(input, option)
                     }
-                    defaultValue={address.CollegeId}
+                    //  defaultValue={address.CollegeId}
                     placeholder="Select a college"
                     onChange={(val, option) =>
                       this.handleChange("CollegeId", val, option)
@@ -718,6 +720,7 @@ class About extends Component {
               </Col>
             </Row>
           </Form>
+  }
         </CommonModal>
       </div>
     );

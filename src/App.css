@@ -2231,3 +2231,4 @@ textarea {
 .add-livelinks .close-icon{position: absolute;right: -4px;top: 54%;transform: translateY(-50%);border-radius: 50%;box-shadow: var(--boxshadow);background-color: var(--white);padding: 14px;
   background-position: -400px -195px;}
   .sc-user-input--file-icon-wrapper{display: none !important;}
+  .about-clg-input .ant-select-selection-item{height: 38px; display: flex;align-items: center;padding: 5px;}
