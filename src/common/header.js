@@ -215,7 +215,7 @@ class HeaderComponent extends React.Component {
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Dropdown overlay={this.state.notifications?this.state.notifications:<div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visible) => { if (!visible) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
+                                <Dropdown overlay={this.state.notifications?this.state.notifications:<div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visibleDdl) => { if (!visibleDdl) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
                                     <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                         <Link className="header-link">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
@@ -322,8 +322,8 @@ class HeaderComponent extends React.Component {
 
                 {/* Mobile Naviagtion */}
                 <div className="">
-                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true" footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
-                        <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
+                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true">
+                        {/* <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} /> */}
                         <div className="messenger-drawer">
                             {this.state.friends?.map((friend, indx) => <Link key={indx} onClick={() => this.showChatWindow(friend)}>
                                 <Meta style={this.state.agentProfile?.UserId === friend.UserId ? { background: "lightgrey" } : {}}

@@ -228,10 +228,11 @@ class CreateGroup extends Component {
                         "Email": this.props?.profile?.Email,
                         "NotificationType": "Invitations",
                         "CreatedDate": new Date(),
+                        "Type":"request"
                     }
                     notificationArray.push(notificationObj);
                 })
-                saveNotification(notificationArray).then(res => {
+                saveNotification({ "Notifications": notificationArray}).then(res => {
 
                 });
                 this.setState({ ...this.state, loading: false });
