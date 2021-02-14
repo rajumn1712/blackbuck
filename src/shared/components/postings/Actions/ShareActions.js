@@ -48,6 +48,12 @@ class ShareAction extends Component {
             Claps: [],
             whistiles: [],
             Comments: [],
+            PostType: object ? object.PostType : "",
+            CourseType: object ? object.CourseType : "",
+            LiveDate: object ? object.LiveDate : "",
+            UrlType: object ? object.UrlType : "",
+            CategoryType: object ? object.CategoryType : "",
+            Author: object ? object.Author : "",
             Loves: [],
             Group: isGroup ? this.state.groupData : (object.Shares?.length == 0 ? object.Group : {
                 GroupId: null,
@@ -95,6 +101,11 @@ class ShareAction extends Component {
                 GroupImage: null,
             },
             PostType: object ? object.PostType : "",
+            CourseType: object ? object.CourseType : "",
+            LiveDate: object ? object.LiveDate : "",
+            UrlType: object ? object.UrlType : "",
+            CategoryType: object ? object.CategoryType : "",
+            Author: object ? object.Author : "",
             Shares: [],
             SharedUsers: this.props.post.SharedUsers ? this.props.post.SharedUsers.concat([user]) : [user]
         }
