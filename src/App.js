@@ -37,6 +37,9 @@ function App() {
     }).catch(err => {
       console.log(err)
     })
+    pushMessages.onMessage(payload => {
+    
+    })
   }, []);
 
   return (

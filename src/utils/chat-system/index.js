@@ -72,7 +72,7 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
             const unsubscribe = db.collection("chat").doc(profile?.Id).collection("messages")
                 .orderBy("createdAt")
                 .where("user_id", "==", agentProfile?.UserId)
-                .limit(100)
+                .limit(1000)
                 .onSnapshot(querySnapShot => {
                     const data = querySnapShot.docs.map(doc => {
                         const _item = doc.data();
