@@ -151,10 +151,11 @@ class About extends Component {
   };
   createSaveObj = (values) => {
     if(!this.state.address.CollegeName){
-      let {address} = this.state;
-    address.CollegeName = this.state.colleges?.filter(
-      (item) => item.CollegeId === this.props.about?.College?.CollegeId
-    )[0].CollegeName;
+      let { address } = this.state;
+      address.dupCollegeName = this.state.colleges?.filter(
+        (item) => item.CollegeId === this.props.about?.College?.CollegeId
+      )[0]?.CollegeName;
+      address.CollegeName = address.dupCollegeName ? address.dupCollegeName : address.CollegeName;
     this.setState({...this.state,address});
     }
     const saveObj = {
@@ -371,6 +372,7 @@ class About extends Component {
     if (prop === "CollegeId") {
       initialValues[prop] = option[0]?.value ? option[0]?.value : null;
       initialValues.CollegeName = option[0]?.value ? option[0]?.name : val[0];
+      initialValues.CollegeName = initialValues.CollegeName ? initialValues.CollegeName : initialValues.CollegeId;
     } else {
       initialValues[prop] = val
         ? val.currentTarget
