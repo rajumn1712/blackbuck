@@ -54,6 +54,7 @@ class ShareAction extends Component {
             UrlType: object ? object.UrlType : "",
             CategoryType: object ? object.CategoryType : "",
             Author: object ? object.Author : "",
+            CourseId: object ? object.CourseId : "",
             Loves: [],
             Group: isGroup ? this.state.groupData : (object.Shares?.length == 0 ? object.Group : {
                 GroupId: null,
@@ -106,6 +107,7 @@ class ShareAction extends Component {
             UrlType: object ? object.UrlType : "",
             CategoryType: object ? object.CategoryType : "",
             Author: object ? object.Author : "",
+            CourseId: object ? object.CourseId : "",
             Shares: [],
             SharedUsers: this.props.post.SharedUsers ? this.props.post.SharedUsers.concat([user]) : [user]
         }
