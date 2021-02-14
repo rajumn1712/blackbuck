@@ -50,6 +50,7 @@ class CreateGroup extends Component {
         this.formRef.current.values.GroupType = initialValues.GroupType;
         this.formRef.current.values.Type = initialValues.Type;
         this.formRef.current.values.Location = initialValues.Location;
+        this.formRef.current.values.Hide = initialValues.Hide;
         this.formRef.current.values.Description = initialValues.Description;
         initialValues.Invitations.forEach(val => {
             this.formRef.current.values.Invitations.push(val.FriendId)
