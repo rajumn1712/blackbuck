@@ -13,6 +13,7 @@ import { fetchUserFriends, fetchNotificationCount } from '../shared/api/apiServe
 import Notifications from '../components/notification';
 import ChatSystem from '../utils/chat-system';
 import firebase from '../utils/firebase';
+import { removeUnRead } from '../utils/chat-system/chatReducer';
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
@@ -159,7 +160,9 @@ class HeaderComponent extends React.Component {
     }
     showChatWindow = (user) => {
         this.setState({ ...this.state, agentProfile: null }, () => {
-            this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image || defaultUser, teamName: user.Firstname, UserId: user.UserId } })
+            this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image || defaultUser, teamName: user.Firstname, UserId: user.UserId } }, () => {
+                this.props.removeUnRead(user.UserId)
+            })
         })
     }
     render() {
@@ -212,7 +215,7 @@ class HeaderComponent extends React.Component {
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                                 <Tooltip title="Messages" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                     <Link className="header-link" onClick={this.showDrawer}>
-                                        <Badge className="notification-count" count={this.props?.chatHistory?.unread.length} showZero>
+                                        <Badge className="notification-count" count={this.props?.chatHistory?.unread.length} >
                                             <span className="icons chat-icon" />
                                         </Badge>
                                     </Link>
@@ -349,4 +352,11 @@ const mapStateToProps = ({ oidc, chatHistory }) => {
     const { user, profile, search_value } = oidc;
     return { profile, user, search_value, chatHistory }
 }
-export default withRouter(connect(mapStateToProps)(HeaderComponent));
+const mapDispatchToProps = dispatch => {
+    return {
+        removeUnRead: id => {
+            dispatch(removeUnRead(id));
+        }
+    }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderComponent));
