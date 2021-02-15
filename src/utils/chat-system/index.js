@@ -4,6 +4,7 @@ import { Launcher } from 'react-chat-window'
 import './chat.css'
 import firebase from '../firebase';
 import { cloudMessaging } from '../../shared/api/clients';
+import { sendNotification } from '../../shared/api/apiServer';
 const db = firebase.firestore();
 const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
     const [messageList, setMessageList] = useState([]);
@@ -36,21 +37,7 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
             name: profile?.FirstName + " " + profile?.LastName,
             from: profile?.Id
         });
-        if (userDevice) {
-            cloudMessaging.post("fcm/send", {
-                data: { user_id: profile?.Id },
-                notification: {
-                    title: "Blackbuck",
-                    icon: "https://theblackbucks.com/assets-new/img/logo.png",
-                    body: "You have new message from " + profile?.FirstName + " " + profile?.LastName
-                },
-                registration_ids: [...userDevice]
-            }).then(res => {
-
-            }).catch(err => {
-                console.log(err)
-            })
-        }
+        sendNotification({ to: agentProfile?.UserId, message: "You have new message from " + profile?.FirstName + " " + profile?.LastName, from: profile?.Id })
     }
     useEffect(() => {
 

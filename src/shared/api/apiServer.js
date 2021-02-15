@@ -1,4 +1,7 @@
-const { apiClient } = require("./clients");
+import firebase from 'firebase';
+import 'firebase/messaging';
+import 'firebase/firestore'
+const { apiClient, cloudMessaging } = require("./clients");
 const FRIENDS_API = "service/api/home/";
 const GROUPS_API = "service/api/groups/";
 const PROFILE_API = "service/api/profile/";
@@ -313,6 +316,27 @@ const saveNotification = (obj) => {
 const readNotification = (id, type) => {
   return apiClient.get(PROFILE_API + `notificationRead/${id}/${type}`);
 }
+const sendNotification = ({ to, message, from }) => {
+  firebase.firestore().collection("devices").doc(to).collection('tokens')
+    .get()
+    .then(snapshot => {
+      const devices = snapshot.docs.map(item => item.data().token);
+      const obj = {
+        data: { user_id: from },
+        notification: {
+          title: "Blackbuck",
+          icon: "https://theblackbucks.com/assets-new/img/logo.png",
+          body: message
+        },
+        registration_ids: devices
+      }
+      if (devices && devices.length > 0) {
+        cloudMessaging.post("fcm/send", obj).then(response => {
+
+        });
+      }
+    });
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -403,5 +427,6 @@ export {
   getIsFriend,
   getCategories,
   saveNotification,
-  readNotification
+  readNotification,
+  sendNotification
 };
