@@ -40,7 +40,8 @@ function App() {
     })
     pushMessages.onMessage(payload => {
       store.dispatch(setUnRead(payload?.data?.user_id));
-    })
+    });
+
   }, []);
 
   return (
