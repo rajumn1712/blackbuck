@@ -11,8 +11,6 @@ import { Provider } from 'react-redux';
 import LayoutComponent from './common/layout';
 import Loader from './common/loader';
 import firebase from './utils/firebase'
-import { notification } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
 import { setUnRead } from './utils/chat-system/chatReducer';
 function App() {
   const [loading, setLoading] = useState(true);
@@ -26,22 +24,9 @@ function App() {
       setLoading(false);
     });
     const pushMessages = firebase.messaging();
-    pushMessages.requestPermission().then(value => {
-      return pushMessages.getToken();
-    }).then(token => {
-      const state = store.getState();
-      if (token && state?.oidc?.profile?.Id) {
-        firebase.firestore().collection("devices").doc(state?.oidc?.profile?.Id).collection("tokens").add({
-          token
-        });
-      }
-    }).catch(err => {
-      console.log(err)
-    })
     pushMessages.onMessage(payload => {
       store.dispatch(setUnRead(payload?.data?.user_id));
     });
-
   }, []);
 
   return (
