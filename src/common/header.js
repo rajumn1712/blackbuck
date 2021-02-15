@@ -13,14 +13,35 @@ import { fetchUserFriends, fetchNotificationCount } from '../shared/api/apiServe
 import Notifications from '../components/notification';
 import ChatSystem from '../utils/chat-system';
 import firebase from '../utils/firebase';
+import 'firebase/messaging';
+import 'firebase/firestore';
 import { removeUnRead } from '../utils/chat-system/chatReducer';
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
-const logout = () => {
-    userLogout();
-    userManager.signoutRedirect()
+const logout = (id) => {
+    firebase.messaging().getToken().then(token => {
+        firebase.firestore().collection("devices").doc(id).collection('tokens')
+            .get()
+            .then(snapshot => {
+                let isExits = false;
+                snapshot.docs.forEach(item => {
+                    if (item.data().token == token) {
+                        item.ref.delete().then(pay => {
+                            isExits = true;
+                            userLogout();
+                            userManager.signoutRedirect()
+                        })
+                    }
+                });
+                if (!isExits) {
+                    userLogout();
+                    userManager.signoutRedirect();
+                }
+            })
+    })
+
 }
 class HeaderComponent extends React.Component {
     chatSubscription;
@@ -153,7 +174,7 @@ class HeaderComponent extends React.Component {
                 </Menu.Item>
             }
             <Menu.Divider />
-            <Menu.Item key="5" onClick={logout}>
+            <Menu.Item key="5" onClick={() => logout(this.props?.profile?.Id)}>
                 <a ><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
             </Menu.Item>
         </Menu >)
