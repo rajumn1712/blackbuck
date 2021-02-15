@@ -420,6 +420,23 @@
     text-align: center !important;
 }
 
+.messenger-drawer .sc-header{ 
+    min-height: 50px !important;
+    padding:0 !important;
+  }
+
+.messenger-drawer .sc-message-list{
+    padding: 16px 0px;
+}
+.messenger-drawer .sc-message--content.sent .sc-message--text{
+    padding: 6px 12px;
+    border-top-right-radius: 0;
+}
+.messenger-drawer .sc-message--content.received .sc-message--text{
+    padding: 6px 12px;
+    border-top-left-radius: 0;
+}
+
 .ant-drawer-footer .messenger-footer {
     color: var(--primary);
 }
