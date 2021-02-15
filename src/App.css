@@ -816,6 +816,7 @@
   align-items: center;
   font-weight: var(--fw-500);
 }
+.ant-upload.ant-upload-drag{margin-bottom: 6px;}
 .upload-image .ant-upload.ant-upload-drag p.ant-upload-text {
   margin: 0 0 4px;
   color: var(--black);
@@ -997,16 +998,6 @@
 }
 .sharebox-icons.office-icon {
   background-position: -661px -105px;
-}
-.hobbies-card .tags {
-  background-color: var(--secondary);
-  color: var(--textprimary);
-  font-size: var(--f-14);
-  font-weight: var(--fw-500);
-  border-radius: 40px;
-  padding: 4px 15px;
-  border: none;
-  margin-bottom: 8px;
 }
 .text-left-line.ant-divider-horizontal.ant-divider-with-text-left::before {
   width: 0 !important;
@@ -1374,9 +1365,7 @@
   min-height: 48px;
   width: 100%;
   border-radius: 8px !important;
-}
-.custom-fields textarea.ant-input {
-  /* min-height: 90px !important; */
+  padding: 4px 11px;
 }
 .ant-input,
 .ant-select-selector,
@@ -1679,6 +1668,15 @@ textarea {
 }
 .hobbies-card .tags {
   min-height: auto;
+  background-color: var(--secondary);
+  color: var(--textprimary);
+  font-size: var(--f-14);
+  font-weight: var(--fw-500);
+  border-radius: 40px;
+  padding: 4px 15px;
+  border: none;
+  margin-bottom: 8px;
+  text-transform: capitalize;
 }
 .onboard-process .steps-content {
   color: var(--white);

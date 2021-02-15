@@ -497,7 +497,7 @@ class About extends Component {
                   <TextArea
                     component="textarea"
                     className="ant-input"
-                    autoSize={{ minRows: 2, maxRows: 6 }}
+                    autoSize={{ minRows: 2, maxRows: 3 }}
                     placeholder="About Me"
                     onChange={(value) => this.handleChange("AboutMe", value)}
                   />

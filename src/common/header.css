@@ -475,4 +475,8 @@
     .desktop-navigation {
         display: none !important;
     }
+    .mobile-main-nav .menu-items{
+        display: flex;
+        justify-content: space-between;
+    }
 }
