@@ -42,7 +42,8 @@ import {
   deleteUserGroup,
   saveAdminUsers,
   fetchUserFriends,
-  getMembers
+  getMembers,
+  sendNotification
 } from "../shared/api/apiServer";
 import { connect } from "react-redux";
 import { profileSuccess } from "../reducers/auth";
@@ -293,6 +294,9 @@ class Group extends Component {
         this.props.updateProfile(this.props.profile);
       }
       else {
+        this.state.groupData.AdminUsers.forEach(item => {
+          sendNotification({ to: item.UserId, message: `${this.props?.profile?.FirstName} sent  request to join  group`, from: this.props?.profile?.Id });
+        });
         this.getGroupData();
       }
     } else {

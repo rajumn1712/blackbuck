@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Button, Row, Col } from 'antd';
 import { apiClient } from '../api/clients';
 import notify from './notification';
-import { cancelFriendRequest, getFriendSuggestions, sendFirendRequest } from '../api/apiServer';
+import { cancelFriendRequest, getFriendSuggestions, sendFirendRequest ,sendNotification} from '../api/apiServer';
 import { Link } from 'react-router-dom'
 import connectStateProps from '../stateConnect';
 import defaultUser from '../../styles/images/defaultuser.jpg';
@@ -85,6 +85,7 @@ class FriendSuggestions extends Component {
         }
         sendFirendRequest(friend.UserId, obj).then(() => {
             this.updateFriendSuggestions(friend.UserId, "Type", "request");
+            sendNotification({to:friend.UserId,message:`${this.props?.profile?.FirstName} sent you friend request`,from:this.props?.profile?.Id});
             notify({ message: "Friend request", description: "Request sent successfully" });
         })
     }

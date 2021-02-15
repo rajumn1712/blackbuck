@@ -8,6 +8,7 @@ import defaultUser from '../../../../styles/images/defaultuser.jpg';
 import Moment from 'react-moment'
 import { uuidv4 } from '../../../../utils';
 import { fetchLMSComments, saveLMSComment } from '../../../../lms/api';
+import { sendNotification } from "../../../api/apiServer";
 const commentEdit = (
     <Menu className="custom-dropdown">
       <Menu.Item key="0">
@@ -71,6 +72,7 @@ class Comments extends Component {
         const saveResponse = await (this.props.isLMSComment ? saveLMSComment(lmscommentObj) : postComment(this.props.postId, object));
         if (saveResponse.ok) {
             let { comments } = this.state;
+            if (!this.props.isLMSComment && this.props.profile?.Id !== !this.props.userId) { sendNotification({ to: this.props.userId, message: `${this.props?.profile?.FirstName} commented on your post`, from: this.props?.profile?.Id }); }
             comments.unshift(object);
           if(this.props.onUpdate){ this.props.onUpdate("commentsCount", this.state.count + 1, object); }
             this.setState({ ...this.state, comments, Comment: "", count: this.state.count + 1 });
@@ -105,7 +107,7 @@ class Comments extends Component {
                     }
                     content={
                         <Form.Item><TextArea onChange={this.onChange} value={this.state.Comment}  autoSize={{ minRows: 1, maxRows: 6 }} />
-                            <Button disabled={!this.state.Comment} htmlType="submit" onClick={this.onSubmit} shape="circle" type="link" className="post-btn">
+                            <Button disabled={!this.state.Comment} htmlType="submit" onClick={()=>this.onSubmit()} shape="circle" type="link" className="post-btn">
                                 <span className="post-icons send-icon mr-0"></span>
                             </Button></Form.Item>
                     }

@@ -43,7 +43,7 @@ import { uuidv4 } from "../../utils";
 import VisSenseFactory from "vissense";
 import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
-import { joinGroupNew, getIsFriend, sendFirendRequest } from "../api/apiServer";
+import { joinGroupNew, getIsFriend, sendFirendRequest ,sendNotification} from "../api/apiServer";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -312,6 +312,7 @@ class Postings extends Component {
     }
     sendFirendRequest(post?.userdetails.UserId, obj).then(() => {
       this.checkWhetherFriendOrNot(post)
+      sendNotification({ to: post?.userdetails.UserId, message: `${this.props?.profile?.FirstName} sent you friend request`, from: this.props?.profile?.Id });
       notify({ message: "Friend request", description: "Request sent successfully" });
     })
   }
@@ -1113,6 +1114,7 @@ class Postings extends Component {
             count={post.commentsCount}
             postId={post.id}
             object={this.state.object}
+            userId={post.userdetails?.UserId}
           />
         )}
         {/* {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />} */}

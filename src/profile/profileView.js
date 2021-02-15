@@ -32,7 +32,7 @@ import VideoProfile from "../components/ProfileComponents/videoprofile";
 import Education from "../components/ProfileComponents/education";
 import Postings from "../shared/postings";
 import { connect } from "react-redux";
-import { profileDetail, getIsFriend, cancelFriendRequest, sendFirendRequest, acceptFrienRequest } from "../shared/api/apiServer";
+import { profileDetail, getIsFriend, cancelFriendRequest, sendFirendRequest, acceptFrienRequest ,sendNotification} from "../shared/api/apiServer";
 import notify from '../shared/components/notification';
 import GroupsPage from "../shared/components/GroupsPage";
 import defaultUser from "../styles/images/defaultuser.jpg";
@@ -164,6 +164,7 @@ class ProfileView extends Component {
       let { requestType } = this.state;
       requestType = "request";
       this.setState({ ...this.state, requestType });
+      sendNotification({to:this.props?.match?.params.userId,message:`${this.props?.profile?.FirstName} sent you friend request`,from:this.props?.profile?.Id});
       notify({ message: "Friend request", description: "Request sent successfully" });
     })
   }
