@@ -97,7 +97,7 @@ class HeaderComponent extends React.Component {
             </div>
             <Divider className="my-0" />
             <div className="notification-container">
-                <Notifications onRef={notification => this.notification = notification} type="ddl" onCount={()=>this.getNotificationsCount()}/>
+                <Notifications onRef={notification => this.notification = notification} type="ddl" onCount={() => this.getNotificationsCount()} />
             </div>
             <Divider className="my-0" />
             {/* {(this.state.notificationsCount > 10) && <div className="p-8 pt-4">
@@ -211,11 +211,15 @@ class HeaderComponent extends React.Component {
                         <Menu className="menu-items text-right right-menu" mode="horizontal">
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                                 <Tooltip title="Messages" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Link className="header-link" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
+                                    <Link className="header-link" onClick={this.showDrawer}>
+                                        <Badge className="notification-count" count={this.props?.chatHistory?.unread.length} showZero>
+                                            <span className="icons chat-icon" />
+                                        </Badge>
+                                    </Link>
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Dropdown overlay={this.state.notifications?this.state.notifications:<div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visibleDdl) => { if (!visibleDdl) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
+                                <Dropdown overlay={this.state.notifications ? this.state.notifications : <div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visibleDdl) => { if (!visibleDdl) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
                                     <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                         <Link className="header-link">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
@@ -262,6 +266,7 @@ class HeaderComponent extends React.Component {
                                     </div>} trigger="click">
                                         <Link className="header-link">
                                             <span className="icons search-icon" />
+
                                         </Link>
                                     </Popover>
                                 </Menu.Item>
@@ -326,7 +331,7 @@ class HeaderComponent extends React.Component {
                         {/* <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} /> */}
                         <div className="messenger-drawer">
                             {this.state.friends?.map((friend, indx) => <Link key={indx} onClick={() => this.showChatWindow(friend)}>
-                                <Meta style={this.state.agentProfile?.UserId === friend.UserId ? { background: "lightgrey" } : {}}
+                                <Meta style={this.props.chatHistory?.unread.indexOf(friend.UserId) > -1 ? { background: "lightgrey" } : {}}
                                     avatar={<Avatar src={friend.Image || defaultUser} />}
                                     title={friend.Firstname}
                                     description={<p className="chat-description">{friend.Email}</p>}
@@ -340,8 +345,8 @@ class HeaderComponent extends React.Component {
         )
     }
 }
-const mapStateToProps = ({ oidc }) => {
+const mapStateToProps = ({ oidc, chatHistory }) => {
     const { user, profile, search_value } = oidc;
-    return { profile, user, search_value }
+    return { profile, user, search_value, chatHistory }
 }
 export default withRouter(connect(mapStateToProps)(HeaderComponent));

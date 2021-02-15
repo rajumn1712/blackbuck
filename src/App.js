@@ -13,6 +13,7 @@ import Loader from './common/loader';
 import firebase from './utils/firebase'
 import { notification } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
+import { setUnRead } from './utils/chat-system/chatReducer';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +39,7 @@ function App() {
       console.log(err)
     })
     pushMessages.onMessage(payload => {
-    
+      store.dispatch(setUnRead(payload?.data?.user_id));
     })
   }, []);
 
