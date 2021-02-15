@@ -2230,5 +2230,5 @@ textarea {
 .add-livelinks .icons.add{position: absolute;left: -4px;top: 57%;transform: translateY(-50%);border-left: 0;border-radius: 50%;box-shadow: var(--boxshadow);background-color: var(--white);}
 .add-livelinks .close-icon{position: absolute;right: -4px;top: 54%;transform: translateY(-50%);border-radius: 50%;box-shadow: var(--boxshadow);background-color: var(--white);padding: 14px;
   background-position: -400px -195px;}
-  .sc-user-input--file-icon-wrapper{display: none !important;}
-  .about-clg-input .ant-select-selection-item{height: 38px; display: flex;align-items: center;padding: 5px;}
+.sc-user-input--file-icon-wrapper{display: none !important;}
+.about-clg-input .ant-select-selection-item{height: 38px !important; display: flex;align-items: center;padding: 5px;}
