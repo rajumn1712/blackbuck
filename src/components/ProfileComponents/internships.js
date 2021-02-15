@@ -64,7 +64,7 @@ class Intership extends Component {
       Location: "",
       Duration: "",
     },
-    duration: ["30 days", "45 days", "2 months", "3 months","4 months","5 months", "6 months"],
+    duration: ["30 days", "45 days", "2 months", "3 months", "4 months", "5 months", "6 months"],
     visible: false,
     fileUploading: false,
     fileUpload: false,
@@ -108,7 +108,7 @@ class Intership extends Component {
       if (status === "done") {
         let { internshipsObj } = this.state;
         internshipsObj.CompanyLogo = info.file.response[0];
-        this.setState({ ...this.state,internshipsObj });
+        this.setState({ ...this.state, internshipsObj });
         notify({
           description: `Logo uploaded successfully.`,
           message: "Upload",
@@ -138,7 +138,7 @@ class Intership extends Component {
         Size: "",
       };
       let { internshipsObj } = this.state
-      
+
       if (status === "done") {
         certificates.Avatar = info.file.name.split(".")[1];
         certificates.File = info.file.name;
@@ -166,7 +166,7 @@ class Intership extends Component {
   deleteLogo = () => {
     const internshipsObj = { ...this.state.internshipsObj };
     internshipsObj.CompanyLogo = "";
-    this.setState({...this.state, internshipsObj: internshipsObj });
+    this.setState({ ...this.state, internshipsObj: internshipsObj });
   };
   deleteFile = (key) => {
     const internship = { ...this.state.internshipsObj };
@@ -260,31 +260,30 @@ class Intership extends Component {
     this.setState({ internshipsObj: internshipsObj });
   };
   handleOk = (values) => {
-      this.setState({ ...this.state, loading: true });
-      const saveObj = this.createObject(values);
-      saveInternships(saveObj).then((res) => {
-        this.setState(
-          {
-            ...this.state,
-            loading: false,
-            visible: false,
-            internshipsObj: {
-              InternshipId: "",
-              // CompanyLogo: "",
-              uploadsources: [],
-            },
+    this.setState({ ...this.state, loading: true });
+    const saveObj = this.createObject(values);
+    saveInternships(saveObj).then((res) => {
+      this.setState(
+        {
+          ...this.state,
+          loading: false,
+          visible: false,
+          internshipsObj: {
+            InternshipId: "",
+            // CompanyLogo: "",
+            uploadsources: [],
           },
-          () => {
-            notify({
-              description: `Internship ${
-                this.state.isEdit ? "edited" : "saved"
+        },
+        () => {
+          notify({
+            description: `Internship ${this.state.isEdit ? "edited" : "saved"
               } successfully`,
-              message: "Internship",
-            });
-            this.props.callback(true);
-          }
-        );
-      });
+            message: "Internship",
+          });
+          this.props.callback(true);
+        }
+      );
+    });
   };
   handleCancel = (e) => {
     this.formRef.current.resetFields();
@@ -305,13 +304,13 @@ class Intership extends Component {
     });
   };
   handleChange = (prop, val) => {
-    let initialValues = {...this.state.initialValues}
+    let initialValues = { ...this.state.initialValues }
     initialValues[prop] = val
       ? val.currentTarget
         ? val.currentTarget.value
         : val
       : "";
-    this.setState({...this.state,initialValues:initialValues})
+    this.setState({ ...this.state, initialValues: initialValues })
   };
   render() {
     const data = [...this.state.internships];
@@ -380,16 +379,16 @@ class Intership extends Component {
                       <span className="">{item.Duration}</span>
                     </p>
                   </div>
-                  <div className="intern-cardfooter">
-                    {item.Certificate?.map((certificate, indx) => {
-                      return (
+                  {item.Certificate?.map((certificate, indx) => {
+                    return (
+                      <div className="intern-cardfooter">
                         <div className="mb-0 filename" key={indx}>
                           {/* <span className="icons pdf mr-8" /> */}
                           <p>{certificate.File}</p>
                         </div>
-                      );
-                    })}
-                  </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </List.Item>
             )}
@@ -411,110 +410,110 @@ class Intership extends Component {
           {this.state.loading && <Loader className="loader-top-middle" />}
           {visible && (
             <Form layout="vertical" initialValues={initialValues} ref={this.formRef}>
-            <Row gutter={8}>
-              <Col xs={24}>
-                <Form.Item
-                  label="Company Name"
-                  name="CompanyName"
-                  rules={[{ required: true,message: "CompanyName  required" }]}
-                  className="custom-fields"
-                >
-                  <Input
-                    className="ant-input"
-                    placeholder="Company Name"
-                    onChange={(value) => this.handleChange("CompanyName", value)}
-                  />
-                </Form.Item>
-              </Col>
-              <Col xs={24} md={12}>
-                <Form.Item
-                  label="Place"
-                  name="Location"
-                  rules={[{ required: true,message: "Place  required" }]}
-                  className="custom-fields"
-                >
-                  <Input
-                    className="ant-input"
-                    placeholder="Location"
-                    onChange={(value) => this.handleChange("Location", value)}
-                  />
-                </Form.Item>
-              </Col>
-              <Col xs={24} md={12}>
-                <Form.Item
-                  label="Duration"
-                  name="Duration"
-                  rules={[{ required: true }]}
-                  className="custom-fields custom-select"
-                >
-                  <Select
-                    name="Duration"
-                    defaultValue=""
-                    onChange={(value) => this.handleChange("Duration", value)}
+              <Row gutter={8}>
+                <Col xs={24}>
+                  <Form.Item
+                    label="Company Name"
+                    name="CompanyName"
+                    rules={[{ required: true, message: "CompanyName  required" }]}
+                    className="custom-fields"
                   >
-                    <Option value="">Select Duration</Option>
-                    {duration.map((duration, index) => {
-                      return (
-                        <Option key={index} value={duration}>
-                          {duration}
-                        </Option>
-                      );
-                    })}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col xs={24} md={24} className="mb-16">
-                <Dragger
-                  className="upload"
-                  {...this.uploadfileProps}
-                  onRemove={() =>
-                    this.setState({
-                      ...this.state.internshipsObj,
-                      Certificate: [],
-                    })
-                  }
-                >
-                  {this.state.fileUpload && (
-                    <Loader className="loader-top-middle" />
-                  )}
-                  <span className="sharebox-icons photo-upload"></span>
-                  <p className="ant-upload-text mt-8 mb-0">
-                    Upload Certificate
-                  </p>
-                </Dragger>
-              </Col>
-
-              <Col xs={24}>
-                <div className="docs about-icons education">
-                  <List
-                    itemLayout="horizontal"
-                    dataSource={internshipsObj.uploadsources}
-                    renderItem={(item, indx) => (
-                      <List.Item className="upload-preview mt-8">
-                        <List.Item.Meta
-                          avatar={[
-                            <span
-                              className={`doc-icons ${item.Avatar}`}
-                            ></span>,
-                          ]}
-                          title={item.File}
-                          description={
-                            <div className="file-size f-14">
-                              {item.Size} {"KB"}
-                            </div>
-                          }
-                        />
-                        <span
-                          className="close-icon"
-                          onClick={() => this.deleteFile(indx)}
-                        ></span>
-                      </List.Item>
+                    <Input
+                      className="ant-input"
+                      placeholder="Company Name"
+                      onChange={(value) => this.handleChange("CompanyName", value)}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label="Place"
+                    name="Location"
+                    rules={[{ required: true, message: "Place  required" }]}
+                    className="custom-fields"
+                  >
+                    <Input
+                      className="ant-input"
+                      placeholder="Location"
+                      onChange={(value) => this.handleChange("Location", value)}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label="Duration"
+                    name="Duration"
+                    rules={[{ required: true }]}
+                    className="custom-fields custom-select"
+                  >
+                    <Select
+                      name="Duration"
+                      defaultValue=""
+                      onChange={(value) => this.handleChange("Duration", value)}
+                    >
+                      <Option value="">Select Duration</Option>
+                      {duration.map((duration, index) => {
+                        return (
+                          <Option key={index} value={duration}>
+                            {duration}
+                          </Option>
+                        );
+                      })}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={24} className="mb-16">
+                  <Dragger
+                    className="upload"
+                    {...this.uploadfileProps}
+                    onRemove={() =>
+                      this.setState({
+                        ...this.state.internshipsObj,
+                        Certificate: [],
+                      })
+                    }
+                  >
+                    {this.state.fileUpload && (
+                      <Loader className="loader-top-middle" />
                     )}
-                  />
-                </div>
-              </Col>
-            </Row>
-          </Form>
+                    <span className="sharebox-icons photo-upload"></span>
+                    <p className="ant-upload-text mt-8 mb-0">
+                      Upload Certificate
+                  </p>
+                  </Dragger>
+                </Col>
+
+                <Col xs={24}>
+                  <div className="docs about-icons education">
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={internshipsObj.uploadsources}
+                      renderItem={(item, indx) => (
+                        <List.Item className="upload-preview mt-8">
+                          <List.Item.Meta
+                            avatar={[
+                              <span
+                                className={`doc-icons ${item.Avatar}`}
+                              ></span>,
+                            ]}
+                            title={item.File}
+                            description={
+                              <div className="file-size f-14">
+                                {item.Size} {"KB"}
+                              </div>
+                            }
+                          />
+                          <span
+                            className="close-icon"
+                            onClick={() => this.deleteFile(indx)}
+                          ></span>
+                        </List.Item>
+                      )}
+                    />
+                  </div>
+                </Col>
+              </Row>
+            </Form>
           )}
         </CommonModal>
       </div>
