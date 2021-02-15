@@ -353,9 +353,9 @@ class HeaderComponent extends React.Component {
                 <div className="">
                     <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true">
                         {/* <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} /> */}
-                        <div className="messenger-drawer">
+                        <div className="messenger-drawer ">
                             {this.state.friends?.map((friend, indx) => <Link key={indx} onClick={() => this.showChatWindow(friend)}>
-                                <Meta style={this.props.chatHistory?.unread.indexOf(friend.UserId) > -1 ? { background: "lightgrey" } : {}}
+                                <Meta className={this.props.chatHistory?.unread.indexOf(friend.UserId) > -1 ? "unread-msg" : ""}
                                     avatar={<Avatar src={friend.Image || defaultUser} />}
                                     title={friend.Firstname}
                                     description={<p className="chat-description">{friend.Email}</p>}
