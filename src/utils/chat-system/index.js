@@ -38,18 +38,13 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
         });
         if (userDevice) {
             cloudMessaging.post("fcm/send", {
-                notification:{
+                data: { user_id: profile?.Id },
+                notification: {
                     title: "Blackbuck",
                     icon: "https://theblackbucks.com/assets-new/img/logo.png",
                     body: "You have new message from " + profile?.FirstName + " " + profile?.LastName
                 },
-                data: {
-                    title: "Blackbuck",
-                    image: 'https://theblackbucks.com/assets-new/img/logo.png',
-                    icon: "https://theblackbucks.com/assets-new/img/logo.png",
-                    message: "You have new message from " + profile?.FirstName + " " + profile?.LastName
-                },
-                to: userDevice
+                registration_ids: [...userDevice]
             }).then(res => {
 
             }).catch(err => {
@@ -63,10 +58,10 @@ const ChatSystem = ({ profile, agentProfile, isOpen, handleClick }) => {
             db.collection("devices").doc(agentProfile?.UserId).collection("tokens")
                 .get().then(snap => {
                     const data = snap.docs.map(item => {
-                        return item.data();
+                        return item.data().token;
                     });
                     if (data.length > 0) {
-                        setUserDevice(data[data.length - 1].token);
+                        setUserDevice(data.filter((item, indx, arr) => indx == arr.indexOf(item)));
                     }
                 });
             const unsubscribe = db.collection("chat").doc(profile?.Id).collection("messages")
