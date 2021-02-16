@@ -14,20 +14,27 @@ class CallbackPage extends React.Component {
         const profileResponse = await fetchProfile(user.profile.email);
         if (profileResponse.ok) {
             this.props.updateProfile(profileResponse.data[0]);
-            firebase.messaging().requestPermission().then(value => {
-                firebase.messaging().getToken().then(token => {
-                    firebase.firestore().collection("devices").doc(profileResponse.data[0].Id).collection("tokens").add({
-                        token
-                    });
-                    if (!profileResponse.data[0]?.IsOnBoardProcess) {
-                        this.props.history.push("/student_onboard")
-                    } else {
-                        const url = localStorage.getItem("__url");
-                        localStorage.removeItem("__url");
-                        this.props.history.push(url && url !== "/callback" ? url : "/")
-                    }
-                })
+            firebase.messaging().getToken().then(token => {
+                firebase.firestore().collection("devices").doc(profileResponse.data[0].Id).collection("tokens").add({
+                    token
+                });
+                if (!profileResponse.data[0]?.IsOnBoardProcess) {
+                    this.props.history.push("/student_onboard")
+                } else {
+                    const url = localStorage.getItem("__url");
+                    localStorage.removeItem("__url");
+                    this.props.history.push(url && url !== "/callback" ? url : "/")
+                }
+            }).catch(error => {
+                if (!profileResponse.data[0]?.IsOnBoardProcess) {
+                    this.props.history.push("/student_onboard")
+                } else {
+                    const url = localStorage.getItem("__url");
+                    localStorage.removeItem("__url");
+                    this.props.history.push(url && url !== "/callback" ? url : "/")
+                }
             })
+
 
 
         } else {
