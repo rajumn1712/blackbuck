@@ -41,6 +41,10 @@ const logout = (id) => {
                 }
             })
     })
+        .catch(error => {
+            userLogout();
+            userManager.signoutRedirect();
+        })
 
 }
 class HeaderComponent extends React.Component {
