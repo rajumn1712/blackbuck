@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Typography, Button, Row, Col } from 'antd';
+import { Typography, Button, Row, Col, Skeleton } from 'antd';
 import { apiClient } from '../api/clients';
 import notify from './notification';
-import { cancelFriendRequest, getFriendSuggestions, sendFirendRequest ,sendNotification} from '../api/apiServer';
+import { cancelFriendRequest, getFriendSuggestions, sendFirendRequest, sendNotification } from '../api/apiServer';
 import { Link } from 'react-router-dom'
 import connectStateProps from '../stateConnect';
 import defaultUser from '../../styles/images/defaultuser.jpg';
@@ -16,7 +16,7 @@ const options = {
     responsiveClass: true,
     responsive: {
         0: {
-            items: 2    
+            items: 2
         },
 
         575: {
@@ -81,11 +81,11 @@ class FriendSuggestions extends Component {
             "Image": this.props?.profile?.ProfilePic,
             "Email": this.props?.profile?.Email,
             "Type": "request",
-            "CreatedDate":new Date()
+            "CreatedDate": new Date()
         }
         sendFirendRequest(friend.UserId, obj).then(() => {
             this.updateFriendSuggestions(friend.UserId, "Type", "request");
-            sendNotification({to:friend.UserId,message:`${this.props?.profile?.FirstName} sent you friend request`,from:this.props?.profile?.Id});
+            sendNotification({ to: friend.UserId, message: `${this.props?.profile?.FirstName} sent you friend request`, from: this.props?.profile?.Id });
             notify({ message: "Friend request", description: "Request sent successfully" });
         })
     }
@@ -133,8 +133,10 @@ class FriendSuggestions extends Component {
             return (
                 <>
                     <Sharebox dataRefreshed={() => { }} />
+                    <div className="friends-thead px-4">
+                        <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title>
+                    </div>
                     <Row gutter={8} >
-
                         {this.state.friends.map((friend, index) => <Col xs={12} md={8} lg={8}>
                             <div className="frnds-list-item m-0 mb-8" key={index}>
                                 <div className="frnds-img ">
@@ -154,13 +156,34 @@ class FriendSuggestions extends Component {
 
                         </Col>)}
                     </Row>
-                    {this.state.isViewAllPage && this.state.loading && <Loader className="loader-top-middle" />}
+                    {this.state.isViewAllPage && this.state.loading &&  <Row gutter={8} >
+                        <Col xs={12} md={8}>
+                            <div className="cards-list-skelton" >
+                                <Skeleton.Image active shape='square' />
+                                <Skeleton active paragraph={{ rows: 1 }} />
+                                <Skeleton.Button active shape='square' />
+                            </div>
+                        </Col>
+                        <Col xs={12} md={8}>
+                            <div className="cards-list-skelton" >
+                                <Skeleton.Image active shape='square' />
+                                <Skeleton active  paragraph={{ rows: 1 }} />
+                                <Skeleton.Button active shape='square' />
+                            </div>
+                        </Col>
+                        <Col xs={12} md={8}>
+                            <div className="cards-list-skelton" >
+                                <Skeleton.Image active shape='square' />
+                                <Skeleton active paragraph={{ rows: 1 }} />
+                                <Skeleton.Button active shape='square' />
+                            </div>
+                        </Col>
+                    </Row>}
                 </>
             )
         }
         return (
             <div>
-
                 <div className="friends-thead px-4">
                     <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title><Link to="/friendsuggestions" className="link-color d-flex align-items-center">View all</Link>
                 </div>

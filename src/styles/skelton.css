@@ -1,0 +1,18 @@
+@import './theme.css';
+.ant-skeleton-avatar, .ant-skeleton-image{border-radius: 0.8rem 0.8rem 0 0;}
+.ant-skeleton-content{padding-left: 16px;padding-right: 16px;}
+.ant-skeleton-title{ height: 16px !important;}
+.ant-skeleton-paragraph li{height: 12px !important;}
+.ant-skeleton-button{margin-right: 16px;margin-left: 16px;width: calc(100% - 32px) !important; height: 36px !important;margin-bottom: 16px;border-radius: 4px;}
+.ant-skeleton-element{width: 100% !important;}
+.ant-skeleton-content .ant-skeleton-title + .ant-skeleton-paragraph {margin-top: 12px !important;}
+.ant-skeleton-image{width: 100% !important;height: 186px !important;}
+
+
+.cards-list-skelton{
+    width: 100%;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--line);
+    margin-bottom: 6px;
+}

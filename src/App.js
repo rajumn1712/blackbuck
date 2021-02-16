@@ -4,6 +4,7 @@ import './App.css';
 import './styles/fonts/stylesheet.css';
 import './index.css';
 import './styles/theme.css';
+import './styles/skelton.css';
 import { loadUser, OidcProvider } from 'redux-oidc';
 import { store } from './store';
 import { userManager } from './shared/authentication/auth';
