@@ -320,7 +320,8 @@ const sendNotification = ({ to, message, from }) => {
   firebase.firestore().collection("devices").doc(to).collection('tokens')
     .get()
     .then(snapshot => {
-      const devices = snapshot.docs.map(item => item.data().token);
+      let devices = snapshot.docs.map(item => item.data().token);
+      devices = devices.filter((item, indx, arra) => indx == arra.indexOf(item));
       const obj = {
         data: { user_id: from },
         notification: {
