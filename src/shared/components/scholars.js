@@ -99,6 +99,7 @@ class BBScholars extends Component {
     if (this.state.isViewAllPage) {
       return (
         <div>
+          <Title level={5} className="fw-500">Blackbuck Scholars</Title>
           <Row gutter={8} >
             {allScholors.map((scholor, index) => <Col lg={8}>
               <div className="frnds-list-item mb-10" key={index}>

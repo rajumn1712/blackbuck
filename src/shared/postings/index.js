@@ -11,6 +11,7 @@ import {
   Spin,
   Modal,
   List,
+  Skeleton
 } from "antd";
 import SideAction from "../components/postings/Actions/SideActions";
 import Comments from "../components/postings/Comments/Comments";
@@ -43,7 +44,7 @@ import { uuidv4 } from "../../utils";
 import VisSenseFactory from "vissense";
 import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
-import { joinGroupNew, getIsFriend, sendFirendRequest ,sendNotification} from "../api/apiServer";
+import { joinGroupNew, getIsFriend, sendFirendRequest, sendNotification } from "../api/apiServer";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -200,7 +201,7 @@ class Postings extends Component {
             : "/profileview/" + user?.UserId
         }
       ><span className="post-title">{user?.Firstname}</span></Link>{post_type === "Course" && " Added a course"}{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
-          to={"/groupview/" + (mainUser.groupDetails ?( mainUser.groupDetails.GroupId) : mainUser?.GroupId)}
+        to={"/groupview/" + (mainUser.groupDetails ? (mainUser.groupDetails.GroupId) : mainUser?.GroupId)}
       ><span className="post-title">{mainUser?.Firstname}</span></Link></>}</span>,
       normal: <span className="overflow-text text-secondary"> <Link
         to={
@@ -308,7 +309,7 @@ class Postings extends Component {
       "Image": this.props?.profile?.ProfilePic,
       "Email": this.props?.profile?.Email,
       "Type": "request",
-      "CreatedDate":new Date()
+      "CreatedDate": new Date()
     }
     sendFirendRequest(post?.userdetails.UserId, obj).then(() => {
       this.checkWhetherFriendOrNot(post)
@@ -636,7 +637,7 @@ class Postings extends Component {
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
       {post.PostType === "Course" ? this.renderCourseCard(post) : <Card
-        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, { ...post.Shares[0]?.groupDetails?post.Shares[0]?.groupDetails:post.Group, Firstname:post.Shares[0]?.groupDetails?post.Shares[0]?.groupDetails?.GroupName:post.Group?.GroupName }, (post.Group?.GroupId ? true : false), post.PostType)}
+        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, { ...post.Shares[0]?.groupDetails ? post.Shares[0]?.groupDetails : post.Group, Firstname: post.Shares[0]?.groupDetails ? post.Shares[0]?.groupDetails?.GroupName : post.Group?.GroupName }, (post.Group?.GroupId ? true : false), post.PostType)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">
@@ -1061,9 +1062,9 @@ class Postings extends Component {
     }
     return <>{post.CourseType === "Live Session" ? <div className="livecourse-card mx-16">
       <div className="p-relative">
-        <img onClick={() => { window.open(process.env.REACT_APP_HOSTURL+`course/${post.CourseId}`, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
+        <img onClick={() => { window.open(process.env.REACT_APP_HOSTURL + `course/${post.CourseId}`, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
         <div className="live-btn-hover d-flex align-items-center">
-          <a className="f-24 semibold" onClick={() => { window.open(process.env.REACT_APP_HOSTURL+`course/${post.CourseId}`, "_blank") }}>Join Live Session</a>
+          <a className="f-24 semibold" onClick={() => { window.open(process.env.REACT_APP_HOSTURL + `course/${post.CourseId}`, "_blank") }}>Join Live Session</a>
         </div>
       </div>
       <div className="course-create p-12 d-flex xs-flex-col justify-between">
@@ -1183,7 +1184,20 @@ class Postings extends Component {
         )}
         {this.props.friendsSuggestions && <FriendSuggestions />}
         {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
-        {this.state.loading && <Loader className="loader-top-middle" />}
+        {this.state.loading && <div className="post-card-skelton" >
+          <div className="post-card-header-skelton">
+            <Skeleton.Avatar active shape='circle' />
+            <Skeleton active paragraph={{ rows: 1 }} />
+          </div>
+          <div className="post-card-body-skelton">
+            <Skeleton.Avatar active shape='square' />
+          </div>
+          <div className="post-card-footer-skelton d-flex">
+            <Skeleton.Button active shape='square' />
+            <Skeleton.Button active shape='square' />
+            <Skeleton.Button active shape='square' />
+          </div>
+        </div>}
         {!this.state.loading &&
           (!this.state.allPosts || this.state.allPosts?.length == 0) && (
             <Empty />

@@ -845,13 +845,13 @@
 }
 .fw-400 {
   font-weight: 400 !important;
-  color: var(--black);
+  /* color: var(--black); */
 }
 .fw-500 {
   font-weight: 500 !important;}
 .fw-600 {
   font-weight: 600 !important;
-  color: var(--black);
+  /* color: var(--black); */
 }
 .justify-content-around .ant-list-item-meta {
   background: var(--grey);
@@ -2145,6 +2145,7 @@ textarea {
 
 /* Careers CSS */
 .scholar-badge{ position: absolute; width: 36px; height: 36px; left: 0; top: 10px; background: var(--white); box-sizing: border-box; border-radius: 0 50% 50% 0;}
+.scholar-badge img{width: 100%;}
 .job-req li{display: flex; align-items: center; margin-bottom: 16px;margin-right: 5px;}
 .job-req li:last-child{margin-right: 0;width: 55%; }
 .job-req .post-icons.job{ background-position: -875px -256px; }
