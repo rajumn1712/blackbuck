@@ -1063,7 +1063,7 @@ const CourseComponent = ({ profile, history }) => {
                                                                                             ev.stopPropagation();
                                                                                             window.open(item.url, "_blank");
                                                                                         }}
-                                                                                        style={{ cursor: "pointer" }}
+                                                                                        className="cursor-pointer"
                                                                                     >
                                                                                         <List.Item.Meta
                                                                                             avatar={[

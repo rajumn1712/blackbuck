@@ -592,7 +592,6 @@ const PostingJob = ({ profile, history }) => {
                       htmlType="submit"
                       className="addContent px-16"
                       size="small"
-                      style={{ marginRight: 8 }}
                     >
                       Save Job
                     </Button>
