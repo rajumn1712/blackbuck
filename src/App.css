@@ -2204,7 +2204,7 @@ textarea {
 .sharebox-icons.video-icon {background-position: -307px -107px;}
 .cms-search {padding-left: 8px !important;padding-right: 8px !important;height: 46px !important;}
 .icons.search-icon-white{background-position: -247px -50px;}
-
+.relative{position: relative;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
 }
