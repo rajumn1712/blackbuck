@@ -17,12 +17,10 @@ import Help from '../components/help';
 import { Col, Row } from "antd";
 import Settings from "./settings";
 import Notifications from "./notification";
-import Connection from '../connections';
 import SinglePostView from "./singlePostview";
 import Admin from "../admin";
 import LMSComponent from "../lms";
 import CMSComponent from "../careers";
-import Carers from "../careers/carers"
 import CourseContent from "../lms/coursecontent";
 import QandA from "../lms/QandA";
 import OverView from "../lms/overview";
@@ -61,7 +59,6 @@ const Router = () => {
       <ProtectedRoute path="/support" component={Help} />
       <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/student_onboard" component={onBoard} />
-      <ProtectedRoute path="/friends" component={Connection} />
       <Route path="/callback" component={Callback} />
       <ProtectedRoute path="/profile/:tabkey" component={Profile} />
       <ProtectedRoute path="/profileview/:userId" component={ProfileView} />
