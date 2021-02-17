@@ -47,7 +47,7 @@ class Admin extends Component {
                         </SubMenu>
                     </Menu>
                 </div>
-                <div style={{ flex: 1, marginLeft: 260 }} className="p-12">
+                <div className="p-12 admin-right-panel">
                     <Route path="/admin/courses" component={(this.props?.profile?.Category == "LMS" || this.props?.profile?.Category == "Root") ? AdminCourses : AccessDenied} />
                     <Route path="/admin/members" component={(this.props?.profile?.Category == "Root") ? Members : AccessDenied} />
                     <Route path="/admin/groups" component={(this.props?.profile?.Category == "Root") ? Groups : AccessDenied} />

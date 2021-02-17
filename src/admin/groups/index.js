@@ -223,14 +223,16 @@ const Groups = ({ profile }) => {
                     </Tooltip>
                 </div>}>
                 {loading && <Loader className="loader-middle" />}
-                <Table
-                    rowSelection={{
-                        hideSelectAll: true,
-                        onSelect: onRecordSelect,
-                        selectedRowKeys: selectedRowKeys,
-                        onChange: onSelectedRowKeysChange
-                    }}
-                    columns={columnsGroups} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: 200, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
+                <div className="overflowX-auto">
+                    <Table
+                        rowSelection={{
+                            hideSelectAll: true,
+                            onSelect: onRecordSelect,
+                            selectedRowKeys: selectedRowKeys,
+                            onChange: onSelectedRowKeysChange
+                        }}
+                        columns={columnsGroups} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: 200, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
+                </div>
             </Card>
         </div>
     </>

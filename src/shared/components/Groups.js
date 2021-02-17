@@ -258,6 +258,7 @@ class Groups extends Component {
         <div className="custom-card sub-text card-scroll">
           <Card
             title="Groups"
+            className="skelton-list"
             bordered={true}
             extra={<Link to="/profile/IsProfileGroupsTab">View all</Link>}
             actions={[

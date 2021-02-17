@@ -205,15 +205,17 @@ const Members = ({ profile }) => {
                 </Tooltip>
 
             </div>}>
-                <Table
-                    rowSelection={{
-                        hideSelectAll: true,
-                        onSelect: onRecordSelect,
-                        selectedRowKeys: selectedRowKeys,
-                        onChange: onSelectedRowKeysChange
-                    }}
-                    loading={loading}
-                    columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
+                <div className="overflowX-auto">
+                    <Table
+                        rowSelection={{
+                            hideSelectAll: true,
+                            onSelect: onRecordSelect,
+                            selectedRowKeys: selectedRowKeys,
+                            onChange: onSelectedRowKeysChange
+                        }}
+                        loading={loading}
+                        columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
+                </div>
             </Card>
         </div>
         <Modal title="Add Admin" visible={isModal} onCancel={handleCancel} centered

@@ -182,29 +182,27 @@ class Courses extends Component {
                 </div> */}
                 <div className="custom-card">
                     <div className="p-12 card-background">
-                        <div className="mb-16">
-                            <Card className="start-course">
-                                <Row align="middle" className="p-16">
-                                    <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
-                                        {lstCourses.length == 0 && <Title level={3} className="normalbold text-white">Get Started with the course</Title>}
-                                        <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
-                                    </Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
-                                        <Button size="small" className="px-16 mr-8" onClick={() => {
-                                            this.props.history.push("/admin/course/new")
-                                        }}>Create Course</Button>
-                                    </Col>
-                                </Row>
-                            </Card>
-                        </div>
+                        <Card className="start-course mb-16">
+                            <Row gutter={16} align="middle" justify="space-between">
+                                <Col xs={24} sm={18} md={18} lg={18} xl={18} xxl={18}>
+                                    {lstCourses.length == 0 && <Title level={3} className="normalbold text-white">Get Started with the course</Title>}
+                                    <p className="f-14 text-white mb-0">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
+                                </Col>
+                                <Col xs={24} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
+                                    <Button size="small" className="" onClick={() => {
+                                        this.props.history.push("/admin/course/new")
+                                    }}>Create Course</Button>
+                                </Col>
+                            </Row>
+                        </Card>
                         <Row gutter={16}>
                             {lstCourses.map((course, index) => {
-                                return <Col xs={24} md={8} lg={6}>
-                                    <Card key={index}  onClick={() => { this.props.history.push("/admin/course/" + course.Id) }}
+                                return <Col xs={24} sm={12} md={8} xl={6}>
+                                    <Card key={index} onClick={() => { this.props.history.push("/admin/course/" + course.Id) }}
                                         className="card-item cursor-pointer"
-                                        cover={<img alt="photography" className="cursor-pointer" src={course.Image?.[0] || defaultguser}/>}
+                                        cover={<img alt="photography" className="cursor-pointer" src={course.Image?.[0] || defaultguser} />}
                                         actions={[
-                                            <Link className="text-red card-item-button-red" onClick={(event) =>{event.stopPropagation(); this.deleteCourse(course)}}>Delete</Link>
+                                            <Link className="text-red card-item-button-red" onClick={(event) => { event.stopPropagation(); this.deleteCourse(course) }}>Delete</Link>
                                         ]}
                                     >
                                         <Meta
@@ -215,7 +213,7 @@ class Courses extends Component {
                                                     {course.Date && <div className="f-14 text-primary my-4">{moment(course.Date).format('ll')}</div>}
                                                 </div>} />
 
-                                        <div className="card-options-right" onClick={(event) =>{event.stopPropagation()}}>
+                                        <div className="card-options-right" onClick={(event) => { event.stopPropagation() }}>
                                             <SideAction
                                                 horclass="icons more"
                                                 clickedEvent={(event, name) =>
