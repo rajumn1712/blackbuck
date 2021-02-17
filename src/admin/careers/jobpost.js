@@ -194,13 +194,9 @@ const PostingJob = ({ profile, history }) => {
           >
             <Row>
               <Col
-                offset={4}
-                xs={16}
-                sm={16}
-                md={16}
-                lg={16}
-                xl={16}
-                xxl={16}
+                xs={{span:24 }}
+                sm={{span:20, offset:2 }}
+                xl={{span:16, offset:4 }}
                 className="course-steps"
               >
                 <div className="">

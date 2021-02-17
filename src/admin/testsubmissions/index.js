@@ -95,7 +95,9 @@ const TestSubmissions = ({ profile }) => {
       <Title className="f-18 text-primary semibold">Test Submissions</Title>
       <div className="custom-card">
         <Card className="p-12 custom-fields">
+          <div className="overflowX-auto">
           <Table loading={loading} columns={columns} dataSource={data} size="small" bordered={true} pagination={{ position: ["bottomCenter"], total: data?.length }} />
+          </div>
         </Card>
       </div>
     </>

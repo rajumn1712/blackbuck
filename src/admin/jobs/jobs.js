@@ -63,7 +63,10 @@ class Jobs extends Component {
         <Title className="f-18 text-primary semibold">Test Submissions</Title>
         <div className="custom-card">
           <Card className="p-12 custom-fields">
+            <div className="overflowX-auto">
             <Table columns={columns} dataSource={data} size="small" bordered={true} pagination={{ position: ["bottomCenter"]}} />
+              
+            </div>
           </Card>
         </div>
       </>
