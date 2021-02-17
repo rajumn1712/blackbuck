@@ -26,6 +26,7 @@ import Carers from "../careers/carers"
 import CourseContent from "../lms/coursecontent";
 import QandA from "../lms/QandA";
 import OverView from "../lms/overview";
+import AllCourses from "../lms/allCourses";
 
 
 const onBoard = () => {
@@ -47,6 +48,13 @@ const Router = () => {
       <ProtectedRoute path="/QandA" component={QandA} />
       <ProtectedRoute path="/overview" component={OverView} />
       <ProtectedRoute path="/course/:id" component={CourseContent} />
+      <ProtectedRoute path="/ongoing" component={AllCourses} />
+      <ProtectedRoute path="/upcoming" component={AllCourses} />
+      <ProtectedRoute path="/previous" component={AllCourses} />
+      <ProtectedRoute path="/mockinterviews" component={AllCourses} />
+      <ProtectedRoute path="/webinars" component={AllCourses} />
+      <ProtectedRoute path="/workshops" component={AllCourses} />
+      <ProtectedRoute path="/courseslive" component={AllCourses} />
       <ProtectedRoute path="/admin" component={Admin} />
       <ProtectedRoute path="/post/:id" component={SinglePostView} />
       <ProtectedRoute path="/notifications" component={Notifications} />

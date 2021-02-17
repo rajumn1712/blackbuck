@@ -1,8 +1,8 @@
 import React, { Component, createRef } from 'react';
-import { Row, Col, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Select } from 'antd';
+import { Row, Col, Card, Avatar, Tooltip, Slider, List, Button, message, Upload, Image, Form, Select, AutoComplete } from 'antd';
 import './groupstyle.css';
 import CommonModal from '../components/ProfileComponents/CommonModal';
-import { saveGroup, fetchUserFriends, editGroup } from '../shared/api/apiServer';
+import { saveGroup, fetchUserFriends, editGroup, saveNotification } from '../shared/api/apiServer';
 import { connect } from 'react-redux';
 import notify from '../shared/components/notification';
 import ImgCrop from 'antd-img-crop';
@@ -12,6 +12,9 @@ import { hasChanged, uuidv4 } from "../utils";
 import Loader from "../common/loader";
 import defaultCover from '../styles/images/defaultcover.png'
 import defaultguser from '../styles/images/default-cover.png';
+import indianCitiesDatabase from 'indian-cities-database';
+var cities = indianCitiesDatabase.cities;
+let cityValues = cities.map(item => item.city);
 const { Option } = Select;
 
 class CreateGroup extends Component {
@@ -29,7 +32,7 @@ class CreateGroup extends Component {
         AdminUsers: null,
         CreatedDate: "",
         Members: [],
-        Categories:[]
+        Categories: []
     }
     formRef = createRef();
 
@@ -47,6 +50,7 @@ class CreateGroup extends Component {
         this.formRef.current.values.GroupType = initialValues.GroupType;
         this.formRef.current.values.Type = initialValues.Type;
         this.formRef.current.values.Location = initialValues.Location;
+        this.formRef.current.values.Hide = initialValues.Hide ? initialValues.Hide : "Visible";
         this.formRef.current.values.Description = initialValues.Description;
         initialValues.Invitations.forEach(val => {
             this.formRef.current.values.Invitations.push(val.FriendId)
@@ -102,7 +106,7 @@ class CreateGroup extends Component {
         let { groupObject } = this.state;
         let InvitesArray = [];
         values.Invitations.forEach(item => {
-            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item, Image: this.props?.profile.ProfilePic, CreatedDate:new Date()})
+            InvitesArray.push({ UserName: this.props?.profile.FirstName, FriendId: item, Image: this.props?.profile.ProfilePic, CreatedDate: new Date() })
         });
         return {
             GroupName: values.GroupName,
@@ -125,8 +129,8 @@ class CreateGroup extends Component {
             }],
             CreatedDate: groupObject.CreatedDate ? new Date(groupObject.CreatedDate) : new Date(),
             Members: [],
-            Categories:[],
-            CourseSections:[]
+            Categories: [],
+            CourseSections: []
         };
     };
     handleBeforUpload = (file) => {
@@ -154,7 +158,7 @@ class CreateGroup extends Component {
         name: 'file',
         multiple: false,
         fileList: [],
-        action: process.env.REACT_APP_AUTHORITY +'/Home/UploadFile',
+        action: process.env.REACT_APP_AUTHORITY + '/Home/UploadFile',
         onChange: ({ file }) => {
             const { status } = file;
             if (status !== 'uploading') {
@@ -205,12 +209,33 @@ class CreateGroup extends Component {
     }
 
     handleSave = async (e) => {
+        let notificationArray = [];
         this.formRef.current.handleSubmit();
         if (!hasChanged(this.formRef.current.values)) {
             this.setState({ ...this.state, loading: true });
             const saveObj = this.createObject(this.formRef.current.values);
             const response = await saveGroup(saveObj);
             if (response.ok) {
+                saveObj.Invitations.forEach(invite => {
+                    let notificationObj = {
+                        "NotificationId": uuidv4(),
+                        "ReferenceId": saveObj.GroupId,//GroupId
+                        "Name": saveObj.GroupName,//GroupName
+                        "MainUserId": invite.FriendId,
+                        "UserId": this.props?.profile?.Id,
+                        "Firstname": this.props?.profile?.FirstName,
+                        "Lastname": this.props?.profile?.LastName,
+                        "Image": this.props?.profile?.ProfilePic,
+                        "Email": this.props?.profile?.Email,
+                        "NotificationType": "Invitations",
+                        "CreatedDate": new Date(),
+                        "Type":"request"
+                    }
+                    notificationArray.push(notificationObj);
+                })
+                saveNotification({ "Notifications": notificationArray}).then(res => {
+
+                });
                 this.setState({ ...this.state, loading: false });
                 this.props.handleCancel();
                 if (this.props.refreshSave)
@@ -245,9 +270,9 @@ class CreateGroup extends Component {
         return <div>
             <List.Item>
                 <List.Item.Meta className="privacy-dropdown sample-check"
-                    avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="select-image" src={item.Image || defaultUser} />}
+                    avatar={item.Icon ? <span className={item.Icon}></span> : <Avatar className="invite-dropdown" src={item.Image || defaultUser} />}
                     title={<span>{item.Firstname ? item.Firstname : item.Name}</span>}
-                    description={item.Description ? <div className="f-12" style={{wordBreak: 'break-word',whiteSpace: 'pre-wrap'}}>{item.Description}</div> : ''}
+                    description={item.Description ? <div className="f-12" style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>{item.Description}</div> : ''}
                 />
             </List.Item>
         </div>
@@ -317,7 +342,7 @@ class CreateGroup extends Component {
                                                                 name="GroupName"
                                                                 value={values.GroupName}
                                                                 placeholder="Enter group name here"
-                                                                maxlength={150} 
+                                                                maxlength={150}
                                                                 autocomplete="off"
                                                             />
                                                             <span className="validateerror">
@@ -388,10 +413,10 @@ class CreateGroup extends Component {
                                                     <Col xs={12} id="inviteFrnd1">
                                                         <Form.Item
                                                             label="Invite Friends (optional)"
-                                                            className="custom-fields multi-select custom-select "
+                                                            className="custom-fields multi-select custom-select"
                                                             placeholder="Select Invitee"
                                                         >
-                                                            <Select 
+                                                            <Select
                                                                 defaultValue=""
                                                                 name="Invitations"
                                                                 value={values.Invitations}
@@ -446,16 +471,28 @@ class CreateGroup extends Component {
                                                         </Form.Item>
                                                     </Col>
                                                     }
-                                                    <Col xs={24}>
-                                                        <Form.Item label="Location" className="custom-fields" name="Location" rules={[{ required: true }]}>
-                                                            <Field
-                                                                className="ant-input"
+                                                    <Col xs={24} id="Loc">
+                                                        <Form.Item label="Location" className="custom-fields" name="Location" rules={[{ required: true, type: "array" }]}>
+                                                            <AutoComplete
                                                                 name="Location"
                                                                 value={values.Location}
-                                                                placeholder="Add a Location to your group"
-                                                                autocomplete="off"
-                                                                maxlength={100}
-                                                            />
+                                                                placeholder={"Add a Location to your group"}
+                                                                onChange={(value) =>
+                                                                    setFieldValue("Location", value)
+                                                                }
+                                                                getPopupContainer={() => document.querySelector('#Loc')}
+                                                                filterOption={(input, option) =>
+                                                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                                }
+                                                            >
+                                                                {cityValues.map((item, index) => {
+                                                                    return (
+                                                                        <Option key={index} value={item}>
+                                                                            {item}
+                                                                        </Option>
+                                                                    );
+                                                                })}
+                                                            </AutoComplete>
                                                             <span className="validateerror">
                                                                 <ErrorMessage name="Location" />
                                                             </span>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip, Button, Popover } from 'antd'
+import { Layout, Menu, Row, Col, Input, Avatar, Badge, Dropdown, Drawer, Card, Divider, Tooltip, Button, Popover, notification } from 'antd'
 import { Link, withRouter } from 'react-router-dom';
 import { userManager } from '../shared/authentication/auth';
 import { store } from '../store'
@@ -11,39 +11,92 @@ import '../index.css';
 import { connect } from 'react-redux';
 import { fetchUserFriends, fetchNotificationCount } from '../shared/api/apiServer';
 import Notifications from '../components/notification';
+import ChatSystem from '../utils/chat-system';
+import firebase from '../utils/firebase';
+import 'firebase/messaging';
+import 'firebase/firestore';
+import { removeUnRead } from '../utils/chat-system/chatReducer';
 const { Meta } = Card;
 const { Search } = Input;
 const { Header } = Layout;
 const onSearch = value => console.log(value);
-const logout = () => {
-    userLogout();
-    userManager.signoutRedirect()
+const logout = (id) => {
+    firebase.messaging().getToken().then(token => {
+        firebase.firestore().collection("devices").doc(id).collection('tokens')
+            .get()
+            .then(snapshot => {
+                let isExits = false;
+                snapshot.docs.forEach(item => {
+                    if (item.data().token == token) {
+                        item.ref.delete().then(pay => {
+                            isExits = true;
+                            userLogout();
+                            userManager.signoutRedirect()
+                        })
+                    }
+                });
+                if (!isExits) {
+                    userLogout();
+                    userManager.signoutRedirect();
+                }
+            })
+    })
+        .catch(error => {
+            userLogout();
+            userManager.signoutRedirect();
+        })
+
 }
 class HeaderComponent extends React.Component {
-
+    chatSubscription;
     state = {
         visible: false, placement: 'left', FirstName: "",
         Email: "",
         ProfilePic: "",
         friends: [],
         showMessenger: false,
-        agentProfile: {
-            imageUrl: null,
-            teamName: null
-        },
+        agentProfile: null,
         notifications: null,
         notificationsCount: 0,
         search_value: this.props.search_value
     };
 
-    showDrawer = async () => {
+    showDrawer = async (openChat, user) => {
         const friendsRes = await fetchUserFriends(this.props.profile?.Id)
         this.setState({
             visible: true,
             friends: friendsRes.data
+        }, () => {
+            if (openChat == true) {
+                this.showChatWindow(user);
+            }
         });
     };
     componentDidMount() {
+        let initialState = true;
+        this.chatSubscription = firebase.firestore().collection('chat').doc(this.props?.profile?.Id).collection("notifications")
+            .onSnapshot(snapshot => {
+                let data;
+                if (initialState) {
+                    initialState = false;
+                } else {
+                    snapshot.docChanges().forEach(change => {
+                        if (change.type == "added") {
+                            data = change.doc.data();
+                        }
+                    })
+                    if (data) {
+                        notification.open({
+                            message: "You've new message",
+                            description: '"' + data?.message + '"' + " from " + data?.name,
+                            icon: <Avatar src={data.image} />,
+                            onClick: () => {
+                                this.showDrawer(true, { Firstname: data?.name, Image: data.image, UserId: data.from })
+                            }
+                        })
+                    }
+                }
+            });
         const storeState = store.getState();
         const { FirstName, LastName, Email, ProfilePic, Id } = storeState.oidc?.profile || {};
         this.handleNotifications(Id);
@@ -56,11 +109,12 @@ class HeaderComponent extends React.Component {
                 this.setState({ FirstName, LastName, Email, ProfilePic })
             }
         });
-
-
     }
     componentDidUpdate(prevProps) {
         if (prevProps.search_value != this.props.search_value) { this.setState({ ...this.state, search_value: this.props.search_value }); }
+    }
+    componentWillUnmount() {
+        this.chatSubscription();
     }
     async handleNotifications(id) {
         const notifications = <div className="notification-dropdown">
@@ -69,12 +123,12 @@ class HeaderComponent extends React.Component {
             </div>
             <Divider className="my-0" />
             <div className="notification-container">
-                <Notifications onRef={notification => this.notification = notification} type="ddl" />
+                <Notifications onRef={notification => this.notification = notification} type="ddl" onCount={() => this.getNotificationsCount()} />
             </div>
             <Divider className="my-0" />
-            {(this.state.notificationsCount > 10) && <div className="p-8 pt-4">
+            {/* {(this.state.notificationsCount > 10) && <div className="p-8 pt-4">
                 <Link className="f-16 semibold text-primary p-8 d-block button-hover" to="/profile/IsProfileNotificationsTab">View all</Link>
-            </div>}
+            </div>} */}
 
         </div>;
         this.setState({ ...this.state, notifications })
@@ -124,13 +178,17 @@ class HeaderComponent extends React.Component {
                 </Menu.Item>
             }
             <Menu.Divider />
-            <Menu.Item key="5" onClick={logout}>
+            <Menu.Item key="5" onClick={() => logout(this.props?.profile?.Id)}>
                 <a ><span className="icons signout-icon" /><span className="pl-16">Sign Out</span></a>
             </Menu.Item>
         </Menu >)
     }
     showChatWindow = (user) => {
-        this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image, teamName: user.Firstname } })
+        this.setState({ ...this.state, agentProfile: null }, () => {
+            this.setState({ ...this.state, showMessenger: true, agentProfile: { imageUrl: user.Image || defaultUser, teamName: user.Firstname, UserId: user.UserId } }, () => {
+                this.props.removeUnRead(user.UserId)
+            })
+        })
     }
     render() {
         const { visible } = this.state;
@@ -181,11 +239,15 @@ class HeaderComponent extends React.Component {
                         <Menu className="menu-items text-right right-menu" mode="horizontal">
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
                                 <Tooltip title="Messages" placement="bottom" getPopupContainer={() => document.querySelector('#headerIcon')}>
-                                    <Link className="header-link" onClick={this.showDrawer}><i className="icons chat-icon"></i></Link>
+                                    <Link className="header-link" onClick={this.showDrawer}>
+                                        <Badge className="notification-count" count={this.props?.chatHistory?.unread.length} >
+                                            <span className="icons chat-icon" />
+                                        </Badge>
+                                    </Link>
                                 </Tooltip>
                             </Menu.Item>}
                             {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
-                                <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                <Dropdown overlay={this.state.notifications ? this.state.notifications : <div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visibleDdl) => { if (!visibleDdl) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
                                     <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                         <Link className="header-link">
                                             <Badge className="notification-count" count={this.state.notificationsCount} showZero>
@@ -232,6 +294,7 @@ class HeaderComponent extends React.Component {
                                     </div>} trigger="click">
                                         <Link className="header-link">
                                             <span className="icons search-icon" />
+
                                         </Link>
                                     </Popover>
                                 </Menu.Item>
@@ -292,17 +355,17 @@ class HeaderComponent extends React.Component {
 
                 {/* Mobile Naviagtion */}
                 <div className="">
-                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true" footer={<Link to="#" className="messenger-footer">See all in Messenger</Link>}>
-                        <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} />
-                        <div className="messenger-drawer">
+                    <Drawer title="Messenger" placement="right" closable={false} onClose={this.onClose} visible={visible} width="360px" className="messenger-chat" closable="true">
+                        {/* <Search className="header-searchbar mb-16" placeholder="Search" onSearch={onSearch} /> */}
+                        <div className="messenger-drawer ">
                             {this.state.friends?.map((friend, indx) => <Link key={indx} onClick={() => this.showChatWindow(friend)}>
-                                <Meta
-                                    avatar={<Avatar src={friend.Image} />}
+                                <Meta className={this.props.chatHistory?.unread.indexOf(friend.UserId) > -1 ? "unread-msg" : ""}
+                                    avatar={<Avatar src={friend.Image || defaultUser} />}
                                     title={friend.Firstname}
                                     description={<p className="chat-description">{friend.Email}</p>}
                                 />
                             </Link>)}
-                            {/* <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, isOpen: false }) }} /> */}
+                            <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, showMessenger: false }) }} onNotificationSelect={(user) => { }} />
                         </div>
                     </Drawer>
                 </div>
@@ -310,8 +373,15 @@ class HeaderComponent extends React.Component {
         )
     }
 }
-const mapStateToProps = ({ oidc }) => {
+const mapStateToProps = ({ oidc, chatHistory }) => {
     const { user, profile, search_value } = oidc;
-    return { profile, user, search_value }
+    return { profile, user, search_value, chatHistory }
 }
-export default withRouter(connect(mapStateToProps)(HeaderComponent));
+const mapDispatchToProps = dispatch => {
+    return {
+        removeUnRead: id => {
+            dispatch(removeUnRead(id));
+        }
+    }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderComponent));

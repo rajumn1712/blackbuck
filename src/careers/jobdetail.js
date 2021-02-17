@@ -11,6 +11,7 @@ import Moment from "react-moment";
 import Loader from "../common/loader";
 import notify from "../shared/components/notification";
 import connectStateProps from "../shared/stateConnect";
+import Logo from '../styles/images/logo.svg';
 
 
 const { Title, Paragraph } = Typography;
@@ -59,15 +60,26 @@ setLoading(false);
       {loading && <Loader className="loader-top-middle" />}
         <Card>
           <div className="p-12">
-            <Title className="f-16 semibold text-primary mb-0">
+          <div className="job-card-title">
+              <div className="company-logo"> 
+                {jobDetailObj.CompanyLogo && <img src={jobDetailObj.CompanyLogo} className="obj-fit" alt={jobDetailObj.EmployerName} />}
+                {!jobDetailObj.CompanyLogo && <span className="company-text">{jobDetailObj.EmployerName?.substring(0,2)}</span>}
+              </div>
+              <div> 
+              <Title className="f-16 semibold text-primary mb-0">
               {jobDetailObj.Title}
             </Title>
-            <Paragraph className="f-12 text-secondary">
+            {/* <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobDetailObj.CreateDate}</Moment>
-            </Paragraph>
+            </Paragraph> */}
             <Paragraph className="f-14">
               {jobDetailObj.EmployerName}
             </Paragraph>
+
+            </div>
+            </div>
+            
+            
             {jobDetailObj.Type === 'Job' && <p className="f-14 text-primary mb-12 job-req">
               <span className="post-icons job mr-16"></span>{jobDetailObj.Years} Yr's
             </p>}
@@ -81,11 +93,11 @@ setLoading(false);
             </p>
             <p className="f-14 text-primary job-req d-flex">
               <span className="post-icons location mr-16"></span>
-             <p> {jobDetailObj.Place}, {jobDetailObj.City}, {jobDetailObj.State}</p>
+             <p> {jobDetailObj.City}, {jobDetailObj.State}</p>
             </p>
-            <span className="job-ldate f-14 semibold text-secondary px-8 py-4">
-              Apply before :{" "}
-              <span className="semibold text-primary f-16">
+            <span className="job-ldate semibold text-secondary px-8 py-4">
+              Apply before {" "}
+              <span className="semibold text-primary">
                 <Moment format="MM/DD/YYYY">{jobDetailObj.EndDate}</Moment>
               </span>
             </span>
@@ -96,7 +108,9 @@ setLoading(false);
           >
             {/* <Button type="dashed">Save Job</Button> */}
             {jobDetailObj.IsApplied ? <a className="apply-job-btn">
-            <span></span>Applied
+            <Button type="default" className="ml-16 secondary-btn" >
+            Applied
+            </Button>
           </a> : <Button type="primary" className="ml-16" onClick={showModal}>
               Apply Now
             </Button>}

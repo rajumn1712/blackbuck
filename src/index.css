@@ -49,6 +49,7 @@ a:hover,a:active{color: var(--primaryhover) !important;}
 .friends-list.two .friends-list--name{background: linear-gradient(to top, rgba(112, 165, 113, 1), rgba(112, 165, 113, 0));}
 .friends-list img {object-fit: cover;}
 .post-icons.addfriend-icon{background-position:-433px -226px;}
+.post-icons.addfriend-icon-grey {background-position: -433px -201px;}
 .friends-list--name {position: absolute; left: 0; right: 0; bottom: 0; text-align: center; top: 60%;
 background: linear-gradient(to top, rgba(18, 66, 128, 1), rgba(18, 66, 128, 0));
 font-size: 14px; display: flex; justify-content: flex-end; flex-direction: column; align-items: center;padding: 8px;}
@@ -72,13 +73,14 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .more-frnd-btn:hover{background: var(--primary);}
 .container{padding-left: 15px;padding-right: 15px;}
 .admin-panel{padding-left: 0; padding-right: 0;}
-.frnds-list-item{background: var(--white); border-radius: 0.8rem;margin-right: 5px;margin-left: 5px; border: 1px solid var(--line);}
+.frnds-list-item{background: var(--white); border-radius: var(--border-radius);margin-right: 5px;margin-left: 5px; border: 1px solid var(--line);}
 .frnds-list-item img{border-radius: 0.8rem 0.8rem 0 0;}
 .frnds-list-item.viewall-item{padding-top: 100%;min-height: 309px !important;}
-.frnds-list-item.viewall-item a{position: absolute;top: 0;right: 0;left: 0;bottom: 0;display: flex;justify-content: center;align-items: center;background: var(--white);border-radius: 0.8rem;margin-right: 8px;color: var(--primary);padding: 24px;}
+.frnds-list-item.viewall-item a{position: absolute;top: 0;right: 0;left: 0;bottom: 0;display: flex;justify-content: center;align-items: center;background: var(--white);border-radius: var(--border-radius);margin-right: 8px;color: var(--primary);padding: 24px;}
 .frnds-img{height: 186px; position: relative;}
 .frnd-name{font-size: var(--f-14); font-weight: 500; margin-bottom: 4px !important; width: 100%; line-height: normal; color: var(--textprimary) !important; cursor: pointer;text-transform: capitalize !important;}
-.addfrnd{ color: var(--primary) !important; min-width: auto !important; min-height: 34px !important;font-size: var(--f-16) !important; border-color: var(--primary) !important; border-radius: 4px !important;width: 100%;}
+.addfrnd,.secondary-btn{ color: var(--primary) !important; min-width: auto !important; min-height: 34px !important;font-size: var(--f-16) !important; border-color: var(--primary) !important; border-radius: 4px !important;width: 100%;}
+.secondary-btn{width: auto;}
 .addfrnd:hover{box-shadow: inset 0 0 0 1px var(--primary-10); background: var(--primary-10) !important; 
 transition-property: background-color,box-shadow,color;
 transition-timing-function: cubic-bezier(.4,0,.2,1);
@@ -128,11 +130,11 @@ transition-duration: 167ms;}
 .custom-fields.multi-select .ant-select-selector{padding: 4px 11px;}
 .custom-fields.multi-select .ant-select-selection-item-content{text-transform: capitalize;}
 .ant-spin-dot-item{background-color: var(--primary) !important;}
-.coursesbanner{border-radius: 0.8rem;height: 275px;}
+.coursesbanner{border-radius: var(--border-radius);height: 275px;}
 .coursesbanner .owl-dots{position: absolute;right: 0;bottom: 0;}
 .coursesbanner .owl-carousel{height: 275px;}
-.coursesbanner .coursebanneritem{position: relative;border-radius: 0.8rem;height: 275px;overflow: hidden; background: var(--white);border-radius: 0.8rem 0.8rem 0 0;}
-.coursesbanner .coursebanneritem img{border-radius: 0.8rem;    object-fit: cover;object-position: center center;height: 275px;}
+.coursesbanner .coursebanneritem{position: relative;border-radius: var(--border-radius);height: 275px;overflow: hidden; background: var(--white);border-radius: 0.8rem 0.8rem 0 0;}
+.coursesbanner .coursebanneritem img{border-radius: var(--border-radius);    object-fit: cover;object-position: center center;height: 275px;}
 .coursesbanner .coursebanneritem .coursebannertext{position: absolute;height: 100%;top: 0;left: 0; right: 0;left: 0;background: #0000003d;display: flex;flex-direction: column;align-items: flex-start;justify-content: center;padding: 24px;}
 .coursesbanner .coursebanneritem .coursebannerdescp{max-width: 60%;color: var(--white);}
 .coursesbanner .coursebanneritem .coursebannertitle{color :var(--white);font-size: 24px;text-transform: uppercase;margin-bottom: 8px;line-height: 26px;}

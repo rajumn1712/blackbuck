@@ -140,7 +140,7 @@ class MediaPreview extends Component {
         const _result = {
             Video: () => {
                 return <div className="video-post" >
-                    <video controls>
+                    <video controls controlsList="nodownload">
                         <source src={imageObj} />
                     </video>
                 </div>
@@ -306,7 +306,7 @@ class MediaPreview extends Component {
                                     </div>
                                 </Card>
                                 {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount} onUpdate={(prop, value, object) => { this.updatePost(post, prop, value, object) }}
-                                />}
+                                userId={post.userdetails?.UserId}/>}
                             </div>
                         </Col>
                     </Row>

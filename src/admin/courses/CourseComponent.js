@@ -5,7 +5,7 @@ import { Card, Input, Row, Col, Button, Select, Collapse, Space, message, Upload
 import { uuidv4 } from '../../utils';
 import moment from 'moment';
 import notify from '../../shared/components/notification';
-import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete, getPublishedObject } from '../../shared/api/apiServer';
+import { getCollegeBranches, getAuthors, saveTopic, sectionDeletion, saveSection, saveCourse, getCourse, publishCourse, getCoursesRelCount, submitDocs, topicDelete, getPublishedObject, getCategories } from '../../shared/api/apiServer';
 import Loader from "../../common/loader";
 import Title from 'antd/lib/typography/Title';
 const { Dragger } = Upload;
@@ -52,7 +52,8 @@ const CourseComponent = ({ profile, history }) => {
         "Author": [],
         "CourseType": "Content",
         "Date": "",
-        "Link": "",
+        "RefLinks": [],
+        "EndDate": "",
         "CreatedDate": "",
         "CategoryType": "LMS",
         "CourseVideo": [],
@@ -69,11 +70,21 @@ const CourseComponent = ({ profile, history }) => {
         "Members": [],
         "Invitations": [],
         "IsPublish": false,
+        "PublishDate": new Date(),
         "CourseSections": [
         ],
         "Tests": [],
         "Documents": [],
-        "UrlType": []
+        "UrlType": [],
+        "LiveDetails": [
+            {
+                "Id": uuidv4(),
+                "Date": "",
+                "Link": "",
+            }
+        ],
+        "DupCategoeries": [],
+        "SpecialCategory": []
     }
     let postObject = {
         "GroupId": "",
@@ -81,6 +92,10 @@ const CourseComponent = ({ profile, history }) => {
         "Posts": [
         ]
     };
+    const LiveDatail = {
+        "Date": "",
+        "Link": "",
+    }
     const acceptTypesForTopic = {
         "Video": ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
         "Document": ".doc,.docx,.ott,.rtf,.docm,.dot,.odt,.dotm,.md,.xls,.xlsx.,.csv",
@@ -110,7 +125,7 @@ const CourseComponent = ({ profile, history }) => {
         }
     }, []);
     const fetchBranches = async () => {
-        const branchResponse = await getCollegeBranches();
+        const branchResponse = await getCategories();
         if (branchResponse.ok) {
             setCategoriesLu(branchResponse.data);
         } else {
@@ -218,6 +233,21 @@ const CourseComponent = ({ profile, history }) => {
             setLoading(false)
         }
     }
+    const addLiveDetails = () => {
+        LiveDatail.Id = uuidv4();
+        courseObject.LiveDetails.push({ ...LiveDatail })
+        setCourseObject({ ...courseObject })
+    }
+    const deleteLiveDetails = (idx) => {
+        courseObject.LiveDetails.splice(idx, 1)
+        setCourseObject({ ...courseObject })
+    }
+    const handleLiveChange = (prop, val, index) => {
+        courseObject.LiveDetails[index][prop] = val ? (val.currentTarget ? val.currentTarget.value : val) : "";
+        setCourseObject({ ...courseObject })
+        setIsCourseChanged(true)
+    }
+
     const bindCourseData = (obj) => {
         let ObjCourse = { ...obj }
         ObjCourse.Author = [];
@@ -226,10 +256,16 @@ const CourseComponent = ({ profile, history }) => {
             ObjCourse.Author.push(item.UserId)
         });
         obj.Categories.forEach(item => {
-            ObjCourse.Categories.push(item.BranchId)
+            ObjCourse.Categories.push(item.GroupId)
         });
         obj.Date = obj.Date ? moment(obj.Date).local() : "";
         ObjCourse.Date = ObjCourse.Date ? moment(ObjCourse.Date).local() : "";
+        obj.EndDate = obj.EndDate ? moment(obj.EndDate).local() : "";
+        ObjCourse.EndDate = ObjCourse.EndDate ? moment(ObjCourse.EndDate).local() : "";
+        ObjCourse.LiveDetails.forEach(item => {
+            item.Date = item.Date ? moment(item.Date).local() : "";
+        });
+        ObjCourse.Categories = ObjCourse.Categories?.length == 4 ? ["All"] : ObjCourse.Categories;
         setCourseObject({ ...obj });
         form.setFieldsValue({ ...ObjCourse });
     }
@@ -283,6 +319,8 @@ const CourseComponent = ({ profile, history }) => {
         }
         courseObject.Tests = [];
         courseObject.CreatedDate = courseObject.CreatedDate ? courseObject.CreatedDate : new Date();
+        courseObject.Date = courseObject.Date ? moment(courseObject.Date).format() : courseObject.Date;
+        courseObject.EndDate = courseObject.EndDate ? moment(courseObject.EndDate).format() : courseObject.EndDate;
         courseObject.CourseSections = courseObject.CourseSections.filter(item => {
             if (item.SectionName) {
                 item.IsSaved = true;
@@ -299,12 +337,21 @@ const CourseComponent = ({ profile, history }) => {
             }
             courseObject.Tests.push({ ...Obj });
         })
-        courseObject.CourseSections = courseObject.CourseType == "Live Session" ? [] : courseObject.CourseSections;
+        // courseObject.CourseSections = courseObject.CourseType == "Live Session" ? [] : courseObject.CourseSections;
         if (courseObject.CourseType == "Content") {
             courseObject.Date = "";
             courseObject.Link = "";
             courseObject.UrlType = "";
+            courseObject.LiveDetails = [];
+            courseObject.EndDate = "";
         }
+        if (courseObject.DupCategoeries?.length > 0) {
+            courseObject.Categories = courseObject.DupCategoeries;
+        }
+        courseObject.SpecialCategory = courseObject.DupCategoeries.length > 0 ? "All" : courseObject.Categories.map(item => item.GroupName)
+        courseObject.LiveDetails.forEach(item => {
+            item.Date = item.Date ? moment(item.Date).format() : item.Date;
+        })
         const result = await saveCourse(courseObject);
         if (result.ok) {
             setLoading(false)
@@ -323,6 +370,7 @@ const CourseComponent = ({ profile, history }) => {
         setLoading(true)
         postObject.GroupId = courseObject.GroupId;
         postObject.IsPublish = true;
+        postObject.PublishDate = new Date();
         postObject.Posts = [];
         if (!courseObject.IsPublish) {
             courseObject.Categories.forEach(item => {
@@ -435,16 +483,26 @@ const CourseComponent = ({ profile, history }) => {
                     courseObject.UrlType = "";
                     courseObject.Date = "";
                     courseObject.Link = "";
+                    courseObject.EndDate = "";
+                    courseObject.LiveDetails = [];
+                }
+                else if (courseObject[prop] == "Live Session") {
+                    courseObject.LiveDetails = [{
+                        "Id": uuidv4(),
+                        "Date": "",
+                        "Link": "",
+                    }];
                 }
             }
             else {
                 courseObject[prop] = [];
                 (prop == "Categories" ? val : [val]).forEach(item => {
                     (prop == "Categories" ? CategoriesLu : AuthorsLu).forEach(obj => {
-                        if (item == (prop == "Categories" ? obj.BranchId : obj.UserId)) {
+                        if (item == (prop == "Categories" ? obj.GroupId : obj.UserId)) {
                             let Object = prop == "Categories" ? {
-                                "BranchId": obj.BranchId,
-                                "Name": obj.BranchName,
+                                "GroupId": obj.GroupId,
+                                "GroupName": obj.GroupName,
+                                "GroupImage": obj.GroupImage
                             } : {
                                     "UserId": obj.UserId,
                                     "Firstname": obj.Firstname,
@@ -457,6 +515,15 @@ const CourseComponent = ({ profile, history }) => {
                         }
                     });
                 });
+                if (prop == "Categories") {
+                    if (val.indexOf("All") > -1) {
+                        courseObject.DupCategoeries = CategoriesLu;
+                        form.setFieldsValue({ Categories: ["All"] })
+                    }
+                    else {
+                        courseObject.DupCategoeries = [];
+                    }
+                }
             }
             setCourseObject({ ...courseObject })
             form.setFieldsValue({ UrlType: courseObject.UrlType, Date: courseObject.Date, Link: courseObject.Link })
@@ -616,8 +683,9 @@ const CourseComponent = ({ profile, history }) => {
                                                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                                         }
                                                     >
+                                                        <Option value="All">All</Option>
                                                         {CategoriesLu?.map((item, index) => {
-                                                            return <Option value={item.BranchId} key={index}>{item.BranchName}</Option>
+                                                            return <Option value={item.GroupId} key={index} disabled={courseObject.DupCategoeries?.length > 0}>{item.GroupName}</Option>
                                                         })}
                                                     </Select>
                                                 </Form.Item>
@@ -636,7 +704,7 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={courseObject.CourseType == "Live Session"?12:24} sm={courseObject.CourseType == "Live Session"?12:24} md={courseObject.CourseType == "Live Session"?12:24} lg={courseObject.CourseType == "Live Session"?12:24} xl={courseObject.CourseType == "Live Session"?12:24} xxl={courseObject.CourseType == "Live Session"?12:24} className="">
+                                            <Col xs={courseObject.CourseType == "Live Session" ? 12 : 24} sm={courseObject.CourseType == "Live Session" ? 12 : 24} md={courseObject.CourseType == "Live Session" ? 12 : 24} lg={courseObject.CourseType == "Live Session" ? 12 : 24} xl={courseObject.CourseType == "Live Session" ? 12 : 24} xxl={courseObject.CourseType == "Live Session" ? 12 : 24} className="">
                                                 <label className="text-secondary d-block mb-4 semibold  required">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
@@ -649,9 +717,48 @@ const CourseComponent = ({ profile, history }) => {
                                                 </Form.Item>
                                             </Col>
                                             {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <label className="text-secondary d-block mb-4  required">Date</label>
-                                                <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
-                                                    <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                                <label className="text-secondary d-block mb-4  required">Start Date</label>
+                                                <Form.Item className="custom-fields" name="Date" rules={[{
+                                                    required: true, message: "Start date required"
+                                                }, {
+                                                    type: "date", validator: async (rule, value, callback) => {
+                                                        if (value && courseObject.EndDate) {
+                                                            if (new Date(value) > new Date(courseObject.EndDate)) {
+                                                                throw new Error("Start Date should grater than end date")
+                                                            } else {
+                                                                callback();
+                                                            }
+                                                        }
+                                                    }
+                                                }]}>
+                                                    <DatePicker placeholder="Course Start Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
+                                                        return (
+                                                            moment().add(-1, "days") >= current
+                                                        );
+                                                    }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                                </Form.Item>
+                                            </Col>
+                                            }
+                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                                <label className="text-secondary d-block mb-4  required">End Date</label>
+                                                <Form.Item className="custom-fields" name="EndDate" rules={[{
+                                                    required: true, message: "End date required"
+                                                }, {
+                                                    type: "date", validator: async (rule, value, callback) => {
+                                                        if (value && courseObject.Date) {
+                                                            if (new Date(value) < new Date(courseObject.Date)) {
+                                                                throw new Error("End Date should later than start date")
+                                                            } else {
+                                                                callback();
+                                                            }
+                                                        }
+                                                    }
+                                                }]}>
+                                                    <DatePicker placeholder="Course End Date" onChange={(val) => { handleChange("EndDate", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
+                                                        return (
+                                                            moment().add(-1, "days") >= current
+                                                        );
+                                                    }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
                                             }
@@ -669,13 +776,45 @@ const CourseComponent = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>}
-                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                            {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4 semibold required ">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
                                                 </Form.Item>
                                             </Col>
-                                            }
+                                            } */}
+                                            {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                                <label className="text-secondary d-block mb-4 semibold required ">Link</label>
+                                                <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                    <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
+                                                </Form.Item>
+                                            </Col>
+                                            } */}
+                                            {courseObject.CourseType == "Live Session" && courseObject.LiveDetails?.map((live, index) => {
+                                                return <Col span={24} className="custom-fields" key={index}>
+                                                    <div className="add-livelinks">
+                                                        <div>
+                                                            <a onClick={() => addLiveDetails()} ><span className="icons add p-4" /></a>
+                                                            <Row gutter={8}>
+                                                                <Col xs={24} sm={24} md={8} className="custom-fields">
+                                                                    <label className="text-secondary d-block mb-4 semibold required ">Date</label>
+                                                                    <Form.Item initialValue={live.Date ? live.Date : ""} className="custom-fields" name={[live.Id, "Date"]} rules={[{ required: true, message: "Date required" }]}>
+                                                                        <DatePicker placeholder="Course Date" onChange={(val) => { handleLiveChange("Date", val, index) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                                                    </Form.Item>
+                                                                </Col>
+                                                                <Col xs={24} sm={24} md={16} className="">
+                                                                    <label className="text-secondary d-block mb-4 semibold required ">Link</label>
+                                                                    <Form.Item initialValue={live.Link ? live.Link : ""} className="custom-fields" name={[live.Id, "Link"]} rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                                        <Input placeholder="Meeting Link" onChange={(value) => handleLiveChange("Link", value, index)} />
+                                                                    </Form.Item>
+                                                                </Col>
+
+                                                            </Row>
+                                                            {courseObject.LiveDetails?.length > 1 && <a onClick={() => deleteLiveDetails(index)} ><span className="close-icon" /></a>}
+                                                        </div>
+                                                    </div>
+                                                </Col>
+                                            })}
                                         </Row>
                                         <Row gutter={16}>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -795,7 +934,7 @@ const CourseComponent = ({ profile, history }) => {
                                                     {fileVideoUploading && <Loader className="loader-top-middle" />}
                                                     {courseObject.CourseVideo?.map((image, indx) => (
                                                         <div key={indx} className="mb-16 mt-8 upload-preview">
-                                                            <video width="100%" controls>
+                                                            <video width="100%" controls controlsList="nodownload">
                                                                 <source src={image} />
                                                             </video>
                                                             <a
@@ -815,6 +954,23 @@ const CourseComponent = ({ profile, history }) => {
                                                         </div>
                                                     ))}
                                                 </div>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <label className="text-secondary d-block mb-4 required">Reference Links</label>
+                                                <Form.Item className="custom-fields custom-multiselect" name="RefLinks" rules={[{
+                                                    required: true,
+                                                    type: 'array',
+                                                    defaultField: { type: 'url', message: 'This field must be a valid url.' }
+                                                }]
+                                                }>
+                                                    <Select
+
+                                                        mode="tags"
+                                                        style={{ width: "100%" }}
+                                                        placeholder="Enter Links"
+                                                        onChange={(value) => handleChange('RefLinks', value)}
+                                                    ></Select>
+                                                </Form.Item>
                                             </Col>
 
                                         </Row>
@@ -868,8 +1024,8 @@ const CourseComponent = ({ profile, history }) => {
                                             </Col>
                                         </Row>
                                     </div>
-                                    {courseObject.CourseType == "Content" && <div className="create-course mt-16">
-                                        {courseObject.CourseType == "Content" && <div>
+                                    <div className="create-course mt-16">
+                                        <div>
                                             {courseObject.CourseSections?.length == 0 && <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>}
                                             {courseObject.CourseSections?.map((item, index) => {
                                                 return <div> <div className="lecture-collapse mb-16" key={index}>
@@ -886,7 +1042,7 @@ const CourseComponent = ({ profile, history }) => {
                                                                 >
                                                                     <Panel header={<>{topic.TopicType == "Video" && topicTitle}{topic.TopicType == "Document" && docTitle}{topic.VideoName ? topic.VideoName : topic.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.TopicType == "Video" && topic.Duration}</div>}>
                                                                         {topic.TopicType == "Video" && <div className="d-flex">
-                                                                            {topic.VideoSource == "Upload" && <video width="280" controls><source src={topic.VideoUrl} /></video>}
+                                                                            {topic.VideoSource == "Upload" && <video width="280" controls controlsList="nodownload"><source src={topic.VideoUrl} /></video>}
                                                                             {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
                                                                             {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
                                                                             <div className="ml-16">
@@ -964,10 +1120,10 @@ const CourseComponent = ({ profile, history }) => {
                                                     }
                                                 </div>
                                             })}
-                                        </div>}
+                                        </div>
 
                                     </div>
-                                    }
+
                                     <div className="card-background mt-16">
                                         <span className="text-left">
                                             <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
@@ -1012,7 +1168,7 @@ const CourseComponent = ({ profile, history }) => {
                                 <label className="text-secondary d-block mb-4  required">Content Type</label>
                                 <Form.Item name="TopicType" rules={[{ required: true, message: "Content Type  required" }]} >
                                     <Select allowClear placeholder="Choose Topic Type" onChange={(value) => handleChange('TopicType', value, true)}
-                                    getPopupContainer={() => document.querySelector('#type')}>
+                                        getPopupContainer={() => document.querySelector('#type')}>
                                         <Option value="Video">Video</Option>
                                         <Option value="Document">Document</Option>
                                     </Select>
@@ -1040,7 +1196,7 @@ const CourseComponent = ({ profile, history }) => {
                             {fileUploading && topicObj.TopicType == "Video" && <Loader className="loader-top-middle" />}
                             {topicObj.VideoSource == "Upload" && topicObj.TopicType == "Video" && topicObj.VideoUrl?.map((image, indx) => (
                                 <div key={indx} className="mb-16 mt-8 upload-preview">
-                                    <video width="100%" controls onLoadedMetadata={e => {
+                                    <video width="100%" controls controlsList="nodownload" onLoadedMetadata={e => {
                                         setIsVideoLoded(true)
                                         topicObj.Sec = e.target.duration ? e.target.duration : 0;
                                         setTopicObj({ ...topicObj })

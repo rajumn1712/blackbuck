@@ -4,13 +4,15 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk'
 import authReducer from '../reducers/auth';
+import chatReducer from '../utils/chat-system/chatReducer';
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["oidc"]
+    whitelist: ["oidc", "chatHistory"]
 }
 const rootReducer = combineReducers({
-    oidc: authReducer
+    oidc: authReducer,
+    chatHistory: chatReducer
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(

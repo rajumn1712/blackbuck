@@ -11,6 +11,7 @@
   --textlightcolor: #BBB9B9;
   --white: #ffffff;
   --black : #000000;
+  --green :#008000;
   --black-80 : rgba(0,0,0,0.8);
   --black-50 : rgba(0,0,0,0.5);
   --btnlight: #DEDFE1;
@@ -31,6 +32,9 @@
   --f-18: 18px;
   --f-20: 20px;
   --f-24: 24px;
+  --fw-500:500;
+  --fw-600:600;
+  --border-radius: 0.8rem;
 }
 
 /*----Font Sizes----*/

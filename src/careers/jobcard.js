@@ -1,8 +1,6 @@
 import React, {
-  forwardRef,
   useEffect,
   useState,
-  useImperativeHandle,
 } from "react";
 import {
   Typography,
@@ -22,10 +20,9 @@ import { uuidv4 } from "../utils";
 import notify from "../shared/components/notification";
 import connectStateProps from "../shared/stateConnect";
 import ApplyModal from "./applyModal";
-import Logo from '../styles/images/logo.svg';
 
 const { Title, Paragraph } = Typography;
-const JobCard = forwardRef((props, ref) => {
+const JobCard = ((props) => {
   let page = 1;
   const pageSize = 5;
   let showSavedLink = window.location.href.indexOf("savedjobs") > -1;
@@ -55,12 +52,6 @@ const JobCard = forwardRef((props, ref) => {
     setIsModalVisible(false);
   };
 
-  useImperativeHandle(ref, () => ({
-    getAlert() {
-      getJobPostings(1, 5);
-    },
-  }));
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     if (props.refresh) {
@@ -87,7 +78,6 @@ const JobCard = forwardRef((props, ref) => {
       setLoading(false);
       loadMore = response.data.length === pageSize ? true : false;
       setLoadMore(loadMore);
-      console.log(loadMore);
     }
   };
   const handleScroll = () => {
@@ -189,7 +179,7 @@ const JobCard = forwardRef((props, ref) => {
   }
   const renderJobPost = (jobpost, indx) => {
     return (
-      <div className="post-card" key={indx} onScroll={handleScroll()}>
+      <div className="post-card" key={indx}>
         <Card
           bordered={true}
           className="job-card"
@@ -211,14 +201,16 @@ const JobCard = forwardRef((props, ref) => {
           </a>,
           ]}
         >
-          <div className="p-12">
+          <div className="p-12 cursor-pointer" onClick={()=>{
+        props.history.push(`/jobdetail/${jobpost.JobId}`)
+      }}>
             <div className="job-card-title">
               <div className="company-logo"> 
-                <img src={Logo} className="obj-fit" alt={jobpost.EmployerName} />
-                {/* <span className="company-text">ZF</span> */}
+                {jobpost.CompanyLogo && <img src={jobpost.CompanyLogo} className="obj-fit" alt={jobpost.EmployerName} />}
+                {!jobpost.CompanyLogo && <span className="company-text">{jobpost.EmployerName.substring(0,2)}</span>}
               </div>
               <div> 
-              <Title className="f-16 semibold text-secondary mb-0">
+              <Title className="f-16 semibold text-secondary mb-0 ">
               <Link to={`/jobdetail/${jobpost.JobId}`}>
                 <span className="post-title">{jobpost.Title}</span>
               </Link>
@@ -226,7 +218,7 @@ const JobCard = forwardRef((props, ref) => {
             {/* <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobpost.CreateDate}</Moment>
             </Paragraph> */}
-            <Paragraph className="f-12 mb-8">{jobpost.EmployerName}</Paragraph>
+            <Paragraph className="f-12 mb-8" >{jobpost.EmployerName}</Paragraph>
 
             </div>
             </div>
@@ -269,8 +261,8 @@ const JobCard = forwardRef((props, ref) => {
                 </Paragraph>
               </li>
             </ul>
-            <span className="job-ldate f-12 text-secondary px-8 py-4">
-              Last date -{" "}
+            <span className="job-ldate semibold f-12 text-secondary">
+              Apply Before {" "}
               <span className="semibold text-primary">
                 <Moment format="MM/DD/YYYY">{jobpost.EndDate}</Moment>
               </span>

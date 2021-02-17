@@ -200,11 +200,11 @@ class Courses extends Component {
                         <Row gutter={16}>
                             {lstCourses.map((course, index) => {
                                 return <Col xs={24} md={8} lg={6}>
-                                    <Card key={index}
-                                        className="card-item"
-                                        cover={<img alt="photography" src={course.Image?.[0] || defaultguser} />}
+                                    <Card key={index}  onClick={() => { this.props.history.push("/admin/course/" + course.Id) }}
+                                        className="card-item cursor-pointer"
+                                        cover={<img alt="photography" className="cursor-pointer" src={course.Image?.[0] || defaultguser}/>}
                                         actions={[
-                                            <Link className="text-red card-item-button-red" onClick={() => this.deleteCourse(course)}>Delete</Link>
+                                            <Link className="text-red card-item-button-red" onClick={(event) =>{event.stopPropagation(); this.deleteCourse(course)}}>Delete</Link>
                                         ]}
                                     >
                                         <Meta
@@ -215,7 +215,7 @@ class Courses extends Component {
                                                     {course.Date && <div className="f-14 text-primary my-4">{moment(course.Date).format('ll')}</div>}
                                                 </div>} />
 
-                                        <div className="card-options-right">
+                                        <div className="card-options-right" onClick={(event) =>{event.stopPropagation()}}>
                                             <SideAction
                                                 horclass="icons more"
                                                 clickedEvent={(event, name) =>

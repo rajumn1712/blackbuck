@@ -11,6 +11,7 @@ import {
   Spin,
   Modal,
   List,
+  Skeleton
 } from "antd";
 import SideAction from "../components/postings/Actions/SideActions";
 import Comments from "../components/postings/Comments/Comments";
@@ -26,6 +27,7 @@ import {
   getPosts,
   saveActions,
   saveUserPosts,
+  reportContent
 } from "../api/postsApi";
 import FriendSuggestions from "../components/friendSuggestion";
 import ShareBox from "../../components/SavePostBox/sharebox";
@@ -42,7 +44,7 @@ import { uuidv4 } from "../../utils";
 import VisSenseFactory from "vissense";
 import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
-import { joinGroupNew } from "../api/apiServer";
+import { joinGroupNew, getIsFriend, sendFirendRequest, sendNotification } from "../api/apiServer";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -64,6 +66,9 @@ class Postings extends Component {
     descriptionSelection: [],
     object: {},
     postEditData: {},
+    IsYouSendRequest: false,
+    IsFriend: false,
+    RequestType: null
   };
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
@@ -77,7 +82,7 @@ class Postings extends Component {
 
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.match?.params.key !== this.props.match?.params.key) {
+    if (prevProps.match?.params.key !== this.props.match?.params.key || prevProps.id !== this.props.id) {
       this.setState({ ...this.state, page: 1, allPosts: [] }, () => {
         this.loadPosts();
       })
@@ -196,7 +201,7 @@ class Postings extends Component {
             : "/profileview/" + user?.UserId
         }
       ><span className="post-title">{user?.Firstname}</span></Link>{post_type === "Course" && " Added a course"}{<><span className="icon repost-icon mr-0 repost-arrow"></span><Link
-        to={"/groupview/" + mainUser?.GroupId}
+        to={"/groupview/" + (mainUser.groupDetails ? (mainUser.groupDetails.GroupId) : mainUser?.GroupId)}
       ><span className="post-title">{mainUser?.Firstname}</span></Link></>}</span>,
       normal: <span className="overflow-text text-secondary"> <Link
         to={
@@ -261,10 +266,67 @@ class Postings extends Component {
           });
         }
         break;
+      case "Report Post":
+        const object = {
+          ReportId: uuidv4(),
+          ReferenceId: post.id,
+          ReportUsers: [{
+            "UserId": this.props?.profile?.Id,
+            "Firstname": this.props?.profile?.FirstName,
+            "Lastname": this.props?.profile?.LastName,
+            "Email": this.props?.profile?.Email,
+            "Image": this.props?.profile?.ProfilePic
+          }],
+          CreatedDate: new Date(),
+          ReportType: "Posts"
+        };
+        const reportResponse = await reportContent(object);
+        if (reportResponse.ok) {
+          notify({
+            description: "Post reported successfully",
+            message: "Post Report",
+          });
+        } else {
+          notify({
+            description: "Something went wrong'",
+            message: "Error",
+            type: "error",
+          });
+        }
+        break;
+      case "Add Friend":
+        this.addFriend(post);
+        break;
       default:
         break;
     }
   };
+  addFriend = async (post) => {
+    const obj = {
+      "UserId": this.props?.profile?.Id,
+      "Firstname": this.props?.profile?.FirstName,
+      "Lastname": this.props?.profile?.LastName,
+      "Image": this.props?.profile?.ProfilePic,
+      "Email": this.props?.profile?.Email,
+      "Type": "request",
+      "CreatedDate": new Date()
+    }
+    sendFirendRequest(post?.userdetails.UserId, obj).then(() => {
+      this.checkWhetherFriendOrNot(post)
+      sendNotification({ to: post?.userdetails.UserId, message: `${this.props?.profile?.FirstName} sent you friend request`, from: this.props?.profile?.Id });
+      notify({ message: "Friend request", description: "Request sent successfully" });
+    })
+  }
+  checkWhetherFriendOrNot = (post) => {
+    if (post.userdetails.UserId)
+      getIsFriend(this.props.profile?.Id, post?.userdetails.UserId).then(res => {
+        let { IsFriend, IsYouSendRequest, RequestType } = this.state;
+        IsFriend = res.data[0]?.IsFriend;
+        IsYouSendRequest = res.data[0]?.IsYouSendRequest;
+        RequestType = res.data[0]?.type
+        this.setState({ ...this.state, IsFriend, IsYouSendRequest, RequestType });
+      })
+  }
   editPost = (post) => {
     this.sharebox.editPost(JSON.parse(JSON.stringify(post)));
     //json added for deep copy
@@ -324,7 +386,7 @@ class Postings extends Component {
       Video: () => {
         return (
           <div className="video-post cursor-pointer">
-            <video width="100%" controls muted>
+            <video width="100%" controls controlsList="nodownload" muted>
               <source src={imageObj} />
             </video>
             {/* <div className="play"></div> */}
@@ -446,7 +508,7 @@ class Postings extends Component {
       });
     }
   };
-  fetchCardActions = (user) => {
+  fetchCardActions = (user, fndDetail) => {
     const ownerActions = [
       {
         action: "Edit",
@@ -472,6 +534,11 @@ class Postings extends Component {
         icons: "post-icons savepost-icon",
         subTitle: "Save this item for later",
       },
+      {
+        action: "Report Post",
+        icons: "post-icons report-icon",
+        subTitle: "Report this item",
+      },
       // {
       //   action: "Turn on Notifications",
       //   icons: "post-icons notify-icon",
@@ -487,12 +554,23 @@ class Postings extends Component {
         },
       ];
     }
-    const result =
+    let result =
       user.UserId === this.props.profile.Id
         ? ownerActions.concat(actionsList)
         : this.props.postingsType === "group" && this.props.groupData?.IsAdmin
           ? groupActions.concat(actionsList)
           : actionsList;
+    if (user.UserId !== this.props.profile.Id && user.UserId) {
+      result = fndDetail && !fndDetail.IsFriend ? ((fndDetail.IsYouSendRequest && fndDetail.RequestType) ? result.concat([{
+        action: "Request Sent",
+        icons: "post-icons requestsent-grey",
+        subTitle: "Friend Request Sent",
+      }]) : result.concat([{
+        action: "Add Friend",
+        icons: "post-icons addfriend-icon-grey",
+        subTitle: "To send friend request",
+      }])) : result;
+    }
     return result;
   };
   deletePost = (post) => {
@@ -531,14 +609,16 @@ class Postings extends Component {
     }
   };
   renderShareCard = (post) => {
+    let { IsFriend, IsYouSendRequest, RequestType } = this.state;
     return <Card title={this.titleAvatar(post.userdetails, post.date, true, post.Shares[0], false, post.PostType)}
       bordered={true}
       extra={
         <SideAction
+          checkFriend={() => this.checkWhetherFriendOrNot(post)}
           clickedEvent={(event, name) =>
             this.handleEvent(event, name, post)
           }
-          actionsList={this.fetchCardActions(post.userdetails)}
+          actionsList={(IsFriend || IsYouSendRequest || RequestType) ? this.fetchCardActions(post.userdetails, { IsFriend: IsFriend, IsYouSendRequest: IsYouSendRequest, RequestType: RequestType }) : this.fetchCardActions(post.userdetails)}
         />
       }
       actions={[
@@ -557,7 +637,7 @@ class Postings extends Component {
         <ShareAction post={post} key="share" url={`${process.env.REACT_APP_HOSTURL}post/${post.id}`} imgUrl={post.image} />
       ]}>
       {post.PostType === "Course" ? this.renderCourseCard(post) : <Card
-        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false), post.PostType)}
+        className="m-12 mt-0 mb-0" title={this.titleAvatar(post.Shares[0], post.Shares[0]?.CreatedDate, false, { ...post.Shares[0]?.groupDetails ? post.Shares[0]?.groupDetails : post.Group, Firstname: post.Shares[0]?.groupDetails ? post.Shares[0]?.groupDetails?.GroupName : post.Group?.GroupName }, (post.Group?.GroupId ? true : false), post.PostType)}
       >
         {/* <Title level={5} className="post-title">{post.title}</Title> */}
         <Paragraph className="post-desc">
@@ -752,15 +832,17 @@ class Postings extends Component {
     </Card>
   }
   renderCommonCard = (post) => {
+    let { IsFriend, IsYouSendRequest, RequestType } = this.state;
     return <Card
       title={this.titleAvatar(post.userdetails, post.date, false, { ...post.Group, Firstname: post.Group?.GroupName, }, (post.Group?.GroupId ? true : false), post.PostType)}
       bordered={true}
       extra={
         <SideAction
+          checkFriend={() => this.checkWhetherFriendOrNot(post)}
           clickedEvent={(event, name) =>
             this.handleEvent(event, name, post)
           }
-          actionsList={this.fetchCardActions(post.userdetails)}
+          actionsList={(IsFriend || IsYouSendRequest || RequestType) ? this.fetchCardActions(post.userdetails, { IsFriend: IsFriend, IsYouSendRequest: IsYouSendRequest, RequestType: RequestType }) : this.fetchCardActions(post.userdetails)}
         />
       }
       actions={[
@@ -980,9 +1062,9 @@ class Postings extends Component {
     }
     return <>{post.CourseType === "Live Session" ? <div className="livecourse-card mx-16">
       <div className="p-relative">
-        <img onClick={() => { window.open(post.Link, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
+        <img onClick={() => { window.open(process.env.REACT_APP_HOSTURL + `course/${post.CourseId}`, "_blank") }} width="100%" height="240" src={liveIcon[post.UrlType]} className="zoom-img" />
         <div className="live-btn-hover d-flex align-items-center">
-          <a className="f-24 semibold" onClick={() => { window.open(post.Link, "_blank") }}>Join Live Session</a>
+          <a className="f-24 semibold" onClick={() => { window.open(process.env.REACT_APP_HOSTURL + `course/${post.CourseId}`, "_blank") }}>Join Live Session</a>
         </div>
       </div>
       <div className="course-create p-12 d-flex xs-flex-col justify-between">
@@ -997,7 +1079,7 @@ class Postings extends Component {
         {/* <Button type="primary" onClick={() => { window.open(post.Link, "_blank") }}>Join Live</Button> */}
       </div>
     </div> : <div className="livecourse-card mx-16">
-        {post.type === "Video" && <video width="100%" controls muted className="coursevideo-card">
+        {post.type === "Video" && <video width="100%" controls controlsList="nodownload" muted className="coursevideo-card">
           <source src={post.image[0]} />
         </video>}
         <div className="course-create p-12">
@@ -1033,6 +1115,7 @@ class Postings extends Component {
             count={post.commentsCount}
             postId={post.id}
             object={this.state.object}
+            userId={post.userdetails?.UserId}
           />
         )}
         {/* {post.type !== 'text' && <PostCardModal postData={postObj} visible={this.state.showModal} closed={() => this.closed()} handleEvent={(e, name, post) => this.handleEvent(e, name, post)} handleActions={(event, type, post) => this.handleActions(event, type, post)} updatePost={(event, type, post) => this.updatePost(event, type, post)} />} */}
@@ -1101,7 +1184,20 @@ class Postings extends Component {
         )}
         {this.props.friendsSuggestions && <FriendSuggestions />}
         {this.state.allPosts?.map((post, indx) => this.renderPost(post))}
-        {this.state.loading && <Loader className="loader-top-middle" />}
+        {this.state.loading && <div className="post-card-skelton" >
+          <div className="post-card-header-skelton">
+            <Skeleton.Avatar active shape='circle' />
+            <Skeleton active paragraph={{ rows: 1 }} />
+          </div>
+          <div className="post-card-body-skelton">
+            <Skeleton.Avatar active shape='square' />
+          </div>
+          <div className="post-card-footer-skelton d-flex">
+            <Skeleton.Button active shape='square' />
+            <Skeleton.Button active shape='square' />
+            <Skeleton.Button active shape='square' />
+          </div>
+        </div>}
         {!this.state.loading &&
           (!this.state.allPosts || this.state.allPosts?.length == 0) && (
             <Empty />

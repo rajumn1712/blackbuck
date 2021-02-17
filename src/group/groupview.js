@@ -42,7 +42,8 @@ import {
   deleteUserGroup,
   saveAdminUsers,
   fetchUserFriends,
-  getMembers
+  getMembers,
+  sendNotification
 } from "../shared/api/apiServer";
 import { connect } from "react-redux";
 import { profileSuccess } from "../reducers/auth";
@@ -293,6 +294,9 @@ class Group extends Component {
         this.props.updateProfile(this.props.profile);
       }
       else {
+        this.state.groupData.AdminUsers.forEach(item => {
+          sendNotification({ to: item.UserId, message: `${this.props?.profile?.FirstName} sent  request to join  group`, from: this.props?.profile?.Id });
+        });
         this.getGroupData();
       }
     } else {
@@ -487,7 +491,7 @@ class Group extends Component {
                     <a><span className="post-icons settings-icon"></span> Update your settings</a>
                 </Menu.Item> please don't delete */}
         <Menu.Item key="1">
-          {!this.state.groupData ?.IsAdmin && !this.state.groupData ?.IsSystem && (
+          {!this.state.groupData ?.IsAdmin  && (
             <a onClick={() => this.leaveGroup(this.state.groupData)}>
               <span className="post-icons Leavegroup-icon"></span> Leave this
               group
@@ -523,7 +527,7 @@ class Group extends Component {
               className="ant-dropdown-link"
               onClick={(e) => e.preventDefault()}
             >
-              {(this.state.groupData ?.IsAdmin || (!this.state.groupData ?.IsAdmin && !this.state.groupData ?.IsSystem)|| this.state.groupData ?.IsGroupMember) && <span className="icons h-more-icon m-0"></span>}
+              {(this.state.groupData ?.IsAdmin || this.state.groupData ?.IsGroupMember) && <span className="icons h-more-icon m-0"></span>}
             </a>
           </Dropdown>
         </button>
@@ -766,7 +770,7 @@ class Group extends Component {
             <Tabs
               defaultActiveKey="1"
               className="profile-tabs"
-              tabBarExtraContent={(!groupData.IsGroupAdmin && !groupData.IsGroupMember) ? [] : ((groupData.IsGroupMember && groupData.IsSystem) ? [] : operations)}
+              tabBarExtraContent={(!groupData.IsGroupAdmin && !groupData.IsGroupMember) ? [] : ( operations)}
               onChange={(e) => this.setState({ ...this.state, tabkey: e })}
             >
               <TabPane tab="About" key="3">

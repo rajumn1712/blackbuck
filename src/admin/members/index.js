@@ -40,18 +40,22 @@ const Members = ({ profile }) => {
     const [adminObj, setAdminObj] = useState({ ...obj });
     const [groups, setGroups] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         getMembersCount();
         getMembers(1, 20);
     }, []);
     const getMembers = async (page, pageSize) => {
+        setLoading(true);
         const response = await getUsers(profile?.Id, pageSize, ((pageSize * page) - pageSize));
         if (response.ok) {
+            setLoading(false);
             response.data.forEach((item, index) => {
                 item["key"] = index;
             })
             setData(response.data);
         }
+        else { setLoading(false); }
 
     }
     const onPageChange = (page, pageSize) => {
@@ -208,6 +212,7 @@ const Members = ({ profile }) => {
                         selectedRowKeys: selectedRowKeys,
                         onChange: onSelectedRowKeysChange
                     }}
+                    loading={loading}
                     columns={columns} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: count, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
             </Card>
         </div>

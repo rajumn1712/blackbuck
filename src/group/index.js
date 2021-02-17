@@ -33,21 +33,21 @@ class Aboutus extends Component {
               onChange={(e) => this.setState({ ...this.state, tabkey: e })}>
               <TabPane tab="Groups" key="1">
                 <Row gutter={16}>
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                  <Col xs={24}>
                   <GroupsPage onRef={(courses) => (this.courses = courses)}/>
                   </Col>
                 </Row>
               </TabPane>
               <TabPane tab="Invite Groups" key="3">
                 <Row gutter={16}>
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                  <Col xs={24}>
                   <Invite displayas={"Card"}/>
                   </Col>
                 </Row>
               </TabPane>
               <TabPane tab="Suggested Groups" key="2">
                 <Row gutter={16}>
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                  <Col xs={24}>
                   <Groups displayas={"Card"} />
                   </Col>
                 </Row>

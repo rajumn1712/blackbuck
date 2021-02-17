@@ -6,7 +6,8 @@ import Moment from "react-moment";
 import {
     getNotifications,
     acceptFrienRequest,
-    acceptDeclineInvitations
+    acceptDeclineInvitations,
+    readNotification
 } from "../shared/api/apiServer";
 import notify from '../shared/components/notification';
 import { Link, withRouter } from 'react-router-dom';
@@ -21,7 +22,7 @@ class Notifications extends Component {
         loading: true,
         loadMore: true,
         page: 1,
-        pageSize: this.props.type?20:5,
+        pageSize: this.props.type ? 20 : 5,
     };
 
     componentDidMount() {
@@ -63,9 +64,9 @@ class Notifications extends Component {
         }
     }
     getAllNotifications = () => {
-        getNotifications(this.props?.profile.Id,this.state.pageSize,(this.state.pageSize*this.state.page-this.state.pageSize)).then(res => {
-            let {data}=this.state;
-            this.setState({ ...this.state, data: data.concat(res.data), loading: false ,loadMore: res.data.length === this.state.pageSize}, () => { this.changeTab("1") });
+        getNotifications(this.props?.profile.Id, this.state.pageSize, (this.state.pageSize * this.state.page - this.state.pageSize)).then(res => {
+            let { data } = this.state;
+            this.setState({ ...this.state, data: data.concat(res.data), loading: false, loadMore: res.data.length === this.state.pageSize }, () => { this.changeTab("1") });
         });
     }
     handleAccept = async (friend) => {
@@ -82,9 +83,10 @@ class Notifications extends Component {
                 }
             }
             acceptDeclineInvitations(object).then(res => {
+                readNotification(friend.NotificationId, "accept");
                 this.props.profile.Groups = (this.props.profile.Groups ? this.props.profile.Groups : 0) + 1;
                 this.props.updateProfile(this.props.profile);
-                this.updateNotifications(friend);
+                this.updateNotifications(friend, "accept");
                 notify({ placement: 'bottomLeft', message: 'Invite', description: `Request accepted successfully.` });
             });
         }
@@ -105,7 +107,8 @@ class Notifications extends Component {
                 obj
             ).then(() => {
                 message.success("Action Success");
-                this.updateNotifications(friend);
+                readNotification(friend.NotificationId, "accept");
+                this.updateNotifications(friend, "accept");
                 this.props.profile.Friends = this.props.profile.Friends
                     ? this.props.profile.Friends + 1
                     : 1;
@@ -128,7 +131,8 @@ class Notifications extends Component {
                 }
             }
             acceptDeclineInvitations(object).then(res => {
-                this.updateNotifications(friend);
+                readNotification(friend.NotificationId, 'decline');
+                this.updateNotifications(friend, 'decline');
                 this.props.updateProfile(this.props.profile);
                 notify({ placement: 'bottomLeft', message: 'Invite', description: `Request declined successfully.` });
             });
@@ -148,15 +152,24 @@ class Notifications extends Component {
                 "decline",
                 obj
             ).then(() => {
-                this.updateNotifications(friend);
+                readNotification(friend.NotificationId, 'decline');
+                this.updateNotifications(friend, 'decline');
                 this.props.updateProfile(this.props.profile);
                 message.success("Action Success");
             });
         }
     };
-    updateNotifications = (item) => {
+    updateNotifications = (item, type) => {
         let { typeData } = this.state;
-        typeData = typeData.filter(obj => obj != item);
+         typeData.filter(obj => {
+            if (item.NotificationId == obj.NotificationId) {
+                obj.IsRead = true;
+                obj.RequestType = type;
+            }
+        });
+        if (this.props.onCount) {
+            this.props.onCount();
+        }
         this.setState({ ...this.state, typeData });
     }
     changeTab = (index) => {
@@ -168,9 +181,9 @@ class Notifications extends Component {
     }
     getTitle = (item) => {
         const messages = {
-            Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
-            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">sent you a friend request</span></div>,
-            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span className="fw-400">commented on your post</span>  <Link to={"/post/" + item.PostId}>{`"${item.Comment}"`}</Link> </div>
+            Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
+            Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span></div>,
+            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{item.Firstname}</Link> <span>commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{`"${item.Comment}"`}</Link> </div>
         }
         return messages[item.Type]
     }
@@ -184,23 +197,25 @@ class Notifications extends Component {
             loading={this.state.loading}
             renderItem={item => (
                 <List.Item
-                    className="read"
+                    className={item.IsRead ? "read" : "unread"}
                 >
                     <List.Item.Meta
                         avatar={<Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}><Avatar src={item.Image || defaultUser} /></Link>}
                         title={<>{this.getTitle(item)}</>}
-                        description={ <div>{item.CreatedDate && <div> <Moment fromNow>{item.CreatedDate}</Moment></div>}
-                       
-                        {this.props.type  && <div className="noti-button">
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
+                        description={<div>{item.CreatedDate && <div className="f-12 text-secondary"><Moment fromNow>{item.CreatedDate}</Moment></div>}
+
+                            {this.props.type && item.RequestType == "request" && <div className="noti-button">
+                                {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
+                                {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
+                            </div>}
+                            {(item.RequestType == "accept" || item.RequestType == "decline") && <span className="fw-400 text-secondary f-14">Request {item.RequestType == "decline" ? "declined" : "accepted"}</span>}
                         </div>}
-                    </div>}
 
                     />
-                    {!this.props.type  && <div className="noti-button">
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
-                        {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
+                    {!this.props.type && item.RequestType == "request" && <div className="noti-button">
+                        {(item.Type == "Invitations" || item.Type == "Friends") && item.RequestType == "request" && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
+                        {(item.Type == "Invitations" || item.Type == "Friends") && item.RequestType == "request" && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
+                        {(item.RequestType == "accept" || item.RequestType == "decline") && <span className="fw-400">Request {item.RequestType == "decline" ? "declined" : "accepted"}</span>}
                     </div>}
                 </List.Item>
 
@@ -212,20 +227,20 @@ class Notifications extends Component {
 
     render() {
         return <>
-           {this.props.type && <Row className="noti-dropdown m-0" gutter={16}>
+            {this.props.type && <Row className="noti-dropdown m-0" gutter={16}>
                 <Col className="noti-dropdown p-0" xs={24} sm={24} md={24} lg={24} xl={24}>
                     {this.renderNotifications()}
 
                 </Col>
             </Row>
-    }
-            {!this.props.type && <Row  gutter={16}>
+            }
+            {!this.props.type && <Row gutter={16}>
                 <Col className="notification-full" xs={24} sm={24} md={24} lg={24} xl={24}>
                     {this.renderNotifications()}
 
                 </Col>
             </Row>
-    }
+            }
         </>
     }
 }

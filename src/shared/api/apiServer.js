@@ -1,4 +1,7 @@
-const { apiClient } = require("./clients");
+import firebase from 'firebase';
+import 'firebase/messaging';
+import 'firebase/firestore'
+const { apiClient, cloudMessaging } = require("./clients");
 const FRIENDS_API = "service/api/home/";
 const GROUPS_API = "service/api/groups/";
 const PROFILE_API = "service/api/profile/";
@@ -179,6 +182,9 @@ const unFriend = (user_id, friend_id) => {
 const fetchNotificationCount = (userId) => {
   return apiClient.get(PROFILE_API + `getNotificationsCount/${userId}`);
 };
+const certifiedCourses = (user_id) => {
+  return apiClient.get(PROFILE_API + `getCertifiedCourses/${user_id}`);
+}
 const saveUserPassword = (object) => {
   return apiClient.post(process.env.REACT_APP_AUTHORITY + "/Account/ChangePassword", object);
 };
@@ -244,7 +250,7 @@ const getAllSystemGroups = (take, skip) => {
   return apiClient.get(ADMIN_API + `getAllSystemGroups/${take}/${skip}`);
 }
 const groupBlock = (obj) => {
-  return apiClient.post(ADMIN_API + `saveGroupBlocked`,obj);
+  return apiClient.post(ADMIN_API + `saveGroupBlocked`, obj);
 }
 const joinGroupNew = (id, obj) => {
   return apiClient.post(LMS_API + "joinCourse/" + id, obj);
@@ -258,13 +264,13 @@ const saveJobPost = (obj) => {
 const getJobPostings = (user_id, take, skip) => {
   return apiClient.get(ADMIN_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
 }
-const getJobById = (user_id,id) => {
+const getJobById = (user_id, id) => {
   return apiClient.get(ADMIN_API + `getJobPostById/${user_id}/${id}`)
 }
 const jobpostingsCount = () => {
   return apiClient.get(ADMIN_API + 'getJobPostingCount');
 }
-const getJobApplications = (user_id,take, skip) => {
+const getJobApplications = (user_id, take, skip) => {
   return apiClient.get(ADMIN_API + `getJobApplications/${user_id}/${take}/${skip}`)
 }
 const jobApplicationCount = () => {
@@ -273,33 +279,64 @@ const jobApplicationCount = () => {
 const getScholorUsers = (take, skip) => {
   return apiClient.get(ADMIN_API + `getScholorUsers/${take}/${skip}`);
 }
-const allJobPostings = (user_id,take,skip,type,state,city)=>{
-  if(type==='jobsearch'&&(state||city)){
+const allJobPostings = (user_id, take, skip, type, state, city) => {
+  if (type === 'jobsearch' && (state || city)) {
     return apiClient.get(CAREESRS_API + `getSearchJobPostings/${user_id}/${state ? state : null}/${city ? city : null}/${take}/${skip}`)
-  }else if(type === 'savedjobs'){
+  } else if (type === 'savedjobs') {
     return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
   }
-  else{
+  else {
     return apiClient.get(CAREESRS_API + `getAllJobPostings/${user_id}/${take}/${skip}`);
   }
 }
-const saveApplicationJob = (obj)=>{
-  return apiClient.post(CAREESRS_API + 'saveJobApplication',obj);
+const saveApplicationJob = (obj) => {
+  return apiClient.post(CAREESRS_API + 'saveJobApplication', obj);
 }
-const saveUserJobPost = (obj)=>{
-  return apiClient.post(CAREESRS_API + 'savedJobPosts',obj);
+const saveUserJobPost = (obj) => {
+  return apiClient.post(CAREESRS_API + 'savedJobPosts', obj);
 }
-const getSavedJobPost = (user_id,take,skip)=>{
+const getSavedJobPost = (user_id, take, skip) => {
   return apiClient.get(CAREESRS_API + `getUserSavedJobPosts/${user_id}/${take}/${skip}`);
 }
-const deleteJobSavedPost = (id)=>{
+const deleteJobSavedPost = (id) => {
   return apiClient.get(CAREESRS_API + `deleteSavedJobPost/${id}`);
 }
-const deleteJobPost = (id)=>{
+const deleteJobPost = (id) => {
   return apiClient.get(ADMIN_API + `deleteJobPost/${id}`);
 }
 const getIsFriend = (id, fnd_user_id) => {
   return apiClient.get(PROFILE_API + `CheckIsFriend/${id}/${fnd_user_id}`);
+}
+const getCategories = () => {
+  return apiClient.get(LMS_API + `getCategoriesLu`);
+}
+const saveNotification = (obj) => {
+  return apiClient.post(PROFILE_API + `saveNotification`, obj);
+}
+const readNotification = (id, type) => {
+  return apiClient.get(PROFILE_API + `notificationRead/${id}/${type}`);
+}
+const sendNotification = ({ to, message, from }) => {
+  firebase.firestore().collection("devices").doc(to).collection('tokens')
+    .get()
+    .then(snapshot => {
+      let devices = snapshot.docs.map(item => item.data().token);
+      devices = devices.filter((item, indx, arra) => indx == arra.indexOf(item));
+      const obj = {
+        data: { user_id: from },
+        notification: {
+          title: "Blackbuck",
+          icon: "https://theblackbucks.com/assets-new/img/logo.png",
+          body: message
+        },
+        registration_ids: devices
+      }
+      if (devices && devices.length > 0) {
+        cloudMessaging.post("fcm/send", obj).then(response => {
+
+        });
+      }
+    });
 }
 export {
   getFriendSuggestions,
@@ -350,6 +387,7 @@ export {
   getNotifications,
   unFriend,
   fetchNotificationCount,
+  certifiedCourses,
   saveUserPassword,
   getAuthors,
   saveTopic,
@@ -387,5 +425,9 @@ export {
   getSavedJobPost,
   deleteJobSavedPost,
   deleteJobPost,
-  getIsFriend
+  getIsFriend,
+  getCategories,
+  saveNotification,
+  readNotification,
+  sendNotification
 };

@@ -56,6 +56,26 @@ const userRecentWatchedCourse = (user_id)=>{
 const getRecommendedVideos = (course_id,pageNo,pageSize)=>{
   return apiClient.get(LMS_REMOTE + `getRecommendedVideos/${course_id}/${pageSize}/${pageNo * pageSize - pageSize}`)
 }
+const getAllLMS = ()=>{
+  return apiClient.get(LMS_REMOTE + '/getLiveSessions/30/0');
+}
+const getByCourseType = (type,take,skip)=>{
+  const methods = {
+    'mockinterviews':'Mock Interviews',
+    'webinars':`Webinar's`,
+    'workshops':'Workshops',
+    'courseslive':'Courses'
+  }
+  return apiClient.get(LMS_REMOTE + `getCoursesByType/${methods[type]}/${take}/${skip}`);
+}
+const getCoursesByType = (type,take,skip)=>{
+  const methods = {
+    'ongoing':'OnGoing',
+    'upcoming':'Upcoming',
+    'previous':'Previous'
+  }
+  return apiClient.get(LMS_REMOTE + `getLiveSessions/${methods[type]}/${take}/${skip}`)
+}
 export {
   fetchUserCourses,
   fetchCourseSuggestions,
@@ -70,5 +90,8 @@ export {
   getCertifiedFlags,
   getUserWatchedVideos,
   userRecentWatchedCourse,
-  getRecommendedVideos
+  getRecommendedVideos,
+  getAllLMS,
+  getByCourseType,
+  getCoursesByType
 };

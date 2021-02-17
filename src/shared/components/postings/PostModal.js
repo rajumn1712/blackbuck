@@ -107,7 +107,7 @@ class PostCardModal extends Component {
         const _result = {
             Video: () => {
                 return <div className="video-post" >
-                    <video width="100%" controls>
+                    <video width="100%" controls controlsList="nodownload">
                         <source src={imageObj} />
                     </video>
                 </div>
@@ -237,7 +237,7 @@ class PostCardModal extends Component {
                                     </div>
                                 </Card>
                                 {this.state.commentselection.indexOf(post.id) > -1 && <Comments postId={post.id} count={post.commentsCount} onUpdate={(prop, value, object) => { this.props.updatePost(post, prop, value, object) }}
-                                />}
+                                 userId={post.userdetails?.UserId}/>}
                             </div>
                         </Col>
                     </Row>

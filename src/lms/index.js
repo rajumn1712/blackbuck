@@ -16,8 +16,9 @@ class LMSComponent extends Component {
                         <CourseCards onRef={(courses) => this.coursedetails = courses} />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={7} xl={7}>
+
+                        <CourseList isDataReferesh={this.coursedetails} />
                         <Affix offsetTop={86} >
-                            <CourseList isDataReferesh={this.coursedetails} />
                             <Ads />
                         </Affix>
                     </Col>

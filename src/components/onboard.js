@@ -29,7 +29,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
             "Email": profile?.Email
         },
         "College": {
-            "CollegeId": null,
+            "CollegeId": [],
             "CollegeName": "",
             "BranchId": null,
             "BranchName": "",
@@ -95,11 +95,13 @@ const OnBoard = ({ profile, history, updateProfile }) => {
         }
         setLoaders({ ...loaders, subjects: false });
     }
-    const handleChange = (prop, val) => {
+    const handleChange = (prop, val,option) => {
         let object = { ...initialValues };
         object.College[prop] = val;
         if (prop === "CollegeId") {
-            object.College.CollegeName = colleges.filter(item => item.CollegeId === val)[0].CollegeName;
+            object.College[prop] = option[0]?.value ? option[0]?.value : null;
+            //  object.College.CollegeName = colleges.filter(item => item?.CollegeId === val)[0]?.CollegeName;
+            object.College.CollegeName = option[0]?.value ? option[0]?.name : val[0];
         } else if (prop === "BranchId") {
             object.College.BranchName = branches.filter(item => item.BranchId === val)[0].BranchName;
         }
@@ -158,6 +160,9 @@ const OnBoard = ({ profile, history, updateProfile }) => {
     const onFinishFailed = (error) => {
 
     }
+    const getFilter = (input, option) => {
+        return option.name ? (option.name.toLowerCase().indexOf(input.toLowerCase()) >= 0) : [];
+    }
     const finishSetup = () => {
         let prop = { ...profile };
         prop.IsOnBoardProcess = true;
@@ -191,10 +196,21 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                         <div className="intro2 pb-0">
                             <Form layout="vertical" initialValues={initialValues.College} onFinishFailed={onFinishFailed} onFinish={(values) => next(values)}>
                                 <Row gutter={16}>
-                                    <Col xs={24} className="custom-fields">
-                                        <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }]}>
-                                            <Select loading={loaders.colleges} defaultValue={initialValues.College.CollegeId} placeholder="Select a college" onChange={(val) => handleChange("CollegeId", val)}>
-                                                {colleges?.map((college, indx) => <Option value={college?.CollegeId}><Avatar src={college.Image} />{college?.CollegeName}</Option>)}
+                                    <Col xs={24} className="custom-fields custom-multiselect onboard-clg-input">
+                                        <Form.Item label="College/University Name" name="CollegeId" rules={[{ required: true, message: "College / University name required" }, {
+                                            validator: (rule, value, callback) => {
+                                                if (value) {
+                                                    if (value.length > 1) {
+                                                        callback("Please select only one College/University")
+                                                    } else if (value.length <= 1) {
+                                                        callback();
+                                                    }
+                                                }
+                                                return;
+                                            }
+                                        }]}>
+                                            <Select mode={"tags"} showSearch filterOption={(input, option) => getFilter(input, option)} loading={loaders.colleges} defaultValue={initialValues.College.CollegeId} placeholder="Select a college" onChange={(val,option) => handleChange("CollegeId", val,option)}>
+                                                {colleges?.map((college, indx) => <Option name={college?.CollegeName} value={college?.CollegeId}><Avatar src={college.Image} />{college?.CollegeName}</Option>)}
                                             </Select>
                                         </Form.Item>
                                     </Col>
@@ -206,8 +222,8 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} md={12} className="custom-fields">
-                                        <Form.Item label="Date of joining" name="DateOfJoining" rules={[{ required: true, message: "Date of joining required" }]}>
-                                            <DatePicker defaultValue={initialValues.College.DateOfJoining} onChange={(val) => { handleChange("DateOfJoining", val) }} format="DD/MM/YYYY" />
+                                        <Form.Item label="Year of joining" name="DateOfJoining" rules={[{ required: true, message: "Year of joining required" }]}>
+                                            <DatePicker defaultValue={initialValues.College.DateOfJoining} onChange={(val) => { handleChange("DateOfJoining", val) }} picker="year" />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} md={12} className="custom-fields">
@@ -215,7 +231,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                             type: "date", validator: async (rule, value, callback) => {
                                                 if (value && initialValues.College.DateOfJoining) {
                                                     if (new Date(value).getFullYear() <= new Date(initialValues.College.DateOfJoining).getFullYear()) {
-                                                        throw new Error("Passing out year should be greater than Date Of Joining")
+                                                        throw new Error("Passing out year should be greater than Year Of Joining")
                                                     } else {
                                                         callback();
                                                     }
@@ -237,7 +253,7 @@ const OnBoard = ({ profile, history, updateProfile }) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} className="custom-fields multi-select">
-                                        <Form.Item label="Choose you're courses" name="Subjects" rules={[{ required: true, message: "Please select at least one course" }]}>
+                                        <Form.Item label="Choose your courses" name="Subjects" rules={[{ required: true, message: "Please select at least one course" }]}>
                                             <Select loading={loaders.subjects} mode="multiple" defaultValue={fetchSelectedSubjects()} showSearch placeholder="Select a course" onChange={onSubjectsSelection} filterOption={(input, option) =>
                                                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                             }>
