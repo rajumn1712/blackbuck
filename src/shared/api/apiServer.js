@@ -316,14 +316,14 @@ const saveNotification = (obj) => {
 const readNotification = (id, type) => {
   return apiClient.get(PROFILE_API + `notificationRead/${id}/${type}`);
 }
-const sendNotification = ({ to, message, from }) => {
+const sendNotification = ({ to, message, from, type }) => {
   firebase.firestore().collection("devices").doc(to).collection('tokens')
     .get()
     .then(snapshot => {
       let devices = snapshot.docs.map(item => item.data().token);
       devices = devices.filter((item, indx, arra) => indx == arra.indexOf(item));
       const obj = {
-        data: { user_id: from },
+        data: { user_id: from, type },
         notification: {
           title: "Blackbuck",
           icon: "https://theblackbucks.com/assets-new/img/logo.png",
