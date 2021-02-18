@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Avatar, Col, Row, Typography, Empty } from "antd";
+import { Card, Avatar, Col, Row, Typography, Empty ,Skeleton} from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { store } from "../../store";
 import { connect } from "react-redux";
@@ -194,10 +194,36 @@ class GroupsPage extends Component {
   render() {
     const { user } = store.getState().oidc;
     const { Groups, visible, loading } = this.state;
-    const {IsHideAction}=this.props;
+    const { IsHideAction } = this.props;
     return (
       <div className="group-page p-12 pb-0 mb-6">
-        {loading && <Loader className="loader-top-middle" />}
+        {loading && <Row gutter={16} >
+          <Col xs={12} md={8}>
+            <div className="groupcard-skelton" >
+              <Skeleton.Image active shape='square' />
+              <Skeleton.Avatar active shape='circle' />
+              <Skeleton active paragraph={{ rows: 1 }} />
+              <Skeleton.Button active shape='square' />
+            </div>
+          </Col>
+          <Col xs={12} md={8}>
+            <div className="groupcard-skelton">
+              <Skeleton.Image active shape='square' />
+              <Skeleton.Avatar active shape='circle' />
+              <Skeleton active paragraph={{ rows: 1 }} />
+              <Skeleton.Button active shape='square' />
+            </div>
+          </Col>
+          <Col xs={12} md={8}>
+            <div className="groupcard-skelton" >
+              <Skeleton.Image active shape='square' />
+              <Skeleton.Avatar active shape='circle' />
+              <Skeleton active paragraph={{ rows: 1 }} />
+              <Skeleton.Button active shape='square' />
+            </div>
+          </Col>
+        </Row>}
+        
         <Row gutter={16} className="">
           {Groups.length > 0 &&
             Groups?.map((group, index) => {
@@ -216,26 +242,33 @@ class GroupsPage extends Component {
                       //   src={group.image || defaultguser}
                       // />
                       // </Link>
-                       <img
-                       className="obj-fit"
-                       src={group.image || defaultguser}
-                     />
+                      <span className="custom-group-cards">
+                        <img
+                          className="obj-fit group-banner"
+                          src={group.image || defaultguser}
+                        />
+                        <img
+                          className="obj-fit group-icons"
+                          src={group.image || defaultguser}
+                        />
+                      </span>
+
                     }
-                    actions={!group.IsGroupAdmin  && !IsHideAction? [
+                    actions={!group.IsGroupAdmin && !IsHideAction ? [
                       <Link className="list-link f-14" onClick={(event) => { event.stopPropagation(); this.leaveGroup(group) }}>
                         Leave Group
                       </Link>,
                     ] : ""}
                   >
-                    
+
                     <Meta
                       title={
-                        !IsHideAction?  <Link
+                        !IsHideAction ? <Link
                           to={"/groupview/" + group.id}
                           className="post-title"
                         >
                           {group.name}
-                        </Link>:<span>{group.name}</span>
+                        </Link> : <span>{group.name}</span>
                       }
                       description={
                         <div>
@@ -259,7 +292,7 @@ class GroupsPage extends Component {
                       }
                     />
                   </Card>
-                  {group.IsGroupAdmin && !IsHideAction&& (
+                  {group.IsGroupAdmin && !IsHideAction && (
                     <span className="card-options-right" onClick={(event) => { event.stopPropagation() }}>
                       <SideAction
                         horclass="icons more"

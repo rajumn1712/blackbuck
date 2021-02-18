@@ -180,10 +180,16 @@ class Groups extends Component {
               <Card
                 key={index}
                 cover={
-                  <img
-                    className="obj-fit"
-                    src={group.image || defaultguser}
-                  />
+                  <span className="custom-group-cards">
+                    <img
+                      className="obj-fit group-banner"
+                      src={group.image || defaultguser}
+                    />
+                    <img
+                      className="obj-fit group-icons"
+                      src={group.image || defaultguser}
+                    />
+                  </span>
                 }
                 actions={[
                   group.requestJoin === "request" ? (
@@ -315,7 +321,7 @@ class Groups extends Component {
                           <span>
                             <span className="mr-4">{item.members}</span>
                             {item.members > 1 ? "Members" : "Member"}
-                        </span>{" "}
+                          </span>{" "}
                         |{" "}
                           <span>
                             <span className="mr-4">{item.postsCount ? item.postsCount : 0}</span>
