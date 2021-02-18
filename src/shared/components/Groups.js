@@ -30,7 +30,7 @@ class Groups extends Component {
     data: [],
     loading: true,
     page: 1,
-    pageSize: this.props.displayas ? 20 : 5,
+    pageSize: this.props.displayas ? 18 : 5,
     size: 0,
     loadMore: true,
   };
@@ -209,6 +209,7 @@ class Groups extends Component {
                     )
                 ]}
               >
+                {loading && <Loader className="loader-middle" key={loading} />}
                 <Meta
                   title={
                     <Link

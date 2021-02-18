@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, List } from 'antd'
+import { Card, List,Skeleton } from 'antd'
 import { Link } from 'react-router-dom';
 import { fetchTags } from '../../shared/api/apiServer';
 import '../../index.css';
@@ -7,6 +7,7 @@ import '../../App.css';
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import connectStateProps from '../../shared/stateConnect';
 import { connect } from 'react-redux';
+import Loader from "../../common/loader";
 
 class FriendRequests extends Component {
     componentDidMount() {
@@ -35,7 +36,7 @@ class FriendRequests extends Component {
         return (
             <div className="custom-card tag-card">
                 <Card title="#Tags" bordered={false} >
-                    <List loading={this.state.loading}
+                    <List loading={this.state.loading?{indicator:<Loader className="loader-top-middle" />}:false}
                         itemLayout="vertical"
                         dataSource={tags?.slice(0, 5)}
                         renderItem={item => (

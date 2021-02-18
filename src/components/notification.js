@@ -13,6 +13,7 @@ import notify from '../shared/components/notification';
 import { Link, withRouter } from 'react-router-dom';
 import { profileSuccess } from "../reducers/auth";
 import defaultUser from '../styles/images/defaultuser.jpg';
+import Loader from '../common/loader'
 const { TabPane } = Tabs;
 
 class Notifications extends Component {
@@ -194,7 +195,7 @@ class Notifications extends Component {
             dataSource={this.state.typeData}
             bordered={true}
             split={true}
-            loading={this.state.loading}
+            loading={this.state.loading?{indicator:<Loader className="loader-top-middle" />}:false}
             renderItem={item => (
                 <List.Item
                     className={item.IsRead ? "read" : "unread"}
