@@ -1,4 +1,4 @@
-import { Card, Col, Row, Tabs, Empty, Typography } from "antd";
+import { Card, Col, Row, Tabs, Empty, Typography, Skeleton } from "antd";
 import React, { Component, createRef } from "react";
 import photography from "../styles/images/default-cover.png";
 import { Link, withRouter } from "react-router-dom";
@@ -44,7 +44,7 @@ class CourseCards extends Component {
   state = {
     courses: [],
     recentCourses: [],
-    loadMore:true,
+    loadMore: true,
     loading: false,
     page: 1,
     pageSize: 5,
@@ -69,13 +69,15 @@ class CourseCards extends Component {
         this.state.pageSize,
         'courses'
       );
-      let {courses} = this.state;
+      let { courses } = this.state;
       courses = courses.concat(response.data);
       if (response.ok) {
-        this.setState({ ...this.state, 
+        this.setState({
+          ...this.state,
           courses,
           loading: false,
-          loadMore: response.data.length === this.state.pageSize });
+          loadMore: response.data.length === this.state.pageSize
+        });
       } else {
         this.setState({ ...this.state, loading: false });
       }
@@ -144,111 +146,123 @@ class CourseCards extends Component {
             <AllCourses type="courseslive" title="Courses" />
           </TabPane>
           <TabPane tab="My Courses" key="2">
-              <div className="">
-                {this.state.courses?.map((course, indx) => (
-                  <Card
-                    className="card-item vertical-card"
-                    onClick={()=>{this.props.history.push("course/" + course.id)}}
-                    cover={
-                      <>
-                        <img
-                          alt="photography"
-                          src={
-                            course.image.length > 0
-                              ? course.image
-                              : photography
-                          }
-                        />
-                        {course.CourseType === "Live Session" && (
-                          <span className="live-btn">LIVE</span>
-                        )}
-                      </>
+            <div className="">
+              {this.state.courses?.map((course, indx) => (
+                <Card
+                  className="card-item vertical-card"
+                  onClick={() => { this.props.history.push("course/" + course.id) }}
+                  cover={
+                    <>
+                      <img
+                        alt="photography"
+                        src={
+                          course.image.length > 0
+                            ? course.image
+                            : photography
+                        }
+                      />
+                      {course.CourseType === "Live Session" && (
+                        <span className="live-btn">LIVE</span>
+                      )}
+                    </>
+                  }
+                >
+                  <Meta
+                    title={
+                      <Link
+                        to=""
+                        className="text-primary"
+                      >
+                        {course.name}
+                      </Link>
                     }
-                  >
-                    <Meta
-                      title={
-                        <Link
-                          to=""
-                          className="text-primary"
-                        >
-                          {course.name}
-                        </Link>
-                      }
-                      description={
-                        <div className="coursecard-cont">
-                          <div>
+                    description={
+                      <div className="coursecard-cont">
+                        <div>
                           <Paragraph
-                              ellipsis={{ rows: 2 }}
-                              className="f-14 text-primary mb-8"
-                              style={{ height: "42px" }}
-                            >
-                              {course.description}
+                            ellipsis={{ rows: 2 }}
+                            className="f-14 text-primary mb-8"
+                            style={{ height: "42px" }}
+                          >
+                            {course.description}
+                          </Paragraph>
+                          {course.CourseType === "Live Session" && (
+                            <Paragraph className="job-ldate f-12 text-secondary ">
+                              Starts on{" "}
+                              <span className="semibold text-primary f-14">
+                                <Moment format="MM/DD/YYYY">
+                                  {course.LiveDate}
+                                </Moment>
+                              </span>
                             </Paragraph>
-                            {course.CourseType === "Live Session" && (
-                              <Paragraph className="job-ldate f-12 text-secondary ">
-                                Starts on{" "}
-                                <span className="semibold text-primary f-14">
-                                  <Moment format="MM/DD/YYYY">
-                                    {course.LiveDate}
-                                  </Moment>
-                                </span>
-                              </Paragraph>
-                            )}
-                            {course.CourseType === "Content" && (
-                              <Paragraph className="job-ldate f-12 text-secondary">
-                                Created on{" "}
-                                <span className="semibold text-primary f-14">
-                                  <Moment format="MM/DD/YYYY">
-                                    {course.CreatedDate}
-                                  </Moment>
-                                </span>
-                              </Paragraph>
-                            )}
-                            
-                            {course.CourseType === "Content" && (
-                              <div className="justify-content-between">
-                                <span className="mr-4 f-12 text-secondary">
-                                  {course.sections} Sections
+                          )}
+                          {course.CourseType === "Content" && (
+                            <Paragraph className="job-ldate f-12 text-secondary">
+                              Created on{" "}
+                              <span className="semibold text-primary f-14">
+                                <Moment format="MM/DD/YYYY">
+                                  {course.CreatedDate}
+                                </Moment>
+                              </span>
+                            </Paragraph>
+                          )}
+
+                          {course.CourseType === "Content" && (
+                            <div className="justify-content-between">
+                              <span className="mr-4 f-12 text-secondary">
+                                {course.sections} Sections
                                     </span>{" "}
                                     |
-                                <span className="mx-4 f-12 text-secondary">
-                                  {course.videos}{" "}
-                                  {`${course.videos === 1 ? "Video" : "Videos"
-                                    }`}
-                                </span>{" "}
+                              <span className="mx-4 f-12 text-secondary">
+                                {course.videos}{" "}
+                                {`${course.videos === 1 ? "Video" : "Videos"
+                                  }`}
+                              </span>{" "}
                                     |
-                                <span className="ml-4 f-12 text-secondary">
-                                  {
-                                    course.members.concat(course.AdminUsers)
-                                      .length
-                                  }{" "}
+                              <span className="ml-4 f-12 text-secondary">
+                                {
+                                  course.members.concat(course.AdminUsers)
+                                    .length
+                                }{" "}
                                       Members
                                     </span>
-                              </div>
-                            )}
-                            {course.CourseType === "Live Session" && (
-                              <div className="justify-content-between">
-                                <span className="ml-4 f-12 text-secondary">
-                                  {
-                                    course.members.concat(course.AdminUsers)
-                                      .length
-                                  }{" "}
+                            </div>
+                          )}
+                          {course.CourseType === "Live Session" && (
+                            <div className="justify-content-between">
+                              <span className="ml-4 f-12 text-secondary">
+                                {
+                                  course.members.concat(course.AdminUsers)
+                                    .length
+                                }{" "}
                                       Members
                                     </span>
-                              </div>
-                            )}
-                          </div>
+                            </div>
+                          )}
                         </div>
-                      }
-                    />
-                  </Card>
-                ))}
-              </div>
-              {this.state.loading && <Loader className="loader-top-middle" />}
-              {!this.state.loading &&
-                this.state.courses.length === 0 &&
-                this.state.recentCourses.length === 0 && <Empty />}
-           
+                      </div>
+                    }
+                  />
+                </Card>
+              ))}
+            </div>
+            {this.state.loading && <Row gutter={8}>
+              <Col xs={24} md={24} className="">
+                <div className="cards-list-skelton lms-card-skelton vertical-card">
+                  <Skeleton.Image active shape='square' />
+                  <div className="">
+                    <Skeleton active paragraph={{ rows: 2 }} />
+                    <Skeleton.Button active shape='square' />
+                    <Skeleton active paragraph={{ rows: 0 }} />
+                  </div>
+                </div>
+              </Col>
+            </Row>}
+            {this.state.loading && <Loader className="loader-top-middle" />}
+            {!this.state.loading &&
+              this.state.courses.length === 0 &&
+              this.state.recentCourses.length === 0 && <Empty />}
+
           </TabPane>
         </Tabs>
       </div>

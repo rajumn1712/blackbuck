@@ -32,4 +32,12 @@
 
 .cards-list-skelton.lms-card-skelton .ant-skeleton-button{width: 185px !important;margin-bottom: 0;}
 .cards-list-skelton.lms-card-skelton.vertical-card{display: flex;}
-.cards-list-skelton.lms-card-skelton.vertical-card .ant-skeleton-element:first-child{width: 30% !important;}
+.cards-list-skelton.lms-card-skelton.vertical-card>div:first-child{width:30% !important;}
+.cards-list-skelton.lms-card-skelton.vertical-card>div:last-child{width:70% !important;}
+.cards-list-skelton.lms-card-skelton.vertical-card .ant-skeleton-image{border-radius: 0.8rem 0 0 0.8rem;}
+
+@media (max-width:575px){
+    .cards-list-skelton.lms-card-skelton.vertical-card{flex-direction: column;}
+    .cards-list-skelton.lms-card-skelton.vertical-card>div:first-child,.cards-list-skelton.lms-card-skelton.vertical-card>div:last-child{width: 100% !important;}
+    .cards-list-skelton.lms-card-skelton.vertical-card .ant-skeleton-image{border-radius: 0.8rem 0.8rem 0 0 ;}
+}
