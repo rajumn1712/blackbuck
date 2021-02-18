@@ -674,8 +674,8 @@ const AdminCourses = ({ profile, history }) => {
         },
     };
     return (<>
-        <Row gutter={12} className="mb-12">
-            <Col span={6}>
+        <Row gutter={16} className="mb-12">
+            <Col sm={12} md={6}>
                 <Card className="admin-kpi-card">
                     <Statistic
                         title="Members"
@@ -685,7 +685,7 @@ const AdminCourses = ({ profile, history }) => {
                     />
                 </Card>
             </Col>
-            <Col span={6}>
+            <Col sm={12} md={6}>
                 <Card className="admin-kpi-card">
                     <Statistic
                         title="Courses"
@@ -697,7 +697,7 @@ const AdminCourses = ({ profile, history }) => {
             </Col>
         </Row>
         <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} >
                 {/* {counts.CoursesCouunt > 0 && <div className="mb-16">
                 <Card className="start-course">
                     <Row align="middle" className="p-16">
@@ -714,7 +714,7 @@ const AdminCourses = ({ profile, history }) => {
                 {showForm && <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
 
                     <Row>
-                        <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
+                        <Col xs={{ span: 24 }}  sm={{ span: 20, offset: 2 }} xl={{ span: 16, offset: 4 }} className="course-steps">
                             <div className="text-center my-16 pb-16">
                                 <Title level={1} className="normalbold text-primary">Get Started with the course</Title>
                                 <p className="f-14 text-secondary">Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting.</p>
@@ -727,7 +727,7 @@ const AdminCourses = ({ profile, history }) => {
                                             <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
                                                 <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
-                                        </div> 
+                                        </div>
                                         <div className="">
                                             <label className="text-secondary d-block mb-4 semibold">Description</label>
                                             <Form.Item className="mb-0" name="Description" rules={[{ required: true, message: "Description  required" }]}>

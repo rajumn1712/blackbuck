@@ -650,491 +650,488 @@ const CourseComponent = ({ profile, history }) => {
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form initialValues={{ ...courseObj }} onFinishFailed={() => { }} onFinish={() => coursSave()} scrollToFirstError={true} form={form} >
-
                     <Row>
-                        <Col offset={4} xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className="course-steps">
-                            <Row>
-                                <Col offset={1} xs={20} sm={22} md={22} lg={22} xl={22} xxl={22}>
-                                    <div className="create-course">
-                                        <div className="custom-fields">
-                                            <label className="text-secondary d-block mb-4 semibold required">Title</label>
-                                            <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
-                                                <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
-                                            </Form.Item>
-                                        </div>
-                                        <div className="">
-                                            <label className="text-secondary d-block mb-4 semibold required">Description</label>
-                                            <Form.Item className="mb-12" name="Description" rules={[{ required: true, message: "Description  required" }]}>
-                                                <TextArea className="" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
-                                                    autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
-                                                />
-                                            </Form.Item>
-                                        </div>
-                                        <Row gutter={16}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
-                                                <label className="text-secondary d-block mb-4 semibold required">Category</label>
-                                                <Form.Item className="lh-24 custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
-                                                    <Select
-                                                        placeholder="Choose a Category" className="text-left"
-                                                        onChange={(value) => handleChange('Categories', value)}
-                                                        mode="multiple"
-                                                        disabled={courseObject.CreatedDate}
-                                                        filterOption={(input, option) =>
-                                                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                                        }
-                                                    >
-                                                        <Option value="All">All</Option>
-                                                        {CategoriesLu?.map((item, index) => {
-                                                            return <Option value={item.GroupId} key={index} disabled={courseObject.DupCategoeries?.length > 0}>{item.GroupName}</Option>
-                                                        })}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
-                                                <label className="text-secondary d-block mb-4 semibold  required">Author Name</label>
-                                                <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
-                                                    <Select
-                                                        defaultValue="Choose Author" placeholder="Choose Author" className="text-left"
-                                                        onChange={(value) => handleChange('Author', value)}
-                                                    >
-                                                        <Option value="">Choose Author</Option>
-                                                        {AuthorsLu?.map((item, index) => {
-                                                            return <Option value={item.UserId} key={index}>{item.Firstname}</Option>
-                                                        })}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={courseObject.CourseType == "Live Session" ? 12 : 24} sm={courseObject.CourseType == "Live Session" ? 12 : 24} md={courseObject.CourseType == "Live Session" ? 12 : 24} lg={courseObject.CourseType == "Live Session" ? 12 : 24} xl={courseObject.CourseType == "Live Session" ? 12 : 24} xxl={courseObject.CourseType == "Live Session" ? 12 : 24} className="">
-                                                <label className="text-secondary d-block mb-4 semibold  required">Type</label>
-                                                <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
-                                                    <Select
-                                                        defaultValue="Content" className="text-left"
-                                                        onChange={(value) => handleChange('CourseType', value)}
-                                                    >
-                                                        <Option value="Live Session">Live Session</Option>
-                                                        <Option value="Content">Content</Option>
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <label className="text-secondary d-block mb-4  required">Start Date</label>
-                                                <Form.Item className="custom-fields" name="Date" rules={[{
-                                                    required: true, message: "Start date required"
-                                                }, {
-                                                    type: "date", validator: async (rule, value, callback) => {
-                                                        if (value && courseObject.EndDate) {
-                                                            if (new Date(value) > new Date(courseObject.EndDate)) {
-                                                                throw new Error("Start Date should grater than end date")
-                                                            } else {
-                                                                callback();
-                                                            }
-                                                        }
+                        <Col xs={{ span: 24 }}
+                            sm={{ span: 20, offset: 2 }}
+                            xl={{ span: 16, offset: 4 }} className="course-steps">
+                            <div className="create-course">
+                                <div className="custom-fields">
+                                    <label className="text-secondary d-block mb-4 semibold required">Title</label>
+                                    <Form.Item className="custom-fields" name="GroupName" rules={[{ required: true, message: "Title  required" }]}>
+                                        <Input placeholder="Title" onChange={(value) => handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
+                                    </Form.Item>
+                                </div>
+                                <div className="">
+                                    <label className="text-secondary d-block mb-4 semibold required">Description</label>
+                                    <Form.Item className="mb-12" name="Description" rules={[{ required: true, message: "Description  required" }]}>
+                                        <TextArea className="" placeholder="Description" onResize onChange={(value) => handleChange('Description', value)}
+                                            autoSize={{ minRows: 3, maxRows: 30 }} maxLength={1360}
+                                        />
+                                    </Form.Item>
+                                </div>
+                                <Row gutter={16}>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
+                                        <label className="text-secondary d-block mb-4 semibold required">Category</label>
+                                        <Form.Item className="lh-24 custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
+                                            <Select
+                                                placeholder="Choose a Category" className="text-left"
+                                                onChange={(value) => handleChange('Categories', value)}
+                                                mode="multiple"
+                                                disabled={courseObject.CreatedDate}
+                                                filterOption={(input, option) =>
+                                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                }
+                                            >
+                                                <Option value="All">All</Option>
+                                                {CategoriesLu?.map((item, index) => {
+                                                    return <Option value={item.GroupId} key={index} disabled={courseObject.DupCategoeries?.length > 0}>{item.GroupName}</Option>
+                                                })}
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
+                                        <label className="text-secondary d-block mb-4 semibold  required">Author Name</label>
+                                        <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
+                                            <Select
+                                                defaultValue="Choose Author" placeholder="Choose Author" className="text-left"
+                                                onChange={(value) => handleChange('Author', value)}
+                                            >
+                                                <Option value="">Choose Author</Option>
+                                                {AuthorsLu?.map((item, index) => {
+                                                    return <Option value={item.UserId} key={index}>{item.Firstname}</Option>
+                                                })}
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={courseObject.CourseType == "Live Session" ? 12 : 24} sm={courseObject.CourseType == "Live Session" ? 12 : 24} md={courseObject.CourseType == "Live Session" ? 12 : 24} lg={courseObject.CourseType == "Live Session" ? 12 : 24} xl={courseObject.CourseType == "Live Session" ? 12 : 24} xxl={courseObject.CourseType == "Live Session" ? 12 : 24} className="">
+                                        <label className="text-secondary d-block mb-4 semibold  required">Type</label>
+                                        <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
+                                            <Select
+                                                defaultValue="Content" className="text-left"
+                                                onChange={(value) => handleChange('CourseType', value)}
+                                            >
+                                                <Option value="Live Session">Live Session</Option>
+                                                <Option value="Content">Content</Option>
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                    {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <label className="text-secondary d-block mb-4  required">Start Date</label>
+                                        <Form.Item className="custom-fields" name="Date" rules={[{
+                                            required: true, message: "Start date required"
+                                        }, {
+                                            type: "date", validator: async (rule, value, callback) => {
+                                                if (value && courseObject.EndDate) {
+                                                    if (new Date(value) > new Date(courseObject.EndDate)) {
+                                                        throw new Error("Start Date should grater than end date")
+                                                    } else {
+                                                        callback();
                                                     }
-                                                }]}>
-                                                    <DatePicker placeholder="Course Start Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
-                                                        return (
-                                                            moment().add(-1, "days") >= current
-                                                        );
-                                                    }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
-                                                </Form.Item>
-                                            </Col>
+                                                }
                                             }
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <label className="text-secondary d-block mb-4  required">End Date</label>
-                                                <Form.Item className="custom-fields" name="EndDate" rules={[{
-                                                    required: true, message: "End date required"
-                                                }, {
-                                                    type: "date", validator: async (rule, value, callback) => {
-                                                        if (value && courseObject.Date) {
-                                                            if (new Date(value) < new Date(courseObject.Date)) {
-                                                                throw new Error("End Date should later than start date")
-                                                            } else {
-                                                                callback();
-                                                            }
-                                                        }
+                                        }]}>
+                                            <DatePicker placeholder="Course Start Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
+                                                return (
+                                                    moment().add(-1, "days") >= current
+                                                );
+                                            }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                        </Form.Item>
+                                    </Col>
+                                    }
+                                    {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <label className="text-secondary d-block mb-4  required">End Date</label>
+                                        <Form.Item className="custom-fields" name="EndDate" rules={[{
+                                            required: true, message: "End date required"
+                                        }, {
+                                            type: "date", validator: async (rule, value, callback) => {
+                                                if (value && courseObject.Date) {
+                                                    if (new Date(value) < new Date(courseObject.Date)) {
+                                                        throw new Error("End Date should later than start date")
+                                                    } else {
+                                                        callback();
                                                     }
-                                                }]}>
-                                                    <DatePicker placeholder="Course End Date" onChange={(val) => { handleChange("EndDate", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
-                                                        return (
-                                                            moment().add(-1, "days") >= current
-                                                        );
-                                                    }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
-                                                </Form.Item>
-                                            </Col>
+                                                }
                                             }
-                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
-                                                <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
-                                                    <Select
-                                                        defaultValue="Choose Link Type" placeholder="Choose Link Type" className="text-left"
-                                                        onChange={(value) => handleChange('UrlType', value)}
-                                                    >
-                                                        <Option value="">Choose Link Type</Option>
-                                                        <Option value="Zoom">Zoom</Option>
-                                                        <Option value="GotoMeeting">GotoMeeting</Option>
-                                                        <Option value="Others">Others</Option>
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>}
-                                            {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                        }]}>
+                                            <DatePicker placeholder="Course End Date" onChange={(val) => { handleChange("EndDate", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
+                                                return (
+                                                    moment().add(-1, "days") >= current
+                                                );
+                                            }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                        </Form.Item>
+                                    </Col>
+                                    }
+                                    {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        <label className="text-secondary d-block mb-4 semibold  required">Link Type</label>
+                                        <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
+                                            <Select
+                                                defaultValue="Choose Link Type" placeholder="Choose Link Type" className="text-left"
+                                                onChange={(value) => handleChange('UrlType', value)}
+                                            >
+                                                <Option value="">Choose Link Type</Option>
+                                                <Option value="Zoom">Zoom</Option>
+                                                <Option value="GotoMeeting">GotoMeeting</Option>
+                                                <Option value="Others">Others</Option>
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>}
+                                    {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4 semibold required ">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
                                                 </Form.Item>
                                             </Col>
                                             } */}
-                                            {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
+                                    {/* {courseObject.CourseType == "Live Session" && <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4 semibold required ">Link</label>
                                                 <Form.Item className="custom-fields" name="Link" rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
                                                     <Input placeholder="Meeting Link" onChange={(value) => handleChange("Link", value)} />
                                                 </Form.Item>
                                             </Col>
                                             } */}
-                                            {courseObject.CourseType == "Live Session" && courseObject.LiveDetails?.map((live, index) => {
-                                                return <Col span={24} className="custom-fields" key={index}>
-                                                    <div className="add-livelinks">
-                                                        <div>
-                                                            <a onClick={() => addLiveDetails()} ><span className="icons add p-4" /></a>
-                                                            <Row gutter={8}>
-                                                                <Col xs={24} sm={24} md={8} className="custom-fields">
-                                                                    <label className="text-secondary d-block mb-4 semibold required ">Date</label>
-                                                                    <Form.Item initialValue={live.Date ? live.Date : ""} className="custom-fields" name={[live.Id, "Date"]} rules={[{ required: true, message: "Date required" }]}>
-                                                                        <DatePicker placeholder="Course Date" onChange={(val) => { handleLiveChange("Date", val, index) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
-                                                                    </Form.Item>
-                                                                </Col>
-                                                                <Col xs={24} sm={24} md={16} className="">
-                                                                    <label className="text-secondary d-block mb-4 semibold required ">Link</label>
-                                                                    <Form.Item initialValue={live.Link ? live.Link : ""} className="custom-fields" name={[live.Id, "Link"]} rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
-                                                                        <Input placeholder="Meeting Link" onChange={(value) => handleLiveChange("Link", value, index)} />
-                                                                    </Form.Item>
-                                                                </Col>
+                                    {courseObject.CourseType == "Live Session" && courseObject.LiveDetails?.map((live, index) => {
+                                        return <Col span={24} className="custom-fields" key={index}>
+                                            <div className="add-livelinks">
+                                                <div>
+                                                    <a onClick={() => addLiveDetails()} ><span className="icons add p-4" /></a>
+                                                    <Row gutter={8}>
+                                                        <Col xs={24} sm={24} md={8} className="custom-fields">
+                                                            <label className="text-secondary d-block mb-4 semibold required ">Date</label>
+                                                            <Form.Item initialValue={live.Date ? live.Date : ""} className="custom-fields" name={[live.Id, "Date"]} rules={[{ required: true, message: "Date required" }]}>
+                                                                <DatePicker placeholder="Course Date" onChange={(val) => { handleLiveChange("Date", val, index) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                        <Col xs={24} sm={24} md={16} className="">
+                                                            <label className="text-secondary d-block mb-4 semibold required ">Link</label>
+                                                            <Form.Item initialValue={live.Link ? live.Link : ""} className="custom-fields" name={[live.Id, "Link"]} rules={[{ required: true, message: "This field must be a valid url.", type: "url" }]}>
+                                                                <Input placeholder="Meeting Link" onChange={(value) => handleLiveChange("Link", value, index)} />
+                                                            </Form.Item>
+                                                        </Col>
 
-                                                            </Row>
-                                                            {courseObject.LiveDetails?.length > 1 && <a onClick={() => deleteLiveDetails(index)} ><span className="close-icon" /></a>}
-                                                        </div>
-                                                    </div>
-                                                </Col>
-                                            })}
-                                        </Row>
-                                        <Row gutter={16}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <label className="text-secondary d-block mb-4 semibold">Course Image</label>
-                                                <div className="mb-12">
-                                                    <Dragger
-                                                        className="upload"
-                                                        onChange={(info) => {
-                                                            const { status } = info.file;
-                                                            if (status == "uploading") {
-                                                                setFileImgUploading(true);
-                                                            }
-                                                            if (status === 'done') {
-                                                                setFileImgUploading(false);
-                                                                courseObject.GroupImage = info.file.response;
-                                                                setCourseObject({ ...courseObject })
-                                                                message.success(`${info.file.name} file uploaded successfully.`);
-                                                            } else if (status === 'error') {
-                                                                message.error(`${info.file.name} file upload failed.`);
-                                                            }
-                                                        }}
-                                                        beforeUpload={(file) => {
-                                                            let accepted = false;
-                                                            const acceptTypes = ".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
-                                                            if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
-                                                                setFileImgUploading(false);
-                                                                notify({
-                                                                    message: "Upload",
-                                                                    description: `File format not supported`,
-                                                                    type: "warning",
-                                                                });
-                                                                accepted = true;
-                                                            }
-                                                            return !accepted;
-                                                        }}
-                                                        accept=".jpg,.jpeg,.png"
-                                                        action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
-                                                        onRemove={() => {
+                                                    </Row>
+                                                    {courseObject.LiveDetails?.length > 1 && <a onClick={() => deleteLiveDetails(index)} ><span className="close-icon" /></a>}
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    })}
+                                </Row>
+                                <Row gutter={16}>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <label className="text-secondary d-block mb-4 semibold">Course Image</label>
+                                        <div className="mb-12">
+                                            <Dragger
+                                                className="upload"
+                                                onChange={(info) => {
+                                                    const { status } = info.file;
+                                                    if (status == "uploading") {
+                                                        setFileImgUploading(true);
+                                                    }
+                                                    if (status === 'done') {
+                                                        setFileImgUploading(false);
+                                                        courseObject.GroupImage = info.file.response;
+                                                        setCourseObject({ ...courseObject })
+                                                        message.success(`${info.file.name} file uploaded successfully.`);
+                                                    } else if (status === 'error') {
+                                                        message.error(`${info.file.name} file upload failed.`);
+                                                    }
+                                                }}
+                                                beforeUpload={(file) => {
+                                                    let accepted = false;
+                                                    const acceptTypes = ".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
+                                                    if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                                                        setFileImgUploading(false);
+                                                        notify({
+                                                            message: "Upload",
+                                                            description: `File format not supported`,
+                                                            type: "warning",
+                                                        });
+                                                        accepted = true;
+                                                    }
+                                                    return !accepted;
+                                                }}
+                                                accept=".jpg,.jpeg,.png"
+                                                action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
+                                                onRemove={() => {
+                                                    courseObject.GroupImage = [];
+                                                    setCourseObject({ ...courseObject })
+                                                }}
+                                                showUploadList={false}
+                                                disabled={fileImgUploading || courseObject.GroupImage.length > 0}
+                                            >
+                                                <span className="sharebox-icons photo-upload"></span>
+                                                <p className="ant-upload-text mt-8 mb-0">Upload Image</p>
+                                            </Dragger>
+                                            {fileImgUploading && <Loader className="loader-top-middle" />}
+                                            {courseObject.GroupImage?.map((image, indx) => (
+                                                <div key={indx} className="mb-16 mt-8 upload-preview">
+                                                    <Image className="objectfit-cover" src={image} />
+                                                    <a
+                                                        class="item-close"
+                                                        onClick={() => {
                                                             courseObject.GroupImage = [];
-                                                            setCourseObject({ ...courseObject })
-                                                        }}
-                                                        showUploadList={false}
-                                                        disabled={fileImgUploading || courseObject.GroupImage.length > 0}
-                                                    >
-                                                        <span className="sharebox-icons photo-upload"></span>
-                                                        <p className="ant-upload-text mt-8 mb-0">Upload Image</p>
-                                                    </Dragger>
-                                                    {fileImgUploading && <Loader className="loader-top-middle" />}
-                                                    {courseObject.GroupImage?.map((image, indx) => (
-                                                        <div key={indx} className="mb-16 mt-8 upload-preview">
-                                                            <Image className="objectfit-cover" src={image} />
-                                                            <a
-                                                                class="item-close"
-                                                                onClick={() => {
-                                                                    courseObject.GroupImage = [];
-                                                                    setCourseObject({
-                                                                        ...courseObject
-                                                                    })
-                                                                }}
-                                                            >
-                                                                <Tooltip title="Remove">
-                                                                    <span className="close-icon"></span>
-                                                                </Tooltip>
-                                                            </a>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <label className="text-secondary d-block mb-4 semibold">Introduction video</label>
-                                                <div className="mb-12">
-                                                    <Dragger
-                                                        className="upload"
-                                                        onRemove={() => {
-                                                            courseObject.CourseVideo = [];
-                                                            setCourseObject({ ...courseObject })
-                                                            setIsCourseChanged(true);
-                                                        }}
-                                                        onChange={(info) => {
-                                                            const { status } = info.file;
-                                                            if (status == "uploading") {
-                                                                setFileVideoUploading(true);
-                                                            }
-                                                            if (status === 'done') {
-                                                                setIsCourseChanged(true);
-                                                                setFileVideoUploading(false);
-                                                                courseObject.CourseVideo = info.file.response;
-                                                                setCourseObject({ ...courseObject })
-                                                                message.success(`${info.file.name} file uploaded successfully.`);
-                                                            } else if (status === 'error') {
-                                                                message.error(`${info.file.name} file upload failed.`);
-                                                            }
-                                                        }}
-                                                        beforeUpload={(file) => {
-                                                            let accepted = false;
-                                                            const acceptTypes = ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm";
-                                                            if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
-                                                                setFileVideoUploading(false);
-                                                                notify({
-                                                                    message: "Upload",
-                                                                    description: `File format not supported`,
-                                                                    type: "warning",
-                                                                });
-                                                                accepted = true;
-                                                            }
-                                                            return !accepted;
-                                                        }
-                                                        }
-                                                        action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
-                                                        accept=".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm"
-                                                        showUploadList={false}
-                                                        disabled={fileVideoUploading || courseObject.CourseVideo.length > 0}
-                                                    >
-                                                        <span className="sharebox-icons video-upload"></span>
-                                                        <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
-                                                    </Dragger>
-                                                    {fileVideoUploading && <Loader className="loader-top-middle" />}
-                                                    {courseObject.CourseVideo?.map((image, indx) => (
-                                                        <div key={indx} className="mb-16 mt-8 upload-preview">
-                                                            <video width="100%" controls controlsList="nodownload">
-                                                                <source src={image} />
-                                                            </video>
-                                                            <a
-                                                                class="item-close"
-                                                                onClick={() => {
-                                                                    courseObject.CourseVideo = [];
-                                                                    setCourseObject({
-                                                                        ...courseObject
-                                                                    })
-                                                                }
-                                                                }
-                                                            >
-                                                                <Tooltip title="Remove">
-                                                                    <span className="close-icon"></span>
-                                                                </Tooltip>
-                                                            </a>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <label className="text-secondary d-block mb-4 required">Reference Links</label>
-                                                <Form.Item className="custom-fields custom-multiselect" name="RefLinks" rules={[{
-                                                    required: true,
-                                                    type: 'array',
-                                                    defaultField: { type: 'url', message: 'This field must be a valid url.' }
-                                                }]
-                                                }>
-                                                    <Select
-
-                                                        mode="tags"
-                                                        style={{ width: "100%" }}
-                                                        placeholder="Enter Links"
-                                                        onChange={(value) => handleChange('RefLinks', value)}
-                                                    ></Select>
-                                                </Form.Item>
-                                            </Col>
-
-                                        </Row>
-                                        <Row gutter={16}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
-                                                {fileUploading && <Loader className="loader-top-middle" />}
-                                                <Dragger showUploadList={false} className="upload mb-16" {...uploadProps}>
-                                                    <span className="sharebox-icons docs-upload mb-16"></span>
-                                                    <p className="ant-upload-text">
-                                                        Upload your assignment files here</p>
-                                                    <p className="ant-upload-hint">
-                                                        Support for a single or bulk upload. Strictly prohibit
-                                                        from uploading company data or other band files (doc, PPT,
-                                    PDF, xls).</p>
-                                                </Dragger>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={16}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
-
-                                                <div className="docs mb-16 mt-16 pl-0">
-                                                    <List
-                                                        itemLayout="horizontal"
-                                                        dataSource={courseObject.Documents}
-                                                        renderItem={(item, indx) => (
-                                                            <List.Item className="upload-preview">
-                                                                <List.Item.Meta
-                                                                    avatar={[
-                                                                        <span className={`doc-icons ${item.avatar}`}></span>,
-                                                                    ]}
-                                                                    title={item.title}
-                                                                    description={
-                                                                        <div className="file-size f-12">{bytesToSize(item.fileSize)}</div>
-                                                                    }
-                                                                />
-                                                                <a
-                                                                    class="item-close"
-                                                                    onClick={() => {
-                                                                        courseObject.Documents.splice(indx, 1);
-                                                                        setTopicObj({ ...courseObject })
-                                                                    }}
-                                                                >
-                                                                    <Tooltip title="Remove">
-                                                                        <span className="close-icon"></span>
-                                                                    </Tooltip>
-                                                                </a>
-                                                            </List.Item>
-                                                        )}
-                                                    />
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                    <div className="create-course mt-16">
-                                        <div>
-                                            {courseObject.CourseSections?.length == 0 && <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>}
-                                            {courseObject.CourseSections?.map((item, index) => {
-                                                return <div> <div className="lecture-collapse mb-16" key={index}>
-                                                    {item.IsSaved && <Collapse
-                                                        className="mb-16"
-                                                        expandIconPosition="right"
-                                                    >
-                                                        <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">{getTopicsTime(item.Topics)}</div>}>
-                                                            {item.Topics?.map((topic, index) => {
-                                                                return <Collapse
-                                                                    className="mb-8"
-                                                                    expandIconPosition="right"
-                                                                    key={index}
-                                                                >
-                                                                    <Panel header={<>{topic.TopicType == "Video" && topicTitle}{topic.TopicType == "Document" && docTitle}{topic.VideoName ? topic.VideoName : topic.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.TopicType == "Video" && topic.Duration}</div>}>
-                                                                        {topic.TopicType == "Video" && <div className="d-flex">
-                                                                            {topic.VideoSource == "Upload" && <video width="280" controls controlsList="nodownload"><source src={topic.VideoUrl} /></video>}
-                                                                            {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
-                                                                            {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
-                                                                            <div className="ml-16">
-                                                                                <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
-                                                                                <p className="f-14 text-secondary mb-8">{topic.Description}</p>
-                                                                                <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? bytesToSize(topic.Size) : "NA"}</p>
-                                                                                <Button size="small" className="px-16 mr-8" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit</Button>
-                                                                                <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteTopic(topic, item)}>Delete</Button>
-                                                                            </div>
-                                                                        </div>}
-                                                                        {topic.TopicType == "Document" && <div className="docs">
-                                                                            <List
-                                                                                itemLayout="horizontal"
-                                                                                dataSource={topic.lstDocuments}
-                                                                                renderItem={(item) => (
-                                                                                    <List.Item
-                                                                                        onClick={(ev) => {
-                                                                                            ev.stopPropagation();
-                                                                                            window.open(item.url, "_blank");
-                                                                                        }}
-                                                                                        style={{ cursor: "pointer" }}
-                                                                                    >
-                                                                                        <List.Item.Meta
-                                                                                            avatar={[
-                                                                                                <span className={`doc-icons ${item.avatar}`}></span>,
-                                                                                            ]}
-                                                                                            title={item.title}
-                                                                                            description={
-                                                                                                <div className="file-size f-12">{bytesToSize(item.fileSize)}</div>
-                                                                                            }
-                                                                                        />
-                                                                                    </List.Item>
-                                                                                )}
-                                                                            />
-                                                                            <Button size="small" className="px-16 mr-8" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit</Button>
-                                                                            <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteTopic(topic, item)}>Delete</Button>
-                                                                        </div>
-                                                                        }
-                                                                    </Panel>
-                                                                </Collapse>
+                                                            setCourseObject({
+                                                                ...courseObject
                                                             })
-                                                            }
-                                                            <div className="text-right">
-                                                                <Button type="primary" size="small" className="px-16 mr-8" onClick={() => showModal('Add', null, item.SectionId)}>{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</Button>
-                                                                <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
-                                                            </div>
-                                                        </Panel>
-
-                                                    </Collapse>
-                                                    }
-                                                    {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><Tooltip title="Remove Section"><span className="icons close" onClick={() => deleteSection(item)}></span></Tooltip></div>}
-                                                    {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}> <Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
+                                                        }}
+                                                    >
+                                                        <Tooltip title="Remove">
+                                                            <span className="close-icon"></span>
+                                                        </Tooltip>
+                                                    </a>
                                                 </div>
-                                                    {!item.IsSaved && <div className="lecture-collapse mb-16">
-                                                        <div className="custom-fields entr-course-title p-12 mb-12">
-                                                            < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()}>
-                                                                <Form.Item className="custom-fields" name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
-                                                                    <div className="d-flex"><div style={{ width: '100%' }}>{item.SectionId && <Input className="py-0 f-16 right-shape" placeholder="Add section title here"
-                                                                        suffix={<Tooltip title="Save Section"><Button small htmlType="submit" type="primary">Save</Button></Tooltip>}
-                                                                        onChange={(value) => secItemsChange("SectionName", value, index)} />
-
-
-
-                                                                    }</div>
-                                                                        <div><Tooltip title="Delete Section"><span className="playicons close-section" onClick={() => deleteSection(item)}></span></Tooltip></div>
-                                                                    </div>
-
-
-                                                                </Form.Item>
-                                                            </Form>
-                                                        </div>
-                                                        {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><Tooltip title="Remove Section"><span className="icons close" onClick={() => deleteSection(item)}></span></Tooltip></div>}
-                                                        {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
-                                                    </div>
-                                                    }
-                                                </div>
-                                            })}
+                                            ))}
                                         </div>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <label className="text-secondary d-block mb-4 semibold">Introduction video</label>
+                                        <div className="mb-12">
+                                            <Dragger
+                                                className="upload"
+                                                onRemove={() => {
+                                                    courseObject.CourseVideo = [];
+                                                    setCourseObject({ ...courseObject })
+                                                    setIsCourseChanged(true);
+                                                }}
+                                                onChange={(info) => {
+                                                    const { status } = info.file;
+                                                    if (status == "uploading") {
+                                                        setFileVideoUploading(true);
+                                                    }
+                                                    if (status === 'done') {
+                                                        setIsCourseChanged(true);
+                                                        setFileVideoUploading(false);
+                                                        courseObject.CourseVideo = info.file.response;
+                                                        setCourseObject({ ...courseObject })
+                                                        message.success(`${info.file.name} file uploaded successfully.`);
+                                                    } else if (status === 'error') {
+                                                        message.error(`${info.file.name} file upload failed.`);
+                                                    }
+                                                }}
+                                                beforeUpload={(file) => {
+                                                    let accepted = false;
+                                                    const acceptTypes = ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm";
+                                                    if (!(acceptTypes.indexOf(file.name.substr(file.name.lastIndexOf(".") + 1)) > -1)) {
+                                                        setFileVideoUploading(false);
+                                                        notify({
+                                                            message: "Upload",
+                                                            description: `File format not supported`,
+                                                            type: "warning",
+                                                        });
+                                                        accepted = true;
+                                                    }
+                                                    return !accepted;
+                                                }
+                                                }
+                                                action={process.env.REACT_APP_AUTHORITY + "/Home/UploadFile"}
+                                                accept=".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm"
+                                                showUploadList={false}
+                                                disabled={fileVideoUploading || courseObject.CourseVideo.length > 0}
+                                            >
+                                                <span className="sharebox-icons video-upload"></span>
+                                                <p className="ant-upload-text mt-8 mb-0">Upload Video</p>
+                                            </Dragger>
+                                            {fileVideoUploading && <Loader className="loader-top-middle" />}
+                                            {courseObject.CourseVideo?.map((image, indx) => (
+                                                <div key={indx} className="mb-16 mt-8 upload-preview">
+                                                    <video width="100%" controls controlsList="nodownload">
+                                                        <source src={image} />
+                                                    </video>
+                                                    <a
+                                                        class="item-close"
+                                                        onClick={() => {
+                                                            courseObject.CourseVideo = [];
+                                                            setCourseObject({
+                                                                ...courseObject
+                                                            })
+                                                        }
+                                                        }
+                                                    >
+                                                        <Tooltip title="Remove">
+                                                            <span className="close-icon"></span>
+                                                        </Tooltip>
+                                                    </a>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        <label className="text-secondary d-block mb-4 required">Reference Links</label>
+                                        <Form.Item className="custom-fields custom-multiselect" name="RefLinks" rules={[{
+                                            required: true,
+                                            type: 'array',
+                                            defaultField: { type: 'url', message: 'This field must be a valid url.' }
+                                        }]
+                                        }>
+                                            <Select
 
-                                    </div>
+                                                mode="tags"
+                                                style={{ width: "100%" }}
+                                                placeholder="Enter Links"
+                                                onChange={(value) => handleChange('RefLinks', value)}
+                                            ></Select>
+                                        </Form.Item>
+                                    </Col>
 
-                                    <div className="card-background mt-16">
-                                        <span className="text-left">
-                                            <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
-                                        </span>
-                                        <span className="text-right float-right">
-                                            <Button disabled={fileVideoUploading} type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
-                                            {(courseObject.CreatedDate) && <Button disabled={fileVideoUploading || isCourseChanged} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
-                                        </span>
-                                    </div>
-                                </Col>
-                            </Row>
+                                </Row>
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
+                                        {fileUploading && <Loader className="loader-top-middle" />}
+                                        <Dragger showUploadList={false} className="upload mb-16" {...uploadProps}>
+                                            <span className="sharebox-icons docs-upload mb-16"></span>
+                                            <p className="ant-upload-text">
+                                                Upload your assignment files here</p>
+                                            <p className="ant-upload-hint">
+                                                Support for a single or bulk upload. Strictly prohibit
+                                                from uploading company data or other band files (doc, PPT,
+                                    PDF, xls).</p>
+                                        </Dragger>
+                                    </Col>
+                                </Row>
+                                <Row gutter={16}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="ad-upload multi-select custom-fields">
+
+                                        <div className="docs mb-16 mt-16 pl-0">
+                                            <List
+                                                itemLayout="horizontal"
+                                                dataSource={courseObject.Documents}
+                                                renderItem={(item, indx) => (
+                                                    <List.Item className="upload-preview">
+                                                        <List.Item.Meta
+                                                            avatar={[
+                                                                <span className={`doc-icons ${item.avatar}`}></span>,
+                                                            ]}
+                                                            title={item.title}
+                                                            description={
+                                                                <div className="file-size f-12">{bytesToSize(item.fileSize)}</div>
+                                                            }
+                                                        />
+                                                        <a
+                                                            class="item-close"
+                                                            onClick={() => {
+                                                                courseObject.Documents.splice(indx, 1);
+                                                                setTopicObj({ ...courseObject })
+                                                            }}
+                                                        >
+                                                            <Tooltip title="Remove">
+                                                                <span className="close-icon"></span>
+                                                            </Tooltip>
+                                                        </a>
+                                                    </List.Item>
+                                                )}
+                                            />
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
+                            <div className="create-course mt-16">
+                                <div>
+                                    {courseObject.CourseSections?.length == 0 && <div className="f-18 add-course-section mb-16 p-12 text-center semibold cursor-pointer text-white" onClick={() => addSection()}>Add Course Section</div>}
+                                    {courseObject.CourseSections?.map((item, index) => {
+                                        return <div> <div className="lecture-collapse mb-16" key={index}>
+                                            {item.IsSaved && <Collapse
+                                                className="mb-16"
+                                                expandIconPosition="right"
+                                            >
+                                                <Panel header={item.SectionName} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary video-dur">{getTopicsTime(item.Topics)}</div>}>
+                                                    {item.Topics?.map((topic, index) => {
+                                                        return <Collapse
+                                                            className="mb-8"
+                                                            expandIconPosition="right"
+                                                            key={index}
+                                                        >
+                                                            <Panel header={<>{topic.TopicType == "Video" && topicTitle}{topic.TopicType == "Document" && docTitle}{topic.VideoName ? topic.VideoName : topic.Title}</>} className="f-16 semibold text-primary" extra={<div className="f-16 text-secondary subvideo-dur">{topic.TopicType == "Video" && topic.Duration}</div>}>
+                                                                {topic.TopicType == "Video" && <div className="d-flex">
+                                                                    {topic.VideoSource == "Upload" && <video width="280" controls controlsList="nodownload"><source src={topic.VideoUrl} /></video>}
+                                                                    {topic.VideoSource == "YouTube" && topic.VideoUrl && <iframe width="280" height="200" src={topic.VideoUrl.split("watch?v=").join("embed/")} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                    {topic.VideoSource == "Vimeo" && topic.VideoUrl && <iframe width="280" height="200" src={`https://player.vimeo.com/video/${topic.VideoUrl.split('/')[topic.VideoUrl.split('/').length - 1]}`} frameborder="0" allowfullscreen X-Frame-Options={true}></iframe>}
+                                                                    <div className="ml-16">
+                                                                        <p className="f-16 text-primary mb-4">{topic.VideoName}</p>
+                                                                        <p className="f-14 text-secondary mb-8">{topic.Description}</p>
+                                                                        <p className="f-12 text-primary">{topic.Duration ? topic.Duration : "NA"} | {topic.Size ? bytesToSize(topic.Size) : "NA"}</p>
+                                                                        <Button size="small" className="px-16 mr-8" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit</Button>
+                                                                        <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteTopic(topic, item)}>Delete</Button>
+                                                                    </div>
+                                                                </div>}
+                                                                {topic.TopicType == "Document" && <div className="docs">
+                                                                    <List
+                                                                        itemLayout="horizontal"
+                                                                        dataSource={topic.lstDocuments}
+                                                                        renderItem={(item) => (
+                                                                            <List.Item
+                                                                                onClick={(ev) => {
+                                                                                    ev.stopPropagation();
+                                                                                    window.open(item.url, "_blank");
+                                                                                }}
+                                                                                className="cursor-pointer"
+                                                                            >
+                                                                                <List.Item.Meta
+                                                                                    avatar={[
+                                                                                        <span className={`doc-icons ${item.avatar}`}></span>,
+                                                                                    ]}
+                                                                                    title={item.title}
+                                                                                    description={
+                                                                                        <div className="file-size f-12">{bytesToSize(item.fileSize)}</div>
+                                                                                    }
+                                                                                />
+                                                                            </List.Item>
+                                                                        )}
+                                                                    />
+                                                                    <Button size="small" className="px-16 mr-8" onClick={() => showModal('Edit', { ...topic }, item.SectionId)}>Edit</Button>
+                                                                    <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteTopic(topic, item)}>Delete</Button>
+                                                                </div>
+                                                                }
+                                                            </Panel>
+                                                        </Collapse>
+                                                    })
+                                                    }
+                                                    <div className="text-right">
+                                                        <Button type="primary" size="small" className="px-16 mr-8" onClick={() => showModal('Add', null, item.SectionId)}>{item.Topics?.length > 0 ? "Add Another Topic" : "Add Topic"}</Button>
+                                                        <Button type="default" className=" remove-course-section px-16" size="small" onClick={() => deleteSection(item)}>Delete Section</Button>
+                                                    </div>
+                                                </Panel>
+
+                                            </Collapse>
+                                            }
+                                            {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><Tooltip title="Remove Section"><span className="icons close" onClick={() => deleteSection(item)}></span></Tooltip></div>}
+                                            {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}> <Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
+                                        </div>
+                                            {!item.IsSaved && <div className="lecture-collapse mb-16">
+                                                <div className="custom-fields entr-course-title p-12 mb-12">
+                                                    < Form id={"secForm" + index} initialValues={{ ...secObj }} onFinishFailed={() => { }} onFinish={() => sectionSave()}>
+                                                        <Form.Item className="custom-fields" name="SectionName" rules={[{ required: true, message: "Section title required" }]}>
+                                                            <div className="d-flex"><div style={{ width: '100%' }}>{item.SectionId && <Input className="py-0 f-16 right-shape" placeholder="Add section title here"
+                                                                suffix={<Tooltip title="Save Section"><Button small htmlType="submit" type="primary">Save</Button></Tooltip>}
+                                                                onChange={(value) => secItemsChange("SectionName", value, index)} />
+
+
+
+                                                            }</div>
+                                                                <div><Tooltip title="Delete Section"><span className="playicons close-section" onClick={() => deleteSection(item)}></span></Tooltip></div>
+                                                            </div>
+
+
+                                                        </Form.Item>
+                                                    </Form>
+                                                </div>
+                                                {courseObject.CourseSections?.length - 1 !== index && <div className="add-lecture p-4"><Tooltip title="Remove Section"><span className="icons close" onClick={() => deleteSection(item)}></span></Tooltip></div>}
+                                                {courseObject.CourseSections?.length - 1 == index && <div className="add-lecture p-4" onClick={() => addSection()}><Tooltip title="Add Section"><span className="icons add"></span></Tooltip></div>}
+                                            </div>
+                                            }
+                                        </div>
+                                    })}
+                                </div>
+
+                            </div>
+
+                            <div className="card-background mt-16">
+                                <span className="text-left">
+                                    <Button type="default" className="addContent px-16" size="small" onClick={() => cancelCourse()}>Cancel</Button>
+                                </span>
+                                <span className="text-right float-right">
+                                    <Button disabled={fileVideoUploading} type="primary" htmlType="submit" className="addContent px-16" size="small" style={{ marginRight: 8 }}>Save Course</Button>
+                                    {(courseObject.CreatedDate) && <Button disabled={fileVideoUploading || isCourseChanged} type="primary" className="addContent px-16" size="small" style={{ marginRight: 8 }} onClick={() => coursePublish()}>Publish</Button>}
+                                </span>
+                            </div>
                         </Col>
                     </Row>
                 </Form>

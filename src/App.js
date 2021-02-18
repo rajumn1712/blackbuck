@@ -15,7 +15,6 @@ import firebase from './utils/firebase'
 import { setUnRead } from './utils/chat-system/chatReducer';
 function App() {
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);
@@ -26,7 +25,9 @@ function App() {
     });
     const pushMessages = firebase.messaging();
     pushMessages.onMessage(payload => {
-      store.dispatch(setUnRead(payload?.data?.user_id));
+      if (payload?.data?.type === "chat") {
+        store.dispatch(setUnRead(payload?.data?.user_id));
+      }
     });
   }, []);
 

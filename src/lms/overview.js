@@ -301,12 +301,12 @@ updateCount=(prop,value)=>{
             </div>
             {flagsData.IsCertified && <div className="custom-card mb-8">
                     <Card className="start-course">
-                        <Row align="middle" className="p-16">
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18} className="pr-16">
+                        <Row align="middle" className="p-16" justify="space-between">
+                            <Col xs={24} sm={18} md={18} lg={18} xl={18} xxl={18}>
                                 <Title level={3} className="normalbold text-white mb-4">Download Course Certificate</Title>
                                 <p className="f-14 text-white mb-0">Your are certified and your certificate is generated now its ready to generate.</p>
                             </Col>
-                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className="text-right">
+                            <Col xs={24} sm={6} md={6} lg={6} xl={6} xxl={6}>
                                 <Button type="dashed" onClick={this.downloadCertificate} disabled={this.state.buttonLoading}>
                                   {this.state.buttonLoading && <Spin />}
                                   Download Here

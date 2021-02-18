@@ -2007,6 +2007,7 @@ textarea {
 /*--Admin--*/
 .course-step{ padding: 40px;}
 .admin-left-pane{width: 260px; position: fixed; top: 70px; left: 0; bottom: 0;}
+.admin-right-panel{flex: 1;margin-left: 260px;}
 .course-step .ant-collapse{background: var(--white);  border-radius: 0.4rem;}
 .create-course{background: var(--white); padding: 40px 40px 28px; border-radius: var(--border-radius); border: 1px solid var(--line)}
 .addContent{height: 32px; font-size: var(--f-12) ;border-radius: 0.4rem;}
@@ -2204,14 +2205,22 @@ textarea {
 .sharebox-icons.video-icon {background-position: -307px -107px;}
 .cms-search {padding-left: 8px !important;padding-right: 8px !important;height: 46px !important;}
 .icons.search-icon-white{background-position: -247px -50px;}
-
+.relative{position: relative;}
+.overflowX-auto{overflow-x: auto;}
+.start-course .ant-row {padding: 16px;}
 @media (max-width: 991px){
   .change-text{text-align: left;margin-bottom: 0;}
+  .admin-left-pane{width: 120px;}
+  .admin-left-pane .ant-menu-submenu-arrow{display: none;}
+  .admin-right-panel{margin-left: 120px;width: calc(100% - 120px);}
 }
 @media (max-width: 767px){
   .job-req{flex-wrap: wrap;}
   .job-card .ant-card-actions .post-icons{display: none;}
   .job-card .ant-card-actions li:not(:last-child) a {border-right: 1px solid var(--line);}
+  .admin-left-pane{width: 50px;}
+  .admin-left-pane .ant-menu-submenu-arrow{display: none;}
+  .admin-right-panel{margin-left: 50px;width: calc(100% - 50px);}
 }
 
 @media (max-width:575px){
@@ -2224,6 +2233,14 @@ textarea {
   .card-item.vertical-card {display: flex;flex-direction: column;}
   .card-item.vertical-card .ant-card-cover{border: 0 !important;width: 100%;}
   .card-item.vertical-card .ant-card-cover img {height: 180px;object-fit: cover;object-position: center;border-radius: 0.8rem 0.8rem 0 0 ;}
+  .admin-left-pane{width: 50px;}
+  .admin-left-pane .ant-menu-submenu-arrow{display: none;}
+  .admin-right-panel{margin-left: 50px;width: calc(100% - 50px);}
+  .start-course .ant-row {padding: 8px;}
+  .start-course .ant-col {text-align: center !important;}
+  .start-course .ant-col .ant-btn{margin-top: 8px;}
+  .create-course{padding: 20px 20px 14px;}
+
 }
 .add-livelinks{border: 1px solid #d9d9d9;border-radius: var(--border-radius);padding:8px 20px 0 20px;background: #fafafa;}
 .add-livelinks .icons.add{position: absolute;left: -4px;top: 57%;transform: translateY(-50%);border-left: 0;border-radius: 50%;box-shadow: var(--boxshadow);background-color: var(--white);}

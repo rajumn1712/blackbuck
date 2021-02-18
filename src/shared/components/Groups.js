@@ -258,6 +258,7 @@ class Groups extends Component {
         <div className="custom-card sub-text card-scroll">
           <Card
             title="Groups"
+            className="skelton-list"
             bordered={true}
             extra={<Link to="/profile/IsProfileGroupsTab">View all</Link>}
             actions={[
@@ -266,9 +267,25 @@ class Groups extends Component {
             </Button>,
             ]}
           >
-            {/* {loading && <Loader className="loader-top-middle" />} */}
+            {loading && <div className="overlay-skelton">
+              <div className="h-card-list-skelton">
+                <Skeleton avatar paragraph={{ rows: 1 }} />
+                <Skeleton.Button active size="small" shape="square" />
+              </div>
+              <div className="h-card-list-skelton">
+                <Skeleton avatar paragraph={{ rows: 1 }} />
+                <Skeleton.Button active size="small" shape="square" />
+              </div>
+              <div className="h-card-list-skelton">
+                <Skeleton avatar paragraph={{ rows: 1 }} />
+                <Skeleton.Button active size="small" shape="square" />
+              </div>
+              <div className="h-card-list-skelton">
+                <Skeleton avatar paragraph={{ rows: 1 }} />
+                <Skeleton.Button active size="small" shape="square" />
+              </div>
+            </div>}
             <List
-              loading={loading}
               itemLayout="horizontal"
               split={false}
               dataSource={this.state.data}

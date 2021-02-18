@@ -175,6 +175,7 @@ const JobPostings = ({ profile, history }) => {
             </div>
           }
         >
+          <div className="overflowX-auto">
           <Table
             rowSelection={{
               hideSelectAll: true,
@@ -193,6 +194,7 @@ const JobPostings = ({ profile, history }) => {
             }}
             bordered={true}
           />
+          </div>
         </Card>
       </div>
     </>

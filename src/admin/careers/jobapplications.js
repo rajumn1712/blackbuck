@@ -97,7 +97,8 @@ const JobApplications = ({profile}) => {
     <>
       <Title className="f-18 text-primary semibold">Job Applications</Title>
       <Card className="custom-card">
-        <div className="custom-card">
+        <div className="custom-card overflowX-auto">
+          
           <Table
             loading={loading}
             columns={columns}
