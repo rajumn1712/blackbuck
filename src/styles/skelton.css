@@ -30,3 +30,6 @@
 .groupcard-skelton .ant-skeleton-avatar{ width: 120px !important;height: 120px !important;object-fit: cover;border-radius: 50% !important;margin: auto;text-align: center;margin-top: -60px;padding: 2px;border: 2px solid var(--white);}
 .groupcard-skelton .ant-skeleton-button{ margin-top: 12px;margin-bottom: 12px!important;width: 104px !important;height: 19px !important;}
 
+.cards-list-skelton.lms-card-skelton .ant-skeleton-button{width: 185px !important;margin-bottom: 0;}
+.cards-list-skelton.lms-card-skelton.vertical-card{display: flex;}
+.cards-list-skelton.lms-card-skelton.vertical-card .ant-skeleton-element:first-child{width: 30% !important;}

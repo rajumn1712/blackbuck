@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Card, Col, Row, Empty, Typography } from "antd";
+import { Card, Col, Row, Empty, Typography, Skeleton } from "antd";
 import photography from "../styles/images/default-cover.png";
 import { Link, withRouter } from "react-router-dom";
 import Moment from "react-moment";
@@ -58,10 +58,10 @@ const AllCourses = (props) => {
     ) > -1
       ? getCoursesByType
       : getByCourseType)(
-      props.type || props.path.replace(/\\|\//g, ""),
-      pagesize,
-      pagesize * pageNo - pagesize
-    );
+        props.type || props.path.replace(/\\|\//g, ""),
+        pagesize,
+        pagesize * pageNo - pagesize
+      );
     if (response.ok) {
       courses = courses.concat(response.data);
       loadMore = response.data.length === size ? true : false;
@@ -133,24 +133,24 @@ const AllCourses = (props) => {
           extra={<Link to={`${props.type}`}>View all</Link>}
         >
           <div className="px-12 pt-12 pb-8">
-          {courses.length > 4 && <><Link
-                  className="more-frnd-btn left"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    slider.current.prev();
-                  }}
-                >
-                  <span className="icon left-arrow mr-0"></span>
-                </Link>
-                <Link
-                  className="more-frnd-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    slider.current.next();
-                  }}
-                >
-                  <span className="icon right-arrow mr-0"></span>
-                </Link></>}
+            {courses.length > 4 && <><Link
+              className="more-frnd-btn left"
+              onClick={(e) => {
+                e.preventDefault();
+                slider.current.prev();
+              }}
+            >
+              <span className="icon left-arrow mr-0"></span>
+            </Link>
+              <Link
+                className="more-frnd-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  slider.current.next();
+                }}
+              >
+                <span className="icon right-arrow mr-0"></span>
+              </Link></>}
             <OwlCarousel
               options={options}
               ref={slider}
@@ -162,7 +162,7 @@ const AllCourses = (props) => {
                   <Card
                     bordered={false}
                     className="card-item"
-                    onClick={()=>{props.history.push("course/" + course.id)}}
+                    onClick={() => { props.history.push("course/" + course.id) }}
                     cover={
                       <>
                         <img
@@ -189,12 +189,12 @@ const AllCourses = (props) => {
                       description={
                         <div className="coursecard-cont">
                           <Paragraph
-                              ellipsis={{ rows: 2 }}
-                              className="f-14 text-primary mb-8"
-                              style={{ height: "42px" }}
-                            >
-                              {course.description}
-                            </Paragraph>
+                            ellipsis={{ rows: 2 }}
+                            className="f-14 text-primary mb-8"
+                            style={{ height: "42px" }}
+                          >
+                            {course.description}
+                          </Paragraph>
                           {course.startDate ? (
                             <Paragraph className="job-ldate f-12 semibold text-secondary">
                               Starts On{" "}
@@ -205,17 +205,17 @@ const AllCourses = (props) => {
                               </span>
                             </Paragraph>
                           ) : (
-                            <Paragraph className="job-ldate f-12 semibold text-secondary">
-                              Created On{" "}
-                              <span className="semibold text-primary f-14">
-                                <Moment format="MM/DD/YYYY">
-                                  {course.CreatedDate}
-                                </Moment>
-                              </span>
-                            </Paragraph>
-                          )}
+                              <Paragraph className="job-ldate f-12 semibold text-secondary">
+                                Created On{" "}
+                                <span className="semibold text-primary f-14">
+                                  <Moment format="MM/DD/YYYY">
+                                    {course.CreatedDate}
+                                  </Moment>
+                                </span>
+                              </Paragraph>
+                            )}
                           <div>
-                            
+
                             {course.CourseType === "Content" && (
                               <div className="justify-content-between">
                                 <span className="mr-4 f-12 text-secondary">
@@ -224,9 +224,8 @@ const AllCourses = (props) => {
                                 |
                                 <span className="mx-4 f-12 text-secondary">
                                   {course.videos}{" "}
-                                  {`${
-                                    course.videos === 1 ? "Video" : "Videos"
-                                  }`}
+                                  {`${course.videos === 1 ? "Video" : "Videos"
+                                    }`}
                                 </span>{" "}
                                 |
                                 <span className="ml-4 f-12 text-secondary">
@@ -253,7 +252,32 @@ const AllCourses = (props) => {
               ))}
             </OwlCarousel>
           </div>
-          {loading && <Loader className="loader-top-middle" />}
+          {loading && <Row gutter={8} className="p-12">
+            <Col xs={12} md={8}>
+              <div className="cards-list-skelton lms-card-skelton" >
+                <Skeleton.Image active shape='square' />
+                <Skeleton active paragraph={{ rows: 2 }} />
+                <Skeleton.Button active shape='square' />
+                <Skeleton active paragraph={{ rows: 0 }} />
+              </div>
+            </Col>
+            <Col xs={12} md={8}>
+              <div className="cards-list-skelton lms-card-skelton" >
+                <Skeleton.Image active shape='square' />
+                <Skeleton active paragraph={{ rows: 2 }} />
+                <Skeleton.Button active shape='square' />
+                <Skeleton active paragraph={{ rows: 0 }} />
+              </div>
+            </Col>
+            <Col xs={12} md={8}>
+              <div className="cards-list-skelton lms-card-skelton" >
+                <Skeleton.Image active shape='square' />
+                <Skeleton active paragraph={{ rows: 2 }} />
+                <Skeleton.Button active shape='square' />
+                <Skeleton active paragraph={{ rows: 0 }} />
+              </div>
+            </Col>
+          </Row>}
           {!loading && courses?.length === 0 && <Empty />}
         </Card>
       )}
@@ -271,11 +295,11 @@ const AllCourses = (props) => {
                   xs={24}
                   md={props.type ? 12 : 8}
                   lg={props.type ? 8 : 6}
-                  //  md={8} lg={6}
+                //  md={8} lg={6}
                 >
                   <Card
                     className="card-item custom-card"
-                    onClick={()=>{props.history.push("course/" + course.id)}}
+                    onClick={() => { props.history.push("course/" + course.id) }}
                     cover={
                       <>
                         <img
@@ -302,7 +326,7 @@ const AllCourses = (props) => {
                       description={
                         <div className="coursecard-cont">
                           <div>
-                          <Paragraph
+                            <Paragraph
                               ellipsis={{ rows: 2 }}
                               className="f-14 text-primary mb-8"
                               style={{ height: "42px" }}
@@ -329,7 +353,7 @@ const AllCourses = (props) => {
                                 </span>
                               </Paragraph>
                             )}
-                            
+
                             {course.CourseType === "Content" && (
                               <div className="justify-content-between">
                                 <span className="mr-4 f-12 text-secondary">
@@ -338,9 +362,8 @@ const AllCourses = (props) => {
                                 |
                                 <span className="mx-4 f-12 text-secondary">
                                   {course.videos}{" "}
-                                  {`${
-                                    course.videos === 1 ? "Video" : "Videos"
-                                  }`}
+                                  {`${course.videos === 1 ? "Video" : "Videos"
+                                    }`}
                                 </span>{" "}
                                 |
                                 <span className="ml-4 f-12 text-secondary">
