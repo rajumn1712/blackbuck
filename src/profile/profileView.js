@@ -412,9 +412,9 @@ class ProfileView extends Component {
               userId={this.props.match.params.userId}
               key={this.props.match.params.userId}
             />
-            <Affix offsetTop={86}>
+            <div className="affix-top">
               <Ads />
-            </Affix>
+            </div>
           </Col>
         </Row>
       </div>

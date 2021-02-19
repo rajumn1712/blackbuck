@@ -177,9 +177,9 @@ const CMSComponent = (props) => {
         <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
 
           <Identity />
-          <Affix offsetTop={86}>
+          <div className="affix-top">
             <Tags />
-          </Affix>
+          </div>
         </Col>
         <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
           <div className="cms-box px-16 pt-16 text-left">
@@ -253,10 +253,10 @@ const CMSComponent = (props) => {
           <JobCard postingsType={"Normal"} refresh={refresh} searchobj={searchObj} postingsType={"jobsearch"} />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
-          <Affix offsetTop={86}>
+          <div className="affix-top">
             {/* <Carers />  */}
             <Ads />
-          </Affix>
+          </div>
         </Col>
       </Row>
     </div>

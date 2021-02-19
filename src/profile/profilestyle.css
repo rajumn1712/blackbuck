@@ -215,12 +215,13 @@
     display: flex;
     cursor: pointer;
 }
+.user-statistic .left-statistic,.user-statistic .right-statistic{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
 @media (min-width:576px){
-    .user-statistic .left-statistic,.user-statistic .right-statistic{
-        display: flex;
-        width: 100%;
-        justify-content: space-around;
-    }
+    
     .user-banner{
         min-width: 250px;
     }
@@ -235,9 +236,7 @@
         width: 150px;
         height: 150px;
     } */
-    .user-statistic .user-banner {
-        margin-top: -50px;
-    }
+    
     .user-statistic .ant-statistic {
         display: flex;
         flex-direction: row-reverse;
@@ -252,15 +251,7 @@
         color: var(--textprimary);
     }
     .ant-statistic.afterline:after {
-        content: "";
-        position: absolute;
-        width: 75px;
-        height: 1px;
-        background-color: var(--line);
-        top: auto;
         right: 0;
-        left: 0;
-        bottom: -8px;
     }
 }
 .overlay{padding: 16px;}

@@ -783,26 +783,26 @@ class Group extends Component {
               <TabPane tab="Posts" key="1">
                 <Row gutter={16}>
                   {groupData ?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <Affix offsetTop={86} className="xs-dnone">
+                    <div className="affix-top">
                       <Tags />
                       <PrivateInvite />
-                    </Affix>
+                    </div>
                   </Col>
                   }
                   {
                     groupData ?.IsGroupMember && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                      <Affix offsetTop={86} className="xs-dnone">
+                      <div className="affix-top">
                         <Tags />
                         <Invite />
-                      </Affix>
+                      </div>
                     </Col>
                   }
                   {
                     !groupData ?.IsGroupMember && !groupData ?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                      <Affix offsetTop={86} className="xs-dnone">
+                     <div className="affix-top">
                         <Tags />
                         <Invite />
-                      </Affix>
+                      </div>
                     </Col>
                   }
                   <Col xs={24} sm={groupData ?.IsGroupAdmin ? 16 : 16} md={groupData ?.IsGroupAdmin ? 16 : 16} lg={groupData ?.IsGroupAdmin ? 16 : 16} xl={groupData ?.IsGroupAdmin ? 16 : 16}>
@@ -828,9 +828,9 @@ class Group extends Component {
           </Col>
           <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
             <Groups />
-            <Affix offsetTop={86}>
+            <div className="affix-top">
               <Ads />
-            </Affix>
+            </div>
           </Col>
         </Row>
       </div>

@@ -232,15 +232,7 @@
         margin-right: 8px;
     }
     .ant-statistic.afterline:after {
-        content: "";
-        position: absolute;
-        width: 75px;
-        height: 1px;
-        background-color: var(--line);
-        top: auto;
         right: 0;
-        left: 0;
-        bottom: -8px;
     }
 }
 .left-menu.visible-icon{background-position: -464px -254px;}

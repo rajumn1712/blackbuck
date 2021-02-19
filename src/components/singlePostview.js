@@ -31,9 +31,9 @@ class SinglePostView extends Component {
                         />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
-                        <Affix offsetTop={86} >
+                        <div className="affix-top" >
                             <Ads />
-                        </Affix>
+                        </div>
                     </Col>
                 </Row>
             </div>

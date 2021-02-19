@@ -18,9 +18,9 @@ class LMSComponent extends Component {
                     <Col xs={24} sm={12} md={8} lg={7} xl={7}>
 
                         <CourseList isDataReferesh={this.coursedetails} />
-                        <Affix offsetTop={86} >
+                        <div className="affix-top">
                             <Ads />
-                        </Affix>
+                        </div>
                     </Col>
                 </Row>
             </div>

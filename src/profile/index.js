@@ -214,6 +214,7 @@ class Profile extends Component {
                   value={profile?.Groups ? profile.Groups : 0}
                 />
                 <Statistic
+                  className="afterline"
                   title="Posts"
                   value={profile?.Posts ? profile.Posts : 0}
                 />
@@ -289,11 +290,13 @@ class Profile extends Component {
                   render={() => {
                     return (
                       <Row gutter={8}>
-                        <Col xs={{span:24 ,order:2}} sm={{span:24 ,order:2}} lg={{span:8 ,order:1}} xl={8}>
-                          <Invite />
-                          <Courses />
+                        <Col xs={{ span: 24, order: 2 }} sm={{ span: 24, order: 2 }} lg={{ span: 8, order: 1 }} xl={8}>
+                          
+                            <Invite />
+                            <Courses />
+                         
                         </Col>
-                        <Col xs={{span:24 ,order:1}} sm={{span:24 ,order:1}} lg={{span:16 ,order:2}} xl={16}>
+                        <Col xs={{ span: 24, order: 1 }} sm={{ span: 24, order: 1 }} lg={{ span: 16, order: 2 }} xl={16}>
                           <Postings postingsType="user" sharebox={true} />
                         </Col>
                       </Row>
@@ -365,9 +368,9 @@ class Profile extends Component {
           <Col xs={24} sm={9} md={8} lg={7} xl={7}>
             {/* <FriendsSuggestioncard /> */}
             <Groups />
-            <Affix offsetTop={86}>
+            <div className="affix-top">
               <Ads />
-            </Affix>
+            </div>
           </Col>
         </Row>
       </div>
