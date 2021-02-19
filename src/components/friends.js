@@ -36,7 +36,6 @@ class Friends extends Component {
     const { FriendsList, loading } = this.state;
     return (
       <div className="custom-card requests">
-        {loading && <Loader className="loader-top-middle" />}
 
         {/*    /// FRIENDS TABS ///   
         <div className="main">
@@ -134,6 +133,7 @@ class Friends extends Component {
       </div>  /// FRIENDS TABS /// */}
 
         <Card title={`Friends (${FriendsList.length})`} bordered={true}>
+        {loading && <Loader className="loader-top-middle" />}
           <List
             grid={{
               column: 2,
