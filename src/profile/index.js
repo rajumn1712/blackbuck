@@ -172,7 +172,7 @@ class Profile extends Component {
     return (
       <div className="main">
         <Row gutter={16}>
-          <Col xs={24} sm={16} md={17} lg={17} xl={17}>
+          <Col xs={24} sm={15} md={16} lg={17} xl={17}>
             <div className="coverpage">
               <Avatar
                 className="center-focus"
@@ -288,12 +288,12 @@ class Profile extends Component {
                   path="/profile/IsProfilePostsTab"
                   render={() => {
                     return (
-                      <Row gutter={16}>
-                        <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                      <Row gutter={8}>
+                        <Col xs={{span:24 ,order:2}} sm={{span:24 ,order:2}} lg={{span:8 ,order:1}} xl={8}>
                           <Invite />
                           <Courses />
                         </Col>
-                        <Col xs={24} sm={16} md={16} lg={16} xl={16}>
+                        <Col xs={{span:24 ,order:1}} sm={{span:24 ,order:1}} lg={{span:16 ,order:2}} xl={16}>
                           <Postings postingsType="user" sharebox={true} />
                         </Col>
                       </Row>
@@ -362,7 +362,7 @@ class Profile extends Component {
               </TabPane>
             </Tabs>
           </Col>
-          <Col xs={24} sm={8} md={7} lg={7} xl={7}>
+          <Col xs={24} sm={9} md={8} lg={7} xl={7}>
             {/* <FriendsSuggestioncard /> */}
             <Groups />
             <Affix offsetTop={86}>

@@ -36,7 +36,7 @@ class FriendRequests extends Component {
         return (
             <div className="custom-card tag-card">
                 <Card title="#Tags" bordered={false} >
-                    <List loading={this.state.loading?{indicator:<Loader className="loader-top-middle" />}:false}
+                    <List loading={this.state.loading?{indicator:<Skeleton paragraph={{rows:3}} />}:false}
                         itemLayout="vertical"
                         dataSource={tags?.slice(0, 5)}
                         renderItem={item => (
