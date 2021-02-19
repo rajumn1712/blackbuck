@@ -126,11 +126,39 @@ class FriendSuggestions extends Component {
         });
     }
     render() {
-        if (!this.state.friends || this.state.friends.length === 0) { return null; }
+        const { loading } = this.state;
+        if (!this.state.friends || this.state.friends.length === 0) {
+            return <>{loading && <Row gutter={8} >
+                <Col xs={12} md={8}>
+                    <div className="cards-list-skelton" >
+                        <Skeleton.Image active shape='square' />
+                        <Skeleton active paragraph={{ rows: 1 }} />
+                        <Skeleton.Button active shape='square' />
+                    </div>
+                </Col>
+                <Col xs={12} md={8}>
+                    <div className="cards-list-skelton" >
+                        <Skeleton.Image active shape='square' />
+                        <Skeleton active paragraph={{ rows: 1 }} />
+                        <Skeleton.Button active shape='square' />
+                    </div>
+                </Col>
+                <Col xs={12} md={8}>
+                    <div className="cards-list-skelton" >
+                        <Skeleton.Image active shape='square' />
+                        <Skeleton active paragraph={{ rows: 1 }} />
+                        <Skeleton.Button active shape='square' />
+                    </div>
+                </Col>
+            </Row>
+            }
+                {!loading && null}
+            </>
+        }
         if (this.state.isViewAllPage) {
             return (
                 <>
-                    <Sharebox dataRefreshed={() => { }} />
+                    {/* <Sharebox dataRefreshed={() => { }} /> */}
                     <div className="friends-thead px-4">
                         <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title>
                     </div>
