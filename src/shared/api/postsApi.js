@@ -1,6 +1,6 @@
 import { apiClient } from './clients';
-const POSTS_END_POINT = "service/api/posts/";
-const PROFILE_END_POINT = "service/api/profile/"
+const POSTS_END_POINT = "posts/api/posts/";
+const PROFILE_END_POINT = "profile/api/profile/"
 const getPosts = (userid, pageNo, pageSize, postingsType, groupid, post_id, search_value, search_type) => {
     const method = {
         "all": "getAllPosts",

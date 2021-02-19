@@ -133,7 +133,7 @@ const AllCourses = (props) => {
           extra={<Link to={`${props.type}`}>View all</Link>}
         >
           <div className="px-12 pt-12 pb-8">
-            {courses.length > 4 && <><Link
+            {courses.length > 3 && <><Link
               className="more-frnd-btn left"
               onClick={(e) => {
                 e.preventDefault();

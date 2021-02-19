@@ -708,7 +708,7 @@ class About extends Component {
                   <Input
                     className="ant-input"
                     placeholder="Phone Number"
-                    maxlength="15"
+                    maxlength="10"
                     onChange={(value) =>
                       this.handleChange("PhoneNumber", value)
                     }

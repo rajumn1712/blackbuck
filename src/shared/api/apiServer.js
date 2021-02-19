@@ -4,11 +4,11 @@ import 'firebase/firestore'
 const { apiClient, cloudMessaging } = require("./clients");
 const FRIENDS_API = "service/api/home/";
 const GROUPS_API = "service/api/groups/";
-const PROFILE_API = "service/api/profile/";
-const TAGS_API = "service/api/posts/";
-const ADMIN_API = "service/api/admin/";
-const LMS_API = "service/api/LMS/";
-const CAREESRS_API = "service/api/careers/";
+const PROFILE_API = "profile/api/profile/";
+const TAGS_API = "posts/api/posts/";
+const ADMIN_API = "admin/api/admin/";
+const LMS_API = "LMS/api/LMS/";
+const CAREESRS_API = "careers/api/careers/";
 const getFriendSuggestions = (userid, page, pageSize) => {
   return apiClient.get(
     FRIENDS_API +

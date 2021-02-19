@@ -1,7 +1,7 @@
 import { apiClient } from "../shared/api/clients";
-const PROFILE_REMOTE = "/service/api/profile/";
-const ADMIN_REMOTE = "/service/api/admin/";
-const LMS_REMOTE = "/service/api/LMS/";
+const PROFILE_REMOTE = "/profile/api/profile/";
+const ADMIN_REMOTE = "/admin/api/admin/";
+const LMS_REMOTE = "/LMS/api/LMS/";
 
 const fetchUserCourses = (user_id, page, pageSize, key) => {
   const method = key === "courses" ? "getUserCourses" : "getRecentCourses";
