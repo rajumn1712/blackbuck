@@ -632,14 +632,14 @@ class Group extends Component {
               </ImgCrop>
             </div>
 
-            <div className="user-statistic pb-0">
+            <div className="user-statistic">
               <div className="left-statistic group-leftext">
                 <Title className="mb-4 f-16 text-primary" level={5}>
                   {groupData.GroupName}
                 </Title>
                 <div className="f-12 text-secondary">{groupData.Type} Group</div>
               </div>
-              <Card className="group-banner w-btn">
+              <Card className="user-banner w-btn">
                 <List
                   itemLayout="horizontal"
                   dataSource={[{}]}
@@ -744,9 +744,9 @@ class Group extends Component {
                   <List itemLayout="horizontal">{adminsData}</List>
                 </div>
               </CommonModal>
-              <div className="right-statistic group-right mt-16 mr-12">
+              <div className="right-statistic group-right">
                 {groupData.Members > 0 && (
-                  <span className="text-center mt-4 mr-16">
+                  <span className="text-center">
                     <span className="f-20 mt-4 fw-400">
                       {groupData.Members}
                     </span>{" "}

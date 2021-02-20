@@ -26,7 +26,7 @@ const options = {
     },
 
     768: {
-      items: 3,
+      items: 2,
     },
 
     992: {
@@ -288,7 +288,7 @@ const AllCourses = (props) => {
           extra={props.type && <Link to={`${props.type}`}>View all</Link>}
         >
           <div className="px-12 pt-12 pb-8">
-            <Row gutter={16}>
+            <Row gutter={8}>
               {courses?.map((course, indx) => (
                 <Col
                   key={indx}
@@ -390,7 +390,40 @@ const AllCourses = (props) => {
               ))}
             </Row>
           </div>
-          {loading && <Loader className="loader-top-middle" />}
+          {loading && <Row gutter={8} className="p-12">
+            <Col xs={12} md={8} lg={6}> 
+              <div className="cards-list-skelton lms-card-skelton" >
+                <Skeleton.Image active shape='square' />
+                <Skeleton active paragraph={{ rows: 2 }} />
+                <Skeleton.Button active shape='square' />
+                <Skeleton active paragraph={{ rows: 0 }} />
+              </div>
+            </Col>
+            <Col xs={12} md={8} lg={6}>
+              <div className="cards-list-skelton lms-card-skelton" >
+                <Skeleton.Image active shape='square' />
+                <Skeleton active paragraph={{ rows: 2 }} />
+                <Skeleton.Button active shape='square' />
+                <Skeleton active paragraph={{ rows: 0 }} />
+              </div>
+            </Col>
+            <Col xs={12} md={8} lg={6}>
+              <div className="cards-list-skelton lms-card-skelton" >
+                <Skeleton.Image active shape='square' />
+                <Skeleton active paragraph={{ rows: 2 }} />
+                <Skeleton.Button active shape='square' />
+                <Skeleton active paragraph={{ rows: 0 }} />
+              </div>
+            </Col>
+            <Col xs={12} md={8} lg={6}>
+              <div className="cards-list-skelton lms-card-skelton" >
+                <Skeleton.Image active shape='square' />
+                <Skeleton active paragraph={{ rows: 2 }} />
+                <Skeleton.Button active shape='square' />
+                <Skeleton active paragraph={{ rows: 0 }} />
+              </div>
+            </Col>
+          </Row>}
           {!loading && courses.length === 0 && <Empty />}
         </Card>
       )}

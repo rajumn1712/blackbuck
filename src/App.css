@@ -1178,6 +1178,7 @@
   line-height: 22px;
   color: var(--textprimary);
   margin-bottom: 8px;
+  margin-top: 16px;
 }
 .intern-cards .intern-cardbody .description {
   font-size: var(--f-16);
@@ -2233,7 +2234,7 @@ textarea {
 .about-clg-input .ant-select-selection-item{height: 38px !important; display: flex;align-items: center;padding: 5px;}
 .text-red{color: var(--red);}
 .friends.scholors .owl-carousel{max-height: 310px !important;height: auto;}
-
+.user-statistic .right-statistic.group-right .ant-btn{margin-left: 10px;}
 @media (min-width:576px){
   .affix-top{position: sticky;top: 86px;align-self: flex-start;margin-bottom: 6px;}
 }
@@ -2253,6 +2254,8 @@ textarea {
   .user-statistic{ flex-wrap: wrap;flex-direction: row;}
   .user-statistic .ant-statistic-title{font-size: 12px;}
   .user-statistic .left-statistic .ant-statistic:last-child{border-right: 1px solid var(--line);}
+  .user-statistic .left-statistic.group-leftext{display: block !important;margin-left: 24px;width: calc(50% - 24px) !important;}
+  .user-statistic .right-statistic.group-right{display: flex !important;flex-direction: column;align-items: flex-end;margin-right: 24px;text-align: end;width: calc(50% - 24px) !important;}
 }
 @media (max-width: 767px){
   .job-req{flex-wrap: wrap;}
@@ -2284,5 +2287,5 @@ textarea {
   .create-course{padding: 20px 20px 14px;}
   .ant-modal-header,.ant-modal-footer ,.ant-modal-body{padding: 16px 24px !important;}
   .coverpage .ant-avatar{height: 200px !important;}
- 
+  .center-focus{height: 200px;}
 }

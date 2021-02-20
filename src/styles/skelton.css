@@ -46,7 +46,6 @@
 .upload-skelton .ant-skeleton-image{width: 100%;height: 250px !important;margin-bottom: 8px;}
 .upload-skelton{width: 100% !important;}
 
-.fl-skelton {}
 @media (max-width:575px){
     .cards-list-skelton.lms-card-skelton.vertical-card{flex-direction: column;}
     .cards-list-skelton.lms-card-skelton.vertical-card>div:first-child,.cards-list-skelton.lms-card-skelton.vertical-card>div:last-child{width: 100% !important;}
