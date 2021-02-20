@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Affix, Typography, Button } from "antd";
+import { Row, Col, Affix, Typography, Button,Skeleton } from "antd";
 import { Link } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel2";
 import "react-owl-carousel2/src/owl.carousel.css";
@@ -129,7 +129,29 @@ class BBScholars extends Component {
               </div>
             </Col>)}
           </Row>
-          {isViewAllPage && loading && <Loader className="loader-top-middle" />}
+          {isViewAllPage && loading && <Row gutter={8} >
+                <Col xs={12} md={8}>
+                    <div className="cards-list-skelton" >
+                        <Skeleton.Image active shape='square' />
+                        <Skeleton active paragraph={{ rows: 1 }} />
+                        <Skeleton.Button active shape='square' />
+                    </div>
+                </Col>
+                <Col xs={12} md={8}>
+                    <div className="cards-list-skelton" >
+                        <Skeleton.Image active shape='square' />
+                        <Skeleton active paragraph={{ rows: 1 }} />
+                        <Skeleton.Button active shape='square' />
+                    </div>
+                </Col>
+                <Col xs={12} md={8}>
+                    <div className="cards-list-skelton" >
+                        <Skeleton.Image active shape='square' />
+                        <Skeleton active paragraph={{ rows: 1 }} />
+                        <Skeleton.Button active shape='square' />
+                    </div>
+                </Col>
+            </Row>}
         </div>
       )
     }

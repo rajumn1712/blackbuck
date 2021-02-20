@@ -172,7 +172,7 @@ class Profile extends Component {
     return (
       <div className="main">
         <Row gutter={16}>
-          <Col xs={24} sm={15} md={16} lg={17} xl={17}>
+          <Col xs={24} sm={24} md={16} lg={17} xl={17}>
             <div className="coverpage">
               <Avatar
                 className="center-focus"
@@ -365,7 +365,7 @@ class Profile extends Component {
               </TabPane>
             </Tabs>
           </Col>
-          <Col xs={24} sm={9} md={8} lg={7} xl={7}>
+          <Col xs={24} sm={24} md={8} lg={7} xl={7}>
             {/* <FriendsSuggestioncard /> */}
             <Groups />
             <div className="affix-top">

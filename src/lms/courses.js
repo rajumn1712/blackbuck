@@ -25,36 +25,31 @@ class Courses extends Component {
         const { profileData } = this.state;
         return (
             <div className="coursepage">
-                <Row gutter={16}>
-                    <Col xs={24}>
-                        <div className="coverpage coursesbanner">
-                            <OwlCarousel options={options}>
-                                <div className="coursebanneritem">
-                                    <img src={CourseBanner1} alt="The Last of us" />
-                                    <div className="coursebannertext ">
-                                        <h2 className="coursebannertitle">Aerodynamics</h2>
-                                        <p className="coursebannerdescp">This course extends fluid mechanic concepts from Unified Engineering to the aerodynamic performance of wings and bodies in sub/supersonic regimes.</p>
-                                    </div>
-                                </div>
-                                <div className="coursebanneritem">
-                                    <img src={CourseBanner1} alt="The Last of us" />
-                                    <div className="coursebannertext">
-                                        <h2 className="coursebannertitle">Aerodynamics</h2>
-                                        <p className="coursebannerdescp">This course extends fluid mechanic concepts from Unified Engineering to the aerodynamic performance of wings and bodies in sub/supersonic regimes.</p>
-                                    </div>
-                                </div>
-                                <div className="coursebanneritem">
-                                    <img src={CourseBanner1} alt="The Last of us" />
-                                    <div className="coursebannertext">
-                                        <h2 className="coursebannertitle">Aerodynamics</h2>
-                                        <p className="coursebannerdescp">This course extends fluid mechanic concepts from Unified Engineering to the aerodynamic performance of wings and bodies in sub/supersonic regimes.</p>
-                                    </div>
-                                </div>
-                            </OwlCarousel>
+                <div className="coverpage coursesbanner">
+                    <OwlCarousel options={options}>
+                        <div className="coursebanneritem">
+                            <img src={CourseBanner1} alt="The Last of us" />
+                            <div className="coursebannertext ">
+                                <h2 className="coursebannertitle">Aerodynamics</h2>
+                                <p className="coursebannerdescp">This course extends fluid mechanic concepts from Unified Engineering to the aerodynamic performance of wings and bodies in sub/supersonic regimes.</p>
+                            </div>
                         </div>
-                     
-                    </Col>
-                </Row>
+                        <div className="coursebanneritem">
+                            <img src={CourseBanner1} alt="The Last of us" />
+                            <div className="coursebannertext">
+                                <h2 className="coursebannertitle">Aerodynamics</h2>
+                                <p className="coursebannerdescp">This course extends fluid mechanic concepts from Unified Engineering to the aerodynamic performance of wings and bodies in sub/supersonic regimes.</p>
+                            </div>
+                        </div>
+                        <div className="coursebanneritem">
+                            <img src={CourseBanner1} alt="The Last of us" />
+                            <div className="coursebannertext">
+                                <h2 className="coursebannertitle">Aerodynamics</h2>
+                                <p className="coursebannerdescp">This course extends fluid mechanic concepts from Unified Engineering to the aerodynamic performance of wings and bodies in sub/supersonic regimes.</p>
+                            </div>
+                        </div>
+                    </OwlCarousel>
+                </div>
             </div>
         );
     }
