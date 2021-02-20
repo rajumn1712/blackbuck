@@ -299,6 +299,7 @@ class ProfileView extends Component {
                 {!IsFriend && requestType && !IsYouSendRequest && <Button type="default" onClick={() => this.handleRemove()} className="addfrnd semibold ml-8">Remove</Button>}
               </div>
             </div>
+           
             <Tabs defaultActiveKey="1" className="profile-tabs">
               <TabPane tab="Profile" key="1">
                 <Row gutter={16}>

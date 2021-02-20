@@ -228,7 +228,6 @@
     .user-statistic .ant-statistic-content .ant-statistic-content-value {
         font-weight: var(--fw-600);
         font-size: 20px;
-        margin-right: 8px;
     }
     /* .ant-statistic.afterline:after {
         right: 0;
