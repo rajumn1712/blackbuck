@@ -51,7 +51,7 @@
 .p-0{padding: 0 !important;}
 .p-4{padding: 4px;}
 .p-8{padding: 8px;}
-.p-16{padding: 16px;}
+.p-16{padding: 16px !important;}
 .p-12{padding: 12px !important;}
 .pl-0{padding-left: 0px !important;}
 .pl-4{padding-left: 4px;}
@@ -130,7 +130,7 @@
 
 *{font-family: 'Neue Haas Grotesk Text Pro' !important;}
 * { scrollbar-width: thin; scrollbar-color: var(--primary) var(--secondary);}
-*::-webkit-scrollbar { width: 8px;}
+*::-webkit-scrollbar { width: 8px;height: 6px;  }
 *::-webkit-scrollbar-thumb {background-color: var(--primary);border-radius: 20px;}
 body{background-color: #f3f2ef !important;}
 html {--antd-wave-shadow-color:var(--primary) !important;}
