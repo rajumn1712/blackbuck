@@ -110,7 +110,7 @@ class Media extends Component {
                         <div className="p-12 pb-0 mb-6 media-tabs-content">
                             <Row gutter={[8, 8]}>
                                 {Photos.length > 0 && Photos?.map((item, indx) => {
-                                    return <Col xs={24} md={12} lg={6}>
+                                    return <Col xs={24} md={12} lg={8} xl={6} wrap>
                                         {loading && <Loader className="loader-top-middle" />}
                                         <Card key={indx}
                                             bordered={false}
@@ -128,7 +128,7 @@ class Media extends Component {
                         <div className="p-12 pb-0 mb-6 media-tabs-content">
                             <Row gutter={[8, 8]} className="px-8">
                                 {Videos.length > 0 && Videos?.map((item, indx) => {
-                                    return <Col xs={24} md={12} lg={6} wrap>
+                                    return <Col xs={24} md={12} lg={8} xl={6} wrap>
                                         {loading && <Loader className="loader-top-middle" />}
                                         <Card key={indx}
 

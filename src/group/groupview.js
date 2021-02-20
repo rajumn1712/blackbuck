@@ -598,7 +598,7 @@ class Group extends Component {
       <div className="main">
         {dataLoading && <Loader className="loader-middle" />}
         <Row gutter={16}>
-          <Col xs={24} sm={12} md={16} lg={18} xl={17} xxl={17}>
+          <Col xs={24} sm={12} md={16} lg={16} xl={17} xxl={17}>
             <div className="coverpage">
               <img
                 className="center-focus"
@@ -753,7 +753,7 @@ class Group extends Component {
                     {groupData.Members > 1 ? "Members" : "Member"}
                   </span>
                 )}
-                {groupData.IsGroupMember && <Button className="mr-8" type="primary" onClick={this.showModal}>
+                {groupData.IsGroupMember && <Button className="" type="primary" onClick={this.showModal}>
                   <span className="icons add-white"></span> Invite
                 </Button>
                 }
@@ -782,30 +782,30 @@ class Group extends Component {
               </TabPane>
               <TabPane tab="Posts" key="1">
                 <Row gutter={16}>
-                  {groupData ?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <div className="affix-top">
+                  {groupData ?.IsGroupAdmin && <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                   
                       <Tags />
                       <PrivateInvite />
-                    </div>
+                  
                   </Col>
                   }
                   {
-                    groupData ?.IsGroupMember && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                      <div className="affix-top">
+                    groupData ?.IsGroupMember && <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                     
                         <Tags />
                         <Invite />
-                      </div>
+                     
                     </Col>
                   }
                   {
-                    !groupData ?.IsGroupMember && !groupData ?.IsGroupAdmin && <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                     <div className="affix-top">
+                    !groupData ?.IsGroupMember && !groupData ?.IsGroupAdmin && <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                    
                         <Tags />
                         <Invite />
-                      </div>
+                     
                     </Col>
                   }
-                  <Col xs={24} sm={groupData ?.IsGroupAdmin ? 16 : 16} md={groupData ?.IsGroupAdmin ? 16 : 16} lg={groupData ?.IsGroupAdmin ? 16 : 16} xl={groupData ?.IsGroupAdmin ? 16 : 16}>
+                  <Col xs={24} sm={groupData ?.IsGroupAdmin ? 24 : 24} md={groupData ?.IsGroupAdmin ? 24 : 24} lg={groupData ?.IsGroupAdmin ? 16 : 16} xl={groupData ?.IsGroupAdmin ? 16 : 16}>
                     {groupData ?.GroupId && tabkey == "1" && (
                       <Postings
                         sharebox={groupData ?.IsGroupMember || groupData ?.IsGroupAdmin}
@@ -826,7 +826,7 @@ class Group extends Component {
               </TabPane>
             </Tabs>
           </Col>
-          <Col xs={24} sm={12} md={8} lg={6} xl={7} xxl={7}>
+          <Col xs={24} sm={12} md={8} lg={8} xl={7} xxl={7}>
             <Groups />
             <div className="affix-top">
               <Ads />
