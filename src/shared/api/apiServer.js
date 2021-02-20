@@ -2,8 +2,8 @@ import firebase from 'firebase';
 import 'firebase/messaging';
 import 'firebase/firestore'
 const { apiClient, cloudMessaging } = require("./clients");
-const FRIENDS_API = "service/api/home/";
-const GROUPS_API = "service/api/groups/";
+const FRIENDS_API = "profile/api/home/";
+const GROUPS_API = "posts/api/groups/";
 const PROFILE_API = "profile/api/profile/";
 const TAGS_API = "posts/api/posts/";
 const ADMIN_API = "admin/api/admin/";

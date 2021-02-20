@@ -71,7 +71,7 @@ class Notifications extends Component {
         });
     }
     handleAccept = async (friend) => {
-        if (friend.Type == "Invitations") {
+        if (friend.Type == "Invitations" || friend.Type == "GroupRequest") {
             const object = {
                 "GroupId": friend.PostId,
                 "Type": "accept",
@@ -119,7 +119,7 @@ class Notifications extends Component {
     };
 
     handleRemove = (friend) => {
-        if (friend.Type == "Invitations") {
+        if (friend.Type == "Invitations" || friend.Type == "GroupRequest") {
             const object = {
                 "GroupId": friend.PostId,
                 "Type": "decline",
@@ -184,7 +184,8 @@ class Notifications extends Component {
         const messages = {
             Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
             Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span></div>,
-            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{item.Firstname}</Link> <span>commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{`"${item.Comment}"`}</Link> </div>
+            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{item.Firstname}</Link> <span>commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{`"${item.Comment}"`}</Link> </div>,
+            GroupRequest: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a request to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
         }
         return messages[item.Type]
     }
@@ -206,16 +207,16 @@ class Notifications extends Component {
                         description={<div>{item.CreatedDate && <div className="f-12 text-secondary"><Moment fromNow>{item.CreatedDate}</Moment></div>}
 
                             {this.props.type && item.RequestType == "request" && <div className="noti-button">
-                                {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
-                                {(item.Type == "Invitations" || item.Type == "Friends") && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
+                                {(item.Type == "Invitations" || item.Type == "Friends" || item.Type == "GroupRequest") && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
+                                {(item.Type == "Invitations" || item.Type == "Friends" || item.Type == "GroupRequest") && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
                             </div>}
                             {(item.RequestType == "accept" || item.RequestType == "decline") && <span className="fw-400 text-secondary f-14">Request {item.RequestType == "decline" ? "declined" : "accepted"}</span>}
                         </div>}
 
                     />
                     {!this.props.type && item.RequestType == "request" && <div className="noti-button">
-                        {(item.Type == "Invitations" || item.Type == "Friends") && item.RequestType == "request" && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
-                        {(item.Type == "Invitations" || item.Type == "Friends") && item.RequestType == "request" && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
+                        {(item.Type == "Invitations" || item.Type == "Friends" || item.Type == "GroupRequest") && item.RequestType == "request" && <span className="f-14 mr-16 semibold text-primarygreen cursor-pointer" onClick={() => this.handleAccept(item)}>Accept</span>}
+                        {(item.Type == "Invitations" || item.Type == "Friends" || item.Type == "GroupRequest") && item.RequestType == "request" && <span className="f-14 semibold text-red cursor-pointer" onClick={() => this.handleRemove(item)}>Remove</span>}
                         {(item.RequestType == "accept" || item.RequestType == "decline") && <span className="fw-400">Request {item.RequestType == "decline" ? "declined" : "accepted"}</span>}
                     </div>}
                 </List.Item>
