@@ -288,12 +288,12 @@ updateCount=(prop,value)=>{
                                 >
                                     <Avatar src={user} />
                                     <Avatar src={user} />
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                                    <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                                    <Avatar >K</Avatar>
+                                    <Avatar >K</Avatar>
+                                    <Avatar >K</Avatar>
+                                    <Avatar >K</Avatar>
+                                    <Avatar >K</Avatar>
+                                    <Avatar >K</Avatar>
                                 </Avatar.Group> */}
                         {/* </div></div>
                 </div> 

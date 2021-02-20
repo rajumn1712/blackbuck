@@ -49,6 +49,7 @@
     flex-direction: column-reverse;
     align-items: center;
     margin-top: 20px;
+    width: 33.3%;
 }
 
 .user-statistic .user-banner {
@@ -239,10 +240,9 @@
     
     .user-statistic .ant-statistic {
         display: flex;
-        flex-direction: row-reverse;
-        align-items: baseline;
+        flex-direction: column-reverse;
+        align-items: center;
         margin-top: 8px;
-        justify-content: flex-end;
     }
     .user-statistic .ant-statistic-content .ant-statistic-content-value {
         font-weight: 500;

@@ -244,11 +244,11 @@ class ProfileView extends Component {
               <div className="left-statistic">
                 <Statistic
                   title="Friends"
-                  className="afterline"
+                  className=""
                   value={profileData?.Friend ? profileData.Friend : 0}
                 />
                 <Statistic
-                  className="afterline"
+                  className=""
                   title="Groups"
                   value={profileData?.Groups ? profileData.Groups : 0}
                 />
@@ -277,12 +277,12 @@ class ProfileView extends Component {
               <div className="right-statistic">
                 <Statistic
                   title="Shares"
-                  className="afterline"
+                  className=""
                   value={profileData.Shares}
                 />
                 <Statistic
                   title="Interests"
-                  className="afterline"
+                  className=""
                   value={profileData.Interest}
                 />
                 <Statistic

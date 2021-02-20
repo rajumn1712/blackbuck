@@ -112,7 +112,7 @@ class BBScholars extends Component {
                     <img src={scholor.Image || defaultUser} width="100%" height="100%" />
                   </Link>
                 </div>
-                <div style={{ padding: 16 }}>
+                <div className="p-16">
                   <Paragraph className="frnd-name text-overflow c-default">
                     {scholor.Firstname}
                   </Paragraph>
@@ -136,7 +136,7 @@ class BBScholars extends Component {
     return (
       <div>
         <div className="friends-thead px-4">
-          <Title level={5} style={{ fontWeight: 500 }}>
+          <Title level={5} className="fw-500">
             Blackbuck Scholars
           </Title>
           <Link
@@ -160,7 +160,7 @@ class BBScholars extends Component {
                     <img src={scholor.Image || defaultUser} width="100%" height="100%" />
                   </Link>
                 </div>
-                <div style={{ padding: 16 }}>
+                <div className="p-16">
                   <Paragraph className="frnd-name text-overflow c-default">
                     {scholor.Firstname}
                   </Paragraph>

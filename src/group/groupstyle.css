@@ -124,7 +124,7 @@
 .profile-tabs .ant-tabs-nav:before {
     /* border: 0; */
 }
-
+/* 
 .afterline {
     position: relative;
 }
@@ -138,8 +138,8 @@
     top: 10px;
     right: -25px;
     left: auto;
-}
-.profile-tabs .ant-tabs-tab:first-child {margin-left: 20px !important;}
+} */
+
 .dropdown-align .ant-dropdown-menu-item{padding: 8px 16px;}
 .profile-tabs .ant-tabs-tab {
     margin: 0 10px !important;
@@ -221,19 +221,18 @@
     
     .user-statistic .ant-statistic {
         display: flex;
-        flex-direction: row-reverse;
-        align-items: baseline;
+        flex-direction: column-reverse;
+        align-items: center;
         margin-top: 8px;
-        justify-content: flex-end;
     }
     .user-statistic .ant-statistic-content .ant-statistic-content-value {
         font-weight: var(--fw-600);
         font-size: 20px;
         margin-right: 8px;
     }
-    .ant-statistic.afterline:after {
+    /* .ant-statistic.afterline:after {
         right: 0;
-    }
+    } */
 }
 .left-menu.visible-icon{background-position: -464px -254px;}
 .multi-select.custom-fields .ant-select-selector .ant-select-selection-item{line-height: 24px !important;border-radius: 0.25rem;}

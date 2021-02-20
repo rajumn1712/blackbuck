@@ -46,7 +46,7 @@ const columns = [
         key: 'action',
         render: (text, record) => (
             <Space size="middle">
-                <a className="semibold" style={{ color: 'var(--red)' }}>Delete</a>
+                <a className="semibold text-red">Delete</a>
             </Space>
         ),
     },

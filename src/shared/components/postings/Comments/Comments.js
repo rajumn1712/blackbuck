@@ -89,7 +89,7 @@ class Comments extends Component {
                     itemLayout="horizontal"
                 renderItem={item => <Comment content={item.Comment} author={item.Firstname} datetime={<><Moment fromNow>{item.CreatedDate}</Moment>{this.props.profile?.Id==item.UserId && <Dropdown placement="bottomRight" overlay={commentEdit} trigger={['click']}><a className="ant-dropdown-link"><span className="post-icons h-more-icon mr-0 ml-8 cursor-pointer"></span></a></Dropdown>}</>} avatar={<Avatar src={item.Image || defaultUser} />}>
                         {/* {item.Replies.map(reply=>{return <Comment {...reply}></Comment>})}
-                                {/* <Comment style={{ marginLeft: 10 }} className="reply-comment"
+                                {/* <Comment className="reply-comment"
                                     avatar={
                                         <Avatar src={item.Image} />
                                     }

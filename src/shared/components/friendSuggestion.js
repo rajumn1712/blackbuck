@@ -160,7 +160,7 @@ class FriendSuggestions extends Component {
                 <>
                     {/* <Sharebox dataRefreshed={() => { }} /> */}
                     <div className="friends-thead px-4">
-                        <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title>
+                        <Title level={5} className="fw-500">Friend Suggestions</Title>
                     </div>
                     <Row gutter={8} >
                         {this.state.friends.map((friend, index) => <Col xs={12} md={8} lg={8}>
@@ -169,7 +169,7 @@ class FriendSuggestions extends Component {
                                     <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
                                     <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                                 </div>
-                                <div style={{ padding: 16 }}>
+                                <div className="p-16">
                                     <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
                                     <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
                                     <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>
@@ -211,7 +211,7 @@ class FriendSuggestions extends Component {
         return (
             <div>
                 <div className="friends-thead px-4">
-                    <Title level={5} style={{ fontWeight: 500 }}>Friend Suggestions</Title><Link to="/friendsuggestions" className="link-color d-flex align-items-center">View all</Link>
+                    <Title level={5} className="fw-500">Friend Suggestions</Title><Link to="/friendsuggestions" className="link-color d-flex align-items-center">View all</Link>
                 </div>
                 <Row gutter={8}>
                     <div className="friends">
@@ -222,7 +222,7 @@ class FriendSuggestions extends Component {
                                     <Link to={"/profileview/" + friend.UserId}><img src={friend.Image || defaultUser} width="100%" height="100%" /></Link>
                                     <a className="removefrnd-btn" onClick={() => this.removeSuggestion(friend)}></a>
                                 </div>
-                                <div style={{ padding: 16 }}>
+                                <div className="p-16">
                                     <Paragraph className="frnd-name text-overflow"> <Link className="overflow-text post-title" to={"/profileview/" + friend.UserId}>{friend.FirstName}</Link></Paragraph>
                                     <Paragraph className="m-frnds">{friend.MutualFriendsCount || "No"} Mutual friends</Paragraph>
                                     <Paragraph className="friends-list--course">{friend.Dept}</Paragraph>

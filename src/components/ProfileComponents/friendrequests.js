@@ -151,7 +151,7 @@ class FriendRequests extends Component {
                           })}
                         </Avatar.Group>
                       </span>{" "}
-                      <span style={{ fontWeight: 500 }}>Mutual Friends</span>
+                      <span className="fw-500">Mutual Friends</span>
                     </div>
                   }
                 />

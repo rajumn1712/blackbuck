@@ -205,16 +205,16 @@ class Profile extends Component {
               <div className="left-statistic">
                 <Statistic
                   title="Friends"
-                  className="afterline"
+                  className=""
                   value={profile?.Friends ? profile.Friends : 0}
                 />
                 <Statistic
-                  className="afterline"
+                  className=""
                   title="Groups"
                   value={profile?.Groups ? profile.Groups : 0}
                 />
                 <Statistic
-                  className="afterline"
+                  className=""
                   title="Posts"
                   value={profile?.Posts ? profile.Posts : 0}
                 />
@@ -252,12 +252,12 @@ class Profile extends Component {
               <div className="right-statistic">
                 <Statistic
                   title="Shares"
-                  className="afterline"
+                  className=""
                   value={profile?.Shares ? profile?.Shares : 0}
                 />
                 <Statistic
                   title="Interests"
-                  className="afterline"
+                  className=""
                   value={profile?.Interests ? profile?.Interests : 0}
                 />
                 <Statistic title="Internships" value={profile?.Internships ? profile?.Internships : 0} />

@@ -131,6 +131,7 @@ class VideoProfile extends Component {
     return (
       <div className="custom-card">
         <Card
+          bordered={false}
           title="Video as Profile"
           className="pfvideocard"
           cover={
@@ -140,7 +141,7 @@ class VideoProfile extends Component {
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )
           }
-          bordered={false}
+          
           extra={
             !this.props.IsHideAction ? (
               <Tooltip title={video ? "Edit" : "Add"}>

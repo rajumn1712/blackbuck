@@ -208,7 +208,7 @@ class Friends extends Component {
                       notify({ type: "error", message: "Error", description: "Somethings went wrong. Please try again later" })
                     }
                   }}>
-                    <a style={{ cursor: "pointer" }}>Un-friend</a>
+                    <a className="cursor-pointer" style={{ cursor: "pointer" }}>Un-friend</a>
                   </Menu.Item>
                 </Menu>} trigger={['click']} placement="bottomRight">
                   <a className="ant-dropdown-link ml-auto" onClick={e => e.preventDefault()}>
