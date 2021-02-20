@@ -105,8 +105,7 @@ class Media extends Component {
         const { Videos, Photos, tabkey, loading } = this.state;
         return (
             <div className="custom-card">
-                {loading && <Loader className="loader-top-middle" />}
-                <Card title="Media" bordered={false}
+                <Card  bordered={false}
                 // extra={<div><a className="f-14 px-16" href="#">Create Album</a><a className="pl-8 f-14" href="#">Add Photos/Video</a></div>}
                 >
                     <Tabs defaultActiveKey={tabkey} className=" media-tabs" onTabClick={(index) => this.onTabClick(index, this.state.tabkey)}>
@@ -114,6 +113,7 @@ class Media extends Component {
                             <Row gutter={[8, 8]} className="px-8">
                                 {Photos.length > 0 && Photos?.map((item, indx) => {
                                     return <Col xs={24} md={12} lg={6}>
+                                        {loading && <Loader className="loader-top-middle" />}
                                         <Card key={indx}
                                             bordered={false}
                                             className="b-none"
@@ -129,6 +129,7 @@ class Media extends Component {
                             <Row gutter={[8, 8]} className="px-8">
                                 {Videos.length > 0 && Videos?.map((item, indx) => {
                                     return <Col xs={24} md={12} lg={6} wrap>
+                                        {loading && <Loader className="loader-top-middle" />}
                                         <Card key={indx}
 
                                             bordered={false}

@@ -95,7 +95,34 @@ class BBScholars extends Component {
   }
   render() {
     const { allScholors,isViewAllPage,loading } = this.state;
-    if (!allScholors || allScholors?.length === 0) { return null; }
+    if (!allScholors || allScholors?.length === 0) {
+      return <>{loading && <Row gutter={8} >
+        <Col xs={12} md={8}>
+          <div className="cards-list-skelton" >
+            <Skeleton.Image active shape='square' />
+            <Skeleton active paragraph={{ rows: 1 }} />
+            <Skeleton.Button active shape='square' />
+          </div>
+        </Col>
+        <Col xs={12} md={8}>
+          <div className="cards-list-skelton" >
+            <Skeleton.Image active shape='square' />
+            <Skeleton active paragraph={{ rows: 1 }} />
+            <Skeleton.Button active shape='square' />
+          </div>
+        </Col>
+        <Col xs={12} md={8}>
+          <div className="cards-list-skelton" >
+            <Skeleton.Image active shape='square' />
+            <Skeleton active paragraph={{ rows: 1 }} />
+            <Skeleton.Button active shape='square' />
+          </div>
+        </Col>
+      </Row>
+      }
+        {!loading && null}
+      </>
+    }
     if (this.state.isViewAllPage) {
       return (
         <div>
