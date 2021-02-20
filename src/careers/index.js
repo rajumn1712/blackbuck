@@ -174,14 +174,14 @@ const CMSComponent = (props) => {
   return (
     <div className="main">
       <Row gutter={16}>
-        <Col xs={24} sm={12} md={8} lg={6} xl={5} xxl={5}>
+        <Col xs={24} sm={8} lg={6} xl={5} xxl={5}>
 
           <Identity />
           <div className="affix-top">
             <Tags />
           </div>
         </Col>
-        <Col xs={24} sm={12} md={16} lg={12} xl={12} xxl={12}>
+        <Col xs={24} sm={16} lg={12} xl={12} xxl={12}>
           <div className="cms-box px-16 pt-16 text-left">
             <Form
               initialValues={{ ...searchjob }}

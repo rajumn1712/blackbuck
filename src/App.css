@@ -2224,6 +2224,7 @@ textarea {
 .sc-user-input--file-icon-wrapper{display: none !important;}
 .about-clg-input .ant-select-selection-item{height: 38px !important; display: flex;align-items: center;padding: 5px;}
 .text-red{color: var(--red);}
+.friends.scholors .owl-carousel{max-height: 310px !important;height: auto;}
 @media (min-width:576px){
   .affix-top{position: sticky;top: 86px;align-self: flex-start;margin-bottom: 6px;}
 }

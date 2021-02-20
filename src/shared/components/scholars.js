@@ -102,7 +102,7 @@ class BBScholars extends Component {
           <Title level={5} className="fw-500">Blackbuck Scholars</Title>
           <Row gutter={8} >
             {allScholors.map((scholor, index) => <Col lg={8}>
-              <div className="frnds-list-item mb-10" key={index}>
+              <div className="frnds-list-item m-0 mb-6" key={index}>
                 <div className="frnds-img">
                   <div className="scholar-badge p-4">
                     {scholor.IsScholor && <img src={scholarBadge} />}
@@ -169,7 +169,7 @@ class BBScholars extends Component {
           </Link>
         </div>
         <Row gutter={8}>
-          <div className="friends">
+          <div className="friends scholors">
             {(allScholors?.length > 4) && <><Link className="more-frnd-btn left" onClick={() => { this.carouselRef.prev() }}><span className="icon left-arrow mr-0"></span></Link><Link className="more-frnd-btn" onClick={() => { this.carouselRef.next() }}><span className="icon right-arrow mr-0"></span></Link></>}
             <OwlCarousel autoWidth={true} ref={(ref) => this.carouselRef = ref}   options={options} key={`carousel_${allScholors.length}`}>
               {allScholors.map((scholor, index) => <div className="frnds-list-item" key={index}>

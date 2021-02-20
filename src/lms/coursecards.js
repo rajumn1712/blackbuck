@@ -258,7 +258,7 @@ class CourseCards extends Component {
                 </div>
               </Col>
             </Row>}
-            {this.state.loading && <Loader className="loader-top-middle" />}
+            {/* {this.state.loading && <Loader className="loader-top-middle" />} */}
             {!this.state.loading &&
               this.state.courses.length === 0 &&
               this.state.recentCourses.length === 0 && <Empty />}

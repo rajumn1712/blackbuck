@@ -7,6 +7,7 @@ import {
   Card,
   Empty,
   Modal,
+  Skeleton
 } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import {
@@ -210,20 +211,13 @@ const JobCard = ((props) => {
                 {!jobpost.CompanyLogo && <span className="company-text">{jobpost.EmployerName.substring(0,2)}</span>}
               </div>
               <div> 
-              <Title className="f-16 semibold text-secondary mb-0 ">
-              <Link to={`/jobdetail/${jobpost.JobId}`}>
-                <span className="post-title">{jobpost.Title}</span>
-              </Link>
-            </Title>
+              <Title className="f-16 semibold text-secondary mb-0 "><Link to={`/jobdetail/${jobpost.JobId}`}> <span className="post-title">{jobpost.Title}</span></Link></Title>
             {/* <Paragraph className="f-12 text-secondary">
               <Moment fromNow>{jobpost.CreateDate}</Moment>
             </Paragraph> */}
-            <Paragraph className="f-12 mb-8" >{jobpost.EmployerName}</Paragraph>
-
+              <Paragraph className="f-12 mb-8" >{jobpost.EmployerName}</Paragraph>
             </div>
             </div>
-            
-           
             <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
               {jobpost.Role}
             </Paragraph>
@@ -275,7 +269,27 @@ const JobCard = ((props) => {
   return (
     <div onScroll={handleScroll}>
       {allJobPosts?.map((jobpost, indx) => renderJobPost(jobpost, indx))}
-      {loading && <Loader className="loader-top-middle" />}
+      {loading &&
+      <div className="post-card-skelton jc-skelton" >
+          <div className="post-card-header-skelton">
+            <Skeleton.Avatar active shape='Square' size="large" />
+            <Skeleton active paragraph={{ rows: 1 }} />
+          </div>
+          <div className="job-card-body-skelton">
+            <Skeleton paragraph={{rows:2}} active />
+            <div className="d-flex">
+              <Skeleton.Button active shape='square' />
+              <Skeleton.Button active shape='square' />
+              <Skeleton.Button active shape='square' />
+          </div>
+          <Skeleton.Button className="s-date-btn" active shape='square' />
+          </div>
+          <div className="post-card-footer-skelton d-flex">
+            <Skeleton.Button active shape='square' />
+            <Skeleton.Button active shape='square' />
+            <Skeleton.Button active shape='square' />
+          </div>
+        </div>}
       {allJobPosts.length == 0 && <Empty />}
       <ApplyModal
         className="custom-popup"
