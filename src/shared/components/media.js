@@ -105,12 +105,10 @@ class Media extends Component {
         const { Videos, Photos, tabkey, loading } = this.state;
         return (
             <div className="custom-card">
-                <Card  bordered={false}
-                // extra={<div><a className="f-14 px-16" href="#">Create Album</a><a className="pl-8 f-14" href="#">Add Photos/Video</a></div>}
-                >
-                    <Tabs defaultActiveKey={tabkey} className=" media-tabs" onTabClick={(index) => this.onTabClick(index, this.state.tabkey)}>
-                        <TabPane tab="Photos" key="1">
-                            <Row gutter={[8, 8]} className="px-8">
+                <Tabs defaultActiveKey={tabkey} className="group-tabs sub-tab profile-tabs media-tabs" onTabClick={(index) => this.onTabClick(index, this.state.tabkey)}>
+                    <TabPane tab="Photos" key="1">
+                        <div className="p-12 pb-0 mb-6 media-tabs-content">
+                            <Row gutter={[8, 8]}>
                                 {Photos.length > 0 && Photos?.map((item, indx) => {
                                     return <Col xs={24} md={12} lg={6}>
                                         {loading && <Loader className="loader-top-middle" />}
@@ -124,8 +122,10 @@ class Media extends Component {
                                 }
                                 {Photos.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
                             </Row>
-                        </TabPane>
-                        <TabPane tab="Videos" key="2">
+                        </div>
+                    </TabPane>
+                    <TabPane tab="Videos" key="2">
+                        <div className="p-12 pb-0 mb-6 media-tabs-content">
                             <Row gutter={[8, 8]} className="px-8">
                                 {Videos.length > 0 && Videos?.map((item, indx) => {
                                     return <Col xs={24} md={12} lg={6} wrap>
@@ -145,8 +145,9 @@ class Media extends Component {
                                 }
                                 {Videos.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
                             </Row>
-                        </TabPane>
-                        {/* <TabPane tab="Albums" key="3">
+                        </div>
+                    </TabPane>
+                    {/* <TabPane tab="Albums" key="3">
                             <Row gutter={16}>
                                 <Col xs={24} sm={8} md={8} lg={8} xl={8} className="m-8">
                                     <Card
@@ -160,8 +161,7 @@ class Media extends Component {
                             </Row>
                         </TabPane> */}
 
-                    </Tabs>
-                </Card>
+                </Tabs>
                 <MediaPreview onRef={mediaPreview => this.mediaPreview = mediaPreview} groupData={this.props.groupData} />
             </div>
         )

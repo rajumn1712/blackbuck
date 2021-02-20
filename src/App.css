@@ -357,6 +357,13 @@
 .media-tabs .ant-tabs-tab {
   font-size: var(--f-14)!important;
 }
+.media-tabs .media-tabs-content{
+  background: var(--white);
+  border-color: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 0 0 0.8rem 0.8rem;
+  border-top: 0;
+}
 .profile-menu .ant-menu-item a {
   width: 100%;
   height: 100%;

@@ -15,7 +15,7 @@ import {
   Upload,
   List,
   Alert,
-  Select
+  Select,Skeleton
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { TweenOneGroup } from "rc-tween-one";
@@ -453,7 +453,7 @@ class ShareBox extends Component {
             <span className="sharebox-icons photo-upload"></span>
             <p className="ant-upload-text mt-8 mb-0">Upload Image</p>
           </Dragger>}
-          {this.state.fileUploading && <Loader className="loader-top-middle" />}
+          {this.state.fileUploading &&  <Skeleton.Image className="upload-skelton" /> }
           {this.state.uploadSources?.map((image, indx) => (
             <div key={indx} className="mb-16 upload-preview">
               <Image src={image} />
