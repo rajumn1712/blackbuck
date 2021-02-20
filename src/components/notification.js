@@ -7,7 +7,8 @@ import {
     getNotifications,
     acceptFrienRequest,
     acceptDeclineInvitations,
-    readNotification
+    readNotification,
+    acceptDeclinePrivateInvites
 } from "../shared/api/apiServer";
 import notify from '../shared/components/notification';
 import { Link, withRouter } from 'react-router-dom';
@@ -71,7 +72,7 @@ class Notifications extends Component {
         });
     }
     handleAccept = async (friend) => {
-        if (friend.Type == "Invitations" || friend.Type == "GroupRequest") {
+        if (friend.Type == "Invitations") {
             const object = {
                 "GroupId": friend.PostId,
                 "Type": "accept",
@@ -89,6 +90,17 @@ class Notifications extends Component {
                 this.props.updateProfile(this.props.profile);
                 this.updateNotifications(friend, "accept");
                 notify({ placement: 'bottomLeft', message: 'Invite', description: `Request accepted successfully.` });
+            });
+        }
+        else if (friend.Type == "GroupRequest") {
+            acceptDeclinePrivateInvites(friend.PostId, friend.UserId, 'accept').then((res) => {
+                readNotification(friend.NotificationId, 'accept');
+                this.updateNotifications(friend, 'accept');
+                notify({
+                    placement: "bottomLeft",
+                    message: "Invite",
+                    description: `Request accept successfully.`,
+                });
             });
         }
         else {
@@ -119,7 +131,7 @@ class Notifications extends Component {
     };
 
     handleRemove = (friend) => {
-        if (friend.Type == "Invitations" || friend.Type == "GroupRequest") {
+        if (friend.Type == "Invitations") {
             const object = {
                 "GroupId": friend.PostId,
                 "Type": "decline",
@@ -136,6 +148,17 @@ class Notifications extends Component {
                 this.updateNotifications(friend, 'decline');
                 this.props.updateProfile(this.props.profile);
                 notify({ placement: 'bottomLeft', message: 'Invite', description: `Request declined successfully.` });
+            });
+        }
+        else if (friend.Type == "GroupRequest") {
+            acceptDeclinePrivateInvites(friend.PostId, friend.UserId, 'decline').then((res) => {
+                readNotification(friend.NotificationId, 'decline');
+                this.updateNotifications(friend, 'decline');
+                notify({
+                    placement: "bottomLeft",
+                    message: "Invite",
+                    description: `Request declined successfully.`,
+                });
             });
         }
         else {
@@ -162,7 +185,7 @@ class Notifications extends Component {
     };
     updateNotifications = (item, type) => {
         let { typeData } = this.state;
-         typeData.filter(obj => {
+        typeData.filter(obj => {
             if (item.NotificationId == obj.NotificationId) {
                 obj.IsRead = true;
                 obj.RequestType = type;
@@ -184,7 +207,7 @@ class Notifications extends Component {
         const messages = {
             Invitations: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a invitation to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
             Friends: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a friend request</span></div>,
-            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{item.Firstname}</Link> <span>commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={() => {this.updateNotifications(item);readNotification(item.NotificationId, null)}}>{`"${item.Comment}"`}</Link> </div>,
+            Comment: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId} onClick={() => { this.updateNotifications(item); readNotification(item.NotificationId, null) }}>{item.Firstname}</Link> <span>commented on your post</span>  <Link to={"/post/" + item.PostId} onClick={() => { this.updateNotifications(item); readNotification(item.NotificationId, null) }}>{`"${item.Comment}"`}</Link> </div>,
             GroupRequest: <div className="noti-text"><Link to={this.props.profile.Id === item.UserId ? "/profile/IsProfileTab" : "/profileview/" + item.UserId}>{item.Firstname}</Link> <span>sent you a request to join in</span> {<Link to={"/groupview/" + item.PostId}><b>{item.Name || "Group"}</b></Link>}</div>,
         }
         return messages[item.Type]
@@ -196,7 +219,7 @@ class Notifications extends Component {
             dataSource={this.state.typeData}
             bordered={true}
             split={true}
-            loading={this.state.loading?{indicator:<Loader className="loader-top-middle" />}:false}
+            loading={this.state.loading ? { indicator: <Loader className="loader-top-middle" /> } : false}
             renderItem={item => (
                 <List.Item
                     className={item.IsRead ? "read" : "unread"}
