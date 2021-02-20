@@ -291,128 +291,177 @@ class CourseContent extends Component {
                       {this.state.courseDetails.GroupName}
                     </Title>
                     {(courseDetails.CourseType === "Content" || courseDetails.CourseType === "Live Session") && (
-                        <Carousel>
-                          {!this.state.IsRenderType && this.state.selectedVideo && (
-                            <div className="lms-video" id="video_player">
+                      <Carousel>
+                        {!this.state.IsRenderType && this.state.selectedVideo && (
+                          <div className="lms-video" id="video_player">
+                            <div className="video-container">
+                              <video width="100%"
+                                controls
+                                controlsList="nodownload"
+                                class="video"
+                                key={this.state.selectedVideo}
+                              >
+                                <source src={this.state.selectedVideo} />
+                              </video>
+                            </div>
+                          </div>
+                        )}
+                        {this.state.IsRenderType === "Video" && (
+                          <div className="lms-video " id="video_player">
+                            {this.state.IsVideoSource == "Upload" && (
                               <div className="video-container">
                                 <video width="100%"
                                   controls
                                   controlsList="nodownload"
-                                  class="video"
                                   key={this.state.selectedVideo}
+                                  class="video"
                                 >
                                   <source src={this.state.selectedVideo} />
                                 </video>
                               </div>
-                            </div>
-                          )}
-                          {this.state.IsRenderType === "Video" && (
-                            <div className="lms-video " id="video_player">
-                              {this.state.IsVideoSource == "Upload" && (
-                                <div className="video-container">
-                                  <video width="100%"
-                                    controls
-                                    controlsList="nodownload"
-                                    key={this.state.selectedVideo}
-                                    class="video"
-                                  >
-                                    <source src={this.state.selectedVideo} />
-                                  </video>
-                                </div>
+                            )}
+                            {this.state.IsVideoSource == "YouTube" &&
+                              this.state.selectedVideo && (
+                                <iframe
+                                  width="100%"
+                                  height="500"
+                                  key={this.state.selectedVideo}
+                                  src={
+                                    this.state.selectedVideo
+                                      .split("watch?v=")
+                                      .join("embed/") + "?autoplay=1"
+                                  }
+                                  frameborder="0"
+                                  allow="autoplay; encrypted-media"
+                                  allowfullscreen
+                                  X-Frame-Options={true}
+                                ></iframe>
                               )}
-                              {this.state.IsVideoSource == "YouTube" &&
-                                this.state.selectedVideo && (
-                                  <iframe
-                                    width="100%"
-                                    height="500"
-                                    key={this.state.selectedVideo}
-                                    src={
-                                      this.state.selectedVideo
-                                        .split("watch?v=")
-                                        .join("embed/") + "?autoplay=1"
-                                    }
-                                    frameborder="0"
-                                    allow="autoplay; encrypted-media"
-                                    allowfullscreen
-                                    X-Frame-Options={true}
-                                  ></iframe>
-                                )}
-                              {this.state.IsVideoSource == "Vimeo" &&
-                                this.state.selectedVideo && (
-                                  <iframe
-                                    width="100%"
-                                    height="500"
-                                    key={this.state.selectedVideo}
-                                    src={`https://player.vimeo.com/video/${
-                                      this.state.selectedVideo.split("/")[
-                                        this.state.selectedVideo.split("/")
-                                          .length - 1
-                                      ]
+                            {this.state.IsVideoSource == "Vimeo" &&
+                              this.state.selectedVideo && (
+                                <iframe
+                                  width="100%"
+                                  height="500"
+                                  key={this.state.selectedVideo}
+                                  src={`https://player.vimeo.com/video/${this.state.selectedVideo.split("/")[
+                                    this.state.selectedVideo.split("/")
+                                      .length - 1
+                                    ]
                                     }?autoplay=1`}
-                                    frameborder="0"
-                                    allow="autoplay; encrypted-media"
-                                    allowfullscreen
-                                    X-Frame-Options={true}
-                                  ></iframe>
-                                )}
-                            </div>
-                          )}
-                          {this.state.IsRenderType === "Document" && (
-                            <div className="docs px-12">
-                              <List
-                                itemLayout="horizontal"
-                                dataSource={this.state.lstDocuments}
-                                renderItem={(item) => (
-                                  <List.Item className="upload-preview">
-                                    <List.Item.Meta
-                                      avatar={[
-                                        <span
-                                          className={`doc-icons ${item.avatar}`}
-                                        ></span>,
-                                      ]}
-                                      title={
-                                        <a href={item.url}>{item.title}</a>
-                                      }
-                                      description={
-                                        <div className="file-size f-12">
-                                          {item.fileSize}
-                                        </div>
-                                      }
-                                    />
-                                    <a
-                                      class="item-close"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        window.open(item.url);
-                                      }}
-                                      target="_blank"
-                                    >
-                                      <Tooltip title="Download">
-                                        <span className="post-icons download-coloricon mt-6 ml-6"></span>
-                                      </Tooltip>
-                                    </a>
-                                  </List.Item>
-                                )}
-                              />
-                            </div>
-                          )}
-                        </Carousel>
-                      )}
-                      {courseDetails.CourseType === "Live Session" && (
-                        <>
-                            {/* Gotomeeting */}
-                            {courseDetails.UrlType === "GotoMeeting" &&
-                              courseDetails.LiveDetails?.map((course, indx) => {
-                                return (
-                                  <Carousel>
-                                  <div className="px-12">
-                          <div className="custom-card mb-16 mt-8">
-                                  <span>{moment(course.Date).format('LLL')}</span>
-                                  <Card
-                                    className="start-gotomeeting"
-                                    key={indx}
+                                  frameborder="0"
+                                  allow="autoplay; encrypted-media"
+                                  allowfullscreen
+                                  X-Frame-Options={true}
+                                ></iframe>
+                              )}
+                          </div>
+                        )}
+                        {this.state.IsRenderType === "Document" && (
+                          <div className="docs px-12">
+                            <List
+                              itemLayout="horizontal"
+                              dataSource={this.state.lstDocuments}
+                              renderItem={(item) => (
+                                <List.Item className="upload-preview">
+                                  <List.Item.Meta
+                                    avatar={[
+                                      <span
+                                        className={`doc-icons ${item.avatar}`}
+                                      ></span>,
+                                    ]}
+                                    title={
+                                      <a href={item.url}>{item.title}</a>
+                                    }
+                                    description={
+                                      <div className="file-size f-12">
+                                        {item.fileSize}
+                                      </div>
+                                    }
+                                  />
+                                  <a
+                                    class="item-close"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      window.open(item.url);
+                                    }}
+                                    target="_blank"
                                   >
-                                    <Row align="middle" className="p-16">
+                                    <Tooltip title="Download">
+                                      <span className="post-icons download-coloricon mt-6 ml-6"></span>
+                                    </Tooltip>
+                                  </a>
+                                </List.Item>
+                              )}
+                            />
+                          </div>
+                        )}
+                      </Carousel>
+                    )}
+                    {courseDetails.CourseType === "Live Session" && (
+                      <>
+                        {/* Gotomeeting */}
+                        {courseDetails.UrlType === "GotoMeeting" &&
+                          courseDetails.LiveDetails?.map((course, indx) => {
+                            return (
+                              <Carousel>
+                                <div className="px-12">
+                                  <div className="custom-card mb-16 mt-8">
+                                    <span>{moment(course.Date).format('LLL')}</span>
+                                    <Card
+                                      className="start-gotomeeting"
+                                      key={indx}
+                                    >
+                                      <Row align="middle" className="p-16">
+                                        <Col
+                                          xs={18}
+                                          sm={18}
+                                          md={18}
+                                          lg={18}
+                                          xl={18}
+                                          xxl={18}
+                                          className="pr-16"
+                                        >
+                                          <div>
+                                            <img src={gotomeeting} />
+                                          </div>
+                                        </Col>
+                                        <Col
+                                          xs={6}
+                                          sm={6}
+                                          md={6}
+                                          lg={6}
+                                          xl={6}
+                                          xxl={6}
+                                          className="text-right"
+                                        >
+                                          <Button
+                                            type="dashed"
+                                            key="console"
+                                            disabled={new Date(course.Date) >= new Date()}
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              window.open(course.Link);
+                                            }}
+                                          >
+                                            Join Session
+                                        </Button>
+                                        </Col>
+                                      </Row>
+                                    </Card>
+                                  </div>
+                                </div>
+                              </Carousel>
+                            );
+                          })}
+                        {/* Zoom */}
+                        {courseDetails.UrlType === "Zoom" &&
+                          courseDetails.LiveDetails?.map((course, indx) => {
+                            return <Carousel>
+                              <div className="px-12">
+                                <div className="custom-card mb-16 mt-8">
+                                  <span className="zoomcard-date">{moment(course.Date).format('LLL')}</span>
+                                  <Card className="start-zoom" style={{ marginBottom: '24' }} key={indx}>
+                                    <Row align="middle" className="p-16 ">
                                       <Col
                                         xs={18}
                                         sm={18}
@@ -423,7 +472,7 @@ class CourseContent extends Component {
                                         className="pr-16"
                                       >
                                         <div>
-                                          <img src={gotomeeting} />
+                                          <img src={zoom} />
                                         </div>
                                       </Col>
                                       <Col
@@ -445,115 +494,65 @@ class CourseContent extends Component {
                                           }}
                                         >
                                           Join Session
-                                        </Button>
+                                      </Button>
                                       </Col>
                                     </Row>
                                   </Card>
-                               </div>
-                               </div>
-                               </Carousel>
-                                );
-                              })}
-                            {/* Zoom */}
-                            {courseDetails.UrlType === "Zoom" &&
-                              courseDetails.LiveDetails?.map((course, indx) => {
-                                return <Carousel>
-                                <div className="px-12">
+                                </div>
+                              </div>
+                            </Carousel>
+                          })}
+                        {/* Others */}
+                        {courseDetails.UrlType === "Others" &&
+                          courseDetails.LiveDetails?.map((course, indx) => {
+                            return <Carousel>
+                              <div className="px-12">
                                 <div className="custom-card mb-16 mt-8">
-                                <span className="zoomcard-date">{moment(course.Date).format('LLL')}</span>
-                                <Card className="start-zoom" style={{marginBottom:'24'}} key={indx}>
-                                  <Row align="middle" className="p-16 ">
-                                    <Col
-                                      xs={18}
-                                      sm={18}
-                                      md={18}
-                                      lg={18}
-                                      xl={18}
-                                      xxl={18}
-                                      className="pr-16"
-                                    >
-                                      <div>
-                                        <img src={zoom} />
-                                      </div>
-                                    </Col>
-                                    <Col
-                                      xs={6}
-                                      sm={6}
-                                      md={6}
-                                      lg={6}
-                                      xl={6}
-                                      xxl={6}
-                                      className="text-right"
-                                    >
-                                      <Button
-                                        type="dashed"
-                                        key="console"
-                                        disabled={new Date(course.Date) >= new Date()}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          window.open(course.Link);
-                                        }}
+                                  <span>{moment(course.Date).format('LLL')}</span>
+                                  <Card className="start-others" key={indx}>
+                                    <Row align="middle" className="p-16">
+                                      <Col
+                                        xs={18}
+                                        sm={18}
+                                        md={18}
+                                        lg={18}
+                                        xl={18}
+                                        xxl={18}
+                                        className="pr-16"
                                       >
-                                        Join Session
-                                      </Button>
-                                    </Col>
-                                  </Row>
-                                </Card>
-                              </div>
-                              </div>
-                              </Carousel>
-                              })}
-                            {/* Others */}
-                            {courseDetails.UrlType === "Others" &&
-                              courseDetails.LiveDetails?.map((course, indx) => {
-                                return <Carousel>
-                                <div className="px-12">
-                                <div className="custom-card mb-16 mt-8">
-                                <span>{moment(course.Date).format('LLL')}</span>
-                                <Card className="start-others" key={indx}>
-                                  <Row align="middle" className="p-16">
-                                    <Col
-                                      xs={18}
-                                      sm={18}
-                                      md={18}
-                                      lg={18}
-                                      xl={18}
-                                      xxl={18}
-                                      className="pr-16"
-                                    >
-                                      <div>
-                                        <img src={others} />
-                                      </div>
-                                    </Col>
-                                    <Col
-                                      xs={6}
-                                      sm={6}
-                                      md={6}
-                                      lg={6}
-                                      xl={6}
-                                      xxl={6}
-                                      className="text-right"
-                                    >
-                                      <Button
-                                        type="dashed"
-                                        key="console"
-                                        disabled={new Date(course.Date) >= new Date()}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          window.open(course.Link);
-                                        }}
+                                        <div>
+                                          <img src={others} />
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        xs={6}
+                                        sm={6}
+                                        md={6}
+                                        lg={6}
+                                        xl={6}
+                                        xxl={6}
+                                        className="text-right"
                                       >
-                                        Join Session
+                                        <Button
+                                          type="dashed"
+                                          key="console"
+                                          disabled={new Date(course.Date) >= new Date()}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            window.open(course.Link);
+                                          }}
+                                        >
+                                          Join Session
                                       </Button>
-                                    </Col>
-                                  </Row>
-                                </Card>
+                                      </Col>
+                                    </Row>
+                                  </Card>
+                                </div>
                               </div>
-                              </div>
-                              </Carousel>
-                              })}
-                              </>
-                      )}
+                            </Carousel>
+                          })}
+                      </>
+                    )}
                   </div>
                   <div className="py-12">
                     <div className="px-12">
@@ -646,20 +645,23 @@ class CourseContent extends Component {
                   <div className="custom-card">
                     <Card
                       title="Reference Links"
-                      className="hobbies-card"
+                      className="hobbies-card "
                       bordered={false}
                     >
                       {courseDetails.RefLinks?.map((link, index) => {
                         return (
                           link !== null && (
-                            <a
-                              href={link}
-                              target="_blank"
-                              className="tags"
-                              key={index}
-                            >
-                              {link}
-                            </a>
+                            <div className="tags text-left">
+                              <a
+                                href={link}
+                                target="_blank"
+                                className="overflow-text break-text text-primary"
+                                key={index}
+                              >
+                                {link}
+                              </a>
+                            </div>
+
                           )
                         );
                       })}
@@ -708,18 +710,17 @@ class CourseContent extends Component {
                                         <List.Item
                                           className={
                                             this.state.selectedTopicid ===
-                                            item.TopicId
+                                              item.TopicId
                                               ? "active-topic"
                                               : ""
                                           }
                                           extra={
                                             item.TopicType === "Video" && (
                                               <span
-                                                className={`icon ${
-                                                  item.IsChecked
+                                                className={`icon ${item.IsChecked
                                                     ? "playover-icon"
                                                     : "play-icon"
-                                                }`}
+                                                  }`}
                                                 key={index}
                                               ></span>
                                             )
@@ -758,17 +759,16 @@ class CourseContent extends Component {
                                               </div>,
                                               <div className="f-12">
                                                 <span
-                                                  className={`grp-type-icon ${
-                                                    item.TopicType === "Video"
+                                                  className={`grp-type-icon ${item.TopicType === "Video"
                                                       ? "video-play"
                                                       : "lessons"
-                                                  }`}
+                                                    }`}
                                                 ></span>{" "}
                                                 {item.Description.length > 25
                                                   ? `${item.Description.substring(
-                                                      0,
-                                                      45
-                                                    )}...`
+                                                    0,
+                                                    45
+                                                  )}...`
                                                   : item.Description}
                                               </div>,
                                             ]}
@@ -805,11 +805,11 @@ class CourseContent extends Component {
                                       <source src={item.CourseVideo || video} />
                                     </video>
                                   ) : (
-                                    <img
-                                      src={video}
-                                      style={{ width: "130px" }}
-                                    />
-                                  )}
+                                      <img
+                                        src={video}
+                                        style={{ width: "130px" }}
+                                      />
+                                    )}
                                 </div>
                               }
                               title={

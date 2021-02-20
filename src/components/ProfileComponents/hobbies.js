@@ -139,7 +139,7 @@ class Hobbies extends Component {
       <div className="custom-card">
         <Card
           title="Hobbies"
-          className="hobbies-card"
+          className="hobbies-card capitalize"
           bordered={false}
           extra={
             !this.props.IsHideAction ? (
