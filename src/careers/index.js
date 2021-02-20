@@ -243,7 +243,7 @@ const CMSComponent = (props) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={12} lg={2}>
+                <Col xs={24} lg={2} className="text-center">
                   <Button type="primary" htmlType="submit" className="cms-search"><span className="icons search-icon-white" /></Button>
                 </Col>
               </Row>
