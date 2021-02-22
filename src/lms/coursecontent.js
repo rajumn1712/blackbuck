@@ -463,8 +463,8 @@ class CourseContent extends Component {
                                   <Card className="start-zoom" style={{ marginBottom: '24' }} key={indx}>
                                     <Row align="middle" className="p-16 ">
                                       <Col
-                                        xs={18}
-                                        sm={18}
+                                        xs={12}
+                                        sm={12}
                                         md={18}
                                         lg={18}
                                         xl={18}
@@ -476,8 +476,8 @@ class CourseContent extends Component {
                                         </div>
                                       </Col>
                                       <Col
-                                        xs={6}
-                                        sm={6}
+                                        xs={12}
+                                        sm={12}
                                         md={6}
                                         lg={6}
                                         xl={6}

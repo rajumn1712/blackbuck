@@ -381,7 +381,7 @@ class CreateGroup extends Component {
 
                                                     </Col>
 
-                                                    <Col xs={12} id="type">
+                                                    <Col xs={24} lg={12} id="type">
                                                         <Form.Item
                                                             label="Choose Privacy"
                                                             className="custom-fields custom-select" name="Choose Privacy" rules={[{ required: true }]}
@@ -410,7 +410,7 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                    <Col xs={12} id="inviteFrnd1">
+                                                    <Col xs={24} lg={12} id="inviteFrnd1">
                                                         <Form.Item
                                                             label="Invite Friends (optional)"
                                                             className="custom-fields multi-select custom-select"
@@ -443,7 +443,7 @@ class CreateGroup extends Component {
                                                             </span>
                                                         </Form.Item>
                                                     </Col>
-                                                    {values.Type == 'Private' && <Col xs={12}>
+                                                    {values.Type == 'Private' && <Col xs={24} lg={12}>
                                                         <Form.Item
                                                             label="Hide Group"
                                                             className="custom-fields custom-select" name="Hide Group" rules={[{ required: true }]}
