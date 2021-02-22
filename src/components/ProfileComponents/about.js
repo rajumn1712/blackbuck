@@ -689,10 +689,10 @@ class About extends Component {
               </Col>
               <Col xs={24} sm={12}>
                 <Form.Item
-                  label="Phone Number"
+                  label="Mobile No"
                   name="PhoneNumber"
                   rules={[
-                    { required: true, message: "Phone Number required" },
+                    { required: true, message: "Mobile Number required" },
                     () => ({
                       validator(_, value) {
                         if (Number(value)) {
@@ -707,7 +707,7 @@ class About extends Component {
                 >
                   <Input
                     className="ant-input"
-                    placeholder="Phone Number"
+                    placeholder="Mobile Number"
                     maxlength="15"
                     onChange={(value) =>
                       this.handleChange("PhoneNumber", value)
