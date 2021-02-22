@@ -245,7 +245,7 @@ class GroupsPage extends Component {
                       <span className="custom-group-cards">
                         <img
                           className="obj-fit group-banner"
-                          src={group.image || defaultguser}
+                          src={group.groupCoverPic || defaultguser}
                         />
                         <img
                           className="obj-fit group-icons"
