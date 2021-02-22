@@ -670,7 +670,7 @@ const CourseComponent = ({ profile, history }) => {
                                     </Form.Item>
                                 </div>
                                 <Row gutter={16}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
                                         <label className="text-secondary d-block mb-4 semibold required">Category</label>
                                         <Form.Item className="lh-24 custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                             <Select
@@ -689,7 +689,7 @@ const CourseComponent = ({ profile, history }) => {
                                             </Select>
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
                                         <label className="text-secondary d-block mb-4 semibold  required">Author Name</label>
                                         <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
                                             <Select
@@ -816,7 +816,7 @@ const CourseComponent = ({ profile, history }) => {
                                     })}
                                 </Row>
                                 <Row gutter={16}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                         <label className="text-secondary d-block mb-4 semibold">Course Image</label>
                                         <div className="mb-12">
                                             <Dragger
@@ -882,7 +882,7 @@ const CourseComponent = ({ profile, history }) => {
                                             ))}
                                         </div>
                                     </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                         <label className="text-secondary d-block mb-4 semibold">Introduction video</label>
                                         <div className="mb-12">
                                             <Dragger

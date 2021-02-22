@@ -737,7 +737,7 @@ const AdminCourses = ({ profile, history }) => {
                                             </Form.Item>
                                         </div>
                                         <Row gutter={16}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
+                                            <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12} className="multi-select">
                                                 <label className="text-secondary d-block mb-4 semibold">Category</label>
                                                 <Form.Item className="lh-24 custom-fields" name="Categories" rules={[{ required: true, message: "Categories  required" }]}>
                                                     <Select
@@ -752,7 +752,7 @@ const AdminCourses = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
+                                            <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
                                                 <label className="text-secondary d-block mb-4 semibold">Author Name</label>
                                                 <Form.Item className="custom-fields" name="Author" rules={[{ required: true, message: "Author  required" }]} onChange={(value) => handleChange('Author', value)}>
                                                     <Select
@@ -766,7 +766,7 @@ const AdminCourses = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
+                                            <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12} className="">
                                                 <label className="text-secondary d-block mb-4 semibold">Type</label>
                                                 <Form.Item className="custom-fields" name="CourseType" rules={[{ required: true, message: "Type required" }]}>
                                                     <Select
@@ -778,14 +778,14 @@ const AdminCourses = ({ profile, history }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4">Date</label>
                                                 <Form.Item className="custom-fields" name="Date" rules={[{ required: true, message: "Date required" }]}>
                                                     <DatePicker placeholder="Course Date" onChange={(val) => { handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={current => { return moment().add(-1, 'days') >= current }} showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }} />
                                                 </Form.Item>
                                             </Col>
                                             }
-                                            {courseObject.CourseType == "Live Session" && <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
+                                            {courseObject.CourseType == "Live Session" && <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12} className="custom-fields">
                                                 <label className="text-secondary d-block mb-4 semibold">Link Type</label>
                                                 <Form.Item className="custom-fields" name="UrlType" rules={[{ required: true, message: "Link Type required" }]}>
                                                     <Select
@@ -808,7 +808,7 @@ const AdminCourses = ({ profile, history }) => {
                                             }
                                         </Row>
                                         <Row gutter={16}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <label className="text-secondary d-block mb-4 semibold">Course Image</label>
                                                 <div className="mb-12">
                                                     <Dragger
@@ -874,7 +874,7 @@ const AdminCourses = ({ profile, history }) => {
                                                     ))}
                                                 </div>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                                 <label className="text-secondary d-block mb-4 semibold">Introduction video</label>
                                                 <div className="mb-12">
                                                     <Dragger
