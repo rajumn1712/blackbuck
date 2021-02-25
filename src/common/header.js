@@ -298,8 +298,8 @@ class HeaderComponent extends React.Component {
                                         </Link>
                                     </Popover>
                                 </Menu.Item>
-                                <Menu.Item key="">
-                                    <Dropdown overlay={this.state.notifications} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')}>
+                                {this.props?.profile?.IsOnBoardProcess && <Menu.Item key="">
+                                    <Dropdown overlay={this.state.notifications ? this.state.notifications : <div></div>} trigger={['click']} placement="bottomCenter" getPopupContainer={() => document.querySelector('#headerIcon')} onVisibleChange={(visibleDdl) => { if (!visibleDdl) { this.setState({ ...this.state, notifications: null }) } else { this.handleNotifications() } }}>
                                         <Tooltip title="Notifications" getPopupContainer={() => document.querySelector('#headerIcon')}>
                                             <Link className="header-link">
                                                 <Badge className="notification-count" count={this.state.notificationsCount} showZero>
@@ -308,7 +308,7 @@ class HeaderComponent extends React.Component {
                                             </Link>
                                         </Tooltip>
                                     </Dropdown>
-                                </Menu.Item>
+                                </Menu.Item>}
                                 <Menu.Item key="" className="m-profile-nav" >
                                     <Dropdown overlay={this.menu} trigger={['click']} >
                                         <Link to="/about" onClick={e => e.preventDefault()} className="avatar-menu" overlay={this.menu}>
