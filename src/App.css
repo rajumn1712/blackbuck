@@ -2292,5 +2292,6 @@ textarea {
   .coverpage .ant-avatar{height: 200px !important;}
   .center-focus{height: 200px;}
   .ant-tooltip{z-index: 999 !important;}
+  .xs-none{display: none !important;}
  
 }

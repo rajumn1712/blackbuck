@@ -29,15 +29,17 @@ class Home extends Component {
         return (
             <div className="main">
                 <Row gutter={16}>
-                    <Col xs={{ order: 1, span: 24 }} sm={{ order: 1, span: 8 }} lg={6 } xl={5} xxl={5} >
-                        <Identity />
-                        <div className="affix-top">
+                    <Col xs={{ order: 1, span: 24 }} sm={{ order: 1, span: 8 }} lg={6} xl={5} xxl={5} >
+                        <div className="xs-none">
+                            <Identity />
+                        </div>
+                        <div className="affix-top xs-none">
                             <Tags />
                             <UpcomingCourses />
                             {/* <Invite /> */}
                         </div>
                     </Col>
-                    <Col xs={{ order: 3, span: 24 }} sm={{ order: 2, span: 16 }} lg={12 } xl={12} xxl={12}  >
+                    <Col xs={{ order: 2, span: 24 }} sm={{ order: 2, span: 16 }} lg={12} xl={12} xxl={12}  >
                         <Switch >
                             <Route path="/newsfeed" render={(props) => { return <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
@@ -57,9 +59,11 @@ class Home extends Component {
                             <Redirect path="" to="/newsfeed" />
                         </Switch>
                     </Col>
-                    <Col xs={{ order: 2, span: 24 }} sm={{ order: 3, span: 24 }} lg={ 6 } xl={7} xxl={7}  >
-                        <Groups />
-                        <div className="affix-top"><Ads /></div>
+                    <Col xs={{ order: 3, span: 24 }} sm={{ order: 3, span: 24 }} lg={6} xl={7} xxl={7}  >
+                        <div className="xs-none">
+                            <Groups />
+                        </div>
+                        <div className="affix-top "><Ads /></div>
                     </Col>
                 </Row>
             </div>

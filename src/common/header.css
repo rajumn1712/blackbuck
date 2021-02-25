@@ -455,6 +455,9 @@
     background-position: -91px -252px;
 }
 
+.icons.left-menu{
+    background-position: -368px  -6px;
+}
 
 /* .profile-dropdown li a:hover .icons.swap-icon {
     background-position: -3px -279px;
@@ -498,4 +501,18 @@
         display: flex;
         justify-content: space-between;
     }
+    .left-menu-drawer .ant-drawer-body{
+            padding: 6px !important;
+    }
+    .left-menu-drawer .ant-drawer-close .anticon{
+        background: var(--white);
+    box-shadow: var(--boxshadow);
+    padding: 6px;
+    border-radius: 50%; 
+    }
+    
+}
+@media (max-width:375px){
+    .main-header .ant-menu-item{margin: 0 6px !important;}
+    .main-header .logo-brand{margin-right: 0;}
 }

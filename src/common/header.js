@@ -8,11 +8,15 @@ import Logo from '../styles/images/logo.svg';
 import defaultUser from '../styles/images/defaultuser.jpg';
 import './header.css';
 import '../index.css';
+import Identity from '../components/identity';
 import { connect } from 'react-redux';
 import { fetchUserFriends, fetchNotificationCount } from '../shared/api/apiServer';
 import Notifications from '../components/notification';
+import UpcomingCourses from '../lms/upcomingCourses';
 import ChatSystem from '../utils/chat-system';
 import firebase from '../utils/firebase';
+import Tags from '../components/ProfileComponents/tags';
+import Groups from '../shared/components/Groups';
 import 'firebase/messaging';
 import 'firebase/firestore';
 import { removeUnRead } from '../utils/chat-system/chatReducer';
@@ -72,6 +76,17 @@ class HeaderComponent extends React.Component {
             }
         });
     };
+    showMenu = () => {
+        this.setState({
+            Menuvisible: true,
+        });
+    };
+    onMenuClose = () => {
+        this.setState({
+            Menuvisible: false,
+        });
+    };
+
     componentDidMount() {
         let initialState = true;
         this.chatSubscription = firebase.firestore().collection('chat').doc(this.props?.profile?.Id).collection("notifications")
@@ -191,7 +206,7 @@ class HeaderComponent extends React.Component {
         })
     }
     render() {
-        const { visible } = this.state;
+        const { visible, Menuvisible } = this.state;
         return (
             <Header className="main-header">
                 <Row className="desktop-navigation">
@@ -272,15 +287,16 @@ class HeaderComponent extends React.Component {
                 {/* Mobile Naviagtion */}
                 <div className="mobile-navigation">
                     <Row className="">
-                        <Col xs={6} justify="start"  >
+                        <Col xs={7} justify="start"  >
                             <div className="left-block">
+                                <span onClick={this.showMenu} className="icons left-menu"/>
                                 <Link to="/" className="logo-brand">
                                     <img src={Logo} alt="Blackbuck" width="60px" />
                                 </Link>
 
                             </div>
                         </Col>
-                        <Col xs={18}>
+                        <Col xs={17}>
                             <Menu className="menu-items text-right right-menu" mode="horizontal" title="Blackbuck">
                                 <Menu.Item key="">
                                     <Popover placement="bottom" content={<div>
@@ -367,6 +383,14 @@ class HeaderComponent extends React.Component {
                             </Link>)}
                             <ChatSystem agentProfile={this.state.agentProfile} isOpen={this.state.showMessenger} handleClick={() => { this.setState({ ...this.state, showMessenger: false }) }} onNotificationSelect={(user) => { }} />
                         </div>
+                    </Drawer>
+                </div>
+                <div className="">
+                    <Drawer placement="left" closable={false} onClose={this.onMenuClose} visible={Menuvisible} width="320px" className="left-menu-drawer" closable="true">
+                        <Identity />
+                        <Tags />
+                        <Groups />
+                        <UpcomingCourses />
                     </Drawer>
                 </div>
             </Header>
