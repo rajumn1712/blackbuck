@@ -382,8 +382,11 @@
     padding: 8px 12px;
 }
 
-.messenger-chat {
+.messenger-chat{
     width: auto !important;
+}
+.messenger-chat .ant-drawer-content-wrapper{
+    width: 360px !important;
 }
 
 .messenger-drawer .ant-card-meta-title {
@@ -515,4 +518,5 @@
 @media (max-width:375px){
     .main-header .ant-menu-item{margin: 0 6px !important;}
     .main-header .logo-brand{margin-right: 0;}
+    .messenger-chat .ant-drawer-content-wrapper{ width: 300px !important;    }
 }

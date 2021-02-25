@@ -41,3 +41,6 @@ bottom: 0px;
     .messenger-drawer .sc-chat-window.opened{width: 320px !important;}
     .sc-chat-window{right: 0 !important;}
 }
+@media (max-width:375px) {
+    .messenger-drawer .sc-chat-window.opened{width: 300px !important;}
+}
