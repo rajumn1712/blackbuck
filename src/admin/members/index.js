@@ -5,32 +5,9 @@ import { getUsers, getUsersCount, setScholor, getSystemGroups, setSystemAdmin, s
 import connectStateProps from '../../shared/stateConnect';
 import notify from '../../shared/components/notification';
 import Modal from 'antd/lib/modal/Modal';
+import GetColumnSearchProps from "../../shared/components/filterComponent";
 
 const { Option } = Select;
-const columns = [
-    {
-        title: 'User Name',
-        dataIndex: 'Firstname',
-        key: 'Firstname',
-        render: text => <a>{text}</a>,
-    },
-    {
-        title: 'Email',
-        dataIndex: 'Email',
-        key: 'Email',
-    },
-    {
-        title: 'Branch',
-        dataIndex: 'BranchName',
-        key: 'BranchName',
-    },
-    {
-        title: 'College',
-        dataIndex: 'CollegeName',
-        key: 'CollegeName',
-    },
-
-];
 const Members = ({ profile }) => {
     const obj = { Type: "Group", GroupName: "", GroupId: "", SystemType: "Root", Isroot: false }
     const [data, setData] = useState([]);
@@ -41,6 +18,34 @@ const Members = ({ profile }) => {
     const [groups, setGroups] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
+    const columns = [
+        {
+            title: 'User Name',
+            dataIndex: 'Firstname',
+            key: 'Firstname',
+            render: text => <a>{text}</a>,
+            ...GetColumnSearchProps('Firstname')
+        },
+        {
+            title: 'Email',
+            dataIndex: 'Email',
+            key: 'Email',
+            ...GetColumnSearchProps('Email')
+        },
+        {
+            title: 'Branch',
+            dataIndex: 'BranchName',
+            key: 'BranchName',
+            ...GetColumnSearchProps('BranchName')
+        },
+        {
+            title: 'College',
+            dataIndex: 'CollegeName',
+            key: 'CollegeName',
+            ...GetColumnSearchProps('CollegeName')
+        },
+
+    ];
     useEffect(() => {
         getMembersCount();
         getMembers(1, 20);
