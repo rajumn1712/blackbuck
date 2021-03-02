@@ -3,7 +3,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Input, Button, Space } from 'antd';
 
 
-const GetColumnSearchProps = (dataIndex) => {
+const GetColumnSearchProps = (dataIndex, renderFun) => {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     let searchInput = "";
@@ -75,19 +75,19 @@ const GetColumnSearchProps = (dataIndex) => {
                 <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
             ),
             onFilter: (value, record) =>
-                record[dataIndex]
+                renderFun ? renderFun(value, record) : (record[dataIndex]
                     ? record[dataIndex]
                         .toString()
                         .toLowerCase()
                         .includes(value.toLowerCase())
-                    : "",
+                    : ""),
             onFilterDropdownVisibleChange: (visible) => {
                 if (visible) {
                     setTimeout(() => searchInput.select(), 100);
                 }
             },
-            render: (text) =>
-                text
+            // render: (text) =>
+            //     text
         }));
 }
 

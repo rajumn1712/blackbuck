@@ -98,6 +98,12 @@ const Groups = ({ profile }) => {
             key: 'admin',
             render: (text, record) => record.adminUsers?.map((admin, index) => {
                 return <span>{admin.Firstname}{index !== record.adminUsers?.length - 1 && ", "}</span>
+            }),
+            ...GetColumnSearchProps('type', (value, record) => {
+                record.adminUsers.forEach((admin, index) => {
+                    record.renderdText = (record.renderdText ? record.renderdText : "") + "" + (admin.Firstname ? admin.Firstname : "");
+                });
+                return record['renderdText'].toLowerCase().includes(value.toLowerCase())
             })
         },
         {
