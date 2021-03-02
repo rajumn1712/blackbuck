@@ -7,6 +7,7 @@ import notify from '../../shared/components/notification';
 import Modal from 'antd/lib/modal/Modal';
 import moment from 'moment';
 import Loader from "../../common/loader";
+import GetColumnSearchProps from "../../shared/components/filterComponent";
 
 const { Option } = Select;
 const columns = [
@@ -51,45 +52,6 @@ const columns = [
         ),
     },
 ];
-const columnsGroups = [
-    {
-        title: 'Group Name',
-        dataIndex: 'name',
-        // render: text => {{text}}
-    },
-    {
-        title: 'Posts',
-        dataIndex: 'postsCount',
-    },
-    {
-        title: 'Type',
-        dataIndex: 'type',
-    },
-    {
-        title: 'Date',
-        dataIndex: 'date',
-        render: (text, record) => (
-            moment(record.date).format('ll')
-        ),
-    },
-    {
-        title: 'Members',
-        dataIndex: 'members',
-    },
-    {
-        title: 'Admin',
-        dataIndex: 'admin',
-        key: 'admin',
-        render: (text, record) => record.adminUsers?.map((admin, index) => {
-            return <span>{admin.Firstname}{index !== record.adminUsers?.length - 1 && ", "}</span>
-        })
-    },
-    {
-        title: 'Status',
-        dataIndex: 'Status',
-        render: (text, record) => { return record.IsGroupBlocked ? 'Blocked' : 'Active' }
-    },
-];
 const data = [
     {
         key: '1',
@@ -103,6 +65,47 @@ const data = [
     },
 ];
 const Groups = ({ profile }) => {
+    const columnsGroups = [
+        {
+            title: 'Group Name',
+            dataIndex: 'name',
+            // render: text => {{text}}
+            ...GetColumnSearchProps('name')
+        },
+        {
+            title: 'Posts',
+            dataIndex: 'postsCount',
+        },
+        {
+            title: 'Type',
+            dataIndex: 'type',
+            ...GetColumnSearchProps('type')
+        },
+        {
+            title: 'Date',
+            dataIndex: 'date',
+            render: (text, record) => (
+                moment(record.date).format('ll')
+            ),
+        },
+        {
+            title: 'Members',
+            dataIndex: 'members',
+        },
+        {
+            title: 'Admin',
+            dataIndex: 'admin',
+            key: 'admin',
+            render: (text, record) => record.adminUsers?.map((admin, index) => {
+                return <span>{admin.Firstname}{index !== record.adminUsers?.length - 1 && ", "}</span>
+            })
+        },
+        {
+            title: 'Status',
+            dataIndex: 'Status',
+            render: (text, record) => { return record.IsGroupBlocked ? 'Blocked' : 'Active' }
+        },
+    ];
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);

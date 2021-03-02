@@ -4,7 +4,7 @@ import { getSubmissions, certipyRejectDocument } from '../../shared/api/apiServe
 import connectStateProps from '../../shared/stateConnect';
 import Moment from "react-moment";
 import notify from '../../shared/components/notification';
-
+import GetColumnSearchProps from "../../shared/components/filterComponent";
 const { Title } = Typography;
 // const assginMentActions = (
 //   <Menu className="custom-dropdown">
@@ -24,10 +24,12 @@ const TestSubmissions = ({ profile }) => {
     {
       title: 'Name',
       dataIndex: 'Firstname',
+      ...GetColumnSearchProps('Firstname')
     },
     {
       title: 'Course Name',
       dataIndex: 'CourseName',
+      ...GetColumnSearchProps('CourseName')
     },
     {
       title: 'Document',
@@ -96,7 +98,7 @@ const TestSubmissions = ({ profile }) => {
       <div className="custom-card">
         <Card className="p-12 custom-fields">
           <div className="overflowX-auto">
-          <Table loading={loading} columns={columns} dataSource={data} size="small" bordered={true} pagination={{ position: ["bottomCenter"], total: data?.length }} />
+            <Table loading={loading} columns={columns} dataSource={data} size="small" bordered={true} pagination={{ position: ["bottomCenter"], total: data?.length }} />
           </div>
         </Card>
       </div>
