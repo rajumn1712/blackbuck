@@ -7,56 +7,60 @@ import {
   getJobApplications,
   jobApplicationCount,
 } from "../../shared/api/apiServer";
+import GetColumnSearchProps from "../../shared/components/filterComponent";
 import connectStateProps from "../../shared/stateConnect";
 
-const columns = [
-  {
-    title: "Title",
-    dataIndex: "Title",
-    key: "Title",
-  },
-  {
-    title: "Applicant Name",
-    dataIndex: "ApplicantName",
-    render: (text, record) => (
-      <span>
-        {record.ApplicantDetails.Firstname} {record.ApplicantDetails.Lastname}
-      </span>
-    ),
-  },
-  {
-    title: "File Name",
-    dataIndex: "FileName",
-    render: (text, record) => (
-      <a href={record.Documents.Url}>{record.Documents.File}</a>
-    ),
-  },
-  {
-    title: "Skills",
-    dataIndex: "Skills",
-    key: "Skills",
-  },
-  {
-    title: "Comment",
-    dataIndex: "Comment",
-    render: (text) => (
-      <ShowMoreText lines={2} more="see more" less="see less">
-        {text}
-      </ShowMoreText>
-    ),
-  },
-  {
-    title: "Date of Application",
-    dataIndex: "CreateDate",
-    render: (text) => (
-      <span>
-        <Moment fromNow>{text}</Moment>
-      </span>
-    ),
-  },
-];
-
 const JobApplications = ({profile}) => {
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "Title",
+      key: "Title",
+      ...GetColumnSearchProps('Title')
+    },
+    {
+      title: "Applicant Name",
+      dataIndex: "ApplicantName",
+      render: (text, record) => (
+        <span>
+          {record.ApplicantDetails.Firstname} {record.ApplicantDetails.Lastname}
+        </span>
+      ),
+      ...GetColumnSearchProps('ApplicationName')
+    },
+    {
+      title: "File Name",
+      dataIndex: "FileName",
+      render: (text, record) => (
+        <a href={record.Documents.Url}>{record.Documents.File}</a>
+      ),
+    },
+    {
+      title: "Skills",
+      dataIndex: "Skills",
+      key: "Skills",
+      ...GetColumnSearchProps('Skills')
+    },
+    {
+      title: "Comment",
+      dataIndex: "Comment",
+      render: (text) => (
+        <ShowMoreText lines={2} more="see more" less="see less">
+          {text}
+        </ShowMoreText>
+      ),
+      ...GetColumnSearchProps('Comment')
+    },
+    {
+      title: "Date of Application",
+      dataIndex: "CreateDate",
+      render: (text) => (
+        <span>
+          <Moment fromNow>{text}</Moment>
+        </span>
+      ),
+    },
+  ];
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);

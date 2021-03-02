@@ -9,39 +9,43 @@ import {
   jobpostingsCount,
 } from "../../shared/api/apiServer";
 import notify from "../../shared/components/notification";
-
-const columns = [
-  {
-    title: "Title",
-    dataIndex: "Title",
-    key: "Title",
-    render: (text, record) => (
-      <Link to={`/admin/postingjob/${record.JobId}`}>{text}</Link>
-    ),
-  },
-  {
-    title: "Employer Name",
-    dataIndex: "EmployerName",
-    key: "EmployerName",
-  },
-  {
-    title: "Type",
-    dataIndex: "Type",
-    key: "Type",
-  },
-  {
-    title: "Qualification",
-    dataIndex: "Qualification",
-    key: "Qualification",
-  },
-  {
-    title: "Status",
-    dataIndex: "Status",
-    key: "Status",
-  },
-];
+import GetColumnSearchProps from "../../shared/components/filterComponent";
 
 const JobPostings = ({ profile, history }) => {
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "Title",
+      key: "Title",
+      render: (text, record) => (
+        <Link to={`/admin/postingjob/${record.JobId}`}>{text}</Link>
+      ),
+      ...GetColumnSearchProps('Title')
+    },
+    {
+      title: "Employer Name",
+      dataIndex: "EmployerName",
+      key: "EmployerName",
+      ...GetColumnSearchProps('EmployerName')
+    },
+    {
+      title: "Type",
+      dataIndex: "Type",
+      key: "Type",
+      ...GetColumnSearchProps('Type')
+    },
+    {
+      title: "Qualification",
+      dataIndex: "Qualification",
+      key: "Qualification",
+      ...GetColumnSearchProps('Qualification')
+    },
+    {
+      title: "Status",
+      dataIndex: "Status",
+      key: "Status",
+    },
+  ];
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
