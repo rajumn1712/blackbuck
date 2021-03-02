@@ -16,7 +16,7 @@ import {
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import { uuidv4 } from "../../utils";
-import { getJobById, saveJobPost } from "../../shared/api/apiServer";
+import { getJobById, saveJobPost, statesList } from "../../shared/api/apiServer";
 import notify from "../../shared/components/notification";
 import Loader from "../../common/loader";
 import connectStateProps from "../../shared/stateConnect";
@@ -24,7 +24,6 @@ import {
   useParams,
   withRouter,
 } from "react-router-dom/cjs/react-router-dom.min";
-import { RegionDropdown } from "react-country-region-selector";
 import indianCitiesDatabase from "indian-cities-database";
 var cities = indianCitiesDatabase.cities;
 let cityValues = cities.map((item) => item.city);
@@ -491,7 +490,7 @@ const PostingJob = ({ profile, history }) => {
                       /> */}
                     </Form.Item>
                   </Col>
-                  <Col xs={24} sm={12}>
+                  <Col xs={24} sm={12} id="state">
                     <label className="text-secondary d-block mb-4 semibold required">
                       State
                     </label>
@@ -500,13 +499,18 @@ const PostingJob = ({ profile, history }) => {
                       name="State"
                       rules={[{ required: true, message: "State  required" }]}
                     >
-                      <RegionDropdown
-                        showDefaultOption={true}
-                        defaultOptionLabel="Select State"
-                        blankOptionLabel="Select State"
-                        onChange={(value) => handleChange("State", value)}
-                        country="India"
-                      />
+                      <AutoComplete
+                      placeholder="Select State"
+                      getPopupContainer={() => document.querySelector("#state")}
+                      filterOption={(input, option) =>
+                        option.children
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                      onChange={(value) => handleChange("State", value)}
+                    >
+                      {statesList.map(statevalue => <Option key={statevalue.key} value={statevalue.name}>{statevalue.name}</Option>)}
+                    </AutoComplete>
                     </Form.Item>
                   </Col>
                   <Col xs={24}>
