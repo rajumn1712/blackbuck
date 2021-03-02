@@ -2,7 +2,6 @@ import React, { Component, createRef } from "react";
 import {
   Card,
   List,
-  Divider,
   Row,
   Col,
   Form,
@@ -10,21 +9,22 @@ import {
   Select,
   DatePicker,
   Tooltip,
+  AutoComplete
 } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
 import "../../App.css";
 import { Meta } from "antd/lib/list/Item";
-import Dragger from "antd/lib/upload/Dragger";
 import CommonModal from "./CommonModal";
 import notify from "../../shared/components/notification";
 import { saveEducation } from "../../shared/api/apiServer";
-import { ErrorMessage, Field, Formik } from "formik";
-import { hasChanged, uuidv4 } from "../../utils";
-import Moment from "react-moment";
+import { uuidv4 } from "../../utils";
 import moment from "moment";
 import Loader from "../../common/loader";
+import indianCitiesDatabase from "indian-cities-database";
+var cities = indianCitiesDatabase.cities;
+let cityValues = cities.map((item) => item.city);
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -394,7 +394,7 @@ class Education extends Component {
                       {/* </Input.Group> */}
                     </Form.Item>
                   </Col>
-                  <Col xs={24} sm={12}>
+                  <Col xs={24} sm={12} id="location">
                     <Form.Item
                       label={`Place of ${
                         initialValues.EducationType === "School"
@@ -414,18 +414,30 @@ class Education extends Component {
                       ]}
                       className="custom-fields"
                     >
-                      <Input
-                        className="ant-input"
+                       <AutoComplete
                         placeholder={`Place of ${
                           initialValues.EducationType === "School"
                             ? "School"
                             : "College/University"
                         }`}
-                        name="Location"
                         onChange={(value) =>
                           this.handleChange("Location", value)
                         }
-                      />
+                        getPopupContainer={() => document.querySelector("#location")}
+                        filterOption={(input, option) =>
+                          option.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                      >
+                        {cityValues.map((item, index) => {
+                          return (
+                            <Option key={index} value={item}>
+                              {item}
+                            </Option>
+                          );
+                        })}
+                      </AutoComplete>
                     </Form.Item>
                   </Col>
                   <Col xs={24} sm={12}>
