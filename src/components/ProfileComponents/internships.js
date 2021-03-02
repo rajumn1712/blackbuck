@@ -7,25 +7,23 @@ import {
   Col,
   Select,
   Input,
-  message,
   Tooltip,
-  Image,
   Modal,
+  AutoComplete
 } from "antd";
 import { Link } from "react-router-dom";
-import { store } from "../../store";
 import "../../index.css";
 import "../../App.css";
 import Dragger from "antd/lib/upload/Dragger";
 import CommonModal from "./CommonModal";
 import { deleteinternship, saveInternships } from "../../shared/api/apiServer";
 import Loader from "../../common/loader";
-import { ErrorMessage, Field, Formik } from "formik";
-import * as Yup from "yup";
-import { hasChanged, uuidv4 } from "../../utils";
+import { uuidv4 } from "../../utils";
 import notify from "../../shared/components/notification";
 import SideAction from "../../shared/components/postings/Actions/SideActions";
-import Avatar from "antd/lib/avatar/avatar";
+import indianCitiesDatabase from "indian-cities-database";
+var cities = indianCitiesDatabase.cities;
+let cityValues = cities.map((item) => item.city);
 
 const docs = [
   {
@@ -425,18 +423,31 @@ class Intership extends Component {
                     />
                   </Form.Item>
                 </Col>
-                <Col xs={24} md={12}>
+                <Col xs={24} md={12} id="location">
                   <Form.Item
                     label="Place"
                     name="Location"
                     rules={[{ required: true, message: "Place  required" }]}
                     className="custom-fields"
                   >
-                    <Input
-                      className="ant-input"
-                      placeholder="Location"
-                      onChange={(value) => this.handleChange("Location", value)}
-                    />
+                    <AutoComplete
+                        placeholder="Location"
+                        onChange={(value) => this.handleChange("Location", value)}
+                        getPopupContainer={() => document.querySelector("#location")}
+                        filterOption={(input, option) =>
+                          option.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                      >
+                        {cityValues.map((item, index) => {
+                          return (
+                            <Option key={index} value={item}>
+                              {item}
+                            </Option>
+                          );
+                        })}
+                      </AutoComplete>
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>

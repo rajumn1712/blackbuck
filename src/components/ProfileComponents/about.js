@@ -10,15 +10,15 @@ import {
   Button,
   Avatar,
   Select,
+  AutoComplete,
 } from "antd";
 import { Link } from "react-router-dom";
 import { store } from "../../store";
 import "../../index.css";
 import "../../App.css";
 import CommonModal from "./CommonModal";
-import { ErrorMessage, Field, Formik } from "formik";
 import { getColleges, saveAboutMe } from "../../shared/api/apiServer";
-import { hasChanged, uuidv4 } from "../../utils";
+import { uuidv4 } from "../../utils";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import notify from "../../shared/components/notification";
 import Loader from "../../common/loader";
@@ -27,6 +27,9 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { profileSuccess } from "../../reducers/auth";
 import TextArea from "antd/lib/input/TextArea";
+import indianCitiesDatabase from "indian-cities-database";
+var cities = indianCitiesDatabase.cities;
+let cityValues = cities.map((item) => item.city);
 
 const { Option } = Select;
 
@@ -611,18 +614,36 @@ class About extends Component {
                         </span>
                       </Form.Item>
                     </Col> */}
-              <Col xs={24} sm={12}>
+              <Col xs={24} sm={12} id="city">
                 <Form.Item
                   label="City"
                   name="City"
                   rules={[{ required: true, message: "City required" }]}
                   className="custom-fields"
                 >
-                  <Input
+                  <AutoComplete
+                        placeholder="City"
+                        onChange={(value) => this.handleChange("City", value)}
+                        getPopupContainer={() => document.querySelector("#city")}
+                        filterOption={(input, option) =>
+                          option.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                      >
+                        {cityValues.map((item, index) => {
+                          return (
+                            <Option key={index} value={item}>
+                              {item}
+                            </Option>
+                          );
+                        })}
+                      </AutoComplete>
+                  {/* <Input
                     className="ant-input"
                     placeholder="City"
                     onChange={(value) => this.handleChange("City", value)}
-                  />
+                  /> */}
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12}>

@@ -161,9 +161,9 @@ const JobCard = ((props) => {
     });
   };
   const confirmJObDelete = async (jobpost)=>{
-    const response = await deleteJobSavedPost(jobpost.JobId);
+    const response = await deleteJobSavedPost(jobpost.Id);
     if (response.ok) {
-      allJobPosts = allJobPosts.filter((item) => jobpost.JobId !== item.JobId);
+      allJobPosts = allJobPosts.filter((item) => jobpost.Id !== item.Id);
       setAllJobPosts([...allJobPosts]);
       notify({
         message: "Delete",

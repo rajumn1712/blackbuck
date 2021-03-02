@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  AutoComplete,
   Button,
   Card,
   Col,
@@ -24,6 +25,9 @@ import {
   withRouter,
 } from "react-router-dom/cjs/react-router-dom.min";
 import { RegionDropdown } from "react-country-region-selector";
+import indianCitiesDatabase from "indian-cities-database";
+var cities = indianCitiesDatabase.cities;
+let cityValues = cities.map((item) => item.city);
 const { Option } = Select;
 const { Dragger } = Upload;
 
@@ -183,148 +187,143 @@ const PostingJob = ({ profile, history }) => {
   return (
     <>
       {loading && <Loader className="loader-middle" />}
-        <Form
-          initialValues={{ ...jobpostObj }}
-          onFinishFailed={() => { }}
-          onFinish={() => jobSave()}
-          scrollToFirstError={true}
-          form={form}
-        >
-          <Row>
-            <Col
-              xs={{ span: 24 }}
-              sm={{ span: 20, offset: 2 }}
-              xl={{ span: 16, offset: 4 }}
-              className="course-steps"
-            >
-              <div className="p-16 card-background">
-                <Card className="custom-card" bordered={false}>
-                  <Row gutter={16}>
-                    <Col xs={24} sm={12}>
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        Title
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="Title"
-                        rules={[
-                          { required: true, message: "Title  required" },
-                        ]}
+      <Form
+        initialValues={{ ...jobpostObj }}
+        onFinishFailed={() => {}}
+        onFinish={() => jobSave()}
+        scrollToFirstError={true}
+        form={form}
+      >
+        <Row>
+          <Col
+            xs={{ span: 24 }}
+            sm={{ span: 20, offset: 2 }}
+            xl={{ span: 16, offset: 4 }}
+            className="course-steps"
+          >
+            <div className="p-16 card-background">
+              <Card className="custom-card" bordered={false}>
+                <Row gutter={16}>
+                  <Col xs={24} sm={12}>
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      Title
+                    </label>
+                    <Form.Item
+                      className="custom-fields"
+                      name="Title"
+                      rules={[{ required: true, message: "Title  required" }]}
+                    >
+                      <Input
+                        placeholder="Title"
+                        onChange={(value) => handleChange("Title", value)}
+                        maxLength={150}
+                        autoComplete="off"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      Employer Name
+                    </label>
+                    <Form.Item
+                      className="custom-fields"
+                      name="EmployerName"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Employer Name  required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Employer Name"
+                        onChange={(value) =>
+                          handleChange("EmployerName", value)
+                        }
+                        maxLength={150}
+                        autoComplete="off"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      Job Type
+                    </label>
+                    <Form.Item
+                      className="custom-fields"
+                      name="Type"
+                      rules={[
+                        { required: true, message: "Job Type  required" },
+                      ]}
+                    >
+                      <Select
+                        defaultValue="Internship"
+                        className="text-left"
+                        onChange={(value) => handleChange("Type", value)}
                       >
-                        <Input
-                          placeholder="Title"
-                          onChange={(value) => handleChange("Title", value)}
-                          maxLength={150}
-                          autoComplete="off"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        Employer Name
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="EmployerName"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Employer Name  required",
-                          },
-                        ]}
-                      >
-                        <Input
-                          placeholder="Employer Name"
-                          onChange={(value) =>
-                            handleChange("EmployerName", value)
-                          }
-                          maxLength={150}
-                          autoComplete="off"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        Job Type
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="Type"
-                        rules={[
-                          { required: true, message: "Job Type  required" },
-                        ]}
-                      >
-                        <Select
-                          defaultValue="Internship"
-                          className="text-left"
-                          onChange={(value) => handleChange("Type", value)}
-                        >
-                          <Option value="Job">Job</Option>
-                          <Option value="Internship">Internship</Option>
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        Qualification
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="Qualification"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Qualification  required",
-                          },
-                        ]}
-                      >
-                        <Input
-                          placeholder="Qualification"
-                          onChange={(value) =>
-                            handleChange("Qualification", value)
-                          }
-                          maxLength={150}
-                          autoComplete="off"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        Skills
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="Skills"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Skills  required",
-                          },
-                        ]}
-                      >
-                        <Input
-                          placeholder="Skills"
-                          onChange={(value) => handleChange("Skills", value)}
-                          maxLength={150}
-                          autoComplete="off"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={6}>
-                      <label className="text-secondary d-block mb-4 semibold">
-                        Years
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="Years"
-                      >
-                        <Input
-                          placeholder="Years"
-                          onChange={(value) => handleChange("Years", value)}
-                          maxLength={150}
-                          autoComplete="off"
-                        />
-                        {/* <Select
+                        <Option value="Job">Job</Option>
+                        <Option value="Internship">Internship</Option>
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      Qualification
+                    </label>
+                    <Form.Item
+                      className="custom-fields"
+                      name="Qualification"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Qualification  required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Qualification"
+                        onChange={(value) =>
+                          handleChange("Qualification", value)
+                        }
+                        maxLength={150}
+                        autoComplete="off"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      Skills
+                    </label>
+                    <Form.Item
+                      className="custom-fields"
+                      name="Skills"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Skills  required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Skills"
+                        onChange={(value) => handleChange("Skills", value)}
+                        maxLength={150}
+                        autoComplete="off"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={6}>
+                    <label className="text-secondary d-block mb-4 semibold">
+                      Years
+                    </label>
+                    <Form.Item className="custom-fields" name="Years">
+                      <Input
+                        placeholder="Years"
+                        onChange={(value) => handleChange("Years", value)}
+                        maxLength={150}
+                        autoComplete="off"
+                      />
+                      {/* <Select
                           defaultValue=""
                           className="text-left"
                           onChange={(value) => handleChange('Years', value)}
@@ -334,122 +333,105 @@ const PostingJob = ({ profile, history }) => {
                               return <Option key={indx} value={yearfield}>{yearfield}</Option>
                           })}
                         </Select> */}
-                      </Form.Item>
-                    </Col>
-                    {jobPostingObject.Type === "Internship" && (
-                      <Col xs={24} sm={6}>
-                        <label className="text-secondary d-block mb-4 semibold">
-                          Months
-                          </label>
-                        <Form.Item
-                          className="custom-fields"
-                          name="Months"
-                        >
-                          <Select
-                            defaultValue=""
-                            className="text-left"
-                            onChange={(value) =>
-                              handleChange("Months", value)
-                            }
-                          >
-                            <Option value="">Select Month</Option>
-                            {yearsmonths.map((monthfield, indx) => {
-                              return (
-                                <Option key={indx} value={monthfield}>
-                                  {monthfield}
-                                </Option>
-                              );
-                            })}
-                          </Select>
-                        </Form.Item>
-                      </Col>
-                    )}
-                    <Col xs={24} sm={12}>
+                    </Form.Item>
+                  </Col>
+                  {jobPostingObject.Type === "Internship" && (
+                    <Col xs={24} sm={6}>
                       <label className="text-secondary d-block mb-4 semibold">
-                        {jobPostingObject.Type === "Internship"
-                          ? "Stipend"
-                          : "Salary Range"}
+                        Months
                       </label>
-                      <Form.Item className="custom-fields" name="SalaryRange">
-                        <Input
-                          placeholder={
-                            jobPostingObject.Type === "Internship"
-                              ? "Stipend"
-                              : "Salary Range"
-                          }
-                          onChange={(value) =>
-                            handleChange("SalaryRange", value)
-                          }
-                          maxLength={150}
-                          autoComplete="off"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col
-                      xs={24} sm={12}
-                      className="custom-fields"
-                    >
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        Start Date
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="StartDate"
-                        rules={[
-                          { required: true, message: "Start Date required" },
-                        ]}
-                      >
-                        <DatePicker
-                          placeholder="Start Date"
-                          format="MM/DD/YYYY"
-                          onChange={(value) =>
-                            handleChange("StartDate", value)
-                          }
-                          disabledDate={(current) => {
+                      <Form.Item className="custom-fields" name="Months">
+                        <Select
+                          defaultValue=""
+                          className="text-left"
+                          onChange={(value) => handleChange("Months", value)}
+                        >
+                          <Option value="">Select Month</Option>
+                          {yearsmonths.map((monthfield, indx) => {
                             return (
-                              moment().add(-1, "days") >= current ||
-                              moment(
-                                jobPostingObject.EndDate
-                                  ? jobPostingObject.EndDate
-                                  : ""
-                              ).add(+1, "days") <= current
+                              <Option key={indx} value={monthfield}>
+                                {monthfield}
+                              </Option>
                             );
-                          }}
-                        />
+                          })}
+                        </Select>
                       </Form.Item>
                     </Col>
-                    <Col
-                      xs={24} sm={12}
+                  )}
+                  <Col xs={24} sm={12}>
+                    <label className="text-secondary d-block mb-4 semibold">
+                      {jobPostingObject.Type === "Internship"
+                        ? "Stipend"
+                        : "Salary Range"}
+                    </label>
+                    <Form.Item className="custom-fields" name="SalaryRange">
+                      <Input
+                        placeholder={
+                          jobPostingObject.Type === "Internship"
+                            ? "Stipend"
+                            : "Salary Range"
+                        }
+                        onChange={(value) => handleChange("SalaryRange", value)}
+                        maxLength={150}
+                        autoComplete="off"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12} className="custom-fields">
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      Start Date
+                    </label>
+                    <Form.Item
                       className="custom-fields"
+                      name="StartDate"
+                      rules={[
+                        { required: true, message: "Start Date required" },
+                      ]}
                     >
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        Apply Before
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="EndDate"
-                        rules={[
-                          { required: true, message: "End Date required" },
-                        ]}
-                      >
-                        <DatePicker
-                          placeholder="Apply Before"
-                          format="MM/DD/YYYY"
-                          onChange={(value) => handleChange("EndDate", value)}
-                          disabledDate={(current) => {
-                            return (
-                              moment().add(-1, "days") >= current ||
-                              moment(
-                                jobPostingObject.StartDate
-                                  ? jobPostingObject.StartDate
-                                  : ""
-                              ).add(-1, "days") >= current
-                            );
-                          }}
-                        />
-                      </Form.Item>
-                    </Col>
-                    {/* <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                      <DatePicker
+                        placeholder="Start Date"
+                        format="MM/DD/YYYY"
+                        onChange={(value) => handleChange("StartDate", value)}
+                        disabledDate={(current) => {
+                          return (
+                            moment().add(-1, "days") >= current ||
+                            moment(
+                              jobPostingObject.EndDate
+                                ? jobPostingObject.EndDate
+                                : ""
+                            ).add(+1, "days") <= current
+                          );
+                        }}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12} className="custom-fields">
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      Apply Before
+                    </label>
+                    <Form.Item
+                      className="custom-fields"
+                      name="EndDate"
+                      rules={[{ required: true, message: "End Date required" }]}
+                    >
+                      <DatePicker
+                        placeholder="Apply Before"
+                        format="MM/DD/YYYY"
+                        onChange={(value) => handleChange("EndDate", value)}
+                        disabledDate={(current) => {
+                          return (
+                            moment().add(-1, "days") >= current ||
+                            moment(
+                              jobPostingObject.StartDate
+                                ? jobPostingObject.StartDate
+                                : ""
+                            ).add(-1, "days") >= current
+                          );
+                        }}
+                      />
+                    </Form.Item>
+                  </Col>
+                  {/* <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <label className="text-secondary d-block mb-4 semibold required">
                           Place
                         </label>
@@ -468,83 +450,100 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col> */}
-                    <Col xs={24} sm={12}>
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        City
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="City"
-                        rules={[
-                          { required: true, message: "City  required" },
-                        ]}
-                      >
-                        <Input
-                          placeholder="City"
-                          onChange={(value) => handleChange("City", value)}
-                          maxLength={150}
-                          autoComplete="off"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        State
-                        </label>
-                      <Form.Item
-                        className="custom-fields"
-                        name="State"
-                        rules={[
-                          { required: true, message: "State  required" },
-                        ]}
-                      >
-                        <RegionDropdown
-                          showDefaultOption={true}
-                          defaultOptionLabel="Select State"
-                          blankOptionLabel="Select State"
-                          onChange={(value) => handleChange("State", value)}
-                          country="India"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24}>
-                      <label className="text-secondary d-block mb-4 semibold required">
-                        Role
-                        </label>
-                      <Form.Item
-                        className=""
-                        name="Role"
-                        rules={[
-                          { required: true, message: "Role  required" },
-                        ]}
-                      >
-                        <TextArea
-                          placeholder="Role"
-                          onResize
-                          autoSize={{ minRows: 3, maxRows: 30 }}
-                          onChange={(value) => handleChange("Role", value)}
-                          maxLength={1360}
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col
-                      xs={24}
-                      sm={12}
-                      className="multi-select custom-fields"
+                  <Col xs={24} sm={12} id="city">
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      City
+                    </label>
+                    <Form.Item
+                      className="custom-fields"
+                      name="City"
+                      rules={[
+                        {
+                          required: true,
+                          message: "City  required",
+                          type: "array",
+                        },
+                      ]}
                     >
-                      <div className="upload-image">
-                        <Dragger
-                          showUploadList={false}
-                          className="upload mb-16"
-                          {...uploadProps}
-                        >
-                          {fileUploading && (
-                            <Loader className="loader-top-middle" />
-                          )}
-                          <span className="sharebox-icons docs-upload mb-16"></span>
-                          <p className="ant-upload-text  mt-8 mb-0">Upload company logo</p>
-                        </Dragger>
-                        {jobPostingObject.CompanyLogo && <div className="mb-16 mt-8 upload-preview">
+                      <AutoComplete
+                        placeholder="City"
+                        onChange={(value) => handleChange("City", value)}
+                        getPopupContainer={() => document.querySelector("#city")}
+                        filterOption={(input, option) =>
+                          option.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                      >
+                        {cityValues.map((item, index) => {
+                          return (
+                            <Option key={index} value={item}>
+                              {item}
+                            </Option>
+                          );
+                        })}
+                      </AutoComplete>
+                      {/* <Input
+                        placeholder="City"
+                        onChange={(value) => handleChange("City", value)}
+                        maxLength={150}
+                        autoComplete="off"
+                      /> */}
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      State
+                    </label>
+                    <Form.Item
+                      className="custom-fields"
+                      name="State"
+                      rules={[{ required: true, message: "State  required" }]}
+                    >
+                      <RegionDropdown
+                        showDefaultOption={true}
+                        defaultOptionLabel="Select State"
+                        blankOptionLabel="Select State"
+                        onChange={(value) => handleChange("State", value)}
+                        country="India"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24}>
+                    <label className="text-secondary d-block mb-4 semibold required">
+                      Role
+                    </label>
+                    <Form.Item
+                      className=""
+                      name="Role"
+                      rules={[{ required: true, message: "Role  required" }]}
+                    >
+                      <TextArea
+                        placeholder="Role"
+                        onResize
+                        autoSize={{ minRows: 3, maxRows: 30 }}
+                        onChange={(value) => handleChange("Role", value)}
+                        maxLength={1360}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12} className="multi-select custom-fields">
+                    <div className="upload-image">
+                      <Dragger
+                        showUploadList={false}
+                        className="upload mb-16"
+                        {...uploadProps}
+                      >
+                        {fileUploading && (
+                          <Loader className="loader-top-middle" />
+                        )}
+                        <span className="sharebox-icons docs-upload mb-16"></span>
+                        <p className="ant-upload-text  mt-8 mb-0">
+                          Upload company logo
+                        </p>
+                      </Dragger>
+                      {jobPostingObject.CompanyLogo && (
+                        <div className="mb-16 mt-8 upload-preview">
                           <Image
                             className="objectfit-cover"
                             src={jobPostingObject.CompanyLogo}
@@ -552,49 +551,48 @@ const PostingJob = ({ profile, history }) => {
                           <a
                             class="item-close"
                             onClick={() => {
-                              jobPostingObject.CompanyLogo = '';
-                              setJobPostingObject({ ...jobPostingObject })
+                              jobPostingObject.CompanyLogo = "";
+                              setJobPostingObject({ ...jobPostingObject });
                             }}
                           >
                             <Tooltip title="Remove">
                               <span className="close-icon"></span>
                             </Tooltip>
                           </a>
-                        </div>}
-                      </div>
-
-                    </Col>
-                  </Row>
-                </Card>
-              </div>
-              <div className="card-background mt-16">
-                <span className="text-left">
-                  <Button
-                    type="default"
-                    className="addContent px-16"
-                    size="small"
-                    onClick={() => {
-                      history.push("/admin/jobpostings");
-                    }}
-                  >
-                    Cancel
-                    </Button>
-                </span>
-                <span className="text-right float-right">
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="addContent px-16"
-                    size="small"
-                  >
-                    Save Job
-                    </Button>
-                </span>
-              </div>
-            </Col>
-          </Row>
-        </Form>
-      
+                        </div>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+              </Card>
+            </div>
+            <div className="card-background mt-16">
+              <span className="text-left">
+                <Button
+                  type="default"
+                  className="addContent px-16"
+                  size="small"
+                  onClick={() => {
+                    history.push("/admin/jobpostings");
+                  }}
+                >
+                  Cancel
+                </Button>
+              </span>
+              <span className="text-right float-right">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="addContent px-16"
+                  size="small"
+                >
+                  Save Job
+                </Button>
+              </span>
+            </div>
+          </Col>
+        </Row>
+      </Form>
     </>
   );
 };
