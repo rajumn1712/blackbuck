@@ -27,7 +27,8 @@ import {
   getPosts,
   saveActions,
   saveUserPosts,
-  reportContent
+  reportContent,
+  pinUserPost
 } from "../api/postsApi";
 import FriendSuggestions from "../components/friendSuggestion";
 import ShareBox from "../../components/SavePostBox/sharebox";
@@ -297,6 +298,34 @@ class Postings extends Component {
       case "Add Friend":
         this.addFriend(post);
         break;
+      case "Pin Post":
+        if (!post.IsPin) {
+          const pinObject = {
+            "PostId": post.id,
+            "UserId": this.props?.profile?.Id,
+            "IsPin": true,
+          };
+          const pinResponse = await pinUserPost(pinObject);
+          if (pinResponse.ok) {
+            notify({
+              description: "Post pin  done successfully",
+              message: "Pin Post",
+            });
+          } else {
+            notify({
+              description: "Something went wrong'",
+              message: "Error",
+              type: "error",
+            });
+          }
+        }
+        else {
+          notify({
+            description: "Post pin already done",
+            message: "Pin Post",
+          });
+        }
+        break;
       default:
         break;
     }
@@ -554,6 +583,13 @@ class Postings extends Component {
         },
       ];
     }
+    const SuperAdminList = [
+      {
+        action: "Pin Post",
+        icons: "post-icons savepost-icon",
+        subTitle: "Pin this item for later",
+      },
+    ];
     let result =
       user.UserId === this.props.profile.Id
         ? ownerActions.concat(actionsList)
@@ -571,6 +607,7 @@ class Postings extends Component {
         subTitle: "To send friend request",
       }])) : result;
     }
+    result = (this.props.profile.Role == "Super Admin" && user.UserId == this.props.profile.Id) ? result.concat(SuperAdminList) : result;
     return result;
   };
   deletePost = (post) => {

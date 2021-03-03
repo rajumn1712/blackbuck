@@ -1,6 +1,7 @@
 import { apiClient } from './clients';
 const POSTS_END_POINT = "posts/api/posts/";
 const PROFILE_END_POINT = "profile/api/profile/"
+const ADMIN_API = "admin/api/admin/";
 const getPosts = (userid, pageNo, pageSize, postingsType, groupid, post_id, search_value, search_type) => {
     const method = {
         "all": "getAllPosts",
@@ -56,4 +57,7 @@ const getPostDetails = (post_id, user_id) => {
 const reportContent = (obj) => {
     return apiClient.post(PROFILE_END_POINT + `saveReportContent`, obj);
 }
-export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost, fetchComments, fetchPostReactions, saveUserPosts, fetchUserSavedPosts, deleteUserSavedPost, getPostDetails ,reportContent};
+const pinUserPost = (obj) => {
+    return apiClient.post(ADMIN_API + `savePostPin`, obj);
+}
+export { getPosts, savePost, saveActions, deleteActions, postComment, deletePost, fetchComments, fetchPostReactions, saveUserPosts, fetchUserSavedPosts, deleteUserSavedPost, getPostDetails, reportContent, pinUserPost};

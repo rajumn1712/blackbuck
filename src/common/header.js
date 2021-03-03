@@ -186,7 +186,7 @@ class HeaderComponent extends React.Component {
                 <Link to="/support"><span className="icons globe-icon" /><span className="pl-16">Help & Support</span>
                 </Link>
             </Menu.Item>
-            { this.props?.profile?.Role == 'Admin' &&
+            { (this.props?.profile?.Role == 'Admin' || this.props?.profile?.Role == 'Super Admin') &&
                 <Menu.Item key="4">
                     <Link to="/admin/courses"><span className="icons settings-icon" /><span className="pl-16">Admin Settings</span>
                     </Link>
