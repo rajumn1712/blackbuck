@@ -462,6 +462,9 @@ const saveNotification = (obj) => {
 const readNotification = (id, type) => {
   return apiClient.get(PROFILE_API + `notificationRead/${id}/${type}`);
 }
+const setAsPaidMember = (obj) => {
+  return apiClient.post(ADMIN_API + `setPaidMember`, obj);
+}
 const sendNotification = ({ to, message, from, type }) => {
   firebase.firestore().collection("devices").doc(to).collection('tokens')
     .get()
@@ -576,5 +579,6 @@ export {
   saveNotification,
   readNotification,
   sendNotification,
-  statesList
+  statesList,
+  setAsPaidMember
 };
