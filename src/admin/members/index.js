@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Input, Row, Col, Button, Select, Table, Tooltip, Form } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import { getUsers, getUsersCount, setScholor, getSystemGroups, setSystemAdmin, saveAdminUsers } from '../../shared/api/apiServer';
+import { getUsers, getUsersCount, setScholor, getSystemGroups, setSystemAdmin, saveAdminUsers, setAsPaidMember } from '../../shared/api/apiServer';
 import connectStateProps from '../../shared/stateConnect';
 import notify from '../../shared/components/notification';
 import Modal from 'antd/lib/modal/Modal';
@@ -44,6 +44,12 @@ const Members = ({ profile }) => {
             key: 'CollegeName',
             ...GetColumnSearchProps('CollegeName')
         },
+        {
+            title: 'Payment Status',
+            dataIndex: 'IsPaidMember',
+            key: 'IsPaidMember',
+            render: (text, record) => <span>{record.IsPaidMember ? 'Paid' : 'Not Paid'}</span>,
+        },
 
     ];
     useEffect(() => {
@@ -85,6 +91,9 @@ const Members = ({ profile }) => {
         else {
             if (type == "scholor")
                 changeScholor();
+            else if (type == "paid") {
+                changePaidStatus()
+            }
             else {
                 setAdminObj({ ...obj })
                 fetchGroupSuggestions();
@@ -112,6 +121,27 @@ const Members = ({ profile }) => {
                 });
             }
         });
+    }
+    const changePaidStatus = () => {
+        setAsPaidMember({ UserId: selection[0].UserId, IsPaidMember: (selection[0].IsPaidMember ? false : true) }).then((res) => {
+            if (res.ok) {
+                setSelectedRowKeys([]);
+                setSelection([]);
+                updatePaidStatus(selection[0]);
+                notify({
+                    description: "Paid Status updated successfully",
+                    message: "Paid",
+                });
+            }
+        });
+    }
+    const updatePaidStatus = (item) => {
+        data.forEach(obj => {
+            if (obj.UserId === item.UserId) {
+                obj.IsPaidMember = !item.IsPaidMember
+            }
+        });
+        setData([...data])
     }
     const handleCancel = () => {
         setIsModal(false)
@@ -206,6 +236,9 @@ const Members = ({ profile }) => {
                     <span className="left-menu setscroller-icon mx-8"></span>
                 </Tooltip>
                 <Tooltip placement="top" title="Set Admin" onClick={() => showModal()}>
+                    <span className="left-menu setadmin-icon mx-8"></span>
+                </Tooltip>
+                <Tooltip placement="top" title="Set Paid Member" onClick={() => showModal("paid")}>
                     <span className="left-menu setadmin-icon mx-8"></span>
                 </Tooltip>
 
