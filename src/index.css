@@ -80,7 +80,7 @@ font-size: 14px; display: flex; justify-content: flex-end; flex-direction: colum
 .frnds-img{height: 186px; position: relative;}
 .frnd-name{font-size: var(--f-14); font-weight: 500; margin-bottom: 4px !important; width: 100%; line-height: normal; color: var(--textprimary) !important; cursor: pointer;text-transform: capitalize !important;}
 .addfrnd,.secondary-btn{ color: var(--primary) !important; min-width: auto !important; min-height: 34px !important;font-size: var(--f-16) !important; border-color: var(--primary) !important; border-radius: 4px !important;width: 100%;}
-.secondary-btn{width: auto;}
+/* .secondary-btn{width: auto;} */
 .addfrnd:hover{box-shadow: inset 0 0 0 1px var(--primary-10); background: var(--primary-10) !important; 
 transition-property: background-color,box-shadow,color;
 transition-timing-function: cubic-bezier(.4,0,.2,1);

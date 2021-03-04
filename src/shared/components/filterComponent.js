@@ -25,7 +25,7 @@ const GetColumnSearchProps = (dataIndex, renderFun) => {
                 confirm,
                 clearFilters
             }) => (
-                <div style={{ padding: 8 }}>
+                <div className="filter-search custom-fields">
                     <Input
                         ref={(node) => {
                             searchInput = node;
@@ -38,41 +38,16 @@ const GetColumnSearchProps = (dataIndex, renderFun) => {
                         onPressEnter={() =>
                             handleSearch(selectedKeys, confirm, dataIndex)
                         }
-                        style={{ width: 188, marginBottom: 8, display: "block" }}
                     />
-                    <Space>
-                        <Button
-                            type="primary"
-                            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                            icon={<SearchOutlined />}
-                            size="small"
-                            style={{ width: 90 }}
-                        >
-                            Search
-          </Button>
-                        <Button
-                            onClick={() => handleReset(clearFilters)}
-                            size="small"
-                            style={{ width: 90 }}
-                        >
-                            Reset
-          </Button>
-                        <Button
-                            type="link"
-                            size="small"
-                            onClick={() => {
-                                confirm({ closeDropdown: false });
-                                setSearchText(selectedKeys[0]);
-                                setSearchedColumn(dataIndex)
-                            }}
-                        >
-                            Filter
-          </Button>
-                    </Space>
+                    <div className="filter-buttons">
+                        <Button type="primary" onClick={() => handleSearch(selectedKeys, confirm, dataIndex)} size="small">Search</Button>
+                        <Button type="default" onClick={() => handleReset(clearFilters)} size="small" className="secondary-btn">Reset</Button>
+                        {/* <Button type="link"  size="small" onClick={() => { confirm({ closeDropdown: false }); setSearchText(selectedKeys[0]);setSearchedColumn(dataIndex) }}  >Filter</Button> */}
+                    </div>
                 </div>
             ),
             filterIcon: (filtered) => (
-                <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+                <SearchOutlined style={{ color: filtered ? "#07a3b2" : undefined }} />
             ),
             onFilter: (value, record) =>
                 renderFun ? renderFun(value, record) : (record[dataIndex]
