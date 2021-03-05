@@ -12,6 +12,7 @@ import Postings from '../shared/postings';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import SavedPostsComponent from '../shared/postings/savedPosts';
 import FriendSuggestion from '../shared/components/friendSuggestion';
+import Stories from '../shared/components/stories';
 import BBScholars from '../shared/components/scholars';
 import JobCard from '../careers/jobcard';
 import JobDetails from '../careers/jobdetail';
@@ -41,6 +42,7 @@ class Home extends Component {
                     </Col>
                     <Col xs={{ order: 2, span: 24 }} sm={{ order: 2, span: 16 }} lg={12} xl={12} xxl={12}  >
                         <Switch >
+                            <Route path="/stories" component={Stories} />
                             <Route path="/newsfeed" render={(props) => { return <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
                             <Route path="/friendsuggestions" component={FriendSuggestion} />

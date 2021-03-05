@@ -586,7 +586,7 @@ class Postings extends Component {
     const SuperAdminList = [
       {
         action: "Pin Post",
-        icons: "post-icons savepost-icon",
+        icons: "post-icons pinpost-icon",
         subTitle: "Pin this item for later",
       },
     ];

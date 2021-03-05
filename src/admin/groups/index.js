@@ -146,17 +146,14 @@ const Groups = ({ profile }) => {
         <Title className="f-18 text-primary semibold">Groups</Title>
         <div className="custom-card">
             <Card className="px-12 pt-12"
-
-                extra={<div className="flex"><div onClick={() => createGroup()}>
-                    <Tooltip placement="top" title="Create Group">
-                        <span className="left-menu block-icon mx-8"></span>
+                extra={<div>
+                    <Tooltip placement="top" title="Create Group" onClick={() => createGroup()}>
+                        <span className="left-menu group-icon mx-8 cursor-pointer"></span>
                     </Tooltip>
-                </div>
-                    <div onClick={() => blockGroup()}>
-                        <Tooltip placement="top" title="Block / Un Block">
-                            <span className="left-menu block-icon mx-8"></span>
-                        </Tooltip>
-                    </div></div>}>
+                    <Tooltip placement="top" title="Block / Un Block" onClick={() => blockGroup()}>
+                        <span className="left-menu block-icon mx-8 cursor-pointer"></span>
+                    </Tooltip>
+                </div>}>
                 {loading && <Loader className="loader-middle" />}
                 <div className="overflowX-auto">
                     <Table

@@ -239,7 +239,7 @@ const Members = ({ profile }) => {
                     <span className="left-menu setadmin-icon mx-8"></span>
                 </Tooltip>
                 {profile.Role == "Super Admin" && <Tooltip placement="top" title="Set Paid Member" onClick={() => showModal("paid")}>
-                    <span className="left-menu setadmin-icon mx-8"></span>
+                    <span className="left-menu setpaid-icon mx-8"></span>
                 </Tooltip>}
 
             </div>}>

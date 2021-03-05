@@ -2095,6 +2095,8 @@ textarea {
 .left-menu.setadmin-icon{background-position: -793px -258px;}
 .left-menu.block-icon{background-position: -823px -258px;}
 .left-menu.setadmin-icon:hover{background-position: -793px -284px;}
+.left-menu.setpaid-icon{background-position: -208px -309px;}
+.left-menu.setpaid-icon:hover{background-position: -208px -335px;}
 .left-menu.block-icon:hover{background-position: -823px -283px;}
 .left-menu.setscroller-icon{background-position: -848px -259px;}
 .left-menu.setscroller-icon:hover{background-position: -848px -284px;}
