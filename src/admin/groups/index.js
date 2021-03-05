@@ -1,75 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Input, Row, Col, Button, Select, Collapse, Space, Steps, message, Upload, Table, Tag, Form, Tabs, Tooltip } from 'antd';
+import { Card, Select, Table, Tooltip } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { getAllSystemGroups, groupBlock } from '../../shared/api/apiServer';
 import connectStateProps from '../../shared/stateConnect';
 import notify from '../../shared/components/notification';
-import Modal from 'antd/lib/modal/Modal';
 import moment from 'moment';
 import Loader from "../../common/loader";
 import GetColumnSearchProps from "../../shared/components/filterComponent";
+import CommonModal from "../../components/ProfileComponents/CommonModal";
+import CreateGroup from '../../group/creategroup';
 
 const { Option } = Select;
-const columns = [
-    {
-        title: 'Group Name',
-        dataIndex: 'groupname',
-        key: 'groupname',
-        render: text => <a>{text}</a>
-    },
-    {
-        title: 'Posts',
-        dataIndex: 'posts',
-        key: 'posts',
-    },
-    {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-    },
-    {
-        title: 'Date',
-        dataIndex: 'date',
-        key: 'date',
-    },
-    {
-        title: 'Members',
-        dataIndex: 'members',
-        key: 'members',
-    },
-    {
-        title: 'Admin',
-        dataIndex: 'admin',
-        key: 'admin',
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-            <Space size="middle">
-                <a className="semibold text-red">Delete</a>
-            </Space>
-        ),
-    },
-];
-const data = [
-    {
-        key: '1',
-        groupname: 'IPL',
-        posts: '10',
-        type: 'Public',
-        date: '23-12-2020 06:00 pm',
-        members: 45,
-        admin: 'Blackbuck',
-
-    },
-];
 const Groups = ({ profile }) => {
     const columnsGroups = [
         {
             title: 'Group Name',
             dataIndex: 'name',
-            // render: text => {{text}}
             ...GetColumnSearchProps('name')
         },
         {
@@ -113,23 +59,20 @@ const Groups = ({ profile }) => {
         },
     ];
     const [data, setData] = useState([]);
-    const [count, setCount] = useState(0);
     const [selection, setSelection] = useState([]);
     const [isModal, setIsModal] = useState(false);
-    const [groups, setGroups] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [cgroup, setCgroup] = useState("");
     useEffect(() => {
         getGroups(1, 20);
     }, []);
-    // const fetchGroupSuggestions = async () => {
-    //     const groupsData = await getSystemGroups(selection[0]?.UserId);
-    //     if (groupsData.ok) {
-    //         setGroups(groupsData.data);
-    //     } else {
-    //         notify({ message: "Error", type: "error", description: "Something went wrong :)" });
-    //     }
-    // }
+    const handleCancel = () => {
+        setIsModal(false)
+    };
+    const saveGroup = () => {
+        cgroup.handleSave();
+    };
     const onSelectedRowKeysChange = selectedRowKeys => {
         setSelectedRowKeys(selectedRowKeys);
     };
@@ -166,6 +109,9 @@ const Groups = ({ profile }) => {
             });
         }
     }
+    const createGroup = () => {
+        setIsModal(true)
+    }
     const updateData = (item) => {
         data.forEach(val => {
             if (val.id == item.id) {
@@ -198,39 +144,19 @@ const Groups = ({ profile }) => {
     }
     return <>
         <Title className="f-18 text-primary semibold">Groups</Title>
-        {/* <div className="custom-card">
-            <Card className="p-12 custom-fields">
-                <Row gutter={16} align="middle">
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Input placeholder="User Name" />
-                    </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Select allowClear placeholder="Choose Group Type">
-                            <Option value="Mechanical Engineering">Private</Option>
-                            <Option value="Chemical Engineering">Public</Option>
-                        </Select>
-                    </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Select allowClear placeholder="Choose College">
-                            <Option value="BVRIT Hyderabad College of Engineering">BVRIT Hyderabad College of Engineering</Option>
-                            <Option value="CGokaraju Rangaraju Institute of Engineering & Technology">Gokaraju Rangaraju Institute of Engineering & Technology</Option>
-                            <Option value="Mahatma Gandhi Institute of Technology (MGIT)">Mahatma Gandhi Institute of Technology (MGIT)</Option>
-                        </Select>
-                    </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Button type="primary">Search</Button>
-                    </Col>
-                </Row>
-            </Card>
-        </div> */}
         <div className="custom-card">
             <Card className="px-12 pt-12"
 
-                extra={<div onClick={() => blockGroup()}>
-                    <Tooltip placement="top" title="Block / Un Block">
+                extra={<div className="flex"><div onClick={() => createGroup()}>
+                    <Tooltip placement="top" title="Create Group">
                         <span className="left-menu block-icon mx-8"></span>
                     </Tooltip>
-                </div>}>
+                </div>
+                    <div onClick={() => blockGroup()}>
+                        <Tooltip placement="top" title="Block / Un Block">
+                            <span className="left-menu block-icon mx-8"></span>
+                        </Tooltip>
+                    </div></div>}>
                 {loading && <Loader className="loader-middle" />}
                 <div className="overflowX-auto">
                     <Table
@@ -243,6 +169,22 @@ const Groups = ({ profile }) => {
                         columns={columnsGroups} dataSource={data} size="small" pagination={{ position: ["bottomCenter"], total: 200, onChange: (page, pageSize) => onPageChange(page, pageSize) }} bordered={true} />
                 </div>
             </Card>
+            <CommonModal
+                className="creategroup-popup"
+                visible={isModal}
+                title="Create group"
+                cancel={handleCancel}
+                saved={saveGroup}
+            >
+                {isModal && (
+                    <CreateGroup
+                        Type={"Add"}
+                        CreatorType={'Super Admin'}
+                        handleCancel={handleCancel}
+                        onRef={(cgroup) => (setCgroup({ ...cgroup }))}
+                    />
+                )}
+            </CommonModal>
         </div>
     </>
 }

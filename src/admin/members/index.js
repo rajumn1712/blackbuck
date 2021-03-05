@@ -238,9 +238,9 @@ const Members = ({ profile }) => {
                 <Tooltip placement="top" title="Set Admin" onClick={() => showModal()}>
                     <span className="left-menu setadmin-icon mx-8"></span>
                 </Tooltip>
-                <Tooltip placement="top" title="Set Paid Member" onClick={() => showModal("paid")}>
+                {profile.Role == "Super Admin" && <Tooltip placement="top" title="Set Paid Member" onClick={() => showModal("paid")}>
                     <span className="left-menu setadmin-icon mx-8"></span>
-                </Tooltip>
+                </Tooltip>}
 
             </div>}>
                 <div className="overflowX-auto">
