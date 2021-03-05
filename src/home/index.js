@@ -42,7 +42,7 @@ class Home extends Component {
                     </Col>
                     <Col xs={{ order: 2, span: 24 }} sm={{ order: 2, span: 16 }} lg={12} xl={12} xxl={12}  >
                         <Switch >
-                            <Route path="/stories" component={Stories} />
+                            {/* <Route path="/stories" component={Stories} /> */}
                             <Route path="/newsfeed" render={(props) => { return <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
                             <Route path="/friendsuggestions" component={FriendSuggestion} />
