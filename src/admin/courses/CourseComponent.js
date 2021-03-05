@@ -84,7 +84,8 @@ const CourseComponent = ({ profile, history }) => {
             }
         ],
         "DupCategoeries": [],
-        "SpecialCategory": []
+        "SpecialCategory": [],
+        "FeeType": "Free"
     }
     let postObject = {
         "GroupId": "",
@@ -699,6 +700,19 @@ const CourseComponent = ({ profile, history }) => {
                                                 <Option value="">Choose Author</Option>
                                                 {AuthorsLu?.map((item, index) => {
                                                     return <Option value={item.UserId} key={index}>{item.Firstname}</Option>
+                                                })}
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className="">
+                                        <label className="text-secondary d-block mb-4 semibold  required">Fee Type</label>
+                                        <Form.Item className="custom-fields" name="FeeType" rules={[{ required: true, message: "Fee type  required" }]}>
+                                            <Select
+                                                className="text-left"
+                                                onChange={(value) => handleChange('FeeType', value)}
+                                            >
+                                                {["Free", "Paid"]?.map((item, index) => {
+                                                    return <Option value={item} key={index}>{item}</Option>
                                                 })}
                                             </Select>
                                         </Form.Item>
