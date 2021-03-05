@@ -283,6 +283,7 @@ class Postings extends Component {
         };
         const reportResponse = await reportContent(object);
         if (reportResponse.ok) {
+          this.updatePost(post, 'IsReported', true)
           notify({
             description: "Post reported successfully",
             message: "Post Report",
@@ -537,7 +538,7 @@ class Postings extends Component {
       });
     }
   };
-  fetchCardActions = (user, fndDetail) => {
+  fetchCardActions = (post, fndDetail) => {
     const ownerActions = [
       {
         action: "Edit",
@@ -591,12 +592,12 @@ class Postings extends Component {
       },
     ];
     let result =
-      user.UserId === this.props.profile.Id
+      post.userdetails.UserId === this.props.profile.Id
         ? ownerActions.concat(actionsList)
         : this.props.postingsType === "group" && this.props.groupData?.IsAdmin
           ? groupActions.concat(actionsList)
           : actionsList;
-    if (user.UserId !== this.props.profile.Id && user.UserId) {
+    if (post.userdetails.UserId !== this.props.profile.Id && post.userdetails.UserId) {
       result = fndDetail && !fndDetail.IsFriend ? ((fndDetail.IsYouSendRequest && fndDetail.RequestType) ? result.concat([{
         action: "Request Sent",
         icons: "post-icons requestsent-grey",
@@ -607,7 +608,8 @@ class Postings extends Component {
         subTitle: "To send friend request",
       }])) : result;
     }
-    result = (this.props.profile.Role == "Super Admin" && user.UserId == this.props.profile.Id) ? result.concat(SuperAdminList) : result;
+    result = (this.props.profile.Role == "Super Admin" && post.userdetails.UserId == this.props.profile.Id) ? result.concat(SuperAdminList) : result;
+    result = (post.IsReported || this.props.postingsType == "user" || post.userdetails.UserId === this.props.profile.Id) ? result.filter(action => action.action !== "Report Post") : result;
     return result;
   };
   deletePost = (post) => {
@@ -655,7 +657,7 @@ class Postings extends Component {
           clickedEvent={(event, name) =>
             this.handleEvent(event, name, post)
           }
-          actionsList={(IsFriend || IsYouSendRequest || RequestType) ? this.fetchCardActions(post.userdetails, { IsFriend: IsFriend, IsYouSendRequest: IsYouSendRequest, RequestType: RequestType }) : this.fetchCardActions(post.userdetails)}
+          actionsList={(IsFriend || IsYouSendRequest || RequestType) ? this.fetchCardActions(post, { IsFriend: IsFriend, IsYouSendRequest: IsYouSendRequest, RequestType: RequestType }) : this.fetchCardActions(post)}
         />
       }
       actions={[
@@ -879,7 +881,7 @@ class Postings extends Component {
           clickedEvent={(event, name) =>
             this.handleEvent(event, name, post)
           }
-          actionsList={(IsFriend || IsYouSendRequest || RequestType) ? this.fetchCardActions(post.userdetails, { IsFriend: IsFriend, IsYouSendRequest: IsYouSendRequest, RequestType: RequestType }) : this.fetchCardActions(post.userdetails)}
+          actionsList={(IsFriend || IsYouSendRequest || RequestType) ? this.fetchCardActions(post, { IsFriend: IsFriend, IsYouSendRequest: IsYouSendRequest, RequestType: RequestType }) : this.fetchCardActions(post)}
         />
       }
       actions={[
@@ -1250,7 +1252,7 @@ class Postings extends Component {
           updatePost={(event, type, post, object) => {
             this.updatePost(event, type, post, object);
           }}
-          fetchCardActions={(user) => this.fetchCardActions(user)}
+          fetchCardActions={(post) => this.fetchCardActions(post)}
         />
 
       </div>
