@@ -245,6 +245,9 @@
 .icons.public-icon{background-position: -615px -256px;margin-top: 5px;margin-left: 5px;}
 .left-menu.public-icon{background-position: -616px -257px;margin-top: 5px;}
 .icons.private-icon{background-position: -643px -256px;margin-top: 5px;margin-left: 5px;}
+.icons.subject-icon{background-position:-232px -304px;margin-top: 2px;margin-left: 2px;}
+.icons.branch-icon{background-position: -322px -251px;margin-top: 2px;margin-left: 2px;}
+.icons.college-icon{background-position: -261px -304px;margin-top: 2px;margin-left: 2px;}
 .icons.visible-icon{background-position: -463px -254px;margin-top: 5px;margin-left: 5px;}
 .icons.hidden-icon{background-position: -674px -257px;margin-top: 5px;margin-left: 5px;}
 .left-menu.hidden-icon{background-position: -674px -257px;}

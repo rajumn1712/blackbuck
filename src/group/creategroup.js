@@ -90,21 +90,21 @@ class CreateGroup extends Component {
             {
 
                 Name: "Subject",
-                Icon: "icons private-icon",
+                Icon: "icons subject-icon",
                 Description: "Only members can see who's in the group and what they post.",
                 SubType: "College"
             },
             {
 
                 Name: "Branch",
-                Icon: "icons private-icon",
+                Icon: "icons branch-icon",
                 Description: "Only members can see who's in the group and what they post.",
                 SubType: "College"
             },
             {
 
                 Name: "College",
-                Icon: "icons private-icon",
+                Icon: "icons college-icon",
                 Description: "Only members can see who's in the group and what they post.",
                 SubType: "College"
             }
