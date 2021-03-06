@@ -291,10 +291,8 @@ class Profile extends Component {
                     return (
                       <Row gutter={8}>
                         <Col xs={{ span: 24, order: 2 }} sm={{ span: 24, order: 2 }} lg={{ span: 8, order: 1 }} xl={8}>
-                          
-                            <Invite />
-                            <Courses />
-                         
+                          <Invite />
+                          <Courses />
                         </Col>
                         <Col xs={{ span: 24, order: 1 }} sm={{ span: 24, order: 1 }} lg={{ span: 16, order: 2 }} xl={16}>
                           <Postings postingsType="user" sharebox={true} />
@@ -348,6 +346,25 @@ class Profile extends Component {
                             </TabPane>
                             <TabPane tab="Suggested Groups" key="3">
                               <Groups displayas={"Card"} />
+                            </TabPane>
+                          </Tabs>
+                        </Col>
+                      </Row>
+                    );
+                  }}
+                />
+              </TabPane>
+              <TabPane tab="Contests" className="m-0" key="IsProfileContestTab">
+                <Route
+                  path="/profile/IsProfileContestTab"
+                  render={() => {
+                    return (
+                      <Row gutter={16}>
+                        <Col span={24}>
+                          <Tabs defaultActiveKey="1"
+                            className="group-tabs sub-tab profile-tabs">
+                            <TabPane tab="My Contests" key="1">
+                              {/* <GroupsPage onRef={(courses) => (this.courses = courses)} /> */}
                             </TabPane>
                           </Tabs>
                         </Col>
