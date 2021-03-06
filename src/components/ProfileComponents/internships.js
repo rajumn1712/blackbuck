@@ -9,8 +9,10 @@ import {
   Input,
   Tooltip,
   Modal,
-  AutoComplete
+  AutoComplete,
+  Typography
 } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 import { Link } from "react-router-dom";
 import "../../index.css";
 import "../../App.css";
@@ -24,14 +26,7 @@ import SideAction from "../../shared/components/postings/Actions/SideActions";
 import indianCitiesDatabase from "indian-cities-database";
 var cities = indianCitiesDatabase.cities;
 let cityValues = cities.map((item) => item.city);
-
-const docs = [
-  {
-    avatar: [<span className="doc-icons word"></span>],
-    title: "Mini Project.Doc",
-    fileSize: "150 KB",
-  },
-];
+const {Paragraph} = Typography;
 
 const ownerActions = [
   {
@@ -58,7 +53,7 @@ class Intership extends Component {
     },
     initialValues: {
       CompanyName: "",
-      // ShortName: "",
+      Description: "",
       Location: "",
       Duration: "",
     },
@@ -76,7 +71,7 @@ class Intership extends Component {
           ? this.state.internshipsObj.InternshipId
           : uuidv4(),
         CompanyName: values.CompanyName,
-        // ShortName: values.ShortName,
+        Description: values.Description,
         // CompanyLogo: this.state.internshipsObj.CompanyLogo,
         Location: values.Location,
         Duration: values.Duration,
@@ -87,7 +82,7 @@ class Intership extends Component {
 
   // validateSchema = Yup.object().shape({
   //   CompanyName: Yup.string().required("is required"),
-  //   ShortName: Yup.string().required("is required"),
+  //   Description: Yup.string().required("is required"),
   //   Place: Yup.string().required("is required"),
   //   Duration: Yup.string().required("is required"),
   // });
@@ -207,7 +202,7 @@ class Intership extends Component {
     e.preventDefault();
     let { internshipsObj, initialValues } = { ...this.state };
     if (isedit) {
-      const { CompanyName, ShortName, Location, Duration } = internship;
+      const { CompanyName, Description, Location, Duration } = internship;
       internshipsObj.InternshipId = internship.InternshipId;
       // internshipsObj.CompanyLogo = internship.CompanyLogo;
       internshipsObj.uploadsources = internship.Certificate
@@ -215,14 +210,14 @@ class Intership extends Component {
         : [];
       Object.assign(initialValues, {
         CompanyName,
-        // ShortName,
+        Description,
         Location,
         Duration,
       });
     } else {
       initialValues = {
         CompanyName: "",
-        // ShortName: "",
+        Description: "",
         Location: "",
         Duration: "",
       };
@@ -295,7 +290,7 @@ class Intership extends Component {
       },
       initialValues: {
         CompanyName: "",
-        // ShortName: "",
+        Description: "",
         Location: "",
         Duration: "",
       },
@@ -368,10 +363,13 @@ class Intership extends Component {
                       {item.CompanyLogo ? (
                         <img src={item.CompanyLogo} />
                       ) : (
-                        item.ShortName.substring(0,2)
+                        item.Description.substring(0,2)
                       )}
                     </div> */}
                     <h4 className="title">{item.CompanyName}</h4>
+                    <Paragraph className="f-14 text-primary" ellipsis={{ rows: 2 }}>
+              {item.Description}
+            </Paragraph>
                     <p className="description">
                       <span className="afterline mr-16">{item.Location}</span>
                       <span className="">{item.Duration}</span>
@@ -423,6 +421,22 @@ class Intership extends Component {
                     />
                   </Form.Item>
                 </Col>
+                <Col xs={24} className="mb-16">
+                <Form.Item
+                  label="Description"
+                  name="Description"
+                  rules={[{ required: true, message: "Description required" }]}
+                  className="custom-fields"
+                >
+                  <TextArea
+                    component="textarea"
+                    className="ant-input"
+                    autoSize={{ minRows: 2, maxRows: 3 }}
+                    placeholder="Description"
+                    onChange={(value) => this.handleChange("Description", value)}
+                  />
+                </Form.Item>
+              </Col>
                 <Col xs={24} md={12} id="location">
                   <Form.Item
                     label="Place"
