@@ -35,7 +35,9 @@ class CreateGroup extends Component {
         Members: [],
         Categories: [],
         MainType: "General",
-        IsSystem: false
+        IsSystem: false,
+        Email: "",
+        Phone: "",
     }
 
     imageObject = {};
@@ -56,6 +58,8 @@ class CreateGroup extends Component {
         groupObject.Hide = initialValues.Hide ? initialValues.Hide : "Visible";
         groupObject.Description = initialValues.Description;
         groupObject.MainType = initialValues.MainType ? initialValues.MainType : "General";
+        groupObject.Email = initialValues.Email ? initialValues.Email : " ";
+        groupObject.Phone = initialValues.Phone ? initialValues.Phone : " ";
         groupObject.IsSystem = initialValues.IsSystem;
         initialValues.Invitations.forEach(val => {
             groupObject.Invitations.push(val.FriendId)
@@ -80,34 +84,34 @@ class CreateGroup extends Component {
                 Description: "Only members can see who's in the group and what they post.",
                 SubType: "General"
             },
-            {
+            // {
 
-                Name: "Company",
-                Icon: "icons private-icon",
-                Description: "Only members can see who's in the group and what they post.",
-                SubType: "Company"
-            },
-            {
+            //     Name: "Company",
+            //     Icon: "icons private-icon",
+            //     Description: "Only members can see who's in the group and what they post.",
+            //     SubType: "Company"
+            // },
+            // {
 
-                Name: "Subject",
-                Icon: "icons subject-icon",
-                Description: "Only members can see who's in the group and what they post.",
-                SubType: "College"
-            },
-            {
+            //     Name: "Subject",
+            //     Icon: "icons subject-icon",
+            //     Description: "Only members can see who's in the group and what they post.",
+            //     SubType: "College"
+            // },
+            // {
 
-                Name: "Branch",
-                Icon: "icons branch-icon",
-                Description: "Only members can see who's in the group and what they post.",
-                SubType: "College"
-            },
-            {
+            //     Name: "Branch",
+            //     Icon: "icons branch-icon",
+            //     Description: "Only members can see who's in the group and what they post.",
+            //     SubType: "College"
+            // },
+            // {
 
-                Name: "College",
-                Icon: "icons college-icon",
-                Description: "Only members can see who's in the group and what they post.",
-                SubType: "College"
-            }
+            //     Name: "College",
+            //     Icon: "icons college-icon",
+            //     Description: "Only members can see who's in the group and what they post.",
+            //     SubType: "College"
+            // }
         ],
         HiddenLu: [
             {
@@ -138,9 +142,11 @@ class CreateGroup extends Component {
         });
         return {
             GroupName: values.GroupName,
-            GroupType: values.GroupType ? values.GroupType : "Official",
+            GroupType: values.GroupType ? values.GroupType : "",
             GroupImage: groupObject.GroupImage ? groupObject.GroupImage : "",
             GroupCoverPic: groupObject.GroupCoverPic ? groupObject.GroupCoverPic : "",
+            Email: groupObject.Email ? groupObject.Email : "",
+            Phone: groupObject.Phone ? groupObject.Phone : "",
             Type: values.Type,
             Location: values.Location,
             Description: values.Description,
@@ -160,7 +166,7 @@ class CreateGroup extends Component {
             Categories: [],
             CourseSections: [],
             MainType: groupObject.MainType ? groupObject.MainType : "General",
-            IsSystem: groupObject.IsSystem ? groupObject.IsSystem : (this.props.profile.Role == "Super Admin" ? true : false)
+            IsSystem: groupObject.IsSystem ? groupObject.IsSystem : (this.props.CreatorType ? true : false),
         };
     };
     handleBeforUpload = (file) => {
@@ -354,7 +360,7 @@ class CreateGroup extends Component {
                             <div className="my-16">
                                 <Form layout="vertical" initialValues={{ ...groupObject }} on scrollToFirstError={true} ref={this.formRef} >
                                     <Row gutter={24}>
-                                        {this.props.profile.Role == "Super Admin" && <Col xs={24} id="groupMainType">
+                                        {this.props.CreatorType && <Col xs={24} id="groupMainType">
                                             <Form.Item
                                                 label="Type"
                                                 className="custom-fields custom-select" name="MainType" rules={[{ required: true, message: "Type  required" }]}
@@ -383,6 +389,28 @@ class CreateGroup extends Component {
                                                 <Input placeholder="Title" onChange={(value) => this.handleChange('GroupName', value)} maxLength={150} autoComplete="off" />
                                             </Form.Item>
                                         </Col>
+                                        {groupObject.MainType != "General" && <Col xs={24}>
+                                            <Form.Item label="Email" name="Email" className="custom-fields" rules={[{ type: 'email', message: 'The input is not valid Email!' }, { required: true, message: 'Please input your Email!' }]}>
+                                                <Input placeholder="Email" onChange={(value) => this.handleChange('Email', value)} maxLength={50} autoComplete="off" />
+                                            </Form.Item>
+                                        </Col>}
+                                        {groupObject.MainType != "General" && <Col xs={24}>
+                                            <Form.Item label="Phone" name="Phone" className="custom-fields" rules={[{ required: true, message: 'Please input your Phone!' }, {
+                                                validator: (rule, value, callback) => {
+                                                    var regx = new RegExp(/^[\+]?[?[0-9]{0,2}?[-\s]?[0-9]{10}$/im);
+                                                    if (value) {
+                                                        if (!regx.test(value)) {
+                                                            callback("Not a valid phone number")
+                                                        } else if (regx.test(value)) {
+                                                            callback();
+                                                        }
+                                                    }
+                                                    return;
+                                                }
+                                            }]}>
+                                                <Input placeholder="Phone" onChange={(value) => this.handleChange('Phone', value)} maxLength={15} autoComplete="off" />
+                                            </Form.Item>
+                                        </Col>}
 
                                         {groupObject.MainType == 'General' && <Col xs={24} id="groupType">
                                             <Form.Item
@@ -426,7 +454,7 @@ class CreateGroup extends Component {
                                                     getPopupContainer={() => document.querySelector('#type')}
                                                 >
                                                     <Option value="" label="Select Type">Select Type</Option>
-                                                    {this.getTypeLu(TypeLu).map((item, index) => {
+                                                    {TypeLu.map((item, index) => {
                                                         return (
                                                             <Option key={index} value={item.Name} label={item.Name}>
                                                                 {this.renderSelectItem(item)}

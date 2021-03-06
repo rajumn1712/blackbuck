@@ -176,7 +176,7 @@ const Groups = ({ profile }) => {
                 {isModal && (
                     <CreateGroup
                         Type={"Add"}
-                        CreatorType={'Super Admin'}
+                        CreatorType={'Admin'}
                         handleCancel={handleCancel}
                         onRef={(cgroup) => (setCgroup({ ...cgroup }))}
                     />
