@@ -313,8 +313,11 @@
 .icons.add {
   background-position: -61px -198px;
 }
-.left-menu.group-icon {
+.left-menu.left-group-icon {
   background-position: -94px -200px;
+}
+.left-menu.contest-icon {
+  background-position: -293px -309px;
 }
 .left-menu.noti-icon {
   background-position: -124px -200px;

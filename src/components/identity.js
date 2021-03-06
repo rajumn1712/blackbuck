@@ -85,8 +85,14 @@ class Identity extends Component {
           </Menu.Item> */}
           <Menu.Item key="groups">
             <Link to="/profile/IsProfileGroupsTab">
-              <span className="left-menu group-icon"></span>
+              <span className="left-menu left-group-icon"></span>
               <span>Groups</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="groups">
+            <Link to="/profile/IsProfileGroupsTab">
+              <span className="left-menu contest-icon"></span>
+              <span>Contests</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="notification">
