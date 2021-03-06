@@ -20,7 +20,7 @@
 .post-card .ant-card-actions > li, .post-card .ant-card-meta {margin: 0;}
 .post-card .ant-card-actions li a{padding: 8px;}
 /* .post-tag{margin: 0 16px;} */
-.post-tag .ant-tag{font-weight: 500; border: none; cursor: pointer;background:none;}
+.post-tag .ant-tag{font-weight: 500; border: none; cursor: pointer;background:none;word-break: break-word;white-space: normal;}
 .post-tag .ant-tag a{color: var(--primary);padding: 0 !important;}
 .post-tag .ant-tag a:hover{text-decoration: underline;}
 .post-card .ant-card-meta-avatar, .share-popup .ant-card-meta-avatar{padding-right: 12px;}
