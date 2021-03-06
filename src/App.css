@@ -2253,6 +2253,9 @@ textarea {
 .stories .story-card  .add-story{width: 80px;height: 80px;border-radius: 50%;border: 1px dashed var(--primary);display: flex;justify-content: center;align-items: center;}
 .stories .story-card:first-child .story-image{padding: 0;border: 1px solid var(--primary);display: flex;justify-content: center;align-items: center;}
 .add-story-icon{width: 36px;height: 36px;vertical-align: initial;display: inline-block;vertical-align: middle;background: url(styles/images/icons.svg) no-repeat;background-position: -420px -150px;}
+.contest-card-item .contest-date h6{color: #5D5D5D;}
+.contest-card-item .contest-date p{font-size: 14px; color:  #000000;}
+
 @media (min-width:576px){
   .affix-top{position: sticky;top: 86px;align-self: flex-start;margin-bottom: 6px;}
 }

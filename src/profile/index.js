@@ -23,6 +23,7 @@ import FriendRequests from "../components/ProfileComponents/friendrequests";
 import Friends from "../components/friends";
 import Groups from "../shared/components/Groups";
 import GroupsPage from "../shared/components/GroupsPage";
+import ContestsPage from "../shared/components/ContestsPage";
 import Postings from "../shared/postings";
 import { connect } from "react-redux";
 import { saveProfileImage } from "../shared/api/apiServer";
@@ -364,7 +365,7 @@ class Profile extends Component {
                           <Tabs defaultActiveKey="1"
                             className="group-tabs sub-tab profile-tabs">
                             <TabPane tab="My Contests" key="1">
-                              {/* <GroupsPage onRef={(courses) => (this.courses = courses)} /> */}
+                              <ContestsPage onRef={(courses) => (this.courses = courses)} />
                             </TabPane>
                           </Tabs>
                         </Col>
