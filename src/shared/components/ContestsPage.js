@@ -232,7 +232,7 @@ class ContestsPage extends Component {
                             actions={ [<Link className="text-center f-12 list-link">Join Contest</Link>]}>
                             <Meta
                                 className="contest-card-item"
-                                title={<Link to={"/groupview/"} className="post-title" >Software Construction</Link>}
+                                title={<Link to={"/contestview/new"} className="post-title" >Software Construction</Link>}
                                 description={
                                     <div>
                                         <p className="mb-16 f-12 text-overflow">
