@@ -2200,7 +2200,7 @@ textarea {
 .zoomcard-date{background: var(--green);color: var(--white);    padding: 8px 10px 14px;border-radius: 0.4rem 0.4rem 0 0;line-height: 26px;}
 .course-list-item .ant-card .ant-card-cover{border: 0 !important;}
 .h-100p{height: 100%;}.icon.sharepost-icon{ width: 20px; height: 20px;display: inline-block; vertical-align: middle;background: url(styles/images/icons.svg) no-repeat;background-position: -330px -8px ;margin-right: 8px;}
-.share-list{display: flex;list-style-type: none;padding-left: 0;justify-content: center;margin: auto;}
+.share-list{display: flex;list-style-type: none;padding-left: 0;justify-content: flex-start;margin: auto;}
 .sharebox-icons {width: 26px;height: 26px;vertical-align: initial;display: inline-block;vertical-align: middle;background: url(styles/images/icons.svg) no-repeat;}
 .share-box{border-radius: 40px;}
 .share-box:hover{border-color: var(--primary);transition: border-color 0.5s;}
