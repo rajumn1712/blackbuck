@@ -269,6 +269,9 @@ class Profile extends Component {
               className="profile-tabs"
               onChange={this.handleTabChange}
               key={tabkey}
+              tabBarExtraContent={<div className="mx-16 mb-8">
+                <Button type="primary" onClick={this.showModal} > Create Contest </Button>
+              </div>}
             >
               <TabPane tab="Profile" key="IsProfileTab">
                 <Route
