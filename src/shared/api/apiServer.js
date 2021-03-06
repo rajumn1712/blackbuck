@@ -487,6 +487,9 @@ const sendNotification = ({ to, message, from, type }) => {
       }
     });
 }
+const savestories = (obj)=>{
+  return apiClient.post(FRIENDS_API + 'savedUserStory',obj);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -580,5 +583,6 @@ export {
   readNotification,
   sendNotification,
   statesList,
-  setAsPaidMember
+  setAsPaidMember,
+  savestories
 };

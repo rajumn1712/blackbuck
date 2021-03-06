@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { Modal, Button, Card, Avatar, Input ,Upload} from 'antd';
+import { Modal, Button, Card, Avatar, Input ,Upload, Image, Tooltip} from 'antd';
 import user from '../../styles/images/user.jpg';
+import connectStateProps from '../stateConnect';
+import { uuidv4 } from '../../utils';
+import notify from './notification';
+import moment from 'moment';
+import { savestories } from '../api/apiServer';
 const { TextArea } = Input;
 const { Dragger } = Upload;
 
@@ -20,20 +25,74 @@ const fileTypes = {
     Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
   };
 
-const Stories = () => {
+const Stories = ({profile}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [uploadSources,setUploadSources] = useState({});
+    const [loader,setLoader] = useState(false);
 
     const showModal = () => {
         setIsModalVisible(true);
     };
 
-    const handleOk = () => {
-        setIsModalVisible(false);
+    const saveStory = async () => {
+        createObject.CreatedDate = new Date();
+        createObject.Stories = uploadSources;
+        const response = await savestories(createObject);
+        if(response.ok){
+            setIsModalVisible(false);
+        }else{
+            notify({
+                description: `Something went wrong`,
+                type: "error",
+                message: "Story",
+              });
+        }
     };
 
     const handleCancel = () => {
+        setUploadSources({});
         setIsModalVisible(false);
     };
+    const createObject = 
+        {
+            "StoryId": uuidv4(),
+            "UserId": profile.Id,
+            "Firstname": profile.Firstname,
+            "Lastname": profile.LastName,
+            "Image": profile.ProfilePic,
+            "Email": profile.Email,
+            "Story": "",
+          "CreatedDate": null,
+          "Stories":{}
+          }
+    const renderByClickIcon = (type)=>{
+        uploadSources.type = type === "Images" ? 'image' : 'video';
+        setUploadSources({...uploadSources});
+
+    }
+   const uploadProps = {
+        name: "file",
+    multiple: false,
+    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+    onChange:(info)=>{
+        setLoader(true);
+        const { status } = info.file;
+        if(status === "done"){
+            uploadSources.url = info.file.response[0];
+            setUploadSources({...uploadSources});
+            setLoader(false);
+        } else if (status === "error") {
+            notify({
+              description: `Something went wrong`,
+              type: "error",
+              message: "Upload",
+            });
+            setLoader(false);
+          } else if (status == undefined) {
+            setLoader(false);
+          }
+    }
+    }
     return (
         <>
             <ul className="stories">
@@ -90,12 +149,12 @@ const Stories = () => {
                 }
                 className="custom-popup"
                 visible={isModalVisible}
-                onOk={handleOk}
                 footer={[
                     <div className="d-flex justify-content-between">
                         <Button
                             type="primary"
-                            onClick={() => handleOk()}
+                            disabled={!uploadSources.url}
+                            onClick={() => saveStory()}
                         >
                             Share to Story
               </Button>
@@ -105,9 +164,9 @@ const Stories = () => {
             >
                 <div className="d-flex justify-content-between addpost-user mb-24">
                     <Meta
-                        avatar={<Avatar src={user} />}
-                        title={<h4 className="mb-0">JMoZ</h4>}
-                        description="Computer Science" />
+                        avatar={<Avatar src={profile.ProfilePic} />}
+                        title={<h4 className="mb-0">{profile.FirstName}</h4>}
+                        description={profile.Branch} />
                 </div>
                 <div className="title-img">
                     <TextArea
@@ -125,20 +184,35 @@ const Stories = () => {
                             key={menu.Id}
                             className="upload"
                             accept={fileTypes[menu.Id]}
-                            multiple={menu.Id === "Images" || menu.Id === "Docs" ? true : false}
-                            onRemove={() => this.setState({ ...this.state, uploadSources: [] })}
+                            {...uploadProps}
                             showUploadList={false}
                         >
-                            <li onClick={() => this.renderByClickIcon(menu.Id)}>
+                            <li onClick={() => renderByClickIcon(menu.Id)}>
                                 <span className={menu.CssSprite}></span>
                             </li>
                         </Dragger>
                     })}
                 </ul>
+                {uploadSources.type && <div className="mb-16 upload-preview">
+              {uploadSources.type === 'image' && uploadSources.url && <Image src={uploadSources.url} />}
+              {uploadSources.type === 'video' && uploadSources.url && <video width="100%" controls controlsList="nodownload">
+                <source src={uploadSources.url} />
+              </video>}
+              <a
+                class="item-close"
+                onClick={() => {
+                  setUploadSources({});
+                }}
+              >
+                <Tooltip title="Remove">
+                  <span className="close-icon"></span>
+                </Tooltip>
+              </a>
+            </div>}
 
             </Modal>
 
         </>
     )
 }
-export default Stories;
+export default connectStateProps(Stories);
