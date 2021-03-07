@@ -9,6 +9,7 @@ const TAGS_API = "posts/api/posts/";
 const ADMIN_API = "admin/api/admin/";
 const LMS_API = "LMS/api/LMS/";
 const CAREESRS_API = "careers/api/careers/";
+const CONTEST_API = "contest/api/contest/";
 const statesList = [
   {
     "key": "AN",
@@ -490,6 +491,12 @@ const sendNotification = ({ to, message, from, type }) => {
 const savestories = (obj)=>{
   return apiClient.post(FRIENDS_API + 'savedUserStory',obj);
 }
+const saveContest = (obj) => {
+  return apiClient.post(CONTEST_API + 'saveContest', obj);
+}
+const editContest = (contest_id) => {
+  return apiClient.get(CONTEST_API + `getContest/${contest_id}`);
+};
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -584,5 +591,7 @@ export {
   sendNotification,
   statesList,
   setAsPaidMember,
-  savestories
+  savestories,
+  saveContest,
+  editContest
 };

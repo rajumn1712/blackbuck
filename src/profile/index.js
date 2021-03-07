@@ -37,6 +37,8 @@ import Loader from "../common/loader";
 import notify from "../shared/components/notification";
 import { apiClient } from '../shared/api/clients';
 import Notifications from '../components/notification';
+import CommonModal from '../components/ProfileComponents/CommonModal';
+import CreateContest from '../contest/createcontest'
 const { Meta } = Card;
 const { TabPane } = Tabs;
 
@@ -59,6 +61,7 @@ class Profile extends Component {
     profile: this.props?.profile,
     tabkey: this.props?.match.params.tabkey,
     showDownload: false,
+    isModal: false,
   };
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.tabkey == this.props?.match?.params.tabkey) {
@@ -112,6 +115,9 @@ class Profile extends Component {
     this.setState({ disabled });
   };
 
+  showModal = () => {
+    this.setState({ ...this.state, isModal: true });
+  }
   componentDidMount() {
     this.storeSubscription = store.subscribe(() => {
       const { profile } = store.getState().oidc;
@@ -165,7 +171,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { isDataRefresh, profile, tabkey, imageLoader } = this.state;
+    const { isDataRefresh, profile, tabkey, imageLoader, isModal} = this.state;
     // if (this.state.loading) {
     //   return <Loader className="loader-top-middle" />;
     // }
@@ -269,9 +275,9 @@ class Profile extends Component {
               className="profile-tabs"
               onChange={this.handleTabChange}
               key={tabkey}
-              tabBarExtraContent={<div className="mx-16 mb-8">
+              tabBarExtraContent={tabkey=="IsProfileContestTab" ?<div className="mx-16 mb-8">
                 <Button type="primary" onClick={this.showModal} > Create Contest </Button>
-              </div>}
+              </div>:[]}
             >
               <TabPane tab="Profile" key="IsProfileTab">
                 <Route
@@ -394,6 +400,20 @@ class Profile extends Component {
             </div>
           </Col>
         </Row>
+        <CommonModal
+          className="creategroup-popup"
+          visible={isModal}
+          title="Edit group"
+          cancel={() => { }}
+          saved={() => { }}
+        >
+          {isModal && (
+            <CreateContest
+              Type={"Add"}
+              handleCancel={() => { }}
+            />
+          )}
+        </CommonModal>
       </div>
     );
   }
