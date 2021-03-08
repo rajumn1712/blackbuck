@@ -48,10 +48,12 @@ const AllStories = ({profile}) => {
 
     const saveStory = async () => {
         createObject.CreatedDate = new Date();
-        createObject.Stories = uploadSources;
+        createObject.Url = uploadSources.url;
+        createObject.Type = uploadSources.type;
         const response = await savestories(createObject);
         if(response.ok){
             setIsModalVisible(false);
+            setUploadSources({});
         }else{
             notify({
                 description: `Something went wrong`,
@@ -69,7 +71,7 @@ const AllStories = ({profile}) => {
         {
             "StoryId": uuidv4(),
             "UserId": profile.Id,
-            "Firstname": profile.Firstname,
+            "Firstname": profile.FirstName,
             "Lastname": profile.LastName,
             "Image": profile.ProfilePic,
             "Email": profile.Email,

@@ -6,33 +6,11 @@ import { withRouter } from 'react-router';
 import { getfriendsStories, userStories } from '../shared/api/apiServer';
 import connectStateProps from '../shared/stateConnect';
 import { Card, Avatar, List } from 'antd';
-const data = [
-    {
-        title: 'William Smith',
-        time: '2 minutes ago',
-    },
-    {
-        title: 'John Doe',
-        time: '5 minutes ago',
-    },
-    {
-        title: 'Sherlyn Chopra',
-        time: '10 minutes ago',
-    },
-    {
-        title: 'Malavika Nayar',
-        time: '1 hour ago',
-    },
-    {
-        title: "Farina",
-        time: '5 hours ago',
-    },
-
-];
+import { Link } from 'react-router-dom';
 
 
 const StoryDetail = ({ profile, match }) => {
-    const [allStories, setAllStories] = useState([]);
+    let [allStories, setAllStories] = useState([]);
     let [page, setPage] = useState(0);
     let [size, setSize] = useState(10);
     let [storyByUser, setStoryByUser] = useState([]);
@@ -53,10 +31,12 @@ const StoryDetail = ({ profile, match }) => {
         }
     }, [])
 
+
     const getAllStories = async () => {
         const response = await getfriendsStories(profile.Id, page, size);
         if (response.ok) {
-            setAllStories(getdata => getdata, ...response.data);
+            allStories = response.data;
+            setAllStories([...allStories]);
         }
     }
     const getuserStories = async () => {
@@ -86,23 +66,24 @@ const StoryDetail = ({ profile, match }) => {
                         </div>
                         <p className="f-16 mb-0 fw-500">Add Story</p>
                     </div>
-                    <List className="stories-list" bordered={false} split={false} itemLayout="horizontal" dataSource={data}
-                        renderItem={item => (
+                    <List className="stories-list" bordered={false} split={false} itemLayout="horizontal" dataSource={allStories}
+                        renderItem={story => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar className src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                    title={<span className="f-16 mb-0 overflow-text">{item.title}</span>}
-                                    description={<span className="f-12">{item.time}</span>}
+                                    avatar={<Avatar className src={story.Image} />}
+                                    title={<span className="f-16 mb-0 overflow-text">{story.Firstname} {story.LastName}</span>}
+                                    // description={<span className="f-12">{item.time}</span>}
                                 />
                             </List.Item>
                         )}
                     />
+                    
                 </Card>
                 {storyByUser.length > 0 && <div className="stories-view"> 
                 <ReactInstaStories height="100%" stories={storyByUser} defaultInterval={1500}/>
 
                 </div>}
-                <span className="close-icon"></span>
+                <Link to="/"><span className="close-icon"></span></Link>
             </div>
         </>
     )
