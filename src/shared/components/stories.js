@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Card, Avatar, Input ,Upload, Image, Tooltip} from 'antd';
-import user from '../../styles/images/user.jpg';
 import connectStateProps from '../stateConnect';
 import { uuidv4 } from '../../utils';
 import notify from './notification';
-import moment from 'moment';
-import { savestories } from '../api/apiServer';
+import { getfriendsStories, savestories } from '../api/apiServer';
 const { TextArea } = Input;
 const { Dragger } = Upload;
 
@@ -29,6 +27,19 @@ const Stories = ({profile}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [uploadSources,setUploadSources] = useState({});
     const [loader,setLoader] = useState(false);
+    let [stories,setStories] = useState([]);
+
+    useEffect(()=>{
+        getAllStories();
+    },[])
+
+    const getAllStories = async ()=>{
+        const response = await getfriendsStories(profile.Id,0,4);
+        if(response.ok){
+            stories = response.data;
+            setStories([...stories]);
+        }
+    }
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -106,36 +117,14 @@ const Stories = ({profile}) => {
                         <p className="name">Add Story</p>
                     </div>
                 </li>
-                <li className="story-card">
-                    <div className="story-image">
-                        <img src={user} />
+                {stories.length > 0 && stories?.map((story)=>{
+                    return <li className="story-card" key={story.UserId}>
+                        <div className="story-image">
+                        <img src={story.Image} />
                     </div>
-                    <p className="name">William Smith</p>
-                </li>
-                <li className="story-card">
-                    <div className="story-image">
-                        <img src={user} />
-                    </div>
-                    <p className="name">William Smith</p>
-                </li>
-                <li className="story-card">
-                    <div className="story-image">
-                        <img src={user} />
-                    </div>
-                    <p className="name">William Smith</p>
-                </li>
-                <li className="story-card">
-                    <div className="story-image">
-                        <img src={user} />
-                    </div>
-                    <p className="name">William Smith</p>
-                </li>
-                <li className="story-card">
-                    <div className="story-image">
-                        <img src={user} />
-                    </div>
-                    <p className="name">William Smith</p>
-                </li>
+                    <p className="name">{story.Firstname} {story.LastName}</p>
+                    </li>
+                })}
             </ul>
             <Modal
                 className="share-popup"

@@ -497,6 +497,9 @@ const saveContest = (obj) => {
 const editContest = (contest_id) => {
   return apiClient.get(CONTEST_API + `getContest/${contest_id}`);
 };
+const getfriendsStories = (user_id,pageNo,pageSize)=>{
+return apiClient.get(PROFILE_API + `getFriendsStories/${user_id}/${pageSize}/${pageNo * (pageSize - pageSize)}`);
+}
 export {
   getFriendSuggestions,
   fetchGroupSuggestions,
@@ -593,5 +596,6 @@ export {
   setAsPaidMember,
   savestories,
   saveContest,
-  editContest
+  editContest,
+  getfriendsStories
 };

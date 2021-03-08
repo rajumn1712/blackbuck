@@ -23,6 +23,7 @@ import QandA from "../lms/QandA";
 import OverView from "../lms/overview";
 import AllCourses from "../lms/allCourses";
 import ContestView from '../contest/contestView'
+import StoryDetail from "./storydetail";
 
 
 const onBoard = () => {
@@ -65,6 +66,7 @@ const Router = () => {
       <ProtectedRoute path="/contestview/:id" component={ContestView} />
       <Route path="/commingsoon" component={CommingSoon} />
       <ProtectedRoute path="/newgroup/:id" component={CreateGroup} />
+      <ProtectedRoute path="/stories" component={StoryDetail} />
       <ProtectedRoute path="" component={Home} />
     </Switch>
   );

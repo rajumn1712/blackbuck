@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { Row, Col, Affix } from 'antd';
-import ShareBox from '../components/SavePostBox/sharebox';
+import { Row, Col } from 'antd';
 import Identity from '../components/identity';
-import Invite from '../shared/components/Invite';
 import Tags from '../components/ProfileComponents/tags';
 import Ads from '../components/ads';
 import Groups from '../shared/components/Groups';
@@ -12,7 +9,6 @@ import Postings from '../shared/postings';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import SavedPostsComponent from '../shared/postings/savedPosts';
 import FriendSuggestion from '../shared/components/friendSuggestion';
-import Stories from '../shared/components/stories';
 import BBScholars from '../shared/components/scholars';
 import JobCard from '../careers/jobcard';
 import JobDetails from '../careers/jobdetail';
@@ -41,9 +37,8 @@ class Home extends Component {
                         </div>
                     </Col>
                     <Col xs={{ order: 2, span: 24 }} sm={{ order: 2, span: 16 }} lg={12} xl={12} xxl={12}  >
-                        <Switch >
-                            <Route path="/stories" component={Stories} />
-                            <Route path="/newsfeed" render={(props) => { return <PostingsComponent sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
+                        <Switch>
+                            <Route path="/newsfeed" render={(props) => { return <PostingsComponent stories={true} sharebox={true} friendsSuggestions={true} postingsType={"all"} {...props} /> }} />
                             <Route path="/savedposts" component={SavedPostsComponent} />
                             <Route path="/friendsuggestions" component={FriendSuggestion} />
                             <Route path="/scholors" component={BBScholars} />
