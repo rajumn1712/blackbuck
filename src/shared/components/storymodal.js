@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Card, Avatar, Input, Upload, Image, Tooltip } from 'antd';
 import connectStateProps from '../stateConnect';
 import { uuidv4 } from '../../utils';
@@ -24,10 +24,11 @@ const fileTypes = {
     Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
 };
 
-const StoryModal = ({profile,visible,cancel})=>{
+const StoryModal = ({profile,visible,cancel,saved})=>{
 
     const [uploadSources, setUploadSources] = useState({});
     const [loader, setLoader] = useState(false);
+    let [storyDes,setStorryDes] = useState('');
 
     const saveStory = async () => {
         createObject.CreatedDate = new Date();
@@ -36,7 +37,7 @@ const StoryModal = ({profile,visible,cancel})=>{
         const response = await savestories(createObject);
         if (response.ok) {
             setUploadSources({});
-            cancel();
+            saved();
         }else{
             notify({
                 description: `Something went wrong`,
@@ -54,7 +55,7 @@ const StoryModal = ({profile,visible,cancel})=>{
             "Lastname": profile.LastName,
             "Image": profile.ProfilePic,
             "Email": profile.Email,
-            "Story": "",
+            "Story": storyDes,
           "CreatedDate": null,
           "Stories":{}
           }
@@ -126,6 +127,10 @@ const StoryModal = ({profile,visible,cancel})=>{
                         name="Message"
                         required={true}
                         maxLength={1306}
+                        onChange={(e)=>{
+                            storyDes = e.target.value;
+                            setStorryDes(storyDes);
+                        }}
                     />
                 </div>
                 <ul className="share-list">

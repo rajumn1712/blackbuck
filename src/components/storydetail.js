@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import ReactInstaStories from 'react-insta-stories';
+import Stories from 'react-insta-stories';
 import { withRouter } from 'react-router';
 import { getfriendsStories, userStories } from '../shared/api/apiServer';
 import connectStateProps from '../shared/stateConnect';
@@ -42,18 +42,19 @@ const StoryDetail = ({ profile, match }) => {
                 profileImage: '',
             },
         }
-        setStoryByUser([])
+        storyByUser = [];
+        setStoryByUser(storyByUser)
         const response = await userStories(match.params.id, 0, 10);
         if (response.ok) {
             response.data.forEach(story => {
                 storyObject.url = story.Url;
-                storyObject.type = story.type;
+                storyObject.type = story.Type;
                 storyObject.header.heading = story.Firstname;
                 storyObject.header.subheading = moment(story.Createddate).startOf('day').fromNow();
                 storyObject.header.profileImage = story.Image;
                 storyByUser.push(storyObject);
-                setStoryByUser([...storyByUser]);
             })
+            setStoryByUser([...storyByUser]);
         }
     }
     const showModal = () => {
@@ -63,6 +64,10 @@ const StoryDetail = ({ profile, match }) => {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
+    const handleSave = () =>{
+        getAllStories();
+    }
+
     return (
         <>
              <div className="viewall-stories">
@@ -93,15 +98,8 @@ const StoryDetail = ({ profile, match }) => {
                     
                 </Card>
                 {storyByUser.length > 0 && <div className="stories-view"> 
-                <ReactInstaStories height="100%" loop={true} keyboardNavigation={true} defaultInterval={1500} stories={storyByUser} 
-                styles= {{
-                    width: 'auto',
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    margin: 'auto'
-                }}
-                />
-                <StoryModal visible={isModalVisible} cancel={handleCancel}/>
+                <Stories loop keyboardNavigation defaultInterval={8000} stories={storyByUser} onStoryEnd={(s, st) => console.log('story ended', s, st)} onAllStoriesEnd={(s, st) => console.log('all stories ended', s, st)} onStoryStart={(s, st) => console.log('story started', s, st)} />
+                <StoryModal visible={isModalVisible} cancel={handleCancel} saved={handleSave}/>
 
                 </div>}
                 <Link to="/"><span className="close-icon"></span></Link>

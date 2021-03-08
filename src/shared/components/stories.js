@@ -29,7 +29,7 @@ const AllStories = ({ profile }) => {
         setIsModalVisible(false);
     };
     const handleSave = () =>{
-
+        getAllStories();
     }
     
     return (
@@ -46,8 +46,8 @@ const AllStories = ({ profile }) => {
                     </div>
                 </li>
                 {stories.length > 0 && stories?.map((story) => {
-                    return <li className="story-card">
-                        <Link key={story.UserId} to={`stories/${story.UserId}`}>
+                    return <li className="story-card" key={story.UserId}>
+                        <Link to={`stories/${story.UserId}`}>
                             <div className="story-image">
                                 <img src={story.Image} />
                             </div>
@@ -55,9 +55,9 @@ const AllStories = ({ profile }) => {
                         </Link>
                     </li>
                 })}
-                <Link className="more-frnd-btn"><span className="icon right-arrow mr-0"></span></Link>
+                {stories.length >= 5 && <Link className="more-frnd-btn"><span className="icon right-arrow mr-0"></span></Link>}
             </ul>
-            <StoryModal visible={isModalVisible} cancel={handleCancel}/>
+            <StoryModal visible={isModalVisible} cancel={handleCancel} saved={handleSave}/>
             
 
         </>
