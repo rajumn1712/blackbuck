@@ -7,6 +7,7 @@ import { getfriendsStories, userStories } from '../shared/api/apiServer';
 import connectStateProps from '../shared/stateConnect';
 import { Card, Avatar, List } from 'antd';
 import { Link } from 'react-router-dom';
+import StoryModal from '../shared/components/storymodal';
 
 
 const StoryDetail = ({ profile, match }) => {
@@ -14,22 +15,14 @@ const StoryDetail = ({ profile, match }) => {
     let [page, setPage] = useState(0);
     let [size, setSize] = useState(10);
     let [storyByUser, setStoryByUser] = useState([]);
-
-    let storyObject = {
-        url: '',
-        header: {
-            heading: '',
-            subheading: '',
-            profileImage: '',
-        },
-    }
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     useEffect(() => {
         getAllStories();
         if (match.params.id) {
             getuserStories();
         }
-    }, [])
+    }, [match.params.id])
 
 
     const getAllStories = async () => {
@@ -40,12 +33,22 @@ const StoryDetail = ({ profile, match }) => {
         }
     }
     const getuserStories = async () => {
+        let storyObject = {
+            url: '',
+            type:'',
+            header: {
+                heading: '',
+                subheading: '',
+                profileImage: '',
+            },
+        }
+        setStoryByUser([])
         const response = await userStories(match.params.id, 0, 10);
         if (response.ok) {
             response.data.forEach(story => {
                 storyObject.url = story.Url;
                 storyObject.type = story.type;
-                storyObject.header.heading = story.FirstName;
+                storyObject.header.heading = story.Firstname;
                 storyObject.header.subheading = moment(story.Createddate).startOf('day').fromNow();
                 storyObject.header.profileImage = story.Image;
                 storyByUser.push(storyObject);
@@ -53,12 +56,19 @@ const StoryDetail = ({ profile, match }) => {
             })
         }
     }
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
     return (
         <>
              <div className="viewall-stories">
                <Card title="Watch Stories" className="custom-card" bordered={true}>
                     <div className="px-12 py-8 d-flex align-items-center">
-                        <div className="story-card mr-8">
+                        <div className="story-card mr-8" onClick={showModal}>
                             <div className="story-image">
                                 <div className="add-story">
                                     <span className="add-story-icon" />
@@ -69,6 +79,7 @@ const StoryDetail = ({ profile, match }) => {
                     </div>
                     <List className="stories-list" bordered={false} split={false} itemLayout="horizontal" dataSource={allStories}
                         renderItem={story => (
+                            <Link to={`/stories/${story.UserId}`}>
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Avatar className src={story.Image} />}
@@ -76,12 +87,21 @@ const StoryDetail = ({ profile, match }) => {
                                     // description={<span className="f-12">{item.time}</span>}
                                 />
                             </List.Item>
+                            </Link>
                         )}
                     />
                     
                 </Card>
                 {storyByUser.length > 0 && <div className="stories-view"> 
-                <ReactInstaStories height="100%" stories={storyByUser} defaultInterval={1500}/>
+                <ReactInstaStories height="100%" loop={true} keyboardNavigation={true} defaultInterval={1500} stories={storyByUser} 
+                styles= {{
+                    width: 'auto',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    margin: 'auto'
+                }}
+                />
+                <StoryModal visible={isModalVisible} cancel={handleCancel}/>
 
                 </div>}
                 <Link to="/"><span className="close-icon"></span></Link>
