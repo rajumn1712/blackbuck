@@ -98,7 +98,7 @@ const StoryDetail = ({ profile, match }) => {
                     
                 </Card>
                 {storyByUser.length > 0 && <div className="stories-view"> 
-                <Stories loop keyboardNavigation defaultInterval={8000} stories={storyByUser} onStoryEnd={(s, st) => console.log('story ended', s, st)} onAllStoriesEnd={(s, st) => console.log('all stories ended', s, st)} onStoryStart={(s, st) => console.log('story started', s, st)} />
+                <Stories loop keyboardNavigation defaultInterval={8000} stories={[...storyByUser]} />
                 <StoryModal visible={isModalVisible} cancel={handleCancel} saved={handleSave}/>
 
                 </div>}
