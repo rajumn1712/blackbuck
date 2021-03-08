@@ -449,7 +449,7 @@ const PostingJob = ({ profile, history }) => {
                           />
                         </Form.Item>
                       </Col> */}
-                  <Col xs={24} sm={12} id="city">
+                  <Col xs={24} sm={12} id="cities">
                     <label className="text-secondary d-block mb-4 semibold required">
                       City
                     </label>
@@ -459,20 +459,19 @@ const PostingJob = ({ profile, history }) => {
                       rules={[
                         {
                           required: true,
-                          message: "City  required",
-                          type: "array",
+                          message: "City  required"
                         },
                       ]}
                     >
                       <AutoComplete
                         placeholder="City"
-                        onChange={(value) => handleChange("City", value)}
-                        getPopupContainer={() => document.querySelector("#city")}
+                        getPopupContainer={() => document.querySelector("#cities")}
                         filterOption={(input, option) =>
                           option.children
                             .toLowerCase()
                             .indexOf(input.toLowerCase()) >= 0
                         }
+                        onChange={(value) => handleChange("City", value)}
                       >
                         {cityValues.map((item, index) => {
                           return (
