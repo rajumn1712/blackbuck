@@ -46,7 +46,7 @@ import VisSenseFactory from "vissense";
 import { postUpdation, updateSearchValue } from "../../reducers/auth";
 import ShowMoreText from "react-show-more-text";
 import { joinGroupNew, getIsFriend, sendFirendRequest, sendNotification } from "../api/apiServer";
-import Stories from "../components/stories";
+import AllStories from "../components/stories";
 const VisSense = VisSenseFactory(window);
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -1214,7 +1214,7 @@ class Postings extends Component {
   render() {
     return (
       <div onScroll={this.handleScroll}>
-        {this.props.stories && <Stories/>}
+        {this.props.stories && <AllStories/>}
         {this.props.sharebox && (
           <ShareBox
             dataRefreshed={(type) => this.dataRefreshed(type)}

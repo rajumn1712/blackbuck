@@ -4,6 +4,7 @@ import connectStateProps from '../stateConnect';
 import { uuidv4 } from '../../utils';
 import notify from './notification';
 import { getfriendsStories, savestories } from '../api/apiServer';
+import { Link } from 'react-router-dom';
 const { TextArea } = Input;
 const { Dragger } = Upload;
 
@@ -23,7 +24,7 @@ const fileTypes = {
     Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
   };
 
-const Stories = ({profile}) => {
+const AllStories = ({profile}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [uploadSources,setUploadSources] = useState({});
     const [loader,setLoader] = useState(false);
@@ -118,12 +119,14 @@ const Stories = ({profile}) => {
                     </div>
                 </li>
                 {stories.length > 0 && stories?.map((story)=>{
-                    return <li className="story-card" key={story.UserId}>
+                    return <Link key={story.UserId} to={`stories/${story.UserId}`}>
+                    <li className="story-card">
                         <div className="story-image">
                         <img src={story.Image} />
                     </div>
                     <p className="name">{story.Firstname} {story.LastName}</p>
                     </li>
+                    </Link>
                 })}
             </ul>
             <Modal
@@ -204,4 +207,4 @@ const Stories = ({profile}) => {
         </>
     )
 }
-export default connectStateProps(Stories);
+export default connectStateProps(AllStories);

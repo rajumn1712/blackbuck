@@ -66,7 +66,7 @@ const Router = () => {
       <ProtectedRoute path="/contestview/:id" component={ContestView} />
       <Route path="/commingsoon" component={CommingSoon} />
       <ProtectedRoute path="/newgroup/:id" component={CreateGroup} />
-      <ProtectedRoute path="/stories" component={StoryDetail} />
+      <ProtectedRoute path="/stories/:id" component={StoryDetail} />
       <ProtectedRoute path="" component={Home} />
     </Switch>
   );
