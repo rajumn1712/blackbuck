@@ -48,11 +48,13 @@ const AllStories = ({ profile }) => {
 
     const saveStory = async () => {
         createObject.CreatedDate = new Date();
-        createObject.Stories = uploadSources;
+        createObject.Url = uploadSources.url;
+        createObject.Type = uploadSources.type;
         const response = await savestories(createObject);
         if (response.ok) {
             setIsModalVisible(false);
-        } else {
+            setUploadSources({});
+        }else{
             notify({
                 description: `Something went wrong`,
                 type: "error",
@@ -65,19 +67,19 @@ const AllStories = ({ profile }) => {
         setUploadSources({});
         setIsModalVisible(false);
     };
-    const createObject =
-    {
-        "StoryId": uuidv4(),
-        "UserId": profile.Id,
-        "Firstname": profile.Firstname,
-        "Lastname": profile.LastName,
-        "Image": profile.ProfilePic,
-        "Email": profile.Email,
-        "Story": "",
-        "CreatedDate": null,
-        "Stories": {}
-    }
-    const renderByClickIcon = (type) => {
+    const createObject = 
+        {
+            "StoryId": uuidv4(),
+            "UserId": profile.Id,
+            "Firstname": profile.FirstName,
+            "Lastname": profile.LastName,
+            "Image": profile.ProfilePic,
+            "Email": profile.Email,
+            "Story": "",
+          "CreatedDate": null,
+          "Stories":{}
+          }
+    const renderByClickIcon = (type)=>{
         uploadSources.type = type === "Images" ? 'image' : 'video';
         setUploadSources({ ...uploadSources });
 
