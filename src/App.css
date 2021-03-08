@@ -2273,12 +2273,20 @@ textarea {
   justify-content: center;background-color: #312d2d;}
 .viewall-stories .stories-view>{height: 100vh !important;}
 .viewall-stories .close-icon{position: absolute;right: 16px;top: 16px;}
+.stories{position: relative;}
+.stories .more-frnd-btn{right: 0 !important;}
 @media (min-width:576px){
   .affix-top{position: sticky;top: 86px;align-self: flex-start;margin-bottom: 6px;}
+}
+@media (max-width:1440px){
+  .stories .story-card { margin-right: 10px;}
 }
 @media (max-width:1220px){
   .addfrnd.ant-btn{padding: 5px !important;font-size: 14px !important;}
   .stories .story-card:nth-last-child(1){display: none;}
+}
+@media (max-width:1024px){
+  .stories .story-card:nth-last-child(1),.stories .story-card:nth-last-child(2){display: none;}
 }
 
 @media (max-width: 991px){
@@ -2309,7 +2317,8 @@ textarea {
   .user-statistic .left-statistic .ant-statistic,.user-statistic .right-statistic .ant-statistic{width: 33.3%;justify-content: center;}
   .profile-tabs .ant-tabs-tab:first-child {margin-left: 5px !important;}
   .docs .ant-list-item {min-width: 100%;}
-  .stories .story-card:nth-last-child(1){display: none;}
+  .stories .story-card:nth-last-child(1),.stories .story-card:nth-last-child(2){display: none;}
+
 }
 
 @media (max-width:575px){
@@ -2334,9 +2343,10 @@ textarea {
   .center-focus{height: 200px;}
   .ant-tooltip{z-index: 999 !important;}
   .xs-none{display: none !important;}
-  .stories .story-card:nth-last-child(1),.stories .story-card:nth-last-child(2){display: none;}
- 
+  .stories .story-card:nth-last-child(1),.stories .story-card:nth-last-child(2),.stories .story-card:nth-last-child(3){display: none;}
+  .stories .story-card { margin-right: 6px;}
 }
 @media (max-width:374px){
-  .stories .story-card:nth-last-child(1),.stories .story-card:nth-last-child(2),.stories .story-card:nth-last-child(3){display: none;}
+  .stories .story-card:nth-last-child(1),.stories .story-card:nth-last-child(2),.stories .story-card:nth-last-child(3),.stories .story-card:nth-last-child(4){display: none;}
+
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button, Card, Avatar, Input ,Upload, Image, Tooltip} from 'antd';
+import { Modal, Button, Card, Avatar, Input, Upload, Image, Tooltip } from 'antd';
 import connectStateProps from '../stateConnect';
 import { uuidv4 } from '../../utils';
 import notify from './notification';
@@ -22,21 +22,21 @@ const NewPostMenu = [
 const fileTypes = {
     Images: ".jpg,.jpeg,.png",
     Video: ".mp4,.mpeg4,.mov,.flv,.avi,.mkv,.webm",
-  };
+};
 
-const AllStories = ({profile}) => {
+const AllStories = ({ profile }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [uploadSources,setUploadSources] = useState({});
-    const [loader,setLoader] = useState(false);
-    let [stories,setStories] = useState([]);
+    const [uploadSources, setUploadSources] = useState({});
+    const [loader, setLoader] = useState(false);
+    let [stories, setStories] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         getAllStories();
-    },[])
+    }, [])
 
-    const getAllStories = async ()=>{
-        const response = await getfriendsStories(profile.Id,0,4);
-        if(response.ok){
+    const getAllStories = async () => {
+        const response = await getfriendsStories(profile.Id, 0, 4);
+        if (response.ok) {
             stories = response.data;
             setStories([...stories]);
         }
@@ -50,14 +50,14 @@ const AllStories = ({profile}) => {
         createObject.CreatedDate = new Date();
         createObject.Stories = uploadSources;
         const response = await savestories(createObject);
-        if(response.ok){
+        if (response.ok) {
             setIsModalVisible(false);
-        }else{
+        } else {
             notify({
                 description: `Something went wrong`,
                 type: "error",
                 message: "Story",
-              });
+            });
         }
     };
 
@@ -65,45 +65,45 @@ const AllStories = ({profile}) => {
         setUploadSources({});
         setIsModalVisible(false);
     };
-    const createObject = 
-        {
-            "StoryId": uuidv4(),
-            "UserId": profile.Id,
-            "Firstname": profile.Firstname,
-            "Lastname": profile.LastName,
-            "Image": profile.ProfilePic,
-            "Email": profile.Email,
-            "Story": "",
-          "CreatedDate": null,
-          "Stories":{}
-          }
-    const renderByClickIcon = (type)=>{
+    const createObject =
+    {
+        "StoryId": uuidv4(),
+        "UserId": profile.Id,
+        "Firstname": profile.Firstname,
+        "Lastname": profile.LastName,
+        "Image": profile.ProfilePic,
+        "Email": profile.Email,
+        "Story": "",
+        "CreatedDate": null,
+        "Stories": {}
+    }
+    const renderByClickIcon = (type) => {
         uploadSources.type = type === "Images" ? 'image' : 'video';
-        setUploadSources({...uploadSources});
+        setUploadSources({ ...uploadSources });
 
     }
-   const uploadProps = {
+    const uploadProps = {
         name: "file",
-    multiple: false,
-    action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
-    onChange:(info)=>{
-        setLoader(true);
-        const { status } = info.file;
-        if(status === "done"){
-            uploadSources.url = info.file.response[0];
-            setUploadSources({...uploadSources});
-            setLoader(false);
-        } else if (status === "error") {
-            notify({
-              description: `Something went wrong`,
-              type: "error",
-              message: "Upload",
-            });
-            setLoader(false);
-          } else if (status == undefined) {
-            setLoader(false);
-          }
-    }
+        multiple: false,
+        action: process.env.REACT_APP_AUTHORITY + "/Home/UploadFile",
+        onChange: (info) => {
+            setLoader(true);
+            const { status } = info.file;
+            if (status === "done") {
+                uploadSources.url = info.file.response[0];
+                setUploadSources({ ...uploadSources });
+                setLoader(false);
+            } else if (status === "error") {
+                notify({
+                    description: `Something went wrong`,
+                    type: "error",
+                    message: "Upload",
+                });
+                setLoader(false);
+            } else if (status == undefined) {
+                setLoader(false);
+            }
+        }
     }
     return (
         <>
@@ -118,17 +118,19 @@ const AllStories = ({profile}) => {
                         <p className="name">Add Story</p>
                     </div>
                 </li>
-                {stories.length > 0 && stories?.map((story)=>{
-                    return <Link key={story.UserId} to={`stories/${story.UserId}`}>
-                    <li className="story-card">
-                        <div className="story-image">
-                        <img src={story.Image} />
-                    </div>
-                    <p className="name">{story.Firstname} {story.LastName}</p>
+                {stories.length > 0 && stories?.map((story) => {
+                    return <li className="story-card">
+                        <Link key={story.UserId} to={`stories/${story.UserId}`}>
+                            <div className="story-image">
+                                <img src={story.Image} />
+                            </div>
+                            <p className="name">{story.Firstname} {story.LastName}</p>
+                        </Link>
                     </li>
-                    </Link>
                 })}
+                <Link className="more-frnd-btn"><span className="icon right-arrow mr-0"></span></Link>
             </ul>
+
             <Modal
                 className="share-popup"
                 title={
@@ -186,21 +188,21 @@ const AllStories = ({profile}) => {
                     })}
                 </ul>
                 {uploadSources.type && <div className="mb-16 upload-preview">
-              {uploadSources.type === 'image' && uploadSources.url && <Image src={uploadSources.url} />}
-              {uploadSources.type === 'video' && uploadSources.url && <video width="100%" controls controlsList="nodownload">
-                <source src={uploadSources.url} />
-              </video>}
-              <a
-                class="item-close"
-                onClick={() => {
-                  setUploadSources({});
-                }}
-              >
-                <Tooltip title="Remove">
-                  <span className="close-icon"></span>
-                </Tooltip>
-              </a>
-            </div>}
+                    {uploadSources.type === 'image' && uploadSources.url && <Image src={uploadSources.url} />}
+                    {uploadSources.type === 'video' && uploadSources.url && <video width="100%" controls controlsList="nodownload">
+                        <source src={uploadSources.url} />
+                    </video>}
+                    <a
+                        class="item-close"
+                        onClick={() => {
+                            setUploadSources({});
+                        }}
+                    >
+                        <Tooltip title="Remove">
+                            <span className="close-icon"></span>
+                        </Tooltip>
+                    </a>
+                </div>}
 
             </Modal>
 
