@@ -275,7 +275,7 @@ class Profile extends Component {
               className="profile-tabs"
               onChange={this.handleTabChange}
               key={tabkey}
-              tabBarExtraContent={tabkey=="IsProfileContestTab" ?<div className="mx-16 mb-8">
+              tabBarExtraContent={tabkey=="IsProfileContestTab" ?<div className="mx-8 mb-8">
                 <Button type="primary" onClick={this.showModal} > Create Contest </Button>
               </div>:[]}
             >
