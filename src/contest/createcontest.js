@@ -242,7 +242,7 @@ class CreateContest extends Component {
 
                     </div>
                     <div className="user-statistic">
-                        <Card className="group-banner w-btn" >
+                        <Card className="group-banner w-btn mt-0" >
                             <div className="my-16">
                                 <Form layout="vertical" initialValues={{ ...contestObj }} on scrollToFirstError={true} ref={this.formRef} >
                                     <Row gutter={24}>
