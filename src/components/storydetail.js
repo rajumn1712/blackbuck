@@ -43,7 +43,8 @@ const StoryDetail = ({ profile, match }) => {
         const response = await userStories(match.params.id, 0, 10);
         if (response.ok) {
             response.data.forEach(story => {
-                storyObject.url = story.url;
+                storyObject.url = story.Url;
+                storyObject.type = story.type;
                 storyObject.header.heading = story.FirstName;
                 storyObject.header.subheading = moment(story.Createddate).startOf('day').fromNow();
                 storyObject.header.profileImage = story.Image;
