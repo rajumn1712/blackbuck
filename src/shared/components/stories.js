@@ -30,6 +30,7 @@ const AllStories = ({ profile }) => {
     };
     const handleSave = () =>{
         getAllStories();
+        setIsModalVisible(false);
     }
     
     return (
@@ -55,7 +56,7 @@ const AllStories = ({ profile }) => {
                         </Link>
                     </li>
                 })}
-                {stories.length >= 5 && <Link className="more-frnd-btn"><span className="icon right-arrow mr-0"></span></Link>}
+                {stories.length >= 5 && <Link className="more-frnd-btn" to="/stories"><span className="icon right-arrow mr-0"></span></Link>}
             </ul>
             <StoryModal visible={isModalVisible} cancel={handleCancel} saved={handleSave}/>
             
