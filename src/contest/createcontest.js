@@ -44,8 +44,8 @@ class CreateContest extends Component {
         contestObj.PrivacyType = initialValues.PrivacyType;
         contestObj.Description = initialValues.Description;
         contestObj.ContestLink = initialValues.ContestLink;
-        contestObj.StartDate = initialValues.StartDate;
-        contestObj.EndDate = initialValues.EndDate;
+        contestObj.StartDate = contestObj.StartDate ? moment(contestObj.StartDate).local() : "";
+        contestObj.EndDate = contestObj.EndDate ? moment(contestObj.EndDate).local() : "";
         this.setState({ ...this.state, contestObj });
         this.formRef.current.setFieldsValue({ ...contestObj })
     }
@@ -125,6 +125,7 @@ class CreateContest extends Component {
     };
 
     componentDidMount() {
+        this.props.onRef(this)
         this.imageObject = {};
         fetchUserFriends((this.props.userId ? this.props.userId : (this.props?.profile?.Id)))
             .then(res => {
@@ -136,6 +137,7 @@ class CreateContest extends Component {
         }
     }
     componentWillUnmount() {
+        this.props.onRef(null)
     }
     showModal = () => {
         this.setState({
@@ -168,38 +170,20 @@ class CreateContest extends Component {
     };
     groupSave = async () => {
         let { contestObj } = this.state;
-        let notificationArray = [];
         this.setState({ ...this.state, loading: true });
         const saveObj = this.createObject(contestObj);
+        saveObj.StartDate = saveObj.StartDate ? moment(saveObj.StartDate).format() : saveObj.StartDate;
+        saveObj.EndDate = saveObj.EndDate ? moment(saveObj.EndDate).format() : saveObj.EndDate;
         const response = await saveContest(saveObj);
         if (response.ok) {
-            saveObj.Invitations.forEach(invite => {
-                let notificationObj = {
-                    "NotificationId": uuidv4(),
-                    "ReferenceId": saveObj.GroupId,//GroupId
-                    "Name": saveObj.GroupName,//GroupName
-                    "MainUserId": invite.FriendId,
-                    "UserId": this.props?.profile?.Id,
-                    "Firstname": this.props?.profile?.FirstName,
-                    "Lastname": this.props?.profile?.LastName,
-                    "Image": this.props?.profile?.ProfilePic,
-                    "Email": this.props?.profile?.Email,
-                    "NotificationType": "Invitations",
-                    "CreatedDate": new Date(),
-                    "Type": "request"
-                }
-                notificationArray.push(notificationObj);
-            })
-            saveNotification({ "Notifications": notificationArray }).then(res => {
 
-            });
             this.setState({ ...this.state, loading: false });
             this.props.handleCancel();
             if (this.props.refreshSave)
                 this.props.refreshSave();
             notify({
-                description: this.props.Type == "Edit" ? "Group edited successfully" : "Group saved successfully",
-                message: "Group",
+                description: this.props.Type == "Edit" ? "Contest edited successfully" : "Contest saved successfully",
+                message: "Contest",
             });
         } else {
             notify({ description: "Something went wrong :)", message: "Error", type: 'error' })
@@ -266,7 +250,7 @@ class CreateContest extends Component {
                                                     }
                                                 }
                                             }]}>
-                                                <DatePicker placeholder="Start Date" onChange={(val) => { this.handleChange("Date", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
+                                                <DatePicker placeholder="Start Date" onChange={(val) => { this.handleChange("StartDate", val) }} format="DD/MM/YYYY HH:mm:ss" disabledDate={(current) => {
                                                     return (
                                                         moment().add(-1, "days") >= current
                                                     );
@@ -299,13 +283,13 @@ class CreateContest extends Component {
                                         <Col xs={24} lg={12} id="type">
                                             <Form.Item
                                                 label="Choose Privacy"
-                                                className="custom-fields custom-select" name="Type" rules={[{ required: true, message: "Privacy required" }]}
+                                                className="custom-fields custom-select" name="PrivacyType" rules={[{ required: true, message: "Privacy required" }]}
                                             >
                                                 <Select
                                                     defaultValue=""
-                                                    name="Type"
+                                                    name="PrivacyType"
                                                     onChange={(value) =>
-                                                        this.handleChange("Type", value)
+                                                        this.handleChange("PrivacyType", value)
                                                     }
                                                     optionLabelProp="label"
                                                     getPopupContainer={() => document.querySelector('#type')}
