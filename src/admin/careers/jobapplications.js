@@ -10,7 +10,7 @@ import {
 import GetColumnSearchProps from "../../shared/components/filterComponent";
 import connectStateProps from "../../shared/stateConnect";
 
-const JobApplications = ({profile}) => {
+const JobApplications = ({ profile }) => {
   const columns = [
     {
       title: "Title",
@@ -100,9 +100,8 @@ const JobApplications = ({profile}) => {
   return (
     <>
       <Title className="f-18 text-primary semibold">Job Applications</Title>
-      <Card className="custom-card">
-        <div className="custom-card overflowX-auto">
-          
+      <div className="custom-card overflowX-auto">
+        <Card className="p-12">
           <Table
             loading={loading}
             columns={columns}
@@ -115,8 +114,8 @@ const JobApplications = ({profile}) => {
             }}
             bordered={true}
           />
-        </div>
-      </Card>
+        </Card>
+      </div>
     </>
   );
 };

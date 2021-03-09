@@ -228,21 +228,27 @@ const Members = ({ profile }) => {
             </Card>
         </div> */}
         <div className="custom-card">
-            <Card className="px-12 pt-12" extra={<div>
+            <Card className="px-12 pt-12" extra={<ul className="admin-actions">
                 {/* <Tooltip placement="top" title="Block">
                     <span className="left-menu block-icon mx-8"></span>
                 </Tooltip> */}
-                <Tooltip placement="top" title="Set Scholor" onClick={() => showModal("scholor")}>
-                    <span className="left-menu setscroller-icon mx-8"></span>
-                </Tooltip>
-                <Tooltip placement="top" title="Set Admin" onClick={() => showModal()}>
-                    <span className="left-menu setadmin-icon mx-8"></span>
-                </Tooltip>
-                {profile.Role == "Super Admin" && <Tooltip placement="top" title="Set Paid Member" onClick={() => showModal("paid")}>
-                    <span className="left-menu setpaid-icon mx-8"></span>
-                </Tooltip>}
+                <li>
+                    <Tooltip placement="top" title="Set Scholor" onClick={() => showModal("scholor")}>
+                        <span className="left-menu setscroller-icon"></span>
+                    </Tooltip>
+                </li>
+                <li>
+                    <Tooltip placement="top" title="Set Admin" onClick={() => showModal()}>
+                        <span className="left-menu setadmin-icon"></span>
+                    </Tooltip>
+                </li>
+                {profile.Role == "Super Admin" && <li>
+                    <Tooltip placement="top" title="Set Paid Member" onClick={() => showModal("paid")}>
+                        <span className="left-menu setpaid-icon"></span>
+                    </Tooltip>
+                </li>}
 
-            </div>}>
+            </ul>}>
                 <div className="overflowX-auto">
                     <Table
                         rowSelection={{

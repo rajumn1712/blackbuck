@@ -2275,6 +2275,11 @@ textarea {
 .viewall-stories .close-icon{position: absolute;right: 16px;top: 16px;}
 .stories{position: relative;}
 .stories .more-frnd-btn{right: 0 !important;}
+.admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 12px;}
+.admin-actions li{margin-right: 16px;}
+.admin-actions li:last-child{margin-right: 0;}
+.admin-right-panel .custom-card .ant-card-head{min-height: auto;}
+.admin-right-panel .custom-card .ant-card-head .ant-card-extra{padding:0;}
 @media (min-width:576px){
   .affix-top{position: sticky;top: 86px;align-self: flex-start;margin-bottom: 6px;}
 }

@@ -136,9 +136,9 @@ const JobPostings = ({ profile, history }) => {
   const confirmJObDelete = async () => {
     const response = await deleteJobPost(selection[0].JobId);
     if (response.ok) {
-        getAllJobPostings(1,10);
-        setSelectedRowKeys([]);
-                setSelection([]);
+      getAllJobPostings(1, 10);
+      setSelectedRowKeys([]);
+      setSelection([]);
       notify({
         message: "Delete",
         type: "success",
@@ -160,44 +160,50 @@ const JobPostings = ({ profile, history }) => {
         <Card
           className="px-12 pt-12"
           extra={
-            <div>
-              <Tooltip placement="top" title="Add job">
-                <Link
-                  to="/admin/postingjob/new"
-                  className="icon add-icon"
-                ></Link>
-              </Tooltip>
-              <Tooltip placement="top" title="Edit job">
-                <Link
-                  className="icon edit-admin"
-                  onClick={handleJobById}
-                ></Link>
-              </Tooltip>
-              <Tooltip placement="top" title="Delete job">
-                <Link className="icon delete-admin" onClick={deleteJob}></Link>
-              </Tooltip>
-            </div>
+            <ul className="admin-actions">
+              <li>
+                <Tooltip placement="top" title="Add job">
+                  <Link
+                    to="/admin/postingjob/new"
+                    className="icon add-icon mr-0"
+                  ></Link>
+                </Tooltip>
+              </li>
+              <li>  
+                <Tooltip placement="top" title="Edit job">
+                  <Link
+                    className="icon edit-admin mr-0"
+                    onClick={handleJobById}
+                  ></Link>
+                </Tooltip>
+              </li>
+              <li>
+                <Tooltip placement="top" title="Delete job">
+                  <Link className="icon delete-admin mr-0" onClick={deleteJob}></Link>
+                </Tooltip>
+              </li>
+            </ul>
           }
         >
           <div className="overflowX-auto">
-          <Table
-            rowSelection={{
-              hideSelectAll: true,
-              onSelect: onRecordSelect,
-              selectedRowKeys: selectedRowKeys,
-              onChange: onSelectedRowKeysChange,
-            }}
-            loading={loading}
-            columns={columns}
-            dataSource={data}
-            size="small"
-            pagination={{
-              position: ["bottomCenter"],
-              total: count,
-              onChange: (page, pageSize) => onPageChange(page, pageSize),
-            }}
-            bordered={true}
-          />
+            <Table
+              rowSelection={{
+                hideSelectAll: true,
+                onSelect: onRecordSelect,
+                selectedRowKeys: selectedRowKeys,
+                onChange: onSelectedRowKeysChange,
+              }}
+              loading={loading}
+              columns={columns}
+              dataSource={data}
+              size="small"
+              pagination={{
+                position: ["bottomCenter"],
+                total: count,
+                onChange: (page, pageSize) => onPageChange(page, pageSize),
+              }}
+              bordered={true}
+            />
           </div>
         </Card>
       </div>
