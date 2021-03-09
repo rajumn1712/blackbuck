@@ -24,7 +24,6 @@ const StoryDetail = ({ profile, match }) => {
         }
     }, [match.params.id])
 
-
     const getAllStories = async () => {
         const response = await getfriendsStories(profile.Id, page, size);
         if (response.ok) {
@@ -95,14 +94,13 @@ const StoryDetail = ({ profile, match }) => {
                             </Link>
                         )}
                     />
-                    
                 </Card>
                 {storyByUser.length > 0 && <div className="stories-view"> 
-                <Stories loop keyboardNavigation defaultInterval={8000} stories={storyByUser} />
+                <Link class="more-frnd-btn left" ><span class="icon left-arrow mr-0" /></Link><Link class="more-frnd-btn" href=""><span class="icon right-arrow mr-0" /></Link>
+                <Stories loop keyboardNavigation defaultInterval={8000}  stories={storyByUser} />
                 <StoryModal visible={isModalVisible} cancel={handleCancel} saved={handleSave}/>
-
                 </div>}
-                <Link to="/"><span className="close-icon"></span></Link>
+                <Link to="/"><span className="icons white-close"></span></Link>
             </div>
         </>
     )

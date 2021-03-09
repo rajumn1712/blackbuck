@@ -2256,6 +2256,7 @@ textarea {
 .add-story-icon{width: 36px;height: 36px;vertical-align: initial;display: inline-block;vertical-align: middle;background: url(styles/images/icons.svg) no-repeat;background-position: -420px -150px;}
 .contest-card-item .contest-date h6{color: #5D5D5D;}
 .contest-card-item .contest-date p{font-size: 14px; color:  #000000;}
+.viewall-stories{background-color: #312d2d;}
 .viewall-stories .custom-card .story-card{ width: 56px;height: 56px;display: flex; align-items: center;justify-content: center;}
 .viewall-stories .story-card .add-story{width: 50px;height: 50px;}
 .viewall-stories .story-card .add-story .add-story-icon{transform: scale(0.8);}
@@ -2268,11 +2269,11 @@ textarea {
 .viewall-stories .stories-list .ant-list-item-meta-title{margin-bottom: 0 !important;}
 .viewall-stories .custom-card{width: 350px;max-height: 100vh;overflow-y: auto;}
 .viewall-stories{display: flex;position: absolute; top: 0; right: 0;bottom: 0;left: 0;z-index: 101;}
-.viewall-stories .stories-view{width: calc(100vw - 350px);    display: flex;
-  align-items: center;
-  justify-content: center;background-color: #312d2d;}
-.viewall-stories .stories-view>{height: 100vh !important;}
-.viewall-stories .close-icon{position: absolute;right: 16px;top: 16px;}
+.viewall-stories .stories-view{width: calc(100vw - 350px); display: flex;align-items: center;justify-content: center;background-color: #312d2d;position: relative;width: 572px;margin: auto;}
+.viewall-stories .stories-view>div{height: calc(100vh - 30vh) !important;}
+.viewall-stories .stories-view>div>div:nth-child(2){height: 100% !important;width: 100% !important;}
+.viewall-stories .stories-view>div>div:nth-child(2)>div {display: flex; width: 100% !important;}
+.viewall-stories .white-close{position: absolute;right: 16px;top: 16px;}
 .stories{position: relative;}
 .stories .more-frnd-btn{right: 0 !important;}
 .admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 12px;}
@@ -2285,6 +2286,7 @@ textarea {
 }
 @media (max-width:1440px){
   .stories .story-card { margin-right: 10px;}
+  .viewall-stories .stories-view>div{height: calc(100vh - 10vh) !important;}
 }
 @media (max-width:1220px){
   .addfrnd.ant-btn{padding: 5px !important;font-size: 14px !important;}
@@ -2292,6 +2294,7 @@ textarea {
 }
 @media (max-width:1024px){
   .stories .story-card:nth-last-child(1),.stories .story-card:nth-last-child(2){display: none;}
+  .viewall-stories .stories-view>div{height: calc(100vh - 5vh) !important;}
 }
 
 @media (max-width: 991px){
@@ -2323,6 +2326,7 @@ textarea {
   .profile-tabs .ant-tabs-tab:first-child {margin-left: 5px !important;}
   .docs .ant-list-item {min-width: 100%;}
   .stories .story-card:nth-last-child(1),.stories .story-card:nth-last-child(2){display: none;}
+  .viewall-stories .stories-view>div{height: calc(100vh - 2vh) !important;}
 
 }
 
