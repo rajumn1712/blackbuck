@@ -66,6 +66,7 @@ const StoryDetail = ({ profile, match }) => {
     };
     const handleSave = () =>{
         getAllStories();
+        setIsModalVisible(false);
     }
 
     return (

@@ -4,6 +4,7 @@ import connectStateProps from '../stateConnect';
 import { uuidv4 } from '../../utils';
 import notify from './notification';
 import { savestories } from '../api/apiServer';
+import Loader from '../../common/loader';
 
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -148,6 +149,7 @@ const StoryModal = ({profile,visible,cancel,saved})=>{
                         </Dragger>
                     })}
                 </ul>
+                {loader && <Loader className="loader-top-middle" />}
                 {uploadSources.type && <div className="mb-16 upload-preview">
                     {uploadSources.type === 'image' && uploadSources.url && <Image src={uploadSources.url} />}
                     {uploadSources.type === 'video' && uploadSources.url && <video width="100%" controls controlsList="nodownload">
